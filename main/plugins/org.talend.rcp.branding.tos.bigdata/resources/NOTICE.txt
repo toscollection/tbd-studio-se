@@ -1,0 +1,541 @@
+ Copyright (c) 2006 - 2014 Talend Inc. - www.talend.com
+ All rights reserved.
+ 
+ This program and the accompanying materials are made available
+ under the terms of the Talend Commercial Software License and
+ Services Agreement which accompanies this distribution.
+ 
+ This product includes software developed at
+ Talend Inc. (http://www.talend.com).
+ 
+ This product includes software developed at
+ The Apache Software Foundation (http://www.apache.org).
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ The Eclipse Foundation (http://www.eclipse.org).
+ Licensed under the Eclipse Public License - v1.0
+ 
+ This product includes software developed at
+ Apache ActiveMQ (http://activemq.apache.org)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Ant (http://ant.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ AntlR (http://www.antlr3.org)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ AOP Alliance (Java/J2EE AOP standards) (http://aopalliance.sourceforge.net/)
+ Licensed under the Public Domain license
+ 
+ This product includes software developed at
+ Apache Cassandra (http://cassandra.apache.org)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache JAMES (http://james.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ ASM (http://asm.ow2.org/)
+ Licensed under the BSD 3-clause license aka Inria license (http://asm.ow2.org/license.html)
+ 
+ This product includes software developed at
+ Apache Hadoop (http://hadoop.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Avro (http://avro.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Axiom (http://ws.apache.org/axiom/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Axis (http://axis.apache.org)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Axis 2 (http://axis.apache.org/axis2)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Amazon (https://github.com/aws/aws-sdk-java)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Windows Azure Storage libraries for Java (https://github.com/Azure/azure-storage-java )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Batik (http://xmlgraphics.apache.org/batik/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ The Legion of the Bouncy Castle (http://www.bouncycastle.org/)
+ Licensed under the X11 / MIT license. (http://www.bouncycastle.org/licence.html)
+ 
+ This product includes software developed at
+ Box Java SDK (V2) (https://github.com/box/box-java-sdk-v2)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ DataStax Java Driver for Apache Cassandra (https://github.com/datastax/java-driver)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Commons (http://commons.apache.org/proper/commons-cli)
+ Licensed under the Apache License Version 2.0.
+  
+ This product includes software developed at
+ Apache Common Http Client (http://hc.apache.org/httpcomponents-client-ga)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Commons JxPath (http://commons.apache.org/proper/commons-jxpath/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Commons Lang (http://commons.apache.org/lang/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Ning Compression codec for LZF encoding (https://github.com/ning/compress)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ ConcurrentLinkedHashMap for Java (https://code.google.com/p/concurrentlinkedhashmap/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Couchbase Client (http://www.couchbase.com/communities/all-client-libraries)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache CXF (http://cxf.apache.org/ )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Datafu (http://data.linkedin.com/opensource/datafu)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ DataNucleus (http://www.datanucleus.org/project)
+ Licensed under the Apache License Version 2.0. (http://www.datanucleus.org/documentation/license.html)
+ 
+ This product includes software developed at
+ Apache Derby Database Engine and Embedded JDBC Driver (http://db.apache.org/derby/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ dropbox-sdk-java : Java library for the Dropbox Core API (https://www.dropbox.com/developers/core/sdks/java)
+ Licensed under the X11 / MIT license.
+ 
+ This product includes software developed at
+ Ehcache (http://ehcache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Pig (http://pig.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Ezmorph (http://ezmorph.sourceforge.net/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Ganymed SSH-2 for Java (http://www.ganymed.ethz.ch/ssh2/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ Apache Geronimo (http://geronimo.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Google APIs Client Library for Java (https://code.google.com/p/google-api-java-client/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Groovy (http://groovy.codehaus.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Google Gson (http://code.google.com/p/google-gson/ )
+ Licensed under the Apache License Version 2.0.
+
+ This product includes software developed at
+ Guava: Google Core Libraries for Java (https://code.google.com/p/guava-libraries/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ google-guice (https://code.google.com/p/google-guice/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ H2 Embedded Database and JDBC Driver (http://www.h2database.com/html/main.html)
+ Licensed under the Eclipse Public License - v1.0
+ 
+ This product includes software developed at
+ Apache Hbase (http://hbase.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache HCatalog (http://hive.apache.org/hcatalog/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Hector : A high level Java client for Apache Cassandra (http://hector-client.github.io/hector/build/html/)
+ Licensed under the X11 / MIT license.
+ 
+ This product includes software developed at
+ Hibernate Validator (http://validator.hibernate.org )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ HighScale Lib (https://github.com/stephenc/high-scale-lib)
+ Licensed under the Public Domain license
+ 
+ This product includes software developed at
+ Apache Hive (http://hive.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ HsqlDB (http://hsqldb.org/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ Cloudera HTrace (https://github.com/cloudera/htrace/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache HttpComponents Client (http://hc.apache.org/httpcomponents-asyncclient-dev/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Common Http Core (http://hc.apache.org/httpcomponents-core-ga/index.html)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache HttpClient (http://hc.apache.org/httpclient-3.x/)
+ Licensed under the Apache License Version 2.0.
+  
+ This product includes software developed at
+ Ini4j (http://ini4j.sourceforge.net/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Jackson Java JSON-processor (http://jackson.codehaus.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Commons Bcel (http://commons.apache.org/proper/commons-bcel/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Java Agent for Memory Measurements (https://github.com/jbellis/jamm/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Mondrian (https://sourceforge.net/projects/mondrian/)
+ Licensed under the Eclipse Public License - v1.0
+ 
+ This product includes software developed at
+ atinject (https://code.google.com/p/atinject/;JSR-330: Dependency Injection for Java)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Java API for RESTful Services (http://grepcode.com/snapshot/repo1.maven.org/maven2/javax.ws.rs/javax.ws.rs-api/2.0-m10)
+ Licensed under the CDDL license version 1.1
+ 
+ This product includes software developed at
+ Jaxb (https://jaxb.java.net/)
+ Licensed under the CDDL license version 1.1
+ 
+ This product includes software developed at
+ Jaxen (http://jaxen.codehaus.org/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ JClouds (https://jclouds.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ JDO-API (http://db.apache.org/jdo/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ JetS3T (https://bitbucket.org/jmurty/jets3t/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Jettison (http://jettison.codehaus.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Jetty (http://www.eclipse.org/jetty/)
+ Licensed under the Apache License Version 2.0
+ 
+ This product includes software developed at
+ JLine (http://jline.sourceforge.net/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ Joda-Time (http://joda-time.sourceforge.net/license.html)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ JSON (http://www.json.org)
+ Licensed under the JSON license (http://www.json.org/license.html)
+ 
+ This product includes software developed at
+ Json Simple (https://code.google.com/p/json-simple/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ JSR 305: Annotations for Software Defect Detection in Java (https://code.google.com/p/jsr-305/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ JUnit (http://junit.org/)
+ Licensed under the BSD 2-Clause license.
+ 
+ This product includes software developed at
+ Apache Thrift (http://thrift.apache.org )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ LightCouch (http://www.lightcouch.org )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Log4j (http://logging.apache.org/log4j/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Lucene Core (http://lucene.apache.org/core)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ LZ4 : Extremely Fast Compression algorithm (https://code.google.com/p/lz4/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ Metrics API (https://dropwizard.github.io/metrics/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Microsoft Azure SDK for Java (https://github.com/Azure/azure-sdk-for-java)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ MongoDB Java Driver (http://www.mongodb.org )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Neethi (http://ws.apache.org/neethi/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Netty (http://netty.io/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Oozie (https://oozie.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ OpenSAML (https://wiki.shibboleth.net/confluence/display/OpenSAML/Home/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache ServiceMix (http://servicemix.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ W3C (http://www.w3.org/)
+ Licensed under the W3C license.
+ 
+ This product includes software developed at
+ Paraccel JDBC Driver (http://www.actian.com/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ Parboiled (https://github.com/sirthias/parboiled/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Parquet (http://incubator.apache.org/projects/parquet.html)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache PiggyBank (https://cwiki.apache.org/confluence/display/PIG/PiggyBank)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache POI (http://poi.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ PostgreSQL JDBC Driver (http://jdbc.postgresql.org/)
+ Licensed under the BSD 3-clause license. (http://jdbc.postgresql.org/about/license.html)
+ 
+ This product includes software developed at
+ Protocol Buffers - Google's data interchange format (https://code.google.com/p/protobuf/)
+ Licensed under the BSD 3-clause license.
+ 
+ This product includes software developed at
+ Metrics Reporter Config (https://github.com/addthis/metrics-reporter-config )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Resty : A simple HTTP REST client for Java (http://beders.github.io/Resty/Resty/Overview.html)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Riak Client (http://basho.com/riak/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Rocoto (http://99soft.github.io/rocoto/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Simple API for CSS (http://www.w3.org/Style/CSS/SAC/)
+ Licensed under the W3C license.
+ 
+ This product includes software developed at
+ Scala Lang (http://www.scala-lang.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ SDSU Java Library (http://www.eli.sdsu.edu/java-SDSU/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Xalan-J (http://xml.apache.org/xalan-j/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Tomcat (http://tomcat.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ SL4J : Simple Logging Facade for Java (http://www.slf4j.org)
+ Licensed under the X11 / MIT license.
+ 
+ This product includes software developed at
+ YAML parser and emitter for Java (https://code.google.com/p/snakeyaml/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Snappy for Java a fast compressor/decompresser (https://code.google.com/p/snappy-java/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ SpyMemCached (https://code.google.com/p/spymemcached/ )
+ Licensed under the X11 / MIT license.
+ 
+ This product includes software developed at
+ SQLite JDBC Driver (https://bitbucket.org/xerial/sqlite-jdbc)
+ Licensed under the BSD 2-Clause license.
+ 
+ This product includes software developed at
+ Apache Sqoop (http://sqoop.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ SshJ (https://github.com/shikhar/sshj)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ StAX API (http://stax.codehaus.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ StAXON - JSON via StAX (https://github.com/beckchr/staxon/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Super SCV (http://supercsv.sourceforge.net/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Twitter4J (http://twitter4j.org/en/index.html)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Uuid (http://johannburkard.de/software/uuid/ http://johannburkard.de/software/uuid/copying.txt)
+ Licensed under the X11 / MIT license.
+ 
+ This product includes software developed at
+ Hibernate BeanValidation API (https://source.jboss.org/browse/Hibernate/beanvalidation/api/tags/v1_0_0_GA/license.txt?r=17647)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Velocity (http://velocity.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Woden (http://www.apache.org/dist/ws/woden/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Woodstox : High-performance XML processor (http://woodstox.codehaus.org/ http://woodstox.codehaus.org/Download)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache WebServices Common Utilities (http://ws.apache.org/commons/util/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache WSS4J (https://ws.apache.org/wss4j/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Xerces2 (https://xerces.apache.org/xerces2-j/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ XmlBeans (http://xmlbeans.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Xml-RPC (https://ws.apache.org/xmlrpc/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ XmlSchema Core (http://ws.apache.org/xmlschema/xmlschema-core/index.html)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Xmlsec - Apache Santuario (http://santuario.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Zip4J (http://www.lingala.net/zip4j/ )
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Zookeeper (http://zookeeper.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ CSV Tools (http://kasparov.skife.org/csv/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ The Castor Project (http://castor.codehaus.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes software developed at
+ Apache Chemistry (http://chemistry.apache.org/)
+ Licensed under the Apache License Version 2.0.
+ 
+ This product includes Dom4J software developed at
+ MetaStuff (http://dom4j.sourceforge.net/ previously http://www.dom4j.org)
+ Licensed under the BSD-5-Clause
