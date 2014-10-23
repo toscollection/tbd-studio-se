@@ -217,6 +217,7 @@
 <%
 		}
 %>
+		globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
 		if(result_<%=cid%> != 0) {
 <%
 			if(dieOnError) {

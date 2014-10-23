@@ -47,6 +47,8 @@ public class Neo4jDNDProvider extends AbstractDNDProvider {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(INeo4jAttributes.SERVER_URL));
         } else if (INeo4jAttributes.COLUMN_MAPPING.equals(value)) {
             return getColumnMappingValue(connection, table);
+        } else if (INeo4jAttributes.DB_VERSION.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(INeo4jAttributes.DB_VERSION), false);
         }
 
         return null;

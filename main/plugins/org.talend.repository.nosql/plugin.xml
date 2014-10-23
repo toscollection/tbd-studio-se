@@ -163,6 +163,7 @@
             dbDNDProvider="org.talend.repository.nosql.db.provider.neo4j.Neo4jDNDProvider"
             dbMetadataProvider="org.talend.repository.nosql.db.provider.neo4j.Neo4jMetadataProvider"
             dbType="NEO4J"
+            dbVersions="NEO4J_1_X_X;NEO4J_2_1_X;"
             dbWizPageProvider="org.talend.repository.nosql.db.provider.neo4j.Neo4jWizardPageProvider"
             description="Neo4j">
       </factory>
