@@ -87,7 +87,8 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
                     if (StringUtils.isEmpty(key) || value == null) {
                         continue;
                     }
-                    addMetadataColumns(classLoader, key, value, metadataColumns, columnLabels);
+                    addMetadataColumns(classLoader, db, key, value, metadataColumns, columnLabels,
+                            Neo4jConnectionUtil.isVersion1(connection));
                 }
             }
         } catch (Exception e) {
@@ -97,11 +98,11 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
         return metadataColumns;
     }
 
-    private void addMetadataColumns(ClassLoader classLoader, String columnKey, Object columnValue,
-            List<MetadataColumn> metadataColumns, List<String> columnLabels) throws NoSQLServerException {
+    private void addMetadataColumns(ClassLoader classLoader, Object db, String columnKey, Object columnValue,
+            List<MetadataColumn> metadataColumns, List<String> columnLabels, boolean isVersion1) throws NoSQLServerException {
         boolean isNode = Neo4jConnectionUtil.isNode(columnValue, classLoader);
         if (isNode) {
-            Map<String, Object> nodeProperties = Neo4jConnectionUtil.getNodeProperties(columnValue, classLoader);
+            Map<String, Object> nodeProperties = Neo4jConnectionUtil.getNodeProperties(db, columnValue, classLoader, isVersion1);
             Iterator<Entry<String, Object>> proIterator = nodeProperties.entrySet().iterator();
             while (proIterator.hasNext()) {
                 Map.Entry<String, Object> proEntry = proIterator.next();

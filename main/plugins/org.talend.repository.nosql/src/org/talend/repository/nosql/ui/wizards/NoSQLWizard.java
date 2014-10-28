@@ -200,6 +200,8 @@ public class NoSQLWizard extends AbstractNoSQLWizard {
                         ExceptionUtils.getFullStackTrace(e));
                 ExceptionHandler.process(e);
                 return false;
+            } finally {
+                performClean();
             }
             return true;
         } else {

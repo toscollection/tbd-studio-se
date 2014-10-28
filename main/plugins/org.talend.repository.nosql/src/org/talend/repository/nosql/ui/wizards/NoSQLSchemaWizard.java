@@ -118,8 +118,9 @@ public class NoSQLSchemaWizard extends AbstractNoSQLSchemaWizard {
             workspace.run(operation, null);
         } catch (CoreException e) {
             ExceptionHandler.process(e);
+        } finally {
+            performClean();
         }
-        performClean();
         return true;
     }
 
