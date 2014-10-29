@@ -23,6 +23,8 @@ java.util.Map
 	boolean isLocal = "LOCAL".equals(storageSource);
 	boolean isHDFS = "HDFS".equals(storageSource);
 	boolean isTwitter = "TWITTER".equals(storageSource);
+
+	boolean inMain = node.isSubtreeStart();
 	
 	String outputConnectionName = "";
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
@@ -48,9 +50,10 @@ java.util.Map
 		}
 	
 		String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
-		String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
+		String talendRDDClass = (isStreaming && inMain?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
 %>
 		<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
+		resourceMap.put("context_<%=cid%>", ctx_<%=cid%>); 
 <%
 		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 		if(isHDFS && !isStreaming) {
@@ -107,7 +110,7 @@ java.util.Map
 <%
 		} else {
 %>
-			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%>, <%=("".equals(inputFile)?"\"\"":inputFile)%>, <%=("".equals(separator)?"\"\"":separator)%>));
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>, <%=("".equals(inputFile)?"\"\"":inputFile)%>, <%=("".equals(separator)?"\"\"":separator)%>));
 <%
 		}
 	}

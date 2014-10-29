@@ -111,7 +111,7 @@
 		<IMPORTS>
 			<!-- Spark streaming -->
 			<IMPORT NAME="talend-spark-streaming-external.jar" MODULE="talend-spark-streaming-external.jar"
-				REQUIRED_IF="(STORAGE_SOURCE=='TWITTER')" />
+				REQUIRED_IF="(STORAGE_SOURCE=='TWITTER')" MRREQUIRED="true"/>
 			<IMPORT NAME="twitter4j-stream-3.0.3.jar" MODULE="twitter4j-stream-3.0.3.jar"
 				REQUIRED_IF="(STORAGE_SOURCE=='TWITTER')" />
 			<IMPORT NAME="twitter4j-core-3.0.3.jar" MODULE="twitter4j-core-3.0.3.jar"

@@ -104,7 +104,7 @@
 		<IMPORTS>
 
 			<IMPORT NAME="talend-spark-1.0.0.jar" MODULE="talend-spark-1.0.0.jar"
-				REQUIRED="true" />
+				REQUIRED="true"  MRREQUIRED="true"/>
 
 			<!-- Cloudera_CDH5.1 -->
 			<IMPORT NAME="spark-assembly-1.0.0-cdh5.1.2-hadoop2.3.0-cdh5.1.2.jar"

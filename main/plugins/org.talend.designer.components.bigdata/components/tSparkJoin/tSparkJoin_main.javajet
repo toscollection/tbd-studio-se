@@ -128,13 +128,13 @@
 					lookupKeys+=lkIndex;
 				}
 				
-				if(isStreaming) {
+				//if(isStreaming) {
 %>
-					if(true) {
-						throw new java.lang.UnsupportedOperationException("The component tSparkJoin does not support the streaming mode.");
-					}
+				//	if(true) {
+				//		throw new java.lang.UnsupportedOperationException("The component tSparkJoin does not support the streaming mode.");
+				//	}
 <%
-				} else {
+				//} else {
 %>
 					java.util.List<Integer> inputKeyList_<%=cid%> = new java.util.ArrayList<Integer>();
 					java.util.List<Integer> lookupKeyList_<%=cid%> = new java.util.ArrayList<Integer>();
@@ -155,7 +155,7 @@
 					org.talend.spark.TalendPairRDD<List<Object>, List<Object>> <%=cid%>_<%=outputConnectionName%>_PairRDD = org.talend.spark.operation.Join.<%=joinMode %>(<%=previous_node%>_<%=previousOutputConnectionName%>_RDD, inputKeyList_<%=cid%>, lk_<%=cid %>_RDD, lookupKeyList_<%=cid%>);
 					<%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.RDDConverter.convert(<%=cid%>_<%=outputConnectionName%>_PairRDD.toJavaRDD());
 <%
-				}
+				//}
 			} else {
 %>
 				if(true) {

@@ -71,23 +71,140 @@ java.util.Map
 			e.printStackTrace();
 		}
 		
-		java.util.List<String> jars = null;
-		for (int i = 0; i < commandLine.length; i++) {
-			if(commandLine[i].contains("jar")) {
-				jars = java.util.Arrays.asList(commandLine[i].split(";"));
+		java.util.List<String> jars = new java.util.ArrayList<String>();
+		jarsToRegister = new java.util.ArrayList<String>();
+		int commandLineLength = commandLine.length;
+		for (int i = 0; i < commandLineLength; i++) {
+			if(commandLine[i].contains("libjars")) {
+				if(commandLineLength > i + 1) {
+					String s = commandLine[i+1] + ",systemRoutines.jar,userRoutines.jar";
+					jarsToRegister = java.util.Arrays.asList(s.split(","));
+				}
 				break;
 			}
 		}
-		
-		jarsToRegister = new java.util.ArrayList<String>();
-		
-		jarsToRegister.add("talend-spark");
-		jarsToRegister.add("twitter4j");
-		jarsToRegister.add("talend-datascience-mllib");
+
+		for (int i = 0; i < commandLineLength; i++) {
+			if(commandLine[i].contains("-cp")) {
+				if(commandLineLength > i + 1) {
+					jars = java.util.Arrays.asList(commandLine[i+1].split(";"));
+				}
+				break;
+			}
+		}
 %>
 		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
-		
-			
+<%
+		boolean hasClasses = false;
+		java.util.List<java.io.File> functionsList = null;
+		java.util.List<java.io.File> routinesList = null;
+		for(int j = 0; j < jars.size(); j++) {
+			if(jars.get(j).contains("/classes")) {
+				hasClasses = true;
+%>
+				class ZipUtils_<%=cid%> {
+					public String zipFile(String jarName, java.util.List<String> fileList, String packageFolder) throws java.lang.Exception {
+						String tmp = System.getProperty("java.io.tmpdir").replaceAll("\\\\", "/");
+						java.util.zip.ZipOutputStream zos = new java.util.zip.ZipOutputStream(new java.io.FileOutputStream(tmp + "/" + jarName));
+						java.io.FileInputStream fis = null;
+						byte[] bytes;
+						int length;
+						for(String file : fileList) {
+							zos.putNextEntry(new java.util.zip.ZipEntry(packageFolder + "/" + file.substring(file.lastIndexOf("/") + 1, file.length())));
+							try {
+								fis = new java.io.FileInputStream(file);
+							} catch (java.lang.Exception e) {
+								throw e;
+							}
+
+							bytes = new byte[1024];
+							while ((length = fis.read(bytes)) >= 0) {
+								zos.write(bytes, 0, length);
+							}
+
+							zos.closeEntry();
+							fis.close();
+						}
+						zos.close();
+						return tmp + "/" + jarName;
+					}
+				}
+
+				ZipUtils_<%=cid%> ZipUtilsInstance_<%=cid%> = new ZipUtils_<%=cid%>();
+<%			
+				class FileUtils {
+					public java.util.List<java.io.File> getFiles(String path, String pattern, boolean recursive) {
+						java.io.File root = new java.io.File(path);
+						java.io.File[] list = root.listFiles();
+						java.util.List<java.io.File> fileList = new java.util.ArrayList<java.io.File>();
+
+						for (java.io.File f : list) {
+							if(f.isDirectory()) {
+								if(recursive) {
+									try {
+										fileList.addAll(getFiles(f.getCanonicalPath(), pattern, recursive));
+									} catch (Exception e) {
+										System.err.println(e.getMessage());
+									}
+								}
+							} else {
+								if(f.getName().contains(pattern)) {
+									fileList.add(f);
+								}
+							}
+						}
+						return fileList;
+					}
+				}
+
+				FileUtils util = new FileUtils();
+
+				functionsList = util.getFiles(jars.get(j), "SparkFunction.class", true);
+				routinesList = util.getFiles(jars.get(j) + "/routines", ".class", false);
+
+				if(functionsList.size() > 0) {
+%>
+					java.util.List<String> functionsList_<%=cid%> = new java.util.ArrayList<String>();
+<%
+					for(java.io.File clazz: functionsList) {
+						String filePath = "";
+						try {
+							filePath = clazz.getCanonicalPath();
+%>
+							functionsList_<%=cid%>.add("<%=filePath.replaceAll("\\\\", "/")%>");
+<%
+						} catch (Exception e) {
+							System.err.println(e.getMessage());
+						}
+					}
+%>
+					String functionJar_<%=cid%> = ZipUtilsInstance_<%=cid%>.zipFile("functions_" + projectName + "_" + jobName + "_" + Thread.currentThread().getId() + ".jar", functionsList_<%=cid%>, this.getClass().getPackage().getName().replaceAll("\\.", "/"));
+<%
+				}
+				if(routinesList.size() > 0) {
+%>
+				
+					java.util.List<String> routinesList_<%=cid%> = new java.util.ArrayList<String>();
+<%				
+					for(java.io.File clazz: routinesList) {
+						String filePath = "";
+						try {
+							filePath = clazz.getCanonicalPath();
+%>
+							routinesList_<%=cid%>.add("<%=filePath.replaceAll("\\\\", "/")%>");
+<%
+						} catch (Exception e) {
+							System.err.println(e.getMessage());
+						}
+					}
+%>
+					String routineJar_<%=cid%> = ZipUtilsInstance_<%=cid%>.zipFile("routines_" + projectName + "_" + jobName + "_" + Thread.currentThread().getId() + ".jar", routinesList_<%=cid%>, "routines");
+<%
+				}
+				break;
+			}
+		}
+%>
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 		conf_<%=cid%>.setJars(new String[]{
 <%
@@ -98,7 +215,7 @@ java.util.Map
 				if(jars.get(j).contains(jarToRegister)) {
 					if(!isFirst) {
 %>
-					,
+						,
 <%
 					}
 %>
@@ -107,6 +224,22 @@ java.util.Map
 					isFirst = false;
 				}
 			}
+		}
+		if(hasClasses) {
+			if(functionsList != null && functionsList.size() > 0) {
+%>
+				, getJarsToRegister_<%=cid %>.replaceJarPaths(functionJar_<%=cid%>, "file://")
+<%
+			}
+			if(routinesList != null && routinesList.size() > 0) {
+%>
+				, getJarsToRegister_<%=cid %>.replaceJarPaths(routineJar_<%=cid%>, "file://")
+<%
+			}
+		} else {
+%>
+			, getJarsToRegister_<%=cid%>.replaceJarPaths("./" + jobName + "_" + jobVersion.replaceAll("\\.", "_") + ".jar", "file://")
+<%			
 		}
 %>
 		});
