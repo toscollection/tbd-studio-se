@@ -25,6 +25,7 @@
         for(INode targetNode : nodes){
             if (targetNode.getUniqueName().equals(connection)) {
                 dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(targetNode, "__REMOTE_SERVER__"));
                 break;
             }
         }
