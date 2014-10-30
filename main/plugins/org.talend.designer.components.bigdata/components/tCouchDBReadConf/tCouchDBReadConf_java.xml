@@ -13,6 +13,7 @@
 		STARTABLE="true"
 		VISIBLE="false"
 		TECHNICAL="true"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
 	</HEADER>

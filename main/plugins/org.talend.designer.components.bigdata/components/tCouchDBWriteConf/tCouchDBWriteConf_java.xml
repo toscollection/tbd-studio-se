@@ -11,6 +11,7 @@
 	    DATA_AUTO_PROPAGATE="false"
 	    TECHNICAL="true"
 		PARTITIONING="NONE"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
 	</HEADER>

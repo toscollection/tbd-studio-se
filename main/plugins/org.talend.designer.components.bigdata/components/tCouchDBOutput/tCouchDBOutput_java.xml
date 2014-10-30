@@ -11,6 +11,7 @@
 	    STARTABLE="false"
 	    DATA_AUTO_PROPAGATE="false"
 		PARTITIONING="NONE"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
 	</HEADER>
