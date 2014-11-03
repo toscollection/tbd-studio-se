@@ -12,6 +12,7 @@
     HAS_CONDITIONAL_OUTPUTS="true"
     PARALLELIZE="true"
 	  PARTITIONING="AUTO"
+    LOG4J_ENABLED="true"
   >
     <SIGNATURE/>
   </HEADER>

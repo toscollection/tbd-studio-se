@@ -9,6 +9,7 @@
     RELEASE_DATE="20110729A"
     STARTABLE="true"
 	PARTITIONING="AUTO"
+    LOG4J_ENABLED="true"
   >
     <SIGNATURE/>
   </HEADER>

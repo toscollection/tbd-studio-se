@@ -43,28 +43,25 @@ public class Neo4jConnectionUtil {
 
     public static synchronized boolean checkConnection(NoSQLConnection connection) throws NoSQLServerException {
         boolean canConnect = true;
-        ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
+        final ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
         try {
-            Object db = getDB(connection);
+            final Object db = getDB(connection);
             boolean isRemote = Boolean.valueOf(connection.getAttributes().get(INeo4jAttributes.REMOTE_SERVER));
             if (isRemote) {
                 NoSQLReflection.invokeMethod(db, "getAllNodes", //$NON-NLS-1$
                         new Object[0]);
             } else {
-                Object tx = NoSQLReflection.invokeMethod(db, "beginTx", //$NON-NLS-1$
-                        new Object[0]);
-                try {
-                    Object ggo = NoSQLReflection.invokeStaticMethod("org.neo4j.tooling.GlobalGraphOperations", "at", //$NON-NLS-1$ //$NON-NLS-2$
-                            new Object[] { db }, classLoader,
-                            Class.forName("org.neo4j.graphdb.GraphDatabaseService", true, classLoader)); //$NON-NLS-1$
-                    NoSQLReflection.invokeMethod(ggo, "getAllLabels", //$NON-NLS-1$
-                            new Object[0]);
+                if (isVersion1(connection)) {
+                    doCheck(db, classLoader);
+                } else {
+                    new ExecutionUnitWithTransaction() {
 
-                    NoSQLReflection.invokeMethod(tx, "success", //$NON-NLS-1$
-                            new Object[0]);
-                } finally {
-                    NoSQLReflection.invokeMethod(tx, "close", //$NON-NLS-1$
-                            new Object[0]);
+                        @Override
+                        protected Object run() throws Exception {
+                            doCheck(db, classLoader);
+                            return null;
+                        }
+                    }.execute(db);
                 }
             }
         } catch (Exception e) {
@@ -74,6 +71,13 @@ public class Neo4jConnectionUtil {
         }
 
         return canConnect;
+    }
+
+    private static void doCheck(Object db, ClassLoader classLoader) throws NoSQLReflectionException, ClassNotFoundException {
+        Object ggo = NoSQLReflection.invokeStaticMethod("org.neo4j.tooling.GlobalGraphOperations", "at", //$NON-NLS-1$ //$NON-NLS-2$
+                new Object[] { db }, classLoader, Class.forName("org.neo4j.graphdb.GraphDatabaseService", true, classLoader)); //$NON-NLS-1$
+        NoSQLReflection.invokeMethod(ggo, "getAllNodes", //$NON-NLS-1$
+                new Object[0]);
     }
 
     public static synchronized Object getDB(NoSQLConnection connection) throws NoSQLServerException {
@@ -156,20 +160,22 @@ public class Neo4jConnectionUtil {
         return resultIterator;
     }
 
-    public static synchronized Map<String, Object> getNodeProperties(Object node, ClassLoader classLoader)
-            throws NoSQLServerException {
-        Map<String, Object> propertiesMap = new HashMap<String, Object>();
+    public static synchronized Map<String, Object> getNodeProperties(final Object db, final Object node,
+            final ClassLoader classLoader, boolean isVersion1) throws NoSQLServerException {
+        final Map<String, Object> propertiesMap = new HashMap<String, Object>();
         try {
             if (isNode(node, classLoader)) {
-                Iterable<String> propertieKeys = (Iterable<String>) NoSQLReflection.invokeMethod(node,
-                        "getPropertyKeys", new Object[0]); //$NON-NLS-1$
-                Iterator<String> propertyKeysIter = propertieKeys.iterator();
-                while (propertyKeysIter.hasNext()) {
-                    String proKey = propertyKeysIter.next();
-                    Object proValue = NoSQLReflection.invokeMethod(node, "getProperty", new Object[] { proKey });
-                    if (proKey != null || proValue != null) {
-                        propertiesMap.put(proKey, proValue);
-                    }
+                if (isVersion1) {
+                    collectNodeProperties(propertiesMap, node, classLoader);
+                } else {
+                    new ExecutionUnitWithTransaction() {
+
+                        @Override
+                        protected Object run() throws Exception {
+                            collectNodeProperties(propertiesMap, node, classLoader);
+                            return null;
+                        }
+                    }.execute(db);
                 }
             }
         } catch (NoSQLReflectionException e) {
@@ -177,6 +183,19 @@ public class Neo4jConnectionUtil {
         }
 
         return propertiesMap;
+    }
+
+    private static void collectNodeProperties(Map<String, Object> propertiesMap, Object node, ClassLoader classLoader)
+            throws NoSQLReflectionException {
+        Iterable<String> propertieKeys = (Iterable<String>) NoSQLReflection.invokeMethod(node, "getPropertyKeys", new Object[0]); //$NON-NLS-1$
+        Iterator<String> propertyKeysIter = propertieKeys.iterator();
+        while (propertyKeysIter.hasNext()) {
+            String proKey = propertyKeysIter.next();
+            Object proValue = NoSQLReflection.invokeMethod(node, "getProperty", new Object[] { proKey });
+            if (proKey != null || proValue != null) {
+                propertiesMap.put(proKey, proValue);
+            }
+        }
     }
 
     public static boolean isNode(Object obj, ClassLoader classLoader) throws NoSQLServerException {
@@ -221,6 +240,11 @@ public class Neo4jConnectionUtil {
         }
 
         return executionEngine = ee;
+    }
+
+    public static boolean isVersion1(NoSQLConnection connection) {
+        String dbVersion = connection.getAttributes().get(INeo4jAttributes.DB_VERSION);
+        return "NEO4J_1_X_X".equals(dbVersion); //$NON-NLS-1$
     }
 
     public static synchronized void closeConnections() throws NoSQLServerException {
