@@ -66,34 +66,47 @@
 			%>
 				log.info("<%=cid%> - Return the result is : "+result_<%=cid%>);
 			<%
+			} else {
+			%>
+			    System.out.println(result_<%=cid%>);
+		    <%
 			}
 			%>
-			System.out.println(result_<%=cid%>);
 		}else{
 			<%
 			if(isLog4jEnabled){
 			%>
-				log.error("<%=cid%> - Error result: "+result_<%=cid%>);
+				log.error("<%=cid%> - Error result: " + result_<%=cid%>);
 			<%
-			}
-			%>
-			System.err.println(result_<%=cid%>);
+			} else {
+            %>
+                System.out.println(result_<%=cid%>);
+            <%
+            }
+	        if (dieOnError) {
+	        %>
+	            throw new Exception("Error result: " + result_<%=cid%>);
+	        <%
+	        }
+	        %>
 		}
-	}catch(Exception e_<%=cid%>){
+	} catch(Exception e_<%=cid%>) {
 		<%
-		if(dieOnError){
+		if (dieOnError) {
 		%>
 			e_<%=cid%>.printStackTrace();
+			throw new TalendException(e_<%=cid%>, "<%=cid%>", globalMap);
 		<%
-		}else{
+		} else {
 			if(isLog4jEnabled){
 			%>
 				log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
 			<%
+			} else {
+			    %>
+			    System.err.println(e_<%=cid%>.getMessage());
+			    <%
 			}
-			%>
-			System.err.println(e_<%=cid%>.getMessage());
-		<%
 		}
 		%>
 	}
