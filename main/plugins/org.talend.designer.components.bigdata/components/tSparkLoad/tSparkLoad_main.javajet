@@ -23,6 +23,8 @@ java.util.Map
 	boolean isLocal = "LOCAL".equals(storageSource);
 	boolean isHDFS = "HDFS".equals(storageSource);
 	boolean isTwitter = "TWITTER".equals(storageSource);
+	boolean isKafka = "KAFKA".equals(storageSource);
+	boolean isHBase = "HBASE".equals(storageSource);
 
 	boolean inMain = node.isSubtreeStart();
 	
@@ -107,6 +109,30 @@ java.util.Map
 			}
 %>
 			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.TwitterLoad.twitterStream(ctx_<%=cid%>, <%=("".equals(consumerKey)?"\"\"":consumerKey)%>, consumerSecret_<%=cid%>, <%=("".equals(accesstoken)?"\"\"":accesstoken)%>, accessTokenSecret_<%=cid%>, <%=("".equals(filters)?"\"\"":filters)%>.split(","), mapping_<%=cid%>));
+<%
+		} else if(isKafka) {
+			String zookeeperHost = ElementParameterParser.getValue(node, "__ZOOKEEPER_HOST_KAFKA__");
+			String zookeeperPort = (String)ElementParameterParser.getObjectValue(node, "__ZOOKEEPER_PORT_KAFKA__");
+			String kafkaTopic = ElementParameterParser.getValue(node, "__KAFKA_TOPIC__");
+			Integer numThread = Integer.parseInt(ElementParameterParser.getValue(node, "__NUM_THREAD__"));
+			String consumerGroupName = ElementParameterParser.getValue(node, "__CONSUMER_GROUP_NAME__");
+%>
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.KafkaLoad.kafkaStream(ctx_<%=cid%>, <%=zookeeperHost%>+":"+<%=zookeeperPort%>,<%=consumerGroupName%>, <%=kafkaTopic%>, <%=numThread%>));
+<%
+		} else if(isHBase) {
+			String zookeeperHost = ElementParameterParser.getValue(node, "__ZOOKEEPER_HOST_HBASE__");
+			String zookeeperPort = (String)ElementParameterParser.getObjectValue(node, "__ZOOKEEPER_PORT_HBASE__");
+			String hbaseTable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
+			List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
+			java.lang.StringBuilder columns = new java.lang.StringBuilder();
+			for(int i=0;i<mapping.size();i++) {
+				if(i!=0) columns.append(" + \" \" + ");
+				Map<String, String> map = mapping.get(i);
+				String family_column= map.get("FAMILY_COLUMN");
+				columns.append(family_column);
+			}
+%>
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.HBaseLoad.hbaseRDD(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>,<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>));
 <%
 		} else {
 %>

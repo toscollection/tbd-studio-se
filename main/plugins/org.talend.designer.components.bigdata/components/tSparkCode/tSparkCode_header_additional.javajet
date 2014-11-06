@@ -21,7 +21,12 @@
 %>	
 	static class <%=cid%>_SparkFunction implements org.apache.spark.api.java.function.Function<java.util.List<Object>, java.util.List<Object>>, java.io.Serializable {
 		private static final long serialVersionUID = 1L;
-
+		private Object obj;
+		
+		public <%=cid%>_SparkFunction(Object o) {
+			this.obj = o;
+		}
+		
 		public java.util.List<Object> call(java.util.List<Object> <%=previousOutputConnectionName%>) {
 			java.util.List<Object> <%=outputConnectionName%> = new java.util.ArrayList<Object>();
 			<%=org.talend.core.model.process.ElementParameterParser.getValue(sparkCode, "__CODE__")%>

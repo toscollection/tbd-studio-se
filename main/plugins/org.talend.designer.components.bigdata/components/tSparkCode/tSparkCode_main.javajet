@@ -34,7 +34,7 @@
 	
 	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
 %>
-		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD.map(new <%=cid%>_SparkFunction());
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD.map(new <%=cid%>_SparkFunction(null));
 <%
 	} else {
 %>
