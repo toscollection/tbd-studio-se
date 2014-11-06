@@ -95,7 +95,7 @@
 		if (dieOnError) {
 		%>
 			e_<%=cid%>.printStackTrace();
-			throw new TalendException(e_<%=cid%>, "<%=cid%>", globalMap);
+			throw e_<%=cid%>;
 		<%
 		} else {
 			if(isLog4jEnabled){
