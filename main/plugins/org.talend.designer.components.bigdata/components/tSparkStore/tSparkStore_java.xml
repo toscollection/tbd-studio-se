@@ -59,15 +59,15 @@
 			NUM_ROW="40" SHOW_IF="STORAGE_SOURCE=='LOCAL'">
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
-		
+
 		<!-- HBase -->
-		
-		<PARAMETER NAME="ZOOKEEPER_HOST_HBASE" FIELD="TEXT" REQUIRED="true"
-			NUM_ROW="40" SHOW_IF="STORAGE_SOURCE=='HBASE'" GROUP="HBASE_CONFIGURATION">
+
+		<PARAMETER NAME="ZOOKEEPER_HOST_HBASE" FIELD="TEXT"
+			REQUIRED="true" NUM_ROW="40" SHOW_IF="STORAGE_SOURCE=='HBASE'" GROUP="HBASE_CONFIGURATION">
 			<DEFAULT>"localhost"</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="ZOOKEEPER_PORT_HBASE" FIELD="TEXT" REQUIRED="true"
-			NUM_ROW="40" SHOW_IF="STORAGE_SOURCE=='HBASE'" GROUP="HBASE_CONFIGURATION">
+		<PARAMETER NAME="ZOOKEEPER_PORT_HBASE" FIELD="TEXT"
+			REQUIRED="true" NUM_ROW="40" SHOW_IF="STORAGE_SOURCE=='HBASE'" GROUP="HBASE_CONFIGURATION">
 			<DEFAULT>"2181"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="HBASE_TABLE" FIELD="TEXT" REQUIRED="true"
@@ -75,8 +75,7 @@
 			<DEFAULT>"table"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="MAPPING" FIELD="TABLE" REQUIRED="true"
-			NUM_ROW="50" NB_LINES="5"
-			SHOW_IF="STORAGE_SOURCE=='HBASE'" GROUP="HBASE_CONFIGURATION">
+			NUM_ROW="50" NB_LINES="5" SHOW_IF="STORAGE_SOURCE=='HBASE'" GROUP="HBASE_CONFIGURATION">
 			<ITEMS BASED_ON_SCHEMA="true">
 				<ITEM NAME="FAMILY_COLUMN" />
 			</ITEMS>
@@ -84,6 +83,32 @@
 	</PARAMETERS>
 
 	<CODEGENERATION>
+		<IMPORTS>
+			<!-- HBase -->
+			<IMPORT NAME="hbase-common-0.98.7-hadoop2.jar" MODULE="hbase-common-0.98.7-hadoop2.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="hbase-client-0.98.7-hadoop2.jar" MODULE="hbase-client-0.98.7-hadoop2.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="hbase-server-0.98.7-hadoop2.jar" MODULE="hbase-server-0.98.7-hadoop2.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="hbase-protocol-0.98.7-hadoop2.jar" MODULE="hbase-protocol-0.98.7-hadoop2.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="zookeeper-3.4.5-cdh5.1.2.jar" MODULE="zookeeper-3.4.5-cdh5.1.2.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-cdh5.1.2.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="htrace-core-2.04.jar" MODULE="htrace-core-2.04.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.1/lib/htrace-core-2.04.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+			<IMPORT NAME="protobuf-java-2.5.0.jar" MODULE="protobuf-java-2.5.0.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/protobuf-java-2.5.0.jar"
+				REQUIRED_IF="(STORAGE_SOURCE=='HBASE')" MRREQUIRED="true" />
+		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
 	</RETURNS>
