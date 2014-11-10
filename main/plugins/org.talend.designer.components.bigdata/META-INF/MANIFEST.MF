@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TIS ComponentProvider Plug-in
 Bundle-SymbolicName: org.talend.designer.components.bigdata;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-Vendor: .Talend SA.
 Require-Bundle: org.eclipse.ui.workbench,
  org.talend.commons.ui,
@@ -11,3 +11,4 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.apache.log4j
 Bundle-Activator: org.talend.designer.components.tishadoopprovider.TisHadoopComponentProviderActivator
 Eclipse-LazyStart: true
+Eclipse-BundleShape: dir

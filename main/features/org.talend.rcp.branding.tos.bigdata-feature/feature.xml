@@ -2,7 +2,7 @@
 <feature
       id="org.talend.rcp.branding.tos.bigdata_feature"
       label="Horton studio branding feature"
-      version="2.2.0.qualifier"
+      version="6.0.0.qualifier"
       provider-name=".Talend SA."
       plugin="org.talend.rcp.branding.tos.bigdata">
 
@@ -19,7 +19,7 @@
    </license>
 
    <includes
-         id="org.talend.tos_feature"
+         id="org.talend.tos-feature"
          version="0.0.0"/>
 
    <includes

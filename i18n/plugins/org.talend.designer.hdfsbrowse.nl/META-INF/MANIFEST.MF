@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: HDFS Browse Plug-in Nl
 Bundle-SymbolicName: org.talend.designer.hdfsbrowse.nl
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Fragment-Host: org.talend.designer.hdfsbrowse
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: .Talend SA.
