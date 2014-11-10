@@ -11,7 +11,7 @@ java.util.List<String> supportNewHbaseApiVersionList = java.util.Arrays.<String>
 	"HDP_2_0","HDP_2_1","PIVOTAL_HD_2_0","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1"
 );
 
-if(!isCustom && (hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
 <%} else {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);

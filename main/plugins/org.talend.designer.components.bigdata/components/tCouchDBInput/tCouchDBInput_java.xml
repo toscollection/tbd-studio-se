@@ -12,6 +12,7 @@
 		RELEASE_DATE="20130305A"
 		STARTABLE="true"
 		VISIBLE="true"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
 	</HEADER>

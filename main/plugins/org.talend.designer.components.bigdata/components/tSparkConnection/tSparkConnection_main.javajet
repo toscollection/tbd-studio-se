@@ -83,6 +83,7 @@ java.util.Map
 		
 		jarsToRegister.add("talend-spark");
 		jarsToRegister.add("twitter4j");
+		jarsToRegister.add("talend-datascience-mllib");
 %>
 		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
 		

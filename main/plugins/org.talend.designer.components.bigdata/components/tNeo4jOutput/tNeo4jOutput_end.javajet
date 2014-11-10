@@ -36,7 +36,13 @@
     neo4JTransactionHelper.closeTransaction();
 
     boolean shutdownDb = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SHUTDOWN_DB__"));
-    String dbconn = "dbService_" + connection;
+
+    String dbconn = "";
+    if (useExistingConnection) {
+        dbconn = "dbService_" + connection;
+    } else {
+        dbconn = "dbService_" + cid;
+    }
     List<Map<String, String>> values = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__VALUES__");
 
 
@@ -80,15 +86,16 @@
 	    } else { // NEO4J_2_1_X
 	        %>
             // Must shutdown database to prevent data corruption after batch importation
-            if ((indexProvider_<%=cid%>!=null) && (globalMap.containsKey("<%=dbconn%>_indexprovider"))) {
+            if ((indexProvider_<%=cid%> != null) && (globalMap.containsKey("<%=dbconn%>_indexprovider"))) {
                 indexProvider_<%=cid%>.shutdown();
                 globalMap.remove("<%=dbconn%>_indexprovider");
             }
-            if ((inserter_<%=cid%>!=null) && (globalMap.containsKey("<%=dbconn%>_inserter"))) {
+            if ((inserter_<%=cid%> != null) && (globalMap.containsKey("<%=dbconn%>_inserter"))) {
                 try {
                     inserter_<%=cid%>.shutdown();
                     globalMap.remove("<%=dbconn%>_inserter");
                 } catch (IllegalStateException e_<%=cid%>) {
+                    System.err.println(e_<%=cid%>.getMessage());
                     // Nothing, the shutdown must be called two times due to multiples components
                 }
             }

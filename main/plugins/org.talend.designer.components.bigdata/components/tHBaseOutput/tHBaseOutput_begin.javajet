@@ -20,18 +20,21 @@ imports="
 	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
 	
 	String version = null;
-	String custom = null;
+    boolean isCustomTemp = false;
+	boolean isHadoop2Temp = false;
 	
 	if(!"true".equals(useExistingConn)) {
 		version = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
-		custom =  ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+		isCustomTemp = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+		isHadoop2Temp = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
 	} else {
 		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
 		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
 		for(INode targetNode : nodes){
 			if (targetNode.getUniqueName().equals(connectionSid)) {
 				version = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-				custom =  ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
+				isCustomTemp = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
+				isHadoop2Temp = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
 				break;
 			}
 		}
@@ -40,8 +43,10 @@ imports="
 	log4jFileUtil.componentStartInfo(node);
 	
 	final String hbaseVersion = version;
-	final boolean isCustom = "CUSTOM".equals(custom);
-	
+
+	final boolean isCustom = isCustomTemp;
+    final boolean isHadoop2 = isHadoop2Temp;
+
 	class GenerateCode {
 		
 		public void generateCreateTable(INode node) {
@@ -85,7 +90,7 @@ imports="
 				if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
 %>
 					family_<%=cid%>.setBloomFilterType(
-						<%if(!isCustom && (hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+						<%if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
 						org.apache.hadoop.hbase.regionserver.BloomType.<%=family_bloomfiltertype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>
@@ -101,7 +106,7 @@ imports="
 				if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
 %>
 					family_<%=cid%>.setCompactionCompressionType(
-						<%if(!isCustom && (hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+						<%if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
 						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compactioncompressiontype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>
@@ -112,7 +117,7 @@ imports="
 				if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
 %>
 					family_<%=cid%>.setCompressionType(
-						<%if(!isCustom && (hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+						<%if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
 						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compressiontype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>
