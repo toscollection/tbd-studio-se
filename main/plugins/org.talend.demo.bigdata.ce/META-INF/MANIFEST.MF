@@ -5,4 +5,4 @@ Bundle-SymbolicName: org.talend.demo.bigdata.ce;singleton:=true
 Bundle-Version: 6.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Localization: plugin
-Require-Bundle: org.talend.core.runtime;bundle-version="1.0.0"
+Require-Bundle: org.talend.core.runtime;bundle-version="6.0.0"
