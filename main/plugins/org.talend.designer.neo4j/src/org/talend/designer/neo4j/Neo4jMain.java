@@ -116,8 +116,7 @@ public class Neo4jMain {
         }
         dialog.setIcon(CoreImageProvider.getComponentIcon(component, ICON_SIZE.ICON_32));
 
-        // TODO : internalize this
-        dialog.setTitle("Neo4j Dialog Test");
+        dialog.setTitle("Neo4J Mapping"); //$NON-NLS-1$
 
         return dialog;
     }
