@@ -21,6 +21,7 @@ class Neo4JOutputUtil {
     private String dbConnectionName;
     private String dbVersion;
     private boolean useExistingConnection;
+    private boolean remoteServer;
 
     public Neo4JOutputUtil(INode node) {
         this.node = node;
@@ -36,24 +37,25 @@ class Neo4JOutputUtil {
             for(INode targetNode : node.getProcess().getNodesOfType("tNeo4jConnection")){
                 if (targetNode.getUniqueName().equals(connection)) {
                     this.dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                    this.remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(targetNode, "__REMOTE_SERVER__"));
                     break;
                 }
             }
         } else {
             this.dbConnectionName = "dbService_" + cid;
             this.dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+            this.remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
         }
     }
 
 
     public void createDatabaseService() {
-        if (useExistingConnection) {
+        if (this.useExistingConnection) {
             %>
             org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = (org.neo4j.graphdb.GraphDatabaseService) globalMap.get("<%=dbConnectionName%>");
             <%
         } else {
-            boolean remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
-            if (remoteServer) {
+            if (this.remoteServer) {
                 String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
                 %>
                 org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);

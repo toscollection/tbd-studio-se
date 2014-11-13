@@ -13,6 +13,7 @@
     HAS_CONDITIONAL_OUTPUTS="true"
     TECHNICAL="true"
 	PARTITIONING="NONE"
+  LOG4J_ENABLED="true"
   >
     <SIGNATURE/>
   </HEADER>

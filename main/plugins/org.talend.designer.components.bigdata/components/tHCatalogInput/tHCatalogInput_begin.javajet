@@ -30,6 +30,7 @@
 	String table = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String partition = ElementParameterParser.getValue(node, "__PARTITION_NAME__");
 	String user = ElementParameterParser.getValue(node, "__USERNAME__");
+    String fileLocation = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
 	
 	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
@@ -114,7 +115,7 @@
 %>
 	
 	String pathEndpoint_<%=cid%> = "templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%> + "/partition/" + <%=partition%>;
-	String location_<%=cid%> = "";
+	String location_<%=cid%> = <%=fileLocation%>;
 	<%@ include file="../templates/HCatalog/RestResponse.javajet"%>
 <%
 		ParseRestResult parserResult = new ParseRestResult();
@@ -130,11 +131,7 @@
 			parserResult.getJSONObject(node, null);
 			parserResult.manageError(node, activateLog);
 			parserResult.manageResponseStatus(node, null);
-%>		
-		Object loc_<%=cid%> = object_<%=cid%>.get("location");
-		if(loc_<%=cid%>!=null) {
-			location_<%=cid%> = loc_<%=cid%>.toString();
-		}
+%>
 	} catch (Exception e_<%=cid%>) {
 <%
 		if(dieOnError) {
@@ -161,12 +158,13 @@
 			throw new Exception("Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
 <%
 		} else {
-%>
-			System.err.println("Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
-<%
 			if(isLog4jEnabled) {
 %>
-			log.error("<%=cid%> - Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
+                log.error("<%=cid%> - Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
+<%
+			} else {
+%>
+	            System.err.println("Error during the response parsing. The Templeton server has returned a bad value or the location isn't available");
 <%
 			}
 		}

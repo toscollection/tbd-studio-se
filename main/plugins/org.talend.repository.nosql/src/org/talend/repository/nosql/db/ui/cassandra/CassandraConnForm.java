@@ -14,12 +14,15 @@ package org.talend.repository.nosql.db.ui.cassandra;
 
 import java.util.List;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -158,7 +161,17 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 Messages.getString("CassandraConnForm.dbVersion"), Messages.getString("CassandraConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
         serverText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.server"), 1); //$NON-NLS-1$
         portText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.port"), 1); //$NON-NLS-1$
+        addPortDecoration();
         databaseText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.keyspace"), 1, true); //$NON-NLS-1$
+    }
+
+    private void addPortDecoration() {
+        Image fieldDecorationWarningImage = FieldDecorationRegistry.getDefault()
+                .getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+        ControlDecoration warningDecorator = new ControlDecoration(portText.getTextControl(), SWT.RIGHT | SWT.CENTER);
+        warningDecorator.setMarginWidth(1);
+        warningDecorator.setImage(fieldDecorationWarningImage);
+        warningDecorator.setDescriptionText(Messages.getString("CassandraConnForm.port.instruction")); //$NON-NLS-1$
     }
 
     private void addAuthGroup(Composite composite) {

@@ -9,6 +9,7 @@
         STATUS="ALPHA"
         VERSION="0.102"
         STARTABLE="false"
+        LOG4J_ENABLED="true"
     >
         <SIGNATURE />
     </HEADER>

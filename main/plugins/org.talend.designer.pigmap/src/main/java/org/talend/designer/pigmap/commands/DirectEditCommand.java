@@ -140,10 +140,12 @@ public class DirectEditCommand extends Command {
                                             source.getLookupOutgoingConnections().add((LookupConnection) connection);
                                             ((TableNode) model).getLookupIncomingConnections().add((LookupConnection) connection);
                                         }
-                                        connection.setSource(sourceNode);
-                                        connection.setTarget(model);
-                                        mapperData.getConnections().add(connection);
-                                        usefullConnections.add(connection);
+                                        if (connection != null) {
+                                            connection.setSource(sourceNode);
+                                            connection.setTarget(model);
+                                            mapperData.getConnections().add(connection);
+                                            usefullConnections.add(connection);
+                                        }
                                     }
                                 }
                             }

@@ -102,7 +102,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         udpateDBConnPart(isRemote);
         dbPathTxt.setText(dbPath);
         serverURLTxt.setText(serverURL == null ? INeo4jConstants.DEFAULT_SERVER_URL : serverURL);
-        updateAbsPathStatus();
+        // updateAbsPathStatus();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         localDbBtn.setEnabled(editable);
         remoteDbBtn.setEnabled(editable);
         browseDbPathBtn.setEnabled(editable);
-        dbPathTxt.setEditable(editable);
+        // dbPathTxt.setEditable(editable);
         serverURLTxt.setEditable(editable);
     }
 
@@ -164,6 +164,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         localDBCompLayout.marginHeight = 0;
         localDBComposite.setLayout(localDBCompLayout);
         dbPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.dbPath.label"), 2); //$NON-NLS-1$
+        dbPathTxt.getTextControl().setEditable(false);
         browseDbPathBtn = new Button(localDBComposite, SWT.NONE);
         browseDbPathBtn.setText("..."); //$NON-NLS-1$
         absPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.absPath.label"), 2); //$NON-NLS-1$
@@ -250,7 +251,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
                     if (!StringUtils.equals(originalDBPath, currentDBPath)) {
                         getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, currentDBPath);
                         udpateConnectionConfig();
-                        updateAbsPathStatus();
+                        // updateAbsPathStatus();
                     }
                 }
             }

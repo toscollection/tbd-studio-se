@@ -13,6 +13,7 @@
 package org.talend.repository.hadoopcluster.ui.common;
 
 import org.eclipse.swt.widgets.Composite;
+import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -60,7 +61,12 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         distribution = clusterConnection.getDistribution();
         version = clusterConnection.getDfVersion();
         enableKerberos = clusterConnection.isEnableKerberos();
-        enableGroup = EHadoopVersion4Drivers.indexOfByVersion(version).isSupportGroup();
+        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(version);
+        if (version4Drivers != null) {
+            enableGroup = version4Drivers.isSupportGroup();
+        } else {
+            enableGroup = EAuthenticationMode.UGI.getName().equals(clusterConnection.getAuthMode());
+        }
         isHDI = isHDI(clusterConnection);
         setupForm();
     }

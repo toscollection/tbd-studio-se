@@ -18,10 +18,11 @@ String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CO
 			table_<%=cid%>.close();
 		}
 	<%
-	//use existing connection
+	//use local connection
 	if(!"true".equals(useExistingConn)){
 		String hbaseVersion = ElementParameterParser.getValue(node,"__HBASE_VERSION__");
 		boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+		boolean isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
 		%>
 		if(conn_<%=cid%>!=null){
 			<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
