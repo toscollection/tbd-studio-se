@@ -57,7 +57,8 @@
 		}
 	}
   	%>
-	Runtime runtime_<%=cid%> = Runtime.getRuntime();
+
+
 	StringBuffer comand_<%=cid%>=new StringBuffer();
 	<%	
 	if(mongoBinFolder!= null && !"".equals(mongoBinFolder)&& !"\"\"".equals(mongoBinFolder)){
@@ -66,22 +67,30 @@
 	<%
 	}
 	%>
-		comand_<%=cid%>.append("/bin/mongoimport");
+	comand_<%=cid%>.append("/bin/mongoimport");
+ 	List<String> args_<%=cid%> = new java.util.ArrayList<String>();
+ 	args_<%=cid%>.add(comand_<%=cid%>.toString());
+ 	ProcessBuilder runtime_<%=cid%> = new ProcessBuilder(args_<%=cid%>);
 	<%	
+
+ 
 	if(useLocalDBpath){
 	%>
-		comand_<%=cid%>.append(" --dbpath "+<%=localDBpath%>);
+		args_<%=cid%>.add("--dbpath");
+		args_<%=cid%>.add(<%=localDBpath%>);
 	<%
 	}else{
 		if(!useReplicaSet){
 			if(dbhost!= null && !"".equals(dbhost)&& !"\"\"".equals(dbhost)){
 			%>
-				comand_<%=cid%>.append(" --host "+<%=dbhost%>);
+				args_<%=cid%>.add("--host");
+				args_<%=cid%>.add(<%=dbhost%>);
 			<%	
 			}
 			if(dbport!= null && !"".equals(dbport)&& !"\"\"".equals(dbport)){
 			%>
-				comand_<%=cid%>.append(" --port "+<%=dbport%>);
+				args_<%=cid%>.add("--port");
+				args_<%=cid%>.add("" + <%=dbport%>);
 			<%
 			}
 		}else{
@@ -116,25 +125,29 @@
 				}
 		  	}
 			%>
-			comand_<%=cid%>.append(" --host "+repHosts_<%=cid%>.toString());
+			args_<%=cid%>.add("--host");
+			args_<%=cid%>.add(repHosts_<%=cid%>.toString());
 		<%
 		}
 	}
 	
 	if(dbname!= null && !"".equals(dbname)&& !"\"\"".equals(dbname)){
 	%>
-		comand_<%=cid%>.append(" --db "+<%=dbname%>);
+		args_<%=cid%>.add("--db");
+		args_<%=cid%>.add(<%=dbname%>);
 	<%
 	}
 	if(collection!= null && !"".equals(collection)&& !"\"\"".equals(collection)){
 	%>
-		comand_<%=cid%>.append(" --collection "+<%=collection%>);
+		args_<%=cid%>.add("--collection");
+		args_<%=cid%>.add(<%=collection%>);
 	<%
 	}
 	if (authentication){
 		if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
 		%>
- 			comand_<%=cid%>.append(" --username "+<%=dbuser%>); 
+ 			args_<%=cid%>.add("--username"); 
+ 			args_<%=cid%>.add(<%=dbuser%>); 
 		<%
 		}
 		if(dbpass!= null && !"".equals(dbpass)&& !"\"\"".equals(dbpass)){
@@ -146,23 +159,26 @@
         
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
 		
- 		comand_<%=cid%>.append(" --password "+decryptedPassword_<%=cid%>); 
+ 		args_<%=cid%>.add("--password"); 
+ 		args_<%=cid%>.add(decryptedPassword_<%=cid%>); 
 		<%
 		}
 	}
 	if(fileType!= null && !"".equals(fileType)&& !"\"\"".equals(fileType)){
 	%>
-		comand_<%=cid%>.append(" --type "+"<%=fileType%>");
+		args_<%=cid%>.add("--type");
+		args_<%=cid%>.add("<%=fileType%>");
 	<%
 	}
 	if(dataFileName!= null && !"".equals(dataFileName)&& !"\"\"".equals(dataFileName)){
 	%>
-		comand_<%=cid%>.append(" --file "+<%=dataFileName%>);
+		args_<%=cid%>.add("--file");
+		args_<%=cid%>.add(<%=dataFileName%>);
 	<%
 	}
 	if(dropCreateColl){
 	%>
-		comand_<%=cid%>.append(" --drop");
+		args_<%=cid%>.add("--drop");
 	<%
 	}
 	if("UPSERT".equalsIgnoreCase(dataAction)){
@@ -176,34 +192,36 @@
 			}
 		}
 		%>
-		comand_<%=cid%>.append(" --upsert");
+		args_<%=cid%>.add("--upsert");
 		<%
 		if(!"".equals(upsertFields)){
 		%>
-			comand_<%=cid%>.append(" --upsertFields "+"<%=upsertFields%>");
+			args_<%=cid%>.add("--upsertFields");
+			args_<%=cid%>.add("<%=upsertFields%>");
 		<%
 		}
 	}
 	if(!"JSON".equalsIgnoreCase(fileType)){
 		if(ignoreBlanks){
 		%>
-			comand_<%=cid%>.append(" --ignoreBlanks");
+			args_<%=cid%>.add("--ignoreBlanks");
 		<%
 		}
 		if(!"".equals(fileds)){
 		%>
-			comand_<%=cid%>.append(" --fields "+"<%=fileds%>");
+			args_<%=cid%>.add("--fields");
+			args_<%=cid%>.add("<%=fileds%>");
 		<%
 		}
 		if(isFirstLineHeader){
 		%>
-			comand_<%=cid%>.append(" --headerline");
+			args_<%=cid%>.add("--headerline");
 		<%
 		}
 	} else {
 	    if (jsonArray) {
 	        %>
-	            comand_<%=cid%>.append(" --jsonArray");
+	            args_<%=cid%>.add("--jsonArray");
 	        <%
 	    }
 	}
@@ -214,11 +232,11 @@
 			String value = param.get("VALUE");
 			if(arg!=null && !"".equals(arg)){
 			%>
-				comand_<%=cid%>.append(" "+<%=arg%>);
+				args_<%=cid%>.add("" + <%=arg%>);
 				<%
 				if(value!=null && !"".equals(value)){
 				%>
-					comand_<%=cid%>.append(" "+<%=value%>);
+					args_<%=cid%>.add(""+<%=value%>);
 				<%
 				}
 			}
@@ -226,12 +244,16 @@
 	}
 	if(isLog4jEnabled){
 	%>	
-		log.info("<%=cid%> - Execute command " + comand_<%=cid%>.toString() + ".");
+		StringBuilder sb = new StringBuilder();
+		for (String s : args_<%=cid%>) {
+			sb.append(s + " ");
+		}
+		log.info("<%=cid%> - Execute command " + sb.toString() + ".");
 		log.info("<%=cid%> - Start to import the data into ["+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%>+"]");
 	<%
 	}
 	%>
-	final Process process_<%=cid%> = runtime_<%=cid%>.exec(comand_<%=cid%>.toString());
+	final Process process_<%=cid%> = runtime_<%=cid%>.start();
 
 	Thread normal_<%=cid %> = new Thread() {
 		public void run() {

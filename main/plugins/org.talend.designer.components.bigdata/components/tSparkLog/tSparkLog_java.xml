@@ -28,6 +28,10 @@
 	</CONNECTORS>
 
 	<PARAMETERS>
+        <PARAMETER NAME="NOTE_NO_PARAMETER" FIELD="LABEL" NUM_ROW="1"
+            REQUIRED="true">
+            <DEFAULT>This component does not require any setup.</DEFAULT>
+        </PARAMETER>
 	</PARAMETERS>
 
 	<CODEGENERATION>
