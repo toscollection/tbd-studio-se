@@ -50,8 +50,11 @@ java.util.Map
 	
 	String previousOutputConnectionName = "";
 	
+	List<IMetadataColumn> columnsMetadataList = null;
 	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
 		IConnection connection = node.getIncomingConnections().get(0);
+		IMetadataTable metadata = connection.getMetadataTable();
+		columnsMetadataList = metadata.getListColumns();
 		previous_node = connection.getSource().getUniqueName();
 		previousOutputConnectionName = connection.getName();
 	}
@@ -125,7 +128,21 @@ java.util.Map
 				columns.append(family_column);
 			}
 %>
-			org.talend.spark.operation.HBaseStore.run(<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, <%=previous_node%>_<%=previousOutputConnectionName%>_RDD);
+			java.util.List<Integer> keyList_<%=cid%> = new java.util.ArrayList<Integer>();
+<%
+			if(columnsMetadataList != null) {
+				int index = 0;
+				for(IMetadataColumn columnsMetadata : columnsMetadataList) {
+					if(columnsMetadata.isKey()) {
+%>
+						keyList_<%=cid%>.add(<%=index%>);
+<%						
+					}
+					index++;
+				}
+			}
+%>
+			org.talend.spark.operation.HBaseStore.run(<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, <%=previous_node%>_<%=previousOutputConnectionName%>_RDD, keyList_<%=cid%>);
 <%
 		}
 	}
