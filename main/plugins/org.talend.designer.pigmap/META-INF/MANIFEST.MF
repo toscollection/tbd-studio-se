@@ -20,7 +20,6 @@ Require-Bundle: org.eclipse.ui,
  org.talend.designer.components.localprovider,
  org.talend.repository,
  org.talend.datatools.xml
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName

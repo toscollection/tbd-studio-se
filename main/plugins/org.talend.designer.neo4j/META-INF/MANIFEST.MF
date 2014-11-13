@@ -24,4 +24,3 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding.beans,
  org.eclipse.core.databinding.observable,
  org.eclipse.core.databinding.property
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6

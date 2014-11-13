@@ -8,7 +8,6 @@ Bundle-ClassPath: .,
  lib/json_simple-1.1.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.talend.repository.model.hcatalog,
  org.talend.repository.model.hcatalog.impl,
  org.talend.repository.model.hcatalog.util
