@@ -60,6 +60,15 @@ java.util.Map
 	if(!useLocalMode) { // If the spark mode is not local.
 		if(useStandaloneMode) {
 			String sparkHome = ElementParameterParser.getValue(node, "__SPARK_HOME__");
+			boolean defineDriverHost = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_SPARK_DRIVER_HOST__"));
+			if(defineDriverHost) {
+                String driverHost = ElementParameterParser.getValue(node, "__SPARK_DRIVER_HOST__");
+                if(driverHost != null && !"".equals(driverHost)) {
+%>
+                    conf_<%=cid%>.set("spark.driver.host", <%=driverHost%>);
+<%
+                }
+			}
 %>
 			conf_<%=cid%>.setSparkHome(<%=sparkHome%>);
 <%
