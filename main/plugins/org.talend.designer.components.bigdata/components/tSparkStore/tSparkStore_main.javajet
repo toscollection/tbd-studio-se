@@ -82,31 +82,22 @@ java.util.Map
 <%
 			if (rmResultDir && isLocal) {
 %>
-				java.io.File file_<%=cid %> = new java.io.File(outputFile_<%=cid %>);
-			    if(file_<%=cid %>.isDirectory()) {
-			        //directory is empty, then delete it
-			        if(file_<%=cid %>.list().length==0){
-			            file_<%=cid %>.delete();
-			        }else{
-			            //list all the directory contents
-			            String files[] = file_<%=cid %>.list();
-			
-			            for (String temp : files) {
-			                //construct the file_<%=cid %> structure
-			                java.io.File fileDelete = new java.io.File(file_<%=cid %>, temp);
-			                //recursive delete
-			                fileDelete.delete();
-			            }
-			
-			            //check the directory again, if empty then delete it
-			            if(file_<%=cid %>.list().length==0){
-			                file_<%=cid %>.delete();
-			            }
-			        }
-			    }else{
-			        //if file_<%=cid %>, then delete it
-			        file_<%=cid %>.delete();
-			    }
+                class FileUtils_<%=cid%> {
+                    public void delete(java.io.File file) {
+                        if (file != null && file.exists()) {
+                            if (file.isDirectory()) {
+                                for (java.io.File f : file.listFiles()) {
+                                    delete(f);
+                                }
+                            }
+                            file.delete();
+                        }
+                    }
+                }
+    
+                java.io.File file_<%=cid %> = new java.io.File(<%=ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__")%>);
+                FileUtils_<%=cid%> Utils_<%=cid%> = new FileUtils_<%=cid%>();
+                Utils_<%=cid%>.delete(file_<%=cid %>);
 <%
 			}
 %>
