@@ -97,11 +97,11 @@ imports="
                 
                 if(("String").equals(typeToGenerate) || ("Character").equals(typeToGenerate) || ("char").equals(typeToGenerate)) {
 %>
-                    sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + <%=incomingConnName%>.<%=column.getName()%> + "'");
+                    sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + <%=incomingConnName%>.<%=column.getName()%>.replaceAll("\'", "\\\\'") + "'");
 <%
                 } else if(("java.util.Date").equals(typeToGenerate)) {
 %>
-                    sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + FormatterUtils.format_Date(<%=incomingConnName%>.<%=column.getName()%>, <%=column.getColumn().getPattern()%>) + "'");
+                    sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + FormatterUtils.format_Date(<%=incomingConnName%>.<%=column.getName()%>, "yyyy-MM-dd") + "'");
 <%
                 } else {
 %>
