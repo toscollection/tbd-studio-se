@@ -1126,19 +1126,6 @@
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
                 REQUIRED_IF="(STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND ((#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_1') OR (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_1_MR1'))" />
 
-<!-- 			<IMPORT NAME="parquet-pig-bundle-1.3.2" MODULE="parquet-pig-bundle-1.3.2.jar"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.3.2.jar"
-				REQUIRED_IF="((STORE=='PARQUETSTORER') AND DISTRIBUTION!='CUSTOM')" /> -->
-
-<!--            <IMPORT NAME="parquet-pig-bundle-1.3.2" MODULE="parquet-pig-bundle-1.3.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.3.2.jar"
-                REQUIRED_IF="((STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND (HBASE_VERSION!='Cloudera_CDH5_1'))" />
-            <IMPORT NAME="parquet-pig-bundle-1.2.5-cdh5.1.3" MODULE="parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
-                REQUIRED_IF="((STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND (HBASE_VERSION=='Cloudera_CDH5_1'))" />
-                            <IMPORT NAME="snappy-java-1.0.5.jar" MODULE="snappy-java-1.0.5.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.pig/lib/snappy-java-1.0.5.jar"
-                REQUIRED="true" /> -->
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
