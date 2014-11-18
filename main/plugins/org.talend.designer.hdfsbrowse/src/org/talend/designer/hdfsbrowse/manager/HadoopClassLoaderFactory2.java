@@ -12,12 +12,10 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.manager;
 
-import java.io.File;
+import java.net.MalformedURLException;
 import java.util.Set;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.talend.core.GlobalServiceRegister;
-import org.talend.core.ILibraryManagerService;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.classloader.ClassLoaderFactory;
 import org.talend.core.classloader.DynamicClassLoader;
 import org.talend.core.hadoop.EHadoopCategory;
@@ -34,8 +32,6 @@ import org.talend.designer.hdfsbrowse.constants.IHadoopArgs;
  *
  */
 public class HadoopClassLoaderFactory2 {
-
-    private final static String PATH_SEPARATOR = "/"; //$NON-NLS-1$
 
     public static ClassLoader getHDFSClassLoader(String distribution, String version, boolean useKrb) {
         return getClassLoader(EHadoopCategory.HDFS, distribution, version, useKrb);
@@ -134,7 +130,7 @@ public class HadoopClassLoaderFactory2 {
         }
         ClassLoader classLoader = builder.build();
         if (classLoader instanceof DynamicClassLoader && useKrb) {
-            loadSecurityJars(category, (DynamicClassLoader) classLoader);
+            classLoader = createSecurityLoader(category, (DynamicClassLoader) classLoader);
         }
 
         return classLoader;
@@ -163,7 +159,7 @@ public class HadoopClassLoaderFactory2 {
         return ClassLoaderFactory.getCustomClassLoader(index, String.valueOf(customJars));
     }
 
-    private static void loadSecurityJars(EHadoopCategory category, DynamicClassLoader loader) {
+    private static DynamicClassLoader createSecurityLoader(EHadoopCategory category, DynamicClassLoader loader) {
         String[] securityJars;
         switch (category) {
         case HDFS:
@@ -184,17 +180,14 @@ public class HadoopClassLoaderFactory2 {
             break;
         }
 
-        ILibraryManagerService librairesManagerService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(
-                ILibraryManagerService.class);
-        String libStorePath = loader.getLibStorePath();
-        for (String dependentJar : securityJars) {
-            librairesManagerService.retrieve(dependentJar, libStorePath, true, new NullProgressMonitor());
-            String jarPath = libStorePath + PATH_SEPARATOR + dependentJar;
-            File jarFile = new File(jarPath);
-            if (jarFile.exists()) {
-                loader.addLibraries(jarFile.getAbsolutePath());
-            }
+        DynamicClassLoader securityClassLoader = null;
+        try {
+            securityClassLoader = DynamicClassLoader.createNewOneBaseLoader(loader, securityJars, null);
+        } catch (MalformedURLException e) {
+            ExceptionHandler.process(e);
         }
+
+        return securityClassLoader;
     }
 
 }
