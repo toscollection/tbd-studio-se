@@ -21,10 +21,10 @@
 %>	
 	static class <%=cid%>_SparkFunction implements org.apache.spark.api.java.function.Function<java.util.List<Object>, java.util.List<Object>>, java.io.Serializable {
 		private static final long serialVersionUID = 1L;
-		private Object obj;
+		private java.util.Map<String, Object> localMap;
 		
-		public <%=cid%>_SparkFunction(Object o) {
-			this.obj = o;
+		public <%=cid%>_SparkFunction(java.util.Map<String, Object> localMap) {
+			this.localMap = localMap;
 		}
 		
 		public java.util.List<Object> call(java.util.List<Object> <%=previousOutputConnectionName%>) {

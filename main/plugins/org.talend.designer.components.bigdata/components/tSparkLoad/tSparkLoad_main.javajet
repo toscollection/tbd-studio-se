@@ -54,6 +54,7 @@ java.util.Map
 		String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
 		String talendRDDClass = (isStreaming && inMain?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
 %>
+        java.util.Map<String, Object> localMap = new java.util.HashMap<String, Object>();
 		<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
 		resourceMap.put("context_<%=cid%>", ctx_<%=cid%>); 
 <%
@@ -139,12 +140,12 @@ java.util.Map
 <%
 			for(int i=0;i<properties.size();i++){
 				Map<String, String> map = properties.get(i);
-   			String property = map.get("PROPERTY");
-   			String value= map.get("VALUE");
+       			String property = map.get("PROPERTY");
+       			String value= map.get("VALUE");
 %>
 				properties_<%=cid%>.put(<%=property%>, <%=value%>);
 <%
-   		}
+   		   }
 %>
 			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.HBaseLoad.hbaseRDD(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>,<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, properties_<%=cid%>));
 <%
