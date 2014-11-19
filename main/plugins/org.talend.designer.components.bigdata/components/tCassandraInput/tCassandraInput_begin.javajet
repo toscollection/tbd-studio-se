@@ -34,12 +34,11 @@
 				if(b.getLabel().equals(keyColumn)) {
 					return 1;
 				}
-			}
-			return a.getLabel().compareTo(b.getLabel());
+			}// */
+			return a.getLabel().toLowerCase().compareTo(b.getLabel().toLowerCase());
 		}
 
 	}
-
 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -92,6 +91,7 @@
   	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
       	columnList = metadata.getListColumns();
+      	java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
 		int sizeColumns = columnList.size();
       	if(metadata != null){
       		
@@ -265,9 +265,6 @@
 					nb_line_<%=cid %>++;
 					me.prettyprint.hector.api.beans.Row row_<%=cid%>=(me.prettyprint.hector.api.beans.Row)rows_<%=cid%>.next();
 					me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
-					<% if("CASSANDRA_2_0_0".equals(dbVersion)) { %>
-					List<me.prettyprint.hector.api.beans.HColumn<String,String>> cols_<%=cid%> = slice_<%=cid%>.getColumns();
-					<%}%>
 			<%
 			}else{
 				if(isSpecifyKeys){
@@ -300,7 +297,7 @@
       			firstConnName = out.getName();
 		  		if(out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 				
-					java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
+					//java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
 
 					for(int i = 0; i < sizeColumns; i++){
 						IMetadataColumn column = columnList.get(i);
@@ -364,14 +361,13 @@
 							<%
 							}else{
 								if("STANDARD".equals(columnFamilyType)){
-								%>
-								<% if("CASSANDRA_2_0_0".equals(dbVersion)) { %>
-									if(<%=i%> < cols_<%=cid%>.size()) {
-										column_<%=cid%> = cols_<%=cid%>.get(<%=i%>);
+									if(column.getLabel().equals(keyColumn)) {
+										continue;
 									}
-									<%} else { %>
-										column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
-									<%}%>
+								%>
+								
+									column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
+									
 									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
 								<%
 								}else{
