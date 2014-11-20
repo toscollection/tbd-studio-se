@@ -62,74 +62,15 @@ imports="
 	}
 %>
 	String tableName_<%=cid%> = <%=tableName%>;
-	int insertedCount_<%=cid%>=0;
 	int nb_line_<%=cid%> = 0;
 <%
     Map<String, StringBuilder> actionSQLMap = getManager(dbmsId, cid).createProcessSQL(stmtStructure);
     StringBuilder insertColName = actionSQLMap.get(INSERT_COLUMN_NAME);   
     StringBuilder insertValueStmt = actionSQLMap.get(INSERT_VALUE_STMT);    
-
-	if(!extendedInsert) {
-%>		
-		java.sql.PreparedStatement pstmt_<%=cid %> = conn_<%=cid%>.prepareStatement("INSERT <%=action%> " + tableName_<%=cid%> + " (<%=insertColName.toString()%>) VALUES (<%=insertValueStmt.toString()%>)");
-<%
-	} else { //entended insert
 %>
-		int rowCount<%=cid%> = 0;
-		class BufferLine_<%=cid%> {
-<% 
-		for(Column column : stmtStructure) {
-			if(!column.isReplaced() && !column.isAddCol() && column.isInsertable()) {
-				String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
-%>
-				<%=typeToGenerate%> <%=column.getName()%>;                
-<%
-			}
-		}            
-%>   
-	            
-			public BufferLine_<%=cid%>(
-<% 
-				int count = 0;
-				for(Column column : stmtStructure) {
-					if(!column.isReplaced() && !column.isAddCol() && column.isInsertable()) {
-						if(count != 0) {
-%>
-							,
-<%
-						}
-						String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getColumn().getTalendType(), column.getColumn().isNullable());
-%>
-						<%=typeToGenerate%> <%=column.getName()%>
-<%
-						count++;                        
-					}
-				}            
-%> 
-			){
-<% 
-				for(Column column : stmtStructure) {
-					if(!column.isReplaced() && !column.isAddCol() && column.isInsertable()) {
-%>
-						this.<%=column.getName()%> = <%=column.getName()%>;              
-<%   
-					}
-				}            
-%>   	                
-			}
-		}
-	            
-		java.util.List<BufferLine_<%=cid%>> exInsertColValueList_<%=cid%> = new java.util.ArrayList();
-		BufferLine_<%=cid%> exInsertColValue_<%=cid%> = null; 
-			
-		StringBuilder extendInsertValueStmt_<%=cid%> = new StringBuilder();
-		for(int i=0;i < <%=numPerInsert%>;i++){
-			 extendInsertValueStmt_<%=cid%>.append("(<%=insertValueStmt.toString()%>)");
-			 if (i!=<%=numPerInsert%>-1) extendInsertValueStmt_<%=cid%>.append(",");
-		}
-            
-		String insert_<%=cid%> = "INSERT <%=action%> "+<%=tableName%>+" (<%=insertColName.toString()%>) VALUES " + extendInsertValueStmt_<%=cid%>.toString();
-		java.sql.PreparedStatement pstmt_<%=cid %> =  conn_<%=cid%>.prepareStatement(insert_<%=cid%>);
-<%
-	}
-%>
+    String insertPrefix_<%=cid%> = "INSERT <%=action%> " + tableName_<%=cid%> + " (<%=insertColName.toString()%>) VALUES ";		
+	java.lang.StringBuilder sbValue_<%=cid%> = null;
+    java.sql.Statement stmt_<%=cid %> = conn_<%=cid%>.createStatement();
+    int rowCount<%=cid%> = 0;
+    boolean needInitialization_<%=cid%> = true;
+	 

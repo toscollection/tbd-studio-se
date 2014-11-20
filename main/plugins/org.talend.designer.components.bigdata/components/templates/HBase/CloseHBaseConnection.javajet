@@ -12,7 +12,8 @@ java.util.List<String> supportNewHbaseApiVersionList = java.util.Arrays.<String>
 );
 
 if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
-		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
+        org.apache.hadoop.hbase.client.HConnection hConnection_<%=cid%> = org.apache.hadoop.hbase.client.HConnectionManager.getConnection(conn_<%=cid%>);
+        hConnection_<%=cid%>.close();
 <%} else {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);
 <%}%>
