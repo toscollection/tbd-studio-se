@@ -115,9 +115,23 @@ java.util.Map
 			for(int i=0;i<mapping.size();i++) {
 				if(i!=0) columns.append(" + \" \" + ");
 				Map<String, String> map = mapping.get(i);
-				String family_column= map.get("FAMILY_COLUMN");
-				columns.append(family_column);
+                String family_column= map.get("FAMILY_COLUMN");
+                String hbase_column= map.get("HBASE_COLUMN");
+                columns.append(family_column + " + \":\" + " + hbase_column);
 			}
+			
+			List<Map<String, String>> properties = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
+%>
+            java.util.Map<String, String> properties_<%=cid%> = new java.util.HashMap<String, String>();
+<%
+            for(int i=0;i<properties.size();i++){
+                Map<String, String> map = properties.get(i);
+                String property = map.get("PROPERTY");
+                String value= map.get("VALUE");
+%>
+                properties_<%=cid%>.put(<%=property%>, <%=value%>);
+<%
+           }
 %>
 			java.util.List<Integer> keyList_<%=cid%> = new java.util.ArrayList<Integer>();
 <%
@@ -133,7 +147,7 @@ java.util.Map
 				}
 			}
 %>
-			org.talend.spark.operation.HBaseStore.run(<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, <%=previous_node%>_<%=previousOutputConnectionName%>_RDD, keyList_<%=cid%>);
+			org.talend.spark.operation.HBaseStore.run(<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, properties_<%=cid%>, <%=previous_node%>_<%=previousOutputConnectionName%>_RDD, keyList_<%=cid%>);
 <%
 		}
 	}
