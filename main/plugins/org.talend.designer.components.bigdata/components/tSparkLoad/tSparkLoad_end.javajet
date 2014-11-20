@@ -70,4 +70,6 @@ java.util.Map
 		}
 	}
 %>
+
+	resourceMap.put("finish_<%=cid%>", true); 
 	
