@@ -83,15 +83,6 @@ java.util.Map
 		java.util.List<String> jars = new java.util.ArrayList<String>();
 		jarsToRegister = new java.util.ArrayList<String>();
 		int commandLineLength = commandLine.length;
-		for (int i = 0; i < commandLineLength; i++) {
-			if(commandLine[i].contains("libjars")) {
-				if(commandLineLength > i + 1) {
-					String s = commandLine[i+1] + ",systemRoutines.jar,userRoutines.jar";
-					jarsToRegister = java.util.Arrays.asList(s.split(","));
-				}
-				break;
-			}
-		}
 
 		for (int i = 0; i < commandLineLength; i++) {
 			if(commandLine[i].contains("-cp")) {
@@ -217,22 +208,33 @@ java.util.Map
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 		conf_<%=cid%>.setJars(new String[]{
 <%
+        
+        // jarsToRegister is actually temporary used to exclude jars from the spark registration.  
+        jarsToRegister.add("spark-assembly");
+        jarsToRegister.add("camel-core");
+
 		boolean isFirst = true;
-		for(int i=0; i<jarsToRegister.size(); i++) {
-			String jarToRegister = jarsToRegister.get(i);
-			for(int j=0; j<jars.size(); j++) {
-				if(jars.get(j).contains(jarToRegister)) {
-					if(!isFirst) {
-%>
-						,
-<%
-					}
-%>
-					getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>", "file://")
-<%
-					isFirst = false;
+		for(int i=0; i<jars.size(); i++) {
+            boolean blackListed = false;
+			String jar = jars.get(i);
+			if(!jar.endsWith(".jar")) break;
+			for(int j=0; j<jarsToRegister.size(); j++) {
+				if(jar.contains(jarsToRegister.get(j))) {
+				    blackListed = true;
+				    break;
 				}
 			}
+			if(blackListed) continue;
+			
+			if(!isFirst) {
+%>
+				,
+<%
+	   		}
+%>
+			getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jar%>", "file://")
+<%
+			isFirst = false;
 		}
 		if(hasClasses) {
 			if(functionsList != null && functionsList.size() > 0) {
