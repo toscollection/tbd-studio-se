@@ -136,19 +136,10 @@
 		>
 		  <DEFAULT>"hdp"</DEFAULT>
 		</PARAMETER>
-        <PARAMETER
-          NAME="FILE_LOCATION"
-          FIELD="TEXT"
-          NUM_ROW="70"
-          REQUIRED="true"
-          GROUP="HCAT_CONFIGURATION"
-        >
-          <DEFAULT>""</DEFAULT>
-        </PARAMETER>
 		<PARAMETER
 		  NAME="DIE_ON_ERROR"
 		  FIELD="CHECK"
-		  NUM_ROW="80"
+		  NUM_ROW="70"
 		  REQUIRED="true"
 		>
 		  <DEFAULT>false</DEFAULT>
