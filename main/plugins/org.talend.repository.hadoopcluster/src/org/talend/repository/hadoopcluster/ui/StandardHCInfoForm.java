@@ -17,16 +17,23 @@ import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
@@ -219,6 +226,26 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         checkButtonLayout.marginWidth = 0;
         checkServicesBtn = new UtilsButton(checkButtonComposite, Messages.getString("HadoopClusterForm.button.check"), true); //$NON-NLS-1$
         checkServicesBtn.setEnabled(false);
+        addCheckServicesWarning(checkGroup);
+    }
+
+    private void addCheckServicesWarning(Composite parent) {
+        Display display = getDisplay();
+        FontData fontData = display.getSystemFont().getFontData()[0];
+        Font font = new Font(display, new FontData(fontData.getName(), fontData.getHeight(), SWT.ITALIC));
+        Label warningLabel1 = new Label(parent, SWT.NONE);
+        warningLabel1.setText(Messages.getString("HadoopClusterForm.checkServices.warning1")); //$NON-NLS-1$
+        warningLabel1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        warningLabel1.setFont(font);
+        Image labelDecorationWarningImage = FieldDecorationRegistry.getDefault()
+                .getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+        ControlDecoration warningDecorator = new ControlDecoration(warningLabel1, SWT.LEFT | SWT.CENTER);
+        warningDecorator.setMarginWidth(4);
+        warningDecorator.setImage(labelDecorationWarningImage);
+        Label warningLabel2 = new Label(parent, SWT.NONE);
+        warningLabel2.setText(Messages.getString("HadoopClusterForm.checkServices.warning2")); //$NON-NLS-1$
+        warningLabel2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        warningLabel2.setFont(font);
     }
 
     @Override
