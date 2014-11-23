@@ -387,7 +387,7 @@
 		</PARAMETER>
 		<PARAMETER NAME="PARQUET_NOTE" FIELD="LABEL" NUM_ROW="74"
 			SHOW_IF="(USE_EXISTING_CONNECTION=='true')" COLOR="255;0;0">
-			<DEFAULT><![CDATA[Parquet is only supported if the distribution used embeds Hive version 0.10 or later.]]></DEFAULT>
+			<DEFAULT><![CDATA[Parquet is only supported if the distribution uses embedded Hive version 0.10 or later.]]></DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="USE_PARQUET" FIELD="CHECK" NUM_ROW="75"
 			SHOW_IF="(USE_EXISTING_CONNECTION=='true' OR (DISTRIBUTION=='CUSTOM' OR (HIVE_VERSION!='APACHE_0_20_203' AND HIVE_VERSION!='Cloudera_CDH3' AND HIVE_VERSION!='Cloudera_CDH4' AND HIVE_VERSION!='MAPR2' AND HIVE_VERSION!='APACHE_1_0_0' AND HIVE_VERSION!='HDP_1_0' AND HIVE_VERSION!='PIVOTAL_HD_1_0_1')))">
