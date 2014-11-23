@@ -58,7 +58,7 @@
 
 		<PARAMETER NAME="PARQUET_NOTE" FIELD="LABEL" NUM_ROW="19"
 			COLOR="255;0;0">
-			<DEFAULT><![CDATA[Parquet is only supported if the distribution used embeds Hive version 0.10 or later.]]></DEFAULT>
+			<DEFAULT><![CDATA[Parquet is only supported if the distribution uses embedded Hive version 0.10 or later.]]></DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER NAME="TARGET_TABLE_IS_A_PARQUET_TABLE" FIELD="CHECK"
