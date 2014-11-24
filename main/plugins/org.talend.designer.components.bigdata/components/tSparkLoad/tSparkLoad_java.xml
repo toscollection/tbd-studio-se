@@ -186,6 +186,9 @@
 				REQUIRED_IF="(STORAGE_SOURCE=='TWITTER')" />
 
 			<!-- Kafka -->
+			<IMPORT NAME="zookeeper-3.4.5.jar" MODULE="zookeeper-3.4.5.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5.jar"
+				REQUIRED_IF="((STORAGE_SOURCE=='KAFKA') AND (#LINK@NODE.SPARK_CONNECTION.SPARK_MODE=='LOCAL'))" />
 			<IMPORT NAME="kafka_2.10-0.8.1.1.jar" MODULE="kafka_2.10-0.8.1.1.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/kafka_2.10-0.8.1.1.jar"
 				REQUIRED_IF="(STORAGE_SOURCE=='KAFKA')" MRREQUIRED="true" />
