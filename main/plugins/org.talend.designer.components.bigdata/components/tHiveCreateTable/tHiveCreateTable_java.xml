@@ -393,7 +393,7 @@
 		<PARAMETER NAME="PARQUET_NOTE" FIELD="LABEL" NUM_ROW="151"
 			SHOW_IF="(USE_EXISTING_CONNECTION=='true' AND (STORAGE_FORMAT=='PARQUET'))"
 			GROUP="CREATE_TABLE_GROUP" COLOR="255;0;0">
-			<DEFAULT><![CDATA[Parquet is only supported if the distribution used embeds Hive version 0.10 or later.]]></DEFAULT>
+			<DEFAULT><![CDATA[Parquet is only supported if the distribution uses embedded Hive version 0.10 or later.]]></DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="STORAGE_FORMAT" FIELD="CLOSED_LIST"
 			NUM_ROW="152" REQUIRED="true" SHOW_IF="LIKE_TABLE=='false'" GROUP="CREATE_TABLE_GROUP">

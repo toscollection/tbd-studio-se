@@ -124,7 +124,7 @@ java.util.Map
 			String zookeeperHost = ElementParameterParser.getValue(node, "__ZOOKEEPER_HOST_HBASE__");
 			String zookeeperPort = (String)ElementParameterParser.getObjectValue(node, "__ZOOKEEPER_PORT_HBASE__");
 			String hbaseTable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
-			List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING__");
+			List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING_HBASE__");
 			java.lang.StringBuilder columns = new java.lang.StringBuilder();
 			for(int i=0;i<mapping.size();i++) {
 				if(i!=0) columns.append(" + \" \" + ");
@@ -145,10 +145,19 @@ java.util.Map
 %>
 				properties_<%=cid%>.put(<%=property%>, <%=value%>);
 <%
-   		   }
+            }
+            if(isStreaming && !inMain) {
 %>
-			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.HBaseLoad.hbaseRDD(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>,<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, properties_<%=cid%>));
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.HBaseLoad.hbaseRDD(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>,<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, properties_<%=cid%>));
 <%
+            } else {
+%>
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = null;
+                if(true) {
+                    throw new java.lang.UnsupportedOperationException("The HBase storage mode is supported in streaming mode only in a lookup flow.");
+                }
+<%
+            }
 		} else {
 %>
 			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>, <%=("".equals(inputFile)?"\"\"":inputFile)%>, <%=("".equals(separator)?"\"\"":separator)%>));
