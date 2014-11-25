@@ -8,6 +8,7 @@ Require-Bundle: org.eclipse.ui.workbench,
  org.talend.commons.ui,
  org.eclipse.core.runtime,
  org.talend.core,
- org.apache.log4j
+ org.apache.log4j,
+ org.talend.designer.codegen
 Bundle-Activator: org.talend.designer.components.tishadoopprovider.TisHadoopComponentProviderActivator
 Eclipse-LazyStart: true
