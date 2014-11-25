@@ -346,7 +346,10 @@ public class HadoopServerUtil {
         String errorMsg = "Cannot connect to HDFS \"" + connection.getNameNodeURI()
                 + "\". Please check the connection parameters. ";
         Object dfs = null;
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader classLoader = getClassLoader(connection);
+            Thread.currentThread().setContextClassLoader(classLoader);
             dfs = getDFS(connection);
             if (dfs != null) {
                 // Check if we can access the HDFS file content.
@@ -376,6 +379,7 @@ public class HadoopServerUtil {
                 } catch (Exception e) {
                 }
             }
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
 
         return connectionStatus;
