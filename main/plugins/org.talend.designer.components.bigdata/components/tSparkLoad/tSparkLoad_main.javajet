@@ -23,6 +23,10 @@ java.util.Map
 	boolean isLocal = "LOCAL".equals(storageSource);
 	boolean isHDFS = "HDFS".equals(storageSource);
 	boolean isTwitter = "TWITTER".equals(storageSource);
+	boolean isKafka = "KAFKA".equals(storageSource);
+	boolean isHBase = "HBASE".equals(storageSource);
+
+	boolean inMain = node.isSubtreeStart();
 	
 	String outputConnectionName = "";
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
@@ -48,9 +52,11 @@ java.util.Map
 		}
 	
 		String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
-		String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
+		String talendRDDClass = (isStreaming && inMain?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
 %>
+        java.util.Map<String, Object> localMap = new java.util.HashMap<String, Object>();
 		<%=contextClass%> ctx_<%=cid%> = (<%=contextClass%>)globalMap.get("<%=sparkConnection%>_SPARK_CONTEXT");
+		resourceMap.put("context_<%=cid%>", ctx_<%=cid%>); 
 <%
 		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 		if(isHDFS && !isStreaming) {
@@ -102,12 +108,79 @@ java.util.Map
 				mapping_<%=cid%>.add(org.talend.spark.utils.twitter.TwitterParameter.<%=configRow.get("TWITTER_PROPERTY")%>);
 <%			
 			}
+			
+			if(!isStreaming) {
 %>
-			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.TwitterLoad.twitterStream(ctx_<%=cid%>, <%=("".equals(consumerKey)?"\"\"":consumerKey)%>, consumerSecret_<%=cid%>, <%=("".equals(accesstoken)?"\"\"":accesstoken)%>, accessTokenSecret_<%=cid%>, <%=("".equals(filters)?"\"\"":filters)%>.split(","), mapping_<%=cid%>));
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = null;
+                if(true) {
+                    throw new java.lang.UnsupportedOperationException("The Twitter storage mode is supported in streaming mode only.");
+                }
 <%
+			} else {
+%>
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.TwitterLoad.twitterStream(ctx_<%=cid%>, <%=("".equals(consumerKey)?"\"\"":consumerKey)%>, consumerSecret_<%=cid%>, <%=("".equals(accesstoken)?"\"\"":accesstoken)%>, accessTokenSecret_<%=cid%>, <%=("".equals(filters)?"\"\"":filters)%>.split(","), mapping_<%=cid%>));
+<%
+            }
+		} else if(isKafka) {
+			String zookeeperHost = ElementParameterParser.getValue(node, "__ZOOKEEPER_HOST_KAFKA__");
+			String zookeeperPort = (String)ElementParameterParser.getObjectValue(node, "__ZOOKEEPER_PORT_KAFKA__");
+			String kafkaTopic = ElementParameterParser.getValue(node, "__KAFKA_TOPIC__");
+			Integer numThread = Integer.parseInt(ElementParameterParser.getValue(node, "__NUM_THREAD__"));
+			String consumerGroupName = ElementParameterParser.getValue(node, "__CONSUMER_GROUP_NAME__");
+			
+	         if(!isStreaming) {
+%>
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = null;
+                if(true) {
+                    throw new java.lang.UnsupportedOperationException("The Kafka storage mode is supported in streaming mode only.");
+                }
+<%
+            } else {
+%>
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.KafkaLoad.kafkaStream(ctx_<%=cid%>, <%=zookeeperHost%>+":"+<%=zookeeperPort%>,<%=consumerGroupName%>, <%=kafkaTopic%>, <%=numThread%>));
+<%
+            }
+		} else if(isHBase) {
+			String zookeeperHost = ElementParameterParser.getValue(node, "__ZOOKEEPER_HOST_HBASE__");
+			String zookeeperPort = (String)ElementParameterParser.getObjectValue(node, "__ZOOKEEPER_PORT_HBASE__");
+			String hbaseTable = ElementParameterParser.getValue(node, "__HBASE_TABLE__");
+			List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__MAPPING_HBASE__");
+			java.lang.StringBuilder columns = new java.lang.StringBuilder();
+			for(int i=0;i<mapping.size();i++) {
+				if(i!=0) columns.append(" + \" \" + ");
+				Map<String, String> map = mapping.get(i);
+				String family_column= map.get("FAMILY_COLUMN");
+				String hbase_column= map.get("HBASE_COLUMN");
+				columns.append(family_column + " + \":\" + " + hbase_column);
+			}
+			
+			List<Map<String, String>> properties = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
+%>
+			java.util.Map<String, String> properties_<%=cid%> = new java.util.HashMap<String, String>();
+<%
+			for(int i=0;i<properties.size();i++){
+				Map<String, String> map = properties.get(i);
+       			String property = map.get("PROPERTY");
+       			String value= map.get("VALUE");
+%>
+				properties_<%=cid%>.put(<%=property%>, <%=value%>);
+<%
+            }
+            if(isStreaming && !inMain) {
+%>
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.HBaseLoad.hbaseRDD(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>,<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, properties_<%=cid%>));
+<%
+            } else {
+%>
+                org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = null;
+                if(true) {
+                    throw new java.lang.UnsupportedOperationException("The HBase storage mode is supported in streaming mode only in a lookup flow.");
+                }
+<%
+            }
 		} else {
 %>
-			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%>, <%=("".equals(inputFile)?"\"\"":inputFile)%>, <%=("".equals(separator)?"\"\"":separator)%>));
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.Load.run(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>, <%=("".equals(inputFile)?"\"\"":inputFile)%>, <%=("".equals(separator)?"\"\"":separator)%>));
 <%
 		}
 	}

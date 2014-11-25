@@ -34,12 +34,11 @@
 				if(b.getLabel().equals(keyColumn)) {
 					return 1;
 				}
-			}
-			return a.getLabel().compareTo(b.getLabel());
+			}// */
+			return a.getLabel().toLowerCase().compareTo(b.getLabel().toLowerCase());
 		}
 
 	}
-
 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -86,12 +85,24 @@
 	
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
+    if (useExistingConnection) {
+    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+    }
+
     %>
 	int nb_line_<%=cid %> = 0;
 	<%
   	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
       	columnList = metadata.getListColumns();
+      	java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
 		int sizeColumns = columnList.size();
       	if(metadata != null){
       		
@@ -263,11 +274,8 @@
 				java.util.Iterator rows_<%=cid%> = result_<%=cid%>.get().iterator();
 				while(rows_<%=cid%>.hasNext()){
 					nb_line_<%=cid %>++;
-					me.prettyprint.hector.api.beans.Row row_<%=cid%>=(me.prettyprint.hector.api.beans.Row)rows_<%=cid%>.next();
-					me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
-					<% if("CASSANDRA_2_0_0".equals(dbVersion)) { %>
-					List<me.prettyprint.hector.api.beans.HColumn<String,String>> cols_<%=cid%> = slice_<%=cid%>.getColumns();
-					<%}%>
+					me.prettyprint.hector.api.beans.Row<<%=rowKeyType%>,String, String> row_<%=cid%>=(me.prettyprint.hector.api.beans.Row<<%=rowKeyType%>,String, String>)rows_<%=cid%>.next();
+					me.prettyprint.hector.api.beans.ColumnSlice<String, String> slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
 			<%
 			}else{
 				if(isSpecifyKeys){
@@ -294,13 +302,15 @@
 			me.prettyprint.hector.api.beans.HColumn<String,String> column_<%=cid%>=null;
 
 			java.nio.ByteBuffer columnValue_<%=cid%>=null;
+			String colName = "";
+			byte[] bTargetColName = null;
 			<%
 			if(outputs!=null && outputs.size() > 0){
 		    	IConnection out = outputs.get(0);
       			firstConnName = out.getName();
 		  		if(out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 				
-					java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
+					//java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
 
 					for(int i = 0; i < sizeColumns; i++){
 						IMetadataColumn column = columnList.get(i);
@@ -365,13 +375,35 @@
 							}else{
 								if("STANDARD".equals(columnFamilyType)){
 								%>
-								<% if("CASSANDRA_2_0_0".equals(dbVersion)) { %>
-									if(<%=i%> < cols_<%=cid%>.size()) {
-										column_<%=cid%> = cols_<%=cid%>.get(<%=i%>);
+									colName = "<%=column.getOriginalDbColumnName()%>";
+								
+									column_<%=cid%>=slice_<%=cid%>.getColumnByName(colName);
+
+									<% if("CASSANDRA_2_0_0".equals(dbVersion)) { 
+
+										/*
+										when hector was used to insert data, getColumnByName() will work as usual
+										when datastax driver was used to insert data, column.getName() will return empty for key and will
+										return a String different from the column.getOriginalDbColumnName() but only if you look
+										at the byte[] level.
+										example : column name => age {97,103,101} will become {0,3,97,103,101,0}
+										so proposed fix is to reconstruct this second string from the original column name
+										{0, <length_of_byte_array_from_original_colname>,<byte array original column name>, 0}
+										*/
+
+									%>
+									if(column_<%=cid%> == null) {
+										// CASSANDRA 2.x changed their column name encoding, leading to wrong getColumnByName behavior
+										byte[] bColName = "<%=column.getOriginalDbColumnName()%>".getBytes();
+										bTargetColName = new byte[bColName.length + 3];
+										bTargetColName[0] = (byte)0;bTargetColName[bTargetColName.length - 1] = (byte)0;
+										bTargetColName[1] = (byte)bColName.length;
+										System.arraycopy(bColName, 0, bTargetColName, 2, bColName.length);										
+										colName = new String(bTargetColName);
+										column_<%=cid%>=slice_<%=cid%>.getColumnByName(colName);
 									}
-									<%} else { %>
-										column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
-									<%}%>
+									<% } %>
+									
 									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
 								<%
 								}else{
