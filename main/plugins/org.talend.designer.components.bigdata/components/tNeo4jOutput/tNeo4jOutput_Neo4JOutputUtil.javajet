@@ -63,7 +63,12 @@ class Neo4JOutputUtil {
             } else {
                 String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
                 %>
-                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = null;
+                try{
+                		databaseService_<%=cid%> = new org.neo4j.graphdb.factory.GraphDatabaseFactory().newEmbeddedDatabase(<%=databasePath%>);
+                }catch(java.lang.RuntimeException e){
+							throw new java.lang.RuntimeException("There may be inconsistency between the selected database version and the actual database version. Please check.", e);
+                }
                 <%
             }
         }
