@@ -366,6 +366,12 @@
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
 
+		<PARAMETER NAME="NOTE_MULTIPLE_SQOOP" FIELD="LABEL" REQUIRED="true"
+			NUM_ROW="120">
+			<DEFAULT><![CDATA[Note: If you need to chain several sqoop export using same jdbc driver, please run them in separate subjobs via tRunJob (due to a sqoop cache issue).]]>
+			</DEFAULT>
+		</PARAMETER>
+
 	</PARAMETERS>
 
 	<ADVANCED_PARAMETERS>
