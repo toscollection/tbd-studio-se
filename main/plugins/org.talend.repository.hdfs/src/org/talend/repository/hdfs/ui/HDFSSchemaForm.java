@@ -539,6 +539,9 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
     private void pressRetreiveSchemaButton() {
         ConnectionStatus connectionStatus = checkConnection(false);
+        if (connectionStatus == null) {
+            return;
+        }
         if (!connectionStatus.getResult()) {
             tableSettingsInfoLabel.setText(connectionStatus.getMessageException());
         } else {
