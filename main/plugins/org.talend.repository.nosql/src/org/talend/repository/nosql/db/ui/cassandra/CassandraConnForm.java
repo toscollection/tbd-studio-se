@@ -64,6 +64,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
     protected LabelledText pwdText;
 
+    private ControlDecoration portWarningDecorator;
+
     public CassandraConnForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             WizardPage parentWizardPage) {
         super(parent, connectionItem, existingNames, creation, parentWizardPage);
@@ -161,17 +163,24 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 Messages.getString("CassandraConnForm.dbVersion"), Messages.getString("CassandraConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
         serverText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.server"), 1); //$NON-NLS-1$
         portText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.port"), 1); //$NON-NLS-1$
-        addPortDecoration();
+        updatePortDecoration();
         databaseText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.keyspace"), 1, true); //$NON-NLS-1$
     }
 
-    private void addPortDecoration() {
-        Image fieldDecorationWarningImage = FieldDecorationRegistry.getDefault()
-                .getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
-        ControlDecoration warningDecorator = new ControlDecoration(portText.getTextControl(), SWT.RIGHT | SWT.CENTER);
-        warningDecorator.setMarginWidth(1);
-        warningDecorator.setImage(fieldDecorationWarningImage);
-        warningDecorator.setDescriptionText(Messages.getString("CassandraConnForm.port.instruction")); //$NON-NLS-1$
+    private void updatePortDecoration() {
+        if (portWarningDecorator == null) {
+            Image fieldDecorationWarningImage = FieldDecorationRegistry.getDefault()
+                    .getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+            portWarningDecorator = new ControlDecoration(portText.getTextControl(), SWT.RIGHT | SWT.CENTER);
+            portWarningDecorator.setMarginWidth(1);
+            portWarningDecorator.setImage(fieldDecorationWarningImage);
+            portWarningDecorator.setDescriptionText(Messages.getString("CassandraConnForm.port.instruction")); //$NON-NLS-1$
+        }
+        if (CassandraConnectionUtil.isOldVersion(getConnection())) {
+            portWarningDecorator.hide();
+        } else {
+            portWarningDecorator.show();
+        }
     }
 
     private void addAuthGroup(Composite composite) {
@@ -249,6 +258,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 checkFieldsValue();
                 getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
                         repositoryTranslator.getValue(dbVersionCombo.getText()));
+                updatePortDecoration();
             }
         });
 
@@ -316,7 +326,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
     public void releaseResources() throws NoSQLGeneralException {
         super.releaseResources();
         try {
-            CassandraConnectionUtil.closeConnections();
+            CassandraConnectionUtil.getMetadataHandler(getConnection()).closeConnections();
         } catch (NoSQLServerException e) {
             throw new NoSQLGeneralException(e);
         }
