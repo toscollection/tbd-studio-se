@@ -431,7 +431,7 @@
 								<%
 								}else if(javaType == JavaTypesManager.INTEGER){
 								%>
-									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getInt();
+									<%=firstConnName %>.<%=column.getLabel() %> = me.prettyprint.cassandra.serializers.BigIntegerSerializer.get().fromByteBuffer(columnValue_<%=cid%>).intValue();
 								<%
 								}else if(javaType == JavaTypesManager.SHORT){
 								%>
