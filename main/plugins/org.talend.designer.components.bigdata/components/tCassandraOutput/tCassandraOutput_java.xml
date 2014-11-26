@@ -341,21 +341,6 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="uuid-3.4.jar"
-                NAME="uuid-3.4"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT
-                NAME="jackson-core-asl-1.9.2"
-                MODULE="jackson-core-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND DB_VERSION == 'CASSANDRA_1_1_2'" />
-            <IMPORT
-                NAME="jackson-mapper-asl-1.9.2"
-                MODULE="jackson-mapper-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND DB_VERSION == 'CASSANDRA_1_1_2'" />
 
             <!-- Cassandra 1.2.2 -->
             <IMPORT
@@ -402,21 +387,6 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="uuid-3.4.jar"
-                NAME="uuid-3.4"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT
-                NAME="jackson-core-asl-1.9.2"
-                MODULE="jackson-core-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND DB_VERSION == 'CASSANDRA_1_2_2'" />
-            <IMPORT
-                NAME="jackson-mapper-asl-1.9.2"
-                MODULE="jackson-mapper-asl-1.9.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND DB_VERSION == 'CASSANDRA_1_2_2'" />
 
              <!-- Cassandra 2.1.X with latest == 2.0.8 / 2.1 -->
              <IMPORT
@@ -459,6 +429,24 @@
                 UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
                 NAME="commons-lang-2.6"
                 REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
+
+            <!-- Imported for all versions -->
+            <IMPORT
+                MODULE="uuid-3.4.jar"
+                NAME="uuid-3.4"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT
+                NAME="jackson-core-asl-1.9.7"
+                MODULE="jackson-core-asl-1.9.7.jar"
+                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-core-asl-1.9.7.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT
+                NAME="jackson-mapper-asl-1.9.7"
+                MODULE="jackson-mapper-asl-1.9.7.jar"
+                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-mapper-asl-1.9.7.jar"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
+    
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
