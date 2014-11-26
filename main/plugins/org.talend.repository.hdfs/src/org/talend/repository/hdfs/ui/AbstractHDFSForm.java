@@ -29,7 +29,6 @@ import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.ui.dialog.AProgressMonitorDialogWithCancel;
-import org.talend.repository.utils.DatabaseConnectionParameterUtil;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -62,12 +61,8 @@ public abstract class AbstractHDFSForm extends AbstractHadoopSubForm<HDFSConnect
         };
         String executeMessage = Messages.getString("AbstractHDFSForm.checkConnection.executeMessage"); //$NON-NLS-1$
         Exception executeException = null;
-        int timeout = DatabaseConnectionParameterUtil.getDefaultDBConnectionTimeout();
-        if (0 < timeout) {
-            timeout += 5;
-        }
         try {
-            checkingDialog.run(executeMessage, null, true, timeout);
+            checkingDialog.run(executeMessage, null, true, AProgressMonitorDialogWithCancel.ENDLESS_WAIT_TIME);
         } catch (Exception e) {
             executeException = e;
         }
