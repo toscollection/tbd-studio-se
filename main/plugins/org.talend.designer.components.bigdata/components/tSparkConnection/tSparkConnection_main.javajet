@@ -215,9 +215,9 @@ java.util.Map
 
 		boolean isFirst = true;
 		for(int i=0; i<jars.size(); i++) {
-            boolean blackListed = false;
+			boolean blackListed = false;
 			String jar = jars.get(i);
-			if(!jar.endsWith(".jar")) break;
+			if(!jar.endsWith(".jar")) continue;
 			for(int j=0; j<jarsToRegister.size(); j++) {
 				if(jar.contains(jarsToRegister.get(j))) {
 				    blackListed = true;
