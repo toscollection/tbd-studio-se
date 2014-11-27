@@ -94,6 +94,17 @@ java.util.Map
 		}
 %>
 		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
+		class GetJarsToRegisterAndFilter_<%=cid%> extends GetJarsToRegister_<%=cid%> {
+			public String filter(String str) {
+				if(str!=null) {
+					java.io.File f = new java.io.File(java.net.URI.create(str).getPath());
+					if(f.exists()) {
+						return str;
+					}
+				}
+				return null;
+			}
+		}
 <%
 		boolean hasClasses = false;
 		java.util.List<java.io.File> functionsList = null;
@@ -205,7 +216,7 @@ java.util.Map
 			}
 		}
 %>
-		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+		GetJarsToRegisterAndFilter_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegisterAndFilter_<%=cid%>();
 		conf_<%=cid%>.setJars(new String[]{
 <%
         
@@ -230,9 +241,9 @@ java.util.Map
 %>
 				,
 <%
-	   		}
+   			}
 %>
-			getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jar%>", "file://")
+			getJarsToRegister_<%=cid %>.filter(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jar%>", "file://"))
 <%
 			isFirst = false;
 		}
