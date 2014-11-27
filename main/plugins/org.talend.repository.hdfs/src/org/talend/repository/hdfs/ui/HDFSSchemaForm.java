@@ -25,6 +25,7 @@ import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.core.runtime.preferences.InstanceScope;
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
@@ -194,11 +195,24 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
     }
 
     private void initMetadataForm() {
-        if (metadataTable == null) {
+        MetadataTable metaTable = null;
+        if (tableNavigator.getItemCount() <= 0) {
+            metaTable = ConnectionFactory.eINSTANCE.createMetadataTable();
+            metaTable.setLabel(""); //$NON-NLS-1$
+            metaTable.setComment(""); //$NON-NLS-1$
+            metadataTable = null;
+        } else {
+            metaTable = metadataTable;
+        }
+        initMetadataForm(metaTable);
+    }
+
+    private void initMetadataForm(MetadataTable metaTable) {
+        if (metaTable == null) {
             return;
         }
 
-        metadataEditor.setMetadataTable(metadataTable);
+        metadataEditor.setMetadataTable(metaTable);
         IEclipsePreferences preferences = new InstanceScope().getNode(ITalendCorePrefConstants.CoreUIPlugin_ID);
         Boolean flag = preferences.getBoolean(IRepositoryPrefConstants.ALLOW_SPECIFIC_CHARACTERS_FOR_SCHEMA_COLUMNS, false);
         if (!flag.booleanValue()) {
@@ -224,11 +238,14 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         });
 
         // init the fields
-        String label = MetadataToolHelper.validateValue(metadataTable.getLabel());
+        String label = MetadataToolHelper.validateValue(metaTable.getLabel());
         nameText.setText(label);
-        commentText.setText(metadataTable.getComment());
-        String filePath = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_PATH);
-        baseFilePathText.setText(StringUtils.trimToEmpty(filePath));
+        commentText.setText(metaTable.getComment());
+        EMap<String, String> additionalPropertiesMap = metaTable.getAdditionalProperties();
+        if (additionalPropertiesMap != null) {
+            String filePath = additionalPropertiesMap.get(HDFSConstants.HDFS_PATH);
+            baseFilePathText.setText(StringUtils.trimToEmpty(filePath));
+        }
         updateRetreiveSchemaButton();
         nameText.forceFocus();
     }
@@ -466,7 +483,9 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                 String labelText = nameText.getText();
                 MetadataToolHelper.validateSchema(labelText);
                 changeTableNavigatorStatus(labelText);
-                metadataTable.setLabel(labelText);
+                if (metadataTable != null) {
+                    metadataTable.setLabel(labelText);
+                }
                 if (tableNavigator.getSelection().length > 0) {
                     tableNavigator.getSelection()[0].setText(labelText);
                 }
@@ -486,7 +505,9 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
             @Override
             public void modifyText(final ModifyEvent e) {
-                metadataTable.setComment(commentText.getText());
+                if (metadataTable != null) {
+                    metadataTable.setComment(commentText.getText());
+                }
             }
         });
 

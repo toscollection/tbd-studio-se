@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EMap;
 import org.talend.core.model.metadata.MetadataToolHelper;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.cwm.helper.ConnectionHelper;
@@ -69,6 +70,24 @@ public class HDFSSchemaUtil {
                 MetadataTable table = (MetadataTable) obj;
                 if (table.getLabel().equals(label)) {
                     return table;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static MetadataTable getTableByPath(HDFSConnection connection, String path) {
+        if (path != null) {
+            for (MetadataTable table : ConnectionHelper.getTables(connection)) {
+                if (table == null) {
+                    continue;
+                }
+                EMap<String, String> map = table.getAdditionalProperties();
+                if (map != null) {
+                    String hdfsPath = map.get(HDFSConstants.HDFS_PATH);
+                    if (path.equals(hdfsPath)) {
+                        return table;
+                    }
                 }
             }
         }
