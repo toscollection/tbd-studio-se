@@ -36,7 +36,7 @@ public class CassandraSchemaForm extends AbstractNoSQLSchemaForm {
     public void releaseResources() throws NoSQLGeneralException {
         super.releaseResources();
         try {
-            CassandraConnectionUtil.closeConnections();
+            CassandraConnectionUtil.getMetadataHandler(getConnection()).closeConnections();
         } catch (NoSQLServerException e) {
             throw new NoSQLGeneralException(e);
         }

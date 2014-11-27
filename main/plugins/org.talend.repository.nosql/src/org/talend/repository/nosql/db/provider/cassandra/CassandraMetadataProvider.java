@@ -21,6 +21,7 @@ import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
+import org.talend.repository.nosql.db.handler.cassandra.ICassandraMetadataHandler;
 import org.talend.repository.nosql.db.util.cassandra.CassandraConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLExtractSchemaException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
@@ -93,16 +94,16 @@ public class CassandraMetadataProvider extends AbstractMetadataProvider {
     private List<MetadataColumn> extractTheColumns(NoSQLConnection connection, String ksName, String cfName)
             throws NoSQLExtractSchemaException {
         List<MetadataColumn> metadataColumns = new ArrayList<MetadataColumn>();
+        ICassandraMetadataHandler metadataHandler = CassandraConnectionUtil.getMetadataHandler(connection);
         try {
-            List columndfs = CassandraConnectionUtil.getColumns(connection, ksName, cfName);
-            int n = 0;
+            List<Object> columndfs = metadataHandler.getColumns(connection, ksName, cfName);
             for (Object columndf : columndfs) {
                 MetadataColumn column = ConnectionFactory.eINSTANCE.createMetadataColumn();
-                String colName = CassandraConnectionUtil.getColumnName(connection, columndf);
+                String colName = metadataHandler.getColumnName(connection, columndf);
                 colName = MetadataToolHelper.validateValue(colName);
                 column.setName(colName);
                 column.setLabel(colName);
-                String talendType = CassandraConnectionUtil.getColumnTalendType(columndf);
+                String talendType = metadataHandler.getColumnTalendType(columndf);
                 column.setTalendType(talendType);
                 metadataColumns.add(column);
             }
@@ -122,6 +123,7 @@ public class CassandraMetadataProvider extends AbstractMetadataProvider {
      */
     @Override
     public boolean checkConnection(NoSQLConnection connection) throws NoSQLServerException {
-        return CassandraConnectionUtil.checkConnection(connection);
+        return CassandraConnectionUtil.getMetadataHandler(connection).checkConnection(connection);
     }
+
 }

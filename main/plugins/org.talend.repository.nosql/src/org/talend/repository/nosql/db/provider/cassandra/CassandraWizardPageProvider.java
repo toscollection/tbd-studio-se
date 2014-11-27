@@ -26,6 +26,7 @@ import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
+import org.talend.repository.nosql.db.handler.cassandra.ICassandraMetadataHandler;
 import org.talend.repository.nosql.db.ui.cassandra.CassandraConnForm;
 import org.talend.repository.nosql.db.ui.cassandra.CassandraRetrieveSchemaForm;
 import org.talend.repository.nosql.db.ui.cassandra.CassandraSchemaForm;
@@ -100,7 +101,7 @@ public class CassandraWizardPageProvider extends AbstractWizardPageProvider {
                 ksName = ContextParameterUtils.getOriginalValue(contextType, ksName);
             }
             if (StringUtils.isEmpty(ksName)) {
-                List<String> databaseNames = CassandraConnectionUtil.getKeySpaceNames(connection);
+                List<String> databaseNames = CassandraConnectionUtil.getMetadataHandler(connection).getKeySpaceNames(connection);
                 for (String dbn : databaseNames) {
                     INoSQLSchemaNode dbNode = new NoSQLSchemaNode();
                     dbNode.setName(dbn);
@@ -128,18 +129,29 @@ public class CassandraWizardPageProvider extends AbstractWizardPageProvider {
         if (parentNode != null && StringUtils.isNotEmpty(parentNode.getName())) {
             ksName = parentNode.getName();
         }
+        ICassandraMetadataHandler metadataHandler = CassandraConnectionUtil.getMetadataHandler(connection);
         if (ksName != null) {
-            cfNames = CassandraConnectionUtil.getColumnFamilyNames(connection, ksName);
-            scfNames = CassandraConnectionUtil.getSuperColumnFamilyNames(connection, ksName);
+            cfNames = metadataHandler.getColumnFamilyNames(connection, ksName);
+            scfNames = metadataHandler.getSuperColumnFamilyNames(connection, ksName);
         } else {
-            cfNames = CassandraConnectionUtil.getColumnFamilyNames(connection);
-            scfNames = CassandraConnectionUtil.getSuperColumnFamilyNames(connection);
+            cfNames = metadataHandler.getColumnFamilyNames(connection);
+            scfNames = metadataHandler.getSuperColumnFamilyNames(connection);
         }
+        if (CassandraConnectionUtil.isOldVersion(connection)) {
+            collectNodesForOldVersion(schemaNodes, parentNode, cfNames, scfNames);
+        } else {
+            collectNodes(schemaNodes, parentNode, cfNames, scfNames);
+        }
+
+        return schemaNodes;
+    }
+
+    private void collectNodes(List<INoSQLSchemaNode> schemaNodes, INoSQLSchemaNode parentNode, Set<String> cfNames,
+            Set<String> scfNames) {
         for (String name : cfNames) {
             NoSQLSchemaNode node = new NoSQLSchemaNode();
             node.setName(name);
             node.setNodeType(ICassandraConstants.COLUMN_FAMILY);
-            // by default
             node.getParameters().put(ICassandraAttributies.COLUMN_FAMILY_TYPE, ICassandraAttributies.COLUMN_FAMILY_TYPE_STANDARD);
             if (scfNames.size() > 0) {
                 for (String scfName : scfNames) {
@@ -159,8 +171,35 @@ public class CassandraWizardPageProvider extends AbstractWizardPageProvider {
                 schemaNodes.add(node);
             }
         }
+    }
 
-        return schemaNodes;
+    private void collectNodesForOldVersion(List<INoSQLSchemaNode> schemaNodes, INoSQLSchemaNode parentNode, Set<String> cfNames,
+            Set<String> scfNames) {
+        for (String name : cfNames) {
+            addNode(name, schemaNodes, parentNode, false);
+        }
+        for (String name : scfNames) {
+            addNode(name, schemaNodes, parentNode, true);
+        }
+    }
+
+    private void addNode(String nodeName, List<INoSQLSchemaNode> schemaNodes, INoSQLSchemaNode parentNode, boolean isSuper) {
+        NoSQLSchemaNode node = new NoSQLSchemaNode();
+        node.setName(nodeName);
+        if (isSuper) {
+            node.setNodeType(ICassandraConstants.SUPER_COLUMN_FAMILY);
+            node.getParameters().put(ICassandraAttributies.COLUMN_FAMILY_TYPE, ICassandraAttributies.COLUMN_FAMILY_TYPE_SUPER);
+        } else {
+            node.setNodeType(ICassandraConstants.COLUMN_FAMILY);
+            node.getParameters().put(ICassandraAttributies.COLUMN_FAMILY_TYPE, ICassandraAttributies.COLUMN_FAMILY_TYPE_STANDARD);
+        }
+        node.setSchemaType(ENoSQLSchemaType.TABLE);
+        if (parentNode != null) {
+            node.setParent(parentNode);
+            parentNode.addChild(node);
+        } else {
+            schemaNodes.add(node);
+        }
     }
 
 }
