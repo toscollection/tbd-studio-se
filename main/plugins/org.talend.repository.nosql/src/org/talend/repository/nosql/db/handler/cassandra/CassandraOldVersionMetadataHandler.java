@@ -268,7 +268,7 @@ public class CassandraOldVersionMetadataHandler implements ICassandraMetadataHan
         try {
             String type = (String) NoSQLReflection.invokeMethod(column, "getValidationClass"); //$NON-NLS-1$
             if (type != null && type.indexOf(".") != -1) { //$NON-NLS-1$
-                type = type.substring(type.lastIndexOf(".") + 1).toUpperCase(); //$NON-NLS-1$
+                dbType = type.substring(type.lastIndexOf(".") + 1); //$NON-NLS-1$
             }
         } catch (Exception e) {
             throw new NoSQLServerException(e);
