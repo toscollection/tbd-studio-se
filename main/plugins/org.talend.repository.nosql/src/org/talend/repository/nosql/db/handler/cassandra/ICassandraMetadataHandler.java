@@ -25,7 +25,7 @@ import org.talend.repository.nosql.exceptions.NoSQLServerException;
 public interface ICassandraMetadataHandler {
 
     public boolean checkConnection(NoSQLConnection connection) throws NoSQLServerException;
-    
+
     public List<String> getKeySpaceNames(NoSQLConnection connection) throws NoSQLServerException;
 
     public Set<String> getColumnFamilyNames(NoSQLConnection connection) throws NoSQLServerException;
@@ -41,6 +41,8 @@ public interface ICassandraMetadataHandler {
     public String getColumnName(NoSQLConnection connection, Object column) throws NoSQLServerException;
 
     public String getColumnTalendType(Object column) throws NoSQLServerException;
+
+    public String getColumnDbType(Object column) throws NoSQLServerException;
 
     public void closeConnections() throws NoSQLServerException;
 
