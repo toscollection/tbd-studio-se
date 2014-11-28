@@ -105,6 +105,8 @@ public class CassandraMetadataProvider extends AbstractMetadataProvider {
                 column.setLabel(colName);
                 String talendType = metadataHandler.getColumnTalendType(columndf);
                 column.setTalendType(talendType);
+                String dbType = metadataHandler.getColumnDbType(columndf);
+                column.setSourceType(dbType);
                 metadataColumns.add(column);
             }
         } catch (Exception e) {

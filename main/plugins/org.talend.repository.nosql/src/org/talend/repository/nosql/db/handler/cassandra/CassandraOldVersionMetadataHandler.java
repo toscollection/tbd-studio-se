@@ -250,22 +250,30 @@ public class CassandraOldVersionMetadataHandler implements ICassandraMetadataHan
     public String getColumnTalendType(Object column) throws NoSQLServerException {
         String talendType = null;
         try {
-            String type = (String) NoSQLReflection.invokeMethod(column, "getValidationClass"); //$NON-NLS-1$
-            if (type != null) {
-                if (type.indexOf(".") != -1) { //$NON-NLS-1$
-                    type = type.substring(type.lastIndexOf(".") + 1); //$NON-NLS-1$
-                }
-                MappingTypeRetriever mappingTypeRetriever = MetadataTalendType
-                        .getMappingTypeRetriever(ICassandraConstants.DBM_ID);
-                talendType = mappingTypeRetriever.getDefaultSelectedTalendType(type);
-                if (talendType == null) {
-                    talendType = JavaTypesManager.STRING.getId();
-                }
+            String dbType = getColumnDbType(column);
+            MappingTypeRetriever mappingTypeRetriever = MetadataTalendType.getMappingTypeRetriever(ICassandraConstants.DBM_ID);
+            talendType = mappingTypeRetriever.getDefaultSelectedTalendType(dbType);
+            if (talendType == null) {
+                talendType = JavaTypesManager.STRING.getId();
             }
         } catch (Exception e) {
             throw new NoSQLServerException(e);
         }
         return talendType;
+    }
+
+    @Override
+    public String getColumnDbType(Object column) throws NoSQLServerException {
+        String dbType = null;
+        try {
+            String type = (String) NoSQLReflection.invokeMethod(column, "getValidationClass"); //$NON-NLS-1$
+            if (type != null && type.indexOf(".") != -1) { //$NON-NLS-1$
+                type = type.substring(type.lastIndexOf(".") + 1).toUpperCase(); //$NON-NLS-1$
+            }
+        } catch (Exception e) {
+            throw new NoSQLServerException(e);
+        }
+        return dbType;
     }
 
     @Override
