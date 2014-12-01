@@ -240,6 +240,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         if (node.getType() == EHadoopFileTypes.FILE) {
                             if (isExistTable(node)) {
                                 item.setChecked(true);
+                                updateParentItemCheckStatus(item);
                             } else {
                                 TreeEditor treeEditor = treeEditorMap.get(item);
                                 if (treeEditor == null) {
@@ -588,6 +589,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         if (!hasCheckedItem) {
             parentItem.setChecked(false);
         } else if (hasCheckedItem && hasUncheckedItem) {
+            parentItem.setChecked(true);
             parentItem.setGrayed(true);
         } else {
             parentItem.setChecked(true);
