@@ -60,7 +60,7 @@ public abstract class AbstractHDFSForm extends AbstractHadoopSubForm<HDFSConnect
             }
         };
         String executeMessage = Messages.getString("AbstractHDFSForm.checkConnection.executeMessage"); //$NON-NLS-1$
-        Exception executeException = null;
+        Throwable executeException = null;
         try {
             checkingDialog.run(executeMessage, null, true, AProgressMonitorDialogWithCancel.ENDLESS_WAIT_TIME);
         } catch (Exception e) {

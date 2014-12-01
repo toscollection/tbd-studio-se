@@ -31,6 +31,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -364,7 +365,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                 if (INFORM_SIZE < checkedSize) {
                     continueCheck = MessageDialog.openConfirm(getShell(),
                             Messages.getString("HDFSFileSelectorForm.title.confirm"), //$NON-NLS-1$
-                            Messages.getString("HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { checkedSize })); //$NON-NLS-1$
+                            Messages.getString("HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { INFORM_SIZE })); //$NON-NLS-1$
                 }
                 if (continueCheck) {
                     updateItems(schemaTree.getItems(), true, false);
@@ -474,7 +475,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         if (promptNeeded && INFORM_SIZE < checkedSize) {
                             continueCheck = MessageDialog.openConfirm(getShell(),
                                     Messages.getString("HDFSFileSelectorForm.title.confirm"), Messages.getString( //$NON-NLS-1$
-                                            "HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { checkedSize })); //$NON-NLS-1$
+                                            "HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { INFORM_SIZE })); //$NON-NLS-1$
                         }
                         if (continueCheck) {
                             updateItems(treeItem.getItems(), promptNeeded, true);
@@ -958,35 +959,23 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         }
     }
 
-    private static final int YES_TO_ALL = 1;
-
-    private static final int NO_TO_ALL = 2;
-
-    private static final int NOT_SET_YET = -1;
-
-    private int dialogUserChoice = NOT_SET_YET;
+    private boolean notShowAgain = false;
 
     private boolean userConfirmed;
 
     private synchronized void showTableIsExistConfirmDialog(final MetadataTable existTable) {
-        if (dialogUserChoice == NOT_SET_YET) {
-            orgomg.cwm.objectmodel.core.Package pack = (orgomg.cwm.objectmodel.core.Package) existTable.eContainer();
-            MessageDialog dialog = new MessageDialog(Display.getDefault().getActiveShell(),
+        if (notShowAgain == false) {
+            // orgomg.cwm.objectmodel.core.Package pack = (orgomg.cwm.objectmodel.core.Package) existTable.eContainer();
+            MessageDialogWithToggle dialog = new MessageDialogWithToggle(Display.getDefault().getActiveShell(),
                     Messages.getString("HDFSFileSelectorForm.title.confirm"), null, Messages.getString( //$NON-NLS-1$
-                            "HDFSFileSelectorForm.tableIsExist", existTable.getLabel(), pack.getName()), //$NON-NLS-1$
-                    MessageDialog.CONFIRM, new String[] { IDialogConstants.YES_LABEL,
-                            Messages.getString("HDFSFileSelectorForm.confirm.yesToAll"), //$NON-NLS-1$
-                            Messages.getString("HDFSFileSelectorForm.confirm.noToAll"), //$NON-NLS-1$
-                            IDialogConstants.NO_LABEL }, 0);
+                            "HDFSFileSelectorForm.tableIsExist.new", existTable.getLabel()), //$NON-NLS-1$
+                    MessageDialog.CONFIRM, new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL }, 1,
+                    Messages.getString("HDFSFileSelectorForm.tableIsExist.notShowAgain"), //$NON-NLS-1$
+                    false);
             int result = dialog.open();
-            if (result == 0) {
+            notShowAgain = dialog.getToggleState();
+            if (result == IDialogConstants.YES_ID) {
                 userConfirmed = true;
-            } else if (result == YES_TO_ALL) {
-                userConfirmed = true;
-                dialogUserChoice = YES_TO_ALL;
-            } else if (result == NO_TO_ALL) {
-                userConfirmed = false;
-                dialogUserChoice = NO_TO_ALL;
             } else {
                 userConfirmed = false;
             }
@@ -1077,20 +1066,15 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                                 return;
                             }
                         }
-                        if (dialogUserChoice == NOT_SET_YET) {
-                            userConfirmed = true;
-                        }
                         Display.getDefault().syncExec(new Runnable() {
 
                             @Override
                             public void run() {
                                 if (isCanceled()) {
-                                    updateCompleteStatus();
                                     return;
                                 }
                                 showTableIsExistConfirmDialog(existTable);
                                 if (isCanceled()) {
-                                    updateCompleteStatus();
                                     return;
                                 }
                                 if (treeItem.isDisposed()) {
@@ -1136,7 +1120,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
                     try {
                         metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), file);
-                    } catch (final Exception e) {
+                    } catch (final Throwable e) {
                         if (isCanceled() || parentExecutor.isCleaned()) {
                             return;
                         }
@@ -1196,7 +1180,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             return key;
         }
 
-        private void showErrorInfoOnStatusCell(final Exception e) {
+        private void showErrorInfoOnStatusCell(final Throwable e) {
 
             if (treeItem.isDisposed()) {
                 return;
@@ -1293,7 +1277,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     boolean hasThreadRunning = !(unCompletedTaskCount == 1);
                     parentWizardPage.setPageComplete(!hasThreadRunning);
                     if (!hasThreadRunning) {
-                        dialogUserChoice = NOT_SET_YET;
+                        notShowAgain = false;
                     }
                 }
             });
