@@ -307,7 +307,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     }
 
     protected long fetchAllChildren(final TreeItem treeItems[]) {
-        int childSize = 0;
+        long childSize = 0;
         try {
             final StringBuffer fetchNumber = new StringBuffer();
             parentWizardPage.getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
@@ -335,7 +335,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
             });
             if (0 < fetchNumber.length()) {
-                childSize = Integer.valueOf(fetchNumber.toString());
+                childSize = Long.valueOf(fetchNumber.toString());
             }
         } catch (Exception e) {
             ExceptionHandler.process(e);
