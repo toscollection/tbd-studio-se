@@ -36,7 +36,7 @@
       </classloader>
       <classloader
             index="HDFS:HORTONWORKS:HDP_2_0"
-            libraries="hadoop-common-2.2.0.2.0.6.0-76.jar;hadoop-auth-2.2.0.2.0.6.0-76.jar;hadoop-hdfs-2.2.0.2.0.6.0-76.jar;commons-cli-1.2.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;guava-11.0.2.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;protobuf-java-2.5.0.jar;commons-io-2.4.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar">
+            libraries="hadoop-hdfs-2.2.0.2.0.6.0-76.jar;hadoop-common-2.2.0.2.0.6.0-76.jar;hadoop-auth-2.2.0.2.0.6.0-76.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;guava-11.0.2.jar;protobuf-java-2.5.0.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;avro-1.5.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar;log4j-1.2.17.jar">
       </classloader>
       <classloader
             index="HDFS:HORTONWORKS:HDP_2_1"
@@ -100,7 +100,7 @@
       </classloader>
       <classloader
             index="HDFS:HORTONWORKS:HDP_2_0?USE_KRB"
-            libraries="hadoop-common-2.2.0.2.0.6.0-76.jar;hadoop-auth-2.2.0.2.0.6.0-76.jar;hadoop-hdfs-2.2.0.2.0.6.0-76.jar;commons-cli-1.2.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;guava-11.0.2.jar;log4j-1.2.17.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.5.0.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar">
+            libraries="hadoop-hdfs-2.2.0.2.0.6.0-76.jar;hadoop-common-2.2.0.2.0.6.0-76.jar;hadoop-auth-2.2.0.2.0.6.0-76.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;guava-11.0.2.jar;protobuf-java-2.5.0.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;avro-1.5.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar;log4j-1.2.17.jar;hadoop-conf-kerberos.jar">
       </classloader>
       <classloader
             index="HDFS:HORTONWORKS:HDP_2_1?USE_KRB"
