@@ -33,7 +33,7 @@
 			<%
 			}
 			%>
-            Object data_<%=cid%> = com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
+			Object data_<%=cid%>=com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
 			<%
 			if(isLog4jEnabled){
 			%>
@@ -54,59 +54,17 @@
 				<%
 				}else{
 				%>
-				    // Construct the DBObject of the query node
-				    queryObj_<%=cid%> = new com.mongodb.BasicDBObject(
-                            ((com.mongodb.DBObject) data_<%=cid%>).toMap());
-                    if (((com.mongodb.DBObject)queryObj_<%=cid%>).containsField("rootTag")) {
-                        queryObj_<%=cid%> = ((com.mongodb.DBObject)queryObj_<%=cid%>).get("rootTag");
-                    }
-
-                    com.mongodb.DBObject currentDBObject = (com.mongodb.DBObject) queryObj_<%=cid%>;
-                    for (String path: <%=queryNode%>.split("\\.")) {
-                        List<String> toRemove = new java.util.ArrayList<String>();
-                        for (String key: currentDBObject.keySet()) {
-                            if (!key.equals(path)) {
-                                toRemove.add(key);
-                            }
-                        }
-                        for (String key: toRemove) {
-                            currentDBObject.removeField(key);
-                        }
-                        currentDBObject = (com.mongodb.DBObject)currentDBObject.get(path);
-                    }
-
-
-                    // Construct the DBObject of the data node
-                    Object data_<%=cid%>_dupplicate = com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
-                    Object datapath_<%=cid%> = new com.mongodb.BasicDBObject(
-                            ((com.mongodb.DBObject) data_<%=cid%>_dupplicate).toMap());
-                    if (((com.mongodb.DBObject)datapath_<%=cid%>).containsField("rootTag")) {
-                        datapath_<%=cid%> = ((com.mongodb.DBObject)datapath_<%=cid%>).get("rootTag");
-                    }
-
-                    currentDBObject = (com.mongodb.DBObject) datapath_<%=cid%>;
-                    for (String path: <%=dataNode%>.split("\\.")) {
-                        List<String> toRemove = new java.util.ArrayList<String>();
-                        for (String key: currentDBObject.keySet()) {
-                            if (!key.equals(path)) {
-                                toRemove.add(key);
-                            }
-                        }
-                        for (String key: toRemove) {
-                            currentDBObject.removeField(key);
-                        }
-                        currentDBObject = (com.mongodb.DBObject)currentDBObject.get(path);
-                    }
-
-					if(datapath_<%=cid%>!=null && queryObj_<%=cid%>!=null){
+					queryObj_<%=cid%> =((com.mongodb.DBObject)data_<%=cid%>).get(<%=queryNode%>);
+					data_<%=cid%>=((com.mongodb.DBObject)data_<%=cid%>).get(<%=dataNode%>);
+					if(data_<%=cid%>!=null && queryObj_<%=cid%>!=null){
 						<%
 						if("UPDATE".equalsIgnoreCase(dataAction)){	
 						%>	
-							resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,((com.mongodb.DBObject)datapath_<%=cid%>));
+							resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>);
 						<%
 						}else if("UPSERT".equalsIgnoreCase(dataAction)){
 						%>	
-							resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)datapath_<%=cid%>,true,false);
+							resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>,true,false);
 						<%
 						}
 						%>	
