@@ -166,7 +166,7 @@ java.util.Map
 				properties_<%=cid%>.put(<%=property%>, <%=value%>);
 <%
             }
-            if(isStreaming && !inMain) {
+            if((isStreaming && !inMain) || !isStreaming) {
 %>
                 org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = new <%=talendRDDClass%><List<Object>>(org.talend.spark.operation.HBaseLoad.hbaseRDD(ctx_<%=cid%><%=(isStreaming && !inMain)?".sparkContext()":""%>,<%=zookeeperHost%>, <%=zookeeperPort%>, <%=hbaseTable%>, <%=columns%>, properties_<%=cid%>));
 <%
