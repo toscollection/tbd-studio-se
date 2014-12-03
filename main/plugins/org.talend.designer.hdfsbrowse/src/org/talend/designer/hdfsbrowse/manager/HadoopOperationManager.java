@@ -116,7 +116,8 @@ public class HadoopOperationManager {
             Object codec = ReflectionUtils.invokeMethod(factory, "getCodec", new Object[] { pathObj });
             if (codec != null) {
                 Object originStream = ReflectionUtils.invokeMethod(fileSystem, "open", new Object[] { pathObj });
-                stream = (InputStream) ReflectionUtils.invokeMethod(codec, "createInputStream", new Object[] { originStream });
+                stream = (InputStream) ReflectionUtils.invokeMethod(codec, "createInputStream", new Object[] { originStream },
+                        java.io.InputStream.class);
             } else {
                 stream = (InputStream) ReflectionUtils.invokeMethod(fileSystem, "open", new Object[] { pathObj });
             }
