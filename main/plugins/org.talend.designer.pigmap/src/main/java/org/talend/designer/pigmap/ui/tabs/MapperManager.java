@@ -305,7 +305,7 @@ public class MapperManager extends AbstractMapperManager {
             }
 
             if (table != null) {
-                MetadataTableEditor editor = new MetadataTableEditor(table, table.getLabel());
+                MetadataTableEditor editor = new MetadataTableEditor(table, table.getTableName());
                 outputMetaEditorView.setMetadataTableEditor(editor);
                 editor.setModifiedBeanListenable(outputMetaEditorView.getTableViewerCreator());
 
