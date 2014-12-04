@@ -66,7 +66,7 @@ public class TableFilterContainer extends FilterContainer {
         IService expressionBuilderDialogService = GlobalServiceRegister.getDefault().getService(
                 IExpressionBuilderDialogService.class);
         final IExpressionBuilderDialogController dialog = ((IExpressionBuilderDialogService) expressionBuilderDialogService)
-                .getExpressionBuilderInstance(parent, null, null, null);
+                .getExpressionBuilderInstance(parent, null, null, null, false);
 
         button.addMouseListener(new MouseListener() {
 

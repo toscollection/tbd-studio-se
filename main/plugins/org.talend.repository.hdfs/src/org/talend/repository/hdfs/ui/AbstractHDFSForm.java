@@ -12,9 +12,12 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
+import org.apache.log4j.Priority;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
+import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.repository.ConnectionStatus;
@@ -25,6 +28,7 @@ import org.talend.repository.hdfs.Activator;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
+import org.talend.repository.ui.dialog.AProgressMonitorDialogWithCancel;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -46,10 +50,42 @@ public abstract class AbstractHDFSForm extends AbstractHadoopSubForm<HDFSConnect
     }
 
     protected ConnectionStatus checkConnection(boolean displayDialog) {
-        HDFSConnectionBean connectionBean = getConnectionBean();
-        ConnectionStatus connectionStatus = HadoopOperationManager.getInstance().testConnection(connectionBean);
-        hdfsSettingIsValide = connectionStatus.getResult();
-        String connectException = connectionStatus.getMessageException();
+        final HDFSConnectionBean connectionBean = getConnectionBean();
+        AProgressMonitorDialogWithCancel<ConnectionStatus> checkingDialog = new AProgressMonitorDialogWithCancel<ConnectionStatus>(
+                getShell()) {
+
+            @Override
+            protected ConnectionStatus runWithCancel(IProgressMonitor monitor) throws Exception {
+                return HadoopOperationManager.getInstance().testConnection(connectionBean);
+            }
+        };
+        String executeMessage = Messages.getString("AbstractHDFSForm.checkConnection.executeMessage"); //$NON-NLS-1$
+        Exception executeException = null;
+        try {
+            checkingDialog.run(executeMessage, null, true, AProgressMonitorDialogWithCancel.ENDLESS_WAIT_TIME);
+        } catch (Exception e) {
+            executeException = e;
+        }
+        ConnectionStatus connectionStatus = checkingDialog.getExecuteResult();
+        if (checkingDialog.isUserCanncelled()) {
+            return connectionStatus;
+        }
+
+        if (checkingDialog.getExecuteException() != null) {
+            executeException = checkingDialog.getExecuteException();
+        }
+        String connectException = null;
+        if (executeException != null) {
+            if (executeException instanceof InterruptedException) {
+                CommonExceptionHandler.process(executeException, Priority.WARN);
+                return connectionStatus;
+            }
+            hdfsSettingIsValide = false;
+            connectException = executeException.getMessage();
+        } else {
+            hdfsSettingIsValide = connectionStatus.getResult();
+            connectException = connectionStatus.getMessageException();
+        }
 
         if (hdfsSettingIsValide) {
             if (!isReadOnly()) {

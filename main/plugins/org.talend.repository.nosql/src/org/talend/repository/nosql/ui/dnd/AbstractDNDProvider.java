@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.process.IElement;
+import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.utils.TalendQuoteUtils;
@@ -28,7 +29,7 @@ import org.talend.repository.model.nosql.NoSQLConnection;
 public abstract class AbstractDNDProvider implements IDNDProvider {
 
     @Override
-    public void setRepositoryValue(NoSQLConnection connection, INode node, String repositoryValue) {
+    public void setRepositoryValue(NoSQLConnection connection, INode node, IElementParameter param) {
         // Do nothing by default.
     }
 

@@ -37,6 +37,7 @@ import org.talend.commons.ui.swt.tableviewer.ModifiedBeanEvent;
 import org.talend.commons.utils.data.list.IListenableListListener;
 import org.talend.commons.utils.data.list.ListenableListEvent;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.mongodb.IMongoConstants;
 import org.talend.repository.nosql.db.common.mongodb.IMongoDBAttributes;
@@ -106,15 +107,15 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
 
     @Override
     protected void initializeFields() {
-        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
-        String server = getConnection().getAttributes().get(INoSQLCommonAttributes.HOST);
-        String port = getConnection().getAttributes().get(INoSQLCommonAttributes.PORT);
-        String database = getConnection().getAttributes().get(INoSQLCommonAttributes.DATABASE);
-        String user = getConnection().getAttributes().get(INoSQLCommonAttributes.USERNAME);
-        String passwd = getConnection().getAttributes().get(INoSQLCommonAttributes.PASSWORD);
-        boolean isUseRequireAuth = Boolean.parseBoolean(getConnection().getAttributes().get(
-                INoSQLCommonAttributes.REQUIRED_AUTHENTICATION));
-        boolean isUseReplicaSet = Boolean.parseBoolean(getConnection().getAttributes().get(IMongoDBAttributes.USE_REPLICA_SET));
+        NoSQLConnection conn = getConnection();
+        String dbVersion = conn.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        String server = conn.getAttributes().get(INoSQLCommonAttributes.HOST);
+        String port = conn.getAttributes().get(INoSQLCommonAttributes.PORT);
+        String database = conn.getAttributes().get(INoSQLCommonAttributes.DATABASE);
+        String user = conn.getAttributes().get(INoSQLCommonAttributes.USERNAME);
+        String passwd = conn.getValue(conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), false);
+        boolean isUseRequireAuth = Boolean.parseBoolean(conn.getAttributes().get(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION));
+        boolean isUseReplicaSet = Boolean.parseBoolean(conn.getAttributes().get(IMongoDBAttributes.USE_REPLICA_SET));
         if (validText(dbVersion)) {
             dbVersionCombo.setText(repositoryTranslator.getLabel(dbVersion));
         } else {
@@ -136,17 +137,16 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
     @Override
     protected void saveAttributes() {
         super.saveAttributes();
-        getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
-                repositoryTranslator.getValue(dbVersionCombo.getText()));
-        getConnection().getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION,
+        NoSQLConnection conn = getConnection();
+        conn.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, repositoryTranslator.getValue(dbVersionCombo.getText()));
+        conn.getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION,
                 String.valueOf(checkRequireAuthBtn.getSelection()));
-        getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
-        getConnection().getAttributes()
-                .put(IMongoDBAttributes.USE_REPLICA_SET, String.valueOf(checkUseReplicaBtn.getSelection()));
+        conn.getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, conn.getValue(pwdText.getText(), true));
+        conn.getAttributes().put(IMongoDBAttributes.USE_REPLICA_SET, String.valueOf(checkUseReplicaBtn.getSelection()));
         saveReplicaModel();
     }
 
@@ -212,7 +212,8 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         NoSQLRepositoryFactory repFactory = NoSQLRepositoryFactory.getInstance();
         List<String> dbVersions = repFactory.getDBVersions(getConnection().getDbType());
         List<String> dbVersionLabels = repositoryTranslator.getLabels(dbVersions);
-        dbVersionCombo = new LabelledCombo(versionComposite,
+        dbVersionCombo = new LabelledCombo(
+                versionComposite,
                 Messages.getString("MongoDBConnForm.dbVersion"), Messages.getString("MongoDBConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
 
         // create replica button
@@ -248,7 +249,8 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         databaseText = new LabelledText(databaseComposite, Messages.getString("MongoDBConnForm.database"), 3, true); //$NON-NLS-1$
 
         initReplicaField();
-        MongoDBReplicaFieldModel model = new MongoDBReplicaFieldModel(replicaList, Messages.getString("MongoDBConnForm.replicaView")); //$NON-NLS-1$
+        MongoDBReplicaFieldModel model = new MongoDBReplicaFieldModel(replicaList,
+                Messages.getString("MongoDBConnForm.replicaView")); //$NON-NLS-1$
         replicaTableView = new MongoDBReplicaTableView(model, replicaComposite);
         final Composite fieldTableEditorComposite = replicaTableView.getMainComposite();
         GridData gridData = new GridData(SWT.FILL, SWT.FILL, true, false);
@@ -268,7 +270,8 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         checkRequireAuthBtn.setText(Messages.getString("MongoDBConnForm.requireAuth")); //$NON-NLS-1$
         checkRequireAuthBtn.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 4, 1));
         userText = new LabelledText(authGroup, Messages.getString("MongoDBConnForm.username"), 1); //$NON-NLS-1$
-        pwdText = new LabelledText(authGroup, Messages.getString("MongoDBConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        pwdText = new LabelledText(authGroup,
+                Messages.getString("MongoDBConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
     }
 
     /**
@@ -388,7 +391,8 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
             @Override
             public void modifyText(ModifyEvent e) {
                 checkFieldsValue();
-                getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
+                NoSQLConnection conn = getConnection();
+                conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, conn.getValue(pwdText.getText(), true));
             }
         });
 

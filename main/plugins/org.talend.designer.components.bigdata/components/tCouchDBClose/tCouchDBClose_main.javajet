@@ -5,7 +5,6 @@
     	org.talend.designer.codegen.config.CodeGeneratorArgument
 " 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
@@ -13,8 +12,6 @@
     String cid = node.getUniqueName();
 
    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	org.lightcouch.CouchDbClient client_<%=cid%> = (org.lightcouch.CouchDbClient)globalMap.get("client_<%=connection%>");
 	if(client_<%=cid%> != null){
@@ -26,6 +23,4 @@
 		}
 		client_<%=cid%>.shutdown();
 	}
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

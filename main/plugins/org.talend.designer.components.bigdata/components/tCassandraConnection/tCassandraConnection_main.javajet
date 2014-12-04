@@ -5,7 +5,6 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 	" 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -18,8 +17,6 @@
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
 	
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
     String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
     me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);
@@ -41,8 +38,9 @@
 	}
 	%>
 	me.prettyprint.hector.api.Cluster cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
+	if (cluster_tCassandraConnection_1
+            .getConnectionManager().getHosts().isEmpty()) {
+        throw new Exception("Cannot connect to the server: " + hostIps_<%=cid%>);
+    }
 
 	globalMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>

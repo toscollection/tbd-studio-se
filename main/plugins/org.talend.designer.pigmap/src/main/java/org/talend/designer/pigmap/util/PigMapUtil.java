@@ -14,20 +14,29 @@ package org.talend.designer.pigmap.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.emf.common.util.EList;
+import org.talend.core.model.metadata.MetadataToolHelper;
+import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.pigmap.i18n.Messages;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractInOutTable;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.Connection;
 import org.talend.designer.pigmap.model.emf.pigmap.FilterConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.IConnection;
+import org.talend.designer.pigmap.model.emf.pigmap.INodeConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.InputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.LookupConnection;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.PigmapFactory;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
+import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 import org.talend.designer.pigmap.ui.expressionutil.PigMapExpressionManager;
 import org.talend.designer.pigmap.ui.expressionutil.TableEntryLocation;
+import org.talend.repository.ui.wizards.metadata.connection.files.xml.util.StringUtil;
 
 /**
  * 
@@ -44,7 +53,7 @@ public class PigMapUtil {
 
     public static PigMapData getPigMapData(AbstractNode tableNode) {
         AbstractNode rootNode = null;
-        if (tableNode instanceof TableNode) {
+        if (tableNode instanceof TableNode || tableNode instanceof VarNode) {
             rootNode = tableNode;
         }
         if (rootNode != null && rootNode.eContainer() != null && rootNode.eContainer().eContainer() instanceof PigMapData) {
@@ -83,7 +92,7 @@ public class PigMapUtil {
             }
         }
         tableNode.getIncomingConnections().clear();
-        tableNode.setExpression("");
+        tableNode.setExpression(""); //$NON-NLS-1$
     }
 
     public static void detachConnectionsTarget(AbstractNode tableNode, PigMapData mapData) {
@@ -206,38 +215,41 @@ public class PigMapUtil {
 
     /**
      * DOC talend2 Comment method "updateExpression".
+     * 
      * @param oldName
      * @param newName
-     * @param externalEmfData 
-     * @param expressionManager 
+     * @param externalEmfData
+     * @param expressionManager
      */
-    public static void updateExpression(String oldName, String newName, PigMapData externalEmfData, PigMapExpressionManager expressionManager) {
+    public static void updateExpression(String oldName, String newName, PigMapData externalEmfData,
+            PigMapExpressionManager expressionManager) {
         List<AbstractInOutTable> tables = new ArrayList<AbstractInOutTable>(externalEmfData.getInputTables());
         tables.addAll(new ArrayList<AbstractInOutTable>(externalEmfData.getOutputTables()));
-        
-        for(AbstractInOutTable table : tables) {
-            
+
+        for (AbstractInOutTable table : tables) {
+
             String newExpressionFilter = replaceExpression(oldName, newName, table.getExpressionFilter(), expressionManager);
-            
+
             if (newExpressionFilter != null) {
                 table.setExpressionFilter(newExpressionFilter);
             }
-            
-            List<TableNode>  nodes = table.getNodes();
-            if(nodes!=null) {
-                for(TableNode node : nodes) {
+
+            List<TableNode> nodes = table.getNodes();
+            if (nodes != null) {
+                for (TableNode node : nodes) {
                     String newExpression = replaceExpression(oldName, newName, node.getExpression(), expressionManager);
                     if (newExpression != null) {
                         node.setExpression(newExpression);
                     }
                 }
             }
-            
+
         }
     }
 
     /**
      * DOC talend2 Comment method "replaceExpression".
+     * 
      * @param oldName
      * @param newName
      * @param expressionFilter
@@ -246,30 +258,95 @@ public class PigMapUtil {
      */
     private static String replaceExpression(String oldName, String newName, String currentExpression,
             PigMapExpressionManager expressionManager) {
-        
+
         if (currentExpression == null || currentExpression.trim().length() == 0) {
             return null;
         }
-        
+
         List<TableEntryLocation> tableEntryLocations = expressionManager.parseTableEntryLocation(currentExpression);
-        
+
         TableEntryLocation oldLocation = new TableEntryLocation(oldName);
         TableEntryLocation newLocation = new TableEntryLocation(newName);
-        
+
         for (int i = 0; i < tableEntryLocations.size(); i++) {
             TableEntryLocation currentLocation = tableEntryLocations.get(i);
             if (oldLocation.getTableName().equals(currentLocation.getTableName())) {
                 oldLocation.setColumnValue(currentLocation.getColumnValue());
                 newLocation.setColumnValue(currentLocation.getColumnValue());
             }
-            
+
             if (currentLocation.equals(oldLocation)) {
                 currentExpression = expressionManager.replaceExpression(currentExpression, currentLocation, newLocation);
             }
         }
-        
+
         return currentExpression;
-        
     }
-    
+
+    public static String findUniqueVarColumnName(String baseName, VarTable parentTable) {
+        if (baseName == null) {
+            throw new IllegalArgumentException("Base name can't null"); //$NON-NLS-1$
+        }
+        String uniqueName = baseName + 1;
+
+        int counter = 1;
+        boolean exists = true;
+        while (exists) {
+            exists = !checkValidColumnName(uniqueName, parentTable);
+            if (!exists) {
+                break;
+            }
+            uniqueName = baseName + counter++;
+        }
+        return TalendQuoteUtils.addQuotesIfNotExist(uniqueName);
+    }
+
+    private static boolean checkValidColumnName(String newName, VarTable parentTable) {
+        for (VarNode entry : parentTable.getNodes()) {
+            String tempName = TalendQuoteUtils.removeQuotesIfExist(entry.getName());
+            if (newName.equals(tempName)) {
+                return false;
+            }
+        }
+        Pattern regex = Pattern.compile("^[A-Za-z_][A-Za-z0-9_]*$", Pattern.CANON_EQ | Pattern.CASE_INSENSITIVE);//$NON-NLS-1$
+        Matcher regexMatcher = regex.matcher(newName);
+        return regexMatcher.matches();
+    }
+
+    public static String isValidColumnName(final List<? extends AbstractNode> validationList, String newName) {
+        if (!StringUtil.validateLabelForXML(newName) || !MetadataToolHelper.isValidColumnName(newName)) {
+            return Messages.getString("InsertNewColumn_invalid", newName); //$NON-NLS-1$
+        } else {
+            for (AbstractNode existed : validationList) {
+                String tempName = TalendQuoteUtils.removeQuotesIfExist(existed.getName());
+                if (tempName.equals(newName)) {
+                    return Messages.getString("InsertNewColumn_existed"); //$NON-NLS-1$
+                }
+            }
+        }
+        return null;
+    }
+
+    public static void updateTargetExpression(AbstractNode renamedNode, String oldExpression, String newExpression,
+            PigMapExpressionManager expressionManager) {
+        TableEntryLocation previousLocation = expressionManager.parseTableEntryLocation(oldExpression).get(0);
+        TableEntryLocation newLocation = expressionManager.parseTableEntryLocation(newExpression).get(0);
+
+        List<INodeConnection> connections = new ArrayList<INodeConnection>();
+        connections.addAll(renamedNode.getOutgoingConnections());
+        if (renamedNode instanceof TableNode) {
+            connections.addAll(((TableNode) renamedNode).getLookupOutgoingConnections());
+        }
+
+        for (INodeConnection connection : connections) {
+            AbstractNode target = connection.getTarget();
+            List<TableEntryLocation> targetLocaitons = expressionManager.parseTableEntryLocation(target.getExpression());
+            for (TableEntryLocation current : targetLocaitons) {
+                if (current.equals(previousLocation)) {
+                    String replaced = expressionManager.replaceExpression(target.getExpression(), current, newLocation);
+                    target.setExpression(replaced);
+                }
+            }
+        }
+    }
 }

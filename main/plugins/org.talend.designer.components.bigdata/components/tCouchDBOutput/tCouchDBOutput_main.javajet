@@ -11,6 +11,7 @@
 		org.talend.core.model.process.IConnectionCategory
 
 		java.util.List
+		java.util.Map
 	" 
 %>
 	<%
@@ -41,6 +42,16 @@
 				map_<%=cid%> = new java.util.HashMap<Object,Object>();
 				nb_line_<%=cid%> ++;
 				<%
+				Map<String,String> actionMap=new java.util.HashMap<String,String>();
+				if (isLog4jEnabled) {
+					actionMap.put("INSERT","Inserting");
+					actionMap.put("UPDATE","Updating");
+					actionMap.put("DELETE","Deleting");
+					actionMap.put("UPSERT","Upserting");
+					%>
+					log.debug("<%=cid%> - <%=actionMap.get(dataAction)%> the record " + (nb_line_<%=cid%>) + ".");
+				<%
+				}
 				for (int i = 0; i < sizeColumns; i++) {
 					IMetadataColumn column = columnList.get(i);
 					if(!column.getLabel().equals(key)){
@@ -67,12 +78,7 @@
 					}catch(org.lightcouch.DocumentConflictException e_<%=cid%>){
 						<%
 						if(dieOnError){
-							if(isLog4jEnabled){
-							%>
-								log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
-							<%
-							}
-							%>
+						%>
 							throw e_<%=cid%>;
 						<%
 						}else{
@@ -99,7 +105,7 @@
 						if("UPDATE".equals(dataAction)||"UPSERT".equals(dataAction)){
 						%>
 							client_<%=cid%>.update(map_<%=cid%>);
-							nb_line_update_<%=cid%> ++;
+							nb_line_updated_<%=cid%> ++;
 						<%
 		               	}
 						if("DELETE".equals(dataAction)){
@@ -118,12 +124,7 @@
 						<%
 						}else{
 							if(dieOnError){
-								if(isLog4jEnabled){
-								%>
-									log.fatal("<%=cid%> - "+e_<%=cid%>.getMessage());
-								<%
-								}
-								%>
+							%>
 								throw e_<%=cid%>;
 							<%
 							}else{
@@ -139,18 +140,6 @@
 						}
 						%>
 					}
-				<%
-				}
-				if (isLog4jEnabled) {
-				%>
-					log4jSb_<%=cid%>.append("[key:"+<%=conn.getName()%>.<%=key%>+"]");
-					log4jSb_<%=cid%>.append("|");
-					log4jSb_<%=cid%>.append("[value:"+map_<%=cid%>+"]");
-					log4jSb_<%=cid%>.append("|");
-					
-					log.debug("<%=cid%> - Saved the record " + (nb_line_<%=cid%>) + ".");
-					log.trace("<%=cid%> - Content of the record " + (nb_line_<%=cid%>) + ": " + log4jSb_<%=cid%>);
-					log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 				<%
 				}
 			}

@@ -303,6 +303,3 @@
 	sb_<%=cid%>.setLength(0);	
 	
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/RegisterPigLatin.javajet"%>
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>

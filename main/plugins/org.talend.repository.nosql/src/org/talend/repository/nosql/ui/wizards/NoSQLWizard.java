@@ -123,7 +123,7 @@ public class NoSQLWizard extends AbstractNoSQLWizard {
         }
         // initialize the context mode
         ConnectionContextHelper.checkContextMode(connectionItem);
-        setHelpAvailable(true);
+        setHelpAvailable(false);
     }
 
     @Override
@@ -200,6 +200,8 @@ public class NoSQLWizard extends AbstractNoSQLWizard {
                         ExceptionUtils.getFullStackTrace(e));
                 ExceptionHandler.process(e);
                 return false;
+            } finally {
+                performClean();
             }
             return true;
         } else {

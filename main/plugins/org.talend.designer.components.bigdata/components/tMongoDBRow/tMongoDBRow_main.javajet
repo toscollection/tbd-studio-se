@@ -8,7 +8,6 @@
     	java.util.Map		
 	" 
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
   	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
   	INode node = (INode)codeGenArgument.getArgument();
@@ -23,6 +22,11 @@
   	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
   	
   	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+  	if (isLog4jEnabled) {
+	%>
+		final StringBuffer log4jSb_<%=cid%> = new StringBuffer();
+	<%
+	}
 	%>
 	try{
 		<%
@@ -41,7 +45,10 @@
 				log.info("<%=cid%> - Execute script function: " + <%=function%> + ".");
 				<%
 				for(Map<String, String> parameter:parameters){
-					log4jFileUtil.collectRetriveData(parameter.get("PARAMETER"));
+				%>
+					log4jSb_<%=cid%>.append(<%=parameter.get("PARAMETER")%>);
+					log4jSb_<%=cid%>.append("|");								
+				<%
 				}
 				%>
 				log.info("<%=cid%> - Arguments : " + log4jSb_<%=cid%>+".");
@@ -59,39 +66,47 @@
 			%>
 				log.info("<%=cid%> - Return the result is : "+result_<%=cid%>);
 			<%
+			} else {
+			%>
+			    System.out.println(result_<%=cid%>);
+		    <%
 			}
 			%>
-			System.out.println(result_<%=cid%>);
 		}else{
 			<%
 			if(isLog4jEnabled){
 			%>
-				log.error("<%=cid%> - Error result: "+result_<%=cid%>);
+				log.error("<%=cid%> - Error result: " + result_<%=cid%>);
 			<%
-			}
-			%>
-			System.err.println(result_<%=cid%>);
+			} else {
+            %>
+                System.out.println(result_<%=cid%>);
+            <%
+            }
+	        if (dieOnError) {
+	        %>
+	            throw new Exception("Error result: " + result_<%=cid%>);
+	        <%
+	        }
+	        %>
 		}
-	}catch(Exception e_<%=cid%>){
+	} catch(Exception e_<%=cid%>) {
 		<%
-		if(dieOnError){
-			if(isLog4jEnabled){
-			%>
-				log.fatal("<%=cid%> - " + e_<%=cid%>.getMessage());
-			<%
-			}
-			%>
+		if (dieOnError) {
+		%>
 			e_<%=cid%>.printStackTrace();
+			throw e_<%=cid%>;
 		<%
-		}else{
+		} else {
 			if(isLog4jEnabled){
 			%>
 				log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
 			<%
+			} else {
+			    %>
+			    System.err.println(e_<%=cid%>.getMessage());
+			    <%
 			}
-			%>
-			System.err.println(e_<%=cid%>.getMessage());
-		<%
 		}
 		%>
 	}

@@ -10,6 +10,7 @@
 	    RELEASE_DATE="201300828A"
 	    STARTABLE="true"
 		PARTITIONING="NONE"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
   	</HEADER>
@@ -250,6 +251,15 @@
             NUM_ROW="80"
             SHOW_IF="(FILE_TYPE == 'CSV') OR (FILE_TYPE == 'TSV')"
      	>
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER
+            NAME="JSON_ARRAY"
+            FIELD="CHECK"
+            NUM_ROW="90"
+            SHOW_IF="(FILE_TYPE == 'JSON')"
+        >
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
 

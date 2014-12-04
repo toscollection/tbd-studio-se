@@ -1,0 +1,144 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		java.util.List
+		java.util.ArrayList
+		java.util.Map
+		"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String previous_node="";
+	String previousOutputConnectionName = "";
+	boolean isStreaming = false;
+	
+	IConnection inputConnection = null;
+	String inputConnectionName = "";
+	IConnection outputConnection = null;
+	String outputConnectionName = "";
+	
+	List<IMetadataColumn> inputColumns = null;
+	List<IMetadataColumn> outputColumns = null;
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		inputConnection = node.getIncomingConnections().get(0);
+		previous_node = inputConnection.getSource().getUniqueName();
+		inputConnectionName = inputConnection.getName();
+		previousOutputConnectionName = inputConnectionName;
+		inputColumns = inputConnection.getMetadataTable().getListColumns();
+		if(!(inputColumns.size()>0)) {
+%>
+			if(true) {
+				throw new java.lang.Exception("The component <%=cid%> must have input columns.");
+			}
+<%
+		}
+	}
+	
+
+	if(node.getOutgoingConnections()!=null && node.getOutgoingConnections().size()>0) {
+		outputConnection = node.getOutgoingConnections().get(0);
+		outputConnectionName = outputConnection.getName();
+		outputColumns = outputConnection.getMetadataTable().getListColumns();
+		if(!(outputColumns.size()>0)) {
+%>
+			if(true) {
+				throw new java.lang.Exception("The component <%=cid%> must have output columns.");
+			}
+<%
+		}
+	}
+	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+		String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+			if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+				isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+			}
+		}
+		
+		List<Map<String, String>> keyFields = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__KEY_FIELDS__");
+		List<Map<String, String>> operationsConfig = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__OPERATIONS__");
+		
+		String contextClass = (isStreaming?"org.apache.spark.streaming.api.java.JavaStreamingContext":"org.apache.spark.api.java.JavaSparkContext");
+		String talendRDDClass = (isStreaming?"org.talend.spark.TalendDStreamRDD":"org.talend.spark.TalendJavaRDD");
+		
+		String keysId="";
+	
+	  	if(outputConnection != null && inputConnection!=null) {
+			List<String> inputColumnsName = new ArrayList<String>();
+			for (IMetadataColumn column : inputColumns) {
+				inputColumnsName.add(column.getLabel());
+			}
+			boolean isFirst = true;
+			if(keyFields.size()>0){
+				for (Map<String, String> map : keyFields) {
+					if(!isFirst){
+						keysId = keysId + ",";
+					}
+					isFirst = false;
+					keysId = keysId + inputColumnsName.indexOf(map.get("INPUT_COLUMN"));
+				}
+			}
+%>
+			java.util.List<org.talend.spark.utils.Aggregation> aggregationsList_<%=cid%> = new java.util.ArrayList<org.talend.spark.utils.Aggregation>();
+<%		
+			for(int i=0; i<outputColumns.size(); i++) {
+				String operation = "";
+				String outputColumnName = outputColumns.get(i).getLabel();
+				int inputColumnIndex = -1;
+				boolean found = false;
+				
+				//First, we look for the output column in the Operation table.
+				for(Map<String, String> op : operationsConfig) {
+					String operationOutputColumnName = op.get("OUTPUT_COLUMN");
+					if(outputColumnName.equals(operationOutputColumnName)) {
+						operation = op.get("FUNCTION");
+						inputColumnIndex = inputColumnsName.indexOf(op.get("INPUT_COLUMN"));
+						found = true;
+						break;
+					}
+				}
+				
+				//Next, we look for the output column in the Key table.
+				if(!found) {
+					for(Map<String, String> key : keyFields) {
+						String keyColumnName = key.get("INPUT_COLUMN");
+						if(outputColumnName.equals(keyColumnName)) {
+							operation = "PASS_THROUGH";
+							inputColumnIndex = inputColumnsName.indexOf(keyColumnName);
+							found = true;
+							break;
+						}
+					}
+				}
+				
+				//Else, we ignore this column.
+				if(!found) {
+					continue;
+				}
+%>
+				aggregationsList_<%=cid%>.add(new org.talend.spark.utils.Aggregation(<%=i%>, "<%=JavaTypesManager.getTypeToGenerate(outputColumns.get(i).getTalendType(), true)%>", <%=inputColumnIndex%>, "<%=JavaTypesManager.getTypeToGenerate(inputColumns.get(inputColumnIndex).getTalendType(), true)%>", org.talend.spark.utils.Operation.<%=operation%>));
+<%			
+			}
+%>
+			org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = org.talend.spark.operation.Aggregate.run(<%=previous_node%>_<%=inputConnectionName%>_RDD,<%if(!"".equals(keysId)) {%>java.util.Arrays.asList(<%=keysId%>)<%}else{%>null<%}%>, aggregationsList_<%=cid%>);
+<%
+		}
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>

@@ -1,0 +1,75 @@
+<%@ jet
+imports="
+org.talend.core.model.process.INode
+org.talend.core.model.process.ElementParameterParser
+org.talend.core.model.metadata.IMetadataTable
+org.talend.core.model.metadata.IMetadataColumn
+org.talend.core.model.process.IConnection
+org.talend.core.model.process.IConnectionCategory
+org.talend.designer.codegen.config.CodeGeneratorArgument
+java.util.List 
+java.util.Map
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+	
+	if(!"".equals(outputConnectionName)) {
+	
+		boolean inMain = true;
+		String startNode = "";
+	
+		inMain = node.isSubtreeStart();
+		
+		INode lastNode = node;
+		
+		boolean hasChanged = true;	// Used to avoid infinite loops.
+		while((lastNode.getOutgoingConnections(org.talend.core.model.process.EConnectionType.FLOW_REF).size()==0) && hasChanged) {
+			if(lastNode.getOutgoingConnections().size()>0) {
+				hasChanged = true;
+				lastNode = lastNode.getOutgoingConnections().get(0).getTarget();
+			} else {
+				hasChanged = false;
+			}
+		}
+		
+		boolean isStreaming = false;
+		boolean defineTimeout = false;
+		String timeout = "";
+		String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+			if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+				isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+				if(isStreaming) {
+					defineTimeout = "true".equals(ElementParameterParser.getValue(pNode, "__DEFINE_DURATION__"));
+					timeout = ElementParameterParser.getValue(pNode, "__STREAMING_DURATION__");
+				}
+			}
+		}
+		
+		if(!inMain) {
+%>
+			globalMap.put("LOOKUP_RDD_<%=cid%>", <%=lastNode.getUniqueName()%>_<%=lastNode.getOutgoingConnections().get(0).getName()%>_RDD);
+<%
+		} 
+	
+		if(isStreaming && inMain) {
+%>
+			ctx_<%=cid%>.start();
+			ctx_<%=cid%>.awaitTermination(<%=defineTimeout?timeout:""%>);
+<%
+		}
+	}
+%>
+
+	resourceMap.put("finish_<%=cid%>", true); 
+	

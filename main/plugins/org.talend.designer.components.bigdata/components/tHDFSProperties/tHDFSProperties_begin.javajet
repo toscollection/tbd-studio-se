@@ -68,20 +68,16 @@
 			}
 		<%}%>
 		
-		<%
-		log4jFileUtil.collectRetriveData(outputConn);
-		log4jFileUtil.debugRetriveData();
-		%>
+		
 	}
 	<%
 		if(isLog4jEnabled) {
 	%>
 	else {
-		log.info("<%=cid%> - file or directory : " + path_<%=cid %> + " does not exist.");
+		log.warn("<%=cid%> - file or directory : " + path_<%=cid %> + " does not exist.");
 	}
 	<%
     	}
 	}
 	
-	log4jFileUtil.componentFinishInfo(node);
 	%>

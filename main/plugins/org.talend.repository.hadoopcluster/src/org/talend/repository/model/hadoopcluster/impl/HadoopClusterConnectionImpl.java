@@ -46,6 +46,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getJobTrackerURI <em>Job Tracker URI</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isEnableKerberos <em>Enable Kerberos</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getPrincipal <em>Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getJtOrRmPrincipal <em>Jt Or Rm Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getGroup <em>Group</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getAuthMode <em>Auth Mode</em>}</li>
@@ -239,6 +240,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected String principal = PRINCIPAL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getJtOrRmPrincipal() <em>Jt Or Rm Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getJtOrRmPrincipal()
+     * @generated
+     * @ordered
+     */
+    protected static final String JT_OR_RM_PRINCIPAL_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getJtOrRmPrincipal() <em>Jt Or Rm Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getJtOrRmPrincipal()
+     * @generated
+     * @ordered
+     */
+    protected String jtOrRmPrincipal = JT_OR_RM_PRINCIPAL_EDEFAULT;
 
     /**
      * The default value of the '{@link #getUserName() <em>User Name</em>}' attribute.
@@ -593,6 +614,27 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getJtOrRmPrincipal() {
+        return jtOrRmPrincipal;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setJtOrRmPrincipal(String newJtOrRmPrincipal) {
+        String oldJtOrRmPrincipal = jtOrRmPrincipal;
+        jtOrRmPrincipal = newJtOrRmPrincipal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL, oldJtOrRmPrincipal, jtOrRmPrincipal));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getUserName() {
         return userName;
     }
@@ -778,6 +820,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return isEnableKerberos();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRINCIPAL:
                 return getPrincipal();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
+                return getJtOrRmPrincipal();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 return getUserName();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
@@ -834,6 +878,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRINCIPAL:
                 setPrincipal((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
+                setJtOrRmPrincipal((String)newValue);
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 setUserName((String)newValue);
@@ -899,6 +946,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRINCIPAL:
                 setPrincipal(PRINCIPAL_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
+                setJtOrRmPrincipal(JT_OR_RM_PRINCIPAL_EDEFAULT);
+                return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 setUserName(USER_NAME_EDEFAULT);
                 return;
@@ -953,6 +1003,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return enableKerberos != ENABLE_KERBEROS_EDEFAULT;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRINCIPAL:
                 return PRINCIPAL_EDEFAULT == null ? principal != null : !PRINCIPAL_EDEFAULT.equals(principal);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
+                return JT_OR_RM_PRINCIPAL_EDEFAULT == null ? jtOrRmPrincipal != null : !JT_OR_RM_PRINCIPAL_EDEFAULT.equals(jtOrRmPrincipal);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
@@ -1001,6 +1053,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(enableKerberos);
         result.append(", principal: ");
         result.append(principal);
+        result.append(", jtOrRmPrincipal: ");
+        result.append(jtOrRmPrincipal);
         result.append(", userName: ");
         result.append(userName);
         result.append(", group: ");

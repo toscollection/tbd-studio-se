@@ -38,12 +38,15 @@ import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.context.JobContextManager;
+import org.talend.core.model.metadata.types.JavaType;
+import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.process.IContextParameter;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.RepositoryNoSQLPlugin;
+import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.constants.INoSQLConstants;
 import org.talend.repository.nosql.context.NoSQLConnectionContextManager;
 import org.talend.repository.nosql.factory.NoSQLRepositoryFactory;
@@ -60,6 +63,8 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
     protected UtilsButton checkBtn;
 
     protected Composite parentComposite;
+
+    protected Composite topComposite;
 
     private final NoSQLConnectionContextManager nosqlContextManger;
 
@@ -97,8 +102,8 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
 
     @Override
     protected void addFields() {
-        Composite parent = createScrolledComposite();
-        addConnFields(parent);
+        topComposite = createScrolledComposite();
+        addConnFields(topComposite);
         createCheckBtn(this);
     }
 
@@ -206,8 +211,18 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
     private void addContextParams(List<IContextParameter> varList) {
         String contextName = ConnectionContextHelper.convertContextLabel(connectionItem.getProperty().getLabel());
         for (String attr : attributes) {
+
+            NoSQLConnection conn = getConnection();
+            String value = conn.getAttributes().get(attr);
+            JavaType javaType = null;
+            if (INoSQLCommonAttributes.PASSWORD.equals(attr)) {
+                javaType = JavaTypesManager.PASSWORD;
+                // because it's for JobContextParameter, so need raw value for password.
+                value = conn.getValue(value, false);
+            }
             ConnectionContextHelper.createParameters(varList, contextName + "_" + attr, //$NON-NLS-1$
-                    getConnection().getAttributes().get(attr), null);
+                    value, javaType);
+
         }
     }
 

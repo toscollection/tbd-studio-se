@@ -22,12 +22,12 @@ import org.talend.designer.pigmap.model.emf.pigmap.PigmapPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- * <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.ConnectionImpl#getName <em>Name</em>}</li>
- * <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.ConnectionImpl#getSource <em>Source</em>}</li>
- * <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.ConnectionImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.ConnectionImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.ConnectionImpl#getSource <em>Source</em>}</li>
+ *   <li>{@link org.talend.designer.pigmap.model.emf.pigmap.impl.ConnectionImpl#getTarget <em>Target</em>}</li>
  * </ul>
  * </p>
- * 
+ *
  * @generated
  */
 public class ConnectionImpl extends EObjectImpl implements Connection {
@@ -43,9 +43,9 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
     protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getSource() <em>Source</em>}' reference. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getSource()
      * @generated
      * @ordered
@@ -53,9 +53,9 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
     protected AbstractNode source;
 
     /**
-     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getTarget()
      * @generated
      * @ordered
@@ -64,7 +64,6 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected ConnectionImpl() {
@@ -73,7 +72,6 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -95,7 +93,6 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public AbstractNode getSource() {
@@ -104,7 +101,6 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setSource(AbstractNode newSource) {
@@ -116,7 +112,6 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public AbstractNode getTarget() {
@@ -125,7 +120,6 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setTarget(AbstractNode newTarget) {
@@ -137,72 +131,68 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-        case PigmapPackage.CONNECTION__NAME:
-            return getName();
-        case PigmapPackage.CONNECTION__SOURCE:
-            return getSource();
-        case PigmapPackage.CONNECTION__TARGET:
-            return getTarget();
+            case PigmapPackage.CONNECTION__NAME:
+                return getName();
+            case PigmapPackage.CONNECTION__SOURCE:
+                return getSource();
+            case PigmapPackage.CONNECTION__TARGET:
+                return getTarget();
         }
         return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-        case PigmapPackage.CONNECTION__SOURCE:
-            setSource((AbstractNode) newValue);
-            return;
-        case PigmapPackage.CONNECTION__TARGET:
-            setTarget((AbstractNode) newValue);
-            return;
+            case PigmapPackage.CONNECTION__SOURCE:
+                setSource((AbstractNode)newValue);
+                return;
+            case PigmapPackage.CONNECTION__TARGET:
+                setTarget((AbstractNode)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-        case PigmapPackage.CONNECTION__SOURCE:
-            setSource((AbstractNode) null);
-            return;
-        case PigmapPackage.CONNECTION__TARGET:
-            setTarget((AbstractNode) null);
-            return;
+            case PigmapPackage.CONNECTION__SOURCE:
+                setSource((AbstractNode)null);
+                return;
+            case PigmapPackage.CONNECTION__TARGET:
+                setTarget((AbstractNode)null);
+                return;
         }
         super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-        case PigmapPackage.CONNECTION__NAME:
-            return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
-        case PigmapPackage.CONNECTION__SOURCE:
-            return source != null;
-        case PigmapPackage.CONNECTION__TARGET:
-            return target != null;
+            case PigmapPackage.CONNECTION__NAME:
+                return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
+            case PigmapPackage.CONNECTION__SOURCE:
+                return source != null;
+            case PigmapPackage.CONNECTION__TARGET:
+                return target != null;
         }
         return super.eIsSet(featureID);
     }

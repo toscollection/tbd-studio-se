@@ -122,6 +122,13 @@ public class PigmapSwitch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case PigmapPackage.VAR_TABLE: {
+                VarTable varTable = (VarTable)theEObject;
+                T result = caseVarTable(varTable);
+                if (result == null) result = caseMapperTable(varTable);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             case PigmapPackage.ABSTRACT_NODE: {
                 AbstractNode abstractNode = (AbstractNode)theEObject;
                 T result = caseAbstractNode(abstractNode);
@@ -134,6 +141,14 @@ public class PigmapSwitch<T> {
                 T result = caseTableNode(tableNode);
                 if (result == null) result = caseAbstractNode(tableNode);
                 if (result == null) result = caseMapperTableEntity(tableNode);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case PigmapPackage.VAR_NODE: {
+                VarNode varNode = (VarNode)theEObject;
+                T result = caseVarNode(varNode);
+                if (result == null) result = caseAbstractNode(varNode);
+                if (result == null) result = caseMapperTableEntity(varNode);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -238,6 +253,21 @@ public class PigmapSwitch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Var Table</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Var Table</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseVarTable(VarTable object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Abstract Node</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -264,6 +294,21 @@ public class PigmapSwitch<T> {
      * @generated
      */
     public T caseTableNode(TableNode object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Var Node</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Var Node</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseVarNode(VarNode object) {
         return null;
     }
 

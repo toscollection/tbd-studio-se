@@ -1,5 +1,4 @@
-0=Not a build
+0=${version.full}
 1=Launched from Eclipse
-2=Talend Open Studio for Big Data
-3=http://www.talend.com
-
+2=${product.name}
+3=${product.website}

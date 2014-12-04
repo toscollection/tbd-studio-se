@@ -11,6 +11,7 @@
 	    DATA_AUTO_PROPAGATE="false"
 	    TECHNICAL="true"
 		PARTITIONING="NONE"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
 	</HEADER>
@@ -209,6 +210,7 @@
 	    <PARAMETER
 		    NAME="DESTINATION"
 		    FIELD="TEXT"
+            RAW="true"
 		    NUM_ROW="110"
 	        REQUIRED="true"
 	        SHOW_IF="false"

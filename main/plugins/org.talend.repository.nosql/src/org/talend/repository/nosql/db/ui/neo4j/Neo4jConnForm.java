@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.repository.nosql.db.ui.neo4j;
 
+import java.io.File;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.wizard.WizardPage;
@@ -28,16 +31,20 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
 import org.talend.repository.nosql.db.util.neo4j.Neo4jConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLGeneralException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
+import org.talend.repository.nosql.factory.NoSQLRepositoryFactory;
 import org.talend.repository.nosql.i18n.Messages;
 import org.talend.repository.nosql.ui.common.AbstractNoSQLConnForm;
 import org.talend.repository.nosql.validator.NonemptyValidator;
+import org.talend.repository.nosql.validator.SpecialValueValidator;
 
 /**
  * 
@@ -62,7 +69,11 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
 
     private LabelledText dbPathTxt;
 
+    private LabelledText absPathTxt;
+
     private LabelledText serverURLTxt;
+
+    protected LabelledCombo dbVersionCombo;
 
     public Neo4jConnForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             WizardPage parentWizardPage) {
@@ -80,19 +91,27 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         boolean isRemote = Boolean.valueOf(getConnection().getAttributes().get(INeo4jAttributes.REMOTE_SERVER));
         String dbPath = StringUtils.trimToEmpty(getConnection().getAttributes().get(INeo4jAttributes.DATABASE_PATH));
         String serverURL = StringUtils.trimToNull(getConnection().getAttributes().get(INeo4jAttributes.SERVER_URL));
+        String dbVersion = StringUtils.trimToNull(getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION));
+        if (validText(dbVersion)) {
+            dbVersionCombo.setText(repositoryTranslator.getLabel(dbVersion));
+        } else {
+            dbVersionCombo.select(0);
+        }
         localDbBtn.setSelection(!isRemote);
         remoteDbBtn.setSelection(isRemote);
         udpateDBConnPart(isRemote);
         dbPathTxt.setText(dbPath);
         serverURLTxt.setText(serverURL == null ? INeo4jConstants.DEFAULT_SERVER_URL : serverURL);
+        // updateAbsPathStatus();
     }
 
     @Override
     protected void updateEditableStatus(boolean editable) {
+        dbVersionCombo.setEnabled(editable);
         localDbBtn.setEnabled(editable);
         remoteDbBtn.setEnabled(editable);
         browseDbPathBtn.setEnabled(editable);
-        dbPathTxt.setEditable(editable);
+        // dbPathTxt.setEditable(editable);
         serverURLTxt.setEditable(editable);
     }
 
@@ -108,6 +127,21 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         gpLayout.marginWidth = 5;
         gpLayout.marginHeight = 5;
         connectionGroup.setLayout(gpLayout);
+
+        Composite versionComposite = new Composite(connectionGroup, SWT.NONE);
+        versionComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+        GridLayout versionCompLayout = new GridLayout(4, false);
+        versionCompLayout.marginWidth = 0;
+        versionCompLayout.marginHeight = 0;
+        versionComposite.setLayout(versionCompLayout);
+
+        // create DB_Version Combo
+        NoSQLRepositoryFactory repFactory = NoSQLRepositoryFactory.getInstance();
+        List<String> dbVersions = repFactory.getDBVersions(getConnection().getDbType());
+        List<String> dbVersionLabels = repositoryTranslator.getLabels(dbVersions);
+        dbVersionCombo = new LabelledCombo(
+                versionComposite,
+                Messages.getString("MongoDBConnForm.dbVersion"), Messages.getString("MongoDBConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
 
         localDbBtn = new Button(connectionGroup, SWT.RADIO);
         localDbBtn.setText(Messages.getString("Neo4jConnForm.button.localDB.label")); //$NON-NLS-1$
@@ -129,9 +163,13 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         localDBCompLayout.marginWidth = 0;
         localDBCompLayout.marginHeight = 0;
         localDBComposite.setLayout(localDBCompLayout);
-        dbPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.dbPath.label")); //$NON-NLS-1$
+        dbPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.dbPath.label"), 2); //$NON-NLS-1$
+        dbPathTxt.getTextControl().setEditable(false);
         browseDbPathBtn = new Button(localDBComposite, SWT.NONE);
         browseDbPathBtn.setText("..."); //$NON-NLS-1$
+        absPathTxt = new LabelledText(localDBComposite, Messages.getString("Neo4jConnForm.absPath.label"), 2); //$NON-NLS-1$
+        absPathTxt.getTextControl().setEditable(false);
+        absPathTxt.setHideWidgets(true);
 
         remoteDBComposite = new Composite(dbComposite, SWT.NONE);
         remoteDBComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -147,8 +185,26 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         dbComposite.layout();
     }
 
+    private void updateAbsPathStatus() {
+        String dbPath = dbPathTxt.getText();
+        String absPath = new File(dbPath).getAbsolutePath();
+        absPath = Path.fromOSString(absPath).toPortableString();
+        absPathTxt.setText(absPath);
+        absPathTxt.setHideWidgets(dbPath.equalsIgnoreCase(absPath));
+        topComposite.layout();
+    }
+
     @Override
     protected void addFieldsListeners() {
+        dbVersionCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
+                        repositoryTranslator.getValue(dbVersionCombo.getText()));
+            }
+        });
         localDbBtn.addSelectionListener(new SelectionAdapter() {
 
             @Override
@@ -195,6 +251,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
                     if (!StringUtils.equals(originalDBPath, currentDBPath)) {
                         getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, currentDBPath);
                         udpateConnectionConfig();
+                        // updateAbsPathStatus();
                     }
                 }
             }
@@ -229,6 +286,8 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
     @Override
     protected void updateValidatorEntries() {
         super.updateValidatorEntries();
+        collectValidateEntry(new SpecialValueValidator(dbVersionCombo.getSelectionIndex(), -1), true,
+                Messages.getString("AbstractNoSQLConnForm.InvalidDBVersion")); //$NON-NLS-1$
         if (localDbBtn.getSelection()) {
             collectValidateEntry(new NonemptyValidator(dbPathTxt.getText()),
                     Messages.getString("Neo4jConnForm.validate.invalidDbPath")); //$NON-NLS-1$
@@ -255,6 +314,8 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         getConnection().getAttributes().put(INeo4jAttributes.REMOTE_SERVER, String.valueOf(remoteDbBtn.getSelection()));
         getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, dbPathTxt.getText());
         getConnection().getAttributes().put(INeo4jAttributes.SERVER_URL, serverURLTxt.getText());
+        getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
+                repositoryTranslator.getValue(dbVersionCombo.getText()));
     }
 
     @Override

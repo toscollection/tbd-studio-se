@@ -458,6 +458,15 @@ public interface HCatalogPackage extends EPackage {
     int HCATALOG_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID = HadoopClusterPackage.HADOOP_SUB_CONNECTION__RELATIVE_HADOOP_CLUSTER_ID;
 
     /**
+     * The feature id for the '<em><b>Hadoop Properties</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HCATALOG_CONNECTION__HADOOP_PROPERTIES = HadoopClusterPackage.HADOOP_SUB_CONNECTION__HADOOP_PROPERTIES;
+
+    /**
      * The feature id for the '<em><b>Distribution</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -512,13 +521,22 @@ public interface HCatalogPackage extends EPackage {
     int HCATALOG_CONNECTION__USER_NAME = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 5;
 
     /**
+     * The feature id for the '<em><b>Password</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HCATALOG_CONNECTION__PASSWORD = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 6;
+
+    /**
      * The feature id for the '<em><b>Database</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__DATABASE = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 6;
+    int HCATALOG_CONNECTION__DATABASE = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Enable Kerberos</b></em>' attribute.
@@ -527,7 +545,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__ENABLE_KERBEROS = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 7;
+    int HCATALOG_CONNECTION__ENABLE_KERBEROS = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 8;
 
     /**
      * The feature id for the '<em><b>Krb Principal</b></em>' attribute.
@@ -536,7 +554,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__KRB_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 8;
+    int HCATALOG_CONNECTION__KRB_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 9;
 
     /**
      * The feature id for the '<em><b>Krb Realm</b></em>' attribute.
@@ -545,7 +563,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__KRB_REALM = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 9;
+    int HCATALOG_CONNECTION__KRB_REALM = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 10;
 
     /**
      * The feature id for the '<em><b>Nn Principal</b></em>' attribute.
@@ -554,7 +572,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION__NN_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 10;
+    int HCATALOG_CONNECTION__NN_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 11;
 
     /**
      * The number of structural features of the '<em>Connection</em>' class.
@@ -563,7 +581,7 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 11;
+    int HCATALOG_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 12;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionItemImpl <em>Connection Item</em>}' class.
@@ -619,6 +637,15 @@ public interface HCatalogPackage extends EPackage {
      * @ordered
      */
     int HCATALOG_CONNECTION_ITEM__FILE_EXTENSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__FILE_EXTENSION;
+
+    /**
+     * The feature id for the '<em><b>Need Version</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HCATALOG_CONNECTION_ITEM__NEED_VERSION = HadoopClusterPackage.HADOOP_SUB_CONNECTION_ITEM__NEED_VERSION;
 
     /**
      * The feature id for the '<em><b>Connection</b></em>' reference.
@@ -714,6 +741,17 @@ public interface HCatalogPackage extends EPackage {
      * @generated
      */
     EAttribute getHCatalogConnection_UserName();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getPassword <em>Password</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Password</em>'.
+     * @see org.talend.repository.model.hcatalog.HCatalogConnection#getPassword()
+     * @see #getHCatalogConnection()
+     * @generated
+     */
+    EAttribute getHCatalogConnection_Password();
 
     /**
      * Returns the meta object for the attribute '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getDatabase <em>Database</em>}'.
@@ -859,6 +897,14 @@ public interface HCatalogPackage extends EPackage {
          * @generated
          */
         EAttribute HCATALOG_CONNECTION__USER_NAME = eINSTANCE.getHCatalogConnection_UserName();
+
+        /**
+         * The meta object literal for the '<em><b>Password</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HCATALOG_CONNECTION__PASSWORD = eINSTANCE.getHCatalogConnection_Password();
 
         /**
          * The meta object literal for the '<em><b>Database</b></em>' attribute feature.

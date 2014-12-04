@@ -30,6 +30,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobTrackerURI <em>Job Tracker URI</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableKerberos <em>Enable Kerberos</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getPrincipal <em>Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJtOrRmPrincipal <em>Jt Or Rm Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getGroup <em>Group</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getAuthMode <em>Auth Mode</em>}</li>
@@ -283,6 +284,33 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setPrincipal(String value);
+
+    /**
+     * Returns the value of the '<em><b>Jt Or Rm Principal</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Jt Or Rm Principal</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Jt Or Rm Principal</em>' attribute.
+     * @see #setJtOrRmPrincipal(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_JtOrRmPrincipal()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getJtOrRmPrincipal();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJtOrRmPrincipal <em>Jt Or Rm Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Jt Or Rm Principal</em>' attribute.
+     * @see #getJtOrRmPrincipal()
+     * @generated
+     */
+    void setJtOrRmPrincipal(String value);
 
     /**
      * Returns the value of the '<em><b>User Name</b></em>' attribute.

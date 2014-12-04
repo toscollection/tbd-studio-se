@@ -2,7 +2,7 @@
 <feature
       id="org.talend.tos.bigdata.libraries_feature"
       label="Libraries_feature"
-      version="1.0.0.qualifier">
+      version="6.0.0.qualifier">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -201,6 +201,12 @@
          version="0.0.0"/>
 
    <plugin
+         id="org.talend.libraries.hadoop.apache.2.4.0"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
          id="org.talend.libraries.hadoop.apache.1.0.0"
          download-size="0"
          install-size="0"
@@ -339,6 +345,12 @@
          version="0.0.0"/>
 
    <plugin
+         id="org.talend.libraries.hadoop.cloudera.cdh5.1"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
          id="org.talend.libraries.hadoop.mapr.3.1.0"
          download-size="0"
          install-size="0"
@@ -369,17 +381,9 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.talend.libraries.apache.kafka"
+         id="org.talend.libraries.hadoop.mapr.4.0.1"
          download-size="0"
          install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.talend.libraries.apache.storm"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

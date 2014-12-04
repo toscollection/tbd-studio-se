@@ -21,8 +21,10 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.emf.common.util.EMap;
+import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 
 /**
  * created by ycbai on 2013-3-13 Detailled comment
@@ -116,6 +118,21 @@ public class HCVersionUtil {
         customVersionMap.put(versionGroup.getName(), jarSet);
 
         return customVersionMap;
+    }
+
+    public static boolean isHDI(HadoopSubConnection connection) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        return isHDI(hcConnection);
+    }
+
+    public static boolean isHDI(HadoopClusterConnection connection) {
+        if (connection != null) {
+            if (EHadoopDistributions.MICROSOFT_HD_INSIGHT.getName().equals(connection.getDistribution())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -12,6 +12,7 @@
     TECHNICAL="true"
     DATA_AUTO_PROPAGATE="false"
     SCHEMA_AUTO_PROPAGATE="false"
+    LOG4J_ENABLED="true"
   >
     <SIGNATURE/>
   </HEADER>
@@ -320,7 +321,7 @@
     >
       <DEFAULT>"ISO-8859-15"</DEFAULT>
     </PARAMETER>
-        <PARAMETER NAME="DESTINATION" FIELD="TEXT" NUM_ROW="20"
+        <PARAMETER NAME="DESTINATION" FIELD="TEXT" RAW="true" NUM_ROW="20"
             REQUIRED="true" SHOW="false">
             <DEFAULT>tCouchbaseIn_1</DEFAULT>
         </PARAMETER>

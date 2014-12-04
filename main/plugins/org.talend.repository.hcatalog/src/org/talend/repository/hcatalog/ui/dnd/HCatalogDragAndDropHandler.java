@@ -214,46 +214,40 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
     }
 
     @Override
-    public void setComponentValue(Connection connection, INode node, String repositoryValue) {
+    public void setComponentValue(Connection connection, INode node, IElementParameter param) {
         if (node != null && canHandle(connection)) {
-            setHCatalogRepositoryValue((HCatalogConnection) connection, node, repositoryValue);
+            setHCatalogRepositoryValue((HCatalogConnection) connection, node, param);
         }
     }
 
-    private void setHCatalogRepositoryValue(HCatalogConnection connection, INode node, String repositoryValue) {
-        if (EHCatalogRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    EHCatalogRepositoryToComponent.DISTRIBUTION.getParameterName());
+    private void setHCatalogRepositoryValue(HCatalogConnection connection, INode node, IElementParameter param) {
+        if (EHCatalogRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setDistribution(value);
             }
-        } else if (EHCatalogRepositoryToComponent.HCAT_VERSION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    EHCatalogRepositoryToComponent.HCAT_VERSION.getParameterName());
+        } else if (EHCatalogRepositoryToComponent.HCAT_VERSION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setHcatVersion(value);
             }
-        } else if (EHCatalogRepositoryToComponent.TEMPLETON_HOST.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    EHCatalogRepositoryToComponent.TEMPLETON_HOST.getParameterName());
+        } else if (EHCatalogRepositoryToComponent.TEMPLETON_HOST.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setHostName(value);
             }
-        } else if (EHCatalogRepositoryToComponent.TEMPLETON_PORT.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    EHCatalogRepositoryToComponent.TEMPLETON_PORT.getParameterName());
+        } else if (EHCatalogRepositoryToComponent.TEMPLETON_PORT.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setPort(value);
             }
-        } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    EHCatalogRepositoryToComponent.DATABASE_NAME.getParameterName());
+        } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setDatabase(value);
             }
-        } else if (EHCatalogRepositoryToComponent.USERNAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node,
-                    EHCatalogRepositoryToComponent.USERNAME.getParameterName());
+        } else if (EHCatalogRepositoryToComponent.USERNAME.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setUserName(value);
             }

@@ -5,7 +5,6 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		"
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -32,8 +31,8 @@
 		instance_<%=cid%>.setLibJars(libjars_<%=cid%>.toString().substring(0, libjars_<%=cid%>.length()-1));
 		
 		instance_<%=cid%>.sendFiles();
-		instance_<%=cid%>.callWS(null);
-		int exitCode_<%=cid%> = instance_<%=cid%>.waitFor();
+		instance_<%=cid%>.callWS(null, true);
+		int exitCode_<%=cid%> = instance_<%=cid%>.execute();
 		if(exitCode_<%=cid%> > 0) {
 		
 <%
@@ -76,6 +75,4 @@
 		}
 %>
 	}
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>
+

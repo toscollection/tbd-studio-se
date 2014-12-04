@@ -1,0 +1,85 @@
+<%@ jet
+	imports="
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.EConnectionType   
+		java.util.List 
+"
+%>
+
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();	
+	String cid = node.getUniqueName();
+	
+	String inputFile = ElementParameterParser.getValue(node, "__UNION_FILENAME__");
+	String separator = ElementParameterParser.getValue(node, "__ROW_SEPARATOR__");
+	
+	String previous_node="";
+	String previousOutputConnectionName = "";
+	
+	if(node.getIncomingConnections()!=null && node.getIncomingConnections().size()>0) {
+		IConnection connection = node.getIncomingConnections(EConnectionType.FLOW_MAIN).get(0);
+		previous_node = connection.getSource().getUniqueName();
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = "";
+	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+	
+	if(!"".equals(previousOutputConnectionName) && !"".equals(outputConnectionName)) {
+	
+		boolean isStreaming = false;
+		
+		String sparkConnection = ElementParameterParser.getValue(node, "__SPARK_CONNECTION__");
+		for (INode pNode : node.getProcess().getNodesOfType("tSparkConnection")) {
+			if(sparkConnection!=null && sparkConnection.equals(pNode.getUniqueName())) {
+				isStreaming = "true".equals(ElementParameterParser.getValue(pNode, "__STREAMING__"));
+			}
+		}
+	
+%>
+		org.talend.spark.TalendRDD<List<Object>> union_<%=cid %>_RDD = <%=previous_node%>_<%=previousOutputConnectionName%>_RDD;
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = union_<%=cid %>_RDD;
+<%	
+		if(!isStreaming) {
+			INode lookupStartNode = node;
+			if(node.getIncomingConnections()!=null && node.getIncomingConnections(EConnectionType.FLOW_REF).size()>0) {
+				boolean isFirst = true;
+				for(IConnection connection : node.getIncomingConnections(EConnectionType.FLOW_REF)) {
+					lookupStartNode = connection.getSource();
+					while(lookupStartNode.getIncomingConnections(EConnectionType.FLOW_MAIN).size()>0) {
+						lookupStartNode = lookupStartNode.getIncomingConnections(EConnectionType.FLOW_MAIN).get(0).getSource();
+					}
+					if (previous_node.length()>0) {
+%>
+						union_<%=cid %>_RDD = union_<%=cid %>_RDD.union((org.talend.spark.TalendRDD<List<Object>>)globalMap.get("LOOKUP_RDD_<%=lookupStartNode.getUniqueName()%>"));
+<%
+					}
+				}
+			}
+
+			if (previous_node.length()>0) {
+%>
+				<%=cid%>_<%=outputConnectionName%>_RDD = union_<%=cid %>_RDD;
+<%
+			}
+		} else {
+%>
+			if(true) {
+				throw new java.lang.UnsupportedOperationException("The component tSparkUnion does not support the streaming mode.");
+			}
+<%
+		}
+	} else {
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tSparkConnection/sparkCheckInputAndOutputConnection.javajet"%>
+<%
+	}
+%>
+

@@ -1,0 +1,35 @@
+<%@jet
+%>
+
+<%
+	/* The sparkCode variable is created in the file plugins/org.talend.designer.components.localprovider/resources/header_additional_spark.javajet
+	* No need to create it again.
+	*/
+	String cid = sparkCode.getUniqueName();
+	String previousOutputConnectionName = "";
+		
+	if(sparkCode.getIncomingConnections()!=null && sparkCode.getIncomingConnections().size()>0) {
+		org.talend.core.model.process.IConnection connection = sparkCode.getIncomingConnections().get(0);
+		previousOutputConnectionName = connection.getName();
+	}
+	
+	String outputConnectionName = "";
+	List<org.talend.core.model.process.IConnection> outputConnections = (List<org.talend.core.model.process.IConnection>)sparkCode.getOutgoingConnections();
+	if(outputConnections!=null && outputConnections.size()>0) {
+		outputConnectionName = outputConnections.get(0).getName();
+	}
+%>	
+	static class <%=cid%>_SparkFunction implements org.apache.spark.api.java.function.Function<java.util.List<Object>, java.util.List<Object>>, java.io.Serializable {
+		private static final long serialVersionUID = 1L;
+		private java.util.Map<String, Object> localMap;
+		
+		public <%=cid%>_SparkFunction(java.util.Map<String, Object> localMap) {
+			this.localMap = localMap;
+		}
+		
+		public java.util.List<Object> call(java.util.List<Object> <%=previousOutputConnectionName%>) {
+			java.util.List<Object> <%=outputConnectionName%> = new java.util.ArrayList<Object>();
+			<%=org.talend.core.model.process.ElementParameterParser.getValue(sparkCode, "__CODE__")%>
+			return <%=outputConnectionName%>;
+		}
+	}

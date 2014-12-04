@@ -49,6 +49,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.ui.runtime.exception.ExceptionMessageDialog;
 import org.talend.commons.ui.swt.advanced.dataeditor.commands.ExtendedTableRemoveCommand;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
@@ -538,6 +539,9 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
 
     private void pressRetreiveSchemaButton() {
         ConnectionStatus connectionStatus = checkConnection(false);
+        if (connectionStatus == null) {
+            return;
+        }
         if (!connectionStatus.getResult()) {
             tableSettingsInfoLabel.setText(connectionStatus.getMessageException());
         } else {
@@ -552,6 +556,8 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
                     HadoopOperationManager.getInstance().getDFS(getConnectionBean()); // reconnect the HDFS server.
                     metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), metadataTable);
                 } catch (Exception e) {
+                    ExceptionMessageDialog.openError(getShell(),
+                            Messages.getString("HDFSSchemaForm.checkSchema.errorDialog.title"), e.getMessage(), e); //$NON-NLS-1$
                     ExceptionHandler.process(e);
                     return;
                 }

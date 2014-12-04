@@ -11,16 +11,12 @@
 		java.util.Map
 	"
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();
 String cid = node.getUniqueName();
 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-log4jFileUtil.componentStartInfo(node);
-log4jFileUtil.logParameters(node);
-
 IMetadataTable metadata = null;
 List<IMetadataTable> metadatas = node.getMetadataList();
 if((metadatas!=null) && (metadatas.size()>0)){

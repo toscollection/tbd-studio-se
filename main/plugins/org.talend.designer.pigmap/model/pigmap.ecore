@@ -8,6 +8,8 @@
         eType="#//InputTable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="outputTables" upperBound="-1"
         eType="#//OutputTable" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varTables" upperBound="-1"
+        eType="#//VarTable" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connections" upperBound="-1"
         eType="#//IConnection" containment="true"/>
   </eClassifiers>
@@ -40,6 +42,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enableEmptyElement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VarTable" eSuperTypes="../../org.talend.designer.gefabstractmap/model/abstractmap.ecore#//MapperTable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minimized" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//VarNode" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractNode" abstract="true" eSuperTypes="../../org.talend.designer.gefabstractmap/model/abstractmap.ecore#//MapperTableEntity">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -60,6 +68,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="lookupIncomingConnections"
         upperBound="-1" eType="#//LookupConnection"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VarNode" eSuperTypes="#//AbstractNode"/>
   <eClassifiers xsi:type="ecore:EEnum" name="NodeType">
     <eLiterals name="ELEMENT"/>
     <eLiterals name="ATTRIBUT" value="1"/>

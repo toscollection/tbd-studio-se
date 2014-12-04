@@ -1,0 +1,138 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		java.util.List 
+    	java.util.Map 
+    	java.util.ArrayList	
+    	java.util.HashSet 
+    	java.util.Arrays 
+    	java.util.Set 
+	" 
+%>
+<% 
+class Neo4JTransactionHelper {
+    private INode node;
+    private String cid;
+    private String dbVersion;
+    private boolean batchImport;
+    private boolean remoteServer;
+    private String commitEvery;
+
+    public Neo4JTransactionHelper(INode node) {
+        this.node = node;
+        this.cid = node.getUniqueName();
+
+        this.batchImport = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__BATCH_IMPORT__"));
+        this.commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__");
+        boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+
+        if (useExistingConnection) {
+            String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+            for(INode targetNode : node.getProcess().getNodesOfType("tNeo4jConnection")){
+                if (targetNode.getUniqueName().equals(connection)) {
+                    this.dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                    this.remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(targetNode, "__REMOTE_SERVER__"));
+                    break;
+                }
+            }
+        } else {
+            this.dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+            this.remoteServer = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOTE_SERVER__"));
+        }
+
+    }
+
+    public String getDbVersion() {
+        return this.dbVersion;
+    }
+
+    public void startTransaction() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+            <%
+        } else { // NEO4J_2_1_X
+            if (!this.batchImport) {
+                %>
+                org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
+                <%
+            }
+        }
+    }
+
+    public void restartTransaction() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
+                tx_<%=this.cid%>.success();
+                tx_<%=this.cid%>.finish();
+                tx_<%=this.cid%> = databaseService_<%=this.cid%>.beginTx();
+            }
+            <%
+        } else { // NEO4J_2_1_X
+            if (!this.batchImport) {
+                %>
+                if (counter_<%=this.cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
+                    tx_<%=this.cid%>.success();
+                    tx_<%=this.cid%>.finish();
+                    tx_<%=this.cid%> = databaseService_<%=this.cid%>.beginTx();
+                }
+                <%
+            }
+        }
+    }
+
+    public void closeTransaction() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
+                tx_<%=cid%>.success();
+                tx_<%=cid%>.finish();
+            }
+            <%
+        } else { // NEO4J_2_1_X
+            if (!this.batchImport) {
+                %>
+                if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
+                    tx_<%=cid%>.success();
+                    tx_<%=cid%>.finish();
+                }
+                <%
+            }
+        }
+    }
+
+    public void startEmbeddedTransaction() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            // Nothing for neo4j 1.X.X
+        } else { // NEO4J_2_1_X
+            if (!remoteServer) {
+                %>
+                org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
+                try
+                {
+                <%
+            }
+        }
+    }
+
+    public void closeEmbeddedTransaction() {
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            // Nothing for neo4j 1.X.X
+        } else { // NEO4J_2_1_X
+            if (!remoteServer) {
+                %>
+                tx_begin_<%=cid%>.success();
+                } // enf of Try
+                finally
+                {
+                    tx_begin_<%=cid%>.close();
+                }
+                <%
+            }
+        }
+    }
+}
+%>

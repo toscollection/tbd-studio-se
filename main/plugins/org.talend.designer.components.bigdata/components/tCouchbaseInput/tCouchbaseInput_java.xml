@@ -12,6 +12,7 @@
     STARTABLE="true"
     SCHEMA_AUTO_PROPAGATE="false"
     DATA_AUTO_PROPAGATE="false"
+    LOG4J_ENABLED="true"
   >
     <SIGNATURE/>
   </HEADER>
@@ -361,6 +362,7 @@
       FIELD="CHECK"
       NUM_ROW="130"
       GROUP="JSONCONFIG"
+      REQUIRED="true"
     >
       <DEFAULT>true</DEFAULT>
     </PARAMETER>

@@ -13,9 +13,11 @@
 package org.talend.repository.hadoopcluster.ui.common;
 
 import org.eclipse.swt.widgets.Composite;
+import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
+import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 
@@ -34,6 +36,8 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
     protected boolean enableKerberos;
 
     protected boolean enableGroup;
+
+    protected boolean isHDI;
 
     /**
      * DOC ycbai AbstractHadoopSubForm constructor comment.
@@ -57,8 +61,18 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         distribution = clusterConnection.getDistribution();
         version = clusterConnection.getDfVersion();
         enableKerberos = clusterConnection.isEnableKerberos();
-        enableGroup = EHadoopVersion4Drivers.indexOfByVersion(version).isSupportGroup();
+        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(version);
+        if (version4Drivers != null) {
+            enableGroup = version4Drivers.isSupportGroup();
+        } else {
+            enableGroup = EAuthenticationMode.UGI.getName().equals(clusterConnection.getAuthMode());
+        }
+        isHDI = isHDI(clusterConnection);
         setupForm();
+    }
+
+    private boolean isHDI(HadoopClusterConnection hcConnection) {
+        return HCVersionUtil.isHDI(hcConnection);
     }
 
 }

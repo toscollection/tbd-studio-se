@@ -14,12 +14,15 @@ package org.talend.repository.nosql.db.ui.cassandra;
 
 import java.util.List;
 
+import org.eclipse.jface.fieldassist.ControlDecoration;
+import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -29,6 +32,7 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
 import org.talend.repository.nosql.db.util.cassandra.CassandraConnectionUtil;
@@ -60,6 +64,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
     protected LabelledText pwdText;
 
+    private ControlDecoration portWarningDecorator;
+
     public CassandraConnForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             WizardPage parentWizardPage) {
         super(parent, connectionItem, existingNames, creation, parentWizardPage);
@@ -73,14 +79,14 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
     @Override
     protected void initializeFields() {
-        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
-        String server = getConnection().getAttributes().get(INoSQLCommonAttributes.HOST);
-        String port = getConnection().getAttributes().get(INoSQLCommonAttributes.PORT);
-        String database = getConnection().getAttributes().get(INoSQLCommonAttributes.DATABASE);
-        String user = getConnection().getAttributes().get(INoSQLCommonAttributes.USERNAME);
-        String passwd = getConnection().getAttributes().get(INoSQLCommonAttributes.PASSWORD);
-        Boolean isUseRequireAuth = Boolean.parseBoolean(getConnection().getAttributes().get(
-                INoSQLCommonAttributes.REQUIRED_AUTHENTICATION));
+        NoSQLConnection conn = getConnection();
+        String dbVersion = conn.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        String server = conn.getAttributes().get(INoSQLCommonAttributes.HOST);
+        String port = conn.getAttributes().get(INoSQLCommonAttributes.PORT);
+        String database = conn.getAttributes().get(INoSQLCommonAttributes.DATABASE);
+        String user = conn.getAttributes().get(INoSQLCommonAttributes.USERNAME);
+        String passwd = conn.getValue(conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), false);
+        Boolean isUseRequireAuth = Boolean.parseBoolean(conn.getAttributes().get(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION));
         if (validText(dbVersion)) {
             dbVersionCombo.setText(repositoryTranslator.getLabel(dbVersion));
         } else {
@@ -100,15 +106,15 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
     @Override
     protected void saveAttributes() {
         super.saveAttributes();
-        getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
-                repositoryTranslator.getValue(dbVersionCombo.getText()));
-        getConnection().getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION,
+        NoSQLConnection conn = getConnection();
+        conn.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, repositoryTranslator.getValue(dbVersionCombo.getText()));
+        conn.getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION,
                 String.valueOf(checkRequireAuthBtn.getSelection()));
-        getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, conn.getValue(pwdText.getText(), true));
     }
 
     @Override
@@ -152,11 +158,29 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         NoSQLRepositoryFactory repFactory = NoSQLRepositoryFactory.getInstance();
         List<String> dbVersions = repFactory.getDBVersions(getConnection().getDbType());
         List<String> dbVersionLabels = repositoryTranslator.getLabels(dbVersions);
-        dbVersionCombo = new LabelledCombo(connComposite,
+        dbVersionCombo = new LabelledCombo(
+                connComposite,
                 Messages.getString("CassandraConnForm.dbVersion"), Messages.getString("CassandraConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
         serverText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.server"), 1); //$NON-NLS-1$
         portText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.port"), 1); //$NON-NLS-1$
+        updatePortDecoration();
         databaseText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.keyspace"), 1, true); //$NON-NLS-1$
+    }
+
+    private void updatePortDecoration() {
+        if (portWarningDecorator == null) {
+            Image fieldDecorationWarningImage = FieldDecorationRegistry.getDefault()
+                    .getFieldDecoration(FieldDecorationRegistry.DEC_WARNING).getImage();
+            portWarningDecorator = new ControlDecoration(portText.getTextControl(), SWT.RIGHT | SWT.CENTER);
+            portWarningDecorator.setMarginWidth(1);
+            portWarningDecorator.setImage(fieldDecorationWarningImage);
+            portWarningDecorator.setDescriptionText(Messages.getString("CassandraConnForm.port.instruction")); //$NON-NLS-1$
+        }
+        if (CassandraConnectionUtil.isOldVersion(getConnection())) {
+            portWarningDecorator.hide();
+        } else {
+            portWarningDecorator.show();
+        }
     }
 
     private void addAuthGroup(Composite composite) {
@@ -170,7 +194,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         checkRequireAuthBtn.setText(Messages.getString("CassandraConnForm.requireAuth")); //$NON-NLS-1$
         checkRequireAuthBtn.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 4, 1));
         userText = new LabelledText(authGroup, Messages.getString("CassandraConnForm.username"), 1); //$NON-NLS-1$
-        pwdText = new LabelledText(authGroup, Messages.getString("CassandraConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        pwdText = new LabelledText(authGroup,
+                Messages.getString("CassandraConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
     }
 
     /**
@@ -233,6 +258,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 checkFieldsValue();
                 getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
                         repositoryTranslator.getValue(dbVersionCombo.getText()));
+                updatePortDecoration();
             }
         });
 
@@ -289,7 +315,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             @Override
             public void modifyText(ModifyEvent e) {
                 checkFieldsValue();
-                getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
+                NoSQLConnection conn = getConnection();
+                conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, conn.getValue(pwdText.getText(), true));
             }
         });
 
@@ -299,7 +326,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
     public void releaseResources() throws NoSQLGeneralException {
         super.releaseResources();
         try {
-            CassandraConnectionUtil.closeConnections();
+            CassandraConnectionUtil.getMetadataHandler(getConnection()).closeConnections();
         } catch (NoSQLServerException e) {
             throw new NoSQLGeneralException(e);
         }

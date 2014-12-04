@@ -19,12 +19,14 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.designerproperties.ComponentToRepositoryProperty;
+import org.talend.core.model.metadata.designerproperties.EParameterNameForComponent;
 import org.talend.core.model.process.IElement;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
@@ -94,6 +96,38 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
         } else if (EHDFSRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytab()));
+        } else if (EParameterNameForComponent.PARA_NAME_WEBHCAT_HOST.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_HOSTNAME));
+        } else if (EParameterNameForComponent.PARA_NAME_WEBHCAT_PORT.getName().equals(value)) {
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_PORT);
+        } else if (EParameterNameForComponent.PARA_NAME_WEBHCAT_USERNAME.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_USERNAME));
+        } else if (EParameterNameForComponent.PARA_NAME_STATUSDIR.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_JOB_RESULT_FOLDER));
+        } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_USERNAME.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_HDI_USERNAME));
+        } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_PASSWORD.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD));
+        } else if (EParameterNameForComponent.PARA_NAME_WASB_HOST.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_AZURE_HOSTNAME));
+        } else if (EParameterNameForComponent.PARA_NAME_WASB_CONTAINER.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_AZURE_CONTAINER));
+        } else if (EParameterNameForComponent.PARA_NAME_WASB_USERNAME.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_AZURE_USERNAME));
+        } else if (EParameterNameForComponent.PARA_NAME_WASB_PASSWORD.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_AZURE_PASSWORD));
+        } else if (EParameterNameForComponent.PARA_NAME_REMOTE_FOLDER.getName().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
         }
 
         return null;
@@ -161,68 +195,57 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
     }
 
     @Override
-    public void setComponentValue(Connection connection, INode node, String repositoryValue) {
+    public void setComponentValue(Connection connection, INode node, IElementParameter param) {
         if (node != null && canHandle(connection)) {
-            setHadoopClusterRepositoryValue((HadoopClusterConnection) connection, node, repositoryValue);
+            setHadoopClusterRepositoryValue((HadoopClusterConnection) connection, node, param);
         }
     }
 
-    private void setHadoopClusterRepositoryValue(HadoopClusterConnection hcConnection, INode node, String repositoryValue) {
-        if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.DISTRIBUTION.getParameterName());
+    private void setHadoopClusterRepositoryValue(HadoopClusterConnection hcConnection, INode node, IElementParameter param) {
+        if (EHDFSRepositoryToComponent.DISTRIBUTION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setDistribution(value);
             }
-        } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.DB_VERSION.getParameterName());
+        } else if (EHDFSRepositoryToComponent.DB_VERSION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setDfVersion(value);
             }
-        } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(repositoryValue)) {
-            IElementParameter param = node.getElementParameter(EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getParameterName());
-            if (param != null) {
-                Object obj = param.getValue();
-                if (obj != null) {
-                    Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarsParamFromComp((String) obj,
-                            ECustomVersionGroup.COMMON);
-                    HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
-                }
+        } else if (EHDFSRepositoryToComponent.HADOOP_CUSTOM_JARS.getRepositoryValue().equals(param.getRepositoryValue())) {
+            Object obj = param.getValue();
+            if (obj != null) {
+                Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarsParamFromComp((String) obj,
+                        ECustomVersionGroup.COMMON);
+                HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
             }
-        } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getParameterName());
+        } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setAuthMode(value);
             }
-        } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getParameterName());
+        } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setNameNodeURI(value);
             }
-        } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.USE_KRB.getParameterName());
+        } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setEnableKerberos(Boolean.valueOf(value));
             }
-        } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getParameterName());
+        } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setPrincipal(value);
             }
-        } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.USERNAME.getParameterName());
+        } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setUserName(value);
             }
-        } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node,
-                    EHDFSRepositoryToComponent.GROUP.getParameterName());
+        } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
             if (value != null) {
                 hcConnection.setGroup(value);
             }

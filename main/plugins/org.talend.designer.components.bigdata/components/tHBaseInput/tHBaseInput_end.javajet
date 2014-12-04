@@ -39,10 +39,12 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 		scanner_<%=cid %>.close();
 	}
 <%
-//use existing connection
+//use local connection
 if(!"true".equals(useExistingConn)){
 	String hbaseVersion = ElementParameterParser.getValue(node,"__HBASE_VERSION__");
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+    boolean isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
+	
 %>
 	}finally{
 		if(conn_<%=cid%>!=null){
@@ -56,5 +58,4 @@ globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 
 <%
 log4jFileUtil.retrievedDataNumberInfo(node);
-log4jFileUtil.componentFinishInfo(node);
 %>

@@ -8,7 +8,6 @@
 		java.util.List
 	" 
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 
@@ -27,9 +26,6 @@
     String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-    log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
-
     if(useReplicaSet){
 	%>
 		List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
@@ -112,6 +108,4 @@
 	
 	globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
 	globalMap.put("db_<%=cid%>", db_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

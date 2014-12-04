@@ -12,7 +12,6 @@
 		java.util.List
 "
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -51,7 +50,6 @@
 				for (int i = 0; i < sizeColumns; i++) {
 					IMetadataColumn column = columnList.get(i);
 					
-					log4jFileUtil.collectRetriveData(conn.getName()+"."+column.getLabel());
 					
 					if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
 					%>
@@ -76,12 +74,7 @@
 					if(countKey_<%=cid%> <=0){
 						<%
 						if(dieOnError){
-							if(isLog4jEnabled){
-							%>
-								log.fatal("<%=cid%> - Must have at least one key in schema");
-							<%
-							}
-							%>
+						%>
 							throw new Exception("Must have at least one key in schema");
 						<%
 						}else{
@@ -123,12 +116,7 @@
     				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
     					<%
     					if(dieOnError){
-    						if(isLog4jEnabled){
-    						%>
-    							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
-    						<%
-    						}
-    						%>
+    					%>
     						throw new Exception(resultMessage_<%=cid%>.getError());
     					<%
     					}else{
@@ -151,8 +139,6 @@
 				if(isLog4jEnabled){
 				%>
 					log.debug("<%=cid%> - [<%=dataAction%>] - Writing the record " + nb_line_<%=cid %> + " into database.");
-					log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-					log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
 				<%
 				}
 			}

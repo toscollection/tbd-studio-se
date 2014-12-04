@@ -47,11 +47,19 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
-            if (distribution == EHadoopDistributions.CLOUDERA
-                    && hcConnection.getDfVersion().equals(EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue())) {
+            if (distribution == EHadoopDistributions.HORTONWORKS || distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT
+                    || distribution == EHadoopDistributions.CUSTOM) {
                 return false;
             }
-            if (distribution == EHadoopDistributions.HORTONWORKS || distribution == EHadoopDistributions.CUSTOM) {
+            if (distribution == EHadoopDistributions.CLOUDERA
+                    && (EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue().equals(hcConnection.getDfVersion())
+                            || EHadoopVersion4Drivers.CLOUDERA_CDH5_1.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.CLOUDERA_CDH5_1_MR1
+                            .getVersionValue().equals(hcConnection.getDfVersion()))) {
+                return false;
+            }
+            if (distribution == EHadoopDistributions.MAPR
+                    && (EHadoopVersion4Drivers.MAPR310.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.MAPR401
+                            .getVersionValue().equals(hcConnection.getDfVersion()))) {
                 return false;
             }
         }

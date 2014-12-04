@@ -24,7 +24,21 @@
     List<Map<String, String>> listParameters = (List<Map<String, String>>) ElementParameterParser.getObjectValue(node, "__PARAMETERS__");
     boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));   
     String commitEvery = ElementParameterParser.getValue(node, "__COMMIT_EVERY__"); 
-    
+
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+
+    if (useExistingConnection) {
+        String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+    }
+
     List<IMetadataColumn> columnList = null;
     List<IMetadataTable> metadatas = node.getMetadataList();
     
@@ -134,14 +148,46 @@
 		nbNodeInserted_<%=cid%> += result_<%=cid%>.queryStatistics().nodesCreated();
 		nbRelationshipInserted_<%=cid%> += result_<%=cid%>.queryStatistics().relationshipsCreated();
 		nbPropertiesUpdated_<%=cid%> += result_<%=cid%>.queryStatistics().propertiesSet();
-		nbNodeDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().nodesDeleted();
-		nbRelationshipDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().relationshipsDeleted();
+		<%
+	    if ("NEO4J_1_X_X".equals(dbVersion)) {
+	        %>
+            nbNodeDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().deletedNodes();
+            nbRelationshipDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().deletedRelationships();
+	        <%
+	    } else { // NEO4J_2_1_X
+	        %>
+            nbNodeDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().nodesDeleted();
+            nbRelationshipDeleted_<%=cid%> += result_<%=cid%>.queryStatistics().relationshipsDeleted();
+	        <%
+	    }
+	    %>
 	}
 		
 	counter_<%=cid%>++;
 
 	if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
-		tx_<%=cid%>.success();
-		tx_<%=cid%>.finish();
+	    <%
+        if ("NEO4J_1_X_X".equals(dbVersion)) {
+            %>
+            tx_<%=cid%>.success();
+            tx_<%=cid%>.finish();
+            <%
+        } else { // NEO4J_2_1_X
+            %>
+            try {
+                tx_<%=cid%>.success();
+            } finally {
+                tx_<%=cid%>.close();
+            }
+
+            if (databaseService_<%=cid%>.getClass().equals(org.neo4j.kernel.EmbeddedGraphDatabase.class)) {
+                while (((org.neo4j.kernel.EmbeddedGraphDatabase)databaseService_<%=cid%>).transactionRunning()){
+                    // wait the end of the previous transaction
+                }
+            }
+            <%
+        }
+        %>
+
 		tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
 	}

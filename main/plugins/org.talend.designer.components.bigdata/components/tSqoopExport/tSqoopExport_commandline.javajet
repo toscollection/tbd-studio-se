@@ -26,8 +26,8 @@
 	boolean isUseAdditionParams = "true".equals(ElementParameterParser.getValue(node,"__USE_ADDITION_PARAM__"));
 	String specificAdditionParams=ElementParameterParser.getValue(node,"__SPECIFIC_ADDITION_PARAM__");
 
-	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CAL_PROC_STOCK__"));
-	String procStock = ElementParameterParser.getValue(node, "__PROC_STOCK__");
+	boolean callProcStock = "true".equals(ElementParameterParser.getValue(node, "__CALL_PROC_STOC__"));
+	String procStock = ElementParameterParser.getValue(node, "__PROC_STOC__");
 	boolean useBatchMode = "true".equals(ElementParameterParser.getValue(node, "__USE_BATCH_MODE__"));
 	boolean clearStagingTable = "true".equals(ElementParameterParser.getValue(node, "__CLEAR_STAGING_TABLE__"));
 	boolean defineStagingTable = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_STAGING_TABLE__"));
@@ -77,7 +77,8 @@ if(isUseSpeedParallel && isUseAdditionParams){
 }
 %>
 
-, "--connect", <%=connection%>, "--table", <%=table%>, "--username", <%=username%>
+, "--connect", <%=connection%>
+<%if(!callProcStock){%>, "--table", <%=table%><%}%> , "--username", <%=username%>
 <%if(passwordStoredInFile) {%>
 	, "--password-file", <%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>
 <%} else {%>
@@ -91,12 +92,12 @@ if(isUseSpeedParallel && isUseAdditionParams){
 <%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
 <%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
 <%if(useBatchMode){%>, "--batch"<%}%>
-<%if(clearStagingTable && !useColumnForUpdate){%>, "--clear-staging-table"<%}%>
+<%if(clearStagingTable && !useColumnForUpdate && !callProcStock){%>, "--clear-staging-table"<%}%>
 <%if(callProcStock){%>, "--call", <%=procStock%><%}%>
-<%if(defineStagingTable && !useColumnForUpdate){%>, "--staging-table", <%=stagingTable%><%}%>
+<%if(defineStagingTable && !useColumnForUpdate && !callProcStock){%>, "--staging-table", <%=stagingTable%><%}%>
 <%if(defineUpdateMode){%>, "--update-mode", "<%=updateMode%>"<%}%>
 <%
-if(useColumnForUpdate) {
+if(useColumnForUpdate && !callProcStock) {
 	List<Map<String,String>> columnsForUpdate = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__COLUMN_FOR_UPDATE__");
 	if(columnsForUpdate!=null && columnsForUpdate.size()>0) {
 %>
@@ -222,15 +223,19 @@ try {
 	} else {
 %>
 		System.err.println(e.getMessage());
-<%
+		<%if(isLog4jEnabled) {%>
+		log.error("<%=cid%> - " + e.getMessage());
+		<%}
 	}
 %>	
 }
 
+
+	int result_<%=cid%> = ps_<%=cid%>.waitFor();
+	globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
 <%
 	if(dieOnError) {
 %>
-		ps_<%=cid%>.waitFor();
 		if(ps_<%=cid%>.exitValue()>0) {
 			throw new Exception("The Sqoop export has failed. Please check the logs.");
 		}

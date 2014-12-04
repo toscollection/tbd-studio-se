@@ -117,4 +117,3 @@
 	globalMap.put("<%=cid %>_SOURCE_FILEPATH",<%=sourcePath%>);
 	globalMap.put("<%=cid %>_DESTINATION_FILEPATH",target_<%=cid%>);
 	
-	<%log4jFileUtil.componentFinishInfo(node);%>

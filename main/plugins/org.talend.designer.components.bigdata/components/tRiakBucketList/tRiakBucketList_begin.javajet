@@ -18,8 +18,6 @@
     boolean useExistingConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	%>
 	com.basho.riak.client.IRiakClient client_<%=cid%> = null;
 	int nb_line_<%=cid%> = 0;
@@ -54,6 +52,5 @@
 			nb_line_<%=cid%>++;
 			globalMap.put("<%=cid%>_CURRENT_BUCKET_NAME", bucketName_<%=cid%>);
 			<%
-			log4jFileUtil.collectRetriveData("bucketName_"+cid);
 			log4jFileUtil.debugRetriveData(node);
 			%>

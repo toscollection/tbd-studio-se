@@ -46,9 +46,9 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
     protected static final String NAME_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getSource() <em>Source</em>}' reference. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getSource() <em>Source</em>}' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getSource()
      * @generated
      * @ordered
@@ -56,9 +56,9 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
     protected AbstractNode source;
 
     /**
-     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference. <!-- begin-user-doc --> <!--
+     * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+     * <!-- begin-user-doc --> <!--
      * end-user-doc -->
-     * 
      * @see #getTarget()
      * @generated
      * @ordered
@@ -67,7 +67,6 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     protected FilterConnectionImpl() {
@@ -76,7 +75,6 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
@@ -98,17 +96,15 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public AbstractNode getSource() {
         if (source != null && source.eIsProxy()) {
-            InternalEObject oldSource = (InternalEObject) source;
-            source = (AbstractNode) eResolveProxy(oldSource);
+            InternalEObject oldSource = (InternalEObject)source;
+            source = (AbstractNode)eResolveProxy(oldSource);
             if (source != oldSource) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, PigmapPackage.FILTER_CONNECTION__SOURCE, oldSource,
-                            source));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, PigmapPackage.FILTER_CONNECTION__SOURCE, oldSource, source));
             }
         }
         return source;
@@ -116,7 +112,6 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public AbstractNode basicGetSource() {
@@ -125,7 +120,6 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setSource(AbstractNode newSource) {
@@ -137,17 +131,15 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public AbstractInOutTable getTarget() {
         if (target != null && target.eIsProxy()) {
-            InternalEObject oldTarget = (InternalEObject) target;
-            target = (AbstractInOutTable) eResolveProxy(oldTarget);
+            InternalEObject oldTarget = (InternalEObject)target;
+            target = (AbstractInOutTable)eResolveProxy(oldTarget);
             if (target != oldTarget) {
                 if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, PigmapPackage.FILTER_CONNECTION__TARGET, oldTarget,
-                            target));
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, PigmapPackage.FILTER_CONNECTION__TARGET, oldTarget, target));
             }
         }
         return target;
@@ -155,7 +147,6 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public AbstractInOutTable basicGetTarget() {
@@ -164,7 +155,6 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     public void setTarget(AbstractInOutTable newTarget) {
@@ -176,76 +166,70 @@ public class FilterConnectionImpl extends EObjectImpl implements FilterConnectio
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-        case PigmapPackage.FILTER_CONNECTION__NAME:
-            return getName();
-        case PigmapPackage.FILTER_CONNECTION__SOURCE:
-            if (resolve)
-                return getSource();
-            return basicGetSource();
-        case PigmapPackage.FILTER_CONNECTION__TARGET:
-            if (resolve)
-                return getTarget();
-            return basicGetTarget();
+            case PigmapPackage.FILTER_CONNECTION__NAME:
+                return getName();
+            case PigmapPackage.FILTER_CONNECTION__SOURCE:
+                if (resolve) return getSource();
+                return basicGetSource();
+            case PigmapPackage.FILTER_CONNECTION__TARGET:
+                if (resolve) return getTarget();
+                return basicGetTarget();
         }
         return super.eGet(featureID, resolve, coreType);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-        case PigmapPackage.FILTER_CONNECTION__SOURCE:
-            setSource((AbstractNode) newValue);
-            return;
-        case PigmapPackage.FILTER_CONNECTION__TARGET:
-            setTarget((AbstractInOutTable) newValue);
-            return;
+            case PigmapPackage.FILTER_CONNECTION__SOURCE:
+                setSource((AbstractNode)newValue);
+                return;
+            case PigmapPackage.FILTER_CONNECTION__TARGET:
+                setTarget((AbstractInOutTable)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-        case PigmapPackage.FILTER_CONNECTION__SOURCE:
-            setSource((AbstractNode) null);
-            return;
-        case PigmapPackage.FILTER_CONNECTION__TARGET:
-            setTarget((AbstractInOutTable) null);
-            return;
+            case PigmapPackage.FILTER_CONNECTION__SOURCE:
+                setSource((AbstractNode)null);
+                return;
+            case PigmapPackage.FILTER_CONNECTION__TARGET:
+                setTarget((AbstractInOutTable)null);
+                return;
         }
         super.eUnset(featureID);
     }
 
     /**
      * <!-- begin-user-doc --> <!-- end-user-doc -->
-     * 
      * @generated
      */
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-        case PigmapPackage.FILTER_CONNECTION__NAME:
-            return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
-        case PigmapPackage.FILTER_CONNECTION__SOURCE:
-            return source != null;
-        case PigmapPackage.FILTER_CONNECTION__TARGET:
-            return target != null;
+            case PigmapPackage.FILTER_CONNECTION__NAME:
+                return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
+            case PigmapPackage.FILTER_CONNECTION__SOURCE:
+                return source != null;
+            case PigmapPackage.FILTER_CONNECTION__TARGET:
+                return target != null;
         }
         return super.eIsSet(featureID);
     }

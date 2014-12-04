@@ -1,0 +1,14 @@
+<%@ jet 
+%>
+<%
+	if(!"".equals(outputConnectionName)) {
+%>
+		org.talend.spark.TalendRDD<List<Object>> <%=cid%>_<%=outputConnectionName%>_RDD = null;
+<%			
+	}
+%>
+	if(true) {
+		throw new java.lang.Exception("The component <%=cid%> should have an input connection and an output connection.");
+	}
+<%
+%>

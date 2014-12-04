@@ -19,14 +19,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
@@ -56,7 +53,7 @@ public class HadoopServerUtil {
 
     public static final String GROUP_SEPARATOR = ","; //$NON-NLS-1$
 
-    public static final int TIMEOUT = 20; // the max time(second) which achieve DFS connection use.
+    // public static final int TIMEOUT = 20; // the max time(second) which achieve DFS connection use.
 
     /**
      * DOC ycbai Comment method "getDFS".
@@ -90,20 +87,14 @@ public class HadoopServerUtil {
             }
             String group = StringUtils.trimToNull(connection.getGroup());
 
-            Callable<Object> dfsCallable = null;
             if (userName == null || group != null) {
-                dfsCallable = getDFS(conf, classLoader);
+                dfs = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", //$NON-NLS-1$ //$NON-NLS-2$
+                        new Object[] { conf });
             } else {
-                dfsCallable = getDFS(new URI(EHadoopConfProperties.FS_DEFAULT_URI.get(conf)), conf, userName, classLoader);
+                dfs = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] { //$NON-NLS-1$ //$NON-NLS-2$
+                        new URI(EHadoopConfProperties.FS_DEFAULT_URI.get(conf)), conf, userName });
             }
 
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            Future<Object> future = executor.submit(dfsCallable);
-            try {
-                dfs = future.get(TIMEOUT, TimeUnit.SECONDS);
-            } catch (TimeoutException e) {
-                future.cancel(true);
-            }
         } catch (Exception e) {
             throw new HadoopServerException(e);
         } finally {
@@ -162,6 +153,18 @@ public class HadoopServerUtil {
                 ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader,
                         "loginUserFromKeytab", new String[] { keytabPrincipal, keytab });
             }
+
+            Map<String, Object> configurations = connection.getConfigurations();
+            Iterator<Entry<String, Object>> configsIterator = configurations.entrySet().iterator();
+            while (configsIterator.hasNext()) {
+                Entry<String, Object> configEntry = configsIterator.next();
+                String key = configEntry.getKey();
+                Object value = configEntry.getValue();
+                if (key == null) {
+                    continue;
+                }
+                setConfiguration(conf, key, value);
+            }
         } catch (Exception e) {
             throw new HadoopServerException(e);
         }
@@ -169,28 +172,23 @@ public class HadoopServerUtil {
         return conf;
     }
 
-    private static Callable<Object> getDFS(final Object conf, final ClassLoader classLoader) {
-        return new Callable<Object>() {
-
-            @Override
-            public Object call() throws Exception {
-                return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get",
-                        new Object[] { conf });
+    private static void setConfiguration(Object conf, String key, Object value) throws HadoopServerException {
+        try {
+            if (value instanceof Integer) {
+                ReflectionUtils.invokeMethod(conf, "setInt", new Object[] { key, value }, String.class, int.class);
+            } else if (value instanceof Boolean) {
+                ReflectionUtils.invokeMethod(conf, "setBoolean", new Object[] { key, value }, String.class, boolean.class);
+            } else if (value instanceof Float) {
+                ReflectionUtils.invokeMethod(conf, "setFloat", new Object[] { key, value }, String.class, float.class);
+            } else if (value instanceof Long) {
+                ReflectionUtils.invokeMethod(conf, "setLong", new Object[] { key, value }, String.class, long.class);
+            } else {
+                ReflectionUtils
+                        .invokeMethod(conf, "set", new Object[] { key, String.valueOf(value), String.class, String.class });
             }
-        };
-
-    }
-
-    private static Callable<Object> getDFS(final URI uri, final Object conf, final String userName, final ClassLoader classLoader) {
-        return new Callable<Object>() {
-
-            @Override
-            public Object call() throws Exception {
-                return ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] {
-                        uri, conf, userName });
-            }
-        };
-
+        } catch (Exception e) {
+            throw new HadoopServerException(e);
+        }
     }
 
     public static boolean hasReadAuthority(Object status, String userName, String group) throws HadoopServerException {
@@ -348,7 +346,10 @@ public class HadoopServerUtil {
         String errorMsg = "Cannot connect to HDFS \"" + connection.getNameNodeURI()
                 + "\". Please check the connection parameters. ";
         Object dfs = null;
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
+            ClassLoader classLoader = getClassLoader(connection);
+            Thread.currentThread().setContextClassLoader(classLoader);
             dfs = getDFS(connection);
             if (dfs != null) {
                 // Check if we can access the HDFS file content.
@@ -378,6 +379,7 @@ public class HadoopServerUtil {
                 } catch (Exception e) {
                 }
             }
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
 
         return connectionStatus;

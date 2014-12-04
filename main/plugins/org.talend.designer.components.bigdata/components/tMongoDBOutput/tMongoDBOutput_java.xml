@@ -12,6 +12,7 @@
         RELEASE_DATE="20070210A"
         STARTABLE="false"
         PARTITIONING="NONE"
+        LOG4J_ENABLED="true"
     >
         <SIGNATURE/>
     </HEADER>
@@ -206,6 +207,7 @@
         <PARAMETER
             NAME="IS_VIRTUAL_COMPONENT"
             FIELD="CHECK"
+            REQUIRED="true"
             NUM_ROW="5"
         >
             <DEFAULT>false</DEFAULT>
@@ -341,6 +343,7 @@
 
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="Out.SCHEMA" />
             <TEMPLATE_PARAM SOURCE="self.USE_EXISTING_CONNECTION" TARGET="Out.USE_EXISTING_CONNECTION" />
+            <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="Out.DB_VERSION" />
             <TEMPLATE_PARAM SOURCE="self.CONNECTION" TARGET="Out.CONNECTION" />
             <TEMPLATE_PARAM SOURCE="self.USE_REPLICA_SET" TARGET="Out.USE_REPLICA_SET" />
             <TEMPLATE_PARAM SOURCE="self.REPLICA_SET" TARGET="Out.REPLICA_SET" />

@@ -5,10 +5,10 @@
 	if(inMain) {
 %>
 		for(String[] pigLatin_<%=cid%> : pigLatins_<%=cid%>) {
-			<%if(isLog4jEnabled) {%>
-			log.info("<%=cid%> - register script : " + pigLatin_<%=cid%>[1]);
-			<%}%>
 			String type_<%=cid%> = pigLatin_<%=cid%>[0];
+			<%if(isLog4jEnabled) {%>
+			log.info("<%=cid%> - register " + type_<%=cid%> + " : " + pigLatin_<%=cid%>[1]);
+			<%}%>
 			if("query".equals(type_<%=cid%>)) {
 <%
 				if(isExecutedThroughWebHCat) {

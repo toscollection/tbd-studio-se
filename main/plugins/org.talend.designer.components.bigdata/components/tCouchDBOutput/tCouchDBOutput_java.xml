@@ -11,6 +11,7 @@
 	    STARTABLE="false"
 	    DATA_AUTO_PROPAGATE="false"
 		PARTITIONING="NONE"
+		LOG4J_ENABLED="true"
   	>
     	<SIGNATURE/>
 	</HEADER>
@@ -193,6 +194,7 @@
 	        NAME="IS_VIRTUAL_COMPONENT"
 	        FIELD="CHECK"
 	        NUM_ROW="67"
+	        REQUIRED="true"
 	        GROUP="JSON_CONFIGURATION"
         >
             <DEFAULT>false</DEFAULT>

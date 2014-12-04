@@ -32,6 +32,7 @@ import org.talend.designer.gefabstractmap.part.MapperTablePart;
 import org.talend.designer.gefabstractmap.part.TableEntityPart;
 import org.talend.designer.gefabstractmap.utils.MapperUtils;
 import org.talend.designer.pigmap.parts.PigMapTableNodePart;
+import org.talend.designer.pigmap.parts.PigMapVarNodeEditPart;
 
 /**
  * 
@@ -56,7 +57,7 @@ public class PigDragSourceListener extends MapperDragSourceListener {
         }
         List<EditPart> filtedSelection = new ArrayList<EditPart>();
         for (Object part : getViewer().getSelectedEditParts()) {
-            if (part instanceof PigMapTableNodePart) {
+            if (part instanceof PigMapTableNodePart || part instanceof PigMapVarNodeEditPart) {
                 filtedSelection.add((EditPart) part);
             }
         }
@@ -70,6 +71,8 @@ public class PigDragSourceListener extends MapperDragSourceListener {
         EditPart lastSelection = filtedSelection.get(filtedSelection.size() - 1);
         if (lastSelection instanceof PigMapTableNodePart) {
             type = TransferdType.INPUT;
+        } else if (lastSelection instanceof PigMapVarNodeEditPart) {
+            type = TransferdType.VAR;
         }
 
         if (type != null) {

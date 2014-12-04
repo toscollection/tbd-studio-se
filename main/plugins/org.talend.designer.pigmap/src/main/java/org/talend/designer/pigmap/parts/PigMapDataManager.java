@@ -65,7 +65,6 @@ public class PigMapDataManager extends RootModelManager {
      */
     @Override
     public List<? extends MapperTable> getVarTables() {
-        // pig map no this
-        return null;
+        return getModel().getVarTables();
     }
 }

@@ -1,0 +1,122 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection 
+		org.talend.designer.codegen.config.CodeGeneratorArgument 
+		org.talend.designer.neo4j.data.Neo4jData 
+		org.talend.designer.neo4j.data.Index 
+		org.talend.designer.neo4j.data.Relationship 
+		org.talend.designer.neo4j.ui.editor.MetadataColumnExt 
+		java.util.List 
+	" 
+%>
+<%
+class Neo4jBatchUtils {
+
+    protected List<IMetadataColumn> columnList;
+    protected String incomingConnName;
+    protected String cid;
+    protected INode node;
+
+	public Neo4jBatchUtils(String cid, INode node, String incomingConnName, List<IMetadataColumn> columnList) {
+	    this.cid = cid;
+		this.incomingConnName = incomingConnName;
+		this.columnList = columnList;
+		this.node = node;
+	}
+
+	public void generateNodeBatchInsert() {
+        // To be overrided
+
+	}
+
+	protected void putBatchPropertyInsertInMap(IMetadataColumn column) {
+		if (column.getTalendType().equals("id_Date")) {
+    		%>
+    		if (<%=incomingConnName%>.<%=column%> != null) {
+    			java.util.Date date_<%=cid%> = (java.util.Date) <%=incomingConnName%>.<%=column%>;
+    			properties_<%=cid%>.put("<%=column%>", date_<%=cid%>.getTime());
+    		}
+    		<%
+		} else {
+	    	if (column.isNullable()) {
+		    	%>
+	    		if (<%=incomingConnName%>.<%=column%> != null) {
+	    			properties_<%=cid%>.put("<%=column%>", <%=incomingConnName%>.<%=column%>);
+	    		}
+		    	<%
+	    	} else {
+		    	%>
+	    		properties_<%=cid%>.put("<%=column%>", <%=incomingConnName%>.<%=column%>);
+	    		<%
+	    	}
+	    }
+	}
+
+	protected void generateNode() {
+        // To be overrided
+	}
+
+	protected void generateIndexCreation(Index index, IMetadataColumn column) {
+		boolean fromValueColumn = index.getValue() == null || index.getValue().isEmpty();
+		if (fromValueColumn) {
+			%>
+			indexProperties_<%=cid%>.put(<%=index.getKey()%>, <%=incomingConnName%>.<%=column%>);
+			<%
+		} else {
+			%>
+			indexProperties_<%=cid%>.put(<%=index.getKey()%>, <%=index.getValue()%>);
+			<%
+		}
+		%>
+		indexPropertiesMap_<%=cid%>.put(<%=index.getName()%>, indexProperties_<%=cid%>);
+		<%
+
+		if (index.isUnique()) {
+			%>
+			indexInserterMap_<%=cid%>.get(<%=index.getName()%>).updateOrAdd(node_<%=cid%>, indexPropertiesMap_<%=cid%>.get(<%=index.getName()%>));
+			<%
+		} else {
+			%>
+			indexInserterMap_<%=cid%>.get(<%=index.getName()%>).add(node_<%=cid%>, indexPropertiesMap_<%=cid%>.get(<%=index.getName()%>));			
+			<%
+		}
+	}
+
+	protected void generateRelationshipCreation(Relationship relationship, IMetadataColumn column) {
+		%>
+		endNode_<%=cid%>.put(<%=relationship.getIndex().getName()%>, 0L);
+		<%
+		if (relationship.getIndex().getValue() != null && !relationship.getIndex().getValue().isEmpty()) {
+		%>
+			endNode_<%=cid%>.put(<%=relationship.getIndex().getName()%>, indexInserterMap_<%=cid%>.get(<%=relationship.getIndex().getName()%>).get(<%=relationship.getIndex().getKey()%>, <%=relationship.getIndex().getValue()%>).getSingle());
+		<%
+		} else if (column.isNullable()) {
+		%>
+			if (<%=incomingConnName%>.<%=column%> != null) {
+				endNode_<%=cid%>.put(<%=relationship.getIndex().getName()%>, indexInserterMap_<%=cid%>.get(<%=relationship.getIndex().getName()%>).get(<%=relationship.getIndex().getKey()%>, <%=incomingConnName%>.<%=column%>).getSingle());
+			}
+		<%
+		} else {
+			%>
+			endNode_<%=cid%>.put(<%=relationship.getIndex().getName()%>, indexInserterMap_<%=cid%>.get(<%=relationship.getIndex().getName()%>).get(<%=relationship.getIndex().getKey()%>, <%=incomingConnName%>.<%=column%>).getSingle());
+			<%
+		}
+		switch (relationship.getDirection()) {
+			case OUTGOING :
+				%>
+				inserter_<%=cid%>.createRelationship(node_<%=cid%>, endNode_<%=cid%>.get(<%=relationship.getIndex().getName()%>), org.neo4j.graphdb.DynamicRelationshipType.withName(<%=relationship.getType()%>), null);
+				<%
+				break;
+			case INCOMING :
+				%>
+				inserter_<%=cid%>.createRelationship(endNode_<%=cid%>.get(<%=relationship.getIndex().getName()%>), node_<%=cid%>, org.neo4j.graphdb.DynamicRelationshipType.withName(<%=relationship.getType()%>), null);
+				<%
+				break;
+		}
+	}
+}
+%>

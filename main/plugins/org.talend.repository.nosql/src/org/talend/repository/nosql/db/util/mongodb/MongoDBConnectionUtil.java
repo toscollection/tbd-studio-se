@@ -140,7 +140,7 @@ public class MongoDBConnectionUtil {
             boolean requireAuth = requireAuthAttr == null ? false : Boolean.valueOf(requireAuthAttr);
             if (requireAuth) {
                 String userName = connection.getAttributes().get(IMongoDBAttributes.USERNAME);
-                String password = connection.getAttributes().get(IMongoDBAttributes.PASSWORD);
+                String password = connection.getValue(connection.getAttributes().get(IMongoDBAttributes.PASSWORD), false);
                 if (connection.isContextMode()) {
                     ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
                     userName = ContextParameterUtils.getOriginalValue(contextType, userName);
@@ -150,7 +150,7 @@ public class MongoDBConnectionUtil {
                     boolean authorized = (Boolean) NoSQLReflection.invokeMethod(db,
                             "authenticate", new Object[] { userName, password.toCharArray() }); //$NON-NLS-1$
                     if (!authorized) {
-                        throw new NoSQLServerException(Messages.getString("MongoDBConnectionUtil.ConnotLogon", dbName)); //$NON-NLS-1$ //$NON-NLS-2$
+                        throw new NoSQLServerException(Messages.getString("MongoDBConnectionUtil.ConnotLogon", dbName)); //$NON-NLS-1$ 
                     }
                 }
             }

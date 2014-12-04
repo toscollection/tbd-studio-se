@@ -7,7 +7,6 @@ imports="
     java.util.List
 " 
 %>
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	
@@ -20,9 +19,6 @@ imports="
 	List<Map<String, String>> URIList = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__URIS__");
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.setIgnoredParamsList(java.util.Arrays.asList("PASS"));
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
 	if(isLog4jEnabled){
 	%>
 		System.setProperty("net.spy.log.LoggerImpl", "net.spy.memcached.compat.log.Log4JLogger");
@@ -47,6 +43,4 @@ imports="
 	
     client_<%=cid%> = new com.couchbase.client.CouchbaseClient(uris_<%=cid%>, <%=dbname%>,<%if(username!=null && !"".equals(username)){%><%=username%>,<%}%> decryptedPassword_<%=cid%>);
 	globalMap.put("conn_<%=cid%>",client_<%=cid%>);
-	<%
-	log4jFileUtil.componentFinishInfo(node);
-	%>
+	

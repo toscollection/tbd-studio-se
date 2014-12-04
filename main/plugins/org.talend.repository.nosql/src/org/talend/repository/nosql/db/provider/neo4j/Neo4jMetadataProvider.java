@@ -30,6 +30,7 @@ import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
 import org.talend.repository.nosql.db.util.neo4j.Neo4jConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLExtractSchemaException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
+import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
 import org.talend.repository.nosql.metadata.AbstractMetadataProvider;
 import orgomg.cwm.objectmodel.core.CoreFactory;
 import orgomg.cwm.objectmodel.core.TaggedValue;
@@ -63,6 +64,7 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
     private List<MetadataColumn> extractTheColumns(NoSQLConnection connection, String cypher) throws NoSQLExtractSchemaException {
         List<MetadataColumn> metadataColumns = new ArrayList<MetadataColumn>();
         try {
+            ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
             Object db = Neo4jConnectionUtil.getDB(connection);
             if (db == null) {
                 return metadataColumns;
@@ -78,7 +80,6 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
                     break;
                 }
                 rowNum++;
-                int columnIndex = 0;
                 Map<String, Object> row = resultIterator.next();
                 for (Entry<String, Object> column : row.entrySet()) {
                     String key = column.getKey();
@@ -86,22 +87,8 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
                     if (StringUtils.isEmpty(key) || value == null) {
                         continue;
                     }
-                    String formalColumnName = getFormalColumnName(key, columnIndex, columnLabels);
-                    MetadataColumn metaColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
-                    metaColumn.setName(formalColumnName);
-                    metaColumn.setLabel(formalColumnName);
-                    JavaType javaType = JavaTypesManager.getJavaTypeFromName(value.getClass().getSimpleName());
-                    if (javaType == null) {
-                        javaType = JavaTypesManager.STRING;
-                    }
-                    metaColumn.setTalendType(javaType.getId());
-                    EList<TaggedValue> keyTaggedValue = metaColumn.getTaggedValue();
-                    TaggedValue keyTV = CoreFactory.eINSTANCE.createTaggedValue();
-                    keyTV.setTag(INeo4jConstants.RETURN_PARAMETER);
-                    keyTV.setValue(key);
-                    keyTaggedValue.add(keyTV);
-                    metadataColumns.add(metaColumn);
-                    columnIndex++;
+                    addMetadataColumns(classLoader, db, key, value, metadataColumns, columnLabels,
+                            Neo4jConnectionUtil.isVersion1(connection));
                 }
             }
         } catch (Exception e) {
@@ -111,12 +98,56 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
         return metadataColumns;
     }
 
-    private String getFormalColumnName(String columnName, int columnIndex, List<String> columnLabels) {
+    private void addMetadataColumns(ClassLoader classLoader, Object db, String columnKey, Object columnValue,
+            List<MetadataColumn> metadataColumns, List<String> columnLabels, boolean isVersion1) throws NoSQLServerException {
+        boolean isNode = Neo4jConnectionUtil.isNode(columnValue, classLoader);
+        if (isNode) {
+            Map<String, Object> nodeProperties = Neo4jConnectionUtil.getNodeProperties(db, columnValue, classLoader, isVersion1);
+            Iterator<Entry<String, Object>> proIterator = nodeProperties.entrySet().iterator();
+            while (proIterator.hasNext()) {
+                Map.Entry<String, Object> proEntry = proIterator.next();
+                addMetadataColumn(columnKey.concat(DOT).concat(proEntry.getKey()), proEntry.getValue(), metadataColumns,
+                        columnLabels);
+            }
+        } else {
+            addMetadataColumn(columnKey, columnValue, metadataColumns, columnLabels);
+        }
+    }
+
+    private void addMetadataColumn(String columnKey, Object columnValue, List<MetadataColumn> metadataColumns,
+            List<String> columnLabels) {
+        String formalColumnName = getFormalColumnName(columnKey, metadataColumns.size());
+        if (columnLabels.contains(formalColumnName)) {
+            return;
+        }
+        JavaType javaType = JavaTypesManager.getJavaTypeFromName(columnValue.getClass().getSimpleName());
+        if (javaType == null) {
+            javaType = JavaTypesManager.STRING;
+        }
+        addMetadataColumn(formalColumnName, javaType.getId(), columnKey, metadataColumns, columnLabels);
+    }
+
+    private void addMetadataColumn(String columnName, String columnType, String returnParam,
+            List<MetadataColumn> metadataColumns, List<String> columnLabels) {
+        MetadataColumn metaColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
+        metaColumn.setName(columnName);
+        metaColumn.setLabel(columnName);
+        metaColumn.setTalendType(columnType);
+        EList<TaggedValue> keyTaggedValue = metaColumn.getTaggedValue();
+        TaggedValue keyTV = CoreFactory.eINSTANCE.createTaggedValue();
+        keyTV.setTag(INeo4jConstants.RETURN_PARAMETER);
+        keyTV.setValue(returnParam);
+        keyTaggedValue.add(keyTV);
+        metadataColumns.add(metaColumn);
+        columnLabels.add(metaColumn.getLabel());
+    }
+
+    private String getFormalColumnName(String columnName, int columnIndex) {
         String formalColumnName = columnName;
         if (formalColumnName.indexOf(DOT) != -1) {
             formalColumnName = formalColumnName.substring(formalColumnName.indexOf(DOT) + 1);
         }
-        formalColumnName = MetadataToolHelper.validateColumnName(formalColumnName, columnIndex, columnLabels);
+        formalColumnName = MetadataToolHelper.validateColumnName(formalColumnName, columnIndex);
 
         return formalColumnName;
     }

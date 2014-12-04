@@ -16,20 +16,20 @@ imports="
     String cid = node.getUniqueName();
     
 	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
-
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 
     String conn = "conn_" + connection;
     
     String hbaseVersion = null;
     boolean isCustom = false;
+    boolean isHadoop2 = false;
 	List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
     for(INode targetNode : nodes){
 		if (targetNode.getUniqueName().equals(connection)) {
         	hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-        	isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
-        	break;
+            isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
+            isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
+            break;
 	    }
     }
 %>
@@ -40,6 +40,3 @@ imports="
 		globalMap.remove("<%=conn%>");
 	}
 
-<%
-	log4jFileUtil.componentFinishInfo(node);
-%>

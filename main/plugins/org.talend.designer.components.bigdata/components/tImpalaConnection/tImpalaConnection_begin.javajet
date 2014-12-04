@@ -1,0 +1,50 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+	"
+%>
+<%
+	// ---------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------
+	// This javajet is included in other tImpala components. Be careful if you rename and modify it.
+	// ---------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------------------------
+	
+	CodeGeneratorArgument connectionCodeGenArgument = (CodeGeneratorArgument) argument;
+	INode connectionNode = (INode)connectionCodeGenArgument.getArgument();
+	String connectionCid = connectionNode.getUniqueName();
+	
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(connectionNode, "__USE_KRB__"));
+	String additionalParameters = "\";auth=noSasl\"";
+	if(useKrb) {
+		additionalParameters = "\";principal=\" + " + ElementParameterParser.getValue(connectionNode, "__IMPALA_PRINCIPAL__");
+	}
+	
+	final String parameters = additionalParameters;
+	
+	
+%>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/HelpClass/HelpClass.javajet"%>
+<%
+	class ConnectionUtil extends DefaultConnectionUtil{
+		public void createURL(INode node) {
+			super.createURL(node);
+%>
+			String url_<%=cid %> = "jdbc:hive2://"+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%> + <%=parameters%>; 
+<%	
+		}
+	
+		public String getDirverClassName(INode node){
+			return "org.apache.hive.jdbc.HiveDriver";
+		}
+		
+	}
+
+	connUtil = new ConnectionUtil();
+%>
+
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/AbstractDBConnection.javajet"%>

@@ -15,16 +15,44 @@
 %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 	<% 
+
+	class ColumnComparator implements java.util.Comparator<IMetadataColumn> {
+
+		private Boolean incKey = null;
+		private String keyColumn = null;
+
+		public ColumnComparator(Boolean incKey, String keyColumn) {
+			this.incKey = incKey;
+			this.keyColumn = keyColumn;
+		}
+
+		public final int compare(IMetadataColumn a, IMetadataColumn b) {
+			if(incKey) {
+				if(a.getLabel().equals(keyColumn)) {
+					return -1;
+				}
+				if(b.getLabel().equals(keyColumn)) {
+					return 1;
+				}
+			}// */
+			return a.getLabel().toLowerCase().compareTo(b.getLabel().toLowerCase());
+		}
+
+	}
+
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
-    
+    %>
+    <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
+    <%
 	String host = ElementParameterParser.getValue(node,"__HOST__");
     String port = ElementParameterParser.getValue(node,"__PORT__");
     //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
     String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
 	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+	String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
 	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
@@ -54,16 +82,27 @@
   	List<IMetadataColumn> columnList = null;
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
   	String firstConnName = "";
-		
+	
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	log4jFileUtil.componentStartInfo(node);
-	log4jFileUtil.logParameters(node);
-	%>
+
+    if (useExistingConnection) {
+    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+    }
+
+    %>
 	int nb_line_<%=cid %> = 0;
 	<%
   	if(metadatas != null && metadatas.size() > 0){
       	IMetadataTable metadata = metadatas.get(0);
       	columnList = metadata.getListColumns();
+      	java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
 		int sizeColumns = columnList.size();
       	if(metadata != null){
       		
@@ -83,7 +122,9 @@
 					typeMap.put("String","StringSerializer");
 					typeMap.put("Character","CharSerializer");
 					typeMap.put("BigDecimal","BigDecimalSerializer");
+					typeMap.put("java.util.UUID", "UUIDSerializer");
       			}
+
       			public String get(String tType, String cType){
       				if("".equals(cType) || "Default".equals(cType)){
       					return typeMap.get(tType);
@@ -116,7 +157,7 @@
 			me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
 			<%
 			if(useExistingConnection){
-      			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+                String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
 				%>
 				cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
 				<%
@@ -233,8 +274,8 @@
 				java.util.Iterator rows_<%=cid%> = result_<%=cid%>.get().iterator();
 				while(rows_<%=cid%>.hasNext()){
 					nb_line_<%=cid %>++;
-					me.prettyprint.hector.api.beans.Row row_<%=cid%>=(me.prettyprint.hector.api.beans.Row)rows_<%=cid%>.next();
-					me.prettyprint.hector.api.beans.ColumnSlice slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
+					me.prettyprint.hector.api.beans.Row<<%=rowKeyType%>,String, String> row_<%=cid%>=(me.prettyprint.hector.api.beans.Row<<%=rowKeyType%>,String, String>)rows_<%=cid%>.next();
+					me.prettyprint.hector.api.beans.ColumnSlice<String, String> slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
 			<%
 			}else{
 				if(isSpecifyKeys){
@@ -261,12 +302,16 @@
 			me.prettyprint.hector.api.beans.HColumn<String,String> column_<%=cid%>=null;
 
 			java.nio.ByteBuffer columnValue_<%=cid%>=null;
+			String colName = "";
+			byte[] bTargetColName = null;
 			<%
 			if(outputs!=null && outputs.size() > 0){
 		    	IConnection out = outputs.get(0);
       			firstConnName = out.getName();
 		  		if(out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 				
+					//java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
+
 					for(int i = 0; i < sizeColumns; i++){
 						IMetadataColumn column = columnList.get(i);
 						String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
@@ -330,8 +375,36 @@
 							}else{
 								if("STANDARD".equals(columnFamilyType)){
 								%>
-									column_<%=cid%>=slice_<%=cid%>.getColumnByName("<%=column.getOriginalDbColumnName()%>");
-									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
+									colName = "<%=column.getOriginalDbColumnName()%>";
+								
+									column_<%=cid%>=slice_<%=cid%>.getColumnByName(colName);
+
+									<% if("CASSANDRA_2_0_0".equals(dbVersion)) { 
+
+										/*
+										when hector was used to insert data, getColumnByName() will work as usual
+										when datastax driver was used to insert data, column.getName() will return empty for key and will
+										return a String different from the column.getOriginalDbColumnName() but only if you look
+										at the byte[] level.
+										example : column name => age {97,103,101} will become {0,3,97,103,101,0}
+										so proposed fix is to reconstruct this second string from the original column name
+										{0, <length_of_byte_array_from_original_colname>,<byte array original column name>, 0}
+										*/
+
+									%>
+									if(column_<%=cid%> == null) {
+										// CASSANDRA 2.x changed their column name encoding, leading to wrong getColumnByName behavior
+										byte[] bColName = "<%=column.getOriginalDbColumnName()%>".getBytes();
+										bTargetColName = new byte[bColName.length + 3];
+										bTargetColName[0] = (byte)0;bTargetColName[bTargetColName.length - 1] = (byte)0;
+										bTargetColName[1] = (byte)bColName.length;
+										System.arraycopy(bColName, 0, bTargetColName, 2, bColName.length);										
+										colName = new String(bTargetColName);
+										column_<%=cid%>=slice_<%=cid%>.getColumnByName(colName);
+									}
+									<% } %>
+									
+									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
 								<%
 								}else{
 								%>
@@ -358,7 +431,7 @@
 								<%
 								}else if(javaType == JavaTypesManager.INTEGER){
 								%>
-									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getInt();
+									<%=firstConnName %>.<%=column.getLabel() %> = me.prettyprint.cassandra.serializers.BigIntegerSerializer.get().fromByteBuffer(columnValue_<%=cid%>).intValue();
 								<%
 								}else if(javaType == JavaTypesManager.SHORT){
 								%>
@@ -402,7 +475,6 @@
 						<%
 						}
 			   		}
-			   		log4jFileUtil.collectRetriveData(out);
 			   		log4jFileUtil.debugRetriveData(node);
 	     		}
 			}

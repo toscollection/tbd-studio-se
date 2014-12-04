@@ -1,0 +1,17 @@
+<%@ jet 
+imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+" 
+%>
+<%
+	// ------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------
+	// This javajet is included in the tImpalaClose components. Be careful if you rename and modify it.
+	// ------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------
+%>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/tHiveClose/tHiveClose_main.javajet"%>

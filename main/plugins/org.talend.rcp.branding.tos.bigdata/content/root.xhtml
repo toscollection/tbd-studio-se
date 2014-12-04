@@ -87,20 +87,20 @@ div#header {height: 150px; margin-left: auto; margin-right: auto; }
                   <contentProvider id="PROCESS" class="org.talend.rcp.intro.contentProvider.DynamicContentProvider" pluginId="org.talend.rcp"> 
                   </contentProvider>
                </blockquote>
+               <contentProvider id="ITEMSBUSINESSMODEL" class="org.talend.rcp.intro.contentProvider.WelcomePageDynamicContentProvider" pluginId="org.talend.rcp"></contentProvider>
+                <!-- latest modified business process -->
+                <blockquote style="margin-left:30px;">
+                 <contentProvider id="BUSINESS_PROCESS" class="org.talend.rcp.intro.contentProvider.DynamicContentProvider" pluginId="org.talend.rcp"> 
+                  </contentProvider>
+                </blockquote>
             </div><!--left over-->
         
             </td>
             <td class="separator">
              <div id="div_right_part">
-               <span class="style_1 style_2 style_3">Create a new</span><br />
-                   <img style="padding-top:10px;margin-left:15px;" src="imgs/img_process.jpg" />
-               <a class="xh" title="Create a data integration process" href="http://org.eclipse.ui.intro/runAction?pluginId=org.talend.designer.core&amp;class=org.talend.designer.core.ui.action.CreateProcess&amp;id=org.talend.designer.core.actions.createprocess&amp;type=PROCESS"><span class="style_3">Job</span></a>
-               <br />
-               <blockquote>
-                    
-               </blockquote>
+               <contentProvider id="CREATENEWTITLE" class="org.talend.rcp.intro.contentProvider.WelcomePageDynamicContentProvider" pluginId="org.talend.rcp"></contentProvider>
                <contentProvider id="DOCUMENTATIONTITLE" class="org.talend.rcp.intro.contentProvider.WelcomePageDynamicContentProvider" pluginId="org.talend.rcp"></contentProvider>
-              <contentProvider id="GETTINGSTARTEDTITLE" class="org.talend.rcp.intro.contentProvider.WelcomePageDynamicContentProvider" pluginId="org.talend.rcp"></contentProvider>
+               <contentProvider id="GETTINGSTARTEDTITLE" class="org.talend.rcp.intro.contentProvider.WelcomePageDynamicContentProvider" pluginId="org.talend.rcp"></contentProvider>
                <p align="center"><a href="http://org.eclipse.ui.intro/close"><img src="imgs/startNow.jpg" width="120px" height="25px" /></a></p> 
               </div>
             </td>

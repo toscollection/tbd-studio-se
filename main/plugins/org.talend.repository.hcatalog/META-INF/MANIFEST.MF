@@ -2,13 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.talend.repository.hcatalog;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-ClassPath: .,
  lib/hadoop-conf-kerberos.jar,
  lib/json_simple-1.1.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.talend.repository.model.hcatalog,
  org.talend.repository.model.hcatalog.impl,
  org.talend.repository.model.hcatalog.util
@@ -22,6 +21,7 @@ Require-Bundle: org.eclipse.ui,
  org.apache.commons.lang,
  org.talend.commons.ui,
  org.talend.model;visibility:=reexport,
+ org.talend.cwm.mip;visibility:=reexport,
  org.talend.core.runtime,
  org.talend.core,
  org.talend.core.ui,
@@ -30,7 +30,8 @@ Require-Bundle: org.eclipse.ui,
  org.talend.metadata.managment.ui,
  org.talend.repository,
  org.talend.designer.hdfsbrowse,
- org.talend.repository.hadoopcluster,
+ org.talend.repository.hadoopcluster;visibility:=reexport,
+ org.eclipse.gmf.runtime.notation;visibility:=reexport,
  org.talend.repository.items.importexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.repository.hcatalog.Activator

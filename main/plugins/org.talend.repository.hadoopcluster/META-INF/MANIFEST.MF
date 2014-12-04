@@ -2,11 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.talend.repository.hadoopcluster;singleton:=true
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 6.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.eclipse.emf.ecore;visibility:=reexport,
@@ -14,6 +13,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.apache.commons.beanutils,
  org.apache.commons.lang,
  org.talend.model;visibility:=reexport,
+ org.talend.cwm.mip;visibility:=reexport,
+ org.eclipse.gmf.runtime.notation;visibility:=reexport,
  org.talend.core.runtime,
  org.talend.core,
  org.talend.repository,
@@ -38,5 +39,6 @@ Export-Package: org.talend.repository.hadoopcluster.action.common,
  org.talend.repository.hadoopcluster.ui.viewer.handler,
  org.talend.repository.hadoopcluster.util,
  org.talend.repository.model.hadoopcluster,
- org.talend.repository.model.hadoopcluster.impl
+ org.talend.repository.model.hadoopcluster.impl,
+ org.talend.repository.model.hadoopcluster.util
 Bundle-Activator: org.talend.repository.hadoopcluster.HadoopClusterPlugin

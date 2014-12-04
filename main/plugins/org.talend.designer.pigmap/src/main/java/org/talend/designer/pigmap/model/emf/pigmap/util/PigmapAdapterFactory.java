@@ -93,12 +93,20 @@ public class PigmapAdapterFactory extends AdapterFactoryImpl {
                 return createOutputTableAdapter();
             }
             @Override
+            public Adapter caseVarTable(VarTable object) {
+                return createVarTableAdapter();
+            }
+            @Override
             public Adapter caseAbstractNode(AbstractNode object) {
                 return createAbstractNodeAdapter();
             }
             @Override
             public Adapter caseTableNode(TableNode object) {
                 return createTableNodeAdapter();
+            }
+            @Override
+            public Adapter caseVarNode(VarNode object) {
+                return createVarNodeAdapter();
             }
             @Override
             public Adapter caseIConnection(IConnection object) {
@@ -209,6 +217,20 @@ public class PigmapAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link org.talend.designer.pigmap.model.emf.pigmap.VarTable <em>Var Table</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarTable
+     * @generated
+     */
+    public Adapter createVarTableAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link org.talend.designer.pigmap.model.emf.pigmap.AbstractNode <em>Abstract Node</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -233,6 +255,20 @@ public class PigmapAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createTableNodeAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link org.talend.designer.pigmap.model.emf.pigmap.VarNode <em>Var Node</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see org.talend.designer.pigmap.model.emf.pigmap.VarNode
+     * @generated
+     */
+    public Adapter createVarNodeAdapter() {
         return null;
     }
 

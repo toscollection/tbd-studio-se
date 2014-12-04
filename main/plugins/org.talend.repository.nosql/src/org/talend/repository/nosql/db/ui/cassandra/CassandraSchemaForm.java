@@ -24,13 +24,11 @@ import org.talend.repository.nosql.ui.common.AbstractNoSQLSchemaForm;
 
 public class CassandraSchemaForm extends AbstractNoSQLSchemaForm {
 
-    private final String DBM_ID = "cassandra_id"; //$NON-NLS-1$
-
     public CassandraSchemaForm(Composite parent, ConnectionItem connectionItem, MetadataTable metadataTable, boolean creation,
             WizardPage parentWizardPage) {
         super(parent, connectionItem, metadataTable, creation, parentWizardPage);
         setShowDbTypeColumn(true);
-        setDbmID(DBM_ID);
+        setDbmID(ICassandraConstants.DBM_ID);
         setupForm();
     }
 
@@ -38,7 +36,7 @@ public class CassandraSchemaForm extends AbstractNoSQLSchemaForm {
     public void releaseResources() throws NoSQLGeneralException {
         super.releaseResources();
         try {
-            CassandraConnectionUtil.closeConnections();
+            CassandraConnectionUtil.getMetadataHandler(getConnection()).closeConnections();
         } catch (NoSQLServerException e) {
             throw new NoSQLGeneralException(e);
         }

@@ -12,18 +12,36 @@
 // ============================================================================
 package org.talend.repository.pigudf.handler;
 
-import org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler;
+import org.talend.core.model.properties.Item;
+import org.talend.core.model.properties.PropertiesPackage;
+import org.talend.repository.view.di.viewer.handlers.RoutineImportHandler;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class PigUdfImportHandler extends ImportRepTypeHandler {
+public class PigUdfImportHandler extends RoutineImportHandler {
 
     /**
      * DOC ggu PigUdfImportHandler constructor comment.
      */
     public PigUdfImportHandler() {
         super();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.talend.repository.view.di.viewer.handlers.RoutineImportHandler#validEClass(org.talend.core.model.properties
+     * .Item)
+     */
+    @Override
+    protected boolean validEClass(Item item) {
+        if (item != null && item.eClass().equals(PropertiesPackage.eINSTANCE.getPigudfItem())) {
+            return true;
+        }
+        return false;
+
     }
 
 }

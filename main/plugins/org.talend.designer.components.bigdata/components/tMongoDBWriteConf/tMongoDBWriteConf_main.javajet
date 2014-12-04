@@ -7,7 +7,6 @@
 		java.util.List
 "
 %>
-<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -26,14 +25,19 @@
       	if(metadata != null){
 		%>
 			com.mongodb.WriteResult resultMessage_<%=cid%>=null;
-			Object data_<%=cid%>=com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
 			<%
-			log4jFileUtil.collectRetriveData("json_"+cid);
 			if(isLog4jEnabled){
 			%>
-				log.debug("<%=cid%> - [<%=dataAction%>] - Writing the record " + nb_line_<%=cid %> + " into database.");
-				log.trace("<%=cid%> - Content of the record " + nb_line_<%=cid%> + ": " + log4jSb_<%=cid%>);
-				log4jSb_<%=cid%>.delete(0,log4jSb_<%=cid%>.length());
+				log.info("<%=cid%> - Trying to parse a json string.");
+				log.debug("<%=cid%> - The JSON string:"+json_<%=cid%>.toString());
+			<%
+			}
+			%>
+			Object data_<%=cid%>=com.mongodb.util.JSON.parse(json_<%=cid%>.toString());
+			<%
+			if(isLog4jEnabled){
+			%>
+				log.info("<%=cid%> - Parsed Successfully.");
 			<%
 			}
 			%>
@@ -67,12 +71,7 @@
 					}else{
 						<%
 						if(dieOnError){
-							if(isLog4jEnabled){
-							%>
-								log.fatal("<%=cid%> - Data node or Query node configuration error! ");
-							<%
-							}
-							%>
+						%>
 							throw new Exception("Data node or Query node configuration error! ");
 						<%
 						}else{
@@ -95,12 +94,7 @@
     				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
     					<%
     					if(dieOnError){
-    						if(isLog4jEnabled){
-    						%>
-    							log.fatal("<%=cid%> - " + resultMessage_<%=cid%>.getError());
-    						<%
-    						}
-    						%>
+    					%>
     						throw new Exception(resultMessage_<%=cid%>.getError());
     					<%
     					}else{
@@ -121,12 +115,7 @@
 			}else{
 				<%
 				if(dieOnError){
-					if(isLog4jEnabled){
-					%>
-						log.fatal("<%=cid%> - There no data in json,Please check the json configuration");
-					<%
-					}
-					%>
+				%>
 					throw new Exception("There no data in json,Please check the json configuration");
 				<%
 				}else{

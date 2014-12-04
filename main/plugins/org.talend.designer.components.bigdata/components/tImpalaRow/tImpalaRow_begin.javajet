@@ -1,0 +1,46 @@
+<%@ jet 
+imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.process.IConnectionCategory
+		org.talend.core.model.metadata.MappingTypeRetriever
+		org.talend.core.model.metadata.MetadataTalendType
+		org.talend.designer.runprocess.ProcessorException
+		org.talend.designer.runprocess.ProcessorUtilities
+		java.util.List	
+		java.util.Map
+		java.util.Set
+		java.util.HashSet
+		" 
+%>
+<%
+	CodeGeneratorArgument loadCodeGenArgument = (CodeGeneratorArgument) argument;
+	INode loadNode = (INode)loadCodeGenArgument.getArgument();
+	final String loadCid = loadNode.getUniqueName();
+	
+	boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(loadNode,"__USE_EXISTING_CONNECTION__"));
+	boolean isLog4jEnabled = "true".equals(ElementParameterParser.getValue(loadNode.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	if(useExistingConnection) { // We re-use a connection. Get the connection from the global map.
+		String connection = ElementParameterParser.getValue(loadNode, "__CONNECTION__");
+%>
+		java.sql.Connection conn_<%=loadCid%> = (java.sql.Connection)globalMap.get("conn_<%=connection%>");
+<%
+	} else { //We do not use an existing connection. Create it.
+%>
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnection_begin.javajet"%>
+<%
+		// The connection object is created in the tImpalaConnection_begin.javajet.
+	}
+	
+	final String cid = loadCid;
+	INode node = loadNode;
+%>	
+	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
+
+	String query_<%=cid %> = "";
+	boolean whetherReject_<%=cid%> = false;

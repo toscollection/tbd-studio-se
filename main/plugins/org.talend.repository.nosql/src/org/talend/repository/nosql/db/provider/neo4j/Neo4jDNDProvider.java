@@ -47,6 +47,8 @@ public class Neo4jDNDProvider extends AbstractDNDProvider {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(INeo4jAttributes.SERVER_URL));
         } else if (INeo4jAttributes.COLUMN_MAPPING.equals(value)) {
             return getColumnMappingValue(connection, table);
+        } else if (INeo4jAttributes.DB_VERSION.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(INeo4jAttributes.DB_VERSION), false);
         }
 
         return null;
@@ -71,19 +73,19 @@ public class Neo4jDNDProvider extends AbstractDNDProvider {
     }
 
     @Override
-    public void setRepositoryValue(NoSQLConnection connection, INode node, String repositoryValue) {
-        if (INeo4jAttributes.REMOTE_SERVER.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, INeo4jAttributes.REMOTE_SERVER);
+    public void setRepositoryValue(NoSQLConnection connection, INode node, IElementParameter param) {
+        if (INeo4jAttributes.REMOTE_SERVER.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(INeo4jAttributes.REMOTE_SERVER, value);
             }
-        } else if (INeo4jAttributes.DATABASE_PATH.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, INeo4jAttributes.DATABASE_PATH);
+        } else if (INeo4jAttributes.DATABASE_PATH.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(INeo4jAttributes.DATABASE_PATH, value);
             }
-        } else if (INeo4jAttributes.SERVER_URL.equals(repositoryValue)) {
-            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, INeo4jAttributes.SERVER_URL);
+        } else if (INeo4jAttributes.SERVER_URL.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(INeo4jAttributes.SERVER_URL, value);
             }

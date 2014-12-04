@@ -51,6 +51,7 @@ public class PigMapDataEditPart extends MapperRootEditPart {
         List children = new ArrayList();
         children.addAll(((PigMapData) getModel()).getInputTables());
         children.addAll(((PigMapData) getModel()).getOutputTables());
+        children.addAll(((PigMapData) getModel()).getVarTables());
         return children;
     }
 
