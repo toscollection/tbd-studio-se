@@ -130,6 +130,19 @@ public class PigMapComponent extends MapperExternalNode implements IHashableInpu
                 outputTable.setName(newName);
             }
         }
+        // Fix for TDI-31214,metadata Label maybe not useful except some UI, but still change to be the same as table
+        // name here
+        if (getOriginalNode() == null) {
+            return;
+        }
+        for (IMetadataTable table : getOriginalNode().getMetadataList()) {
+            boolean changeLabel = oldName.equals(table.getLabel())
+                    || (table.getLabel() != null && !table.getLabel().equals(table.getTableName()) && oldName.equals(table
+                            .getTableName()));
+            if (changeLabel) {
+                table.setLabel(newName);
+            }
+        }
 
     }
 
