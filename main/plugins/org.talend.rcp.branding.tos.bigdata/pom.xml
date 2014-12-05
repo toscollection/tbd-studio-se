@@ -27,7 +27,13 @@
               <artifacts>
                 <artifact>
                   <file>./resources/license.txt</file>
-                  <type>license</type>
+                  <type>txt</type>
+				  <classifier>license</classifier>
+                </artifact>
+				<artifact>
+                  <file>./resources/NOTICE.txt</file>
+                  <type>txt</type>
+				  <classifier>notice</classifier>
                 </artifact>
               </artifacts>
             </configuration>
