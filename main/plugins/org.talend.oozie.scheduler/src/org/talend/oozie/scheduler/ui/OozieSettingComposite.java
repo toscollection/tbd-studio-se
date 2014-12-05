@@ -264,13 +264,13 @@ public class OozieSettingComposite extends ScrolledComposite {
                     oozieRepositoryText.setText(connection.getLabel());
                     oozieRepositoryText.setVisible(true);
                     oozieSelectBtn.setVisible(true);
+                    return;
                 }
             }
-        } else {
-            ooziePropertyTypeCombo.select(0);
-            oozieRepositoryText.setVisible(false);
-            oozieSelectBtn.setVisible(false);
         }
+        ooziePropertyTypeCombo.select(0);
+        oozieRepositoryText.setVisible(false);
+        oozieSelectBtn.setVisible(false);
     }
 
     protected void preInitialization() {
