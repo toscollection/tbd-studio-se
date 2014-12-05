@@ -105,7 +105,7 @@
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
-        <version>0.21.0</version>
+        <version>${tycho.version}</version>
         <extensions>true</extensions>
       </plugin>
     </plugins>
