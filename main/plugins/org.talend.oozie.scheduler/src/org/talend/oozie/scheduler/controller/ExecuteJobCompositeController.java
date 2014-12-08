@@ -450,6 +450,7 @@ public class ExecuteJobCompositeController {
                 .putValue(TOozieCommonConstants.OOZIE_PREFIX_FOR_PREFERENCE + jobName, jobIdInOozie);
         if (monitor.isCanceled()) {
             output.append(">> The running job is canceled!");
+            updateAllEnabledOrNot(OozieJobProcessStatus.CANCELED, jobName);
             updateOutputTextContents(output.toString(), jobName);
             return Status.CANCEL_STATUS;
         }
@@ -556,6 +557,14 @@ public class ExecuteJobCompositeController {
                                     outputTxt.setEnabled(true);
                                     break;
                                 case SUCCEEDED:
+                                    runBtn.setEnabled(true);
+                                    scheduleBtn.setEnabled(true);
+                                    killBtn.setEnabled(false);
+                                    pathTxt.setEnabled(true);
+                                    pathBtn.setEnabled(true);
+                                    outputTxt.setEnabled(true);
+                                    break;
+                                case CANCELED:
                                     runBtn.setEnabled(true);
                                     scheduleBtn.setEnabled(true);
                                     killBtn.setEnabled(false);
