@@ -264,6 +264,7 @@ public class OozieSettingComposite extends ScrolledComposite {
                     oozieRepositoryText.setText(connection.getLabel());
                     oozieRepositoryText.setVisible(true);
                     oozieSelectBtn.setVisible(true);
+                    return;
                 }
             }
         }
