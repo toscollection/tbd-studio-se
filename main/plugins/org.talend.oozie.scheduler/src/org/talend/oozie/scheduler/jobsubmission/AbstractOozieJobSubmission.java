@@ -66,11 +66,12 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
     }
 
     protected OozieClient createOozieClient(String oozieEndPoint, int debug) {
-        String authName = AuthType.SIMPLE.name();
+        OozieClient oozieClient = null;
         if (TOozieParamUtils.enableOoKerberos()) {
-            authName = AuthType.KERBEROS.name();
+            oozieClient = new AuthOozieClient(oozieEndPoint, AuthType.KERBEROS.name());
+        } else {
+            oozieClient = new OozieClient(oozieEndPoint);
         }
-        AuthOozieClient oozieClient = new AuthOozieClient(oozieEndPoint, authName);
         oozieClient.setDebugMode(debug);
         return oozieClient;
     }
