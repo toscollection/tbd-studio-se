@@ -13,20 +13,25 @@
 package org.talend.repository.hdfs.ui;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.emf.common.util.EMap;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -42,6 +47,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -102,6 +108,12 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private static final int WIDTH_TABLE = 650;
 
+    private static final int INFORM_SIZE = 100;
+
+    private static final int QUEUE_CAPACITY = 5;
+
+    private static final int MAX_POOL_SIZE = 10;
+
     private final WizardPage parentWizardPage;
 
     private HDFSConnection temConnection;
@@ -146,7 +158,12 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     @Override
     public void initialize() {
-        threadExecutor = new RetrieveSchemaThreadPoolExecutor(5, new ThreadPoolExecutor.CallerRunsPolicy());
+        initializeThreadExecutor();
+    }
+
+    private void initializeThreadExecutor() {
+        threadExecutor = new RetrieveSchemaThreadPoolExecutor(QUEUE_CAPACITY, MAX_POOL_SIZE,
+                new ThreadPoolExecutor.CallerRunsPolicy());
     }
 
     @Override
@@ -224,11 +241,15 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         if (node.getType() == EHadoopFileTypes.FILE) {
                             if (isExistTable(node)) {
                                 item.setChecked(true);
+                                updateParentItemCheckStatus(item);
                             } else {
-                                item.setChecked(false);
+                                TreeEditor treeEditor = treeEditorMap.get(item);
+                                if (treeEditor == null) {
+                                    item.setChecked(false);
+                                }
                             }
                         } else {
-                            item.setGrayed(item.getChecked());
+                            // item.setGrayed(item.getChecked());
                         }
                     }
                 }
@@ -286,6 +307,43 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         gc.dispose();
     }
 
+    protected long fetchAllChildren(final TreeItem treeItems[]) {
+        long childSize = 0;
+        try {
+            final StringBuffer fetchNumber = new StringBuffer();
+            parentWizardPage.getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
+
+                @Override
+                public void run(final IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                    PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            monitor.beginTask(Messages.getString("HDFSFileSelectorForm.fetchChildren"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+                            long checkedSize = 0;
+                            for (TreeItem tItem : treeItems) {
+                                if (monitor != null && monitor.isCanceled()) {
+                                    break;
+                                }
+                                checkedSize += fetchAllChildren((IHDFSNode) tItem.getData(), monitor);
+                            }
+                            fetchNumber.append(checkedSize);
+                            monitor.done();
+                        }
+                    });
+                    // System.out.println("monitor:" + monitor.isCanceled());
+                }
+
+            });
+            if (0 < fetchNumber.length()) {
+                childSize = Long.valueOf(fetchNumber.toString());
+            }
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+        return childSize;
+    }
+
     @Override
     protected void addUtilsButtonListeners() {
         checkConnectionBtn.addSelectionListener(new SelectionAdapter() {
@@ -301,11 +359,16 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 updateStatus(IStatus.ERROR, null);
-                for (TreeItem tItem : schemaTree.getItems()) {
-                    fetchAllChildren((IHDFSNode) tItem.getData());
+                long checkedSize = 0;
+                checkedSize = fetchAllChildren(schemaTree.getItems());
+                boolean continueCheck = true;
+                if (INFORM_SIZE < checkedSize) {
+                    continueCheck = MessageDialog.openConfirm(getShell(),
+                            Messages.getString("HDFSFileSelectorForm.title.confirm"), //$NON-NLS-1$
+                            Messages.getString("HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { INFORM_SIZE })); //$NON-NLS-1$
                 }
-                for (TreeItem tItem : schemaTree.getItems()) {
-                    updateItem(tItem, true, false);
+                if (continueCheck) {
+                    updateItems(schemaTree.getItems(), true, false);
                 }
             }
         });
@@ -314,12 +377,10 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                for (TreeItem tItem : schemaTree.getItems()) {
-                    fetchAllChildren((IHDFSNode) tItem.getData());
-                }
-                for (TreeItem tItem : schemaTree.getItems()) {
-                    updateItem(tItem, false, false);
-                }
+                threadExecutor.clearThreads();
+                initializeThreadExecutor();
+                fetchAllChildren(schemaTree.getItems());
+                updateItems(schemaTree.getItems(), false, false);
             }
         });
     }
@@ -392,45 +453,51 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (e.detail == SWT.CHECK) {
-                    TreeItem treeItem = (TreeItem) e.item;
+                    final TreeItem treeItem = (TreeItem) e.item;
                     IHDFSNode node = (IHDFSNode) treeItem.getData();
-                    boolean promptNeeded = treeItem.getChecked();
+                    final boolean promptNeeded = treeItem.getChecked();
                     EHadoopFileTypes type = node.getType();
                     if (type != EHadoopFileTypes.FILE) {
-                        treeItem.setGrayed(true);
+                        treeItem.setGrayed(promptNeeded);
                     }
                     if (type == EHadoopFileTypes.FILE) {
                         if (promptNeeded) {
-                            MetadataTable existTable = HDFSSchemaUtil.getTableByLabel(getConnection(), treeItem.getText(0));
-                            if (existTable != null) {
-                                refreshExistItem(existTable, treeItem);
-                            } else {
-                                treeItem.setText(3, EMPTY_STRING);
-                                treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
-                                parentWizardPage.setPageComplete(false);
-                                refreshTable(treeItem, -1);
-                            }
+                            treeItem.setText(3, EMPTY_STRING);
+                            treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
+                            parentWizardPage.setPageComplete(false);
+                            refreshTable(treeItem, -1);
                         } else {
                             clearTreeItem(treeItem);
-                            if (treeItem.getText() != null
-                                    && treeItem.getText().equals(Messages.getString("HDFSFileSelectorForm.Pending"))) { //$NON-NLS-1$
-                            }
                         }
                     } else if (type == EHadoopFileTypes.FOLDER) {
-                        fetchAllChildren(node);
-                        for (TreeItem tItem : treeItem.getItems()) {
-                            updateItem(tItem, promptNeeded, true);
+                        long checkedSize = fetchAllChildren(new TreeItem[] { treeItem });
+                        boolean continueCheck = true;
+                        if (promptNeeded && INFORM_SIZE < checkedSize) {
+                            continueCheck = MessageDialog.openConfirm(getShell(),
+                                    Messages.getString("HDFSFileSelectorForm.title.confirm"), Messages.getString( //$NON-NLS-1$
+                                            "HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { INFORM_SIZE })); //$NON-NLS-1$
+                        }
+                        if (continueCheck) {
+                            updateItems(treeItem.getItems(), promptNeeded, true);
+                        } else {
+                            treeItem.setGrayed(!promptNeeded);
+                            treeItem.setChecked(!promptNeeded);
                         }
                     }
                 }
             }
+
         });
     }
 
-    private void fetchAllChildren(final IHDFSNode node) {
-        if (node == null) {
-            return;
-        }
+    /**
+     * DOC cmeng Comment method "updateItems".
+     * 
+     * @param treeItem
+     * @param promptNeeded
+     */
+    private void updateItems(final TreeItem treeItems[], final boolean promptNeeded, final boolean isEvent) {
+        parentWizardPage.setPageComplete(false);
         try {
             parentWizardPage.getWizard().getContainer().run(true, true, new IRunnableWithProgress() {
 
@@ -440,109 +507,109 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
                         @Override
                         public void run() {
-                            monitor.beginTask(Messages.getString("HDFSFileSelectorForm.fetchChildren"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
-                            fetchChildren(node);
+                            monitor.beginTask(Messages.getString("HDFSFileSelectorForm.checkingItems"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+                            for (TreeItem tItem : treeItems) {
+                                updateItem(tItem, promptNeeded, isEvent, monitor);
+                            }
                             monitor.done();
                         }
                     });
                 }
 
             });
-        } catch (Exception e) {
-            ExceptionHandler.process(e);
+        } catch (Exception exp) {
+            ExceptionHandler.process(exp);
+        }
+        if (!promptNeeded && !threadExecutor.hasThreadRunning()) {
+            parentWizardPage.setPageComplete(true);
         }
     }
 
-    private void fetchChildren(IHDFSNode node) {
+    private long fetchAllChildren(final IHDFSNode node, IProgressMonitor monitor) {
+        if (node == null) {
+            return 0;
+        }
+        long fetchSize = 0;
+        fetchSize = fetchChildren(node, monitor);
+        // node.refresh();
+        return fetchSize;
+    }
+
+    private long fetchChildren(IHDFSNode node, IProgressMonitor monitor) {
+        if (monitor != null && monitor.isCanceled()) {
+            return 0;
+        }
         node.forceFetchChildren();
+        long nodeSize = 0;
+        EHadoopFileTypes type = node.getType();
+        if (type == EHadoopFileTypes.FILE) {
+            nodeSize++;
+        }
         List<IHDFSNode> children = node.getChildren();
+        if (monitor != null && monitor.isCanceled()) {
+            return 0;
+        }
         if (children != null) {
             for (IHDFSNode child : children) {
-                fetchChildren(child);
+                nodeSize += fetchChildren(child, monitor);
             }
         }
+        return nodeSize;
     }
 
     private boolean isExistTable(IHDFSNode node) {
         if (node != null && node.getType() == EHadoopFileTypes.FILE) {
-            return HDFSSchemaUtil.getTableByLabel(getConnection(), node.getTable().getName()) != null;
+            return HDFSSchemaUtil.getTableByPath(getConnection(), node.getPath()) != null;
         }
         return false;
     }
 
-    private void refreshExistItem(final MetadataTable existTable, final TreeItem item) {
-        Display.getDefault().syncExec(new Runnable() {
+    private static void updateParentItemCheckStatus(TreeItem item) {
+        TreeItem parentItem = item.getParentItem();
+        if (parentItem == null) {
+            return;
+        }
+        boolean hasCheckedItem = false;
+        boolean hasUncheckedItem = false;
 
-            @Override
-            public void run() {
-                orgomg.cwm.objectmodel.core.Package pack = (orgomg.cwm.objectmodel.core.Package) existTable.eContainer();
-                boolean confirm = MessageDialog.openConfirm(Display.getDefault().getActiveShell(),
-                        Messages.getString("HDFSFileSelectorForm.title.confirm"), //$NON-NLS-1$
-                        Messages.getString("HDFSFileSelectorForm.tableIsExist", existTable.getLabel(), pack.getName())); //$NON-NLS-1$
-                if (confirm) {
-                    TreeItem existItem = getExistItem(existTable);
-                    if (existItem != null) {
-                        clearTreeItem(existItem);
-                        existItem.setChecked(false);
-                    }
-                    item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
-                    parentWizardPage.setPageComplete(false);
-                    refreshTable(item, -1);
-                } else {
-                    item.setChecked(false);
-                    boolean hasCheckedItem = false;
-                    TreeItem parentItem = item.getParentItem();
-                    if (parentItem != null) {
-                        for (TreeItem i : parentItem.getItems()) {
-                            if (i.getChecked()) {
-                                hasCheckedItem = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (!hasCheckedItem && parentItem != null) {
-                        parentItem.setChecked(false);
-                    }
-                }
+        for (TreeItem i : parentItem.getItems()) {
+            if (hasCheckedItem && hasUncheckedItem) {
+                break;
             }
-        });
+            IHDFSNode node = (IHDFSNode) i.getData();
+            if (node.getType() == EHadoopFileTypes.FOLDER && i.getGrayed() == true) {
+                hasCheckedItem = true;
+                hasUncheckedItem = true;
+            }
+            if (i.getChecked()) {
+                hasCheckedItem = true;
+            } else {
+                hasUncheckedItem = true;
+            }
+        }
+        if (!hasCheckedItem) {
+            parentItem.setChecked(false);
+        } else if (hasCheckedItem && hasUncheckedItem) {
+            parentItem.setChecked(true);
+            parentItem.setGrayed(true);
+        } else {
+            parentItem.setChecked(true);
+            parentItem.setGrayed(false);
+        }
+        updateParentItemCheckStatus(parentItem);
     }
 
     private void refreshTable(final TreeItem treeItem, final int size) {
-        if (threadExecutor == null) {
-            return;
-        }
+        IHDFSNode node = (IHDFSNode) treeItem.getData();
         if (!threadExecutor.isThreadRunning(treeItem)) {
-            IHDFSNode node = (IHDFSNode) treeItem.getData();
             if (node.getType() == EHadoopFileTypes.FILE) {
-                RetrieveColumnRunnable runnable = new RetrieveColumnRunnable(treeItem);
-                String value = node.getTable().getName();
-                if (!(isExistingNames(value))) {
-                    threadExecutor.execute(runnable);
-                }
+                RetrieveColumnRunnable runnable = new RetrieveColumnRunnable(treeItem, threadExecutor);
+                threadExecutor.execute(runnable);
             }
         } else {
-            RetrieveColumnRunnable runnable = threadExecutor.getRunnable(treeItem);
+            RetrieveColumnRunnable runnable = threadExecutor.getRunnable(node.getPath());
             runnable.setCanceled(false);
         }
-    }
-
-    private boolean isExistingNames(String name) {
-        if (name == null) {
-            return false;
-        }
-        String[] existedNames;
-        if (hdfsTable != null) {
-            existedNames = TableHelper.getTableNames(getConnection(), hdfsTable.getLabel());
-        } else {
-            existedNames = TableHelper.getTableNames(getConnection());
-        }
-        if (existedNames.length > 0) {
-            if (Arrays.asList(existedNames).contains(name)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private void clearTreeItem(TreeItem item) {
@@ -550,7 +617,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     }
 
     private void clearTreeItem(TreeItem item, boolean deleteFromConnection) {
-        if (item == null) {
+        if (item == null || item.isDisposed()) {
             return;
         }
         Object data = item.getData();
@@ -569,7 +636,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     treeEditorMap.remove(item);
                 }
             }
-            RetrieveColumnRunnable runnable = threadExecutor.getRunnable(item);
+            RetrieveColumnRunnable runnable = threadExecutor.getRunnable(node.getPath());
             if (runnable != null) {
                 runnable.setCanceled(true);
             }
@@ -584,20 +651,38 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private TreeItem getExistItem(MetadataTable table) {
         if (!schemaTree.isDisposed() && table != null && table.eContainer() != null) {
-            String name = ((orgomg.cwm.objectmodel.core.Package) table.eContainer()).getName();
-            TreeItem[] items = schemaTree.getItems();
-            for (TreeItem treeItem : items) {
-                if (treeItem.getData() != null) {
-                    EHadoopFileTypes type = ((IHDFSNode) treeItem.getData()).getType();
-                    if (type == EHadoopFileTypes.FOLDER) {
-                        for (TreeItem item : treeItem.getItems()) {
-                            if (item.getText(0).equals(table.getLabel()) && treeItem.getText(0).equals(name) && item.getChecked()) {
-                                return item;
-                            }
-                        }
-                    } else if (type == EHadoopFileTypes.FILE) {
-                        if (treeItem.getText(0).equals(table.getLabel()) && treeItem.getChecked()) {
-                            return treeItem;
+            String path = getHDFSPathFromMetadataTable(table);
+            if (StringUtils.isEmpty(path)) {
+                return null;
+            }
+            return getExistItem(schemaTree.getItems(), path);
+        }
+        return null;
+    }
+
+    private static String getHDFSPathFromMetadataTable(MetadataTable table) {
+        EMap<String, String> map = table.getAdditionalProperties();
+        if (map == null) {
+            return null;
+        }
+        String path = map.get(HDFSConstants.HDFS_PATH);
+        return path;
+    }
+
+    private TreeItem getExistItem(TreeItem[] items, String path) {
+        for (TreeItem itreeItem : items) {
+            if (itreeItem.getData() != null) {
+                EHadoopFileTypes type = ((IHDFSNode) itreeItem.getData()).getType();
+                if (type == EHadoopFileTypes.FOLDER) {
+                    TreeItem item = getExistItem(itreeItem.getItems(), path);
+                    if (item != null) {
+                        return item;
+                    }
+                } else if (type == EHadoopFileTypes.FILE) {
+                    Object obj = itreeItem.getData();
+                    if (obj instanceof IHDFSNode) {
+                        if (path.equals(((IHDFSNode) obj).getPath())) {
+                            return itreeItem;
                         }
                     }
                 }
@@ -606,51 +691,37 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         return null;
     }
 
-    private void updateItem(final TreeItem item, boolean checked, boolean isEvent) {
+    private void updateItem(final TreeItem item, boolean checked, boolean isEvent, IProgressMonitor monitor) {
+        if (monitor != null && monitor.isCanceled()) {
+            return;
+        }
         IHDFSNode node = (IHDFSNode) item.getData();
         if (node == null) {
             return;
         }
-        if (node.getType() == EHadoopFileTypes.FOLDER) {
+        EHadoopFileTypes type = node.getType();
+        if (type != EHadoopFileTypes.FILE) {
+            item.setChecked(checked);
+        }
+        if (type == EHadoopFileTypes.FOLDER) {
             for (TreeItem treeItem : item.getItems()) {
-                updateItem(treeItem, checked, true);
+                updateItem(treeItem, checked, true, monitor);
             }
-        } else if (node.getType() == EHadoopFileTypes.FILE) {
+        } else if (type == EHadoopFileTypes.FILE) {
             String pattern = getNameFilter();
             SearchPattern matcher = new SearchPattern();
             matcher.setPattern(pattern);
             if (!matcher.matches(node.getValue())) {
                 return;
             }
-            // if from click event, should set the table item original status.
-            if (isEvent) {
-                Set<MetadataTable> tables = ConnectionHelper.getTables(getConnection());
-                for (MetadataTable table : tables) {
-                    if (table.getLabel().equals(node.getTable().getName())) {
-                        item.setChecked(true);
-                    }
-                }
-                item.setChecked(!checked);
-            }
             if (checked) {
-                if (!item.getChecked()) {
-                    MetadataTable existTable = HDFSSchemaUtil.getTableByLabel(getConnection(), item.getText(0));
-                    if (existTable != null) {
-                        refreshExistItem(existTable, item);
-                    } else {
-                        item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
-                        parentWizardPage.setPageComplete(false);
-                        refreshTable(item, -1);
-                    }
-                } else {
-                    updateStatus(IStatus.OK, null);
-                }
+                item.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
+                parentWizardPage.setPageComplete(false);
+                refreshTable(item, -1);
                 item.setChecked(true);
             } else {
-                if (item.getChecked()) {
-                    clearTreeItem(item);
-                    item.setChecked(false);
-                }
+                clearTreeItem(item);
+                item.setChecked(false);
             }
         }
     }
@@ -718,28 +789,44 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     class RetrieveSchemaThreadPoolExecutor extends TalendCustomThreadPoolExecutor {
 
+        protected List<RetrieveSchemaThreadPoolExecutor> executors = new ArrayList<RetrieveSchemaThreadPoolExecutor>();
+        {
+            executors.add(this);
+        }
+
+        protected RejectedExecutionHandler handler;
+
+        protected int queueCapacity;
+
+        protected int maxPoolSize;
+
+        volatile protected int sumSize = 0;
+
+        volatile protected int totalTaskSize = 0;
+
+        volatile protected int currentTaskSize = 0;
+
+        volatile protected boolean isCleaned = false;
+
         // This map is used to store the tableItems that are selected or unselected by the user.
         // see afterExecute() and beforeExecute(). If an item is in the map, it means that the item's
         // related thread is running.
-        Map<TreeItem, RetrieveColumnRunnable> map = Collections.synchronizedMap(new HashMap<TreeItem, RetrieveColumnRunnable>());
+        protected Map<String, RetrieveColumnRunnable> runnableMap = Collections
+                .synchronizedMap(new HashMap<String, RetrieveColumnRunnable>());
 
-        public RetrieveSchemaThreadPoolExecutor(int queueCapacity) {
-            super(queueCapacity);
+        public RetrieveSchemaThreadPoolExecutor(int queueCapacity, int maxPoolSize, RejectedExecutionHandler handler) {
+            super(queueCapacity, maxPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(queueCapacity), handler);
+            this.queueCapacity = queueCapacity;
+            this.maxPoolSize = maxPoolSize;
+            this.handler = handler;
         }
 
-        public RetrieveSchemaThreadPoolExecutor(int queueCapacity, RejectedExecutionHandler handler) {
-            super(queueCapacity, handler);
-        }
-
-        /*
-         * (non-Javadoc)
-         * 
-         * @see java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable, java.lang.Throwable)
-         */
-        @Override
-        protected void afterExecute(Runnable r, Throwable t) {
-            RetrieveColumnRunnable runnable = (RetrieveColumnRunnable) r;
-            map.remove(runnable.getTreeItem());
+        private RetrieveSchemaThreadPoolExecutor(int queueCapacity, int maxPoolSize, RejectedExecutionHandler handler,
+                Map<String, RetrieveColumnRunnable> runnableMap, List<RetrieveSchemaThreadPoolExecutor> executors) {
+            super(queueCapacity, maxPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(queueCapacity), handler);
+            this.queueCapacity = queueCapacity;
+            this.runnableMap = runnableMap;
+            this.executors = executors;
         }
 
         /*
@@ -750,7 +837,20 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         @Override
         protected void beforeExecute(Thread t, Runnable r) {
             RetrieveColumnRunnable runnable = (RetrieveColumnRunnable) r;
-            map.put(runnable.getTreeItem(), runnable);
+            // map.put(runnable.getTreeItem(), runnable);
+            runnableMap.put(runnable.getKey(), runnable);
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable, java.lang.Throwable)
+         */
+        @Override
+        protected void afterExecute(Runnable r, Throwable t) {
+            RetrieveColumnRunnable runnable = (RetrieveColumnRunnable) r;
+            runnableMap.remove(runnable.getKey());
+            --currentTaskSize;
         }
 
         /**
@@ -760,7 +860,47 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
          * @return
          */
         public boolean isThreadRunning(TreeItem item) {
-            return map.containsKey(item);
+            IHDFSNode node = (IHDFSNode) item.getData();
+            // currently, use the path as the runnable key, please see the runnable
+            return runnableMap.containsKey(node.getPath());
+        }
+
+        @Override
+        public boolean hasThreadRunning() {
+            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
+                if (executor.getCompletedTaskCount() < executor.totalTaskSize) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int getUncompletedTaskCount() {
+            int completeCount = 0;
+            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
+                completeCount += executor.getCompletedTaskCount();
+            }
+            return sumSize - completeCount;
+        }
+
+        public boolean isCleaned() {
+            return isCleaned;
+        }
+
+        @Override
+        public void clearThreads() {
+            isCleaned = true;
+            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
+                if (executor != this) {
+                    executor.clearThreadsSuper();
+                }
+            }
+            super.clearThreads();
+        }
+
+        private void clearThreadsSuper() {
+            isCleaned = true;
+            super.clearThreads();
         }
 
         /**
@@ -769,23 +909,82 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
          * @param key
          * @return
          */
-        public synchronized RetrieveColumnRunnable getRunnable(TreeItem key) {
+        public RetrieveColumnRunnable getRunnable(String key) {
             // Get the runnable from map first, else then find it in the waiting queue.
-            RetrieveColumnRunnable runnable = map.get(key);
+            RetrieveColumnRunnable runnable = runnableMap.get(key);
             if (runnable != null) {
                 return runnable;
             }
-            for (Object element2 : getQueue()) {
-                RetrieveColumnRunnable element = (RetrieveColumnRunnable) element2;
-                if (element.getTreeItem() == key) {
-                    return element;
+            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
+                BlockingQueue<Runnable> queue = executor.getQueue();
+                for (Object element2 : queue) {
+                    RetrieveColumnRunnable element = (RetrieveColumnRunnable) element2;
+                    if (key.equals(element.getKey())) {
+                        return element;
+                    }
                 }
             }
             return null;
         }
+
+        @Override
+        public synchronized void execute(Runnable command) {
+            RetrieveSchemaThreadPoolExecutor usableExecutor = getUsableExecutor();
+            ++sumSize;
+            usableExecutor.executeSuper(command);
+        }
+
+        private void executeSuper(Runnable command) {
+            ++currentTaskSize;
+            ++totalTaskSize;
+            super.execute(command);
+        }
+
+        private synchronized RetrieveSchemaThreadPoolExecutor getUsableExecutor() {
+
+            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
+                if (!executor.hasFull()) {
+                    return executor;
+                }
+            }
+            RetrieveSchemaThreadPoolExecutor newExecutor = new RetrieveSchemaThreadPoolExecutor(QUEUE_CAPACITY, MAX_POOL_SIZE,
+                    handler, runnableMap, executors);
+            executors.add(newExecutor);
+            return newExecutor;
+
+        }
+
+        public boolean hasFull() {
+            return maxPoolSize <= currentTaskSize;
+        }
+    }
+
+    private boolean notShowAgain = false;
+
+    private boolean userConfirmed;
+
+    private synchronized void showTableIsExistConfirmDialog(final MetadataTable existTable) {
+        if (notShowAgain == false) {
+            // orgomg.cwm.objectmodel.core.Package pack = (orgomg.cwm.objectmodel.core.Package) existTable.eContainer();
+            MessageDialogWithToggle dialog = new MessageDialogWithToggle(Display.getDefault().getActiveShell(),
+                    Messages.getString("HDFSFileSelectorForm.title.confirm"), null, Messages.getString( //$NON-NLS-1$
+                            "HDFSFileSelectorForm.tableIsExist.new", existTable.getLabel()), //$NON-NLS-1$
+                    MessageDialog.CONFIRM, new String[] { IDialogConstants.YES_LABEL, IDialogConstants.NO_LABEL }, 1,
+                    Messages.getString("HDFSFileSelectorForm.tableIsExist.notShowAgain"), //$NON-NLS-1$
+                    false);
+            int result = dialog.open();
+            notShowAgain = dialog.getToggleState();
+            if (result == IDialogConstants.YES_ID) {
+                userConfirmed = true;
+            } else {
+                userConfirmed = false;
+            }
+        }
     }
 
     class RetrieveColumnRunnable implements Runnable {
+
+        String key;
 
         TreeItem treeItem;
 
@@ -799,6 +998,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         volatile boolean isCanceled = false;
 
+        private RetrieveSchemaThreadPoolExecutor parentExecutor;
+
         /**
          * Getter for tableItem.
          * 
@@ -808,9 +1009,11 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             return this.treeItem;
         }
 
-        RetrieveColumnRunnable(TreeItem treeItem) {
+        RetrieveColumnRunnable(TreeItem treeItem, RetrieveSchemaThreadPoolExecutor _parentExecutor) {
             this.treeItem = treeItem;
             this.fileNode = (IHDFSNode) treeItem.getData();
+            this.key = this.fileNode.getPath();
+            this.parentExecutor = _parentExecutor;
             setup();
         }
 
@@ -836,16 +1039,72 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         @Override
         public void run() {
-            if (isCanceled()) {
-                return;
-            }
-
-            IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
 
             synchronized (lock) {
+                if (isCanceled()) {
+                    updateCompleteStatus();
+                    return;
+                }
+
                 if (fileNode.getType() == EHadoopFileTypes.FILE) {
                     HDFSFile file = (HDFSFile) fileNode;
                     NamedColumnSet table = file.getTable();
+                    final MetadataTable existTable = HDFSSchemaUtil.getTableByLabel(getConnection(), table.getName());
+                    if (existTable != null) {
+                        String path = file.getPath();
+                        if (!StringUtils.isEmpty(path)) {
+                            // if the current operating item is already checked before
+                            if (path.equals(getHDFSPathFromMetadataTable(existTable))) {
+                                Display.getDefault().syncExec(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        clearTreeItem(treeItem, false);
+                                    }
+                                });
+                                updateCompleteStatus();
+                                return;
+                            }
+                        }
+                        Display.getDefault().syncExec(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (isCanceled()) {
+                                    return;
+                                }
+                                showTableIsExistConfirmDialog(existTable);
+                                if (isCanceled()) {
+                                    return;
+                                }
+                                if (treeItem.isDisposed()) {
+                                    userConfirmed = false;
+                                    return;
+                                }
+                                if (userConfirmed) {
+                                    TreeItem existItem = getExistItem(existTable);
+                                    if (existItem != null) {
+                                        clearTreeItem(existItem, true);
+                                        existItem.setChecked(false);
+                                        updateParentItemCheckStatus(existItem);
+                                    }
+                                } else {
+                                    clearTreeItem(treeItem, false);
+                                    treeItem.setChecked(false);
+                                    updateParentItemCheckStatus(treeItem);
+                                }
+                            }
+                        });
+                        if (!userConfirmed) {
+                            updateCompleteStatus();
+                            return;
+                        }
+                    }
+                    if (isCanceled()) {
+                        updateCompleteStatus();
+                        return;
+                    }
+                    IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
                     String comment = null;
                     String type = null;
                     comment = ((TdTable) table).getComment();
@@ -861,8 +1120,10 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
                     try {
                         metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), file);
-                    } catch (final Exception e) {
-
+                    } catch (final Throwable e) {
+                        if (isCanceled() || parentExecutor.isCleaned()) {
+                            return;
+                        }
                         Display.getDefault().asyncExec(new Runnable() {
 
                             @Override
@@ -870,10 +1131,11 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                                 showErrorInfoOnStatusCell(e);
                             }
                         });
-
+                        updateCompleteStatus();
                         ExceptionHandler.process(e);
                         return;
                     }
+
                     hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_FILE_TYPE, file.getFileType().getName());
                     Iterator<MetadataColumn> iterate = metadataColumns.iterator();
                     while (iterate.hasNext()) {
@@ -889,6 +1151,11 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                         hdfsTable.getColumns().add(metadataColumn);
                     }
                     if (!ConnectionHelper.getTables(getConnection()).contains(hdfsTable)) {
+                        // add a checker after a cost huge time action
+                        if (isCanceled()) {
+                            updateCompleteStatus();
+                            return;
+                        }
                         HDFSSchemaUtil.addTable2Connection(getConnection(), hdfsTable);
                     }
                 }
@@ -909,7 +1176,11 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         }
 
-        private void showErrorInfoOnStatusCell(final Exception e) {
+        public String getKey() {
+            return key;
+        }
+
+        private void showErrorInfoOnStatusCell(final Throwable e) {
 
             if (treeItem.isDisposed()) {
                 return;
@@ -917,9 +1188,10 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             TreeEditor editor = new TreeEditor(schemaTree);
             final Composite composite = new Composite(schemaTree, SWT.NONE);
             Color backgroundColor = treeItem.getBackground();
+            Color redColor = new Color(backgroundColor.getDevice(), new RGB(backgroundColor.getRed(), 0, 0));
             // GC gc = new GC(composite);
             Font font = treeItem.getFont();
-            composite.setBackground(backgroundColor);
+            composite.setBackground(redColor);
             FormLayout layout = new FormLayout();
             composite.setLayout(layout);
 
@@ -941,7 +1213,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
             Label errorText = new Label(composite, SWT.NONE);
             errorText.setFont(font);
-            errorText.setBackground(backgroundColor);
+            errorText.setBackground(redColor);
             formData = new FormData();
             errorText.setLayoutData(formData);
             String errorString = "  " + Messages.getString("HDFSSchemaForm.retrieveSchema.checkSchema.errorStatus"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -989,7 +1261,26 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             }
 
             updateStatus(IStatus.OK, null);
-            parentWizardPage.setPageComplete(!threadExecutor.hasThreadRunning());
+            updateCompleteStatus();
+        }
+
+        /**
+         * DOC cmeng Comment method "updateCompleteStatus".
+         */
+        private void updateCompleteStatus() {
+            Display.getDefault().syncExec(new Runnable() {
+
+                @Override
+                public void run() {
+                    int unCompletedTaskCount = threadExecutor.getUncompletedTaskCount();
+                    // if only left one uncompleted task(itself), then means it will all finished after this one finish
+                    boolean hasThreadRunning = !(unCompletedTaskCount == 1);
+                    parentWizardPage.setPageComplete(!hasThreadRunning);
+                    if (!hasThreadRunning) {
+                        notShowAgain = false;
+                    }
+                }
+            });
         }
 
     }
