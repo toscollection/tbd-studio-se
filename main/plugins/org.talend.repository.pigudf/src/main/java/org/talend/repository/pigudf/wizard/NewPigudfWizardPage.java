@@ -168,12 +168,11 @@ public class NewPigudfWizardPage extends PropertiesWizardPage {
     protected List<IRepositoryViewObject> loadRepViewObjectWithOtherTypes() throws PersistenceException {
         List<IRepositoryViewObject> list = new ArrayList<IRepositoryViewObject>();
 
-        // List for common process
-        list.addAll(loadRepViewObjectWithOtherTypes(ERepositoryObjectType.PROCESS));
-
-        // List for m/r process
-        ERepositoryObjectType mrRepObjType = ERepositoryObjectType.valueOf(ERepositoryObjectType.class, "PROCESS_MR");//$NON-NLS-1$
-        list.addAll(loadRepViewObjectWithOtherTypes(mrRepObjType));
+        // List for all other processes
+        List<IRepositoryViewObject> processList = getAllProcessTypeObjectsWithoutCurrentType();
+        if (processList != null && !processList.isEmpty()) {
+            list.addAll(processList);
+        }
 
         // routine
         list.addAll(loadRepViewObjectWithOtherTypes(ERepositoryObjectType.ROUTINES));
