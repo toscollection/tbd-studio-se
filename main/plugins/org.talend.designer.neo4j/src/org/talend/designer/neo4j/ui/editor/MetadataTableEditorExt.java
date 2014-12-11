@@ -15,7 +15,7 @@ package org.talend.designer.neo4j.ui.editor;
 import org.talend.core.model.metadata.IMetadataColumn;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.metadata.MetadataColumn;
-import org.talend.core.model.metadata.editor.MetadataTableEditor;
+import org.talend.core.ui.metadata.editor.MetadataTableEditor;
 import org.talend.designer.neo4j.data.Neo4jData;
 import org.talend.designer.neo4j.ui.Neo4jUI;
 

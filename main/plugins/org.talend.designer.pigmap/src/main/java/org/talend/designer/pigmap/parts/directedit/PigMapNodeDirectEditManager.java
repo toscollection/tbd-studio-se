@@ -39,6 +39,7 @@ import org.talend.commons.ui.swt.tableviewer.celleditor.CellEditorDialogBehavior
 import org.talend.commons.ui.swt.tableviewer.celleditor.ExtendedTextCellEditor;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
+import org.talend.core.runtime.services.IExpressionBuilderDialogService;
 import org.talend.designer.gefabstractmap.figures.VarNodeTextLabel;
 import org.talend.designer.gefabstractmap.figures.cells.IComboCell;
 import org.talend.designer.gefabstractmap.figures.cells.IExpressionBuilderCell;
@@ -61,7 +62,6 @@ import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
 import org.talend.designer.pigmap.util.MapDataHelper;
 import org.talend.designer.pigmap.util.PigMapUtil;
-import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
 /**
  * 
