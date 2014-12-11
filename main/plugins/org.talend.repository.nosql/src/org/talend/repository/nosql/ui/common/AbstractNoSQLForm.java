@@ -111,7 +111,11 @@ public abstract class AbstractNoSQLForm extends AbstractForm {
     }
 
     public void processWhenShowPage(WizardPage page) {
-        // Do nothing by default
+        updateContextButton();
+    }
+
+    private void updateContextButton() {
+        adaptFormToEditable();
     }
 
     /*

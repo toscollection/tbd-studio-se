@@ -57,6 +57,7 @@ public class Neo4jSchemaForm extends AbstractNoSQLSchemaForm {
 
     @Override
     public void processWhenShowPage(WizardPage page) {
+        super.processWhenShowPage(page);
         if (!creation) {
             return;
         }
