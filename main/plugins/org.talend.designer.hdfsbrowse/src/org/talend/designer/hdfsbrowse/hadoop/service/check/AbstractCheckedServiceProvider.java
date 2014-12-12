@@ -25,24 +25,22 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
     public boolean checkService(final HadoopServiceProperties serviceProperties, final int timeout) throws HadoopServerException {
         boolean checkedOK = true;
 
-        final ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
-        final ClassLoader classLoader = getClassLoader(serviceProperties);
+        ClassLoader classLoader = getClassLoader(serviceProperties);
         try {
             Thread.currentThread().setContextClassLoader(classLoader);
             ICheckedWorkUnit workUnit = new CheckedWorkUnit() {
 
                 @Override
-                protected Object run() throws Exception {
-                    return check(serviceProperties, classLoader);
+                protected Object run(ClassLoader cl) throws Exception {
+                    return check(serviceProperties, cl);
                 }
             };
             workUnit.setTimeout(timeout);
+            workUnit.setClassLoader(classLoader);
             workUnit.execute();
         } catch (Exception e) {
             checkedOK = false;
             throw new HadoopServerException(e);
-        } finally {
-            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
 
         return checkedOK;

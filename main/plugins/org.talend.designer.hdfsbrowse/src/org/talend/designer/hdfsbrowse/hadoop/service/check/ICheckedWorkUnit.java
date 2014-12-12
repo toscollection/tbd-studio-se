@@ -26,4 +26,6 @@ public interface ICheckedWorkUnit {
 
     public void setTimeout(Integer timeout);
 
+    public void setClassLoader(ClassLoader classLoader);
+
 }
