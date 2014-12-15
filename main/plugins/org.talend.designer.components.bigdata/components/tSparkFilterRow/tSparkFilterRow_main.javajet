@@ -92,7 +92,7 @@
 					for(ColumnType columnType:columns) {
 						if(columnType.getColumnName().equals(configMap.get("COLUMN_NAME"))) {
 							if("GREATER".equals(operator) || "GREATER_EQUAL".equals(operator) || "LESS".equals(operator) || "LESS_EQUAL".equals(operator)) {
-								if(columnType.getColumnType().equals("id_String") || columnType.getColumnType().equals("id_Byte") 
+								if(columnType.getColumnType().equals("id_Byte") 
 									|| columnType.getColumnType().equals("id_Character") || columnType.getColumnType().equals("id_Boolean") 
 										|| columnType.getColumnType().equals("id_byte[]") || columnType.getColumnType().equals("id_Object") 
 											|| columnType.getColumnType().equals("id_List") || columnType.getColumnType().equals("id_Dynamic") 
