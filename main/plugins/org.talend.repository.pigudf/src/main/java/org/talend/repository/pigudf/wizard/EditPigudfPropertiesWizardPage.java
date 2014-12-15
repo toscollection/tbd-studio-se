@@ -12,14 +12,19 @@
 // ============================================================================
 package org.talend.repository.pigudf.wizard;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
+import org.talend.commons.exception.PersistenceException;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.repository.pigudf.i18n.Messages;
 import org.talend.repository.ui.wizards.PropertiesWizardPage;
 
@@ -76,4 +81,19 @@ public class EditPigudfPropertiesWizardPage extends PropertiesWizardPage {
         return ERepositoryObjectType.PIG_UDF;
     }
 
+    @Override
+    protected List<IRepositoryViewObject> loadRepViewObjectWithOtherTypes() throws PersistenceException {
+        List<IRepositoryViewObject> list = new ArrayList<IRepositoryViewObject>();
+
+        // List for all other processes
+        List<IRepositoryViewObject> processList = getAllProcessTypeObjectsWithoutCurrentType();
+        if (processList != null && !processList.isEmpty()) {
+            list.addAll(processList);
+        }
+
+        // routine
+        list.addAll(loadRepViewObjectWithOtherTypes(ERepositoryObjectType.ROUTINES));
+
+        return list;
+    }
 }

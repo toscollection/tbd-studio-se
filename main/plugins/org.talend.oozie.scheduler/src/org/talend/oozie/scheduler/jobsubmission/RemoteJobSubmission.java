@@ -33,7 +33,7 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
  */
 public class RemoteJobSubmission extends AbstractOozieJobSubmission {
 
-    public static final int TIMEOUT = 10;
+    public static final int TIMEOUT = 30;
 
     @Override
     public String submit(JobContext jobContext) throws JobSubmissionException, InterruptedException, URISyntaxException {
