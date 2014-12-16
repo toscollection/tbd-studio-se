@@ -23,5 +23,6 @@ public enum OozieJobProcessStatus {
     SUCCEEDED,
     KILLED,
     FAILED,
-    SUSPENDED
+    SUSPENDED,
+    CANCELED
 }
