@@ -27,7 +27,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.talend.tos.bigdata_feature"
+         id="org.talend.tos.bigdata-feature"
          version="0.0.0"/>
 
    <plugin
