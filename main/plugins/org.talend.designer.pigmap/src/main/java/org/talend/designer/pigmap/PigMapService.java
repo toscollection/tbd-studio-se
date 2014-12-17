@@ -13,7 +13,7 @@
 package org.talend.designer.pigmap;
 
 import org.eclipse.jface.fieldassist.IContentProposalProvider;
-import org.talend.commons.ui.expressionbuilder.IExpressionDataBean;
+import org.talend.commons.ui.runtime.expressionbuilder.IExpressionDataBean;
 import org.talend.core.service.IPigMapService;
 import org.talend.core.ui.proposal.PigProposalProvider;
 import org.talend.designer.core.model.utils.emf.talendfile.AbstractExternalData;

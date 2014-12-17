@@ -22,7 +22,7 @@ import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.runtime.model.expressionbuilder.Variable;
-import org.talend.commons.ui.expressionbuilder.IExpressionBuilderDialogController;
+import org.talend.commons.ui.runtime.expressionbuilder.IExpressionBuilderDialogController;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
 import org.talend.core.runtime.services.IExpressionBuilderDialogService;
