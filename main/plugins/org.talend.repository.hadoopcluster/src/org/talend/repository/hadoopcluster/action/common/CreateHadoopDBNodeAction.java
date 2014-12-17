@@ -19,6 +19,7 @@ import java.util.Map.Entry;
 
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
+import org.talend.commons.runtime.model.repository.ERepositoryStatus;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -27,7 +28,6 @@ import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
-import org.talend.repository.model.ERepositoryStatus;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
