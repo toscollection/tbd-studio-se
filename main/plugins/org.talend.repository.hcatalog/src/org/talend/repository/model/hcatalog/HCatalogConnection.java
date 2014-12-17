@@ -28,6 +28,8 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getKrbPrincipal <em>Krb Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getKrbRealm <em>Krb Realm</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getNnPrincipal <em>Nn Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getRowSeparator <em>Row Separator</em>}</li>
+ *   <li>{@link org.talend.repository.model.hcatalog.HCatalogConnection#getFieldSeparator <em>Field Separator</em>}</li>
  * </ul>
  * </p>
  *
@@ -355,5 +357,59 @@ public interface HCatalogConnection extends HadoopSubConnection {
      * @generated
      */
     void setNnPrincipal(String value);
+
+    /**
+     * Returns the value of the '<em><b>Row Separator</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Row Separator</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Row Separator</em>' attribute.
+     * @see #setRowSeparator(String)
+     * @see org.talend.repository.model.hcatalog.HCatalogPackage#getHCatalogConnection_RowSeparator()
+     * @model default=""
+     * @generated
+     */
+    String getRowSeparator();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getRowSeparator <em>Row Separator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Row Separator</em>' attribute.
+     * @see #getRowSeparator()
+     * @generated
+     */
+    void setRowSeparator(String value);
+
+    /**
+     * Returns the value of the '<em><b>Field Separator</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Field Separator</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Field Separator</em>' attribute.
+     * @see #setFieldSeparator(String)
+     * @see org.talend.repository.model.hcatalog.HCatalogPackage#getHCatalogConnection_FieldSeparator()
+     * @model default=""
+     * @generated
+     */
+    String getFieldSeparator();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getFieldSeparator <em>Field Separator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Field Separator</em>' attribute.
+     * @see #getFieldSeparator()
+     * @generated
+     */
+    void setFieldSeparator(String value);
 
 } // HCatalogConnection

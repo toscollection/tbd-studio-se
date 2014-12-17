@@ -38,6 +38,9 @@ import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
+import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
+import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
+import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
@@ -88,6 +91,30 @@ public class HCatalogForm extends AbstractHCatalogForm {
             krbPrincipalText.setText(getConnection().getKrbPrincipal());
             krbRealmText.setText(getConnection().getKrbRealm());
         }
+        String rowSeparatorVal = getConnection().getRowSeparator();
+        if (StringUtils.isNotEmpty(rowSeparatorVal)) {
+            rowSeparatorText.setText(rowSeparatorVal);
+        } else {
+            rowSeparatorVal = IExtractSchemaService.DEFAULT_ROW_SEPARATOR;
+            rowSeparatorText.setText(rowSeparatorVal);
+            getConnection().setRowSeparator(rowSeparatorVal);
+        }
+        EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorVal, false);
+        if (rowSeparator != null) {
+            rowSeparatorCombo.setText(rowSeparator.getDisplayName());
+        }
+        String fieldSeparatorVal = getConnection().getFieldSeparator();
+        if (StringUtils.isNotEmpty(fieldSeparatorVal)) {
+            fieldSeparatorText.setText(fieldSeparatorVal);
+        } else {
+            fieldSeparatorVal = IExtractSchemaService.DEFAULT_FIELD_SEPARATOR;
+            fieldSeparatorText.setText(fieldSeparatorVal);
+            getConnection().setFieldSeparator(fieldSeparatorVal);
+        }
+        EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorVal, false);
+        if (fieldSeparator != null) {
+            fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
+        }
 
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -106,12 +133,17 @@ public class HCatalogForm extends AbstractHCatalogForm {
             krbPrincipalText.setReadOnly(readOnly);
             krbRealmText.setReadOnly(readOnly);
         }
+        rowSeparatorText.setEditable(!readOnly);
+        rowSeparatorCombo.setEnabled(!readOnly);
+        fieldSeparatorText.setEditable(!readOnly);
+        fieldSeparatorCombo.setEnabled(!readOnly);
     }
 
     @Override
     protected void addFields() {
         addTempletonFields();
         addDatabaseFields();
+        addSeparatorFields();
         addHadoopPropertiesFields();
         addCheckFields();
     }
@@ -304,6 +336,72 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 }
             });
         }
+
+        rowSeparatorCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                String separatorDisplay = rowSeparatorCombo.getText();
+                EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(separatorDisplay, true);
+                if (rowSeparator != null) {
+                    rowSeparatorText.setText(rowSeparator.getValue());
+                    rowSeparatorText.forceFocus();
+                    rowSeparatorText.selectAll();
+                }
+            }
+        });
+
+        fieldSeparatorCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                String separatorDisplay = fieldSeparatorCombo.getText();
+                EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(separatorDisplay, true);
+                if (fieldSeparator != null) {
+                    fieldSeparatorText.setText(fieldSeparator.getValue());
+                    fieldSeparatorText.forceFocus();
+                    fieldSeparatorText.selectAll();
+                }
+            }
+        });
+
+        rowSeparatorText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setRowSeparator(rowSeparatorText.getText());
+                checkFieldsValue();
+                EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorText.getText(), false);
+                if (rowSeparator == null) {
+                    rowSeparatorCombo.deselectAll();
+                } else {
+                    String originalValue = rowSeparatorCombo.getText();
+                    String newValue = rowSeparator.getDisplayName();
+                    if (!newValue.equals(originalValue)) {
+                        rowSeparatorCombo.setText(newValue);
+                    }
+                }
+            }
+        });
+
+        fieldSeparatorText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setFieldSeparator(fieldSeparatorText.getText());
+                checkFieldsValue();
+                EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorText.getText(), false);
+                if (fieldSeparator == null) {
+                    fieldSeparatorCombo.deselectAll();
+                } else {
+                    String originalValue = fieldSeparatorCombo.getText();
+                    String newValue = fieldSeparator.getDisplayName();
+                    if (!newValue.equals(originalValue)) {
+                        fieldSeparatorCombo.setText(newValue);
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -374,6 +472,16 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbRealm.invalid")); //$NON-NLS-1$
                 return false;
             }
+        }
+
+        if (!validText(rowSeparatorText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.rowSeparator")); //$NON-NLS-1$
+            return false;
+        }
+
+        if (!validText(fieldSeparatorText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.fieldSeparator")); //$NON-NLS-1$
+            return false;
         }
 
         checkConnectionBtn.setEnabled(true);

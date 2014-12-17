@@ -19,6 +19,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hcatalog.ecore#//HCatalogConnection/krbPrincipal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hcatalog.ecore#//HCatalogConnection/krbRealm"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hcatalog.ecore#//HCatalogConnection/nnPrincipal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hcatalog.ecore#//HCatalogConnection/rowSeparator"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hcatalog.ecore#//HCatalogConnection/fieldSeparator"/>
     </genClasses>
     <genClasses ecoreClass="hcatalog.ecore#//HCatalogConnectionItem"/>
   </genPackages>
