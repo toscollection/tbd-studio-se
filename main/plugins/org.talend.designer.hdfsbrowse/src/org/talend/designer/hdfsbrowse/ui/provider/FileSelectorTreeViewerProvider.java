@@ -18,7 +18,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
-import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
+import org.talend.core.repository.model.provider.AbstractMetadataExtractorViewProvider;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;

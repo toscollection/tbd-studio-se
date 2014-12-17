@@ -12,8 +12,8 @@
 // ============================================================================
 package org.talend.repository.nosql.ui.content;
 
+import org.talend.core.repository.model.ProjectRepositoryNode;
 import org.talend.repository.metadata.content.AbstractMetadataContentProvider;
-import org.talend.repository.model.ProjectRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.nosql.ui.node.NoSQLRepositoryNodeType;
 

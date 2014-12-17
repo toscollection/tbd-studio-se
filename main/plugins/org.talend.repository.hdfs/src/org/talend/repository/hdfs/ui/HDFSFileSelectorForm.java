@@ -73,8 +73,8 @@ import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.metadata.types.PerlTypesManager;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.repository.model.provider.AbstractMetadataExtractorViewProvider;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.TableHelper;
@@ -91,6 +91,7 @@ import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
+
 import orgomg.cwm.resource.relational.NamedColumnSet;
 
 /**

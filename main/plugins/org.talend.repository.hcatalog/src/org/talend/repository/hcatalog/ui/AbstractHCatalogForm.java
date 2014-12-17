@@ -17,7 +17,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.core.repository.ConnectionStatus;
+import org.talend.core.repository.model.connection.ConnectionStatus;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopSubForm;
 import org.talend.repository.hcatalog.Activator;
 import org.talend.repository.hcatalog.i18n.Messages;
