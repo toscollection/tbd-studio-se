@@ -36,6 +36,7 @@ import org.talend.core.model.repository.RepositoryManager;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.services.IUIRefresher;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.metadata.managment.ui.wizard.PropertiesWizard;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.RepositoryPlugin;
 import org.talend.repository.model.RepositoryNode;
@@ -43,7 +44,6 @@ import org.talend.repository.model.RepositoryNodeUtilities;
 import org.talend.repository.pigudf.wizard.EditPigudfPropertiesWizard;
 import org.talend.repository.ui.actions.EditPropertiesAction;
 import org.talend.repository.ui.views.IJobSettingsView;
-import org.talend.repository.ui.wizards.PropertiesWizard;
 
 /**
  * created by Administrator on 2013-3-13 Detailled comment

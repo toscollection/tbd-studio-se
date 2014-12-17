@@ -26,13 +26,13 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.metadata.managment.ui.wizard.AbstractForm;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.exceptions.NoSQLGeneralException;
 import org.talend.repository.nosql.factory.NoSQLRepositoryTranslator;
 import org.talend.repository.nosql.validator.IValidator;
 import org.talend.repository.nosql.validator.IValidatorEntry;
 import org.talend.repository.nosql.validator.ValidatorEntry;
-import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
  * created by ycbai on 2014-6-16 Detailled comment

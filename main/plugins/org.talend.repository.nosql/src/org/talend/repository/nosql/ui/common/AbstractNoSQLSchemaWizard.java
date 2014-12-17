@@ -16,8 +16,8 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.metadata.managment.ui.wizard.AbstractRepositoryFileTableWizard;
 import org.talend.repository.nosql.exceptions.NoSQLGeneralException;
-import org.talend.repository.ui.wizards.AbstractRepositoryFileTableWizard;
 
 /**
  * created by ycbai on Jul 8, 2014 Detailled comment

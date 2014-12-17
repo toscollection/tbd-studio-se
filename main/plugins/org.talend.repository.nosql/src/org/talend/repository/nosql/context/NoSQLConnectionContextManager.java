@@ -20,8 +20,8 @@ import org.talend.core.language.LanguageManager;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
 
 /**
  * DOC PLV class global comment. Detailled comment

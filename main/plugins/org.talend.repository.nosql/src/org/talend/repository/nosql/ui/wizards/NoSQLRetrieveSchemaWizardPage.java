@@ -18,13 +18,13 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.metadata.managment.ui.wizard.AbstractForm;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.factory.NoSQLRepositoryFactory;
 import org.talend.repository.nosql.ui.common.AbstractNoSQLForm;
 import org.talend.repository.nosql.ui.common.AbstractNoSQLRetrieveSchemaForm;
 import org.talend.repository.nosql.ui.common.AbstractNoSQLWizardPage;
 import org.talend.repository.nosql.ui.provider.IWizardPageProvider;
-import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
  * 

@@ -26,6 +26,7 @@ import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
@@ -33,7 +34,6 @@ import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
 import org.talend.repository.nosql.reflection.NoSQLReflection;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
 
 /**
  * created by ycbai on 2014年11月26日 Detailled comment

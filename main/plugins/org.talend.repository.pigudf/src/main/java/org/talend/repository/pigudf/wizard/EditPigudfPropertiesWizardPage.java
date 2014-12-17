@@ -20,8 +20,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.metadata.managment.ui.wizard.PropertiesWizardPage;
 import org.talend.repository.pigudf.i18n.Messages;
-import org.talend.repository.ui.wizards.PropertiesWizardPage;
 
 /**
  * Created by wchen on Feb 22, 2013.
