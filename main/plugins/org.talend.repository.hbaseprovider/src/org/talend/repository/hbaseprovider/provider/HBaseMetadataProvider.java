@@ -370,6 +370,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         @Override
         public String getColumnText(Object element, int columnIndex) {
             TableNode tableNode = (TableNode) element;
+            List<Object> columnData = tableNode.getColumnDataList();
             int type = tableNode.getType();
             switch (columnIndex) {
             case 0:
@@ -387,7 +388,13 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                     return tableNode.getItemType();
                 }
             default:
-                return "";
+                if (columnData != null && columnIndex < columnData.size()) {
+                    Object columnObj = columnData.get(columnIndex);
+                    if (columnObj != null) {
+                        return columnObj.toString();
+                    }
+                }
+                return ""; //$NON-NLS-1$
             }
         }
 
