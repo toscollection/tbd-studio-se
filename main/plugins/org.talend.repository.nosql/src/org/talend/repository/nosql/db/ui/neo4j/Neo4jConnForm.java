@@ -45,6 +45,7 @@ import org.talend.repository.nosql.i18n.Messages;
 import org.talend.repository.nosql.ui.common.AbstractNoSQLConnForm;
 import org.talend.repository.nosql.validator.NonemptyValidator;
 import org.talend.repository.nosql.validator.SpecialValueValidator;
+import org.talend.repository.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
 
 /**
  * 
@@ -328,4 +329,18 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         }
     }
 
+    @Override
+    protected void collectConParameters() {
+        addContextParams(ENoSQLParamName.Databasepath, true);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.nosql.ui.common.AbstractNoSQLConnForm#collectAttributesForContext()
+     */
+    @Override
+    protected void collectNoSqlAttributesForContext() {
+        getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, dbPathTxt.getText());
+    }
 }
