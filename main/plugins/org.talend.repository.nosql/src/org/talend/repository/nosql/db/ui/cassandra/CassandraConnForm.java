@@ -32,6 +32,8 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.utils.ContextParameterUtils;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
@@ -196,6 +198,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         userText = new LabelledText(authGroup, Messages.getString("CassandraConnForm.username"), 1); //$NON-NLS-1$
         pwdText = new LabelledText(authGroup,
                 Messages.getString("CassandraConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        pwdText.getTextControl().setEchoChar('*');
     }
 
     /**
@@ -206,9 +209,13 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             boolean selection = checkRequireAuthBtn.getSelection();
             userText.setEditable(selection);
             pwdText.setEditable(selection);
+            pwdText.getTextControl().setEchoChar('*');
         } else {
             userText.setEditable(false);
             pwdText.setEditable(false);
+            if (pwdText.getText().startsWith(ContextParameterUtils.JAVA_NEW_CONTEXT_PREFIX)) {
+                pwdText.getTextControl().setEchoChar('\0');
+            }
         }
     }
 
@@ -331,4 +338,35 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             throw new NoSQLGeneralException(e);
         }
     }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.nosql.ui.common.AbstractNoSQLConnForm#collectConParameters()
+     */
+    @Override
+    protected void collectConParameters() {
+        addContextParams(ENoSQLParamName.Server, true);
+        addContextParams(ENoSQLParamName.Port, true);
+        addContextParams(ENoSQLParamName.Keyspace, true);
+        collectAuthParams(checkRequireAuthBtn.getSelection());
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.nosql.ui.common.AbstractNoSQLConnForm#collectAttributesForContext()
+     */
+    @Override
+    protected void collectNoSqlAttributesForContext() {
+        NoSQLConnection conn = getConnection();
+        conn.getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
+        conn.getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
+        if (checkRequireAuthBtn.getSelection()) {
+            conn.getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
+            conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
+        }
+    }
+
 }
