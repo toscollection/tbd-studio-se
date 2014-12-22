@@ -36,6 +36,8 @@ import org.talend.repository.model.hcatalog.HCatalogPackage;
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getKrbPrincipal <em>Krb Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getKrbRealm <em>Krb Realm</em>}</li>
  *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getNnPrincipal <em>Nn Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getRowSeparator <em>Row Separator</em>}</li>
+ *   <li>{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionImpl#getFieldSeparator <em>Field Separator</em>}</li>
  * </ul>
  * </p>
  *
@@ -281,6 +283,46 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
      * @ordered
      */
     protected String nnPrincipal = NN_PRINCIPAL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getRowSeparator() <em>Row Separator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getRowSeparator()
+     * @generated
+     * @ordered
+     */
+    protected static final String ROW_SEPARATOR_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getRowSeparator() <em>Row Separator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getRowSeparator()
+     * @generated
+     * @ordered
+     */
+    protected String rowSeparator = ROW_SEPARATOR_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getFieldSeparator() <em>Field Separator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFieldSeparator()
+     * @generated
+     * @ordered
+     */
+    protected static final String FIELD_SEPARATOR_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getFieldSeparator() <em>Field Separator</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getFieldSeparator()
+     * @generated
+     * @ordered
+     */
+    protected String fieldSeparator = FIELD_SEPARATOR_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -558,6 +600,48 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getRowSeparator() {
+        return rowSeparator;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setRowSeparator(String newRowSeparator) {
+        String oldRowSeparator = rowSeparator;
+        rowSeparator = newRowSeparator;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HCatalogPackage.HCATALOG_CONNECTION__ROW_SEPARATOR, oldRowSeparator, rowSeparator));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getFieldSeparator() {
+        return fieldSeparator;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setFieldSeparator(String newFieldSeparator) {
+        String oldFieldSeparator = fieldSeparator;
+        fieldSeparator = newFieldSeparator;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HCatalogPackage.HCATALOG_CONNECTION__FIELD_SEPARATOR, oldFieldSeparator, fieldSeparator));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
@@ -585,6 +669,10 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
                 return getKrbRealm();
             case HCatalogPackage.HCATALOG_CONNECTION__NN_PRINCIPAL:
                 return getNnPrincipal();
+            case HCatalogPackage.HCATALOG_CONNECTION__ROW_SEPARATOR:
+                return getRowSeparator();
+            case HCatalogPackage.HCATALOG_CONNECTION__FIELD_SEPARATOR:
+                return getFieldSeparator();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -632,6 +720,12 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
                 return;
             case HCatalogPackage.HCATALOG_CONNECTION__NN_PRINCIPAL:
                 setNnPrincipal((String)newValue);
+                return;
+            case HCatalogPackage.HCATALOG_CONNECTION__ROW_SEPARATOR:
+                setRowSeparator((String)newValue);
+                return;
+            case HCatalogPackage.HCATALOG_CONNECTION__FIELD_SEPARATOR:
+                setFieldSeparator((String)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -681,6 +775,12 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
             case HCatalogPackage.HCATALOG_CONNECTION__NN_PRINCIPAL:
                 setNnPrincipal(NN_PRINCIPAL_EDEFAULT);
                 return;
+            case HCatalogPackage.HCATALOG_CONNECTION__ROW_SEPARATOR:
+                setRowSeparator(ROW_SEPARATOR_EDEFAULT);
+                return;
+            case HCatalogPackage.HCATALOG_CONNECTION__FIELD_SEPARATOR:
+                setFieldSeparator(FIELD_SEPARATOR_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -717,6 +817,10 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
                 return KRB_REALM_EDEFAULT == null ? krbRealm != null : !KRB_REALM_EDEFAULT.equals(krbRealm);
             case HCatalogPackage.HCATALOG_CONNECTION__NN_PRINCIPAL:
                 return NN_PRINCIPAL_EDEFAULT == null ? nnPrincipal != null : !NN_PRINCIPAL_EDEFAULT.equals(nnPrincipal);
+            case HCatalogPackage.HCATALOG_CONNECTION__ROW_SEPARATOR:
+                return ROW_SEPARATOR_EDEFAULT == null ? rowSeparator != null : !ROW_SEPARATOR_EDEFAULT.equals(rowSeparator);
+            case HCatalogPackage.HCATALOG_CONNECTION__FIELD_SEPARATOR:
+                return FIELD_SEPARATOR_EDEFAULT == null ? fieldSeparator != null : !FIELD_SEPARATOR_EDEFAULT.equals(fieldSeparator);
         }
         return super.eIsSet(featureID);
     }
@@ -755,6 +859,10 @@ public class HCatalogConnectionImpl extends HadoopSubConnectionImpl implements H
         result.append(krbRealm);
         result.append(", nnPrincipal: ");
         result.append(nnPrincipal);
+        result.append(", rowSeparator: ");
+        result.append(rowSeparator);
+        result.append(", fieldSeparator: ");
+        result.append(fieldSeparator);
         result.append(')');
         return result.toString();
     }

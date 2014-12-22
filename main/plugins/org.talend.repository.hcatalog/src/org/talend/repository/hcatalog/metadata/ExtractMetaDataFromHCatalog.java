@@ -245,4 +245,26 @@ public class ExtractMetaDataFromHCatalog {
 
         return columns;
     }
+
+    public static synchronized String extractPartitionNameByJsonStr(String jsonString) {
+        if (jsonString == null) {
+            return null;
+        }
+
+        JSONObject jsonObject = (JSONObject) JSONValue.parse(jsonString);
+        JSONArray partitionArray = (JSONArray) jsonObject.get(PARTITIONS);
+        if (partitionArray != null) {
+            Iterator<Object> partitionIterator = partitionArray.iterator();
+            while (partitionIterator.hasNext()) {
+                Object partitionsObj = partitionIterator.next();
+                if (partitionsObj != null && partitionsObj instanceof JSONObject) {
+                    JSONObject partitions = (JSONObject) partitionsObj;
+                    Object partitionName = partitions.get(NAME);
+                    return partitionName == null ? "" : String.valueOf(partitionName); //$NON-NLS-1$
+                }
+            }
+        }
+
+        return null;
+    }
 }

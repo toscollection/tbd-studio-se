@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
@@ -25,8 +28,11 @@ import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
+import org.talend.repository.hcatalog.i18n.Messages;
+import org.talend.repository.hcatalog.metadata.ExtractMetaDataFromHCatalog;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.hcatalog.util.EHCatalogRepositoryToComponent;
+import org.talend.repository.hcatalog.util.HCatalogConstants;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
@@ -94,24 +100,12 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytab()));
         } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getDatabase()));
-        } else if (EHCatalogRepositoryToComponent.TABLE_NAME.getRepositoryValue().equals(value)) {
-            // if (table != null) {
-            // return TalendQuoteUtils.addQuotesIfNotExist(table.getLabel());
-            // }
-        } else if (EHCatalogRepositoryToComponent.PARTITION_NAME.getRepositoryValue().equals(value)) {
-            // TODO: need to do it in the future.
-            // if (table != null) {
-            // MetadataTable metaTable = HCatalogSchemaUtil.getTableByName(connection, table.getLabel());
-            // if (metaTable != null) {
-            // EMap<String, String> properties = metaTable.getAdditionalProperties();
-            // String partitions = properties.get(HCatalogConstants.PARTITIONS);
-            // if (partitions != null) {
-            // return TalendQuoteUtils.addQuotesIfNotExist(partitions);
-            // }
-            // }
-            // }
         } else if (EHCatalogRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
+        } else if (EHCatalogRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
+        } else if (EHCatalogRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
         } else if (EHCatalogRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
             return false;
         } else if (EHCatalogRepositoryToComponent.MAPREDUCE.getRepositoryValue().equals(value)) {
@@ -273,6 +267,32 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
         if (tableNameParameter != null) {
             tableNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(tableName));
         }
+        String partition = metadataTable.getAdditionalProperties().get(HCatalogConstants.PARTITIONS);
+        if (StringUtils.isNotEmpty(partition)) {
+            IElementParameter partitionParameter = ele.getElementParameter(EHCatalogRepositoryToComponent.PARTITION_NAME
+                    .getParameterName());
+            if (partitionParameter != null) {
+                String partitionName = ExtractMetaDataFromHCatalog.extractPartitionNameByJsonStr(partition);
+                if (StringUtils.isNotEmpty(partitionName)) {
+                    partitionParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(partitionName));
+                }
+            }
+        }
     }
 
+    @Override
+    public boolean isValidForDataViewer(IMetadataTable metadataTable) {
+        if (metadataTable == null) {
+            return false;
+        }
+        String partition = metadataTable.getAdditionalProperties().get(HCatalogConstants.PARTITIONS);
+        String partitionName = ExtractMetaDataFromHCatalog.extractPartitionNameByJsonStr(partition);
+        if (StringUtils.isEmpty(partitionName)) {
+            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+            MessageDialog.openWarning(shell, Messages.getString("HCatalogDragAndDropHandler.dataViewer.warning.title"), //$NON-NLS-1$
+                    Messages.getString("HCatalogDragAndDropHandler.dataViewer.warning.msg")); //$NON-NLS-1$
+            return false;
+        }
+        return true;
+    }
 }

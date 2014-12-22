@@ -227,6 +227,24 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHCatalogConnection_RowSeparator() {
+        return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(12);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHCatalogConnection_FieldSeparator() {
+        return (EAttribute)hCatalogConnectionEClass.getEStructuralFeatures().get(13);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getHCatalogConnectionItem() {
         return hCatalogConnectionItemEClass;
     }
@@ -272,6 +290,8 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__KRB_PRINCIPAL);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__KRB_REALM);
         createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__NN_PRINCIPAL);
+        createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__ROW_SEPARATOR);
+        createEAttribute(hCatalogConnectionEClass, HCATALOG_CONNECTION__FIELD_SEPARATOR);
 
         hCatalogConnectionItemEClass = createEClass(HCATALOG_CONNECTION_ITEM);
     }
@@ -325,6 +345,8 @@ public class HCatalogPackageImpl extends EPackageImpl implements HCatalogPackage
         initEAttribute(getHCatalogConnection_KrbPrincipal(), theEcorePackage.getEString(), "krbPrincipal", "HTTP/__hostname__", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_KrbRealm(), theEcorePackage.getEString(), "krbRealm", "EXAMPLE.COM", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHCatalogConnection_NnPrincipal(), theEcorePackage.getEString(), "nnPrincipal", "nn/_HOST@EXAMPLE.COM", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHCatalogConnection_RowSeparator(), theEcorePackage.getEString(), "rowSeparator", "", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHCatalogConnection_FieldSeparator(), theEcorePackage.getEString(), "fieldSeparator", "", 0, 1, HCatalogConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hCatalogConnectionItemEClass, HCatalogConnectionItem.class, "HCatalogConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

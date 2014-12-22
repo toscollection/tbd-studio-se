@@ -20,7 +20,6 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.KeyAdapter;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.ModifyEvent;
@@ -33,13 +32,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.command.CommandStackForComposite;
 import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
 import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCheckboxCombo;
-import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.commons.ui.swt.tableviewer.IModifiedBeanListener;
@@ -62,23 +59,13 @@ public class HDFSForm extends AbstractHDFSForm {
 
     private static final String DEFAULT_HEADER_VALUE = "1"; //$NON-NLS-1$
 
-    private static final int VISIBLE_COMBO_ITEM_COUNT = 5;
-
     private UtilsButton checkConnectionBtn;
 
     private LabelledText userNameText;
 
-    private LabelledCombo rowSeparatorCombo;
-
-    private LabelledCombo fieldSeparatorCombo;
-
     private LabelledCheckboxCombo rowsToSkipHeaderCheckboxCombo;
 
     private Button firstRowIsCaptionCheckbox;
-
-    private Text rowSeparatorText;
-
-    private Text fieldSeparatorText;
 
     private List<HashMap<String, Object>> properties;
 
@@ -198,41 +185,6 @@ public class HDFSForm extends AbstractHDFSForm {
         connectionPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         userNameText = new LabelledText(connectionPartComposite, Messages.getString("HDFSForm.text.userName"), 1); //$NON-NLS-1$
-    }
-
-    private void addSeparatorFields() {
-        Group separatorGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.separatorSettings")); //$NON-NLS-1$
-        separatorGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-        ScrolledComposite separatorComposite = new ScrolledComposite(separatorGroup, SWT.V_SCROLL | SWT.H_SCROLL);
-        separatorComposite.setExpandHorizontal(true);
-        separatorComposite.setExpandVertical(true);
-        separatorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-
-        Composite separatorGroupComposite = Form.startNewGridLayout(separatorComposite, 6);
-        GridLayout separatorGroupCompLayout = (GridLayout) separatorGroupComposite.getLayout();
-        separatorGroupCompLayout.marginHeight = 0;
-        separatorGroupCompLayout.marginTop = 0;
-        separatorGroupCompLayout.marginBottom = 0;
-        separatorGroupCompLayout.marginLeft = 0;
-        separatorGroupCompLayout.marginRight = 0;
-        separatorGroupCompLayout.marginWidth = 0;
-        separatorComposite.setContent(separatorGroupComposite);
-
-        rowSeparatorCombo = new LabelledCombo(separatorGroupComposite, Messages.getString("HDFSForm.rowSeparator"), //$NON-NLS-1$
-                Messages.getString("HDFSForm.rowSeparator.tooltip"), EHDFSRowSeparator.getAllRowSeparators(true) //$NON-NLS-1$
-                        .toArray(new String[0]), 1, true);
-        rowSeparatorCombo.setVisibleItemCount(VISIBLE_COMBO_ITEM_COUNT);
-        rowSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
-        rowSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-        fieldSeparatorCombo = new LabelledCombo(
-                separatorGroupComposite,
-                Messages.getString("HDFSForm.fieldSeparator"), //$NON-NLS-1$
-                Messages.getString("HDFSForm.fieldSeparator.tooltip"), EHDFSFieldSeparator.getAllFieldSeparators(true).toArray(new String[0]), 1, true); //$NON-NLS-1$
-        fieldSeparatorCombo.setVisibleItemCount(VISIBLE_COMBO_ITEM_COUNT);
-        fieldSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
-        fieldSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     }
 
     private void addSkipFields() {

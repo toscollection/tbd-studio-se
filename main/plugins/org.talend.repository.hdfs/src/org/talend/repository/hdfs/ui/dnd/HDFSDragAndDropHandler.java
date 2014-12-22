@@ -107,17 +107,6 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getGroup()));
-        } else if (EHDFSRepositoryToComponent.FILENAME.getRepositoryValue().equals(value)) {
-            // if (table != null) {
-            // MetadataTable metaTable = HDFSSchemaUtil.getTableByName(connection, table.getLabel());
-            // if (metaTable != null) {
-            // EMap<String, String> properties = metaTable.getAdditionalProperties();
-            // String hdfsPath = properties.get(HDFSConstants.HDFS_PATH);
-            // if (StringUtils.isNotEmpty(hdfsPath)) {
-            // return TalendQuoteUtils.addQuotesIfNotExist(hdfsPath);
-            // }
-            // }
-            // }
         } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {

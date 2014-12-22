@@ -575,13 +575,31 @@ public interface HCatalogPackage extends EPackage {
     int HCATALOG_CONNECTION__NN_PRINCIPAL = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 11;
 
     /**
+     * The feature id for the '<em><b>Row Separator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HCATALOG_CONNECTION__ROW_SEPARATOR = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 12;
+
+    /**
+     * The feature id for the '<em><b>Field Separator</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HCATALOG_CONNECTION__FIELD_SEPARATOR = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 13;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HCATALOG_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 12;
+    int HCATALOG_CONNECTION_FEATURE_COUNT = HadoopClusterPackage.HADOOP_SUB_CONNECTION_FEATURE_COUNT + 14;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionItemImpl <em>Connection Item</em>}' class.
@@ -809,6 +827,28 @@ public interface HCatalogPackage extends EPackage {
     EAttribute getHCatalogConnection_NnPrincipal();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getRowSeparator <em>Row Separator</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Row Separator</em>'.
+     * @see org.talend.repository.model.hcatalog.HCatalogConnection#getRowSeparator()
+     * @see #getHCatalogConnection()
+     * @generated
+     */
+    EAttribute getHCatalogConnection_RowSeparator();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hcatalog.HCatalogConnection#getFieldSeparator <em>Field Separator</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Field Separator</em>'.
+     * @see org.talend.repository.model.hcatalog.HCatalogConnection#getFieldSeparator()
+     * @see #getHCatalogConnection()
+     * @generated
+     */
+    EAttribute getHCatalogConnection_FieldSeparator();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hcatalog.HCatalogConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -945,6 +985,22 @@ public interface HCatalogPackage extends EPackage {
          * @generated
          */
         EAttribute HCATALOG_CONNECTION__NN_PRINCIPAL = eINSTANCE.getHCatalogConnection_NnPrincipal();
+
+        /**
+         * The meta object literal for the '<em><b>Row Separator</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HCATALOG_CONNECTION__ROW_SEPARATOR = eINSTANCE.getHCatalogConnection_RowSeparator();
+
+        /**
+         * The meta object literal for the '<em><b>Field Separator</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HCATALOG_CONNECTION__FIELD_SEPARATOR = eINSTANCE.getHCatalogConnection_FieldSeparator();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hcatalog.impl.HCatalogConnectionItemImpl <em>Connection Item</em>}' class.
