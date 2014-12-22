@@ -28,6 +28,8 @@ public abstract class CheckedWorkUnit implements ICheckedWorkUnit {
 
     private Integer timeout;
 
+    private ClassLoader classLoader;
+
     @Override
     public Object execute() throws HadoopServerException {
         Object result = null;
@@ -53,15 +55,31 @@ public abstract class CheckedWorkUnit implements ICheckedWorkUnit {
 
             @Override
             public Object call() throws Exception {
-                return run();
+                final ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
+                try {
+                    if (classLoader == null) {
+                        classLoader = oldClassLoaderLoader;
+                    } else {
+                        Thread.currentThread().setContextClassLoader(classLoader);
+                    }
+                    return run(classLoader);
+                } finally {
+                    Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
+                }
             }
         };
     }
 
-    protected abstract Object run() throws Exception;
+    protected abstract Object run(ClassLoader cl) throws Exception;
 
+    @Override
     public void setTimeout(Integer timeout) {
         this.timeout = timeout;
+    }
+
+    @Override
+    public void setClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
     }
 
 }

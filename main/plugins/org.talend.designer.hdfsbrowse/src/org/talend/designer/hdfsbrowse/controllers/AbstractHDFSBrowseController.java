@@ -270,15 +270,29 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
     public Control createControl(final Composite subComposite, final IElementParameter param, final int numInRow,
             final int nbInRow, final int top, final Control lastControl) {
         this.curParameter = param;
-        Button btnEdit = getWidgetFactory().createButton(subComposite, EMPTY_STRING, SWT.PUSH);
         FormData data;
+
+        CLabel labelLabel = getWidgetFactory().createCLabel(subComposite, param.getDisplayName());
+        data = new FormData();
+        if (lastControl != null) {
+            data.left = new FormAttachment(lastControl, 0);
+        } else {
+            data.left = new FormAttachment((((numInRow - 1) * MAX_PERCENT) / nbInRow), 0);
+        }
+        data.top = new FormAttachment(0, top);
+        labelLabel.setLayoutData(data);
+        if (numInRow != 1) {
+            labelLabel.setAlignment(SWT.RIGHT);
+        }
+
+        Button btnEdit = getWidgetFactory().createButton(subComposite, EMPTY_STRING, SWT.PUSH);
 
         btnEdit.setImage(ImageProvider.getImage(CoreUIPlugin.getImageDescriptor(DOTS_BUTTON)));
 
         data = new FormData();
         data.left = new FormAttachment(((numInRow * MAX_PERCENT) / nbInRow), -STANDARD_BUTTON_WIDTH);
         data.right = new FormAttachment(((numInRow * MAX_PERCENT) / nbInRow), 0);
-        data.top = new FormAttachment(0, top);
+        data.top = new FormAttachment(labelLabel, 0, SWT.CENTER);
         data.height = STANDARD_HEIGHT - 2;
         btnEdit.setLayoutData(data);
         btnEdit.setData(NAME, getControllerName());
@@ -311,18 +325,6 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             labelText.setToolTipText(VARIABLE_TOOLTIP + param.getVariableName());
         }
 
-        CLabel labelLabel = getWidgetFactory().createCLabel(subComposite, param.getDisplayName());
-        data = new FormData();
-        if (lastControl != null) {
-            data.left = new FormAttachment(lastControl, 0);
-        } else {
-            data.left = new FormAttachment((((numInRow - 1) * MAX_PERCENT) / nbInRow), 0);
-        }
-        data.top = new FormAttachment(0, top);
-        labelLabel.setLayoutData(data);
-        if (numInRow != 1) {
-            labelLabel.setAlignment(SWT.RIGHT);
-        }
         // **************************
         data = new FormData();
         int currentLabelWidth = STANDARD_LABEL_WIDTH;
@@ -344,7 +346,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             data.left = new FormAttachment(labelLabel, 0, SWT.RIGHT);
         }
         data.right = new FormAttachment(btnEdit, 0);
-        data.top = new FormAttachment(btnEdit, 0, SWT.CENTER);
+        data.top = new FormAttachment(labelLabel, 0, SWT.CENTER);
         cLayout.setLayoutData(data);
 
         hashCurControls.put(param.getName(), labelText);
