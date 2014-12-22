@@ -55,7 +55,7 @@ public abstract class AbstractHDFSForm extends AbstractHadoopSubForm<HDFSConnect
                 getShell()) {
 
             @Override
-            protected ConnectionStatus runWithCancel(IProgressMonitor monitor) throws Exception {
+            protected ConnectionStatus runWithCancel(IProgressMonitor monitor) throws Throwable {
                 return HadoopOperationManager.getInstance().testConnection(connectionBean);
             }
         };
