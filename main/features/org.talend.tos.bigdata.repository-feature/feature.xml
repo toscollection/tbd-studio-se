@@ -105,9 +105,8 @@
       <import plugin="org.eclipse.core.expressions" version="3.4.200" match="compatible"/>
       <import plugin="org.eclipse.equinox.p2.metadata.repository" version="1.0.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.jobs" version="3.4.0" match="compatible"/>
-      <import plugin="org.eclipse.equinox.p2.repository" version="2.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.equinox.p2.metadata" version="2.0.0" match="equivalent"/>
-      <import plugin="org.eclipse.equinox.p2.core" version="2.0.0" match="equivalent"/>
+      <import plugin="org.eclipse.equinox.p2.repository" version="2.0.0" match="compatible"/>
+      <import plugin="org.eclipse.equinox.p2.metadata" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.equinox.p2.core" version="2.0.0" match="compatible"/>
       <import plugin="org.eclipse.core.commands" version="3.4.0" match="compatible"/>
       <import plugin="org.eclipse.equinox.common" version="3.3.0" match="compatible"/>
