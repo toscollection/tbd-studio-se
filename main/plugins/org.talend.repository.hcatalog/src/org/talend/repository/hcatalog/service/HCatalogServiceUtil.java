@@ -31,7 +31,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.exception.ExceptionHandler;
-import org.talend.core.repository.ConnectionStatus;
+import org.talend.core.repository.model.connection.ConnectionStatus;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hcatalog.util.KerberosPolicyConfig;

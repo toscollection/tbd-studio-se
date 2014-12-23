@@ -34,6 +34,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.utils.data.text.IndiceHelper;
 import org.talend.commons.utils.encoding.CharsetToolkit;
+import org.talend.commons.utils.workbench.resources.ResourceUtils;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.MetadataToolHelper;
@@ -42,9 +43,8 @@ import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.types.JavaDataTypeHelper;
 import org.talend.core.model.metadata.types.JavaTypesManager;
-import org.talend.core.prefs.ui.MetadataTypeLengthConstants;
-import org.talend.core.repository.model.ResourceModelUtils;
-import org.talend.core.service.IDesignerCoreUIService;
+import org.talend.core.ui.preference.metadata.MetadataTypeLengthConstants;
+import org.talend.core.ui.services.IDesignerCoreUIService;
 import org.talend.core.utils.CsvArray;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
@@ -53,15 +53,15 @@ import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
+import org.talend.metadata.managment.ui.preview.ProcessDescription;
+import org.talend.metadata.managment.ui.preview.ShadowProcessPreview;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
+import org.talend.metadata.managment.ui.utils.ShadowProcessHelper;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSModelUtil;
 import org.talend.repository.model.hdfs.HDFSConnection;
-import org.talend.repository.preview.ProcessDescription;
-import org.talend.repository.ui.swt.preview.ShadowProcessPreview;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
-import org.talend.repository.ui.utils.ShadowProcessHelper;
 
 /**
  * created by ycbai on 2014-5-29 Detailled comment
@@ -162,7 +162,7 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
         Project project = ProjectManager.getInstance().getCurrentProject();
         IProject fsProject = null;
         try {
-            fsProject = ResourceModelUtils.getProject(project);
+            fsProject = ResourceUtils.getProject(project);
         } catch (PersistenceException e2) {
             ExceptionHandler.process(e2);
         }

@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.controllers;
 
-import org.talend.core.properties.tab.IDynamicProperty;
+import org.talend.core.ui.properties.tab.IDynamicProperty;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
 
 /**

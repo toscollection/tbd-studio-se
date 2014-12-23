@@ -39,10 +39,11 @@ import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.model.update.RepositoryUpdateManager;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.cwm.helper.ConnectionHelper;
+import org.talend.metadata.managment.ui.wizard.AbstractRepositoryFileTableWizard;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
-import org.talend.repository.ui.wizards.AbstractRepositoryFileTableWizard;
+
 import orgomg.cwm.objectmodel.core.Package;
 
 /**

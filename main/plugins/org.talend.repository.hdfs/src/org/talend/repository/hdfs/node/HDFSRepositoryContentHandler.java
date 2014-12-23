@@ -26,6 +26,7 @@ import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.ui.HDFSSchemaWizard;
 import org.talend.repository.hdfs.ui.HDFSWizard;
 import org.talend.repository.hdfs.util.EHDFSImage;
+import org.talend.repository.metadata.ui.actions.metadata.CreateTableAction;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
@@ -33,7 +34,6 @@ import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSConnectionItem;
 import org.talend.repository.model.hdfs.HDFSFactory;
 import org.talend.repository.model.hdfs.HDFSPackage;
-import org.talend.repository.ui.actions.metadata.CreateTableAction;
 
 import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
 

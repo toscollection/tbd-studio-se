@@ -18,8 +18,8 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.metadata.managment.ui.wizard.AbstractForm;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
-import org.talend.repository.ui.swt.utils.AbstractForm;
 
 /**
  * DOC ycbai class global comment. Detailled comment

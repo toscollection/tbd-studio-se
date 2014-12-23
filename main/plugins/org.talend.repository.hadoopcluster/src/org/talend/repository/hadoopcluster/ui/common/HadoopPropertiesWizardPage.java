@@ -19,8 +19,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.metadata.managment.ui.wizard.PropertiesWizardPage;
 import org.talend.repository.model.RepositoryConstants;
-import org.talend.repository.ui.wizards.PropertiesWizardPage;
 
 /**
  * 

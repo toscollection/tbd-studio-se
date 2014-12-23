@@ -33,12 +33,13 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
-import org.talend.commons.expressionbuilder.Variable;
-import org.talend.commons.ui.expressionbuilder.IExpressionBuilderDialogController;
-import org.talend.commons.ui.swt.tableviewer.celleditor.CellEditorDialogBehavior;
-import org.talend.commons.ui.swt.tableviewer.celleditor.ExtendedTextCellEditor;
+import org.talend.commons.runtime.model.expressionbuilder.Variable;
+import org.talend.commons.ui.runtime.expressionbuilder.IExpressionBuilderDialogController;
+import org.talend.commons.ui.runtime.swt.tableviewer.celleditor.CellEditorDialogBehavior;
+import org.talend.commons.ui.runtime.swt.tableviewer.celleditor.ExtendedTextCellEditor;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
+import org.talend.core.runtime.services.IExpressionBuilderDialogService;
 import org.talend.designer.gefabstractmap.figures.VarNodeTextLabel;
 import org.talend.designer.gefabstractmap.figures.cells.IComboCell;
 import org.talend.designer.gefabstractmap.figures.cells.IExpressionBuilderCell;
@@ -61,7 +62,6 @@ import org.talend.designer.pigmap.parts.PigMapInputTablePart;
 import org.talend.designer.pigmap.parts.PigMapOutputTablePart;
 import org.talend.designer.pigmap.util.MapDataHelper;
 import org.talend.designer.pigmap.util.PigMapUtil;
-import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
 /**
  * 

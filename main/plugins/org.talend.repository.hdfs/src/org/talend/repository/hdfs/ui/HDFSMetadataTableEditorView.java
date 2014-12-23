@@ -19,18 +19,19 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.runtime.image.EImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
+import org.talend.commons.ui.runtime.swt.tableviewer.behavior.ColumnCellModifier;
+import org.talend.commons.ui.runtime.swt.tableviewer.behavior.IColumnColorProvider;
+import org.talend.commons.ui.runtime.swt.tableviewer.behavior.IColumnImageProvider;
 import org.talend.commons.ui.swt.advanced.dataeditor.ExtendedToolbarView;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreator.CELL_EDITOR_STATE;
 import org.talend.commons.ui.swt.tableviewer.TableViewerCreatorColumn;
-import org.talend.commons.ui.swt.tableviewer.behavior.ColumnCellModifier;
-import org.talend.commons.ui.swt.tableviewer.behavior.IColumnColorProvider;
-import org.talend.commons.ui.swt.tableviewer.behavior.IColumnImageProvider;
 import org.talend.commons.ui.swt.tableviewer.celleditor.DialogErrorForCellEditorListener;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.ui.metadata.editor.MetadataEmfTableEditorView;
 import org.talend.cwm.helper.TaggedValueHelper;
 import org.talend.repository.hdfs.util.HDFSConstants;
+
 import orgomg.cwm.objectmodel.core.TaggedValue;
 
 /**

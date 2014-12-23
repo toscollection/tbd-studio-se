@@ -44,6 +44,8 @@ import org.talend.core.model.process.IContextParameter;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
+import org.talend.metadata.managment.ui.wizard.context.ContextWizard;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.RepositoryNoSQLPlugin;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
@@ -52,8 +54,6 @@ import org.talend.repository.nosql.context.NoSQLConnectionContextManager;
 import org.talend.repository.nosql.factory.NoSQLRepositoryFactory;
 import org.talend.repository.nosql.i18n.Messages;
 import org.talend.repository.nosql.metadata.IMetadataProvider;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
-import org.talend.repository.ui.wizards.context.ContextWizard;
 
 /**
  * DOC PLV class global comment. Detailled comment

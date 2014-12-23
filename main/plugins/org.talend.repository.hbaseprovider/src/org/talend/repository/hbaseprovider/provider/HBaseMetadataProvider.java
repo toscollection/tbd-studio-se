@@ -39,10 +39,10 @@ import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.builder.database.ExtractMetaDataFromDataBase.ETableTypes;
 import org.talend.core.model.metadata.builder.database.TableNode;
-import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
-import org.talend.core.repository.ConnectionStatus;
-import org.talend.core.repository.IDBMetadataProvider;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.repository.model.connection.ConnectionStatus;
+import org.talend.core.repository.model.provider.AbstractMetadataExtractorViewProvider;
+import org.talend.core.repository.model.provider.IDBMetadataProvider;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.cwm.helper.CatalogHelper;
 import org.talend.cwm.helper.ConnectionHelper;
@@ -56,6 +56,7 @@ import org.talend.repository.hbaseprovider.Activator;
 import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
+
 import orgomg.cwm.objectmodel.core.TaggedValue;
 import orgomg.cwm.resource.relational.Catalog;
 

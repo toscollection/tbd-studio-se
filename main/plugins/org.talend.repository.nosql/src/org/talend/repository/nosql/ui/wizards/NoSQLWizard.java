@@ -32,6 +32,7 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.designer.runprocess.IRunProcessService;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.RepositoryNode;
@@ -44,7 +45,6 @@ import org.talend.repository.nosql.ui.common.AbstractNoSQLWizard;
 import org.talend.repository.nosql.ui.node.ENoSQLImage;
 import org.talend.repository.nosql.ui.node.NoSQLRepositoryNodeType;
 import org.talend.repository.nosql.update.NoSQLUpdateManager;
-import org.talend.repository.ui.utils.ConnectionContextHelper;
 
 /**
  * 

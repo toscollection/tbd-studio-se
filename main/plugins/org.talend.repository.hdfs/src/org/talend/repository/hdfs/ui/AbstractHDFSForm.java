@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.core.repository.ConnectionStatus;
+import org.talend.core.repository.model.connection.ConnectionStatus;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopSubForm;

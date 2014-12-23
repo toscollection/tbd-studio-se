@@ -16,7 +16,7 @@ import java.io.InputStream;
 import java.net.URI;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.core.repository.ConnectionStatus;
+import org.talend.core.repository.model.connection.ConnectionStatus;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdTable;

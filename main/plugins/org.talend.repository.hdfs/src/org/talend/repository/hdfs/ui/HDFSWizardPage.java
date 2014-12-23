@@ -16,7 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.repository.ui.swt.utils.AbstractForm;
+import org.talend.metadata.managment.ui.wizard.AbstractForm;
 
 /**
  * DOC ycbai class global comment. Detailled comment

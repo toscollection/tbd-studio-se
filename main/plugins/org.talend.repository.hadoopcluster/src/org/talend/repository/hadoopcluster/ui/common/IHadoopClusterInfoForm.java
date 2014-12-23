@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui.common;
 
-import org.talend.repository.ui.swt.utils.AbstractForm.ICheckListener;
+import org.talend.metadata.managment.ui.wizard.AbstractForm.ICheckListener;
 
 /**
  * created by ycbai on 2014年9月15日 Detailled comment

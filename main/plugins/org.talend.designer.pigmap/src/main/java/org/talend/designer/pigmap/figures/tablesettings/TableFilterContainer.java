@@ -21,10 +21,11 @@ import org.eclipse.gef.commands.Command;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.widgets.Composite;
-import org.talend.commons.expressionbuilder.Variable;
-import org.talend.commons.ui.expressionbuilder.IExpressionBuilderDialogController;
+import org.talend.commons.runtime.model.expressionbuilder.Variable;
+import org.talend.commons.ui.runtime.expressionbuilder.IExpressionBuilderDialogController;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.IService;
+import org.talend.core.runtime.services.IExpressionBuilderDialogService;
 import org.talend.core.service.IPigMapService;
 import org.talend.designer.gefabstractmap.figures.manager.TableManager;
 import org.talend.designer.gefabstractmap.figures.treesettings.FilterContainer;
@@ -33,7 +34,6 @@ import org.talend.designer.pigmap.model.emf.pigmap.OutputTable;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
 import org.talend.designer.pigmap.model.emf.pigmap.TableNode;
 import org.talend.designer.pigmap.ui.tabs.MapperManager;
-import org.talend.expressionbuilder.IExpressionBuilderDialogService;
 
 /**
  * DOC hcyi class global comment. Detailled comment

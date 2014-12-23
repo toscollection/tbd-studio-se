@@ -14,12 +14,12 @@ package org.talend.repository.pigudf.actions;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.talend.commons.runtime.model.repository.ERepositoryStatus;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.PigudfItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.designer.core.ui.action.OpenExistVersionProcessAction;
-import org.talend.repository.model.ERepositoryStatus;
 import org.talend.repository.model.RepositoryNode;
 
 /**

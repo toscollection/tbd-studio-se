@@ -36,7 +36,7 @@ import org.talend.designer.pigmap.model.emf.pigmap.VarNode;
 import org.talend.designer.pigmap.model.emf.pigmap.VarTable;
 import org.talend.designer.pigmap.ui.expressionutil.PigMapExpressionManager;
 import org.talend.designer.pigmap.ui.expressionutil.TableEntryLocation;
-import org.talend.repository.ui.wizards.metadata.connection.files.xml.util.StringUtil;
+import org.talend.metadata.managment.ui.wizard.metadata.xml.utils.StringUtil;
 
 /**
  * 

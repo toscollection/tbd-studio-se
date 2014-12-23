@@ -34,6 +34,7 @@ import org.talend.repository.hcatalog.ui.HCatalogSchemaWizard;
 import org.talend.repository.hcatalog.ui.HCatalogWizard;
 import org.talend.repository.hcatalog.util.EHCatalogImage;
 import org.talend.repository.hcatalog.util.HCatalogConstants;
+import org.talend.repository.metadata.ui.actions.metadata.CreateTableAction;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
@@ -42,7 +43,6 @@ import org.talend.repository.model.hcatalog.HCatalogConnection;
 import org.talend.repository.model.hcatalog.HCatalogConnectionItem;
 import org.talend.repository.model.hcatalog.HCatalogFactory;
 import org.talend.repository.model.hcatalog.HCatalogPackage;
-import org.talend.repository.ui.actions.metadata.CreateTableAction;
 
 import orgomg.cwm.foundation.businessinformation.BusinessinformationPackage;
 

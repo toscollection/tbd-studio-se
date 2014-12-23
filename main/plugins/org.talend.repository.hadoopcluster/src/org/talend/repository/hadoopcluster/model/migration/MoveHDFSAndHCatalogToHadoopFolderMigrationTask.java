@@ -26,7 +26,6 @@ import org.talend.commons.utils.workbench.resources.ResourceUtils;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.migration.AbstractProjectMigrationTask;
 import org.talend.core.repository.constants.FileConstants;
-import org.talend.core.repository.model.ResourceModelUtils;
 
 /**
  * created by ycbai on 2013-2-28 Detailled comment
@@ -56,7 +55,7 @@ public class MoveHDFSAndHCatalogToHadoopFolderMigrationTask extends AbstractProj
     @Override
     public ExecutionResult execute(Project project) {
         try {
-            IProject iPro = ResourceModelUtils.getProject(project);
+            IProject iPro = ResourceUtils.getProject(project);
             IFolder oldHDFSFolder = iPro.getFolder(OLD_HDFS_FOLDER_PATH);
             IFolder newHDFSFolder = iPro.getFolder(NEW_HDFS_FOLDER_PATH);
             moveFiles(oldHDFSFolder, newHDFSFolder);

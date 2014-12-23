@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
-import org.talend.commons.ui.swt.tableviewer.celleditor.DateDialog;
+import org.talend.commons.ui.runtime.swt.tableviewer.celleditor.DateDialog;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.ui.TOozieSchedulerDialog;
 import org.talend.oozie.scheduler.utils.TOozieDateUtils;

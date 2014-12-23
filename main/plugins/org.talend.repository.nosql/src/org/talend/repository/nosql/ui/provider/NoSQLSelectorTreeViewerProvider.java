@@ -21,7 +21,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Display;
-import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
+import org.talend.core.repository.model.provider.AbstractMetadataExtractorViewProvider;
 import org.talend.repository.nosql.model.ENoSQLSchemaType;
 import org.talend.repository.nosql.model.INoSQLSchemaNode;
 

@@ -18,7 +18,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.exception.ExceptionHandler;
-import org.talend.core.repository.AbstractMetadataExtractorViewProvider;
+import org.talend.core.repository.model.provider.AbstractMetadataExtractorViewProvider;
 import org.talend.cwm.relational.TdTable;
 import org.talend.repository.hcatalog.metadata.ExtractMetaDataFromHCatalog;
 import org.talend.repository.hcatalog.model.HCatalogNode;
