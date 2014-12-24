@@ -32,6 +32,11 @@
 %>
 			com.microsoft.windowsazure.services.core.storage.CloudStorageAccount myAzureStorageAccount_<%=cid%> = (com.microsoft.windowsazure.services.core.storage.CloudStorageAccount)globalMap.get("connection_" + "<%=connection%>");
 <%
+			if(isLog4jEnabled) {
+%>
+			log.info("<%=cid%> - get existed cloud storage account object from <%=connection%>.");
+<%
+			}
 		} else {
 %>
 			String myAzureStorageConn_<%=cid%> = "DefaultEndpointsProtocol=<%=protocol.toLowerCase()%>;" + "AccountName=" + <%=accountName%> + ";" + "AccountKey=" + <%=accountSecret%>;
@@ -40,7 +45,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-				//LOGGING
+			log.info("<%=cid%> - Success to create cloud storage account object.");
 <%
 			}
 %>
@@ -78,6 +83,11 @@
 			throw e_<%=cid%>;
 <%
 		} else {
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+<%
+			}
 %>
 			System.err.println(e_<%=cid%>.getMessage());
 <%

@@ -32,6 +32,11 @@
 			throw(e_<%=cid%>);
 <%
 		} else {
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+<%
+			}
 %>
 			System.err.println(e_<%=cid%>.getMessage());
 <%
