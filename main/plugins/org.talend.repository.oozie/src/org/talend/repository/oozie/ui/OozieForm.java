@@ -1,6 +1,5 @@
 package org.talend.repository.oozie.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,16 +16,10 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
-import org.talend.commons.ui.command.CommandStackForComposite;
 import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
-import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
-import org.talend.commons.ui.swt.tableviewer.IModifiedBeanListener;
-import org.talend.commons.ui.swt.tableviewer.ModifiedBeanEvent;
-import org.talend.commons.utils.data.list.IListenableListListener;
-import org.talend.commons.utils.data.list.ListenableListEvent;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
@@ -64,26 +57,26 @@ public class OozieForm extends AbstractOozieForm {
         addCheckFields();
     }
 
-    private void addHadoopPropertiesFields() {
-        // table view
-        Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
-        GridData gridData = new GridData(GridData.FILL_BOTH);
-        gridData.horizontalSpan = 4;
-        compositeTable.setLayoutData(gridData);
-        CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
-        properties = new ArrayList<HashMap<String, Object>>();
-        initHadoopProperties();
-        HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
-        propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
-        propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
-        final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
-        fieldTableEditorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
-        fieldTableEditorComposite.setBackground(null);
-    }
+    // private void addHadoopPropertiesFields() {
+    // // table view
+    // Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
+    // GridData gridData = new GridData(GridData.FILL_BOTH);
+    // gridData.horizontalSpan = 4;
+    // compositeTable.setLayoutData(gridData);
+    // CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
+    // properties = new ArrayList<HashMap<String, Object>>();
+    // initHadoopProperties();
+    // HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
+    // propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
+    // propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
+    // final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
+    // fieldTableEditorComposite.setLayoutData(new GridData(GridData.FILL_BOTH));
+    // fieldTableEditorComposite.setBackground(null);
+    // }
 
-    private void updateModel() {
-        setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
-    }
+    // private void updateModel() {
+    // setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
+    // }
 
     private void initHadoopProperties() {
         String hadoopProperties = getConnection().getHadoopProperties();
@@ -172,25 +165,25 @@ public class OozieForm extends AbstractOozieForm {
                 checkFieldsValue();
             }
         });
-        if (propertiesTableView != null) {
-            propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
-
-                @Override
-                public void handleEvent(ListenableListEvent event) {
-                    // checkFieldsValue();
-                    updateModel();
-                }
-            });
-            propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
-                    new IModifiedBeanListener<HashMap<String, Object>>() {
-
-                        @Override
-                        public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
-                            // checkFieldsValue();
-                            updateModel();
-                        }
-                    });
-        }
+        // if (propertiesTableView != null) {
+        // propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
+        //
+        // @Override
+        // public void handleEvent(ListenableListEvent event) {
+        // // checkFieldsValue();
+        // updateModel();
+        // }
+        // });
+        // propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
+        // new IModifiedBeanListener<HashMap<String, Object>>() {
+        //
+        // @Override
+        // public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
+        // // checkFieldsValue();
+        // updateModel();
+        // }
+        // });
+        // }
     }
 
     @Override

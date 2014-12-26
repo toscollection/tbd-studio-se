@@ -185,9 +185,9 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
                     connectionProperty.setId(nextId);
                     factory.create(connectionItem, propertiesPage.getDestinationPath());
                 } else {
+                    updateDbConnections();
                     HadoopClusterUpdateManager.updateHadoopClusterConnection(connectionItem);
                     updateConnectionItem();
-                    updateDbConnections();
 
                     boolean isModified = propertiesPage.isNameModifiedByUser();
                     if (isModified) {

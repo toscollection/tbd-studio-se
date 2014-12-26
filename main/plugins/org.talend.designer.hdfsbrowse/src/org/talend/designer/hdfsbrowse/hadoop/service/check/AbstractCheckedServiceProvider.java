@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.hadoop.service.check;
 
+import java.util.List;
+import java.util.Map;
+
+import org.talend.core.utils.ReflectionUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 
@@ -50,5 +54,16 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
             throws Exception;
 
     protected abstract ClassLoader getClassLoader(HadoopServiceProperties serviceProperties);
+
+    protected void setHadoopProperties(Object conf, HadoopServiceProperties serviceProperties) throws Exception {
+        List<Map<String, Object>> hadoopProperties = serviceProperties.getHadoopProperties();
+        if (hadoopProperties != null) {
+            for (Map<String, Object> propMap : hadoopProperties) {
+                String key = String.valueOf(propMap.get("PROPERTY")); //$NON-NLS-1$
+                String value = String.valueOf(propMap.get("VALUE")); //$NON-NLS-1$
+                ReflectionUtils.invokeMethod(conf, "set", new Object[] { key, value }); //$NON-NLS-1$
+            }
+        }
+    }
 
 }

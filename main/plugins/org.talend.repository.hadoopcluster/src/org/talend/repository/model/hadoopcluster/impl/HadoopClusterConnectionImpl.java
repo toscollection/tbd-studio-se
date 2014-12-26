@@ -55,6 +55,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseKeytab <em>Use Keytab</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getKeytabPrincipal <em>Keytab Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getKeytab <em>Keytab</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getHadoopProperties <em>Hadoop Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -400,6 +401,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected String keytab = KEYTAB_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getHadoopProperties() <em>Hadoop Properties</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHadoopProperties()
+     * @generated
+     * @ordered
+     */
+    protected static final String HADOOP_PROPERTIES_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getHadoopProperties() <em>Hadoop Properties</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getHadoopProperties()
+     * @generated
+     * @ordered
+     */
+    protected String hadoopProperties = HADOOP_PROPERTIES_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -785,6 +806,27 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getHadoopProperties() {
+        return hadoopProperties;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setHadoopProperties(String newHadoopProperties) {
+        String oldHadoopProperties = hadoopProperties;
+        hadoopProperties = newHadoopProperties;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES, oldHadoopProperties, hadoopProperties));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -839,6 +881,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return getKeytabPrincipal();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
                 return getKeytab();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
+                return getHadoopProperties();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -907,6 +951,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
                 setKeytab((String)newValue);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
+                setHadoopProperties((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -973,6 +1020,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
                 setKeytab(KEYTAB_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
+                setHadoopProperties(HADOOP_PROPERTIES_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -1021,6 +1071,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return KEYTAB_PRINCIPAL_EDEFAULT == null ? keytabPrincipal != null : !KEYTAB_PRINCIPAL_EDEFAULT.equals(keytabPrincipal);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__KEYTAB:
                 return KEYTAB_EDEFAULT == null ? keytab != null : !KEYTAB_EDEFAULT.equals(keytab);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
+                return HADOOP_PROPERTIES_EDEFAULT == null ? hadoopProperties != null : !HADOOP_PROPERTIES_EDEFAULT.equals(hadoopProperties);
         }
         return super.eIsSet(featureID);
     }
@@ -1069,6 +1121,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(keytabPrincipal);
         result.append(", keytab: ");
         result.append(keytab);
+        result.append(", hadoopProperties: ");
+        result.append(hadoopProperties);
         result.append(')');
         return result.toString();
     }

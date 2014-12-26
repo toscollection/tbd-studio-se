@@ -27,6 +27,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.model.general.Project;
+import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.process.IProcess;
 import org.talend.core.model.properties.ConnectionItem;
@@ -171,12 +172,19 @@ public class HCRepositoryUtil {
      * @param hadoopConnection
      * @return
      */
-    public static HadoopClusterConnection getRelativeHadoopClusterConnection(HadoopSubConnection hadoopSubConnection) {
+    public static HadoopClusterConnection getRelativeHadoopClusterConnection(Connection hadoopSubConnection) {
         if (hadoopSubConnection == null) {
             return null;
         }
+        if (hadoopSubConnection instanceof HadoopSubConnection) {
+            return getRelativeHadoopClusterConnection(((HadoopSubConnection) hadoopSubConnection).getRelativeHadoopClusterId());
+        } else if (hadoopSubConnection instanceof DatabaseConnection) {
+            DatabaseConnection dbConnection = (DatabaseConnection) hadoopSubConnection;
+            String hcId = dbConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+            return getRelativeHadoopClusterConnection(hcId);
+        }
 
-        return getRelativeHadoopClusterConnection(hadoopSubConnection.getRelativeHadoopClusterId());
+        return null;
     }
 
     public static HadoopClusterConnection getRelativeHadoopClusterConnection(String hadoopClusterId) {
@@ -193,7 +201,7 @@ public class HCRepositoryUtil {
             return null;
         }
 
-        return getRelativeHadoopClusterConnection((HadoopSubConnection) hadoopSubConnectionItem.getConnection());
+        return getRelativeHadoopClusterConnection(hadoopSubConnectionItem.getConnection());
     }
 
     public static HadoopClusterConnectionItem getRelativeHadoopClusterItem(Item subConnectionItem) {

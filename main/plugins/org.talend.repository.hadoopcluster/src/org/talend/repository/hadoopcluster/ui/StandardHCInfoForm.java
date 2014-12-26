@@ -13,6 +13,7 @@
 package org.talend.repository.hadoopcluster.ui;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -41,6 +42,7 @@ import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.hadoop.conf.EHadoopProperties;
 import org.talend.core.hadoop.conf.HadoopDefaultConfsManager;
+import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
@@ -50,6 +52,7 @@ import org.talend.designer.hdfsbrowse.hadoop.service.EHadoopServiceType;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 import org.talend.designer.hdfsbrowse.hadoop.service.check.CheckHadoopServicesDialog;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
+import org.talend.metadata.managment.ui.dialog.HadoopPropertiesDialog;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.common.IHadoopClusterInfoForm;
@@ -144,6 +147,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         addCustomFields();
         addConnectionFields();
         addAuthenticationFields();
+        addHadoopPropertiesFields();
         addCheckFields();
     }
 
@@ -211,6 +215,19 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 Messages.getString("HadoopClusterForm.text.keytabPrincipal"), 1); //$NON-NLS-1$
         String[] extensions = { "*.*" }; //$NON-NLS-1$
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
+    }
+
+    protected void addHadoopPropertiesFields() {
+        String hadoopProperties = getConnection().getHadoopProperties();
+        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
+
+            @Override
+            public void updateHadoopProperties(List<Map<String, Object>> properties) {
+                getConnection().setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesJsonStr(properties));
+            }
+
+        }.create(this);
     }
 
     private void addCheckFields() {
@@ -408,6 +425,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         properties.setUseKeytab(getConnection().isUseKeytab());
         properties.setKeytabPrincipal(getConnection().getKeytabPrincipal());
         properties.setKeytab(getConnection().getKeytab());
+        properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(getConnection().getHadoopProperties()));
     }
 
     @Override

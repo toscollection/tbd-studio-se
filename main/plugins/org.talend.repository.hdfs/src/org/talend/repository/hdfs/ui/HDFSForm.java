@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,17 +31,11 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.talend.commons.ui.command.CommandStackForComposite;
 import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
-import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCheckboxCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
-import org.talend.commons.ui.swt.tableviewer.IModifiedBeanListener;
-import org.talend.commons.ui.swt.tableviewer.ModifiedBeanEvent;
-import org.talend.commons.utils.data.list.IListenableListListener;
-import org.talend.commons.utils.data.list.ListenableListEvent;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
@@ -153,28 +146,28 @@ public class HDFSForm extends AbstractHDFSForm {
         }
     }
 
-    private void addHadoopPropertiesFields() {
-        // table view
-        Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
-        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.horizontalSpan = 4;
-        compositeTable.setLayoutData(gridData);
-        CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
-        properties = new ArrayList<HashMap<String, Object>>();
-        initHadoopProperties();
-        HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
-        propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
-        propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
-        final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
-        gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.heightHint = 180;
-        fieldTableEditorComposite.setLayoutData(gridData);
-        fieldTableEditorComposite.setBackground(null);
-    }
+    // private void addHadoopPropertiesFields() {
+    // // table view
+    // Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
+    // GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+    // gridData.horizontalSpan = 4;
+    // compositeTable.setLayoutData(gridData);
+    // CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
+    // properties = new ArrayList<HashMap<String, Object>>();
+    // initHadoopProperties();
+    // HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
+    // propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
+    // propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
+    // final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
+    // gridData = new GridData(GridData.FILL_HORIZONTAL);
+    // gridData.heightHint = 180;
+    // fieldTableEditorComposite.setLayoutData(gridData);
+    // fieldTableEditorComposite.setBackground(null);
+    // }
 
-    private void updateModel() {
-        setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
-    }
+    // private void updateModel() {
+    // setProperties(propertiesTableView.getExtendedTableModel().getBeansList());
+    // }
 
     private void addConnectionFields() {
         Group connectionGroup = Form.createGroup(this, 1, Messages.getString("HDFSForm.connectionSettings")); //$NON-NLS-1$
@@ -395,25 +388,25 @@ public class HDFSForm extends AbstractHDFSForm {
             }
         });
 
-        if (propertiesTableView != null) {
-            propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
-
-                @Override
-                public void handleEvent(ListenableListEvent event) {
-                    // checkFieldsValue();
-                    updateModel();
-                }
-            });
-            propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
-                    new IModifiedBeanListener<HashMap<String, Object>>() {
-
-                        @Override
-                        public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
-                            // checkFieldsValue();
-                            updateModel();
-                        }
-                    });
-        }
+        // if (propertiesTableView != null) {
+        // propertiesTableView.getExtendedTableModel().addAfterOperationListListener(new IListenableListListener() {
+        //
+        // @Override
+        // public void handleEvent(ListenableListEvent event) {
+        // // checkFieldsValue();
+        // updateModel();
+        // }
+        // });
+        // propertiesTableView.getExtendedTableModel().addModifiedBeanListener(
+        // new IModifiedBeanListener<HashMap<String, Object>>() {
+        //
+        // @Override
+        // public void handleEvent(ModifiedBeanEvent<HashMap<String, Object>> event) {
+        // // checkFieldsValue();
+        // updateModel();
+        // }
+        // });
+        // }
     }
 
     @Override
@@ -489,12 +482,12 @@ public class HDFSForm extends AbstractHDFSForm {
         });
     }
 
-    public void setProperties(List<HashMap<String, Object>> properties) {
-        this.properties = properties;
-    }
-
-    public List<HashMap<String, Object>> getProperties() {
-        return properties;
-    }
+    // public void setProperties(List<HashMap<String, Object>> properties) {
+    // this.properties = properties;
+    // }
+    //
+    // public List<HashMap<String, Object>> getProperties() {
+    // return properties;
+    // }
 
 }

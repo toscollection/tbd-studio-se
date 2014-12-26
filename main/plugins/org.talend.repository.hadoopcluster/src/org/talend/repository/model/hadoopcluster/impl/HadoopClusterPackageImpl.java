@@ -311,6 +311,15 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHadoopClusterConnection_HadoopProperties() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getHadoopClusterConnectionItem() {
         return hadoopClusterConnectionItemEClass;
     }
@@ -425,6 +434,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__USE_KEYTAB);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__KEYTAB);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES);
 
         hadoopClusterConnectionItemEClass = createEClass(HADOOP_CLUSTER_CONNECTION_ITEM);
 
@@ -497,6 +507,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         initEAttribute(getHadoopClusterConnection_UseKeytab(), theXMLTypePackage.getBoolean(), "useKeytab", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_KeytabPrincipal(), theXMLTypePackage.getString(), "keytabPrincipal", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_Keytab(), theXMLTypePackage.getString(), "keytab", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_HadoopProperties(), theXMLTypePackage.getString(), "hadoopProperties", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hadoopClusterConnectionItemEClass, HadoopClusterConnectionItem.class, "HadoopClusterConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

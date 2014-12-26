@@ -25,6 +25,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/useKeytab"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/keytabPrincipal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/keytab"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/hadoopProperties"/>
     </genClasses>
     <genClasses ecoreClass="hadoopcluster.ecore#//HadoopClusterConnectionItem"/>
     <genClasses ecoreClass="hadoopcluster.ecore#//HadoopAdditionalProperties">

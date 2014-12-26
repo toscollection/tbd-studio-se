@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.repository.hcatalog.ui;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.ui.IWorkbench;
@@ -28,7 +25,6 @@ import org.talend.core.context.RepositoryContext;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
@@ -41,7 +37,6 @@ import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.repository.hcatalog.node.HCatalogRepositoryNodeType;
 import org.talend.repository.hcatalog.update.HCatalogUpdateManager;
 import org.talend.repository.hcatalog.util.EHCatalogImage;
-import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
@@ -170,15 +165,11 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
     @Override
     public boolean performFinish() {
         if (mainPage.isPageComplete()) {
-            final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
             String displayName = connectionProperty.getDisplayName();
             connectionProperty.setLabel(displayName);
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
-                HCatalogForm hcatalogForm = (HCatalogForm) mainPage.getControl();
-                List<HashMap<String, Object>> hadoopPrperties = hcatalogForm.getProperties();
-                this.connection.setHadoopProperties(getHadoopPropertiesString(hadoopPrperties));
                 if (creation) {
                     createConnectionItem();
                 } else {

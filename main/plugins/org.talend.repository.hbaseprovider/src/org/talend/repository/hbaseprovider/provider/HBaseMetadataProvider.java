@@ -133,8 +133,8 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
 
     private void updateHadoopProperties(Object hbaseConfiguration, IMetadataConnection metadataConnection) throws Exception {
         String hadoopProperties = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_PROPERTIES);
-        List<HashMap<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
-        for (HashMap<String, Object> hadoopPros : hadoopPropertiesList) {
+        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        for (Map<String, Object> hadoopPros : hadoopPropertiesList) {
             ReflectionUtils.invokeMethod(hbaseConfiguration, "set",
                     new Object[] { hadoopPros.get("PROPERTY"), hadoopPros.get("VALUE") });
         }

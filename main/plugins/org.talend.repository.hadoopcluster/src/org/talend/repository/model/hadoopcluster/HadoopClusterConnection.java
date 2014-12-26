@@ -39,6 +39,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseKeytab <em>Use Keytab</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytabPrincipal <em>Keytab Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytab <em>Keytab</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getHadoopProperties <em>Hadoop Properties</em>}</li>
  * </ul>
  * </p>
  *
@@ -503,5 +504,31 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setKeytab(String value);
+
+    /**
+     * Returns the value of the '<em><b>Hadoop Properties</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Hadoop Properties</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Hadoop Properties</em>' attribute.
+     * @see #setHadoopProperties(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_HadoopProperties()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getHadoopProperties();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getHadoopProperties <em>Hadoop Properties</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Hadoop Properties</em>' attribute.
+     * @see #getHadoopProperties()
+     * @generated
+     */
+    void setHadoopProperties(String value);
 
 } // HadoopClusterConnection

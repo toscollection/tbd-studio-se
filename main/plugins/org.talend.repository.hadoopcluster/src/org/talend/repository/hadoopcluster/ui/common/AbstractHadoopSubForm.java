@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui.common;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.layout.GridData;
@@ -21,11 +25,13 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Text;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
+import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
+import org.talend.metadata.managment.ui.dialog.HadoopPropertiesDialog;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
@@ -129,6 +135,24 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         fieldSeparatorCombo.setVisibleItemCount(VISIBLE_COMBO_ITEM_COUNT);
         fieldSeparatorText = new Text(separatorGroupComposite, SWT.BORDER);
         fieldSeparatorText.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+    }
+
+    protected void addHadoopPropertiesFields() {
+        T connection = getConnection();
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        String hadoopPropertiesOfCluster = StringUtils.trimToEmpty(hcConnection.getHadoopProperties());
+        String hadoopProperties = connection.getHadoopProperties();
+        List<Map<String, Object>> hadoopPropertiesListOfCluster = HadoopRepositoryUtil
+                .getHadoopPropertiesList(hadoopPropertiesOfCluster);
+        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        new HadoopPropertiesDialog(getShell(), hadoopPropertiesListOfCluster, hadoopPropertiesList) {
+
+            @Override
+            public void updateHadoopProperties(List<Map<String, Object>> properties) {
+                getConnection().setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesJsonStr(properties));
+            }
+        }.create(this);
+
     }
 
 }

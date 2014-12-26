@@ -61,11 +61,10 @@ public class HadoopClusterService implements IHadoopClusterService {
     @Override
     public boolean containedByCluster(Connection hadoopClusterConnection, Connection hadoopSubConnection) {
         if (hadoopClusterConnection != null && hadoopSubConnection != null
-                && hadoopClusterConnection instanceof HadoopClusterConnection
-                && hadoopSubConnection instanceof HadoopSubConnection) {
+                && hadoopClusterConnection instanceof HadoopClusterConnection) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hadoopClusterConnection;
-            HadoopSubConnection hConnection = (HadoopSubConnection) hadoopSubConnection;
-            HadoopClusterConnection relativeHCConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(hConnection);
+            HadoopClusterConnection relativeHCConnection = HCRepositoryUtil
+                    .getRelativeHadoopClusterConnection(hadoopSubConnection);
             if (hcConnection.equals(relativeHCConnection)) {
                 return true;
             }
@@ -224,6 +223,7 @@ public class HadoopClusterService implements IHadoopClusterService {
         return new HadoopSubMultiRepTypeProcessor(repositoryTypes);
     }
 
+    @Override
     public boolean hasDiffsFromClusterToProcess(Item item, IProcess process) {
         if (item == null || process == null) {
             return false;
@@ -245,6 +245,17 @@ public class HadoopClusterService implements IHadoopClusterService {
             }
         }
         return true;
+    }
+
+    @Override
+    public String getHadoopClusterProperties(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.getHadoopProperties();
+        }
+
+        return null;
     }
 
 }

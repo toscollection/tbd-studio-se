@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
-import java.util.HashMap;
-import java.util.List;
-
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -165,9 +162,6 @@ public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
-                HDFSForm hdfsForm = (HDFSForm) mainPage.getControl();
-                List<HashMap<String, Object>> hadoopPrperties = hdfsForm.getProperties();
-                this.connection.setHadoopProperties(getHadoopPropertiesString(hadoopPrperties));
                 if (creation) {
                     createConnectionItem();
                 } else {
