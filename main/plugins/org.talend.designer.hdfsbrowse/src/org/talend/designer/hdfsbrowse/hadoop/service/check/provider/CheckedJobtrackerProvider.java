@@ -33,6 +33,7 @@ public class CheckedJobtrackerProvider extends AbstractCheckedServiceProvider {
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connect.timeout", "2000" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connection.maxidletime", "2000" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connect.max.retries", "1" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        setHadoopProperties(conf, serviceProperties);
         boolean useKrb = serviceProperties.isUseKrb();
         if (useKrb) {
             String mrPrincipal = serviceProperties.getJtOrRmPrincipal();

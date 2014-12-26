@@ -46,7 +46,6 @@ import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSConnectionItem;
-import org.talend.utils.json.JSONException;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -128,11 +127,7 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
             return "PigStorage"; //$NON-NLS-1$
         } else if (EHDFSRepositoryToComponent.HADOOP_ADVANCED_PROPERTIES.getRepositoryValue().equals(value)) {
-            try {
-                return HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties(), true);
-            } catch (JSONException e) {
-                ExceptionHandler.process(e);
-            }
+            return HadoopRepositoryUtil.getHadoopPropertiesFullList(connection, connection.getHadoopProperties(), true);
         }
 
         return null;

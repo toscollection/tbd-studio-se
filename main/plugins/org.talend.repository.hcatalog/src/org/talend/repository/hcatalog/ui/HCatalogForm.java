@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.repository.hcatalog.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -30,9 +29,7 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
-import org.talend.commons.ui.command.CommandStackForComposite;
 import org.talend.commons.ui.swt.advanced.dataeditor.HadoopPropertiesTableView;
-import org.talend.commons.ui.swt.extended.table.HadoopPropertiesFieldModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
@@ -148,24 +145,24 @@ public class HCatalogForm extends AbstractHCatalogForm {
         addCheckFields();
     }
 
-    private void addHadoopPropertiesFields() {
-        // table view
-        Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
-        GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.horizontalSpan = 4;
-        compositeTable.setLayoutData(gridData);
-        CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
-        properties = new ArrayList<HashMap<String, Object>>();
-        initHadoopProperties();
-        HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
-        propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
-        propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
-        final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
-        gridData = new GridData(GridData.FILL_HORIZONTAL);
-        gridData.heightHint = 180;
-        fieldTableEditorComposite.setLayoutData(gridData);
-        fieldTableEditorComposite.setBackground(null);
-    }
+    // private void addHadoopPropertiesFields() {
+    // // table view
+    // Composite compositeTable = Form.startNewDimensionnedGridLayout(this, 1, this.getBorderWidth(), 150);
+    // GridData gridData = new GridData(GridData.FILL_HORIZONTAL);
+    // gridData.horizontalSpan = 4;
+    // compositeTable.setLayoutData(gridData);
+    // CommandStackForComposite commandStack = new CommandStackForComposite(compositeTable);
+    // properties = new ArrayList<HashMap<String, Object>>();
+    // initHadoopProperties();
+    // HadoopPropertiesFieldModel model = new HadoopPropertiesFieldModel(properties, "Hadoop Properties");
+    // propertiesTableView = new HadoopPropertiesTableView(model, compositeTable);
+    // propertiesTableView.getExtendedTableViewer().setCommandStack(commandStack);
+    // final Composite fieldTableEditorComposite = propertiesTableView.getMainComposite();
+    // gridData = new GridData(GridData.FILL_HORIZONTAL);
+    // gridData.heightHint = 180;
+    // fieldTableEditorComposite.setLayoutData(gridData);
+    // fieldTableEditorComposite.setBackground(null);
+    // }
 
     private void initHadoopProperties() {
         String hadoopProperties = getConnection().getHadoopProperties();

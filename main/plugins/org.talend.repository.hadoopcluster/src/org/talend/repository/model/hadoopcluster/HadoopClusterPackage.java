@@ -614,13 +614,22 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__KEYTAB = ConnectionPackage.CONNECTION_FEATURE_COUNT + 17;
 
     /**
+     * The feature id for the '<em><b>Hadoop Properties</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES = ConnectionPackage.CONNECTION_FEATURE_COUNT + 18;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 18;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 19;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1448,6 +1457,17 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopClusterConnection_Keytab();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getHadoopProperties <em>Hadoop Properties</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Hadoop Properties</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getHadoopProperties()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_HadoopProperties();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1708,6 +1728,14 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__KEYTAB = eINSTANCE.getHadoopClusterConnection_Keytab();
+
+        /**
+         * The meta object literal for the '<em><b>Hadoop Properties</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES = eINSTANCE.getHadoopClusterConnection_HadoopProperties();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.

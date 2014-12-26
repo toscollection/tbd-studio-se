@@ -25,6 +25,7 @@ public class CheckedResourceManagerProvider extends AbstractCheckedServiceProvid
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "ipc.client.connect.max.retries", "1" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "yarn.resourcemanager.connect.max-wait.ms", "2000" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
         ReflectionUtils.invokeMethod(conf, "set", new Object[] { "yarn.resourcemanager.connect.retry-interval.ms", "2000" }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+        setHadoopProperties(conf, serviceProperties);
         boolean useKrb = serviceProperties.isUseKrb();
         if (useKrb) {
             String yarnPrincipal = serviceProperties.getJtOrRmPrincipal();

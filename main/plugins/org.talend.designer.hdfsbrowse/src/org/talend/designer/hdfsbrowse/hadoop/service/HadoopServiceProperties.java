@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.hadoop.service;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -51,6 +53,8 @@ public class HadoopServiceProperties {
     private String uid;
 
     private Set<String> customJars;
+
+    private List<Map<String, Object>> hadoopProperties;
 
     public String getDistribution() {
         return this.distribution;
@@ -178,6 +182,14 @@ public class HadoopServiceProperties {
 
     public void setKeytab(String keytab) {
         this.keytab = keytab;
+    }
+
+    public List<Map<String, Object>> getHadoopProperties() {
+        return this.hadoopProperties;
+    }
+
+    public void setHadoopProperties(List<Map<String, Object>> hadoopProperties) {
+        this.hadoopProperties = hadoopProperties;
     }
 
 }
