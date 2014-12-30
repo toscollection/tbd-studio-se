@@ -87,7 +87,7 @@
    </plugins>
 
    <features>
-      <feature id="org.talend.rcp.branding.tos.bigdata_feature" version="2.2.0.qualifier"/>
+      <feature id="org.talend.rcp.branding.tos.bigdata.feature" version="2.2.0.qualifier"/>
    </features>
 
 
