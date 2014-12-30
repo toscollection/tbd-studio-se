@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.talend.rcp.branding.tos.bigdata-feature"
+      id="org.talend.rcp.branding.tos.bigdata.feature"
       label="Horton studio branding feature"
       version="6.0.0.qualifier"
       provider-name=".Talend SA."
@@ -19,15 +19,15 @@
    </license>
 
    <includes
-         id="org.talend.tos-feature"
+         id="org.talend.tos.feature"
          version="0.0.0"/>
 
    <includes
-         id="org.talend.tos.bigdata.libraries_feature"
+         id="org.talend.tos.bigdata.libraries.feature"
          version="0.0.0"/>
 
    <includes
-         id="org.talend.tos.bigdata-feature"
+         id="org.talend.tos.bigdata.feature"
          version="0.0.0"/>
 
    <plugin
