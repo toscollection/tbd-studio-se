@@ -347,7 +347,10 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
     }
 
     @Override
-    public boolean isValidForDataViewer(IMetadataTable metadataTable) {
+    public boolean isValidForDataViewer(Connection connection, IMetadataTable metadataTable) {
+        if (!canHandle(connection)) {
+            return false;
+        }
         if (metadataTable == null) {
             return false;
         }
