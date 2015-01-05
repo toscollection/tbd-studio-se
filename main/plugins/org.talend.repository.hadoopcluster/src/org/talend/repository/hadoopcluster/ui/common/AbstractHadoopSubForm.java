@@ -148,10 +148,10 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         new HadoopPropertiesDialog(getShell(), hadoopPropertiesListOfCluster, hadoopPropertiesList) {
 
             @Override
-            public void updateHadoopProperties(List<Map<String, Object>> properties) {
+            public void applyProperties(List<Map<String, Object>> properties) {
                 getConnection().setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesJsonStr(properties));
             }
-        }.create(this);
+        }.createPropertiesFields(this);
 
     }
 
