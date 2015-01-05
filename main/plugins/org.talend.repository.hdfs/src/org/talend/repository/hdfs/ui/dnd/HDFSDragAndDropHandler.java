@@ -18,6 +18,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
@@ -40,6 +43,7 @@ import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
+import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.node.model.HDFSRepositoryNodeType;
 import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.model.RepositoryNode;
@@ -342,4 +346,26 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         }
     }
 
+    @Override
+    public boolean isValidForDataViewer(IMetadataTable metadataTable) {
+        if (metadataTable == null) {
+            return false;
+        }
+        Map<String, String> additionalProperties = metadataTable.getAdditionalProperties();
+        if (additionalProperties == null) {
+            return false;
+        }
+        String strFileType = additionalProperties.get(HDFSConstants.HDFS_FILE_TYPE);
+        if (StringUtils.isEmpty(strFileType)) {
+            return false;
+        }
+        EHDFSFileTypes hdfsFileType = EHDFSFileTypes.valueOf(strFileType);
+        if (EHDFSFileTypes.AVRO == hdfsFileType) {
+            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+            MessageDialog.openWarning(shell, Messages.getString("HDFSDragAndDropHandler.dataViewer.warning.title"), //$NON-NLS-1$
+                    Messages.getString("HDFSDragAndDropHandler.dataViewer.warning.msg")); //$NON-NLS-1$
+            return false;
+        }
+        return true;
+    }
 }
