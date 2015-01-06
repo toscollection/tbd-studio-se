@@ -266,6 +266,8 @@
             <IMPORT NAME="jackson-core-asl-1.8.8" MODULE="jackson-core-asl-1.8.8.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"
                 REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false') AND (DB_VERSION=='APACHE_2_4_0_EMR')" />
+            <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"
+                REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false') AND (DB_VERSION=='APACHE_2_4_0_EMR')" />
 
             <!-- APACHE_1_0_3_EMR -->
             <IMPORT NAME="hadoop-core-1.0.3.jar" MODULE="hadoop-core-1.0.3.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/hadoop-core-1.0.3.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_3_EMR') AND (USE_EXISTING_CONNECTION=='false')" />
