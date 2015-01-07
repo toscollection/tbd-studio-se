@@ -197,7 +197,8 @@
             <IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-configuration-1.6.jar" MODULE="commons-configuration-1.6.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar" UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar" REQUIRED_IF="(DB_VERSION=='APACHE_1_0_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
-<!--APACHE_2_4_0_EMR -->
+
+            <!--APACHE_2_4_0_EMR -->
             <IMPORT NAME="hadoop-annotations-2.4.0" MODULE="hadoop-annotations-2.4.0.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/hadoop-annotations-2.4.0.jar"
                 REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false') AND (DB_VERSION=='APACHE_2_4_0_EMR')" />
@@ -290,6 +291,8 @@
                 REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false') AND (DB_VERSION=='APACHE_2_4_0_EMR')" />
             <IMPORT NAME="jackson-core-asl-1.8.8" MODULE="jackson-core-asl-1.8.8.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"
+                REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false') AND (DB_VERSION=='APACHE_2_4_0_EMR')" />
+            <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"
                 REQUIRED_IF="(DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false') AND (DB_VERSION=='APACHE_2_4_0_EMR')" />
 
              <!-- APACHE_1_0_3_EMR -->
