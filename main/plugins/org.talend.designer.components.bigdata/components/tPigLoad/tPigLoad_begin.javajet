@@ -557,7 +557,7 @@
 			
 			System.setProperty("hive.metastore.local", "false");
 			System.setProperty("hive.metastore.uris", <%=thriftServer%>);
-			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hcatalog.pig.<%=function%>()");
+			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using org.apache.hive.hcatalog.pig.<%=function%>()");
 <%
 		} else if(!isLocal && "SequenceFileStorage".equals(function)) {
 			List<IMetadataTable> metadatas = node.getMetadataList();
