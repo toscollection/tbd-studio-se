@@ -24,9 +24,9 @@
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
-	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
-    String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET__");
-    String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME__");
+	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION_LOAD__"));
+    String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET_LOAD__");
+    String s3username = ElementParameterParser.getValue(node, "__S3_USERNAME_LOAD__");
 	String databaseName = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
 	String tableName = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
@@ -446,7 +446,7 @@
 		}
 
         if (isS3Location) {
-            String passwordFieldName = "__S3_PASSWORD__";
+            String passwordFieldName = "__S3_PASSWORD_LOAD__";
             // Get the decrypted password under the variable decryptedS3Password
 
             if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
