@@ -288,6 +288,7 @@
 			if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
                 %>
                 props_<%=cid%>.put("fs.defaultFS", <%=fsDefaultName%>);
+                org.apache.hadoop.security.UserGroupInformation.setLoginUser(org.apache.hadoop.security.UserGroupInformation.createRemoteUser(username_<%=cid %>));
                 <%
             } else {
                 %>
