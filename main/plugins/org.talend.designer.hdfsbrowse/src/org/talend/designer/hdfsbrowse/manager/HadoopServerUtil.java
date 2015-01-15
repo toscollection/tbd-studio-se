@@ -163,32 +163,14 @@ public class HadoopServerUtil {
                 if (key == null) {
                     continue;
                 }
-                setConfiguration(conf, key, value);
+                ReflectionUtils
+                        .invokeMethod(conf, "set", new Object[] { key, String.valueOf(value) }, String.class, String.class);
             }
         } catch (Exception e) {
             throw new HadoopServerException(e);
         }
 
         return conf;
-    }
-
-    private static void setConfiguration(Object conf, String key, Object value) throws HadoopServerException {
-        try {
-            if (value instanceof Integer) {
-                ReflectionUtils.invokeMethod(conf, "setInt", new Object[] { key, value }, String.class, int.class);
-            } else if (value instanceof Boolean) {
-                ReflectionUtils.invokeMethod(conf, "setBoolean", new Object[] { key, value }, String.class, boolean.class);
-            } else if (value instanceof Float) {
-                ReflectionUtils.invokeMethod(conf, "setFloat", new Object[] { key, value }, String.class, float.class);
-            } else if (value instanceof Long) {
-                ReflectionUtils.invokeMethod(conf, "setLong", new Object[] { key, value }, String.class, long.class);
-            } else {
-                ReflectionUtils
-                        .invokeMethod(conf, "set", new Object[] { key, String.valueOf(value), String.class, String.class });
-            }
-        } catch (Exception e) {
-            throw new HadoopServerException(e);
-        }
     }
 
     public static boolean hasReadAuthority(Object status, String userName, String group) throws HadoopServerException {
