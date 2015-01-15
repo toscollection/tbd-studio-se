@@ -272,7 +272,6 @@ public class OozieSettingComposite extends ScrolledComposite {
         List<String> filterDistributionDisplayNames = EHadoopDistributions.getAllDistributionDisplayNames();
         filterDistributionDisplayNames.remove(EHadoopDistributions.APACHE.getDisplayName());
         filterDistributionDisplayNames.remove(EHadoopDistributions.AMAZON_EMR.getDisplayName());
-        filterDistributionDisplayNames.remove(EHadoopDistributions.PIVOTAL_HD.getDisplayName());
 
         hadoopDistributionCombo = new LabelledCombo(versionGroup, TOozieUIConstants.OOZIE_LBL_HADOOP_DISTRIBUTION,
                 "", filterDistributionDisplayNames //$NON-NLS-1$
@@ -801,6 +800,9 @@ public class OozieSettingComposite extends ScrolledComposite {
             List<String> items = getDistributionVersions(distribution);
             if (distribution == EHadoopDistributions.MAPR) {
                 items.remove(EHadoopVersion4Drivers.MAPR1.getVersionDisplay());
+            }
+            if (distribution == EHadoopDistributions.PIVOTAL_HD) {
+                items.remove(EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.getVersionDisplay());
             }
             String[] versions = new String[items.size()];
             items.toArray(versions);
