@@ -22,9 +22,9 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.talend.commons.ui.swt.actions.ITreeContextualAction;
 import org.talend.core.model.repository.ERepositoryObjectType;
-import org.talend.repository.metadata.action.MetedataNodeActionProvier;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.view.di.metadata.action.MetedataNodeActionProvier;
 
 /**
  * created by ycbai on 2013-3-22 Detailled comment
