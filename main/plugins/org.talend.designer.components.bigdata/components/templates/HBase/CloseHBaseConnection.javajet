@@ -7,7 +7,10 @@ imports="
 %>
 
 <%if(!isCustom && ("HDP_2_0".equals(hbaseVersion) || "HDP_2_1".equals(hbaseVersion) || "PIVOTAL_HD_2_0".equals(hbaseVersion) || "Cloudera_CDH5".equals(hbaseVersion))) {%>
-		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>);
+    org.apache.hadoop.hbase.client.HConnection hConnection_<%=cid%> = org.apache.hadoop.hbase.client.HConnectionManager.getConnection(conn_<%=cid%>);
+    if ((hConnection_<%=cid%> != null) && (!hConnection_<%=cid%>.isClosed())) {
+        hConnection_<%=cid%>.close();
+    }
 <%} else {%>
 		org.apache.hadoop.hbase.client.HConnectionManager.deleteConnection(conn_<%=cid%>,true);
 <%}%>
