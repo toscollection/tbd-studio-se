@@ -216,11 +216,11 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
 
             @Override
-            public void updateHadoopProperties(List<Map<String, Object>> properties) {
+            public void applyProperties(List<Map<String, Object>> properties) {
                 getConnection().setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesJsonStr(properties));
             }
 
-        }.create(this);
+        }.createPropertiesFields(this);
     }
 
     private void addCheckFields() {
