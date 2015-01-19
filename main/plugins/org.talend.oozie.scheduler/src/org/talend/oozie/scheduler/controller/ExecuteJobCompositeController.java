@@ -46,7 +46,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.ui.browser.IWorkbenchBrowserSupport;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
-import org.talend.commons.ui.runtime.exception.MessageBoxExceptionHandler;
 import org.talend.core.CorePlugin;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.model.components.ComponentCategory;
@@ -70,6 +69,7 @@ import org.talend.oozie.scheduler.constants.TOozieCommonConstants;
 import org.talend.oozie.scheduler.constants.TOozieOutputMessages;
 import org.talend.oozie.scheduler.exceptions.OozieJobDeployException;
 import org.talend.oozie.scheduler.exceptions.OozieJobException;
+import org.talend.oozie.scheduler.i18n.Messages;
 import org.talend.oozie.scheduler.jobdeployer.OozieJobDeployer;
 import org.talend.oozie.scheduler.jobsubmission.RemoteJobSubmission;
 import org.talend.oozie.scheduler.jobsubmission.ScheduledJobSubmission;
@@ -650,7 +650,17 @@ public class ExecuteJobCompositeController {
                 // afterDoKillAction(jobIdInOozie);
             }
         } catch (OozieClientException e) {
-            MessageBoxExceptionHandler.process(e);
+            // MessageBoxExceptionHandler.process(e);
+            final String title = Messages.getString("ExecuteJobCompositeController.doRunAction.Exception.title"); //$NON-NLS-1$
+            final String mesasge = Messages.getString(
+                    "ExecuteJobCompositeController.doRunAction.Exception.message", e.getMessage()); //$NON-NLS-1$
+            Display.getDefault().syncExec(new Runnable() {
+
+                @Override
+                public void run() {
+                    MessageDialog.openError(new Shell(), title, mesasge);
+                }
+            });
         }
     }
 
