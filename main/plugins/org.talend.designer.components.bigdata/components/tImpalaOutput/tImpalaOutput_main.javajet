@@ -95,11 +95,15 @@ imports="
 <%
                 }
                 
-                if(("String").equals(typeToGenerate) || ("Character").equals(typeToGenerate) || ("char").equals(typeToGenerate)) {
+                if(("String").equals(typeToGenerate)) {
 %>
                     sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + <%=incomingConnName%>.<%=column.getName()%>.replaceAll("\'", "\\\\'") + "'");
 <%
-                } else if(("java.util.Date").equals(typeToGenerate)) {
+                } else if(("Character").equals(typeToGenerate) || ("char").equals(typeToGenerate)) {
+%>
+					sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + <%=incomingConnName%>.<%=column.getName()%> + "'");
+<%                
+                }else if(("java.util.Date").equals(typeToGenerate)) {
 %>
                     sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + FormatterUtils.format_Date(<%=incomingConnName%>.<%=column.getName()%>, "yyyy-MM-dd") + "'");
 <%
