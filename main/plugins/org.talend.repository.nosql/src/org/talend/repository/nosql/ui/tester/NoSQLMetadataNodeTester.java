@@ -13,8 +13,8 @@
 package org.talend.repository.nosql.ui.tester;
 
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.repository.metadata.tester.CoMetadataNodeTester;
 import org.talend.repository.nosql.ui.node.NoSQLRepositoryNodeType;
-import org.talend.repository.view.di.metadata.tester.CoMetadataNodeTester;
 
 /**
  * 

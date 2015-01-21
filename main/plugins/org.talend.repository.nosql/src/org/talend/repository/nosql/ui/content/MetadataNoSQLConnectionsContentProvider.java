@@ -12,10 +12,10 @@
 // ============================================================================
 package org.talend.repository.nosql.ui.content;
 
+import org.talend.repository.metadata.content.AbstractMetadataContentProvider;
 import org.talend.repository.model.ProjectRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.nosql.ui.node.NoSQLRepositoryNodeType;
-import org.talend.repository.view.di.metadata.content.AbstractMetadataContentProvider;
 
 public class MetadataNoSQLConnectionsContentProvider extends AbstractMetadataContentProvider {
 
