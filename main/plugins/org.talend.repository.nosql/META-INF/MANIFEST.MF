@@ -31,3 +31,6 @@ Export-Package: org.talend.repository.model.nosql,
 Bundle-Vendor: .Talend SA.
 Bundle-Localization: plugin
 Bundle-ClassPath: .
+Import-Package: org.talend.repository.view.di.metadata.action,
+ org.talend.repository.view.di.metadata.content,
+ org.talend.repository.view.di.metadata.tester

@@ -12,7 +12,7 @@
 // ============================================================================
 package org.talend.repository.nosql.ui.provider;
 
-import org.talend.repository.metadata.action.MetedataNodeActionProvier;
+import org.talend.repository.view.di.metadata.action.MetedataNodeActionProvier;
 
 /**
  * created by ycbai on Jul 8, 2014 Detailled comment
