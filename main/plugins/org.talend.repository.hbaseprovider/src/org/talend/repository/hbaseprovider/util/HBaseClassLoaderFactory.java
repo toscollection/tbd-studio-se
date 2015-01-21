@@ -13,9 +13,9 @@
 package org.talend.repository.hbaseprovider.util;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.core.classloader.ClassLoaderFactory;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.hbase.conn.version.EHBaseDistributions;
+import org.talend.core.hadoop.HadoopClassLoaderFactory2;
 import org.talend.core.model.metadata.IMetadataConnection;
 
 /**
@@ -33,8 +33,9 @@ public class HBaseClassLoaderFactory {
             }
             String version = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION);
             if (StringUtils.isNotEmpty(distribution) && StringUtils.isNotEmpty(version)) {
-                String index = "HBASE" + ":" + distribution + ":" + version; //$NON-NLS-1$  //$NON-NLS-2$  //$NON-NLS-3$
-                loader = ClassLoaderFactory.getClassLoader(index);
+                boolean useKrb = Boolean.valueOf((String) metadataConnection
+                        .getParameter(ConnParameterKeys.CONN_PARA_KEY_USE_KRB));
+                loader = HadoopClassLoaderFactory2.getHBaseClassLoader(distribution, version, useKrb);
             }
         }
         if (loader == null) {
@@ -44,10 +45,10 @@ public class HBaseClassLoaderFactory {
         return loader;
     }
 
-    public static ClassLoader getCustomClassLoader(IMetadataConnection metadataConnection) {
+    private static ClassLoader getCustomClassLoader(IMetadataConnection metadataConnection) {
         String hcId = metadataConnection.getId();
         String index = "HadoopCustomVersion:HBase:" + hcId; //$NON-NLS-1$ 
-        return ClassLoaderFactory.getCustomClassLoader(index,
-                (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS));
+        return HadoopClassLoaderFactory2.getHadoopCustomClassLoader(index,
+                metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CUSTOM_JARS));
     }
 }

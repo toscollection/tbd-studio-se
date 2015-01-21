@@ -12,10 +12,10 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.hadoop.service.check.provider;
 
+import org.talend.core.hadoop.HadoopClassLoaderFactory2;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 import org.talend.designer.hdfsbrowse.hadoop.service.check.AbstractCheckedServiceProvider;
-import org.talend.designer.hdfsbrowse.manager.HadoopClassLoaderFactory2;
 
 /**
  * created by ycbai on Aug 6, 2014 Detailled comment

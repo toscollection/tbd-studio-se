@@ -73,9 +73,9 @@ public class HCRepositoryUtil {
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION);
-        hadoopDbParameters.add(ConnParameterKeys.HIVE_AUTHENTICATION_USEKEYTAB);
-        hadoopDbParameters.add(ConnParameterKeys.HIVE_AUTHENTICATION_PRINCIPLA);
-        hadoopDbParameters.add(ConnParameterKeys.HIVE_AUTHENTICATION_KEYTAB);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_KEYTAB);
     }
 
     /**
@@ -433,10 +433,10 @@ public class HCRepositoryUtil {
             map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION, hcConnection.getDistribution());
             map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION, hcConnection.getDfVersion());
             if (hcConnection.isEnableKerberos()) {
-                map.put(ConnParameterKeys.HIVE_AUTHENTICATION_USEKEYTAB, String.valueOf(hcConnection.isUseKeytab()));
+                map.put(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB, String.valueOf(hcConnection.isUseKeytab()));
                 if (hcConnection.isUseKeytab()) {
-                    map.put(ConnParameterKeys.HIVE_AUTHENTICATION_PRINCIPLA, hcConnection.getKeytabPrincipal());
-                    map.put(ConnParameterKeys.HIVE_AUTHENTICATION_KEYTAB, hcConnection.getKeytab());
+                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL, hcConnection.getKeytabPrincipal());
+                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB, hcConnection.getKeytab());
                 }
             }
         }
