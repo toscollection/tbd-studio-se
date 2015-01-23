@@ -158,11 +158,11 @@
 <%
 			if(dieOnError) {
 %>
-				throw(e_<%=cid%>);
+				throw new java.lang.Exception("Exception in the component <%=cid%>:" + e_<%=cid%>.getMessage());
 <%
     		}else {
 %> 
-    			System.err.println(e_<%=cid%>.getMessage());
+    			System.err.println("Exception in the component <%=cid%>:" + e_<%=cid%>.getMessage());
 <%
     		}
 %>
@@ -333,11 +333,11 @@
 <%
 		if(dieOnError) {
 %>
-			throw(e_<%=cid%>);
+			throw new java.lang.Exception("Exception in the component <%=cid%>:" + e_<%=cid%>.getMessage());
 <%
 		}else {
 %> 
-			System.err.println(e_<%=cid%>.getMessage());
+			System.err.println("Exception in the component <%=cid%>:" + e_<%=cid%>.getMessage());
 <%
 		}
 %>
