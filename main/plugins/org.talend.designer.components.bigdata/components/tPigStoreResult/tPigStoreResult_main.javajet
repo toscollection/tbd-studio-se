@@ -263,11 +263,18 @@
 	}	
 	
 	if(rmResultDir && !("HCatStorer".equals(function)) && !("HBaseStorage".equals(function))){
-		if(!isExecutedThroughWebHCat) {
+		if (isS3Location) {
+		    
 %>
-		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
-			pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
-    	}
+		    if (pigServer_<%=start_node%>.existsFile("s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>)) {
+	            pigServer_<%=start_node%>.deleteFile("s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>);
+	        }
+<%
+		} else if(!isExecutedThroughWebHCat) {
+%>
+    		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
+    			pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
+        	}
 <%
 		} else {
 %>
