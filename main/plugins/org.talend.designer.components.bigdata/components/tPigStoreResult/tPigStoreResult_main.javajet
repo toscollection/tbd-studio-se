@@ -329,7 +329,7 @@
 		System.setProperty("hive.metastore.uris", <%=thriftServer%>);
 		System.setProperty("hadoop.clientside.fs.operations", "true");
 		System.setProperty("hive.metastore.execute.setugi", "true");
-		sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' <%=hcatPackage%>.<%=function%>('"+<%=partitionFilter%>+"'");
+		sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using <%=hcatPackage%>.<%=function%>('"+<%=partitionFilter%>+"'");
 <%
 		List<IMetadataTable> metadatas = node.getMetadataList();
 		IMetadataTable metadata = null;
