@@ -147,7 +147,7 @@ imports="
 <%
 			}
 %>
-			throw new java.lang.Exception("Exception in the component <%=cid%>:" + e.getMessage());
+			throw e;
 <%
 		} else {
 			if(isLog4jEnabled) {

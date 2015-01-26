@@ -57,7 +57,7 @@ imports="
 	} catch(java.sql.SQLException e_<%=cid%>) {
 	    <%if(("true").equals(dieOnError)) {
 	    %>
-	    	throw new java.lang.Exception("Exception in the component <%=cid%>:" + e_<%=cid%>.getMessage());
+	    	throw e_<%=cid%>;
 	    <%
 	    }else {
 	    %> 
