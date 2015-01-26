@@ -53,7 +53,7 @@ imports="
 <%
                 if (dieOnError) {
 %>
-                    throw new java.lang.Exception("Exception in the component <%=cid%>:" + e.getMessage());
+                    throw e;
 <%
                 } else {
                     dbLog.logPrintedException("e.getMessage()");
