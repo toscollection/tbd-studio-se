@@ -630,8 +630,8 @@
 			<IMPORT NAME="hive-builtins-0.9.0-mapr2.jar" MODULE="hive-builtins-0.9.0-mapr2.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hive-builtins-0.9.0-mapr2.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
@@ -932,8 +932,8 @@
 			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/jdo2-api-2.3-ec.jar"
 				REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='APACHE_1_0_0' OR HIVE_VERSION=='APACHE_1_0_3_EMR' OR HIVE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"
@@ -981,8 +981,8 @@
 			<IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libthrift-0.9.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_1_2') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="antlr-runtime-3.0.1.jar" MODULE="antlr-runtime-3.0.1.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.0.1.jar"
@@ -1053,8 +1053,8 @@
 			<IMPORT NAME="libthrift-0.9.0.jar" MODULE="libthrift-0.9.0.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libthrift-0.9.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_1_3') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="antlr-runtime-3.4.jar" MODULE="antlr-runtime-3.4.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/antlr-runtime-3.4.jar"
@@ -1191,8 +1191,8 @@
 			<IMPORT NAME="jdo2-api-2.3-ec.jar" MODULE="jdo2-api-2.3-ec.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/jdo2-api-2.3-ec.jar"
 				REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='Cloudera_CDH4') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="jackson-core-asl-1.8.8.jar" MODULE="jackson-core-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-asl-1.8.8.jar"
@@ -1374,8 +1374,8 @@
 				REQUIRED_IF="(HIVE_VERSION=='MAPR212' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="hive-builtins-0.10.0.jar" MODULE="hive-builtins-0.10.0.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR212' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR212' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
@@ -1466,8 +1466,8 @@
 			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR213' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
@@ -1560,8 +1560,8 @@
 			<IMPORT NAME="zookeeper-3.3.6.jar" MODULE="zookeeper-3.3.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.esb/lib/zookeeper-3.3.6.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR301' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR301' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
@@ -1659,8 +1659,8 @@
 			<IMPORT NAME="zookeeper-3.4.5-mapr-1401.jar" MODULE="zookeeper-3.4.5-mapr-1401.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.zookeeper/lib/zookeeper-3.4.5-mapr-1401.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR310' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(HIVE_VERSION=='MAPR310' AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM'))" />
 			<IMPORT NAME="jackson-mapper-asl-1.8.8.jar" MODULE="jackson-mapper-asl-1.8.8.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"

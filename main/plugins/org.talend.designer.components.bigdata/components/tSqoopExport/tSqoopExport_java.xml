@@ -574,8 +574,8 @@
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0') AND (DISTRIBUTION!='CUSTOM')" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_0') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar"
 				UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"
@@ -604,8 +604,8 @@
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_2') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar"
 				UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"
@@ -634,8 +634,8 @@
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_3') AND (DISTRIBUTION!='CUSTOM')" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='HDP_1_3') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar"
 				UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"
@@ -664,8 +664,8 @@
 			<IMPORT NAME="commons-configuration-1.6" MODULE="commons-configuration-1.6.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH3') AND (DISTRIBUTION!='CUSTOM')" />
-			<IMPORT NAME="commons-lang-2.4" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='Cloudera_CDH3') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar"
 				UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"

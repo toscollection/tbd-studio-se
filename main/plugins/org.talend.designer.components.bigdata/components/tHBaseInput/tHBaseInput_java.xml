@@ -261,8 +261,8 @@
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
 				REQUIRED="false"
 				REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
-			<IMPORT NAME="commons-lang-2.4.jar" MODULE="commons-lang-2.4.jar"
-				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"
+			<IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
+				UrlPath="platform:/base/plugins/org.apache.commons.lang_2.6.0.v201404270220.jar"
 				REQUIRED="false"
 				REQUIRED_IF="( HBASE_VERSION=='APACHE_0_20_203' or HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') and (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="commons-logging-1.1.1.jar" MODULE="commons-logging-1.1.1.jar"
