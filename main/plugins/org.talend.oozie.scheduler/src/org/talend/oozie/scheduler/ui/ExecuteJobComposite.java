@@ -36,6 +36,7 @@ import org.talend.core.model.process.EComponentCategory;
 import org.talend.core.model.process.Element;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.ui.CoreUIPlugin;
 import org.talend.core.ui.properties.tab.IDynamicProperty;
 import org.talend.designer.core.IMultiPageTalendEditor;
 import org.talend.designer.core.model.components.EOozieParameterName;
@@ -83,6 +84,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public ExecuteJobComposite(Composite parent, int style) {
         super(parent, style);
         parent.setLayout(new FillLayout());
+        // CSS
+        CoreUIPlugin.setCSSClass(this, this.getClass().getSimpleName());
         setExpandHorizontal(true);
         setExpandVertical(true);
         this.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
