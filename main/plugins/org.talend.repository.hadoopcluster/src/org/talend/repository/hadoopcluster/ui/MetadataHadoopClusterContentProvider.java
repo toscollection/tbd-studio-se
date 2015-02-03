@@ -7,9 +7,9 @@ import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.repository.model.ProjectRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
-import org.talend.repository.metadata.content.AbstractMetadataContentProvider;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.nodes.IProjectRepositoryNode;
+import org.talend.repository.view.di.metadata.content.AbstractMetadataContentProvider;
 
 /**
  * 

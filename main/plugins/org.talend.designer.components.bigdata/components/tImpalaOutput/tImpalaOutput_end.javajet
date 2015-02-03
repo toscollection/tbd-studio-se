@@ -53,12 +53,12 @@ imports="
 <%
                 if (dieOnError) {
 %>
-                    throw(e);
+                    throw e;
 <%
                 } else {
                     dbLog.logPrintedException("e.getMessage()");
 %>
-                    System.err.print(e.getMessage());
+                    System.err.print("Exception in the component <%=cid%>:" + e.getMessage());
 <%
                 } 
 %>

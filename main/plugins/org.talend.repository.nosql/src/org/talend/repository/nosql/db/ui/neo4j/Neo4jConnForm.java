@@ -34,6 +34,7 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
@@ -328,4 +329,18 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         }
     }
 
+    @Override
+    protected void collectConParameters() {
+        addContextParams(ENoSQLParamName.Databasepath, true);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.nosql.ui.common.AbstractNoSQLConnForm#collectAttributesForContext()
+     */
+    @Override
+    protected void collectNoSqlAttributesForContext() {
+        getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, dbPathTxt.getText());
+    }
 }

@@ -147,7 +147,7 @@ imports="
 <%
 			}
 %>
-			throw(e);
+			throw e;
 <%
 		} else {
 			if(isLog4jEnabled) {
@@ -174,7 +174,7 @@ imports="
 <%
 			} else {
 %>
-				System.err.println(e.getMessage());
+				System.err.println("Exception in the component <%=cid%>:" + e.getMessage());
 <%
 			}
 		} 

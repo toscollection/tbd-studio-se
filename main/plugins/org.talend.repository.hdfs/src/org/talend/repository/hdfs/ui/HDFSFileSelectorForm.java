@@ -13,14 +13,14 @@
 package org.talend.repository.hdfs.ui;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -97,7 +97,6 @@ import org.talend.repository.hdfs.util.HDFSConstants;
 import org.talend.repository.hdfs.util.HDFSSchemaUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
-
 import orgomg.cwm.resource.relational.NamedColumnSet;
 
 /**
@@ -379,7 +378,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 threadExecutor.clearThreads();
-                initializeThreadExecutor();
                 fetchAllChildren(schemaTree.getItems());
                 updateItems(schemaTree.getItems(), false, false);
             }
@@ -471,6 +469,9 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                             clearTreeItem(treeItem);
                         }
                     } else if (type == EHadoopFileTypes.FOLDER) {
+                        if (!promptNeeded) {
+                            threadExecutor.clearRunnable(node.getPath());
+                        }
                         long checkedSize = fetchAllChildren(new TreeItem[] { treeItem });
                         boolean continueCheck = true;
                         if (promptNeeded && INFORM_SIZE < checkedSize) {
@@ -604,7 +605,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         IHDFSNode node = (IHDFSNode) treeItem.getData();
         if (!threadExecutor.isThreadRunning(treeItem)) {
             if (node.getType() == EHadoopFileTypes.FILE) {
-                RetrieveColumnRunnable runnable = new RetrieveColumnRunnable(treeItem, threadExecutor);
+                RetrieveColumnRunnable runnable = new RetrieveColumnRunnable(treeItem);
                 threadExecutor.execute(runnable);
             }
         } else {
@@ -790,25 +791,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     class RetrieveSchemaThreadPoolExecutor extends TalendCustomThreadPoolExecutor {
 
-        protected List<RetrieveSchemaThreadPoolExecutor> executors = new ArrayList<RetrieveSchemaThreadPoolExecutor>();
-        {
-            executors.add(this);
-        }
-
-        protected RejectedExecutionHandler handler;
-
-        protected int queueCapacity;
-
-        protected int maxPoolSize;
-
-        volatile protected int sumSize = 0;
-
-        volatile protected int totalTaskSize = 0;
-
-        volatile protected int currentTaskSize = 0;
-
-        volatile protected boolean isCleaned = false;
-
         // This map is used to store the tableItems that are selected or unselected by the user.
         // see afterExecute() and beforeExecute(). If an item is in the map, it means that the item's
         // related thread is running.
@@ -816,18 +798,13 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                 .synchronizedMap(new HashMap<String, RetrieveColumnRunnable>());
 
         public RetrieveSchemaThreadPoolExecutor(int queueCapacity, int maxPoolSize, RejectedExecutionHandler handler) {
-            super(queueCapacity, maxPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(queueCapacity), handler);
-            this.queueCapacity = queueCapacity;
-            this.maxPoolSize = maxPoolSize;
-            this.handler = handler;
+            super(queueCapacity, maxPoolSize, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), handler);
         }
 
         private RetrieveSchemaThreadPoolExecutor(int queueCapacity, int maxPoolSize, RejectedExecutionHandler handler,
                 Map<String, RetrieveColumnRunnable> runnableMap, List<RetrieveSchemaThreadPoolExecutor> executors) {
-            super(queueCapacity, maxPoolSize, 0, TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(queueCapacity), handler);
-            this.queueCapacity = queueCapacity;
+            super(queueCapacity, maxPoolSize, 0, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>(), handler);
             this.runnableMap = runnableMap;
-            this.executors = executors;
         }
 
         /*
@@ -851,7 +828,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         protected void afterExecute(Runnable r, Throwable t) {
             RetrieveColumnRunnable runnable = (RetrieveColumnRunnable) r;
             runnableMap.remove(runnable.getKey());
-            --currentTaskSize;
         }
 
         /**
@@ -866,44 +842,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             return runnableMap.containsKey(node.getPath());
         }
 
-        @Override
-        public boolean hasThreadRunning() {
-            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
-                if (executor.getCompletedTaskCount() < executor.totalTaskSize) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public int getUncompletedTaskCount() {
-            int completeCount = 0;
-            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
-                completeCount += executor.getCompletedTaskCount();
-            }
-            return sumSize - completeCount;
-        }
-
-        public boolean isCleaned() {
-            return isCleaned;
-        }
-
-        @Override
-        public void clearThreads() {
-            isCleaned = true;
-            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
-                if (executor != this) {
-                    executor.clearThreadsSuper();
-                }
-            }
-            super.clearThreads();
-        }
-
-        private void clearThreadsSuper() {
-            isCleaned = true;
-            super.clearThreads();
-        }
-
         /**
          * Find the RetrieveColumnRunnable from map and waiting queue. Map stores running runnables
          * 
@@ -916,47 +854,29 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             if (runnable != null) {
                 return runnable;
             }
-            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
-                BlockingQueue<Runnable> queue = executor.getQueue();
-                for (Object element2 : queue) {
-                    RetrieveColumnRunnable element = (RetrieveColumnRunnable) element2;
-                    if (key.equals(element.getKey())) {
-                        return element;
-                    }
+            BlockingQueue<Runnable> queue = getQueue();
+            for (Object element2 : queue) {
+                RetrieveColumnRunnable element = (RetrieveColumnRunnable) element2;
+                if (key.equals(element.getKey())) {
+                    return element;
                 }
             }
             return null;
         }
 
-        @Override
-        public synchronized void execute(Runnable command) {
-            RetrieveSchemaThreadPoolExecutor usableExecutor = getUsableExecutor();
-            ++sumSize;
-            usableExecutor.executeSuper(command);
-        }
-
-        private void executeSuper(Runnable command) {
-            ++currentTaskSize;
-            ++totalTaskSize;
-            super.execute(command);
-        }
-
-        private synchronized RetrieveSchemaThreadPoolExecutor getUsableExecutor() {
-
-            for (RetrieveSchemaThreadPoolExecutor executor : executors) {
-                if (!executor.hasFull()) {
-                    return executor;
+        public void clearRunnable(String parentKey) {
+            BlockingQueue<Runnable> queue = getQueue();
+            for (Object element2 : queue) {
+                RetrieveColumnRunnable element = (RetrieveColumnRunnable) element2;
+                if (element.getKey().startsWith(parentKey)) {
+                    element.setCanceled(true);
                 }
             }
-            RetrieveSchemaThreadPoolExecutor newExecutor = new RetrieveSchemaThreadPoolExecutor(QUEUE_CAPACITY, MAX_POOL_SIZE,
-                    handler, runnableMap, executors);
-            executors.add(newExecutor);
-            return newExecutor;
-
-        }
-
-        public boolean hasFull() {
-            return maxPoolSize <= currentTaskSize;
+            for (Entry<String, RetrieveColumnRunnable> entry : runnableMap.entrySet()) {
+                if (entry.getKey().startsWith(parentKey)) {
+                    entry.getValue().setCanceled(true);
+                }
+            }
         }
     }
 
@@ -999,8 +919,6 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         volatile boolean isCanceled = false;
 
-        private RetrieveSchemaThreadPoolExecutor parentExecutor;
-
         /**
          * Getter for tableItem.
          * 
@@ -1010,11 +928,10 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             return this.treeItem;
         }
 
-        RetrieveColumnRunnable(TreeItem treeItem, RetrieveSchemaThreadPoolExecutor _parentExecutor) {
+        RetrieveColumnRunnable(TreeItem treeItem) {
             this.treeItem = treeItem;
             this.fileNode = (IHDFSNode) treeItem.getData();
             this.key = this.fileNode.getPath();
-            this.parentExecutor = _parentExecutor;
             setup();
         }
 
@@ -1028,7 +945,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
          * @return the isCanceled
          */
         public boolean isCanceled() {
-            return this.isCanceled;
+            return this.isCanceled || Thread.currentThread().isInterrupted();
         }
 
         /**
@@ -1122,7 +1039,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     try {
                         metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), file);
                     } catch (final Throwable e) {
-                        if (isCanceled() || parentExecutor.isCleaned()) {
+                        if (isCanceled()) {
                             return;
                         }
                         Display.getDefault().asyncExec(new Runnable() {
@@ -1273,9 +1190,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
                 @Override
                 public void run() {
-                    int unCompletedTaskCount = threadExecutor.getUncompletedTaskCount();
                     // if only left one uncompleted task(itself), then means it will all finished after this one finish
-                    boolean hasThreadRunning = !(unCompletedTaskCount == 1);
+                    boolean hasThreadRunning = !(threadExecutor.getActiveCount() == 1);
                     parentWizardPage.setPageComplete(!hasThreadRunning);
                     if (!hasThreadRunning) {
                         notShowAgain = false;

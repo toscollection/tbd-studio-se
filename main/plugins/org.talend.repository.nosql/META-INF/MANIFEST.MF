@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.repository.items.importexport,
  org.talend.core,
  org.talend.core.ui,
- org.talend.designer.core
+ org.talend.designer.core,
+ org.talend.repository.view.di
 Bundle-ActivationPolicy: lazy
 Export-Package: org.talend.repository.model.nosql,
  org.talend.repository.model.nosql.impl,

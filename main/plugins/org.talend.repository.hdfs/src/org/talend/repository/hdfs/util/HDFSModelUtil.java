@@ -13,12 +13,16 @@
 package org.talend.repository.hdfs.util;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
@@ -62,6 +66,16 @@ public class HDFSModelUtil {
             bean.setFieldSeparator(connection.getFieldSeparator());
             bean.setRowSeparator(connection.getRowSeparator());
             bean.setRelativeHadoopClusterId(connection.getRelativeHadoopClusterId());
+            Map<String, Object> configurations = bean.getConfigurations();
+            List<Map<String, Object>> hadoopProperties = HadoopRepositoryUtil.getHadoopPropertiesFullList(connection,
+                    connection.getHadoopProperties(), false);
+            for (Map<String, Object> propMap : hadoopProperties) {
+                String key = TalendQuoteUtils.removeQuotesIfExist(String.valueOf(propMap.get("PROPERTY"))); //$NON-NLS-1$
+                String value = TalendQuoteUtils.removeQuotesIfExist(String.valueOf(propMap.get("VALUE"))); //$NON-NLS-1$
+                if (StringUtils.isNotEmpty(key) && value != null) {
+                    configurations.put(key, value);
+                }
+            }
         } catch (Exception e) {
             log.error("Convert failure from HDFSConnection to HDFSConnectionBean", e);
         }

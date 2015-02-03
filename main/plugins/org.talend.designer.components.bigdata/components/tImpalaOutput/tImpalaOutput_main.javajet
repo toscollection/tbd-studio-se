@@ -83,7 +83,7 @@ imports="
 				if(("Byte".equals(typeToGenerate)) || ("byte".equals(typeToGenerate)) || ("byte[]".equals(typeToGenerate)) || ("BigDecimal".equals(typeToGenerate)) || ("Object".equals(typeToGenerate)) || ("List".equals(typeToGenerate)) || ("Dynamic".equals(typeToGenerate)) || ("Document".equals(typeToGenerate))) {
 %>
                     if(true) {
-                        throw new Exception("The component tImpalaOutput does not the support the type <%=typeToGenerate%>.");
+                        throw new java.lang.Exception("The component tImpalaOutput does not the support the type <%=typeToGenerate%>.");
                     }
 <%
 				}
@@ -95,11 +95,15 @@ imports="
 <%
                 }
                 
-                if(("String").equals(typeToGenerate) || ("Character").equals(typeToGenerate) || ("char").equals(typeToGenerate)) {
+                if(("String").equals(typeToGenerate)) {
 %>
                     sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + <%=incomingConnName%>.<%=column.getName()%>.replaceAll("\'", "\\\\'") + "'");
 <%
-                } else if(("java.util.Date").equals(typeToGenerate)) {
+                } else if(("Character").equals(typeToGenerate) || ("char").equals(typeToGenerate)) {
+%>
+					sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + <%=incomingConnName%>.<%=column.getName()%> + "'");
+<%                
+                }else if(("java.util.Date").equals(typeToGenerate)) {
 %>
                     sbValue_<%=cid%>.append("<%=counter==1?"":","%>'" + FormatterUtils.format_Date(<%=incomingConnName%>.<%=column.getName()%>, "yyyy-MM-dd") + "'");
 <%
@@ -147,12 +151,12 @@ imports="
 <%
 			if (dieOnError) {
 %>
-				throw(e);
+				throw e;
 <%
 			} else {
 				dbLog.logPrintedException("e.getMessage()");
 %>
-				System.err.print(e.getMessage());
+				System.err.print("Exception in the component <%=cid%>:" + e.getMessage());
 <%
 			} 
 %>

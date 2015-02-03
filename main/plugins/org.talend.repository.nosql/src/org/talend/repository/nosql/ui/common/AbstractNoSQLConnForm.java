@@ -12,17 +12,11 @@
 // ============================================================================
 package org.talend.repository.nosql.ui.common;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
@@ -32,23 +26,15 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.dialogs.ErrorDialogWidthDetailArea;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
-import org.talend.core.model.context.JobContextManager;
-import org.talend.core.model.metadata.types.JavaType;
-import org.talend.core.model.metadata.types.JavaTypesManager;
-import org.talend.core.model.process.IContextParameter;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.core.model.properties.ContextItem;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
-import org.talend.metadata.managment.ui.wizard.context.ContextWizard;
-import org.talend.repository.model.nosql.NoSQLConnection;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
 import org.talend.repository.nosql.RepositoryNoSQLPlugin;
-import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.constants.INoSQLConstants;
 import org.talend.repository.nosql.context.NoSQLConnectionContextManager;
 import org.talend.repository.nosql.factory.NoSQLRepositoryFactory;
@@ -208,24 +194,6 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
                 HEIGHT_BUTTON_PIXEL);
     }
 
-    private void addContextParams(List<IContextParameter> varList) {
-        String contextName = ConnectionContextHelper.convertContextLabel(connectionItem.getProperty().getLabel());
-        for (String attr : attributes) {
-
-            NoSQLConnection conn = getConnection();
-            String value = conn.getAttributes().get(attr);
-            JavaType javaType = null;
-            if (INoSQLCommonAttributes.PASSWORD.equals(attr)) {
-                javaType = JavaTypesManager.PASSWORD;
-                // because it's for JobContextParameter, so need raw value for password.
-                value = conn.getValue(value, false);
-            }
-            ConnectionContextHelper.createParameters(varList, contextName + "_" + attr, //$NON-NLS-1$
-                    value, javaType);
-
-        }
-    }
-
     /*
      * (non-Javadoc)
      * 
@@ -233,47 +201,24 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
      */
     @Override
     protected void exportAsContext() {
-        List<IContextParameter> varList = new ArrayList<IContextParameter>();
-        addContextParams(varList);
-        exportAsContext(varList, getConnection());
+        collectConParameters();
+
+        collectNoSqlAttributesForContext();
+
+        super.exportAsContext();
     }
 
-    protected void exportAsContext(List<IContextParameter> varList, NoSQLConnection connection) {
-        if (hasContextBtn() && connectionItem != null) {
-            if (isContextMode()) {
-                ConnectionContextHelper.openInConetxtModeDialog();
-            } else {
-                ContextItem contextItem = null;
-                if (connectionItem == null) {
-                    contextItem = null;
-                }
-                String contextName = ConnectionContextHelper.convertContextLabel(connectionItem.getProperty().getLabel());
+    protected void collectConParameters() {
+        // nothing do by default
+    }
 
-                if (varList == null || varList.isEmpty()) {
-                    contextItem = null;
-                }
-                ISelection selection = ConnectionContextHelper.getRepositoryContext(contextName, false);
-                if (selection == null) {
-                    contextItem = null;
-                }
+    protected void collectAuthParams(boolean isNeed) {
+        addContextParams(ENoSQLParamName.UserName, isNeed);
+        addContextParams(ENoSQLParamName.Password, isNeed);
+    }
 
-                ContextWizard contextWizard = new ContextWizard(contextName, selection.isEmpty(), selection, varList);
-                WizardDialog dlg = new WizardDialog(Display.getCurrent().getActiveShell(), contextWizard);
-                if (dlg.open() == Window.OK) {
-                    contextItem = contextWizard.getContextItem();
-                    contextManager = contextWizard.getContextManager();
-                }
-                if (contextItem != null) { // create
-                    if (contextManager instanceof JobContextManager) {
-                        Map<String, String> map = ((JobContextManager) contextManager).getNameMap();
-                        // set properties for context mode
-                        nosqlContextManger.setPropertiesForContextMode(contextItem, map);
-                    }
-                    // refresh current UI.
-                    initialize();
-                }
-            }
-        }
+    protected void collectNoSqlAttributesForContext() {
+        // nothing do by default
     }
 
     /*

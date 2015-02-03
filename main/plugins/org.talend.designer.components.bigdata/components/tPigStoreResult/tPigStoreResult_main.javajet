@@ -62,6 +62,9 @@
 	boolean generateRegisterJarCodeForHCatalog = ("HCatStorer".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
+	java.util.List<String> priorPig012HcatVersionList = java.util.Arrays.<String>asList("HDP_1_0","HDP_1_2","HDP_1_3","MAPR310");
+	String hcatPackage = (priorPig012HcatVersionList.contains(ElementParameterParser.getValue(node, "__HBASE_VERSION__"))) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
+	
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 	
@@ -263,11 +266,18 @@
 	}	
 	
 	if(rmResultDir && !("HCatStorer".equals(function)) && !("HBaseStorage".equals(function))){
-		if(!isExecutedThroughWebHCat) {
+		if (isS3Location) {
+		    
 %>
-		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
-			pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
-    	}
+		    if (pigServer_<%=start_node%>.existsFile("s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>)) {
+	            pigServer_<%=start_node%>.deleteFile("s3n://" + <%=s3username%> + ":" + decryptedS3Password_<%=cid%> + "@" + <%=s3bucket%>);
+	        }
+<%
+		} else if(!isExecutedThroughWebHCat) {
+%>
+    		if (pigServer_<%=start_node%>.existsFile(<%=resultFile%>)) {
+    			pigServer_<%=start_node%>.deleteFile(<%=resultFile%>);
+        	}
 <%
 		} else {
 %>
@@ -319,7 +329,7 @@
 		System.setProperty("hive.metastore.uris", <%=thriftServer%>);
 		System.setProperty("hadoop.clientside.fs.operations", "true");
 		System.setProperty("hive.metastore.execute.setugi", "true");
-		sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using org.apache.hive.hcatalog.pig.<%=function%>('"+<%=partitionFilter%>+"'");
+		sb_<%=cid%>.append("STORE <%=previous_node%>_<%=previousOutputConnectionName%>_RESULT INTO '"+<%=database%>+"."+<%=table%>+"' using <%=hcatPackage%>.<%=function%>('"+<%=partitionFilter%>+"'");
 <%
 		List<IMetadataTable> metadatas = node.getMetadataList();
 		IMetadataTable metadata = null;
