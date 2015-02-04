@@ -22,6 +22,8 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.VerifyEvent;
+import org.eclipse.swt.events.VerifyListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -239,6 +241,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
     @Override
     protected void updateValidatorEntries() {
         super.updateValidatorEntries();
+        // new NumberValidator(portText.getText());
         collectValidateEntry(new SpecialValueValidator(dbVersionCombo.getSelectionIndex(), -1), true,
                 Messages.getString("AbstractNoSQLConnForm.InvalidDBVersion")); //$NON-NLS-1$
         collectValidateEntry(new NonemptyValidator(serverText.getText()),
@@ -286,7 +289,13 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 getConnection().getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
             }
         });
+        portText.getTextControl().addVerifyListener(new VerifyListener() {
 
+            @Override
+            public void verifyText(VerifyEvent e) {
+                e.doit = e.text.matches("[0-9]*");
+            }
+        });
         databaseText.addModifyListener(new ModifyListener() {
 
             @Override
