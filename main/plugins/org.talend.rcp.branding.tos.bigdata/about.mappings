@@ -1,4 +1,4 @@
-0=${version.full}
-1=Launched from Eclipse
+0=${buildQualifier}
+1=${unqualifiedVersion}
 2=${product.name}
 3=${product.website}
