@@ -442,6 +442,16 @@ if(useExistingConn) {
             }
         }
 %>
+
+		<%
+		boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+		if(!useExistingConnection){	
+		%>
+        	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/PrepareTez.javajet"%>
+        	<%
+        	(new PrepareTez()).invoke(previousNode, cid);
+        }	
+        %>
         init_<%=cid%>.close();
 
         String dbname_<%=cid%> = <%=dbname%>;
