@@ -22,7 +22,13 @@ imports="
 	String version = null;
     boolean isCustomTemp = false;
 	boolean isHadoop2Temp = false;
-	
+
+	java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
+	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1",
+	"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1",
+	"APACHE_1_0_0","APACHE_1_0_3_EMR",
+	"PIVOTAL_HD_2_0");
+
 	if(!"true".equals(useExistingConn)) {
 		version = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
 		isCustomTemp = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
@@ -43,9 +49,8 @@ imports="
 	log4jFileUtil.componentStartInfo(node);
 	
 	final String hbaseVersion = version;
-
 	final boolean isCustom = isCustomTemp;
-    final boolean isHadoop2 = isHadoop2Temp;
+	final boolean isHadoop2 = isHadoop2Temp;
 
 	class GenerateCode {
 		
@@ -166,6 +171,12 @@ org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
 <% 
 // not use existing connection
 if(!"true".equals(useExistingConn)){
+	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
+	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
 %>
 	conn_<%=cid %> = org.apache.hadoop.hbase.HBaseConfiguration.create();
 	resourceMap.put("conn_<%=cid%>", conn_<%=cid%>); 
@@ -181,7 +192,20 @@ if(!"true".equals(useExistingConn)){
 	conn_<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
 <%
 	}
-	
+	if((hbaseVersion!=null && supportKrbVersionList.contains(hbaseVersion)) && useKrb){
+%>
+		conn_<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
+		conn_<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);
+		conn_<%=cid%>.set("hbase.security.authorization","true");
+		conn_<%=cid%>.set("hbase.security.authentication","kerberos");
+<%
+		if(useKeytab){
+%>
+			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+		}
+	}
+
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    	for(int i=0;i<properties.size();i++){
@@ -200,6 +224,7 @@ if(!"true".equals(useExistingConn)){
 	if(conn_<%=cid %> == null){
 		throw new RuntimeException("<%=cid %>'s connection is null!");
 	}
+	System.out.println(conn_<%=cid %>.get("hbase.security.authentication"));
 <%
 }
 
