@@ -39,7 +39,7 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
         } else if (ICassandraAttributies.HOST.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.HOST));
         } else if (ICassandraAttributies.PORT.equals(value)) {
-            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.PORT), false);
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.PORT));
         } else if (ICassandraAttributies.KEY_SPACE.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.DATABASE));
         } else if (ICassandraAttributies.USERNAME.equals(value)) {
