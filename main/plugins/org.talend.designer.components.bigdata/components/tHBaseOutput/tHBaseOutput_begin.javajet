@@ -224,7 +224,6 @@ if(!"true".equals(useExistingConn)){
 	if(conn_<%=cid %> == null){
 		throw new RuntimeException("<%=cid %>'s connection is null!");
 	}
-	System.out.println(conn_<%=cid %>.get("hbase.security.authentication"));
 <%
 }
 
