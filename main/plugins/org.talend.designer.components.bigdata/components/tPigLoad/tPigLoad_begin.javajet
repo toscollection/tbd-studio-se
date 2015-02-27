@@ -180,6 +180,8 @@
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
 	}
+	
+	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__"));
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
 <%
@@ -443,9 +445,16 @@
                 props_<%=cid%>.put("dfs.client.use.datanode.hostname", "true");
                 <%
             }
-            %>
-			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
+			
+			if(useTez){
+			%>
+				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(new org.apache.pig.backend.hadoop.executionengine.tez.TezExecType(), props_<%=cid%>);
 			<%
+			}else{
+            %>            
+				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
+			<%
+			}
 		}
 
         if (isS3Location) {
@@ -480,7 +489,7 @@
 		routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
 		
 <%
-	if((advProps.size() > 0) || compress || (isLocal && "HBaseStorage".equals(function))){
+	if((advProps.size() > 0) || compress || (isLocal && "HBaseStorage".equals(function)) || useTez){
 %>
 		StringBuilder script_<%=cid%>=new StringBuilder();
 <%
@@ -517,6 +526,66 @@
 			}
 		}
 %>
+		<%
+		if(useTez){
+			String username = ElementParameterParser.getValue(node, "__USERNAME__");
+			%>
+			//collect tez jars
+			String[] classPaths_<%=cid%> = System.getProperty("java.class.path").split(System.getProperty("path.separator"));
+			java.util.Map<String, String> jarPaths_<%=cid%> = new java.util.HashMap<String, String>();
+			for(String classPath_<%=cid%> : classPaths_<%=cid%>){
+    			<%
+    			String tezJarsNameValue = ElementParameterParser.getValue(node, "__TEZ_JARS_NAME__");
+    			if(tezJarsNameValue != null && !"".equals(tezJarsNameValue)){
+        			String[] tezJarsName = tezJarsNameValue.split(",");
+        			for(String tezJarName : tezJarsName){
+        				if(tezJarName.endsWith(".jar")){
+        				%>
+        					if(classPath_<%=cid%>.endsWith("<%=tezJarName%>")){
+        						jarPaths_<%=cid%>.put("<%=tezJarName%>", classPath_<%=cid%>);
+        					}
+        				<%
+        				}
+        			}
+    			}
+    			%>
+    		}
+    		
+    		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/GetFileSystem.javajet"%>
+  		  	<%
+			(new GetFileSystem()).invoke(node);
+			String definedTezLibUris = null;			
+			if(advProps != null){
+    			for(Map<String, String> item : advProps){
+    				if("\"tez.lib.uris\"".equals(item.get("PROPERTY"))){
+    					definedTezLibUris = item.get("VALUE");	
+    				}
+    			}
+    		}
+    		if(definedTezLibUris != null){
+    		%>
+    			String tezJarsLocation_<%=cid%> = <%=definedTezLibUris%>;
+    		<%
+    		}else{
+			%>
+    			String hdfsUserName_<%=cid%> = (<%=username%> != null && !"".equals(<%=username%>)) ? <%=username%> : System.getProperty("user.name");
+    			String tezJarsLocation_<%=cid%> = "/tmp/" + hdfsUserName_<%=cid%> + "/talend_tez_libs/<%=isCustom?"custom":pigVersion%>";
+        		fs_<%=cid%>.mkdirs(new org.apache.hadoop.fs.Path(tezJarsLocation_<%=cid%>));
+    		<%
+    		}
+    		%>
+    		for(String jarName_<%=cid%> : jarPaths_<%=cid%>.keySet()){
+    			org.apache.hadoop.fs.Path hdfsLocation_<%=cid%> = new org.apache.hadoop.fs.Path(tezJarsLocation_<%=cid%> + "/" + jarName_<%=cid%>);
+				if(!fs_<%=cid%>.exists(hdfsLocation_<%=cid%>)){ 
+        			fs_<%=cid%>.copyFromLocalFile(false, false, new org.apache.hadoop.fs.Path(jarPaths_<%=cid%>.get(jarName_<%=cid%>)), hdfsLocation_<%=cid%>);
+    			}
+    		}
+    		
+    		//define the location of tez jars	
+			script_<%=cid%>.append("SET tez.lib.uris " + fs_<%=cid%>.getUri() + "/" + tezJarsLocation_<%=cid%> + ";");
+		<%
+		}
+		%>
 		helper_<%=cid%>.add("script",script_<%=cid%>.toString());
 <%
 	}
