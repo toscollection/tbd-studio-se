@@ -34,11 +34,11 @@
       </property>
       <property
             name="cssTheme"
-            value="org.talend.themes.talend_theme.default">
+            value="org.talend.themes.css.talend.default">
       </property>
       <property
             name="applicationCSSResources"
-            value="platform:/plugin/org.talend.themes.talend_theme/themes/">
+            value="platform:/plugin/org.talend.themes.css.talend/themes/">
       </property>
    </product>
 </extension>
