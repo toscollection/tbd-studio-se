@@ -1,0 +1,16 @@
+<%@ jet %>
+
+    <%
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+	%>
+	<%
+	if (!useExistingConnection){
+	%>
+		if(resourceMap.get("finish_<%=cid%>") == null){
+			if(resourceMap.get("cluster_<%=cid%>")!=null){
+				((me.prettyprint.hector.api.Cluster)resourceMap.get("cluster_<%=cid%>")).getConnectionManager().shutdown();
+			}
+		}
+	<%
+	}
+	%>

@@ -3,6 +3,7 @@
     	org.talend.core.model.process.INode 
     	org.talend.core.model.process.ElementParameterParser 
     	org.talend.designer.codegen.config.CodeGeneratorArgument
+    	org.talend.core.model.utils.NodeUtil
 " 
 %>
 	<%
@@ -13,12 +14,20 @@
     %>
     <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
     <%
-   	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
-	
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    INode connectionNode = NodeUtil.getNodeByUniqueName(node.getProcess(), connection);
+    %>
+    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/API_selector.javajet"%>
+    <%
+	if((new API_selector()).useDatastax(connectionNode)){
+    %>
+    	<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraClose/tCassandraClose_datastax_main.javajet"%>
+    <%
+    }else{
 	%>
-	me.prettyprint.hector.api.Cluster cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
-	if(cluster_<%=cid%>!=null){
-			cluster_<%=cid%>.getConnectionManager().shutdown();
-	}
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraClose/tCassandraClose_hector_main.javajet"%>
+	<%
+	}	
+	%>
 	
 	

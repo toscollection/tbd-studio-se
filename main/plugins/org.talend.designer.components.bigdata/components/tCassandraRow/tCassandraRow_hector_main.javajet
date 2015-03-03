@@ -1,0 +1,82 @@
+<%@ jet %>
+    <%
+	String host = ElementParameterParser.getValue(node,"__HOST__");
+    String port = ElementParameterParser.getValue(node,"__PORT__");
+    //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
+    String userName = ElementParameterParser.getValue(node, "__USERNAME__");
+    String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
+	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+    String query = ElementParameterParser.getValue(node,"__QUERY__");
+    query = query.replaceAll("\n"," ");
+    query = query.replaceAll("\r"," ");
+    boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+%>
+		me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
+		me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
+		try{
+<%
+	if (useExistingConnection){
+		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+%>
+		cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
+<%
+	}else{
+%>
+			String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
+			me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);
+			java.util.Map<String, String> credentials_<%=cid%> = new java.util.HashMap<String, String>();
+<%
+		if (authentication){
+%>
+			credentials_<%=cid%>.put("username",<%=userName%>);
+			
+            <%
+            String passwordFieldName = "__PASSWORD__";
+            %>
+            
+            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+			
+			credentials_<%=cid%>.put("password",decryptedPassword_<%=cid%>);
+<%
+		}
+%>
+			cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
+<%
+	}
+%>
+			me.prettyprint.cassandra.model.ConfigurableConsistencyLevel clpolicy_<%=cid%> = new me.prettyprint.cassandra.model.ConfigurableConsistencyLevel();
+			me.prettyprint.hector.api.HConsistencyLevel consistencyLevel_<%=cid%> = me.prettyprint.hector.api.HConsistencyLevel.ONE;
+			clpolicy_<%=cid%>.setDefaultWriteConsistencyLevel(consistencyLevel_<%=cid%>);
+			keyspace_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createKeyspace(<%=keySpace%>, cluster_<%=cid%>,clpolicy_<%=cid%>);
+			me.prettyprint.cassandra.model.CqlQuery cql_<%=cid%>=new me.prettyprint.cassandra.model.CqlQuery(keyspace_<%=cid%>,me.prettyprint.cassandra.serializers.StringSerializer.get(),
+				me.prettyprint.cassandra.serializers.StringSerializer.get(),me.prettyprint.cassandra.serializers.StringSerializer.get());
+			cql_<%=cid%>.setQuery(<%=query%>);
+			cql_<%=cid%>.execute();
+		}catch(Exception e_<%=cid%>){
+<%
+	if(dieOnError){
+%>
+			throw(e_<%=cid%>);
+<%
+	}else{
+%>
+			System.err.println(e_<%=cid%>.getMessage());
+<%
+	}
+	if (!useExistingConnection){
+%>
+		}finally{
+			if(cluster_<%=cid%>!=null){
+				cluster_<%=cid%>.getConnectionManager().shutdown();
+			}
+		}
+<%
+	}else{
+%>
+		}
+<%
+	}
+%>

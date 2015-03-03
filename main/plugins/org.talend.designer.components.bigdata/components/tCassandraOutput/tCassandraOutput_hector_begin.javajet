@@ -1,0 +1,375 @@
+<%@ jet %>
+    <%
+	String host = ElementParameterParser.getValue(node,"__HOST__");
+    String port = ElementParameterParser.getValue(node,"__PORT__");
+    //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
+    String userName = ElementParameterParser.getValue(node, "__USERNAME__");
+    String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
+	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    String actionOnKeyspace= ElementParameterParser.getValue(node,"__ACTION_ON_KEYSPACE__");
+    String actionOnColumnFamily= ElementParameterParser.getValue(node,"__ACTION_ON_COLUMN_FAMILY__");
+    String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+	String columnFamilyType =ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
+	
+	String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
+	String keyColumn = ElementParameterParser.getValue(node,"__KEY_COLUMN__");
+	String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
+	boolean incKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_KEY__"));
+	boolean incSuperKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_SUPER_KEY__"));
+	boolean isDefine = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DEFINE_CF_STRUCTS__"));
+	
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	%>
+	me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
+	me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
+	int batchCounter_<%=cid%> = 0;
+	int nb_line_<%=cid %> = 0;
+	<%
+	if(useExistingConnection){
+  		String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+		%>
+		cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
+		<%
+		if(isLog4jEnabled){
+		%>	
+			log.info("<%=cid%> - Get an existing cluster instance from " + "<%=connection%>" + ".");
+		<%
+		}
+	}else{
+	%>
+		String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
+		me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);
+		java.util.Map<String, String> credentials_<%=cid%> = new java.util.HashMap<String, String>();
+		<%
+		if (authentication){
+		%>
+			credentials_<%=cid%>.put("username",<%=userName%>);
+			
+            <%
+            String passwordFieldName = "__PASSWORD__";
+            %>
+            
+            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+			
+			credentials_<%=cid%>.put("password",decryptedPassword_<%=cid%>);
+		<%
+		}
+		%>
+    	cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
+    	resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+	<%
+	}
+	%>
+	me.prettyprint.cassandra.model.ConfigurableConsistencyLevel clpolicy_<%=cid%> = new me.prettyprint.cassandra.model.ConfigurableConsistencyLevel();
+	me.prettyprint.hector.api.HConsistencyLevel consistencyLevel_<%=cid%> = me.prettyprint.hector.api.HConsistencyLevel.ONE;
+	clpolicy_<%=cid%>.setDefaultWriteConsistencyLevel(consistencyLevel_<%=cid%>);
+	<%
+	if("DROP_CREATE".equals(actionOnKeyspace)){
+		if (isLog4jEnabled) {
+		%>
+			log.info("<%=cid%> - Dropping a  keyspace ["+<%=keySpace%>+"].");
+		<%
+		}
+		%>
+		cluster_<%=cid%>.dropKeyspace(<%=keySpace%>, true);
+		<%
+		if (isLog4jEnabled) {
+		%>
+			log.info("<%=cid%> - Dropped keyspace ["+<%=keySpace%>+"] successfully.");
+			log.info("<%=cid%> - Adding a keyspace ["+<%=keySpace%>+"].");
+		<%
+		}
+		%>
+		cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
+		<%
+		if (isLog4jEnabled) {
+		%>
+			log.info("<%=cid%> - Added keyspace ["+<%=keySpace%>+"] successfully.");
+		<%
+		}
+	}
+	if("CREATE".equals(actionOnKeyspace)){
+	%>
+		cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
+	<%
+	}
+	if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnKeyspace)){
+	%>
+		if (cluster_<%=cid%>.describeKeyspace(<%=keySpace%>) != null) {
+			<%
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Dropping a  keyspace ["+<%=keySpace%>+"].");
+			<%
+			}
+			%>
+      		cluster_<%=cid%>.dropKeyspace(<%=keySpace%>, true);
+      		<%
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Dropped keyspace ["+<%=keySpace%>+"] successfully.");
+			<%
+			}
+			%>
+   		}
+   		<%
+		if (isLog4jEnabled) {
+		%>
+			log.info("<%=cid%> - Adding a  keyspace ["+<%=keySpace%>+"].");
+		<%
+		}
+		%>
+   		cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
+		<%
+		if (isLog4jEnabled) {
+		%>
+			log.info("<%=cid%> - Added keyspace ["+<%=keySpace%>+"] successfully.");
+		<%
+		}
+	}
+	if("CREATE_IF_NOT_EXISTS".equals(actionOnKeyspace)){
+	%>
+		if (cluster_<%=cid%>.describeKeyspace(<%=keySpace%>) == null) {
+			<%
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Adding a  keyspace ["+<%=keySpace%>+"].");
+			<%
+			}
+			%>
+      		cluster_<%=cid%>.addKeyspace(new me.prettyprint.cassandra.service.ThriftKsDef(<%=keySpace%>), true);
+      		<%
+      		if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Added keyspace ["+<%=keySpace%>+"] successfully.");
+			<%
+			}
+      		%>
+   		}
+	<%
+	}
+	%>
+    keyspace_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createKeyspace(<%=keySpace%>, cluster_<%=cid%>,clpolicy_<%=cid%>);
+	<%
+    List<IMetadataTable> metadatas = node.getMetadataList();
+	if(!"NONE".equals(actionOnColumnFamily)){
+	%>
+		me.prettyprint.hector.api.ddl.ColumnFamilyDefinition cfDefinition_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createColumnFamilyDefinition(<%=keySpace%>,<%=columnFamily%>); 
+		cfDefinition_<%=cid%>.setColumnType(me.prettyprint.hector.api.ddl.ColumnType.<%=columnFamilyType%>);
+		<%
+		if(isDefine){
+			if("SUPER".equals(columnFamilyType)){
+			%>
+				cfDefinition_<%=cid%>.setSubComparatorType(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=comparator%>"));
+			<%
+			}else{
+			%>
+				cfDefinition_<%=cid%>.setComparatorType(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=comparator%>"));
+			<%
+			}
+			if(metadatas != null && metadatas.size() > 0){
+	      		IMetadataTable metadata = metadatas.get(0);
+	      		if(metadata != null){
+	      			for (IMetadataColumn column : metadata.getListColumns()) {
+	    				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+	    				String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+						String cType = column.getType();
+						if("ObjectType".equalsIgnoreCase(cType)){
+							cType="BytesType";
+						}
+	    				if(column.getLabel().equals(keyColumn)){
+						%>
+							cfDefinition_<%=cid%>.setKeyValidationClass(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=cType%>").getClassName());
+						<%
+						}
+						if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
+						%>
+							cfDefinition_<%=cid%>.setComparatorType(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=cType%>"));
+						<%
+						}
+						if((!column.getLabel().equals(keyColumn) || incKey) || !("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn) && !incSuperKey)){
+						%>
+							me.prettyprint.cassandra.model.BasicColumnDefinition colDef_<%=column.getLabel()%>_<%=cid%> = new me.prettyprint.cassandra.model.BasicColumnDefinition();
+							colDef_<%=column.getLabel()%>_<%=cid%>.setName(me.prettyprint.cassandra.serializers.StringSerializer.get().toByteBuffer("<%=column.getOriginalDbColumnName()%>"));
+							colDef_<%=column.getLabel()%>_<%=cid%>.setValidationClass(me.prettyprint.hector.api.ddl.ComparatorType.getByClassName("<%=cType%>").getClassName());
+							cfDefinition_<%=cid%>.addColumnDefinition(colDef_<%=column.getLabel()%>_<%=cid%>);
+							<%
+							}
+						}
+					}
+				}
+			}
+		}
+		if("DROP_CREATE".equals(actionOnColumnFamily)){
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Dropping a <%=columnFamilyType%> column family ["+<%=columnFamily%>+"] from keyspace ["+<%=keySpace%>+"].");
+			<%
+			}
+			%>
+			cluster_<%=cid%>.dropColumnFamily(<%=keySpace%>,<%=columnFamily%>, true);
+			<%
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Dropped column family ["+<%=columnFamily%>+"] successfully.");
+			<%
+			}
+		}
+		if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily) || "CREATE_IF_NOT_EXISTS".equals(actionOnColumnFamily)){
+		%>
+			try {
+				<%
+				if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
+					if (isLog4jEnabled) {
+					%>
+						log.info("<%=cid%> - Dropping a <%=columnFamilyType%> column family ["+<%=columnFamily%>+"] from keyspace ["+<%=keySpace%>+"].");
+					<%
+					}
+					%>
+					cluster_<%=cid%>.dropColumnFamily(<%=keySpace%>,<%=columnFamily%>, true);
+					<%
+					if (isLog4jEnabled) {
+					%>
+						log.info("<%=cid%> - Dropped column family ["+<%=columnFamily%>+"] successfully.");
+					<%
+					}
+				}else{
+					if (isLog4jEnabled) {
+					%>
+						log.info("<%=cid%> - Adding a <%=columnFamilyType%> column family ["+<%=columnFamily%>+"] in keyspace ["+<%=keySpace%>+"].");
+					<%
+					}
+					%>
+					cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
+					<%
+					if (isLog4jEnabled) {
+					%>
+						log.info("<%=cid%> - Added column family ["+<%=columnFamily%>+"] successfully.");
+					<%
+					}
+ 				}
+				%>
+			} catch (Exception e_<%=cid%>) {
+				<%
+				if("DROP_IF_EXISTS_AND_CREATE".equals(actionOnColumnFamily)){
+				%>
+					}finally{
+						<%
+						if (isLog4jEnabled) {
+						%>
+							log.info("<%=cid%> - Adding a <%=columnFamilyType%> column family ["+<%=columnFamily%>+"] in keyspace ["+<%=keySpace%>+"].");
+						<%
+						}
+						%>
+						cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
+						<%
+						if (isLog4jEnabled) {
+						%>
+							log.info("<%=cid%> - Added column family ["+<%=columnFamily%>+"] successfully.");
+						<%
+						}
+						%>
+					}
+				<%
+				}else{
+				%>
+					}
+				<%
+				}
+		}
+		if("CREATE".equals(actionOnColumnFamily) || "DROP_CREATE".equals(actionOnColumnFamily)){
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Adding a <%=columnFamilyType%> column family ["+<%=columnFamily%>+"] in keyspace ["+<%=keySpace%>+"].");
+			<%
+			}
+			%>
+			cluster_<%=cid%>.addColumnFamily(cfDefinition_<%=cid%>, true);
+			<%
+			if (isLog4jEnabled) {
+			%>
+				log.info("<%=cid%> - Added column family ["+<%=columnFamily%>+"] successfully.");
+			<%
+			}
+		}
+		%>
+		me.prettyprint.hector.api.mutation.Mutator mutator_<%=cid%> = null;
+		<%
+		if (node.getIncomingConnections() != null) {
+			class TypeMap{
+      			Map<String,String> typeMap=new java.util.HashMap<String,String>();
+      			
+      			public TypeMap(){
+					typeMap.put("Boolean","BooleanSerializer");
+					typeMap.put("byte[]","BytesArraySerializer");
+					typeMap.put("java.util.Date","DateSerializer");
+					typeMap.put("Double","DoubleSerializer");
+					typeMap.put("Float","FloatSerializer");
+					typeMap.put("Integer","IntegerSerializer");
+					typeMap.put("Long","LongSerializer");
+					typeMap.put("Object","ObjectSerializer");
+					typeMap.put("Short","ShortSerializer");
+					typeMap.put("String","StringSerializer");
+					typeMap.put("Character","CharSerializer");
+					typeMap.put("BigDecimal","BigDecimalSerializer");
+      			}
+      			public String get(String tType, String cType){
+      				if("".equals(cType) || "Default".equals(cType)){
+      					return typeMap.get(tType);
+      				}else if("CounterColumnType".equals(cType)){
+      					return "LongSerializer";
+      				}else if("IntegerType".equals(cType)){
+      					return "BigIntegerSerializer";
+      				}else if("AsciiType".equals(cType)){
+      					return "AsciiSerializer";
+      				}else if("UUIDType".equals(cType)){
+      					return "UUIDSerializer";
+      				}else if("TimeUUIDType".equals(cType)){
+      					return "TimeUUIDSerializer";
+      				}else{
+      					return typeMap.get(tType) == null ? "ObjectSerializer" : typeMap.get(tType);
+      				}
+      			}
+      		}
+     		TypeMap typeMap = new TypeMap();
+			boolean rowKeyFlag=false;
+			boolean superColFlag=false;
+			for (IConnection incomingConn : node.getIncomingConnections()) {
+				if (incomingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+					IMetadataTable inputMetadataTable = incomingConn.getMetadataTable();
+					for (IMetadataColumn column : inputMetadataTable.getListColumns()) {
+	    				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+	    				String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(),true);
+						String cType = column.getType();
+	    				if(column.getLabel().equals(keyColumn)){
+	    					rowKeyFlag=true;
+	    					%>
+							me.prettyprint.hector.api.Serializer keySerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get();
+						<%
+						}
+						if("SUPER".equals(columnFamilyType) && column.getLabel().equals(superKeyColumn)){
+							superColFlag=true;
+							%>
+							me.prettyprint.hector.api.Serializer sNameSerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get();
+						<%
+						}
+						if(("STANDARD".equals(columnFamilyType) && rowKeyFlag)||("SUPER".equals(columnFamilyType) && rowKeyFlag && superColFlag)){
+							break;
+						}
+					}
+					%>
+			     	me.prettyprint.cassandra.serializers.StringSerializer serializer_<%=cid%> = me.prettyprint.cassandra.serializers.StringSerializer.get();
+			    	mutator_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMutator(keyspace_<%=cid%>, keySerializer_<%=cid%>);
+			    	<%
+					if (isLog4jEnabled) {
+					%>
+						log.info("<%=cid%> - Start to write data into database .");
+					<%
+					}
+				}
+			}
+		}
+		%>
+    

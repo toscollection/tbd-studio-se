@@ -1,0 +1,144 @@
+<%@ jet %>
+	<%
+	IMetadataTable metadata = null;
+	IConnection conn = null;
+	List<IMetadataColumn> columns = null;
+	List<IMetadataTable> metadatas = node.getMetadataList();	
+	if((metadatas != null) && (metadatas.size() > 0)){
+    	metadata = metadatas.get(0);
+    	if(metadata != null){
+    		columns = metadata.getListColumns();		
+    	}
+    }
+    
+    List<? extends IConnection> conns = node.getOutgoingSortedConnections();
+	if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+		conn = conns.get(0);
+    }	
+    
+    if(columns == null || columns.isEmpty() || conn == null){
+    	return "";
+    }
+	%>
+	<% 
+	boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+	if(useExistConn){
+	%>
+        com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
+    	com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
+	<%
+	}else{	
+	%>
+		<%
+        String host = ElementParameterParser.getValue(node,"__HOST__");
+        String port = ElementParameterParser.getValue(node,"__PORT__");
+        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+        String userName = ElementParameterParser.getValue(node, "__USERNAME__");
+        String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
+    	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    	
+    	if(authentication){
+            String passwordFieldName = "__PASSWORD__";
+            %>
+            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>    	
+        <%
+        }	
+        %>
+        com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
+        															.addContactPoints(<%=host%>.split(","))
+        															.withPort(Integer.valueOf(<%=port%>))
+                                                                	<%
+                                                                	if(authentication){
+                                                                	%>
+                                                                    	withCredentials(<%=userName%>, decryptedPassword_<%=cid%>)
+                                                                	<%
+                                                                	}
+                                                                	%>
+        															.build();
+    	
+    	com.datastax.driver.core.Session connection_<%=cid%> = cluster_<%=cid%>.connect(<%=keyspace%>);
+	<%
+	}
+	String query = ElementParameterParser.getValue(node, "__QUERY__");	
+	%>
+	com.datastax.driver.core.ResultSet rs_<%=cid%> = connection_<%=cid%>.execute(<%=query%>);
+	for(com.datastax.driver.core.Row row_<%=cid%> : rs_<%=cid%>){
+        <%
+        String connName = conn.getName();
+    	for(IMetadataColumn column : columns){
+    		String dbType = column.getType();
+    		JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+    		String columnName = column.getLabel();	
+    		String dbColumnName = column.getOriginalDbColumnName();
+    		
+    		if(javaType == JavaTypesManager.STRING){
+    			if("ascii".equals(dbType) || "text".equals(dbType) || "varchar".equals(dbType)){
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getString("<%=dbColumnName%>");
+    			<%
+    			}else if("timeuuid".equals(dbType) || "uuid".equals(dbType)){
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getUUID("<%=dbColumnName%>").toString();
+    			<%
+    			}
+        	}else if(javaType == JavaTypesManager.OBJECT){
+        		if("varint".equals(dbType)){
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getVarint("<%=dbColumnName%>");
+    			<%
+    			}else if("inet".equals(dbType)){
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getInet("<%=dbColumnName%>");
+    			<%
+    			}else if("map".equals(dbType)){
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getMap("<%=dbColumnName%>", Object.class, Object.class);
+    			<%
+    			}else if("set".equals(dbType)){
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getSet("<%=dbColumnName%>", Object.class);
+    			<%
+    			}
+    		}else if(javaType == JavaTypesManager.LIST){
+        	%>
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getList("<%=dbColumnName%>", Object.class);	
+        	<%
+        	}else if(javaType == JavaTypesManager.BOOLEAN){
+        	%>
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getBool("<%=dbColumnName%>");	
+        	<%
+    		}else if(javaType == JavaTypesManager.BYTE_ARRAY){
+        	%>
+        		java.nio.ByteBuffer bytebuffer_<%=columnName%>_<%=cid%> = row_<%=cid%>.getBytes("<%=dbColumnName%>");
+        		byte[] bytes_<%=columnName%>_<%=cid%> = new byte[bytebuffer_<%=columnName%>_<%=cid%>.capacity()];
+        		bytebuffer_<%=columnName%>_<%=cid%>.get(bytes_<%=columnName%>_<%=cid%>, 0, bytes_<%=columnName%>_<%=cid%>.length);
+        		<%=connName%>.<%=columnName%> = bytes_<%=columnName%>_<%=cid%>;	
+        	<%	
+    		}else if(javaType == JavaTypesManager.DATE){
+        	%>
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getDate("<%=dbColumnName%>");	
+        	<%
+    		}else if(javaType == JavaTypesManager.BIGDECIMAL){
+        	%> 
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getDecimal("<%=dbColumnName%>");	
+        	<%
+    		}else if(javaType == JavaTypesManager.DOUBLE){
+        	%> 
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getDouble("<%=dbColumnName%>");	
+        	<%
+    		}else if(javaType == JavaTypesManager.FLOAT){
+        	%> 
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getFloat("<%=dbColumnName%>");	
+        	<%
+    		}else if(javaType == JavaTypesManager.INTEGER){
+        	%> 
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getInt("<%=dbColumnName%>");	
+        	<%
+    		}else if(javaType == JavaTypesManager.LONG){
+        	%> 
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getLong("<%=dbColumnName%>");	
+        	<%
+    		}
+    	}
+        %>

@@ -1,0 +1,122 @@
+<%@ jet %>
+    <%
+    IMetadataTable metadata = null;
+    IConnection conn = null;
+    List<IMetadataColumn> columns = null;
+    List<IMetadataTable> metadatas = node.getMetadataList();
+    if((metadatas!=null) && (metadatas.size() > 0)){
+        metadata = metadatas.get(0);
+        if(metadata != null){
+    		columns = metadata.getListColumns();		
+    	}
+    }
+    List<? extends IConnection> conns = node.getIncomingConnections();
+    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+        conn = conns.get(0);
+    }
+    
+    if(columns == null || columns.isEmpty() || conn == null){
+    	return "";
+    }
+    %>
+    <% 
+    boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    if(useExistConn){
+    %>
+        com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
+        com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
+    <%
+    }else{  
+    %>
+        <%
+        String host = ElementParameterParser.getValue(node,"__HOST__");
+        String port = ElementParameterParser.getValue(node,"__PORT__");
+        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+        String userName = ElementParameterParser.getValue(node, "__USERNAME__");
+        String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
+        boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+        
+        if(authentication){
+            String passwordFieldName = "__PASSWORD__";
+            %>
+            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>      
+        <%
+        }   
+        %>
+        com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
+                                                                    .addContactPoints(<%=host%>.split(","))
+                                                                    .withPort(Integer.valueOf(<%=port%>))
+                                                                    <%
+                                                                    if(authentication){
+                                                                    %>
+                                                                        withCredentials(<%=userName%>, decryptedPassword_<%=cid%>)
+                                                                    <%
+                                                                    }
+                                                                    %>
+                                                                    .build();
+        
+        com.datastax.driver.core.Session connection_<%=cid%> = cluster_<%=cid%>.connect(<%=keyspace%>);
+        resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+        resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
+    <%
+    }
+    String tableAction = ElementParameterParser.getValue(node, "__TABLE_ACTION__");
+    String tableName = ElementParameterParser.getValue(node, "__TABLE__");
+    %>
+    String tableName_<%=cid%> = <%=tableName%>;
+    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/CQL_Helper.javajet"%>    
+    <%
+    String dataAction = ElementParameterParser.getValue(node, "__DATA_ACTION__");
+    CQLManager cqlManager = new CQLManager(node, columns);
+    if(!"NONE".equals(tableAction) && "INSERT".equals(dataAction)){
+        if("DROP_IF_EXISTS_AND_CREATE".equals(tableAction)){
+        %>
+            connection_<%=cid%>.execute(<%=cqlManager.getDropTableSQL()%>);
+            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL()%>);
+            <%
+            if(cqlManager.containsUnsupportTypes()){
+            %>
+                System.err.println("Don't support create table with set/list/map");
+            <%
+            }
+            %>
+        <%    
+        }else if("CREATE_IF_NOT_EXISTS".equals(tableAction)){
+        %>
+            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL()%>);
+            <%
+            if(cqlManager.containsUnsupportTypes()){
+            %>
+                System.err.println("Don't support create table with set/list/map");
+            <%
+            }
+            %>
+        <%
+        }else if("CLEAR".equals(tableAction)){
+        %>
+            connection_<%=cid%>.execute(<%=cqlManager.getDeleteTableSQL()%>);
+        <%
+        }else if("TRUNCATE".equals(tableAction)){
+        %>
+            connection_<%=cid%>.execute(<%=cqlManager.getTruncateTableSQL()%>);
+        <% 
+        }
+    }
+    %>
+    com.datastax.driver.core.PreparedStatement prepareStmt_<%=cid%> = null;
+    prepareStmt_<%=cid%> = connection_<%=cid%>.prepare(<%=cqlManager.generatePreActionSQL()%>);
+    com.datastax.driver.core.BoundStatement boundStmt_<%=cid%> = null;
+    <%
+    boolean useBatch = "true".equals(ElementParameterParser.getValue(node, "__USE_UNLOGGED_BATCH__"));
+    if(useBatch){
+    %>
+        com.datastax.driver.core.BatchStatement batchStmt_<%=cid%> = new com.datastax.driver.core.BatchStatement(com.datastax.driver.core.BatchStatement.Type.UNLOGGED);
+    <%
+    }else{
+    %>
+        boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
+    <%
+    }
+    %>
+    

@@ -1,0 +1,595 @@
+<%@ jet %>
+	<%
+	class Column{
+
+        IMetadataColumn column;
+        private String mark = "?";
+        private String assignmentOperation = "=";
+        private Column assignmentKey;
+        private boolean asColumnKey = false;
+        public Column(IMetadataColumn column){
+            this.column = column;
+        }
+        public String getName(){
+            return column.getLabel();
+        }
+        public String getDBName(){
+        	return column.getOriginalDbColumnName();
+        }
+        public String getTalendType(){
+        	return column.getTalendType();
+        }
+        public String getDBType(){
+        	return column.getType();
+        }
+        public String getType(){
+        	String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+        	
+        	if(typeToGenerate.equals("byte[]")) {
+                typeToGenerate = "Bytes";
+            } else if(typeToGenerate.equals("java.util.Date")) {
+                typeToGenerate = "Date";
+            } else if(typeToGenerate.equals("Integer")) {
+                typeToGenerate = "Int";
+            } else {
+                typeToGenerate=typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
+            }
+
+        	return typeToGenerate;
+        }
+        public boolean isObject(){
+        	java.util.List<String> objectTypes = java.util.Arrays.asList(new String[]{"String", "Object", "List", "Boolean", "Bytes", "Date", "BigDecimal", "Double", "Float", "Int", "Long"}); //TODO: missing some types, but for cassandra, it's enough
+        	return objectTypes.contains(getType());
+        }
+        public boolean isKey(){
+        	return column.isKey();
+        }
+        public String getMark(){
+        	return mark;
+        }
+        public void setMark(String mark){
+        	this.mark = mark;
+        }
+        public void setAssignmentOperation(String op){
+            this.assignmentOperation = op;
+        }
+        public String getAssignmentOperation(){
+            return assignmentOperation;
+        }
+        public void setAssignmentKey(Column keyColumn){
+            this.assignmentKey = keyColumn;
+        }
+        public Column getAssignmentKey(){
+            return assignmentKey;
+        }
+        public void setAsColumnKey(boolean asColumnKey){
+            this.asColumnKey = asColumnKey;
+        }
+        public boolean getAsColumnKey(){
+            return asColumnKey;
+        }
+    }
+    
+	class CQLManager{
+		private String CASSANDRA = "cassandra_datastax_id";
+        
+        private String[] KeyWords = {"ADD","ALL","ALLOW","ALTER","AND","ANY","APPLY","AS","ASC","ASCII","AUTHORIZE","BATCH","BEGIN","BIGINT","BLOB","BOOLEAN","BY","CLUSTERING","COLUMNFAMILY","COMPACT","CONSISTENCY","COUNT","COUNTER","CREATE","CUSTOM","DECIMAL","DELETE","DESC","DISTINCT","DOUBLE","DROP","EACH_QUORUM","EXISTS","FILTERING","FLOAT","FROM","frozen","GRANT","IF","IN","INDEX","INET","INFINITY","INSERT","INT","INTO","KEY","KEYSPACE","KEYSPACES","LEVEL","LIMIT","LIST","LOCAL_ONE","LOCAL_QUORUM","MAP","MODIFY","NAN","NORECURSIVE","NOSUPERUSER","NOT","OF","ON","ONE","ORDER","PASSWORD","PERMISSION","PERMISSIONS","PRIMARY","QUORUM","RENAME","REVOKE","SCHEMA","SELECT","SET","STATIC","STORAGE","SUPERUSER","TABLE","TEXT","TIMESTAMP","TIMEUUID","THREE","TO","TOKEN","TRUNCATE","TTL","TWO","TYPE","UNLOGGED","UPDATE","USE","USER","USERS","USING","UUID","VALUES","VARCHAR","VARINT","WHERE","WITH","WRITETIME"};
+        
+        private INode node;
+        private String cid;
+        private String action;
+
+        public CQLManager(INode node, List<IMetadataColumn> columnList){
+        	this.node = node;
+            this.cid = node.getUniqueName();
+            this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
+            createColumnList(columnList);
+        }
+
+        private List<Column> all;
+    	private List<Column> keys;
+    	private List<Column> normals;
+    	private List<Column> conditions;
+    	private Column ttl;
+    	private Column timestamp;
+
+        private void createColumnList(List<IMetadataColumn> columnList){
+            all = new ArrayList<Column>();            
+            for(IMetadataColumn column : columnList){
+                all.add(new Column(column));
+            }
+            keys = new ArrayList<Column>();
+    		normals = new ArrayList<Column>();
+    		conditions = new ArrayList<Column>();
+			boolean usingTimestamp = "true".equals(ElementParameterParser.getValue(node, "__USING_TIMESTAMP__"));
+			String timestampColName = ElementParameterParser.getValue(node, "__TIMESTAMP__");
+			for(Column column : all){
+    			if("INSERT".equals(action) || "UPDATE".equals(action)){
+					boolean usingTTL = "true".equals(ElementParameterParser.getValue(node, "__USING_TTL__"));
+					String ttlColName = ElementParameterParser.getValue(node, "__TTL__");
+    				if(usingTTL && ttlColName.equals(column.getName())){
+    					ttl = column;
+    					ttl.setMark("TTL ?");
+    					continue;
+    				}
+    			}
+				if(usingTimestamp && timestampColName.equals(column.getName())){
+					timestamp = column;
+					timestamp.setMark("TIMESTAMP ?");
+					continue;
+				}
+				if(column.isKey()){
+    				keys.add(column);
+    				continue;
+    			}
+    			if("UPDATE".equals(action) || ("DELETE".equals(action) && !"true".equals(ElementParameterParser.getValue(node, "__DELETE_IF_EXISTS__")))){
+    				List<Map<String,String>> ifCoditions = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__IF_CONDITION__");
+    				boolean matched = false;
+    				for(Map<String, String> ifCodition : ifCoditions){
+    					if(ifCodition.get("COLUMN_NAME").equals(column.getName())){
+    						conditions.add(column);
+    						matched = true;
+    						continue;
+    					}
+    				}
+    				if(matched){
+    					continue;
+    				}
+    			}
+    			normals.add(column);
+			}
+            if("UPDATE".equals(action)){
+                List<Map<String,String>> assignOperations = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ASSIGNMENT_OPERATION__");
+                List<Column> keyColumns = new ArrayList<Column>();
+                for(Column column : normals){
+                    for(Map<String, String> operation : assignOperations){
+                        String updateColumnKeyName = operation.get("KEY_COLUMN");
+                        String updateColumnOperation = operation.get("OPERATION");
+                        if("p/k".equals(updateColumnOperation) && column.getName().equals(updateColumnKeyName)){
+                            keyColumns.add(column);
+                        }
+                    }
+                }
+                normals.removeAll(keyColumns);
+                for(Column column : normals){
+                    for(Map<String, String> operation : assignOperations){
+                        String updateColumnName = operation.get("COLUMN_NAME");
+                        String updateColumnKeyName = operation.get("KEY_COLUMN");
+                        String updateColumnOperation = operation.get("OPERATION");
+                        if(updateColumnName.equals(column.getName())){
+                            column.setAssignmentOperation(updateColumnOperation);
+                            if("p/k".equals(updateColumnOperation)){
+                                for(Column keyColumn : keyColumns){
+                                    if(keyColumn.getName().equals(updateColumnKeyName)){
+                                        column.setAssignmentKey(keyColumn);
+                                    }
+                                }
+                            }
+                            continue;
+                        }
+                    }
+                }
+            }
+            if("DELETE".equals(action)){
+                List<Map<String,String>> columnsKey = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__DELETE_COLUMN_BY_POSITION_KEY__");
+                for(Column column : normals){
+                    for(Map<String, String> columnKey : columnsKey){
+                        if(column.getName().equals(columnKey.get("COLUMN_NAME"))){
+                            column.setAsColumnKey(true);
+                        }
+                    }
+                }
+            }
+        }
+        protected String getDBMSId(){
+            return CASSANDRA;
+        }
+        private boolean isKeyword (String keyword){
+            for(int i = 0; i < KeyWords.length; i++){
+                if(KeyWords[i].equalsIgnoreCase(keyword)){
+                    return true;
+                }
+            }
+            return false;
+        }
+        private String getLProtectedChar(String keyword){
+            if(isKeyword(keyword)){
+                return "\\\"";
+            }
+            return ""; 
+        }
+        private String getRProtectedChar(String keyword){
+            if(isKeyword(keyword)){
+                return "\\\"";
+            }
+            return "";
+        }  
+        private String wrapProtectedChar(String keyword){
+        	return getLProtectedChar(keyword) + keyword + getRProtectedChar(keyword);
+        }
+        public String getDropTableSQL(){
+            StringBuilder dropTableSQL = new StringBuilder();
+            dropTableSQL.append("\"DROP TABLE IF EXISTS \" + tableName_" + cid);
+            return dropTableSQL.toString();
+        }
+        public String getCreateTableSQL(){
+            StringBuilder createSQL = new StringBuilder();
+            createSQL.append("\"CREATE TABLE IF NOT EXISTS \" + tableName_" + cid + " + \"(");
+            List<Column> columns = new ArrayList<Column>();
+            if("INSERT".equals(action)){
+            	columns.addAll(keys);
+            	columns.addAll(normals);
+            }
+            int count = 1;
+            for(Column column : columns){
+                createSQL.append(wrapProtectedChar(column.getDBName()));
+                createSQL.append(" ");
+                createSQL.append(validateDBType(column));
+				if(count < columns.size()){
+                	createSQL.append(",");
+                }
+                count++;
+            }
+            if(keys.size() > 0){
+                createSQL.append(",PRIMARY KEY(");
+                int i = 1;
+                for(Column column : keys){
+                    createSQL.append(wrapProtectedChar(column.getDBName()));
+                    if(i < keys.size()){
+                        createSQL.append(",");
+                    }
+                    i++;
+                }
+                createSQL.append(")");
+            }
+            createSQL.append(")\"");
+            return createSQL.toString();
+        }
+        public boolean containsUnsupportTypes(){
+        	boolean unsupport = false;
+        	List<String> unsupportTypes = java.util.Arrays.asList(new String[]{"set", "list", "map"});
+        	List<Column> columns = new ArrayList<Column>();
+            if("INSERT".equals(action)){
+            	columns.addAll(keys);
+            	columns.addAll(normals);
+            }
+            for(Column column : columns){
+                if(unsupportTypes.contains(validateDBType(column))){
+                	return true;
+                }
+            }
+            return false;
+        }
+        public String getDeleteTableSQL(){
+            StringBuilder deleteTableSQL = new StringBuilder();
+            deleteTableSQL.append("\"DELETE FROM \" + tableName_" + cid);
+            return deleteTableSQL.toString();
+        }
+        public String getTruncateTableSQL(){
+            StringBuilder truncateTableSQL = new StringBuilder();
+            truncateTableSQL.append("\"TRUNCATE \" + tableName_" + cid);
+            return truncateTableSQL.toString();
+        }
+        public String generatePreActionSQL(){
+        	if("INSERT".equals(action)){
+        		return generatePreInsertSQL();
+        	}else if("UPDATE".equals(action)){
+        		return generatePreUpdateSQL();
+        	}else if("DELETE".equals(action)){
+        		return generatePreDeleteSQL();
+        	}else{
+        		return "";
+        	}
+        }
+        public String generateStmt(String inConnName){
+        	if("INSERT".equals(action)){
+        		return generateInsertStmt(inConnName);
+        	}else if("UPDATE".equals(action)){
+        		return generateUpdateStmt(inConnName);
+        	}else if("DELETE".equals(action)){
+        		return generateDeleteStmt(inConnName);
+        	}else{
+        		return "";
+        	}
+        }
+        /*INSERT INTO table_name
+		 *( identifier, column_name...)
+		 *VALUES ( value, value ... )
+		 *USING option AND option
+		 */
+        private String generatePreInsertSQL(){
+        	List<Column> columns = new ArrayList<Column>();
+        	columns.addAll(keys);
+        	columns.addAll(normals);
+        	
+        	int count = 1;
+        	StringBuilder preInsertSQL = new StringBuilder();
+        	preInsertSQL.append("\"INSERT INTO \" + tableName_" + cid + " + \" (");
+        	for(Column column : columns){
+                preInsertSQL.append(wrapProtectedChar(column.getDBName()));
+				if(count < columns.size()){
+                	preInsertSQL.append(",");
+                }
+                count++;
+            }
+            preInsertSQL.append(") VALUES (");
+            count = 1;
+        	for(Column column : columns){
+                preInsertSQL.append(column.getMark());
+				if(count < columns.size()){
+                	preInsertSQL.append(",");
+                }
+                count++;
+            }
+            preInsertSQL.append(")");
+            boolean ifNotExist = "true".equals(ElementParameterParser.getValue(node, "__INSERT_IF_NOT_EXISTS__"));
+            if(ifNotExist){
+            	preInsertSQL.append(" IF NOT EXISTS");
+            }
+            if(ttl != null || timestamp != null){
+            	preInsertSQL.append(" USING ");
+            	if(ttl != null){
+            		preInsertSQL.append(ttl.getMark());
+            		if(timestamp != null){
+            			preInsertSQL.append(" AND ");
+            		}
+            	}
+            	if(timestamp != null){
+            		preInsertSQL.append(timestamp.getMark());
+            	}
+            }
+            preInsertSQL.append("\"");
+            return preInsertSQL.toString();
+        }
+        private String generateInsertStmt(String inConnName){
+        	StringBuilder insertStmt = new StringBuilder();
+        	List<Column> columns = new ArrayList<Column>();
+        	columns.addAll(keys);
+        	columns.addAll(normals);
+        	if(ttl != null)
+        		columns.add(ttl);
+        	if(timestamp != null)
+        		columns.add(timestamp);
+        	int index = 0;
+        	for(Column column : columns){
+        		insertStmt.append(generateSetStmt(column, inConnName, index));
+        		index++;
+        	}
+        	return insertStmt.toString();
+        }
+        private String generatePreUpdateSQL(){
+        	StringBuilder preUpdateSQL = new StringBuilder();
+        	preUpdateSQL.append("\"UPDATE \" + tableName_" + cid + "+ \"");
+        	if(ttl != null || timestamp != null){
+            	preUpdateSQL.append(" USING ");
+            	if(ttl != null){
+            		preUpdateSQL.append(ttl.getMark());
+            		if(timestamp != null){
+            			preUpdateSQL.append(" AND ");
+            		}
+            	}
+            	if(timestamp != null){
+            		preUpdateSQL.append(timestamp.getMark());
+            	}
+            }
+            preUpdateSQL.append(" SET ");
+        	int count = 1;
+        	for(Column column : normals){
+                
+                String assignment = wrapProtectedChar(column.getDBName()) + "=" + column.getMark();
+                
+                if("+v".equals(column.getAssignmentOperation())){
+                    assignment = wrapProtectedChar(column.getDBName()) + "=" + wrapProtectedChar(column.getDBName()) + "+" + column.getMark();     
+                }else if("v+".equals(column.getAssignmentOperation())){
+                    assignment = wrapProtectedChar(column.getDBName()) + "=" + column.getMark() + "+" + wrapProtectedChar(column.getDBName());     
+                }else if("-".equals(column.getAssignmentOperation())){
+                    assignment = wrapProtectedChar(column.getDBName()) + "=" + wrapProtectedChar(column.getDBName()) + "-" + column.getMark();     
+                }else if("p/k".equals(column.getAssignmentOperation())){
+                    assignment = wrapProtectedChar(column.getDBName()) + "[?]=" + column.getMark(); 
+                }
+
+                preUpdateSQL.append(assignment);
+
+				if(count < normals.size()){
+                	preUpdateSQL.append(",");
+                }
+                count++;
+            }
+            preUpdateSQL.append(" WHERE ");
+            count = 1;
+        	for(Column column : keys){
+                preUpdateSQL.append(wrapProtectedChar(column.getDBName()));
+                preUpdateSQL.append(rowKeyInList(column) ? " IN " : "=");
+                preUpdateSQL.append(column.getMark());
+				if(count < keys.size()){
+                	preUpdateSQL.append(" AND ");
+                }
+                count++;
+            }
+            if(conditions.size() > 0){
+         	   	preUpdateSQL.append(" IF ");
+	            count = 1;
+	            for(Column column : conditions){
+	            	preUpdateSQL.append(wrapProtectedChar(column.getDBName()));
+	            	preUpdateSQL.append("=");
+                	preUpdateSQL.append(column.getMark());
+	            	if(count < conditions.size()){
+	                	preUpdateSQL.append(" AND ");
+	                }
+	                count++;	
+	            }
+            }
+	        // can't work actually, even it supported on office document
+            // boolean ifExist = "true".equals(ElementParameterParser.getValue(node, "__UPDATE_IF_EXISTS__"));
+            // if(ifExist){
+            // 	preUpdateSQL.append(" IF EXISTS");
+            // }
+            
+            preUpdateSQL.append("\"");
+            return preUpdateSQL.toString();
+
+        }
+        private boolean rowKeyInList(Column column){
+            List<Map<String,String>> rowKeyInList = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ROW_KEY_IN_LIST__");
+            for(Map<String, String> rowKey : rowKeyInList){
+                if(column.getName().equals(rowKey.get("COLUMN_NAME"))){
+                    return true;
+                }
+            }
+            return false;
+        }
+        private String generateUpdateStmt(String inConnName){
+        	StringBuilder updateStmt = new StringBuilder();
+        	List<Column> columns = new ArrayList<Column>();
+        	if(ttl != null)
+        		columns.add(ttl);
+        	if(timestamp != null)
+        		columns.add(timestamp);
+            for(Column normal : normals){
+                if(normal.getAssignmentKey() != null){
+                    columns.add(normal.getAssignmentKey());
+                }
+                columns.add(normal);
+            }
+        	columns.addAll(keys);
+        	columns.addAll(conditions);
+        	int index = 0;
+        	for(Column column : columns){
+        		updateStmt.append(generateSetStmt(column, inConnName, index));
+        		index++;
+        	}
+        	return updateStmt.toString();
+        }
+        private String generatePreDeleteSQL(){
+        	StringBuilder preDeleteSQL = new StringBuilder();
+        	preDeleteSQL.append("\"DELETE ");
+        	int count = 1;
+        	for(Column column : normals){
+                preDeleteSQL.append(wrapProtectedChar(column.getDBName()));
+                if(column.getAsColumnKey()){
+                    preDeleteSQL.append("[?]");
+                }
+				if(count < normals.size()){
+                	preDeleteSQL.append(",");
+                }
+                count++;
+            }
+            preDeleteSQL.append(" FROM \" + tableName_" + cid + " + \"");
+        	if(timestamp != null){
+            	preDeleteSQL.append(" USING ");
+        		preDeleteSQL.append(timestamp.getMark());
+            }
+            if(keys.size() > 0){
+                preDeleteSQL.append(" WHERE ");
+                count = 1;
+            	for(Column column : keys){
+            		preDeleteSQL.append(wrapProtectedChar(column.getDBName()));
+            		preDeleteSQL.append(rowKeyInList(column) ? " IN " : "=");
+                    preDeleteSQL.append(column.getMark());
+    				if(count < keys.size()){
+                    	preDeleteSQL.append(" AND ");
+                    }
+                    count++;
+                }
+            }
+            boolean ifExist = "true".equals(ElementParameterParser.getValue(node, "__DELETE_IF_EXISTS__"));
+            if(ifExist){
+            	preDeleteSQL.append(" IF EXISTS");
+            }else{
+	            if(conditions.size() > 0){
+	         	   	preDeleteSQL.append(" IF ");
+		            count = 1;
+		            for(Column column : conditions){
+		            	preDeleteSQL.append(wrapProtectedChar(column.getDBName()));
+		            	preDeleteSQL.append("=");
+	                	preDeleteSQL.append(column.getMark());
+		            	if(count < conditions.size()){
+		                	preDeleteSQL.append(" AND ");
+		                }
+		                count++;	
+		            }
+		        }
+		    }
+            preDeleteSQL.append("\"");
+            return preDeleteSQL.toString();
+        }
+        private String generateDeleteStmt(String inConnName){
+        	StringBuilder deleteStmt = new StringBuilder();
+        	List<Column> columns = new ArrayList<Column>();
+            for(Column column : normals){
+                if(column.getAsColumnKey()){
+                    columns.add(column);
+                }
+            }
+        	if(timestamp != null)
+        		columns.add(timestamp);
+        	columns.addAll(keys);
+        	boolean ifExist = "true".equals(ElementParameterParser.getValue(node, "__DELETE_IF_EXISTS__"));
+            if(!ifExist){
+	        	columns.addAll(conditions);
+	        }
+        	int index = 0;
+        	for(Column column : columns){
+        		deleteStmt.append(generateSetStmt(column, inConnName, index));
+        		index++;
+        	}
+        	return deleteStmt.toString();
+        }
+        private String validateDBType(Column column){
+        	String dbType = column.getDBType();
+        	if(dbType == null || "".equals(dbType.trim())){//TODO: throw error or use default value?
+        		MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetriever(getDBMSId());
+                dbType = mappingType.getDefaultSelectedDbType(column.getTalendType());
+            } 
+            return dbType;
+        }
+        private String generateSetStmt(Column column, String inConnName, int index){
+            String dbType = validateDBType(column);
+            String columnValue = inConnName + "." + column.getName();
+            String assignStmt = "boundStmt_" + cid;
+            StringBuilder setStmt = new StringBuilder();
+            if(column.isObject()){
+                setStmt.append("if(" + columnValue + " == null){\r\n");
+                setStmt.append(assignStmt + ".setToNull(" + index + ");\r\n");
+                setStmt.append("} else {");
+            }
+
+            if("ascii".equals(dbType) || "text".equals(dbType) || "varchar".equals(dbType)){
+                setStmt.append(assignStmt +".setString(" + index + ", " + columnValue + ");\r\n");
+            }else if("timeuuid".equals(dbType) || "uuid".equals(dbType)){
+                setStmt.append(assignStmt +".setUUID(" + index + ", java.util.UUID.fromString(" + columnValue + "));\r\n");
+            }else if("varint".equals(dbType)){
+                setStmt.append(assignStmt +".setVarint(" + index + ", (java.math.BigInteger)" + columnValue + ");\r\n");
+            }else if("inet".equals(dbType)){
+                setStmt.append(assignStmt +".setInet(" + index + ", (java.net.InetAddress)" + columnValue + ");\r\n");
+            }else if("map".equals(dbType)){
+                setStmt.append(assignStmt +".setMap(" + index + ", (java.util.Map)" + columnValue + ");\r\n");
+            }else if("set".equals(dbType)){
+                setStmt.append(assignStmt +".setSet(" + index + ", (java.util.Set)" + columnValue + ");\r\n");
+            }else if("list".equals(dbType)){
+                setStmt.append(assignStmt +".setList(" + index + ", " + columnValue + ");\r\n");
+            }else if("boolean".equals(dbType)){
+                setStmt.append(assignStmt +".setBool(" + index + ", " + columnValue + ");\r\n");
+            }else if("blob".equals(dbType)){
+                setStmt.append(assignStmt +".setBytes(" + index + ", java.nio.ByteBuffer.wrap(" + columnValue + "));\r\n");
+            }else if("timestamp".equals(dbType)){
+                setStmt.append(assignStmt +".setDate(" + index + ", " + columnValue + ");\r\n");
+            }else if("decimal".equals(dbType)){
+                setStmt.append(assignStmt +".setDecimal(" + index + ", " + columnValue + ");\r\n");
+            }else if("double".equals(dbType)){
+                setStmt.append(assignStmt +".setDouble(" + index + ", " + columnValue + ");\r\n");
+            }else if("float".equals(dbType)){
+                setStmt.append(assignStmt +".setFloat(" + index + ", " + columnValue + ");\r\n");
+            }else if("int".equals(dbType)){
+                setStmt.append(assignStmt +".setInt(" + index + ", " + columnValue + ");\r\n");
+            }else if("bigint".equals(dbType) || "count".equals(dbType)){
+                setStmt.append(assignStmt +".setLong(" + index + ", " + columnValue + ");\r\n");
+            }
+
+            if(column.isObject()){
+                setStmt.append("}\r\n");
+            }
+            return setStmt.toString();
+        }
+    }
+    %>

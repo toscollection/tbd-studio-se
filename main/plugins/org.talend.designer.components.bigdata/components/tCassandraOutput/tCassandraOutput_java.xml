@@ -38,7 +38,8 @@
             NUM_ROW="2"
             SHOW="false"
         >
-            <DEFAULT>cassandra_id</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">cassandra_id</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">cassandra_datastax_id</DEFAULT>
         </PARAMETER>
 		<PARAMETER
 			NAME="USE_EXISTING_CONNECTION"
@@ -66,6 +67,25 @@
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
             </ITEMS>
         </PARAMETER>
+        <PARAMETER
+            NAME="API_TYPE"
+            FIELD="CLOSED_LIST"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')"
+            NUM_ROW="4">
+            <ITEMS DEFAULT="HECTOR">
+                <ITEM NAME="HECTOR" VALUE="HECTOR"/>
+                <ITEM NAME="DATASTAX" VALUE="DATASTAX"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="API_SELECTED"
+            FIELD="TEXT"
+            NUM_ROW="4"
+            SHOW="false"
+        >
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">hector</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">datastax</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			FIELD="TEXT"
 			NAME="HOST"
@@ -84,18 +104,9 @@
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
-			<DEFAULT>"9160"</DEFAULT>
+			<DEFAULT IF="API_SELECTED == 'hector'">"9160"</DEFAULT>
+            <DEFAULT IF="API_SELECTED == 'datastax'">"9042"</DEFAULT>
 		</PARAMETER>
-		<!--
-		<PARAMETER
-			FIELD="TEXT"
-			NAME="CLUSTER"
-			NUM_ROW="6"
-			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
-		-->
 		<PARAMETER
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
@@ -125,12 +136,14 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+        <!--parameter only for hector-->
 		<PARAMETER
 			FIELD="TEXT"
 			NAME="KEY_SPACE"
 			REPOSITORY_VALUE="KEY_SPACE"
 			REQUIRED="true"
 			NUM_ROW="13"
+            SHOW_IF="API_SELECTED == 'hector'"
 			GROUP="KEYSPACE_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
@@ -139,6 +152,7 @@
 			NAME="ACTION_ON_KEYSPACE"
 	     	FIELD="CLOSED_LIST"
 	      	NUM_ROW="13"
+            SHOW_IF="API_SELECTED == 'hector'"
 	      	GROUP="KEYSPACE_CONFIGURATION"
     	>
 		   	<ITEMS DEFAULT="NONE">
@@ -154,6 +168,7 @@
 			NAME="COLUMN_FAMILY"
 			REQUIRED="true"
 			NUM_ROW="15"
+            SHOW_IF="API_SELECTED == 'hector'"
 			GROUP="COLUMN_FAMILY_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
@@ -162,6 +177,7 @@
             NAME="COLUMN_FAMILY_TYPE"
             FIELD="CLOSED_LIST"
             NUM_ROW="15"
+            SHOW_IF="API_SELECTED == 'hector'"
             GROUP="COLUMN_FAMILY_CONFIGURATION"
         >
             <ITEMS DEFAULT="STANDARD">
@@ -173,6 +189,7 @@
 			NAME="ACTION_ON_COLUMN_FAMILY"
 	     	FIELD="CLOSED_LIST"
 	      	NUM_ROW="16"
+            SHOW_IF="API_SELECTED == 'hector'"
 	      	GROUP="COLUMN_FAMILY_CONFIGURATION"
     	>
 		   	<ITEMS DEFAULT="NONE">
@@ -188,7 +205,7 @@
 			FIELD="CHECK"
 			NUM_ROW="17"
 			GROUP="COLUMN_FAMILY_CONFIGURATION"
-			SHOW_IF="(ACTION_ON_COLUMN_FAMILY != 'NONE')"
+			SHOW_IF="(ACTION_ON_COLUMN_FAMILY != 'NONE') AND (API_SELECTED == 'hector')"
 		>
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
@@ -198,7 +215,7 @@
             REQUIRED="true"
             NUM_ROW="18"
             GROUP="COLUMN_FAMILY_CONFIGURATION"
-            SHOW_IF="(DEFINE_CF_STRUCTS == 'true') AND (ACTION_ON_COLUMN_FAMILY != 'NONE')"
+            SHOW_IF="(DEFINE_CF_STRUCTS == 'true') AND (ACTION_ON_COLUMN_FAMILY != 'NONE') AND (API_SELECTED == 'hector')"
         >
             <ITEMS DEFAULT="ASCIITYPE">
 				<ITEM NAME="ASCIITYPE" VALUE="AsciiType"/>
@@ -213,28 +230,24 @@
 			NAME="ACTION_ON_DATA"
 	     	FIELD="CLOSED_LIST"
 	      	NUM_ROW="19"
+            SHOW_IF="API_SELECTED == 'hector'"
     	>
 		   	<ITEMS DEFAULT="UPSERT">
 		        <ITEM NAME="DELETE" VALUE="DELETE"/>
 		        <ITEM NAME="UPSERT" VALUE="UPSERT"/>
 		    </ITEMS>
     	</PARAMETER>
-    	<PARAMETER
-			NAME="SCHEMA_FLOW"
-			FIELD="SCHEMA_TYPE"
-			NUM_ROW="19"
-		>
-			<DEFAULT>""</DEFAULT>
-		</PARAMETER>
 		<PARAMETER
 			FIELD="COLUMN_LIST"
 			NAME="KEY_COLUMN"
 			NUM_ROW="20"
+            SHOW_IF="API_SELECTED == 'hector'"
 		/>
 		<PARAMETER
 			FIELD="CHECK"
 			NAME="INC_KEY"
 			NUM_ROW="20"
+            SHOW_IF="API_SELECTED == 'hector'"
 		>
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
@@ -242,13 +255,13 @@
             FIELD="COLUMN_LIST"
             NAME="SUPER_KEY_COLUMN"
             NUM_ROW="22"
-            SHOW_IF="COLUMN_FAMILY_TYPE=='SUPER'"
+            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (API_SELECTED == 'hector')"
         />
         <PARAMETER
             FIELD="CHECK"
             NAME="INC_SUPER_KEY"
             NUM_ROW="22"
-            SHOW_IF="COLUMN_FAMILY_TYPE=='SUPER'"
+            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (API_SELECTED == 'hector')"
         >
             <DEFAULT>true</DEFAULT>
         </PARAMETER>
@@ -256,7 +269,7 @@
             NAME="DELETE_ROW"
             FIELD="CHECK"
             NUM_ROW="30"
-            SHOW_IF="(ACTION_ON_DATA=='DELETE')"
+            SHOW_IF="(ACTION_ON_DATA == 'DELETE') AND (API_SELECTED == 'hector')"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -264,7 +277,7 @@
             NAME="DELETE_SUPER_COLUMN"
             FIELD="CHECK"
             NUM_ROW="30"
-            SHOW_IF="((COLUMN_FAMILY_TYPE=='SUPER') AND ACTION_ON_DATA=='DELETE') AND (DELETE_ROW=='true')"
+            SHOW_IF="((COLUMN_FAMILY_TYPE == 'SUPER') AND ACTION_ON_DATA == 'DELETE') AND (DELETE_ROW == 'true') AND (API_SELECTED == 'hector')"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -274,180 +287,330 @@
             REQUIRED="false"
             NUM_ROW="30"
             NB_LINES="5"
-            SHOW_IF="(ACTION_ON_DATA=='DELETE') AND (DELETE_ROW=='false') "
+            SHOW_IF="(ACTION_ON_DATA == 'DELETE') AND (DELETE_ROW == 'false') AND (API_SELECTED == 'hector')"
         >
             <ITEMS>
                 <ITEM NAME="DELETE_COLUMN" FIELD="COLUMN_LIST" />
             </ITEMS>
         </PARAMETER>
+        <!--parameter only for datastax-->
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="TABLE"
+            REQUIRED="true"
+            NUM_ROW="15"
+            SHOW_IF="API_SELECTED == 'datastax'"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="TABLE_ACTION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="15"
+            SHOW_IF="(API_SELECTED == 'datastax') AND (DATA_ACTION == 'INSERT')"
+        >
+            <ITEMS DEFAULT="NONE">
+                <ITEM NAME="NONE" VALUE="NONE" />
+                <ITEM NAME="CREATE_IF_NOT_EXISTS" VALUE="CREATE_IF_NOT_EXISTS"/>
+                <ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE" />
+                <!--ITEM NAME="CLEAR" VALUE="CLEAR"/-->
+                <ITEM NAME="TRUNCATE" VALUE="TRUNCATE"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DATA_ACTION"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="16"
+            SHOW_IF="API_SELECTED == 'datastax'"
+        >
+            <ITEMS DEFAULT="INSERT">
+                <ITEM NAME="INSERT" VALUE="INSERT" />
+                <ITEM NAME="UPDATE" VALUE="UPDATE"/>
+                <ITEM NAME="DELETE" VALUE="DELETE"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="SCHEMA_FLOW"
+            FIELD="SCHEMA_TYPE"
+            NUM_ROW="19"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			NAME="DIE_ON_ERROR"
 			FIELD="CHECK"
 			NUM_ROW="90"
+            NOT_SHOW_IF="(isShow[USE_UNLOGGED_BATCH]) AND (USE_UNLOGGED_BATCH == 'true')"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 	</PARAMETERS>
 	<ADVANCED_PARAMETERS>
-		<PARAMETER FIELD="TEXT" NAME="BATCH_SIZE" REQUIRED="true" NUM_ROW="1">
+        <PARAMETER
+            NAME="USE_UNLOGGED_BATCH"
+            FIELD="CHECK"
+            NUM_ROW="1"
+            SHOW_IF="(API_SELECTED == 'datastax')"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+		<PARAMETER FIELD="TEXT" NAME="BATCH_SIZE" REQUIRED="true" NUM_ROW="1" SHOW_IF="(API_SELECTED == 'hector') OR ((isShow[USE_UNLOGGED_BATCH]) AND (USE_UNLOGGED_BATCH == 'true'))">
 			<DEFAULT>10000</DEFAULT>
 		</PARAMETER>
+        <PARAMETER
+            NAME="INSERT_IF_NOT_EXISTS"
+            FIELD="CHECK"
+            NUM_ROW="10"
+            SHOW_IF="(API_SELECTED == 'datastax') AND (DATA_ACTION == 'INSERT')"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DELETE_IF_EXISTS"
+            FIELD="CHECK"
+            NUM_ROW="10"
+            SHOW_IF="(API_SELECTED == 'datastax') AND (DATA_ACTION == 'DELETE')"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="USING_TTL"
+            FIELD="CHECK"
+            NUM_ROW="15"
+            SHOW_IF="(API_SELECTED == 'datastax') AND ((DATA_ACTION == 'INSERT') OR (DATA_ACTION == 'UPDATE'))"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER
+            NAME="TTL"
+            FIELD="COLUMN_LIST"
+            NUM_ROW="15"
+            SHOW_IF="(isShow[USING_TTL]) AND (USING_TTL == 'true')"
+        />
+
+        <PARAMETER
+            NAME="USING_TIMESTAMP"
+            FIELD="CHECK"
+            NUM_ROW="15"
+            SHOW_IF="(API_SELECTED == 'datastax')"
+        >
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER
+            NAME="TIMESTAMP"
+            FIELD="COLUMN_LIST"
+            NUM_ROW="15"
+            SHOW_IF="(isShow[USING_TIMESTAMP]) AND (USING_TIMESTAMP == 'true')"
+        />
+        <PARAMETER
+            NAME="IF_CONDITION"
+            FIELD="TABLE"
+            REQUIRED="false"
+            NUM_ROW="20"
+            NB_LINES="5"
+            SHOW_IF="(API_SELECTED == 'datastax') AND ((DATA_ACTION == 'UPDATE') OR ((DATA_ACTION == 'DELETE') AND (DELETE_IF_EXISTS == 'false')))"
+        >
+            <ITEMS>
+                <ITEM NAME="COLUMN_NAME" FIELD="COLUMN_LIST" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="ASSIGNMENT_OPERATION"
+            FIELD="TABLE"
+            REQUIRED="false"
+            NUM_ROW="25"
+            NB_LINES="5"
+            SHOW_IF="(API_SELECTED == 'datastax') AND (DATA_ACTION == 'UPDATE')"
+        >
+            <ITEMS>
+                <ITEM NAME="COLUMN_NAME" FIELD="COLUMN_LIST" />
+                <ITEM NAME="OPERATION" FIELD="CLOSED_LIST">
+                    <ITEMS DEFAULT="+v">
+                        <ITEM NAME="+v" VALUE="+v" /><!--append-->
+                        <ITEM NAME="v+" VALUE="v+" /><!--prepend-->
+                        <ITEM NAME="-" VALUE="-" />
+                        <ITEM NAME="p/k" VALUE="p/k" /><!--select one column as position/key-->
+                    </ITEMS>
+                </ITEM>
+                <ITEM NAME="KEY_COLUMN" FIELD="COLUMN_LIST" NOT_READONLY_IF="ASSIGNMENT_OPERATION.OPERATION == 'p/k'"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="DELETE_COLUMN_BY_POSITION_KEY"
+            FIELD="TABLE"
+            REQUIRED="false"
+            NUM_ROW="30"
+            NB_LINES="5"
+            SHOW_IF="(API_SELECTED == 'datastax') AND (DATA_ACTION == 'DELETE')"
+        >
+            <ITEMS>
+                <ITEM NAME="COLUMN_NAME" FIELD="COLUMN_LIST" />
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
+            NAME="ROW_KEY_IN_LIST"
+            FIELD="TABLE"
+            REQUIRED="false"
+            NUM_ROW="35"
+            NB_LINES="5"
+            SHOW_IF="(API_SELECTED == 'datastax') AND ((DATA_ACTION == 'UPDATE') OR (DATA_ACTION == 'DELETE'))"
+        >
+            <ITEMS>
+                <ITEM NAME="COLUMN_NAME" FIELD="COLUMN_LIST" />
+            </ITEMS>
+        </PARAMETER>
 	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
-		<IMPORTS>
-            <!-- Cassandra 1.1.2 -->
-            <IMPORT
-                MODULE="hector-core-1.1-4.jar"
-                NAME="hector-core-1.1-4"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="apache-cassandra-1.1.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.1.2.jar"
-                NAME="apache-cassandra-1.1.2"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="apache-cassandra-thrift-1.1.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar"
-                NAME="apache-cassandra-thrift-1.1.2"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="slf4j-api-1.6.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"
-                NAME="slf4j-api-1.6.1"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="slf4j-log4j12-1.6.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"
-                NAME="slf4j-log4j12-1.6.1"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="log4j-1.2.16.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
-                NAME="log4j-1.2.16"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="libthrift-0.7.0.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
-                NAME="libthrift-0.7.0"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="guava-12.0.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-12.0.1.jar"
-                NAME="guava-12.0.1"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-            <IMPORT
-                MODULE="commons-lang-2.6.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
-                NAME="commons-lang-2.6"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_1_2')" />
-
-            <!-- Cassandra 1.2.2 -->
-            <IMPORT
-                MODULE="hector-core-1.1-4.jar"
-                NAME="hector-core-1.1-4"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="apache-cassandra-1.2.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.2.2.jar"
-                NAME="apache-cassandra-1.2.2"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="apache-cassandra-thrift-1.2.2.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.2.2.jar"
-                NAME="apache-cassandra-thrift-1.2.2"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="slf4j-api-1.7.2.jar"
-                NAME="slf4j-api-1.7.2"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="slf4j-log4j12-1.7.2.jar"
-                NAME="slf4j-log4j12-1.7.2"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="log4j-1.2.16.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
-                NAME="log4j-1.2.16"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="libthrift-0.7.0.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
-                NAME="libthrift-0.7.0"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="guava-13.0.1.jar"
-                NAME="guava-13.0.1"
-                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-            <IMPORT
-                MODULE="commons-lang-2.6.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
-                NAME="commons-lang-2.6"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_1_2_2')" />
-
-             <!-- Cassandra 2.1.X with latest == 2.0.8 / 2.1 -->
-             <IMPORT
-                MODULE="hector-core-2.0-0.jar"
-                NAME="hector-core-2.0-0"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-2.0-0.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                MODULE="cassandra-thrift-2.0.4.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.0.4.jar"
-                NAME="cassandra-thrift-2.0.4"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                MODULE="slf4j-api-1.7.5.jar"
-                NAME="slf4j-api-1.7.5"
-                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                MODULE="slf4j-log4j12-1.7.5.jar"
-                NAME="slf4j-log4j12-1.7.5"
-                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                MODULE="log4j-1.2.16.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
-                NAME="log4j-1.2.16"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                NAME="libthrift-0.9.1"
-                MODULE="libthrift-0.9.1.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                MODULE="guava-14.0.jar"
-                NAME="guava-14.0"
-                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-            <IMPORT
-                MODULE="commons-lang-2.6.jar"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
-                NAME="commons-lang-2.6"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0'))" />
-
-            <!-- Imported for all versions -->
-            <IMPORT
-                MODULE="uuid-3.4.jar"
-                NAME="uuid-3.4"
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
-            <IMPORT
-                NAME="jackson-core-asl-1.9.7"
-                MODULE="jackson-core-asl-1.9.7.jar"
-                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-core-asl-1.9.7.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
-            <IMPORT
-                NAME="jackson-mapper-asl-1.9.7"
-                MODULE="jackson-mapper-asl-1.9.7.jar"
-                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-mapper-asl-1.9.7.jar"
-                REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
-    
-		</IMPORTS>
+        <IMPORTS>
+            <IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
+        		<IMPORTS REQUIRED_IF="((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))">
+                    <!-- Cassandra 1.1.2 -->
+                    <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_1_1_2')">
+                        <IMPORT
+                            MODULE="hector-core-1.1-4.jar"
+                            NAME="hector-core-1.1-4"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"/>
+                        <IMPORT
+                            MODULE="apache-cassandra-1.1.2.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.1.2.jar"
+                            NAME="apache-cassandra-1.1.2"/>
+                        <IMPORT
+                            MODULE="apache-cassandra-thrift-1.1.2.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar"
+                            NAME="apache-cassandra-thrift-1.1.2"/>
+                        <IMPORT
+                            MODULE="slf4j-api-1.6.1.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"
+                            NAME="slf4j-api-1.6.1"/>
+                        <IMPORT
+                            MODULE="slf4j-log4j12-1.6.1.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"
+                            NAME="slf4j-log4j12-1.6.1"/>
+                        <IMPORT
+                            MODULE="log4j-1.2.16.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
+                            NAME="log4j-1.2.16"/>
+                        <IMPORT
+                            MODULE="libthrift-0.7.0.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                            NAME="libthrift-0.7.0"/>
+                        <IMPORT
+                            MODULE="guava-12.0.1.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-12.0.1.jar"
+                            NAME="guava-12.0.1"/>
+                        <IMPORT
+                            MODULE="commons-lang-2.6.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+                            NAME="commons-lang-2.6"/>
+                    </IMPORTS>
+                    <!-- Cassandra 1.2.2 -->
+                    <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_1_2_2')">
+                        <IMPORT
+                            MODULE="hector-core-1.1-4.jar"
+                            NAME="hector-core-1.1-4"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"/>
+                        <IMPORT
+                            MODULE="apache-cassandra-1.2.2.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.2.2.jar"
+                            NAME="apache-cassandra-1.2.2"/>
+                        <IMPORT
+                            MODULE="apache-cassandra-thrift-1.2.2.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.2.2.jar"
+                            NAME="apache-cassandra-thrift-1.2.2"/>
+                        <IMPORT
+                            MODULE="slf4j-api-1.7.2.jar"
+                            NAME="slf4j-api-1.7.2"/>
+                        <IMPORT
+                            MODULE="slf4j-log4j12-1.7.2.jar"
+                            NAME="slf4j-log4j12-1.7.2"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"/>
+                        <IMPORT
+                            MODULE="log4j-1.2.16.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
+                            NAME="log4j-1.2.16"/>
+                        <IMPORT
+                            MODULE="libthrift-0.7.0.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                            NAME="libthrift-0.7.0"/>
+                        <IMPORT
+                            MODULE="guava-13.0.1.jar"
+                            NAME="guava-13.0.1"
+                            UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"/>
+                        <IMPORT
+                            MODULE="commons-lang-2.6.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+                            NAME="commons-lang-2.6"/>
+                    </IMPORTS>
+                    <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
+                        <!-- Cassandra 2.1.x with latest = 2.0.8 / 2.1 -->
+                        <IMPORT
+                            MODULE="hector-core-2.0-0.jar"
+                            NAME="hector-core-2.0-0"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-2.0-0.jar"/>
+                        <IMPORT
+                            MODULE="cassandra-thrift-2.0.4.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.0.4.jar"
+                            NAME="cassandra-thrift-2.0.4"/>
+                        <IMPORT
+                            MODULE="slf4j-api-1.7.5.jar"
+                            NAME="slf4j-api-1.7.5"
+                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"/>
+                        <IMPORT
+                            MODULE="slf4j-log4j12-1.7.5.jar"
+                            NAME="slf4j-log4j12-1.7.5"
+                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>
+                        <IMPORT
+                            MODULE="log4j-1.2.16.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
+                            NAME="log4j-1.2.16"/>
+                        <IMPORT
+                            NAME="libthrift-0.9.1"
+                            MODULE="libthrift-0.9.1.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"/>
+                        <IMPORT
+                            MODULE="guava-14.0.jar"
+                            NAME="guava-14.0"
+                            UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.jar"/>
+                        <IMPORT
+                            MODULE="commons-lang-2.6.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
+                            NAME="commons-lang-2.6"/>
+                    </IMPORTS>
+                    
+                    <!-- Imported for all versions -->
+                    <IMPORT
+                        MODULE="uuid-3.4.jar"
+                        NAME="uuid-3.4"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"/>
+                    <IMPORT
+                        NAME="jackson-core-asl-1.9.7"
+                        MODULE="jackson-core-asl-1.9.7.jar"
+                        UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-core-asl-1.9.7.jar"/>
+                    <IMPORT
+                        NAME="jackson-mapper-asl-1.9.7"
+                        MODULE="jackson-mapper-asl-1.9.7.jar"
+                        UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-mapper-asl-1.9.7.jar"/>
+                </IMPORTS>
+                <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))">
+                    <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
+                        <IMPORT
+                            MODULE="cassandra-driver-core-2.1.4.jar"
+                            NAME="cassandra-driver-core-2.1.4.jar"/>
+                        <IMPORT
+                            MODULE="slf4j-api-1.7.5.jar"
+                            NAME="slf4j-api-1.7.5.jar"/>    
+                        <IMPORT
+                            MODULE="guava-14.0.1.jar"
+                            NAME="guava-14.0.1.jar"/>
+                        <IMPORT
+                            MODULE="metrics-core-3.0.2.jar"
+                            NAME="metrics-core-3.0.2.jar"/>    
+                    </IMPORTS>
+                </IMPORTS>
+            </IMPORTS>
+        </IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
 		<RETURN AVAILABILITY="AFTER" NAME="NB_LINE" TYPE="id_Integer" />

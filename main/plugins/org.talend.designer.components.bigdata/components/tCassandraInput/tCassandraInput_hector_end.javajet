@@ -1,0 +1,26 @@
+<%@ jet %>
+    <%
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
+	%>
+	    }
+	<%
+	if("SUPER".equals(columnFamilyType)){
+	%>
+		}
+	<%
+	}
+	if (!useExistingConnection){
+	%>
+		}finally{
+			if(cluster_<%=cid%>!=null){
+				cluster_<%=cid%>.getConnectionManager().shutdown();
+			}
+		}
+	<%
+	}
+	%>
+	globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
+	<%
+	log4jFileUtil.retrievedDataNumberInfo(node);
+	%>

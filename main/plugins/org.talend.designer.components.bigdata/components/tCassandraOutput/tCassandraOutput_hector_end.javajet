@@ -1,0 +1,41 @@
+<%@ jet %>
+    <%
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    
+   	String dataAction = ElementParameterParser.getValue(node,"__ACTION_ON_DATA__");
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	%>
+	if (batchCounter_<%=cid%> != 0) {
+		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - Executing the batch.");
+		<%
+		}
+		%>
+		mutator_<%=cid%>.execute();
+		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - Executed the batch successfully.");
+		<%
+		}
+		%>
+	}
+	<%
+	if(isLog4jEnabled){
+	%>
+		log.info("<%=cid%> - Has been <%=dataAction.toLowerCase()+(dataAction.endsWith("E")?"d":"ed")%> " + nb_line_<%=cid%> + " records.");
+	<%
+	}
+	if (!useExistingConnection){
+	%>
+		if(cluster_<%=cid%>!=null){
+			cluster_<%=cid%>.getConnectionManager().shutdown();
+		}
+		resourceMap.put("finish_<%=cid%>", true); 
+	<%
+	}
+	%>
+	globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
+	

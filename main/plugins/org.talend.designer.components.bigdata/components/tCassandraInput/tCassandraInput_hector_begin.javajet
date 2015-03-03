@@ -1,0 +1,460 @@
+<%@ jet %>
+	<% 
+	class ColumnComparator implements java.util.Comparator<IMetadataColumn> {
+
+		private Boolean incKey = null;
+		private String keyColumn = null;
+
+		public ColumnComparator(Boolean incKey, String keyColumn) {
+			this.incKey = incKey;
+			this.keyColumn = keyColumn;
+		}
+
+		public final int compare(IMetadataColumn a, IMetadataColumn b) {
+			if(incKey) {
+				if(a.getLabel().equals(keyColumn)) {
+					return -1;
+				}
+				if(b.getLabel().equals(keyColumn)) {
+					return 1;
+				}
+			}// */
+			return a.getLabel().toLowerCase().compareTo(b.getLabel().toLowerCase());
+		}
+
+	}
+	String host = ElementParameterParser.getValue(node,"__HOST__");
+    String port = ElementParameterParser.getValue(node,"__PORT__");
+    //String cluster= ElementParameterParser.getValue(node, "__CLUSTER__");
+    String userName = ElementParameterParser.getValue(node, "__USERNAME__");
+    String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
+	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+	String dbVersion = ElementParameterParser.getValue(node,"__DB_VERSION__");
+	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+    String keyColumn = ElementParameterParser.getValue(node,"__KEY_COLUMN__");
+    boolean incKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_KEY__"));
+    String superKeyColumn = ElementParameterParser.getValue(node,"__SUPER_KEY_COLUMN__");
+    boolean incSuperKey = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__INC_SUPER_KEY__"));
+    String rowKeys=ElementParameterParser.getValue(node,"__ROW_KEYS__");
+    String searchColumns=ElementParameterParser.getValue(node,"__COLUMNS__");
+ 	String keyStart = ElementParameterParser.getValue(node,"__KEY_START__");
+ 	String keyEnd = ElementParameterParser.getValue(node,"__KEY_END__");
+ 	String keyLimit= ElementParameterParser.getValue(node,"__KEY_LIMIT__");
+ 	String columnStart = ElementParameterParser.getValue(node,"__COLUMN_START__");
+ 	String columnEnd = ElementParameterParser.getValue(node,"__COLUMN_END__");
+ 	String columnLimit = ElementParameterParser.getValue(node,"__COLUMN_LIMIT__");
+ 	
+ 	boolean isSpecifyKeys = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__SPECIFY_KEYS__"));
+ 	boolean isSpecifyColumns = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__SPECIFY_COLUMNS__"));
+ 	
+ 	String columnFamilyType = ElementParameterParser.getValue(node,"__COLUMN_FAMILY_TYPE__");
+ 	String rowKeyType = ElementParameterParser.getValue(node,"__ROW_KEY_TYPE__");
+ 	String sNameType = ElementParameterParser.getValue(node,"__SUPER_COLUMN_TYPE__");
+ 	String rowKeyCType = ElementParameterParser.getValue(node,"__ROW_KEY_C_TYPE__");
+ 	String sNameCType = ElementParameterParser.getValue(node,"__SUPER_COLUMN_C_TYPE__");
+    
+    List<IMetadataTable> metadatas = node.getMetadataList();
+  	List<IMetadataColumn> columnList = null;
+  	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
+  	String firstConnName = "";
+	
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+
+    if (useExistingConnection) {
+    	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connection)) {
+                dbVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__");
+                break;
+            }
+        }
+    }
+    %>
+	int nb_line_<%=cid %> = 0;
+	<%
+  	if(metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	columnList = metadata.getListColumns();
+      	java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
+		int sizeColumns = columnList.size();
+      	if(metadata != null){
+      		
+      		class TypeMap{
+      			Map<String,String> typeMap=new java.util.HashMap<String,String>();
+      			
+      			public TypeMap(){
+					typeMap.put("Boolean","BooleanSerializer");
+					typeMap.put("byte[]","BytesArraySerializer");
+					typeMap.put("java.util.Date","DateSerializer");
+					typeMap.put("Double","DoubleSerializer");
+					typeMap.put("Float","FloatSerializer");
+					typeMap.put("Integer","IntegerSerializer");
+					typeMap.put("Long","LongSerializer");
+					typeMap.put("Object","ObjectSerializer");
+					typeMap.put("Short","ShortSerializer");
+					typeMap.put("String","StringSerializer");
+					typeMap.put("Character","CharSerializer");
+					typeMap.put("BigDecimal","BigDecimalSerializer");
+					typeMap.put("java.util.UUID", "UUIDSerializer");
+      			}
+
+      			public String get(String tType, String cType){
+      				if("".equals(cType) || "Default".equals(cType)){
+      					return typeMap.get(tType);
+      				}else if("CounterColumnType".equals(cType)){
+      					return "LongSerializer";
+      				}else if("IntegerType".equals(cType)){
+      					return "BigIntegerSerializer";
+      				}else if("AsciiType".equals(cType)){
+      					return "AsciiSerializer";
+      				}else if("UUIDType".equals(cType)){
+      					return "UUIDSerializer";
+      				}else if("TimeUUIDType".equals(cType)){
+      					return "TimeUUIDSerializer";
+      				}else{
+      					return typeMap.get(tType) == null ? "ObjectSerializer" : typeMap.get(tType);
+      				}
+      			}
+      		}
+     		TypeMap typeMap = new TypeMap();
+			%>
+			me.prettyprint.hector.api.Serializer keySerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(rowKeyType, rowKeyCType)%>.get();
+			<%
+			if("SUPER".equals(columnFamilyType)){
+			%>
+				me.prettyprint.hector.api.Serializer sNameSerializer_<%=cid%> =me.prettyprint.cassandra.serializers.<%=typeMap.get(sNameType, sNameCType)%>.get();
+			<%
+			}
+			%>
+			me.prettyprint.hector.api.Cluster cluster_<%=cid%> =null;
+			me.prettyprint.hector.api.Keyspace keyspace_<%=cid%> =null;
+			<%
+			if(useExistingConnection){
+                String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+				%>
+				cluster_<%=cid%>=(me.prettyprint.hector.api.Cluster)globalMap.get("cluster_<%=connection%>");
+				<%
+				if(isLog4jEnabled){
+				%>	
+					log.info("<%=cid%> - Get an existing cluster instance from " + "<%=connection%>" + ".");
+				<%
+				}
+			}else{
+			%>
+				try{
+			    	String hostIps_<%=cid%>=<%=host%>+":"+<%=port%>;
+				    me.prettyprint.cassandra.service.CassandraHostConfigurator hosts_<%=cid%> = new me.prettyprint.cassandra.service.CassandraHostConfigurator(hostIps_<%=cid%>);
+				    java.util.Map<String, String> credentials_<%=cid%> = new java.util.HashMap<String, String>();
+					<%
+					if (authentication){
+					%>
+					    credentials_<%=cid%>.put("username",<%=userName%>);
+					    
+                        <%
+                        String passwordFieldName = "__PASSWORD__";
+                        %>
+                        
+                        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>					    
+					    
+					    credentials_<%=cid%>.put("password",decryptedPassword_<%=cid%>);
+					<%
+					}
+					%>
+	   	 			cluster_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.getOrCreateCluster("cluster_<%=cid%>_"+pid,hosts_<%=cid%>,credentials_<%=cid%>);
+			<%
+			}
+			log4jFileUtil.startRetriveDataInfo();
+			%>
+			me.prettyprint.cassandra.model.ConfigurableConsistencyLevel clpolicy_<%=cid%> = new me.prettyprint.cassandra.model.ConfigurableConsistencyLevel();
+			me.prettyprint.hector.api.HConsistencyLevel consistencyLevel_<%=cid%> = me.prettyprint.hector.api.HConsistencyLevel.ONE;
+			clpolicy_<%=cid%>.setDefaultWriteConsistencyLevel(consistencyLevel_<%=cid%>);
+		    keyspace_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createKeyspace(<%=keySpace%>, cluster_<%=cid%>,clpolicy_<%=cid%>);
+		    
+		    me.prettyprint.cassandra.serializers.StringSerializer serializer_<%=cid%> = me.prettyprint.cassandra.serializers.StringSerializer.get();
+			<%
+			if("STANDARD".equals(columnFamilyType)){
+				StringBuilder columns=new StringBuilder();
+		        boolean isfirstColumn=true;
+				for(int i = 0; i < sizeColumns; i++){
+					IMetadataColumn column = columnList.get(i);
+		        	if(!isfirstColumn){
+		        		columns.append(",");
+		        	}else{
+		        		isfirstColumn=false;
+		        	}
+					columns.append("\""+column.getOriginalDbColumnName()+"\"");
+	            }
+				if(isSpecifyKeys){
+				%>
+					me.prettyprint.hector.api.query.MultigetSliceQuery<<%=rowKeyType%>, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSliceQuery(
+						keyspace_<%=cid%> , keySerializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
+				<%
+				}else{
+				%>
+					me.prettyprint.hector.api.query.RangeSlicesQuery<<%=rowKeyType%>, String, String> sliceQuery_<%=cid%> =
+						me.prettyprint.hector.api.factory.HFactory.createRangeSlicesQuery(keyspace_<%=cid%> , keySerializer_<%=cid%>,serializer_<%=cid%>, serializer_<%=cid%>);
+				<%
+				}
+				%>
+				sliceQuery_<%=cid%>.setColumnNames(<%=columns.toString()%>);
+			<%
+			}else{
+				if(isSpecifyKeys){
+				%>
+					me.prettyprint.hector.api.query.MultigetSuperSliceQuery<<%=rowKeyType%>, <%=sNameType%>, String, String> sliceQuery_<%=cid%> = me.prettyprint.hector.api.factory.HFactory.createMultigetSuperSliceQuery(
+						keyspace_<%=cid%> , keySerializer_<%=cid%>,sNameSerializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);
+				<%
+				}else{
+				%>
+					me.prettyprint.hector.api.query.RangeSuperSlicesQuery<<%=rowKeyType%>, <%=sNameType%>, String, String> sliceQuery_<%=cid%> = 
+						me.prettyprint.hector.api.factory.HFactory.createRangeSuperSlicesQuery(keyspace_<%=cid%> , keySerializer_<%=cid%>,sNameSerializer_<%=cid%>, serializer_<%=cid%>, serializer_<%=cid%>);	
+				<%
+				}
+			}
+			%>
+			sliceQuery_<%=cid%>.setColumnFamily(<%=columnFamily%>);
+			<%			
+			if(isSpecifyKeys){
+			%>
+				sliceQuery_<%=cid%>.setKeys(<%=rowKeys%>);
+			<%
+			}else{
+			%>
+				sliceQuery_<%=cid%>.setKeys(<%=("".equals(keyStart) || "\"\"".equals(keyStart)?"null":keyStart)%>,<%=("".equals(keyEnd) || "\"\"".equals(keyEnd)?"null":keyEnd)%>);
+				sliceQuery_<%=cid%>.setRowCount(<%=keyLimit%>);
+			<%
+			}
+			if(isSpecifyColumns){
+			%>
+				sliceQuery_<%=cid%>.setColumnNames(<%=searchColumns%>);
+			<%
+			}else{
+			%>
+				sliceQuery_<%=cid%>.setRange(<%=("".equals(columnStart) || "\"\"".equals(columnStart)?"null":columnStart)%>,<%=("".equals(columnEnd) || "\"\"".equals(columnEnd)?"null":columnEnd)%>, false, <%=columnLimit%>);
+			<%
+			}
+			if("STANDARD".equals(columnFamilyType)){
+				if(isSpecifyKeys){
+				%>
+					me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.Rows<<%=rowKeyType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+				<%
+				}else{
+				%>
+					me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedRows<<%=rowKeyType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+				<%
+				}
+				%>
+				java.util.Iterator rows_<%=cid%> = result_<%=cid%>.get().iterator();
+				while(rows_<%=cid%>.hasNext()){
+					nb_line_<%=cid %>++;
+					me.prettyprint.hector.api.beans.Row<<%=rowKeyType%>,String, String> row_<%=cid%>=(me.prettyprint.hector.api.beans.Row<<%=rowKeyType%>,String, String>)rows_<%=cid%>.next();
+					me.prettyprint.hector.api.beans.ColumnSlice<String, String> slice_<%=cid%>=row_<%=cid%>.getColumnSlice();
+			<%
+			}else{
+				if(isSpecifyKeys){
+				%>
+					me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.SuperRows<<%=rowKeyType%>,<%=sNameType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+				<%
+				}else{
+				%>
+					me.prettyprint.hector.api.query.QueryResult<me.prettyprint.hector.api.beans.OrderedSuperRows<<%=rowKeyType%>,<%=sNameType%>,String, String>> result_<%=cid%> = sliceQuery_<%=cid%>.execute();
+				<%
+				}
+				%>
+				java.util.Iterator superRows_<%=cid%> = result_<%=cid%>.get().iterator();
+				while(superRows_<%=cid%>.hasNext()){
+					nb_line_<%=cid %>++;
+					me.prettyprint.hector.api.beans.SuperRow superRow_<%=cid%>=(me.prettyprint.hector.api.beans.SuperRow)superRows_<%=cid%>.next();
+					me.prettyprint.hector.api.beans.SuperSlice slice_<%=cid%>=superRow_<%=cid%>.getSuperSlice();
+					java.util.List<me.prettyprint.hector.api.beans.HSuperColumn> superColumns_<%=cid%>=slice_<%=cid%>.getSuperColumns();
+					for (me.prettyprint.hector.api.beans.HSuperColumn superColumn_<%=cid%> : superColumns_<%=cid%>) {
+					
+			<%
+			}
+			%>
+			me.prettyprint.hector.api.beans.HColumn<String,String> column_<%=cid%>=null;
+
+			java.nio.ByteBuffer columnValue_<%=cid%>=null;
+			String colName = "";
+			byte[] bTargetColName = null;
+			<%
+			if(outputs!=null && outputs.size() > 0){
+		    	IConnection out = outputs.get(0);
+      			firstConnName = out.getName();
+		  		if(out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+				
+					//java.util.Collections.sort(columnList, new ColumnComparator (incKey, keyColumn));
+
+					for(int i = 0; i < sizeColumns; i++){
+						IMetadataColumn column = columnList.get(i);
+						String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+						JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+						String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+						if(incKey && column.getLabel().equals(keyColumn)){
+							if("STANDARD".equals(columnFamilyType)){
+							%>
+								if(row_<%=cid%>.getKey()!=null){
+									<%
+									if(javaType == JavaTypesManager.DATE){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date((java.util.Date)(row_<%=cid%>.getKey()), <%= patternValue %>);
+									<%
+									}else if(javaType == JavaTypesManager.BYTE_ARRAY){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=String.valueOf(row_<%=cid%>.getKey()).getBytes(utf8Charset);
+									<%
+									}else if(javaType == JavaTypesManager.OBJECT){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=row_<%=cid%>.getKey();
+									<%
+									}else{
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_<%=typeToGenerate%>(String.valueOf(row_<%=cid%>.getKey()));
+									<%
+									}
+									%>
+								}	
+							<%
+							}else{
+							%>
+								if(superRow_<%=cid%>.getKey()!=null){
+									<%
+									if(javaType == JavaTypesManager.DATE){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_Date((java.util.Date)(superRow_<%=cid%>.getKey()), <%= patternValue %>);
+									<%
+									}else if(javaType == JavaTypesManager.BYTE_ARRAY){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=String.valueOf(superRow_<%=cid%>.getKey()).getBytes(utf8Charset);
+									<%
+									}else if(javaType == JavaTypesManager.OBJECT){
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=superRow_<%=cid%>.getKey();
+									<%
+									}else{
+									%>
+										<%=firstConnName %>.<%=column.getLabel() %>=ParserUtils.parseTo_<%=typeToGenerate%>(String.valueOf(superRow_<%=cid%>.getKey()));
+									<%	
+									}
+									%>
+								}
+							<%
+							}
+						}else{
+							if("SUPER".equals(columnFamilyType) && incSuperKey && column.getLabel().equals(superKeyColumn)){
+							%>
+								columnValue_<%=cid%>=superColumn_<%=cid%>.getNameByteBuffer();
+							<%
+							}else{
+								if("STANDARD".equals(columnFamilyType)){
+								%>
+									colName = "<%=column.getOriginalDbColumnName()%>";
+								
+									column_<%=cid%>=slice_<%=cid%>.getColumnByName(colName);
+
+									<% if("CASSANDRA_2_0_0".equals(dbVersion)) { 
+
+										/*
+										when hector was used to insert data, getColumnByName() will work as usual
+										when datastax driver was used to insert data, column.getName() will return empty for key and will
+										return a String different from the column.getOriginalDbColumnName() but only if you look
+										at the byte[] level.
+										example : column name => age {97,103,101} will become {0,3,97,103,101,0}
+										so proposed fix is to reconstruct this second string from the original column name
+										{0, <length_of_byte_array_from_original_colname>,<byte array original column name>, 0}
+										*/
+
+									%>
+									if(column_<%=cid%> == null) {
+										// CASSANDRA 2.x changed their column name encoding, leading to wrong getColumnByName behavior
+										byte[] bColName = "<%=column.getOriginalDbColumnName()%>".getBytes();
+										bTargetColName = new byte[bColName.length + 3];
+										bTargetColName[0] = (byte)0;bTargetColName[bTargetColName.length - 1] = (byte)0;
+										bTargetColName[1] = (byte)bColName.length;
+										System.arraycopy(bColName, 0, bTargetColName, 2, bColName.length);										
+										colName = new String(bTargetColName);
+										column_<%=cid%>=slice_<%=cid%>.getColumnByName(colName);
+									}
+									<% } %>
+									
+									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());									
+								<%
+								}else{
+								%>
+									column_<%=cid%>=superColumn_<%=cid%>.getSubColumnByName("<%=column.getOriginalDbColumnName()%>");
+									columnValue_<%=cid%>=(column_<%=cid%>==null?null:column_<%=cid%>.getValueBytes());
+								<%
+								}
+							}
+							%>
+							if(columnValue_<%=cid%>!=null){
+								<%
+								if(javaType == JavaTypesManager.DATE) {
+								%>
+									Long dateValue_<%=cid%>=columnValue_<%=cid%>.getLong();
+									<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date(new java.util.Date(dateValue_<%=cid%>), <%=patternValue%>);
+								<%
+								}else if(javaType == JavaTypesManager.FLOAT){
+								%>
+									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getFloat();
+								<%
+								}else if(javaType == JavaTypesManager.CHARACTER){
+								%>
+									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getChar();
+								<%
+								}else if(javaType == JavaTypesManager.INTEGER){
+								%>
+									<%=firstConnName %>.<%=column.getLabel() %> = me.prettyprint.cassandra.serializers.BigIntegerSerializer.get().fromByteBuffer(columnValue_<%=cid%>).intValue();
+								<%
+								}else if(javaType == JavaTypesManager.SHORT){
+								%>
+									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getShort();
+								<%
+								}else if(javaType == JavaTypesManager.LONG){
+								%>
+									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getLong();
+								<%
+								}else if(javaType == JavaTypesManager.DOUBLE){
+								%>
+									<%=firstConnName %>.<%=column.getLabel() %>=columnValue_<%=cid%>.getDouble();
+								<%
+								}else{
+									String columnType=JavaTypesManager.getTypeToGenerate(column.getTalendType(), true);
+									String cType = column.getType();
+									%>
+									<%=firstConnName %>.<%=column.getLabel() %> = 
+										<%
+										if(typeMap.get(columnType, cType)=="ObjectSerializer"){
+										%>
+											(<%=columnType%>)
+										<%
+										}
+										%>
+										me.prettyprint.cassandra.serializers.<%=typeMap.get(columnType, cType)%>.get().fromByteBuffer(columnValue_<%=cid%>)
+										<%
+										if(typeMap.get(columnType, cType)=="UUIDSerializer" || typeMap.get(columnType, cType)=="TimeUUIDSerializer"){
+										%>
+											.toString()
+										<%
+										}
+										%>
+										;
+								<%
+								}
+								%>
+							}else{
+								<%=firstConnName %>.<%=column.getLabel() %> = <%=JavaTypesManager.getDefaultValueFromJavaType(typeToGenerate)%>;
+							}
+						<%
+						}
+			   		}
+			   		log4jFileUtil.debugRetriveData(node);
+	     		}
+			}
+      	}
+    }
+	%>
+    

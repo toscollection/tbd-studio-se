@@ -1,0 +1,69 @@
+<%@ jet %>
+	<%
+    IMetadataTable metadata = null;
+    IConnection conn = null;
+    List<IMetadataColumn> columns = null;
+    List<IMetadataTable> metadatas = node.getMetadataList();
+    if((metadatas!=null) && (metadatas.size() > 0)){
+        metadata = metadatas.get(0);
+        if(metadata != null){
+    		columns = metadata.getListColumns();		
+    	}
+    }
+    List<? extends IConnection> conns = node.getIncomingConnections();
+    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+        conn = conns.get(0);
+    }
+    
+    if(columns == null || columns.isEmpty() || conn == null){
+    	return "";
+    }
+    %>
+    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/CQL_Helper.javajet"%> 
+    <%
+    Boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+    String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+    CQLManager cqlManager = new CQLManager(node, columns);
+    boolean useBatch = "true".equals(ElementParameterParser.getValue(node, "__USE_UNLOGGED_BATCH__"));
+    String batchSize = ElementParameterParser.getValue(node, "__BATCH_SIZE__");
+    if(useBatch){
+    %>
+        boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
+    <%
+    }
+    %>
+    
+    <%=cqlManager.generateStmt(conn.getName())%>
+    <%
+    if(useBatch){
+    %>
+        batchStmt_<%=cid%>.add(boundStmt_<%=cid%>);
+        if(batchStmt_<%=cid%>.size() >= <%=batchSize%>){
+            try{
+                connection_<%=cid%>.execute(batchStmt_<%=cid%>);
+                batchStmt_<%=cid%>.clear();
+            }catch(java.lang.Exception e){
+                throw(e);
+            }
+        }
+    <%
+    }else{
+    %>
+        try{
+        	connection_<%=cid%>.execute(boundStmt_<%=cid%>);
+        }catch(java.lang.Exception e){
+        	<%
+        	if(dieOnError){
+        	%>
+        		throw(e);
+        	<%
+        	}else{
+        	%>
+        		System.err.println(e.getMessage());
+        	<%
+        	}
+        	%>
+        }
+    <%
+    }
+    %>

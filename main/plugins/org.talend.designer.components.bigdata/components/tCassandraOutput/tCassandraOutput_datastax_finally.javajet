@@ -1,0 +1,37 @@
+<%@ jet %>
+	<%
+    IMetadataTable metadata = null;
+    IConnection conn = null;
+    List<IMetadataColumn> columns = null;
+    List<IMetadataTable> metadatas = node.getMetadataList();
+    if((metadatas!=null) && (metadatas.size() > 0)){
+        metadata = metadatas.get(0);
+        if(metadata != null){
+    		columns = metadata.getListColumns();		
+    	}
+    }
+    List<? extends IConnection> conns = node.getIncomingConnections();
+    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+        conn = conns.get(0);
+    }
+    
+    if(columns == null || columns.isEmpty() || conn == null){
+    	return "";
+    }
+    %>
+    <% 
+    boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    if(!useExistConn){
+    %>
+    	if(resourceMap.get("finish_<%=cid%>") == null){
+    		if(resourceMap.get("connection_<%=cid%>") != null){
+    			((com.datastax.driver.core.Session)resourceMap.get("connection_<%=cid%>")).close();
+    		}
+    		if(resourceMap.get("cluster_<%=cid%>") != null){
+    			((com.datastax.driver.core.Cluster)resourceMap.get("cluster_<%=cid%>")).close();
+    		}
+    	}
+    <%
+    }
+    %>

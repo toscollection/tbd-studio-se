@@ -1,0 +1,12 @@
+<%@jet%>
+
+<%
+//TODO: use API_SELECTED instead of this
+class API_selector{
+	public boolean useDatastax(INode node){
+		String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+        String apiType = ElementParameterParser.getValue(node, "__API_TYPE__");
+        return "CASSANDRA_2_0_0".equals(dbVersion) && "DATASTAX".equals(apiType); 
+	}
+}	
+%>
