@@ -463,10 +463,14 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
 
     @Override
     protected void collectConParameters() {
-        addContextParams(ENoSQLParamName.Server, true);
-        addContextParams(ENoSQLParamName.Port, true);
-        addContextParams(ENoSQLParamName.Database, true);
+        collectReplicaParameters(!checkUseReplicaBtn.getSelection());
         collectAuthParams(checkRequireAuthBtn.getSelection());
+    }
+
+    private void collectReplicaParameters(boolean isNeed) {
+        addContextParams(ENoSQLParamName.Server, isNeed);
+        addContextParams(ENoSQLParamName.Port, isNeed);
+        addContextParams(ENoSQLParamName.Database, true);
     }
 
     /*
@@ -476,9 +480,11 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
      */
     @Override
     protected void collectNoSqlAttributesForContext() {
-        getConnection().getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
-        getConnection().getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
         getConnection().getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
+        if (!checkUseReplicaBtn.getSelection()) {
+            getConnection().getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
+            getConnection().getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
+        }
         if (checkRequireAuthBtn.getSelection()) {
             getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
             getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());

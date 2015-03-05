@@ -250,4 +250,11 @@
             class="org.talend.repository.nosql.ui.context.handler.NoSQLRepositoryContextHandler">
       </RepositoryContext>
    </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.nosql.ui.context.handler.NoSqlContextUpdateService"
+            serviceId="IRepositoryContextUpdateService">
+      </Service>
+   </extension>
 </plugin>

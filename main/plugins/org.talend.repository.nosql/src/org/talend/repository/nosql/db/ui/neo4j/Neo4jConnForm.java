@@ -331,7 +331,8 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
 
     @Override
     protected void collectConParameters() {
-        addContextParams(ENoSQLParamName.Databasepath, true);
+        addContextParams(ENoSQLParamName.Databasepath, localDbBtn.getSelection());
+        addContextParams(ENoSQLParamName.ServerUrl, remoteDbBtn.getSelection());
     }
 
     /*
@@ -341,6 +342,11 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
      */
     @Override
     protected void collectNoSqlAttributesForContext() {
-        getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, dbPathTxt.getText());
+        if (localDbBtn.getSelection()) {
+            getConnection().getAttributes().put(INeo4jAttributes.DATABASE_PATH, dbPathTxt.getText());
+        }
+        if (remoteDbBtn.getSelection()) {
+            getConnection().getAttributes().put(INeo4jAttributes.SERVER_URL, serverURLTxt.getText());
+        }
     }
 }

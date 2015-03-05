@@ -293,7 +293,9 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
             @Override
             public void verifyText(VerifyEvent e) {
-                e.doit = e.text.matches("[0-9]*");
+                if (!isContextMode()) {
+                    e.doit = e.text.matches("[0-9]*");
+                }
             }
         });
         databaseText.addModifyListener(new ModifyListener() {

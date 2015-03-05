@@ -104,13 +104,17 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(INeo4jAttributes.DATABASE_PATH), javaType);
                         break;
+                    case ServerUrl:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(INeo4jAttributes.SERVER_URL), javaType);
+                        break;
                     case UserName:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(INoSQLCommonAttributes.USERNAME), javaType);
                         break;
                     case Password:
                         ConnectionContextHelper.createParameters(varList, paramName,
-                                conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), javaType);
+                                conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), JavaTypesManager.PASSWORD);
                         break;
                     default:
                     }
@@ -211,6 +215,10 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
             break;
         case Databasepath:
             noSqlConn.getAttributes().put(INeo4jAttributes.DATABASE_PATH,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case ServerUrl:
+            noSqlConn.getAttributes().put(INeo4jAttributes.SERVER_URL,
                     ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
             break;
         case UserName:
