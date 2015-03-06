@@ -52,6 +52,7 @@
 				<ITEM NAME="HDP_1_3" VALUE="HDP_1_3" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="HDP_2_1" VALUE="HDP_2_1" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+				<ITEM NAME="HDP_2_2" VALUE="HDP_2_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
 				<ITEM NAME="Cloudera_CDH5" VALUE="Cloudera_CDH5" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 				<ITEM NAME="Cloudera_CDH5_1_MR1" VALUE="Cloudera_CDH5_1_MR1" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 				<ITEM NAME="Cloudera_CDH5_1" VALUE="Cloudera_CDH5_1" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
@@ -295,6 +296,9 @@
             <IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_1' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_1' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar" REQUIRED_IF="HCAT_VERSION=='HDP_2_1' AND (DISTRIBUTION!='CUSTOM')" />
+            
+            <!-- HDP_2_2 HDFS JARS -->
+            <IMPORT MODULE_GROUP="HDFS-LIB-HDP_2_2_LASTEST" REQUIRED_IF="HCAT_VERSION=='HDP_2_2' AND (DISTRIBUTION!='CUSTOM')" />
 
 		    <!-- Cloudera_CDH5 HDFS JARS -->
 		    <IMPORT NAME="hadoop-hdfs-2.3.0-cdh5.0.4.jar" MODULE="hadoop-hdfs-2.3.0-cdh5.0.4.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/hadoop-hdfs-2.3.0-cdh5.0.4.jar" REQUIRED_IF="HCAT_VERSION=='Cloudera_CDH5' AND (DISTRIBUTION!='CUSTOM')" />

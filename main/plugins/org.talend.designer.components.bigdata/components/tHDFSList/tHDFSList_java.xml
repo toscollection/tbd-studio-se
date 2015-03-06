@@ -66,6 +66,7 @@
                 <ITEM NAME="HDP_1_3" VALUE="HDP_1_3" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
                 <ITEM NAME="HDP_2_0" VALUE="HDP_2_0" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
                 <ITEM NAME="HDP_2_1" VALUE="HDP_2_1" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
+                <ITEM NAME="HDP_2_2" VALUE="HDP_2_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'"/>
                 <ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'"/>
                 <ITEM NAME="APACHE_0_20_204" VALUE="APACHE_0_20_204" SHOW_IF="DISTRIBUTION=='APACHE'" />
                 <ITEM NAME="Cloudera_CDH3" VALUE="Cloudera_CDH3" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
@@ -108,7 +109,7 @@
         </PARAMETER>
         <PARAMETER NAME="USE_DATANODE_HOSTNAME" FIELD="CHECK"
             NUM_ROW="21" REQUIRED="true" GROUP="CONN"
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM') OR (DB_VERSION=='PIVOTAL_HD_1_0_1') OR (DB_VERSION=='PIVOTAL_HD_2_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='HDP_1_3') OR (DB_VERSION=='HDP_2_0') OR (DB_VERSION=='HDP_2_1') OR (DB_VERSION=='Cloudera_CDH4_YARN') OR (DB_VERSION=='Cloudera_CDH5') OR (DB_VERSION=='APACHE_2_4_0_EMR'))">
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DISTRIBUTION=='CUSTOM') OR (DB_VERSION=='PIVOTAL_HD_1_0_1') OR (DB_VERSION=='PIVOTAL_HD_2_0') OR (DB_VERSION=='HDP_1_2') OR (DB_VERSION=='HDP_1_3') OR (DB_VERSION=='HDP_2_0') OR (DB_VERSION=='HDP_2_1') OR (DB_VERSION=='HDP_2_2') OR (DB_VERSION=='Cloudera_CDH4_YARN') OR (DB_VERSION=='Cloudera_CDH5') OR (DB_VERSION=='APACHE_2_4_0_EMR'))">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
 
@@ -471,8 +472,10 @@
             <IMPORT NAME="slf4j-api-1.7.5.jar" MODULE="slf4j-api-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar" REQUIRED_IF="(DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false')" />
             <IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar" REQUIRED_IF="(DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false')" />
             <IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" REQUIRED_IF="(DB_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false')" />
+            <!-- HDP_2_2 -->
+            <IMPORT MODULE_GROUP="HDFS-LIB-HDP_2_2_LASTEST" REQUIRED_IF="(DB_VERSION=='HDP_2_2') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false')" />
 
-            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5' OR DB_VERSION=='Cloudera_CDH5_1' OR DB_VERSION=='Cloudera_CDH5_1_MR1' OR DB_VERSION=='PIVOTAL_HD_2_0') AND (USE_KRB=='true') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='HDP_2_2' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5' OR DB_VERSION=='Cloudera_CDH5_1' OR DB_VERSION=='Cloudera_CDH5_1_MR1' OR DB_VERSION=='PIVOTAL_HD_2_0') AND (USE_KRB=='true') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="jetty-util" MODULE="jetty-util-6.1.26.jar" UrlPath="platform:/plugin/org.talend.libraries.jetty/lib/jetty-util-6.1.26.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5' OR DB_VERSION=='Cloudera_CDH5_1' OR DB_VERSION=='Cloudera_CDH5_1_MR1' OR DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="jersey-core" MODULE="jersey-core-1.8.jar" REQUIRED_IF="(DB_VERSION=='HDP_1_0' OR DB_VERSION=='HDP_1_2' OR DB_VERSION=='HDP_1_3' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1' OR DB_VERSION=='APACHE_1_0_0' OR DB_VERSION=='Cloudera_CDH4' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-io" MODULE="commons-io-2.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar" REQUIRED_IF="(DB_VERSION=='Cloudera_CDH4' OR DB_VERSION=='Cloudera_CDH4_YARN' OR DB_VERSION=='Cloudera_CDH5' OR DB_VERSION=='Cloudera_CDH5_1' OR DB_VERSION=='Cloudera_CDH5_1_MR1' OR DB_VERSION=='PIVOTAL_HD_1_0_1' OR DB_VERSION=='PIVOTAL_HD_2_0' OR DB_VERSION=='HDP_2_0' OR DB_VERSION=='HDP_2_1') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />

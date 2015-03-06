@@ -53,7 +53,7 @@
 	sqoopOptions_<%=cid%>.setExportDir(<%=exportDir%>);
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
-	<%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "PIVOTAL_HD_2_0".equals(version) || "APACHE_2_4_0_EMR".equals(version)))) {%>
+	<%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "HDP_2_2".equals(version) || "PIVOTAL_HD_2_0".equals(version) || "APACHE_2_4_0_EMR".equals(version)))) {%>
 		<%
 		String passwordFieldName = "__PASSWORD__";
     	%>
