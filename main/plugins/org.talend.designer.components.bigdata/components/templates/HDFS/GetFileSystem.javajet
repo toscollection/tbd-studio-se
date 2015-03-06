@@ -29,7 +29,7 @@ log4jFileUtil.componentStartInfo(node);
 
 java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
 	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1",
-	"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1",
+	"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
 	"APACHE_1_0_0","APACHE_1_0_3_EMR",
 	"PIVOTAL_HD_2_0"
 );
