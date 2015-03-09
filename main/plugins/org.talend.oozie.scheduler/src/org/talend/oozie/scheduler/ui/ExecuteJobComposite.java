@@ -84,8 +84,6 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
     public ExecuteJobComposite(Composite parent, int style) {
         super(parent, style);
         parent.setLayout(new FillLayout());
-        // CSS
-        CoreUIPlugin.setCSSClass(this, this.getClass().getSimpleName());
         setExpandHorizontal(true);
         setExpandVertical(true);
         this.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
@@ -98,6 +96,8 @@ public class ExecuteJobComposite extends ScrolledComposite implements IDynamicPr
 
         // executeJobCompController.updateAllEnabledOrNot();
 
+        // CSS
+        CoreUIPlugin.setCSSClass(this, this.getClass().getSimpleName());
     }
 
     protected void createExecuteJobAreas(Composite parent) {
