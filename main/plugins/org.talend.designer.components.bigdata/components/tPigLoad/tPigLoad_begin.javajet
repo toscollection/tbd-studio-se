@@ -531,7 +531,7 @@
 			String username = ElementParameterParser.getValue(node, "__USERNAME__");
 			%>
 			//collect tez jars
-			String[] classPaths_<%=cid%> = System.getProperty("java.class.path").split(System.getProperty("path.separator"));
+			String[] classPaths_<%=cid%> = System.getProperty("java.class.path").split(<%if(!isLocal && !isExecutedThroughWebHCat && inMain){%>String.valueOf(globalMap.get("current_client_path_separator"))<%}else{%>System.getProperty("path.separator")<%}%>);
 			java.util.Map<String, String> jarPaths_<%=cid%> = new java.util.HashMap<String, String>();
 			for(String classPath_<%=cid%> : classPaths_<%=cid%>){
     			<%
