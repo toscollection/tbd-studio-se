@@ -88,7 +88,7 @@
                point="org.eclipse.ui.perspectives">
             <perspective
                   class="org.talend.rcp.perspective.Perspective"
-                  icon="platform:/plugin/org.talend.core/icons/process_icon.gif"
+                  icon="platform:/plugin/org.talend.core/icons/process_icon.png"
                   id="org.talend.rcp.perspective"
                   name="Integration">
             </perspective>
