@@ -28,16 +28,20 @@ import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
 import org.talend.core.model.metadata.IMetadataTable;
+import org.talend.core.model.metadata.builder.ConvertionHelper;
 import org.talend.core.model.metadata.builder.connection.Connection;
+import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.designerproperties.ComponentToRepositoryProperty;
 import org.talend.core.model.process.IElement;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.model.utils.AbstractDragAndDropServiceHandler;
 import org.talend.core.model.utils.IComponentName;
 import org.talend.core.repository.RepositoryComponentSetting;
+import org.talend.core.repository.model.repositoryObject.MetadataTableRepositoryObject;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
@@ -175,14 +179,29 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
 
     protected boolean isSubValid(Item item, ERepositoryObjectType type, RepositoryNode seletetedNode, IComponent component,
             String repositoryType) {
-        boolean tableWithMap = true;
+        boolean isValid = true;
+        String componentName = component.getName();
         if (type == ERepositoryObjectType.METADATA_CON_TABLE) {
-            if (component.getName().toUpperCase().endsWith(MAP)) {
-                tableWithMap = false;
-
+            if (componentName.toUpperCase().endsWith(MAP)) {
+                isValid = false;
             }
         }
-        return tableWithMap;
+
+        // tHDFSInput/tHDFSOutput doesn't support AVRO type
+        if (seletetedNode != null) {
+            IRepositoryViewObject repObject = seletetedNode.getObject();
+            if (repObject instanceof MetadataTableRepositoryObject) {
+                MetadataTable table = ((MetadataTableRepositoryObject) repObject).getTable();
+                if (table != null) {
+                    IMetadataTable metadataTable = ConvertionHelper.convert(table);
+                    if (isAvroType(metadataTable) && ("tHDFSInput".equals(componentName) || "tHDFSOutput".equals(componentName))) { //$NON-NLS-1$ //$NON-NLS-2$
+                        isValid = false;
+                    }
+                }
+            }
+
+        }
+        return isValid;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -353,6 +372,17 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         if (!canHandle(connection)) {
             return false;
         }
+        if (isAvroType(metadataTable)) {
+            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
+            MessageDialog.openWarning(shell, Messages.getString("HDFSDragAndDropHandler.dataViewer.warning.title"), //$NON-NLS-1$
+                    Messages.getString("HDFSDragAndDropHandler.dataViewer.warning.msg")); //$NON-NLS-1$
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean isAvroType(IMetadataTable metadataTable) {
+
         if (metadataTable == null) {
             return false;
         }
@@ -366,11 +396,9 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         }
         EHDFSFileTypes hdfsFileType = EHDFSFileTypes.valueOf(strFileType);
         if (EHDFSFileTypes.AVRO == hdfsFileType) {
-            Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-            MessageDialog.openWarning(shell, Messages.getString("HDFSDragAndDropHandler.dataViewer.warning.title"), //$NON-NLS-1$
-                    Messages.getString("HDFSDragAndDropHandler.dataViewer.warning.msg")); //$NON-NLS-1$
-            return false;
+            return true;
         }
-        return true;
+
+        return false;
     }
 }
