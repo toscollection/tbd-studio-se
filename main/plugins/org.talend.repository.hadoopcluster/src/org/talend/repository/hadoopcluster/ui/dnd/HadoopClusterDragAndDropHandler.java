@@ -77,6 +77,11 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
             return hcConnection.isEnableKerberos();
         } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
+        } else if (EHDFSRepositoryToComponent.JOBTRACKER_PRINCIPAL.getRepositoryValue().equals(value)
+                || EHDFSRepositoryToComponent.RESOURCEMANAGER_PRINCIPAL.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJtOrRmPrincipal()));
+        } else if (EHDFSRepositoryToComponent.JOBHISTORY_PRINCIPAL.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobHistoryPrincipal()));
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getGroup()));
         } else if (EHDFSRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
