@@ -99,7 +99,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                 connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
                 ExceptionHandler.process(e);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ExceptionHandler.process(e);
             connectionStatus.setResult(false);
             connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
