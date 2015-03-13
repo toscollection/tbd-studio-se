@@ -56,7 +56,6 @@ import org.talend.repository.hbaseprovider.Activator;
 import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
-
 import orgomg.cwm.objectmodel.core.TaggedValue;
 import orgomg.cwm.resource.relational.Catalog;
 
@@ -100,7 +99,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                 connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
                 ExceptionHandler.process(e);
             }
-        } catch (Exception e) {
+        } catch (Throwable e) {
             ExceptionHandler.process(e);
             connectionStatus.setResult(false);
             connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
