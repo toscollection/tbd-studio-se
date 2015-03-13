@@ -47,6 +47,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isEnableKerberos <em>Enable Kerberos</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getPrincipal <em>Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getJtOrRmPrincipal <em>Jt Or Rm Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getJobHistoryPrincipal <em>Job History Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getGroup <em>Group</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getAuthMode <em>Auth Mode</em>}</li>
@@ -261,6 +262,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected String jtOrRmPrincipal = JT_OR_RM_PRINCIPAL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getJobHistoryPrincipal() <em>Job History Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getJobHistoryPrincipal()
+     * @generated
+     * @ordered
+     */
+    protected static final String JOB_HISTORY_PRINCIPAL_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getJobHistoryPrincipal() <em>Job History Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getJobHistoryPrincipal()
+     * @generated
+     * @ordered
+     */
+    protected String jobHistoryPrincipal = JOB_HISTORY_PRINCIPAL_EDEFAULT;
 
     /**
      * The default value of the '{@link #getUserName() <em>User Name</em>}' attribute.
@@ -656,6 +677,27 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getJobHistoryPrincipal() {
+        return jobHistoryPrincipal;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setJobHistoryPrincipal(String newJobHistoryPrincipal) {
+        String oldJobHistoryPrincipal = jobHistoryPrincipal;
+        jobHistoryPrincipal = newJobHistoryPrincipal;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY_PRINCIPAL, oldJobHistoryPrincipal, jobHistoryPrincipal));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public String getUserName() {
         return userName;
     }
@@ -864,6 +906,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return getPrincipal();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
                 return getJtOrRmPrincipal();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY_PRINCIPAL:
+                return getJobHistoryPrincipal();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 return getUserName();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
@@ -925,6 +969,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
                 setJtOrRmPrincipal((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY_PRINCIPAL:
+                setJobHistoryPrincipal((String)newValue);
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 setUserName((String)newValue);
@@ -996,6 +1043,9 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
                 setJtOrRmPrincipal(JT_OR_RM_PRINCIPAL_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY_PRINCIPAL:
+                setJobHistoryPrincipal(JOB_HISTORY_PRINCIPAL_EDEFAULT);
+                return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 setUserName(USER_NAME_EDEFAULT);
                 return;
@@ -1055,6 +1105,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return PRINCIPAL_EDEFAULT == null ? principal != null : !PRINCIPAL_EDEFAULT.equals(principal);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL:
                 return JT_OR_RM_PRINCIPAL_EDEFAULT == null ? jtOrRmPrincipal != null : !JT_OR_RM_PRINCIPAL_EDEFAULT.equals(jtOrRmPrincipal);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY_PRINCIPAL:
+                return JOB_HISTORY_PRINCIPAL_EDEFAULT == null ? jobHistoryPrincipal != null : !JOB_HISTORY_PRINCIPAL_EDEFAULT.equals(jobHistoryPrincipal);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USER_NAME:
                 return USER_NAME_EDEFAULT == null ? userName != null : !USER_NAME_EDEFAULT.equals(userName);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__GROUP:
@@ -1107,6 +1159,8 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(principal);
         result.append(", jtOrRmPrincipal: ");
         result.append(jtOrRmPrincipal);
+        result.append(", jobHistoryPrincipal: ");
+        result.append(jobHistoryPrincipal);
         result.append(", userName: ");
         result.append(userName);
         result.append(", group: ");

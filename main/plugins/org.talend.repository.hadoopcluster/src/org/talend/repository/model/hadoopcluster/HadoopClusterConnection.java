@@ -31,6 +31,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableKerberos <em>Enable Kerberos</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getPrincipal <em>Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJtOrRmPrincipal <em>Jt Or Rm Principal</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobHistoryPrincipal <em>Job History Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getUserName <em>User Name</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getGroup <em>Group</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getAuthMode <em>Auth Mode</em>}</li>
@@ -312,6 +313,33 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setJtOrRmPrincipal(String value);
+
+    /**
+     * Returns the value of the '<em><b>Job History Principal</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Job History Principal</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Job History Principal</em>' attribute.
+     * @see #setJobHistoryPrincipal(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_JobHistoryPrincipal()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getJobHistoryPrincipal();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobHistoryPrincipal <em>Job History Principal</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Job History Principal</em>' attribute.
+     * @see #getJobHistoryPrincipal()
+     * @generated
+     */
+    void setJobHistoryPrincipal(String value);
 
     /**
      * Returns the value of the '<em><b>User Name</b></em>' attribute.

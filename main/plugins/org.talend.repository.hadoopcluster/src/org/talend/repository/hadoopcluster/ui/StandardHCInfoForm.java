@@ -73,6 +73,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private LabelledText jtOrRmPrincipalText;
 
+    private LabelledText jobHistoryPrincipalText;
+
     private LabelledText keytabPrincipalText;
 
     private LabelledText userNameText;
@@ -87,10 +89,17 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private final boolean creation;
 
-    public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation) {
+    protected EHadoopDistributions hadoopDistribution;
+
+    protected EHadoopVersion4Drivers hadoopVersison;
+
+    public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
+            EHadoopDistributions hadoopDistribution, EHadoopVersion4Drivers hadoopVersison) {
         super(parent, SWT.NONE, existingNames);
         this.connectionItem = connectionItem;
         this.creation = creation;
+        this.hadoopDistribution = hadoopDistribution;
+        this.hadoopVersison = hadoopVersison;
         setConnectionItem(connectionItem);
         setupForm();
         init();
@@ -108,16 +117,18 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         } else {
             authenticationCombo.select(0);
         }
-        namenodeUriText.setText(getConnection().getNameNodeURI());
-        jobtrackerUriText.setText(getConnection().getJobTrackerURI());
-        kerberosBtn.setSelection(getConnection().isEnableKerberos());
-        namenodePrincipalText.setText(getConnection().getPrincipal());
-        jtOrRmPrincipalText.setText(getConnection().getJtOrRmPrincipal());
-        keytabBtn.setSelection(getConnection().isUseKeytab());
-        keytabPrincipalText.setText(getConnection().getKeytabPrincipal());
-        keytabText.setText(getConnection().getKeytab());
-        userNameText.setText(getConnection().getUserName());
-        groupText.setText(getConnection().getGroup());
+        HadoopClusterConnection connection = getConnection();
+        namenodeUriText.setText(connection.getNameNodeURI());
+        jobtrackerUriText.setText(connection.getJobTrackerURI());
+        kerberosBtn.setSelection(connection.isEnableKerberos());
+        namenodePrincipalText.setText(connection.getPrincipal());
+        jtOrRmPrincipalText.setText(connection.getJtOrRmPrincipal());
+        jobHistoryPrincipalText.setText(connection.getJobHistoryPrincipal());
+        keytabBtn.setSelection(connection.isUseKeytab());
+        keytabPrincipalText.setText(connection.getKeytabPrincipal());
+        keytabText.setText(connection.getKeytab());
+        userNameText.setText(connection.getUserName());
+        groupText.setText(connection.getGroup());
 
         fillDefaults();
         updateStatus(IStatus.OK, EMPTY_STRING);
@@ -131,6 +142,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         kerberosBtn.setEnabled(!readOnly);
         namenodePrincipalText.setReadOnly(readOnly);
         jtOrRmPrincipalText.setReadOnly(readOnly);
+        jobHistoryPrincipalText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
         groupText.setReadOnly(readOnly);
     }
@@ -191,6 +203,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         namenodePrincipalText = new LabelledText(authCommonComposite,
                 Messages.getString("HadoopClusterForm.text.namenodePrincipal"), 1); //$NON-NLS-1$
         jtOrRmPrincipalText = new LabelledText(authCommonComposite, Messages.getString("HadoopClusterForm.text.rmPrincipal"), 1); //$NON-NLS-1$
+        jobHistoryPrincipalText = new LabelledText(authCommonComposite,
+                Messages.getString("HadoopClusterForm.text.jobHistoryPrincipal"), 1); //$NON-NLS-1$
+
+        // placeHolder is only used to make userNameText and groupText to new line
+        Composite placeHolder = new Composite(authCommonComposite, SWT.NULL);
+        GridData placeHolderLayoutData = new GridData(GridData.FILL, GridData.FILL, true, false, 2, 1);
+        placeHolderLayoutData.heightHint = 1;
+        placeHolder.setLayoutData(placeHolderLayoutData);
+
         userNameText = new LabelledText(authCommonComposite, Messages.getString("HadoopClusterForm.text.userName"), 1); //$NON-NLS-1$
         groupText = new LabelledText(authCommonComposite, Messages.getString("HadoopClusterForm.text.group"), 1); //$NON-NLS-1$
 
@@ -292,6 +313,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         });
 
+        jobHistoryPrincipalText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                getConnection().setJobHistoryPrincipal(jobHistoryPrincipalText.getText());
+                checkFieldsValue();
+            }
+        });
+
         userNameText.addModifyListener(new ModifyListener() {
 
             @Override
@@ -388,17 +418,19 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private void initCommonProperties(HadoopServiceProperties properties) {
-        properties.setDistribution(getConnection().getDistribution());
-        properties.setVersion(getConnection().getDfVersion());
-        properties.setGroup(getConnection().getGroup());
-        properties.setUseKrb(getConnection().isEnableKerberos());
-        properties.setCustom(getConnection().isUseCustomVersion());
-        properties.setPrincipal(getConnection().getPrincipal());
-        properties.setJtOrRmPrincipal(getConnection().getJtOrRmPrincipal());
-        properties.setUseKeytab(getConnection().isUseKeytab());
-        properties.setKeytabPrincipal(getConnection().getKeytabPrincipal());
-        properties.setKeytab(getConnection().getKeytab());
-        properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(getConnection().getHadoopProperties()));
+        HadoopClusterConnection connection = getConnection();
+        properties.setDistribution(connection.getDistribution());
+        properties.setVersion(connection.getDfVersion());
+        properties.setGroup(connection.getGroup());
+        properties.setUseKrb(connection.isEnableKerberos());
+        properties.setCustom(connection.isUseCustomVersion());
+        properties.setPrincipal(connection.getPrincipal());
+        properties.setJtOrRmPrincipal(connection.getJtOrRmPrincipal());
+        properties.setJobHistoryPrincipal(connection.getJobHistoryPrincipal());
+        properties.setUseKeytab(connection.isUseKeytab());
+        properties.setKeytabPrincipal(connection.getKeytabPrincipal());
+        properties.setKeytab(connection.getKeytab());
+        properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties()));
     }
 
     @Override
@@ -415,6 +447,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     kerberosBtn.setEnabled(true);
                     namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
                     jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
+                    jobHistoryPrincipalText.setEditable(namenodePrincipalText.getEditable());
                     keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
                     keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
@@ -425,6 +458,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     kerberosBtn.setEnabled(false);
                     namenodePrincipalText.setEditable(false);
                     jtOrRmPrincipalText.setEditable(false);
+                    jobHistoryPrincipalText.setEditable(false);
                     keytabBtn.setEnabled(false);
                     keytabPrincipalText.setEditable(false);
                     keytabText.setEditable(false);
@@ -435,6 +469,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     kerberosBtn.setEnabled(false);
                     namenodePrincipalText.setEditable(false);
                     jtOrRmPrincipalText.setEditable(false);
+                    jobHistoryPrincipalText.setEditable(false);
                     keytabBtn.setEnabled(false);
                     keytabPrincipalText.setEditable(false);
                     keytabText.setEditable(false);
@@ -449,6 +484,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             kerberosBtn.setEnabled(version4Drivers.isSupportSecurity());
             namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
+            jobHistoryPrincipalText.setEditable(namenodePrincipalText.getEditable()
+                    && isCurrentHadoopVersionSupportJobHistoryPrincipal());
             keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
@@ -457,6 +494,43 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         updateMRRelatedContent();
         updateConnectionContent();
+    }
+
+    /**
+     * is current hadoop version support JobHistoryPrincipal
+     * 
+     * @return
+     */
+    protected boolean isCurrentHadoopVersionSupportJobHistoryPrincipal() {
+        if (hadoopDistribution == null || hadoopVersison == null) {
+            return false;
+        }
+        boolean isSupport = false;
+        // this strategy is based on tMRConfiguration_java.xml, Parameter: JOBHISTORY_PRINCIPAL
+        if (hadoopVersison == EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_1) {
+            return false;
+        } else {
+            if (hadoopDistribution == EHadoopDistributions.CUSTOM) {
+                return true;
+            } else {
+                switch (hadoopVersison) {
+                case PIVOTAL_HD_1_0_1:
+                case PIVOTAL_HD_2_0:
+                case HDP_2_0:
+                case HDP_2_1:
+                case CLOUDERA_CDH4_YARN:
+                case CLOUDERA_CDH5:
+                case CLOUDERA_CDH5_1:
+                case MAPR401:
+                case APACHE_2_4_0_EMR:
+                    isSupport = true;
+                    break;
+                default:
+                    isSupport = false;
+                }
+            }
+        }
+        return isSupport;
     }
 
     private void updateMRRelatedContent() {
@@ -474,6 +548,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             kerberosBtn.setSelection(false);
             namenodePrincipalText.setText(EMPTY_STRING);
             jtOrRmPrincipalText.setText(EMPTY_STRING);
+            jobHistoryPrincipalText.setText(EMPTY_STRING);
             getConnection().setEnableKerberos(false);
         }
         if (!groupText.getEditable()) {
@@ -528,6 +603,11 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     EHadoopProperties.NAMENODE_PRINCIPAL.getName());
             if (defaultNNP != null) {
                 namenodePrincipalText.setText(defaultNNP);
+            }
+            String defaultJobHistoryPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.JOBHISTORY_PRINCIPAL.getName());
+            if (defaultJobHistoryPrincipal != null) {
+                jobHistoryPrincipalText.setText(defaultJobHistoryPrincipal);
             }
         }
     }
@@ -585,6 +665,17 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             if (!HadoopParameterValidator.isValidPrincipal(jtOrRmPrincipalText.getText())) {
                 updateStatus(IStatus.ERROR,
                         Messages.getString("HadoopClusterForm.check.jtOrRmPrincipal.invalid", jtOrRmPrincipalText.getLabelText())); //$NON-NLS-1$
+                return false;
+            }
+        }
+
+        if (jobHistoryPrincipalText.getEditable()) {
+            if (!validText(jobHistoryPrincipalText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal")); //$NON-NLS-1$
+                return false;
+            }
+            if (!HadoopParameterValidator.isValidPrincipal(jobHistoryPrincipalText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal.invalid")); //$NON-NLS-1$
                 return false;
             }
         }

@@ -208,7 +208,11 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         if (HCVersionUtil.isHDI(getConnection())) {
             hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
         } else {
-            hcInfoForm = new StandardHCInfoForm(this, connectionItem, existingNamesArray, creation);
+            EHadoopDistributions hadoopDistribution = EHadoopDistributions.getDistributionByDisplayName(distributionCombo
+                    .getText());
+            EHadoopVersion4Drivers hadoopVersion = EHadoopVersion4Drivers.indexOfByVersionDisplay(versionCombo.getText());
+            hcInfoForm = new StandardHCInfoForm(this, connectionItem, existingNamesArray, creation, hadoopDistribution,
+                    hadoopVersion);
         }
         hcInfoForm.setReadOnly(readOnly);
         hcInfoForm.setListener(listener);
