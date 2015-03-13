@@ -239,7 +239,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHadoopClusterConnection_UserName() {
+    public EAttribute getHadoopClusterConnection_JobHistoryPrincipal() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(10);
     }
 
@@ -248,7 +248,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHadoopClusterConnection_Group() {
+    public EAttribute getHadoopClusterConnection_UserName() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(11);
     }
 
@@ -257,7 +257,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHadoopClusterConnection_AuthMode() {
+    public EAttribute getHadoopClusterConnection_Group() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(12);
     }
 
@@ -266,7 +266,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHadoopClusterConnection_ConnectionList() {
+    public EAttribute getHadoopClusterConnection_AuthMode() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(13);
     }
 
@@ -275,8 +275,17 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHadoopClusterConnection_ConnectionList() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(14);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EReference getHadoopClusterConnection_Parameters() {
-        return (EReference)hadoopClusterConnectionEClass.getEStructuralFeatures().get(14);
+        return (EReference)hadoopClusterConnectionEClass.getEStructuralFeatures().get(15);
     }
 
     /**
@@ -285,15 +294,6 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * @generated
      */
     public EAttribute getHadoopClusterConnection_UseKeytab() {
-        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(15);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getHadoopClusterConnection_KeytabPrincipal() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(16);
     }
 
@@ -302,7 +302,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHadoopClusterConnection_Keytab() {
+    public EAttribute getHadoopClusterConnection_KeytabPrincipal() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(17);
     }
 
@@ -311,8 +311,17 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getHadoopClusterConnection_HadoopProperties() {
+    public EAttribute getHadoopClusterConnection_Keytab() {
         return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(18);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_HadoopProperties() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(19);
     }
 
     /**
@@ -426,6 +435,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__ENABLE_KERBEROS);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__PRINCIPAL);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__JT_OR_RM_PRINCIPAL);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__JOB_HISTORY_PRINCIPAL);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__USER_NAME);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__GROUP);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__AUTH_MODE);
@@ -499,6 +509,7 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         initEAttribute(getHadoopClusterConnection_EnableKerberos(), theXMLTypePackage.getBoolean(), "enableKerberos", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_Principal(), theXMLTypePackage.getString(), "principal", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_JtOrRmPrincipal(), theXMLTypePackage.getString(), "jtOrRmPrincipal", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_JobHistoryPrincipal(), theXMLTypePackage.getString(), "jobHistoryPrincipal", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_UserName(), theXMLTypePackage.getString(), "userName", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_Group(), theXMLTypePackage.getString(), "group", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_AuthMode(), theXMLTypePackage.getString(), "authMode", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

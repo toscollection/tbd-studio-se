@@ -44,6 +44,8 @@ public class HadoopServiceProperties {
 
     private String jtOrRmPrincipal;
 
+    private String jobHistoryPrincipal;
+
     private boolean useKeytab;
 
     private String keytabPrincipal;
@@ -158,6 +160,14 @@ public class HadoopServiceProperties {
 
     public void setJtOrRmPrincipal(String jtOrRmPrincipal) {
         this.jtOrRmPrincipal = jtOrRmPrincipal;
+    }
+
+    public String getJobHistoryPrincipal() {
+        return this.jobHistoryPrincipal;
+    }
+
+    public void setJobHistoryPrincipal(String jobHistoryPrincipal) {
+        this.jobHistoryPrincipal = jobHistoryPrincipal;
     }
 
     public boolean isUseKeytab() {
