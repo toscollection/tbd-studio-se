@@ -379,7 +379,27 @@
 			</ITEMS>
 		</PARAMETER>
 
-		<PARAMETER NAME="TARGET" FIELD="CLOSED_LIST" NUM_ROW="61"
+		<PARAMETER NAME="EXECUTION_ENGINE" FIELD="CLOSED_LIST" NUM_ROW="61" REQUIRED="true"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (CONNECTION_MODE=='EMBEDDED') AND ((DISTRIBUTION == 'CUSTOM') OR ((DISTRIBUTION == 'HORTONWORKS') AND (HIVE_VERSION == 'HDP_2_1')) OR ((DISTRIBUTION == 'MAPR') AND (HIVE_VERSION == 'MAPR401'))) AND (LOAD_ACTION == 'INSERT')">
+            <ITEMS DEFAULT="MR">
+                <ITEM NAME="MR" VALUE="mr" />
+                <ITEM NAME="TEZ" VALUE="tez" />
+            </ITEMS>
+        </PARAMETER>
+        
+        <PARAMETER NAME="GROUP" FIELD="TEXT" REQUIRED="true" NUM_ROW="61" SHOW_IF="(isShow[EXECUTION_ENGINE]) AND (EXECUTION_ENGINE == 'tez') AND ((DISTRIBUTION == 'MAPR') AND (HIVE_VERSION == 'MAPR401'))">
+            <DEFAULT>"supergroup"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER NAME="TEZ_JARS_NAME" FIELD="TEXT" REQUIRED="false" SHOW="false"
+            NUM_ROW="61" NB_LINES="4">
+            <DEFAULT IF="(USE_EXISTING_CONNECTION == 'false') AND (CONNECTION_MODE=='EMBEDDED') AND (EXECUTION_ENGINE == 'tez') AND (DISTRIBUTION == 'CUSTOM')"></DEFAULT>
+            <!-- the only different with hdp211 is avro lib, use 1.5.4 instead of 1.7.4 -->
+            <DEFAULT IF="(USE_EXISTING_CONNECTION == 'false') AND (CONNECTION_MODE=='EMBEDDED') AND (EXECUTION_ENGINE == 'tez') AND (DISTRIBUTION == 'HORTONWORKS') AND (HIVE_VERSION == 'HDP_2_1')">avro-1.5.4.jar,commons-cli-1.2.jar,commons-collections4-4.0.jar,guava-11.0.2.jar,guice-3.0.jar,hadoop-mapreduce-client-common-2.4.0.2.1.1.0-385.jar,hadoop-mapreduce-client-core-2.4.0.2.1.1.0-385.jar,hadoop-mapreduce-client-shuffle-2.4.0.2.1.1.0-385.jar,jettison-1.3.4.jar,protobuf-java-2.5.0.jar,snappy-java-1.0.4.1.jar,tez-api-0.4.0.2.1.1.0-385.jar,tez-common-0.4.0.2.1.1.0-385.jar,tez-dag-0.4.0.2.1.1.0-385.jar,tez-mapreduce-0.4.0.2.1.1.0-385.jar,tez-mapreduce-examples-0.4.0.2.1.1.0-385.jar,tez-runtime-internals-0.4.0.2.1.1.0-385.jar,tez-runtime-library-0.4.0.2.1.1.0-385.jar,tez-tests-0.4.0.2.1.1.0-385.jar</DEFAULT>
+            <DEFAULT IF="(USE_EXISTING_CONNECTION == 'false') AND (CONNECTION_MODE=='EMBEDDED') AND (EXECUTION_ENGINE == 'tez') AND (DISTRIBUTION == 'MAPR') AND (HIVE_VERSION == 'MAPR401')">avro-1.7.4.jar,commons-cli-1.2.jar,commons-collections4-4.0.jar,guava-11.0.2.jar,guice-3.0.jar,hadoop-mapreduce-client-common-2.4.0.2.1.1.0-385.jar,hadoop-mapreduce-client-core-2.4.0.2.1.1.0-385.jar,hadoop-mapreduce-client-shuffle-2.4.0.2.1.1.0-385.jar,jettison-1.3.4.jar,protobuf-java-2.5.0.jar,snappy-java-1.0.4.1.jar,tez-api-0.4.0.2.1.1.0-385.jar,tez-common-0.4.0.2.1.1.0-385.jar,tez-dag-0.4.0.2.1.1.0-385.jar,tez-mapreduce-0.4.0.2.1.1.0-385.jar,tez-mapreduce-examples-0.4.0.2.1.1.0-385.jar,tez-runtime-internals-0.4.0.2.1.1.0-385.jar,tez-runtime-library-0.4.0.2.1.1.0-385.jar,tez-tests-0.4.0.2.1.1.0-385.jar</DEFAULT>
+        </PARAMETER>
+
+		<PARAMETER NAME="TARGET" FIELD="CLOSED_LIST" NUM_ROW="62"
 			SHOW_IF="LOAD_ACTION=='INSERT'" GROUP="LOAD_DATA_GROUP">
 			<ITEMS DEFAULT="TABLE">
 				<ITEM NAME="TABLE" VALUE="TABLE" />
@@ -2390,6 +2410,12 @@
 				REQUIRED_IF="((isShow[PARQUET_COMPRESSION]) AND (USE_EXISTING_CONNECTION=='false') AND (PARQUET_COMPRESSION=='SNAPPY') AND (DISTRIBUTION!='CUSTOM') AND (HIVE_VERSION!='APACHE_0_20_203') AND (HIVE_VERSION!='Cloudera_CDH3') AND (HIVE_VERSION!='Cloudera_CDH4') AND (HIVE_VERSION!='MAPR2') AND (HIVE_VERSION!='APACHE_1_0_0') AND (HIVE_VERSION!='HDP_1_0') AND (HIVE_VERSION!='PIVOTAL_HD_1_0_1'))" />
 			<!-- ############## -->
 
+			<!-- HDP_2_1 Tez additional -->
+            <IMPORT MODULE_GROUP="HIVE-TEZ-LIB-HDP211"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION=='false') AND (HIVE_VERSION=='HDP_2_1') AND (DISTRIBUTION!='CUSTOM') AND (EXECUTION_ENGINE=='tez')" />
+            <!-- MapR401 Tez additional -->
+            <IMPORT MODULE_GROUP="HIVE-TEZ-LIB-MapR401"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION=='false') AND (HIVE_VERSION=='MapR401') AND (DISTRIBUTION!='CUSTOM') AND (EXECUTION_ENGINE=='tez')" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
