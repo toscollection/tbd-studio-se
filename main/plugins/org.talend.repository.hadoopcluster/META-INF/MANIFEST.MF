@@ -43,3 +43,4 @@ Export-Package: org.talend.repository.hadoopcluster.action.common,
  org.talend.repository.model.hadoopcluster.impl,
  org.talend.repository.model.hadoopcluster.util
 Bundle-Activator: org.talend.repository.hadoopcluster.HadoopClusterPlugin
+Import-Package: org.talend.core.ui.context.model.table

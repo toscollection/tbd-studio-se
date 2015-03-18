@@ -26,3 +26,4 @@ Bundle-Vendor: %providerName
 Bundle-ClassPath: .,
  lib/json-simple-1.1.jar,
  lib/oozie-client-3.0.2.jar
+Import-Package: org.talend.core.ui.context.model.table

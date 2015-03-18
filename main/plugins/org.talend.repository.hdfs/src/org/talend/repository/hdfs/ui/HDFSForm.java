@@ -37,8 +37,11 @@ import org.talend.commons.ui.swt.formtools.LabelledCheckboxCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.utils.json.JSONArray;
@@ -82,7 +85,8 @@ public class HDFSForm extends AbstractHDFSForm {
             rowSeparatorText.setText(rowSeparatorVal);
             getConnection().setRowSeparator(rowSeparatorVal);
         }
-        EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorVal, false);
+        EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(getConnection()), rowSeparatorVal), false);
         if (rowSeparator != null) {
             rowSeparatorCombo.setText(rowSeparator.getDisplayName());
         }
@@ -94,7 +98,8 @@ public class HDFSForm extends AbstractHDFSForm {
             fieldSeparatorText.setText(fieldSeparatorVal);
             getConnection().setFieldSeparator(fieldSeparatorVal);
         }
-        EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorVal, false);
+        EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(getConnection()), fieldSeparatorVal), false);
         if (fieldSeparator != null) {
             fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
         }
@@ -103,6 +108,9 @@ public class HDFSForm extends AbstractHDFSForm {
             rowsToSkipHeaderCheckboxCombo.setText(header);
         }
         firstRowIsCaptionCheckbox.setSelection(getConnection().isFirstLineCaption());
+        if (isContextMode()) {
+            adaptFormToEditable();
+        }
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -114,6 +122,19 @@ public class HDFSForm extends AbstractHDFSForm {
         rowSeparatorCombo.setEnabled(!readOnly);
         fieldSeparatorText.setEditable(!readOnly);
         fieldSeparatorCombo.setEnabled(!readOnly);
+    }
+
+    @Override
+    protected void updateEditableStatus(boolean isEditable) {
+        userNameText.setEditable(isEditable && !enableKerberos);
+        rowSeparatorText.setEditable(isEditable);
+        rowSeparatorCombo.setEnabled(isEditable);
+        fieldSeparatorText.setEditable(isEditable);
+        fieldSeparatorCombo.setEnabled(isEditable);
+        rowsToSkipHeaderCheckboxCombo.getCheckbox().setEnabled(isEditable);
+        rowsToSkipHeaderCheckboxCombo.getCombo().setEnabled(isEditable && rowsToSkipHeaderCheckboxCombo.isChecked());
+        firstRowIsCaptionCheckbox.setEnabled(isEditable);
+        updateHadoopPropertiesFields(isEditable);
     }
 
     @Override
@@ -264,14 +285,16 @@ public class HDFSForm extends AbstractHDFSForm {
             public void modifyText(final ModifyEvent e) {
                 getConnection().setRowSeparator(rowSeparatorText.getText());
                 checkFieldsValue();
-                EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorText.getText(), false);
-                if (rowSeparator == null) {
-                    rowSeparatorCombo.deselectAll();
-                } else {
-                    String originalValue = rowSeparatorCombo.getText();
-                    String newValue = rowSeparator.getDisplayName();
-                    if (!newValue.equals(originalValue)) {
-                        rowSeparatorCombo.setText(newValue);
+                if (!isContextMode()) {
+                    EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorText.getText(), false);
+                    if (rowSeparator == null) {
+                        rowSeparatorCombo.deselectAll();
+                    } else {
+                        String originalValue = rowSeparatorCombo.getText();
+                        String newValue = rowSeparator.getDisplayName();
+                        if (!newValue.equals(originalValue)) {
+                            rowSeparatorCombo.setText(newValue);
+                        }
                     }
                 }
             }
@@ -283,14 +306,16 @@ public class HDFSForm extends AbstractHDFSForm {
             public void modifyText(final ModifyEvent e) {
                 getConnection().setFieldSeparator(fieldSeparatorText.getText());
                 checkFieldsValue();
-                EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorText.getText(), false);
-                if (fieldSeparator == null) {
-                    fieldSeparatorCombo.deselectAll();
-                } else {
-                    String originalValue = fieldSeparatorCombo.getText();
-                    String newValue = fieldSeparator.getDisplayName();
-                    if (!newValue.equals(originalValue)) {
-                        fieldSeparatorCombo.setText(newValue);
+                if (!isContextMode()) {
+                    EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorText.getText(), false);
+                    if (fieldSeparator == null) {
+                        fieldSeparatorCombo.deselectAll();
+                    } else {
+                        String originalValue = fieldSeparatorCombo.getText();
+                        String newValue = fieldSeparator.getDisplayName();
+                        if (!newValue.equals(originalValue)) {
+                            fieldSeparatorCombo.setText(newValue);
+                        }
                     }
                 }
             }
@@ -302,8 +327,10 @@ public class HDFSForm extends AbstractHDFSForm {
             public void keyPressed(KeyEvent e) {
                 String string = String.valueOf(e.character);
                 // Check if input is number, backspace key and delete key of keyboard.
-                if (!(string.matches("[0-9]*")) && e.keyCode != 8 && e.keyCode != SWT.DEL) { //$NON-NLS-1$
-                    e.doit = false;
+                if (!isContextMode()) {
+                    if (!(string.matches("[0-9]*")) && e.keyCode != 8 && e.keyCode != SWT.DEL) { //$NON-NLS-1$
+                        e.doit = false;
+                    }
                 }
             }
         });
@@ -312,30 +339,32 @@ public class HDFSForm extends AbstractHDFSForm {
 
             @Override
             public void modifyText(final ModifyEvent e) {
-                if (!rowsToSkipHeaderCheckboxCombo.isEmpty()) {
-                    if (!rowsToSkipHeaderCheckboxCombo.isInteger() || rowsToSkipHeaderCheckboxCombo.getText().trim().equals("0")) { //$NON-NLS-1$
-                        rowsToSkipHeaderCheckboxCombo.deselectAll();
+                if (!isContextMode()) {
+                    if (!rowsToSkipHeaderCheckboxCombo.isEmpty()) {
+                        if (!rowsToSkipHeaderCheckboxCombo.isInteger()
+                                || rowsToSkipHeaderCheckboxCombo.getText().trim().equals("0")) { //$NON-NLS-1$
+                            rowsToSkipHeaderCheckboxCombo.deselectAll();
+                            getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
+                            getConnection().setHeaderValue("" + 0); //$NON-NLS-1$
+
+                            rowsToSkipHeaderCheckboxCombo.getCombo().setFocus();
+
+                            // if rowsHeaderToSkip isn't integer or is equals to 0, the firstRowIsCaptionCheckbox is
+                            // unusable.
+                            firstRowIsCaptionCheckbox.setSelection(false);
+                            getConnection().setFirstLineCaption(false);
+                            return;
+                        } else {
+                            getConnection().setHeaderValue(rowsToSkipHeaderCheckboxCombo.getText().trim());
+                            getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
+                            checkFieldsValue();
+                        }
+                    } else {
                         getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
                         getConnection().setHeaderValue("" + 0); //$NON-NLS-1$
-
-                        rowsToSkipHeaderCheckboxCombo.getCombo().setFocus();
-
-                        // if rowsHeaderToSkip isn't integer or is equals to 0, the firstRowIsCaptionCheckbox is
-                        // unusable.
-                        firstRowIsCaptionCheckbox.setSelection(false);
-                        getConnection().setFirstLineCaption(false);
-                        return;
-                    } else {
-                        getConnection().setHeaderValue(rowsToSkipHeaderCheckboxCombo.getText().trim());
-                        getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
                         checkFieldsValue();
                     }
-                } else {
-                    getConnection().setUseHeader(rowsToSkipHeaderCheckboxCombo.isChecked());
-                    getConnection().setHeaderValue("" + 0); //$NON-NLS-1$
-                    checkFieldsValue();
                 }
-
             }
         });
 
@@ -466,6 +495,7 @@ public class HDFSForm extends AbstractHDFSForm {
             adaptFormToReadOnly();
         }
         if (visible) {
+            adaptFormToEditable();
             updateStatus(getStatusLevel(), getStatus());
         }
     }
@@ -480,6 +510,27 @@ public class HDFSForm extends AbstractHDFSForm {
             }
 
         });
+    }
+
+    @Override
+    protected void collectConParameters() {
+        collectConSetingParameters(!enableKerberos);
+        collectSeparatorParameters(true);
+        collectRowHeaderParameters(rowsToSkipHeaderCheckboxCombo.isChecked());
+
+    }
+
+    private void collectConSetingParameters(boolean useKerberos) {
+        addContextParams(EHadoopParamName.HdfsUser, useKerberos);
+    }
+
+    private void collectSeparatorParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.HdfsRowSeparator, true);
+        addContextParams(EHadoopParamName.HdfsFileSeparator, true);
+    }
+
+    private void collectRowHeaderParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.HdfsRowHeader, isUse);
     }
 
     // public void setProperties(List<HashMap<String, Object>> properties) {

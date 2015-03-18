@@ -34,9 +34,12 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.designer.hdfsbrowse.util.EHDFSFieldSeparator;
 import org.talend.designer.hdfsbrowse.util.EHDFSRowSeparator;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.hcatalog.i18n.Messages;
 import org.talend.utils.json.JSONArray;
@@ -96,7 +99,10 @@ public class HCatalogForm extends AbstractHCatalogForm {
             rowSeparatorText.setText(rowSeparatorVal);
             getConnection().setRowSeparator(rowSeparatorVal);
         }
-        EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorVal, false);
+
+        EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(getConnection()), rowSeparatorVal), false);
+
         if (rowSeparator != null) {
             rowSeparatorCombo.setText(rowSeparator.getDisplayName());
         }
@@ -108,11 +114,14 @@ public class HCatalogForm extends AbstractHCatalogForm {
             fieldSeparatorText.setText(fieldSeparatorVal);
             getConnection().setFieldSeparator(fieldSeparatorVal);
         }
-        EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorVal, false);
+        EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(getConnection()), fieldSeparatorVal), false);
         if (fieldSeparator != null) {
             fieldSeparatorCombo.setText(fieldSeparator.getDisplayName());
         }
-
+        if (isContextMode()) {
+            adaptFormToEditable();
+        }
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -134,6 +143,26 @@ public class HCatalogForm extends AbstractHCatalogForm {
         rowSeparatorCombo.setEnabled(!readOnly);
         fieldSeparatorText.setEditable(!readOnly);
         fieldSeparatorCombo.setEnabled(!readOnly);
+    }
+
+    @Override
+    protected void updateEditableStatus(boolean isEditable) {
+        hostText.setEditable(isEditable);
+        portText.setEditable(isEditable);
+        userNameText.setEditable(isEditable);
+        if (isHDI) {
+            passwordText.setEditable(isEditable);
+        }
+        databaseText.setEditable(isEditable);
+        if (enableKerberos) {
+            krbPrincipalText.setEditable(isEditable);
+            krbRealmText.setEditable(isEditable);
+        }
+        rowSeparatorText.setEditable(isEditable);
+        rowSeparatorCombo.setReadOnly(isContextMode());
+        fieldSeparatorText.setEditable(isEditable);
+        fieldSeparatorCombo.setReadOnly(isContextMode());
+        updateHadoopPropertiesFields(isEditable);
     }
 
     @Override
@@ -368,14 +397,16 @@ public class HCatalogForm extends AbstractHCatalogForm {
             public void modifyText(final ModifyEvent e) {
                 getConnection().setRowSeparator(rowSeparatorText.getText());
                 checkFieldsValue();
-                EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorText.getText(), false);
-                if (rowSeparator == null) {
-                    rowSeparatorCombo.deselectAll();
-                } else {
-                    String originalValue = rowSeparatorCombo.getText();
-                    String newValue = rowSeparator.getDisplayName();
-                    if (!newValue.equals(originalValue)) {
-                        rowSeparatorCombo.setText(newValue);
+                if (!isContextMode()) {
+                    EHDFSRowSeparator rowSeparator = EHDFSRowSeparator.indexOf(rowSeparatorText.getText(), false);
+                    if (rowSeparator == null) {
+                        rowSeparatorCombo.deselectAll();
+                    } else {
+                        String originalValue = rowSeparatorCombo.getText();
+                        String newValue = rowSeparator.getDisplayName();
+                        if (!newValue.equals(originalValue)) {
+                            rowSeparatorCombo.setText(newValue);
+                        }
                     }
                 }
             }
@@ -387,14 +418,16 @@ public class HCatalogForm extends AbstractHCatalogForm {
             public void modifyText(final ModifyEvent e) {
                 getConnection().setFieldSeparator(fieldSeparatorText.getText());
                 checkFieldsValue();
-                EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorText.getText(), false);
-                if (fieldSeparator == null) {
-                    fieldSeparatorCombo.deselectAll();
-                } else {
-                    String originalValue = fieldSeparatorCombo.getText();
-                    String newValue = fieldSeparator.getDisplayName();
-                    if (!newValue.equals(originalValue)) {
-                        fieldSeparatorCombo.setText(newValue);
+                if (!isContextMode()) {
+                    EHDFSFieldSeparator fieldSeparator = EHDFSFieldSeparator.indexOf(fieldSeparatorText.getText(), false);
+                    if (fieldSeparator == null) {
+                        fieldSeparatorCombo.deselectAll();
+                    } else {
+                        String originalValue = fieldSeparatorCombo.getText();
+                        String newValue = fieldSeparator.getDisplayName();
+                        if (!newValue.equals(originalValue)) {
+                            fieldSeparatorCombo.setText(newValue);
+                        }
                     }
                 }
             }
@@ -504,6 +537,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
             adaptFormToReadOnly();
         }
         if (visible) {
+            adaptFormToEditable();
             updateStatus(getStatusLevel(), getStatus());
         }
     }
@@ -526,6 +560,39 @@ public class HCatalogForm extends AbstractHCatalogForm {
 
     public List<HashMap<String, Object>> getProperties() {
         return properties;
+    }
+
+    @Override
+    protected void collectConParameters() {
+        collectTempletonParameters(true);
+        collectHdiParameters(isHDI);
+        collectKerBerosParameters(enableKerberos);
+        collectDatabaseParameters(true);
+        collectSeparatorParameters(true);
+    }
+
+    private void collectTempletonParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.HCatalogHostName, isUse);
+        addContextParams(EHadoopParamName.HCatalogPort, isUse);
+        addContextParams(EHadoopParamName.HCatalogUser, isUse);
+    }
+
+    private void collectHdiParameters(boolean isHdi) {
+        addContextParams(EHadoopParamName.HCatalogPassword, isHdi);
+    }
+
+    private void collectKerBerosParameters(boolean useKerberos) {
+        addContextParams(EHadoopParamName.HCatalogKerPrin, useKerberos);
+        addContextParams(EHadoopParamName.HCatalogRealm, useKerberos);
+    }
+
+    private void collectDatabaseParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.HCatalogDatabase, isUse);
+    }
+
+    private void collectSeparatorParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.HcataLogRowSeparator, isUse);
+        addContextParams(EHadoopParamName.HcatalogFileSeparator, isUse);
     }
 
 }

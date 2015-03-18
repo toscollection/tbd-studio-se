@@ -35,7 +35,7 @@ import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.utils.ContextParameterUtils;
-import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
@@ -357,9 +357,9 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
      */
     @Override
     protected void collectConParameters() {
-        addContextParams(ENoSQLParamName.Server, true);
-        addContextParams(ENoSQLParamName.Port, true);
-        addContextParams(ENoSQLParamName.Keyspace, true);
+        addContextParams(EHadoopParamName.Server, true);
+        addContextParams(EHadoopParamName.Port, true);
+        addContextParams(EHadoopParamName.Keyspace, true);
         collectAuthParams(checkRequireAuthBtn.getSelection());
     }
 

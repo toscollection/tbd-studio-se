@@ -18,9 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.language.ECodeLanguage;
-import org.talend.core.language.LanguageManager;
-import org.talend.core.model.context.ContextUtils;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.types.JavaType;
 import org.talend.core.model.metadata.types.JavaTypesManager;
@@ -28,10 +25,11 @@ import org.talend.core.model.process.IContextParameter;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.ui.context.model.table.ConectionAdaptContextVariableModel;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.model.IConnParamName;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
-import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
-import org.talend.metadata.managment.ui.utils.IRepositoryContextHandler;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
+import org.talend.metadata.managment.ui.wizard.context.AbstractRepositoryContextHandler;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
@@ -40,28 +38,13 @@ import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
  * created by ldong on Dec 18, 2014 Detailled comment
  * 
  */
-public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler {
+public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHandler {
 
-    private static final ECodeLanguage LANGUAGE = LanguageManager.getCurrentLanguage();
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.core.model.repository.IRepositoryContextHandler#isRepositoryConType(org.talend.core.model.metadata
-     * .builder.connection.Connection)
-     */
     @Override
     public boolean isRepositoryConType(Connection connection) {
         return connection instanceof NoSQLConnection;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.repository.IRepositoryContextHandler#createContextParameters(java.lang.String,
-     * org.talend.core.model.metadata.builder.connection.Connection)
-     */
     @Override
     public List<IContextParameter> createContextParameters(String prefixName, Connection connection, Set<IConnParamName> paramSet) {
         List<IContextParameter> varList = new ArrayList<IContextParameter>();
@@ -80,8 +63,8 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
             String paramPrefix = prefixName + ConnectionContextHelper.LINE;
             String paramName = null;
             for (IConnParamName param : paramSet) {
-                if (param instanceof ENoSQLParamName) {
-                    ENoSQLParamName noSqlParam = (ENoSQLParamName) param;
+                if (param instanceof EHadoopParamName) {
+                    EHadoopParamName noSqlParam = (EHadoopParamName) param;
                     paramName = paramPrefix + noSqlParam;
                     switch (noSqlParam) {
                     case Server:
@@ -142,8 +125,8 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
             String originalVariableName = prefixName + ConnectionContextHelper.LINE;
             String noSqlVariableName = null;
             for (IConnParamName param : paramSet) {
-                if (param instanceof ENoSQLParamName) {
-                    ENoSQLParamName noSqlParam = (ENoSQLParamName) param;
+                if (param instanceof EHadoopParamName) {
+                    EHadoopParamName noSqlParam = (EHadoopParamName) param;
                     originalVariableName = prefixName + ConnectionContextHelper.LINE;
                     noSqlVariableName = originalVariableName + noSqlParam;
                     matchContextForAttribues(noSqlConn, noSqlParam, noSqlVariableName);
@@ -152,14 +135,6 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.talend.repository.ui.utils.IRepositoryContextHandler#setPropertiesForExistContextMode(org.talend.core.model
-     * .metadata.builder.connection.Connection, org.talend.core.model.properties.ContextItem, java.util.Set,
-     * java.util.Map)
-     */
     @Override
     public void setPropertiesForExistContextMode(Connection connection, Set<IConnParamName> paramSet,
             Map<ContextItem, List<ConectionAdaptContextVariableModel>> adaptMap) {
@@ -170,9 +145,9 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
             NoSQLConnection noSqlConn = (NoSQLConnection) connection;
             ContextItem currentContext = null;
             for (IConnParamName param : paramSet) {
-                if (param instanceof ENoSQLParamName) {
+                if (param instanceof EHadoopParamName) {
                     String noSqlVariableName = null;
-                    ENoSQLParamName noSqlParam = (ENoSQLParamName) param;
+                    EHadoopParamName noSqlParam = (EHadoopParamName) param;
                     if (adaptMap != null && adaptMap.size() > 0) {
                         for (Map.Entry<ContextItem, List<ConectionAdaptContextVariableModel>> entry : adaptMap.entrySet()) {
                             currentContext = entry.getKey();
@@ -195,7 +170,10 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
         }
     }
 
-    private void matchContextForAttribues(NoSQLConnection noSqlConn, ENoSQLParamName noSqlParam, String noSqlVariableName) {
+    @Override
+    protected void matchContextForAttribues(Connection conn, IConnParamName param, String noSqlVariableName) {
+        NoSQLConnection noSqlConn = (NoSQLConnection) conn;
+        EHadoopParamName noSqlParam = (EHadoopParamName) param;
         switch (noSqlParam) {
         case Server:
             noSqlConn.getAttributes().put(INoSQLCommonAttributes.HOST,
@@ -231,17 +209,22 @@ public class NoSQLRepositoryContextHandler implements IRepositoryContextHandler 
             break;
         default:
         }
+
     }
 
-    private String getCorrectVariableName(ContextItem contextItem, String originalVariableName, ENoSQLParamName noSqlParam) {
-        Set<String> contextVarNames = ContextUtils.getContextVarNames(contextItem);
-        if (contextVarNames != null && !contextVarNames.contains(originalVariableName)) {
-            for (String varName : contextVarNames) {
-                if (varName.endsWith(noSqlParam.name())) {
-                    return varName;
-                }
-            }
-        }
-        return originalVariableName;
+    @Override
+    public void revertPropertiesForContextMode(Connection connection, ContextType contextType) {
+
     }
+
+    @Override
+    public Set<String> getConAdditionPropertiesForContextMode(Connection conn) {
+        return Collections.EMPTY_SET;
+    }
+
+    @Override
+    protected void matchAdditionProperties(Connection conn, Map<ContextItem, List<ConectionAdaptContextVariableModel>> adaptMap) {
+        // do nothing since nosql has no additional properties
+    }
+
 }

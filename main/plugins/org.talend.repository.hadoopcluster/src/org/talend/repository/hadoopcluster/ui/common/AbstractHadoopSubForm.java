@@ -66,6 +66,8 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
 
     protected boolean isHDI;
 
+    private HadoopPropertiesDialog propertiesDialog;
+
     /**
      * DOC ycbai AbstractHadoopSubForm constructor comment.
      * 
@@ -95,7 +97,7 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
             enableGroup = EAuthenticationMode.UGI.getName().equals(clusterConnection.getAuthMode());
         }
         isHDI = isHDI(clusterConnection);
-        setupForm();
+        setupForm(true);
     }
 
     private boolean isHDI(HadoopClusterConnection hcConnection) {
@@ -145,13 +147,34 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         List<Map<String, Object>> hadoopPropertiesListOfCluster = HadoopRepositoryUtil
                 .getHadoopPropertiesList(hadoopPropertiesOfCluster);
         List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
-        new HadoopPropertiesDialog(getShell(), hadoopPropertiesListOfCluster, hadoopPropertiesList) {
+        propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesListOfCluster, hadoopPropertiesList) {
 
             @Override
             public void applyProperties(List<Map<String, Object>> properties) {
                 getConnection().setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesJsonStr(properties));
             }
-        }.createPropertiesFields(this);
+        };
+        propertiesDialog.createPropertiesFields(this);
+    }
+
+    protected void updateHadoopPropertiesFields(boolean isEditable) {
+        refreshHadoopProperties(isEditable);
+        updatePropertiesFileds(isEditable);
+    }
+
+    private void refreshHadoopProperties(boolean isEditable) {
+        if (propertiesDialog != null) {
+            List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(getConnection()
+                    .getHadoopProperties());
+            propertiesDialog.setInitProperties(hadoopPropertiesList);
+            propertiesDialog.updateStatusLabel(hadoopPropertiesList);
+        }
+    }
+
+    private void updatePropertiesFileds(boolean isEditable) {
+        if (propertiesDialog != null) {
+            propertiesDialog.updatePropertiesFields(isEditable);
+        }
     }
 
 }

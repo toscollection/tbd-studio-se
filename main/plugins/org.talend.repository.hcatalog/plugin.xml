@@ -101,5 +101,18 @@
          </importItemsHandler>
       </importItemsProvider>
    </extension>
+   <extension
+         point="org.talend.core.repository.repository_context">
+      <RepositoryContext
+            class="org.talend.repository.hcatalog.ui.handler.HCatalogContextHandler">
+      </RepositoryContext>
+   </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.hcatalog.ui.handler.HCatalogContextUpdateService"
+            serviceId="IRepositoryContextUpdateService">
+      </Service>
+   </extension>
 
 </plugin>
