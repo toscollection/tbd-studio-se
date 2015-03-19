@@ -34,6 +34,8 @@ import org.talend.repository.nosql.reflection.NoSQLReflection;
 
 public class MongoDBMetadataProvider extends AbstractMetadataProvider {
 
+    private static final int COUNT_ROWS = 50;
+
     @Override
     public List<MetadataColumn> extractColumns(NoSQLConnection connection, INoSQLSchemaNode node)
             throws NoSQLExtractSchemaException {
@@ -87,15 +89,22 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
             if (db == null) {
                 return metadataColumns;
             }
+            List<String> existColumnNames = new ArrayList<String>();
             Object dbCollection = NoSQLReflection.invokeMethod(db, "getCollection", new Object[] { collectionName }); //$NON-NLS-1$
             Object dbCursor = NoSQLReflection.invokeMethod(dbCollection, "find"); //$NON-NLS-1$
-            Boolean hasNext = (Boolean) NoSQLReflection.invokeMethod(dbCursor, "hasNext"); //$NON-NLS-1$
-            if (hasNext) {
+            int rowNum = 0;
+            while ((Boolean) NoSQLReflection.invokeMethod(dbCursor, "hasNext")) { //$NON-NLS-1$
+                if (rowNum > COUNT_ROWS) {
+                    break;
+                }
                 Object dbObject = NoSQLReflection.invokeMethod(dbCursor, "next"); //$NON-NLS-1$
                 Set<String> columnNames = (Set<String>) NoSQLReflection.invokeMethod(dbObject, "keySet"); //$NON-NLS-1$
                 for (String colName : columnNames) {
-                    MetadataColumn column = ConnectionFactory.eINSTANCE.createMetadataColumn();
                     colName = MetadataToolHelper.validateValue(colName);
+                    if (existColumnNames.contains(colName)) {
+                        continue;
+                    }
+                    MetadataColumn column = ConnectionFactory.eINSTANCE.createMetadataColumn();
                     column.setName(colName);
                     column.setLabel(colName);
                     Object value = NoSQLReflection.invokeMethod(dbObject, "get", new Object[] { colName }); //$NON-NLS-1$
@@ -105,7 +114,9 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
                     }
                     column.setTalendType(javaType.getId());
                     metadataColumns.add(column);
+                    existColumnNames.add(colName);
                 }
+                rowNum++;
             }
         } catch (Exception e) {
             throw new NoSQLExtractSchemaException(e);
