@@ -549,30 +549,44 @@
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 					%>
 					String hdfsUserName_<%=cid%> = (<%=username%> != null && !"".equals(<%=username%>)) ? <%=username%> : System.getProperty("user.name");
-	    			String tezLibFolder_<%=cid%> = "/tmp/" + hdfsUserName_<%=cid%> + "/talend_tez_libs/<%=isCustom?"custom":pigVersion%>";
+	    			String tezLibPath_<%=cid%> = "/tmp/" + hdfsUserName_<%=cid%> + "/talend_tez_libs/<%=isCustom?"custom":pigVersion%>";
 				<%
 				}else{
 				%>
-					String tezLibFolder_<%=cid%> = <%=tezLibFolder%>;
+					String tezLibPath_<%=cid%> = <%=tezLibFolder%>;
 				<%
 				}
 				%>
-				fs_<%=cid%>.mkdirs(new org.apache.hadoop.fs.Path(tezLibFolder_<%=cid%>));
+				fs_<%=cid%>.mkdirs(new org.apache.hadoop.fs.Path(tezLibPath_<%=cid%>));
 				<%
-				//find the local path of the tez lib
-    			String tezLibName = ElementParameterParser.getValue(node, "__TEZ_LIB_NAME__");
+				List<String> tezLibJarsName = new java.util.ArrayList<String>();
+				if(isCustom){
+					List<Map<String,String>> tezLibJarsNameValue = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__TEZ_LIB_NAME__");
+					for(Map<String, String> tezLibJarsNameV : tezLibJarsNameValue){
+						tezLibJarsName.add(tezLibJarsNameV.get("JAR_NAME"));
+					}
+				}else{
+					String tezLibJarsNameValue = ElementParameterParser.getValue(node, "__TEZ_JARS_NAME__");
+	    			if(tezLibJarsNameValue != null && !"".equals(tezLibJarsNameValue)){
+	        			tezLibJarsName = java.util.Arrays.asList(tezLibJarsNameValue.split(","));
+					}
+				}
 				%>
 				String[] classPaths_<%=cid%> = System.getProperty("java.class.path").split(<%if(!isLocal && !isExecutedThroughWebHCat && inMain){%>String.valueOf(globalMap.get("current_client_path_separator"))<%}else{%>System.getProperty("path.separator")<%}%>);
-				String tezLibLocalPath_<%=cid%> = null;
 				for(String classPath_<%=cid%> : classPaths_<%=cid%>){
-					if(classPath_<%=cid%>.endsWith(<%=tezLibName%>)){
-						tezLibLocalPath_<%=cid%> = classPath_<%=cid%>;
+					<%
+					for(String jarName : tezLibJarsName){
+					%>
+						if(classPath_<%=cid%>.endsWith("<%=jarName%>")){
+							org.apache.hadoop.fs.Path tezJarPath_<%=cid%> = new org.apache.hadoop.fs.Path(tezLibPath_<%=cid%> + "/<%=jarName%>");
+							if(!fs_<%=cid%>.exists(tezJarPath_<%=cid%>)){
+								fs_<%=cid%>.copyFromLocalFile(false, false, new org.apache.hadoop.fs.Path(classPath_<%=cid%>), tezJarPath_<%=cid%>);
+							}
+						}
+					<%
 					}
+					%>
 	    		}
-				org.apache.hadoop.fs.Path tezLibPath_<%=cid%> = new org.apache.hadoop.fs.Path(tezLibFolder_<%=cid%> + "/" + <%=tezLibName%>);
-				if(!fs_<%=cid%>.exists(tezLibPath_<%=cid%>)){
-					fs_<%=cid%>.copyFromLocalFile(false, false, new org.apache.hadoop.fs.Path(tezLibLocalPath_<%=cid%>), tezLibPath_<%=cid%>);
-				}
 			<%
 			}else{
 			%>
