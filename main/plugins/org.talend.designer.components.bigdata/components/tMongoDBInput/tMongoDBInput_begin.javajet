@@ -142,7 +142,6 @@
 				}
 			}
 			%>
-			mongo_<%=cid%>.isLocked();
 			<%
 			if(isLog4jEnabled){
 			%>	

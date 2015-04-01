@@ -74,9 +74,6 @@
 		<%
 		}
 	}
-	%>
-	mongo_<%=cid%>.isLocked();
-	<%
 	if(isLog4jEnabled){
 	%>	
 		log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
