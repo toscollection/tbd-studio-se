@@ -8,7 +8,7 @@ imports="
 
 <%
 java.util.List<String> supportNewHbaseApiVersionList = java.util.Arrays.<String>asList(
-	"HDP_2_0","HDP_2_1","PIVOTAL_HD_2_0","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1"
+	"HDP_2_0","HDP_2_1","HDP_2_2","PIVOTAL_HD_2_0","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1"
 );
 
 if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>

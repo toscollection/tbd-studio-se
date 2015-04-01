@@ -9,12 +9,4 @@
             id="org.talend.designer.components.tishadoopprovider.TisHadoopComponentsProvider">
       </ComponentsProvider>
    </extension>
-   <extension
-        point="org.talend.designer.codegen.additional_jetfile">
-        <jetProvider
-            class="org.talend.designer.components.tishadoopprovider.SparkCodeJetFileProvider"
-            id="org.talend.designer.components.tishadoopprovider.SparkCodeJetFileProvider">
-        </jetProvider>
-   </extension>
-
 </plugin>

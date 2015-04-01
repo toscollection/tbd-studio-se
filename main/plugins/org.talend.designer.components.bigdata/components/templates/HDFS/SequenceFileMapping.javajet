@@ -2,7 +2,7 @@
 %>
 <%
 	java.util.List<String> supportShortTypeVersionList = java.util.Arrays.<String>asList(
-		"HDP_2_0","HDP_2_1","Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5",
+		"HDP_2_0","HDP_2_1","HDP_2_2","Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5",
 		"Cloudera_CDH5_1_MR1","Cloudera_CDH5_1","PIVOTAL_HD_1_0_1","PIVOTAL_HD_2_0","MAPR401"
 	);
 	
