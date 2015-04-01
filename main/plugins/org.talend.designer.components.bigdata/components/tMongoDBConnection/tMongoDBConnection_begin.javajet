@@ -56,7 +56,6 @@
 	    }
 	}
 	%>
-	mongo_<%=cid%>.isLocked();
 	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 	<%
 	if (authentication){
@@ -66,7 +65,7 @@
         String passwordFieldName = "__PASSWORD__";
         %>
         
-        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
 	
     	db_<%=cid%>.authenticate(<%=dbuser%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 	<%
