@@ -26,6 +26,7 @@
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
+	String userName = ElementParameterParser.getValue(node, "__USERNAME__");
 	
 	java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
 	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_1_MR1",
@@ -40,6 +41,11 @@
 	config<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
 	config<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
 	config<%=cid%>.set("hbase.cluster.distributed","true"); 
+
+	String username_<%=cid %> = <%=userName%>;
+	if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+		globalMap.put("HADOOP_USER_NAME_<%=cid%>", username_<%=cid %>);
+	}
 <%
 	if(setZNodeParent) {
 %>

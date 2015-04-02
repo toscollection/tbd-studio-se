@@ -48,6 +48,7 @@ if(!"true".equals(useExistingConn)){
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
+	String userName = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 try{
 	conn_<%=cid %> = org.apache.hadoop.hbase.HBaseConfiguration.create();
@@ -55,6 +56,11 @@ try{
 	conn_<%=cid %>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
 	conn_<%=cid %>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
 	conn_<%=cid %>.set("hbase.cluster.distributed","true"); 
+
+	String username_<%=cid %> = <%=userName%>;
+	if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+		System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+	}
 <%
 	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
 	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");		
@@ -91,6 +97,11 @@ try{
 	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 	String conn = "conn_" + connection;
 %>
+	String username_<%=cid %> = (String)globalMap.get("HADOOP_USER_NAME_<%=connection%>");
+	if(username_<%=cid %>!=null && !"".equals(username_<%=cid %>.trim())) {
+		System.setProperty("HADOOP_USER_NAME",username_<%=cid %>);
+	}
+
 	conn_<%=cid %> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
 	if(conn_<%=cid %> == null){
 		throw new RuntimeException("<%=cid %>'s connection is null!");
