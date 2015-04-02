@@ -398,6 +398,15 @@
 				props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>); 
 <%
 				}
+				if(useKrb) {
+				String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASEMASTER_PRINCIPAL__");
+				String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASEREIGONSERVER_PRINCIPAL__");
+%>
+				props_<%=cid%>.put("hbase.security.authentication","kerberos"); 
+				props_<%=cid%>.put("hbase.regionserver.kerberos.principal",<%=hbaseReigonServerPrincipal%>);
+				props_<%=cid%>.put("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
+<%
+				}
 			}
 			
 			if(useKrb) {
