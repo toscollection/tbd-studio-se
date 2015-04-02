@@ -357,6 +357,13 @@
 %>							
 							jsonRow_<%=cid%>.put("columns", columnListForJson_<%=cid%>);
 <%
+						} else {
+							// Undefined schema
+%>
+							if(true){
+								throw new Exception("Schema must be defined for <%=cid%>");
+							}
+<%
 						}
 					}
 				}
