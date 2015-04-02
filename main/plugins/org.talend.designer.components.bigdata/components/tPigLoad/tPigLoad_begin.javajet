@@ -396,15 +396,6 @@
 				props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>); 
 <%
 				}
-				if(useKrb) {
-				String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASEMASTER_PRINCIPAL__");
-				String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASEREIGONSERVER_PRINCIPAL__");
-%>
-				props_<%=cid%>.put("hbase.security.authentication","kerberos"); 
-				props_<%=cid%>.put("hbase.regionserver.kerberos.principal",<%=hbaseReigonServerPrincipal%>);
-				props_<%=cid%>.put("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
-<%
-				}
 			}
 			
 			if(useKrb) {
@@ -412,8 +403,13 @@
 				boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 				String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 				String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+				String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASEMASTER_PRINCIPAL__");
+				String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASEREIGONSERVER_PRINCIPAL__");
 %>
 				props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+				props_<%=cid%>.put("hbase.security.authentication","kerberos"); 
+				props_<%=cid%>.put("hbase.regionserver.kerberos.principal",<%=hbaseReigonServerPrincipal%>);
+				props_<%=cid%>.put("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
 <%				
 				if(isKerberosAvailableHadoop1 || (isCustom && !useYarn)) {
 					String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
