@@ -216,7 +216,7 @@
             StringBuilder createSQL = new StringBuilder();
             createSQL.append("\"CREATE TABLE IF NOT EXISTS \" + tableName_" + cid + " + \"(");
             List<Column> columns = new ArrayList<Column>();
-            if("INSERT".equals(action)){
+            if("INSERT".equals(action) || "UPSERT".equals(action)){
             	columns.addAll(keys);
             	columns.addAll(normals);
             }
