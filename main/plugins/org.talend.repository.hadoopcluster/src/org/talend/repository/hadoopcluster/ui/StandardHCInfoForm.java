@@ -518,6 +518,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 case PIVOTAL_HD_2_0:
                 case HDP_2_0:
                 case HDP_2_1:
+                case HDP_2_2:
                 case CLOUDERA_CDH4_YARN:
                 case CLOUDERA_CDH5:
                 case CLOUDERA_CDH5_1:
