@@ -66,6 +66,7 @@
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh4</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5.1</module>
+		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5.4</module>
 		<module>main/plugins/org.talend.libraries.hadoop.emc.pivotal.1.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.emc.pivotal.2.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.hdp.1.0</module>

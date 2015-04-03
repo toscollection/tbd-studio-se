@@ -308,7 +308,6 @@
 					helper_<%=cid%>.add("jar",getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>"));
 <%
 
-					break;
 				}
 			}
 		}

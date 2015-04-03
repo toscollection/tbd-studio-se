@@ -42,6 +42,7 @@
 			NOT_SHOW_IF="DISTRIBUTION=='CUSTOM'">
 			<ITEMS DEFAULT="Cloudera_CDH5_1">
 				<ITEM NAME="Cloudera_CDH5_1" VALUE="Cloudera_CDH5_1" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
+				<ITEM NAME="Cloudera_CDH5_4" VALUE="Cloudera_CDH5_4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
 			</ITEMS>
 		</PARAMETER>
 		<PARAMETER NAME="HADOOP_CUSTOM_JARS" GROUP="VERSION"
@@ -131,6 +132,10 @@
 				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM')" 
 				BundleID="" />
+				
+			<!-- Cloudera_CDH5_4 -->
+			<IMPORT MODULE_GROUP="IMPALA-LIB-CDH_5_4_LASTEST"
+				REQUIRED_IF="IMPALA_VERSION=='Cloudera_CDH5_4' AND (DISTRIBUTION!='CUSTOM')" />
 		</IMPORTS>
 	</CODEGENERATION>
 
