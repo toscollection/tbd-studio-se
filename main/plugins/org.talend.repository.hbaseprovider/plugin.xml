@@ -63,6 +63,10 @@
             libraries="hadoop-auth-2.4.0.2.1.1.0-385.jar;hadoop-common-2.4.0.2.1.1.0-385.jar;hbase-client-0.98.0.2.1.1.0-385-hadoop2.jar;hbase-common-0.98.0.2.1.1.0-385-hadoop2.jar;hbase-protocol-0.98.0.2.1.1.0-385-hadoop2.jar;zookeeper-3.4.5.2.1.1.0-385.jar;htrace-core-2.04.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-codec-1.7.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.5.5.Final.jar;commons-collections-3.2.1.jar">
       </classloader>
       <classloader
+            index="HBASE:HORTONWORKS:HDP_2_2"
+            libraries="hbase-common-0.98.4.2.2.0.0-2041-hadoop2.jar;hbase-client-0.98.4.2.2.0.0-2041-hadoop2.jar;hbase-protocol-0.98.4.2.2.0.0-2041-hadoop2.jar;zookeeper-3.4.6.2.2.0.0-2041.jar;htrace-core-2.04.jar;commons-logging-1.1.1.jar;commons-codec-1.7.jar;guava-12.0.1.jar;jackson-mapper-asl-1.9.13.jar;jackson-core-asl-1.9.13.jar;netty-3.6.6.Final.jar;hadoop-common-2.6.0.2.2.0.0-2041.jar;hadoop-auth-2.6.0.2.2.0.0-2041.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar">
+      </classloader>
+      <classloader
             index="HBASE:CLOUDERA:Cloudera_CDH3"
             libraries="commons-lang3-3.0.jar;commons-logging-1.1.1.jar;hadoop-core-0.20.203.0.jar;hbase-0.90.1-cdh3u0.jar;log4j-1.2.16.jar;zookeeper-3.3.3-cdh3u0.jar">
       </classloader>
