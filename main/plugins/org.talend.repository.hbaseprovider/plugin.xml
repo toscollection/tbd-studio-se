@@ -32,11 +32,11 @@
       </classloader>
       <classloader
             index="HBASE:APACHE:APACHE_1_0_0"
-            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
+            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
       </classloader>
       <classloader
             index="HBASE:AMAZON_EMR:APACHE_1_0_3_EMR"
-            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
+            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
       </classloader>
       <classloader
             index="HBASE:AMAZON_EMR:APACHE_2_4_0_EMR"
@@ -44,7 +44,7 @@
       </classloader>
       <classloader
             index="HBASE:HORTONWORKS:HDP_1_0"
-            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.15.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
+            libraries="hbase-0.92.0.jar;zookeeper-3.4.2.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar">
       </classloader>
       <classloader
             index="HBASE:HORTONWORKS:HDP_1_2"
