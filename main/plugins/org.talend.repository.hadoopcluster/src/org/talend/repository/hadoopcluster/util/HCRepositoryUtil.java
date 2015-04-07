@@ -67,6 +67,7 @@ public class HCRepositoryUtil {
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_USE_KRB);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_USERNAME);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION);
@@ -425,6 +426,8 @@ public class HCRepositoryUtil {
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_YARN, String.valueOf(hcConnection.isUseYarn()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_KRB, String.valueOf(hcConnection.isEnableKerberos()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, hcConnection.getPrincipal());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL, hcConnection.getJtOrRmPrincipal());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL, hcConnection.getJobHistoryPrincipal());
             map.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER,
                     HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, hcConnection.getUserName());
