@@ -359,11 +359,22 @@
 <%
 						} else {
 							// Undefined schema
+							if(dieOnError) {
 %>
-							if(true){
-								throw new Exception("Schema must be defined for <%=cid%>");
-							}
+							 if(true){
+							 	throw new Exception("Schema must be defined for <%=cid%>");
+							 }
 <%
+							}else{
+%>
+							System.err.println("Schema must be defined for <%=cid%>");
+<%
+								if(isLog4jEnabled) {
+%>
+									log.error("<%=cid%> - Schema must be defined for <%=cid%>");
+<%
+								}
+							}
 						}
 					}
 				}
