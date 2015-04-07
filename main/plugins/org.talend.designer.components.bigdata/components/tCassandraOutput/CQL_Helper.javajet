@@ -76,13 +76,13 @@
         private String[] KeyWords = {"ADD","ALL","ALLOW","ALTER","AND","ANY","APPLY","AS","ASC","ASCII","AUTHORIZE","BATCH","BEGIN","BIGINT","BLOB","BOOLEAN","BY","CLUSTERING","COLUMNFAMILY","COMPACT","CONSISTENCY","COUNT","COUNTER","CREATE","CUSTOM","DECIMAL","DELETE","DESC","DISTINCT","DOUBLE","DROP","EACH_QUORUM","EXISTS","FILTERING","FLOAT","FROM","frozen","GRANT","IF","IN","INDEX","INET","INFINITY","INSERT","INT","INTO","KEY","KEYSPACE","KEYSPACES","LEVEL","LIMIT","LIST","LOCAL_ONE","LOCAL_QUORUM","MAP","MODIFY","NAN","NORECURSIVE","NOSUPERUSER","NOT","OF","ON","ONE","ORDER","PASSWORD","PERMISSION","PERMISSIONS","PRIMARY","QUORUM","RENAME","REVOKE","SCHEMA","SELECT","SET","STATIC","STORAGE","SUPERUSER","TABLE","TEXT","TIMESTAMP","TIMEUUID","THREE","TO","TOKEN","TRUNCATE","TTL","TWO","TYPE","UNLOGGED","UPDATE","USE","USER","USERS","USING","UUID","VALUES","VARCHAR","VARINT","WHERE","WITH","WRITETIME"};
         
         private INode node;
-        private String cid;
         private String action;
+        private String tableName;
 
         public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
-            this.cid = node.getUniqueName();
             this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
+            this.tableName = ElementParameterParser.getValue(node, "__TABLE__");
             createColumnList(columnList);
         }
 
@@ -207,14 +207,14 @@
         private String wrapProtectedChar(String keyword){
         	return getLProtectedChar(keyword) + keyword + getRProtectedChar(keyword);
         }
-        public String getDropTableSQL(){
-            StringBuilder dropTableSQL = new StringBuilder();
-            dropTableSQL.append("\"DROP TABLE IF EXISTS \" + tableName_" + cid);
+ 	    public String getDropTableSQL(){
+ 	    	StringBuilder dropTableSQL = new StringBuilder();
+            dropTableSQL.append("\"DROP TABLE IF EXISTS \" + " + tableName);
             return dropTableSQL.toString();
-        }
+ 	    }   
         public String getCreateTableSQL(){
             StringBuilder createSQL = new StringBuilder();
-            createSQL.append("\"CREATE TABLE IF NOT EXISTS \" + tableName_" + cid + " + \"(");
+            createSQL.append("\"CREATE TABLE IF NOT EXISTS \" + " + tableName + " + \"(");
             List<Column> columns = new ArrayList<Column>();
             if("INSERT".equals(action) || "UPSERT".equals(action)){
             	columns.addAll(keys);
@@ -262,12 +262,12 @@
         }
         public String getDeleteTableSQL(){
             StringBuilder deleteTableSQL = new StringBuilder();
-            deleteTableSQL.append("\"DELETE FROM \" + tableName_" + cid);
+            deleteTableSQL.append("\"DELETE FROM \" + " + tableName);
             return deleteTableSQL.toString();
         }
         public String getTruncateTableSQL(){
             StringBuilder truncateTableSQL = new StringBuilder();
-            truncateTableSQL.append("\"TRUNCATE \" + tableName_" + cid);
+            truncateTableSQL.append("\"TRUNCATE \" + " + tableName);
             return truncateTableSQL.toString();
         }
         public String generatePreActionSQL(){
@@ -281,13 +281,13 @@
         		return "";
         	}
         }
-        public String generateStmt(String inConnName){
+        public String generateStmt(String assignStmt, String inConnName){
         	if("INSERT".equals(action)){
-        		return generateInsertStmt(inConnName);
+        		return generateInsertStmt(assignStmt, inConnName);
         	}else if("UPDATE".equals(action)){
-        		return generateUpdateStmt(inConnName);
+        		return generateUpdateStmt(assignStmt, inConnName);
         	}else if("DELETE".equals(action)){
-        		return generateDeleteStmt(inConnName);
+        		return generateDeleteStmt(assignStmt, inConnName);
         	}else{
         		return "";
         	}
@@ -304,7 +304,7 @@
         	
         	int count = 1;
         	StringBuilder preInsertSQL = new StringBuilder();
-        	preInsertSQL.append("\"INSERT INTO \" + tableName_" + cid + " + \" (");
+        	preInsertSQL.append("\"INSERT INTO \" + " + tableName + " + \" (");
         	for(Column column : columns){
                 preInsertSQL.append(wrapProtectedChar(column.getDBName()));
 				if(count < columns.size()){
@@ -341,7 +341,7 @@
             preInsertSQL.append("\"");
             return preInsertSQL.toString();
         }
-        private String generateInsertStmt(String inConnName){
+        private String generateInsertStmt(String assignStmt, String inConnName){
         	StringBuilder insertStmt = new StringBuilder();
         	List<Column> columns = new ArrayList<Column>();
         	columns.addAll(keys);
@@ -352,14 +352,14 @@
         		columns.add(timestamp);
         	int index = 0;
         	for(Column column : columns){
-        		insertStmt.append(generateSetStmt(column, inConnName, index));
+        		insertStmt.append(generateSetStmt(assignStmt, column, inConnName, index));
         		index++;
         	}
         	return insertStmt.toString();
         }
         private String generatePreUpdateSQL(){
         	StringBuilder preUpdateSQL = new StringBuilder();
-        	preUpdateSQL.append("\"UPDATE \" + tableName_" + cid + "+ \"");
+        	preUpdateSQL.append("\"UPDATE \" + " + tableName + "+ \"");
         	if(ttl != null || timestamp != null){
             	preUpdateSQL.append(" USING ");
             	if(ttl != null){
@@ -438,7 +438,7 @@
             }
             return false;
         }
-        private String generateUpdateStmt(String inConnName){
+        private String generateUpdateStmt(String assignStmt, String inConnName){
         	StringBuilder updateStmt = new StringBuilder();
         	List<Column> columns = new ArrayList<Column>();
         	if(ttl != null)
@@ -455,7 +455,7 @@
         	columns.addAll(conditions);
         	int index = 0;
         	for(Column column : columns){
-        		updateStmt.append(generateSetStmt(column, inConnName, index));
+        		updateStmt.append(generateSetStmt(assignStmt, column, inConnName, index));
         		index++;
         	}
         	return updateStmt.toString();
@@ -474,7 +474,7 @@
                 }
                 count++;
             }
-            preDeleteSQL.append(" FROM \" + tableName_" + cid + " + \"");
+            preDeleteSQL.append(" FROM \" + " + tableName + " + \"");
         	if(timestamp != null){
             	preDeleteSQL.append(" USING ");
         		preDeleteSQL.append(timestamp.getMark());
@@ -513,7 +513,7 @@
             preDeleteSQL.append("\"");
             return preDeleteSQL.toString();
         }
-        private String generateDeleteStmt(String inConnName){
+        private String generateDeleteStmt(String assignStmt, String inConnName){
         	StringBuilder deleteStmt = new StringBuilder();
         	List<Column> columns = new ArrayList<Column>();
             for(Column column : normals){
@@ -530,7 +530,7 @@
 	        }
         	int index = 0;
         	for(Column column : columns){
-        		deleteStmt.append(generateSetStmt(column, inConnName, index));
+        		deleteStmt.append(generateSetStmt(assignStmt, column, inConnName, index));
         		index++;
         	}
         	return deleteStmt.toString();
@@ -543,10 +543,9 @@
             } 
             return dbType;
         }
-        private String generateSetStmt(Column column, String inConnName, int index){
+        private String generateSetStmt(String assignStmt, Column column, String inConnName, int index){
             String dbType = validateDBType(column);
             String columnValue = inConnName + "." + column.getName();
-            String assignStmt = "boundStmt_" + cid;
             StringBuilder setStmt = new StringBuilder();
             if(column.isObject()){
                 setStmt.append("if(" + columnValue + " == null){\r\n");

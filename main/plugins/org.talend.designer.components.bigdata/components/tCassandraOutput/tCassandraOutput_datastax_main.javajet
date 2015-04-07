@@ -33,7 +33,7 @@
     }
     %>
     
-    <%=cqlManager.generateStmt(conn.getName())%>
+    <%=cqlManager.generateStmt("boundStmt_" + cid, conn.getName())%>
     <%
     if(useBatch){
     %>
