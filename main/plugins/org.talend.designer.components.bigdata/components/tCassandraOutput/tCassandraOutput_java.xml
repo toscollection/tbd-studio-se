@@ -607,8 +607,8 @@
                 <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))">
                     <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
                         <IMPORT
-                            MODULE="cassandra-driver-core-2.1.4.jar"
-                            NAME="cassandra-driver-core-2.1.4.jar"/>
+                            MODULE="cassandra-driver-core-2.1.5.jar"
+                            NAME="cassandra-driver-core-2.1.5.jar"/>
                         <IMPORT
                             MODULE="slf4j-api-1.7.5.jar"
                             NAME="slf4j-api-1.7.5.jar"/>    
