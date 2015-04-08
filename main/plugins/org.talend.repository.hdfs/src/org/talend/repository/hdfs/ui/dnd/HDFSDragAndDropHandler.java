@@ -96,6 +96,8 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
                 return hcConnection.getParameters().get(ECustomVersionGroup.PIG.getName());
             }
             return HCVersionUtil.getCompCustomJarsParamFromRep(hcConnection, ECustomVersionGroup.COMMON);
+        } else if (EHDFSRepositoryToComponent.USE_YARN.getRepositoryValue().equals(value)) {
+            return hcConnection.isUseYarn();
         } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(value)) {
             return hcConnection.getAuthMode();
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
@@ -258,6 +260,11 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
                 Map<String, Set<String>> customVersionMap = HCVersionUtil.getRepCustomJarsParamFromComp((String) obj,
                         ECustomVersionGroup.COMMON);
                 HCVersionUtil.injectCustomVersionMap(hcConnection, customVersionMap);
+            }
+        } else if (EHDFSRepositoryToComponent.USE_YARN.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
+            if (value != null) {
+                hcConnection.setUseYarn(Boolean.valueOf(value));
             }
         } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(param.getRepositoryValue())) {
             String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
