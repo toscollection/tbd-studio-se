@@ -38,8 +38,8 @@
         	return typeToGenerate;
         }
         public boolean isObject(){
-        	java.util.List<String> objectTypes = java.util.Arrays.asList(new String[]{"String", "Object", "List", "Boolean", "Bytes", "Date", "BigDecimal", "Double", "Float", "Int", "Long"}); //TODO: missing some types, but for cassandra, it's enough
-        	return objectTypes.contains(getType());
+        	java.util.List<String> objectTypes = java.util.Arrays.asList(new String[]{"String", "Object", "List", "Boolean", "byte[]", "java.util.Date", "BigDecimal", "Double", "Float", "Integer", "Long"}); //TODO: missing some types, but for cassandra, it's enough
+        	return JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable()).contains(getType());
         }
         public boolean isKey(){
         	return column.isKey();
@@ -184,12 +184,13 @@
         protected String getDBMSId(){
             return CASSANDRA;
         }
+        //do not consider keyword as it instability, but you can wrap double quote in dbname on schema manually
         private boolean isKeyword (String keyword){
-            for(int i = 0; i < KeyWords.length; i++){
-                if(KeyWords[i].equalsIgnoreCase(keyword)){
-                    return true;
-                }
-            }
+            //for(int i = 0; i < KeyWords.length; i++){
+            //    if(KeyWords[i].equalsIgnoreCase(keyword)){
+            //        return true;
+            //    }
+            //}
             return false;
         }
         private String getLProtectedChar(String keyword){

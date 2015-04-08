@@ -97,6 +97,17 @@
 			<DEFAULT IF="API_SELECTED == 'hector'">"9160"</DEFAULT>
             <DEFAULT IF="API_SELECTED == 'datastax'">"9042"</DEFAULT>
 		</PARAMETER>
+		<!-- do not want GROUP="KEYSPACE_CONFIGURATION", have to add different PARAMETER  -->
+        <PARAMETER
+            NAME="KEY_SPACE_DATASTAX"
+            FIELD="TEXT"
+            REPOSITORY_VALUE="KEY_SPACE"
+            REQUIRED="true"
+            NUM_ROW="9"
+            SHOW_IF="(API_SELECTED == 'datastax') AND (USE_EXISTING_CONNECTION == 'false')"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"

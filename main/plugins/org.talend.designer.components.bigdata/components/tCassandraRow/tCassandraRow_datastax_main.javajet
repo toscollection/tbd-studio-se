@@ -12,7 +12,7 @@
         <%
         String host = ElementParameterParser.getValue(node,"__HOST__");
         String port = ElementParameterParser.getValue(node,"__PORT__");
-        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE_DATASTAX__");
         String userName = ElementParameterParser.getValue(node, "__USERNAME__");
         String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
         boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
@@ -42,7 +42,7 @@
     <%
     }
     Boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
-    String query = ElementParameterParser.getValue(node, "__QUERY__");
+    String query = ElementParameterParser.getValue(node, "__QUERY__").replaceAll("[\r\n]", " ");
     %>
     try{
     	connection_<%=cid%>.execute(<%=query%>);

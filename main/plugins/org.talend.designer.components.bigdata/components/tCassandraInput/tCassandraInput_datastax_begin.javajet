@@ -33,7 +33,7 @@
 		<%
         String host = ElementParameterParser.getValue(node,"__HOST__");
         String port = ElementParameterParser.getValue(node,"__PORT__");
-        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE_DATASTAX__");
         String userName = ElementParameterParser.getValue(node, "__USERNAME__");
         String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
     	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
@@ -60,9 +60,10 @@
     	com.datastax.driver.core.Session connection_<%=cid%> = cluster_<%=cid%>.connect(<%=keyspace%>);
 	<%
 	}
-	String query = ElementParameterParser.getValue(node, "__QUERY__");	
+	String query = ElementParameterParser.getValue(node, "__QUERY__").replaceAll("[\r\n]", " ");	
 	%>
 	com.datastax.driver.core.ResultSet rs_<%=cid%> = connection_<%=cid%>.execute(<%=query%>);
+	int nb_line_<%=cid%> = 0;
 	for(com.datastax.driver.core.Row row_<%=cid%> : rs_<%=cid%>){
         <%
         String connName = conn.getName();
@@ -111,7 +112,7 @@
     		}else if(javaType == JavaTypesManager.BYTE_ARRAY){
         	%>
         		java.nio.ByteBuffer bytebuffer_<%=columnName%>_<%=cid%> = row_<%=cid%>.getBytes("<%=dbColumnName%>");
-        		byte[] bytes_<%=columnName%>_<%=cid%> = new byte[bytebuffer_<%=columnName%>_<%=cid%>.capacity()];
+        		byte[] bytes_<%=columnName%>_<%=cid%> = new byte[bytebuffer_<%=columnName%>_<%=cid%>.remaining()];
         		bytebuffer_<%=columnName%>_<%=cid%>.get(bytes_<%=columnName%>_<%=cid%>, 0, bytes_<%=columnName%>_<%=cid%>.length);
         		<%=connName%>.<%=columnName%> = bytes_<%=columnName%>_<%=cid%>;	
         	<%	
@@ -142,3 +143,4 @@
     		}
     	}
         %>
+        nb_line_<%=cid%>++;

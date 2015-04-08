@@ -32,7 +32,7 @@
         <%
         String host = ElementParameterParser.getValue(node,"__HOST__");
         String port = ElementParameterParser.getValue(node,"__PORT__");
-        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE_DATASTAX__");
         String userName = ElementParameterParser.getValue(node, "__USERNAME__");
         String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
         boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
@@ -102,6 +102,7 @@
         }
     }
     %>
+	int nb_line_<%=cid%> = 0;
     com.datastax.driver.core.PreparedStatement prepareStmt_<%=cid%> = null;
     prepareStmt_<%=cid%> = connection_<%=cid%>.prepare(<%=cqlManager.generatePreActionSQL()%>);
     com.datastax.driver.core.BoundStatement boundStmt_<%=cid%> = null;
