@@ -89,6 +89,8 @@ imports="
         	String zookeeperClientPortForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
         	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
 			String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
+			String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
+			String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REIGONSERVER_PRINCIPAL__");
         	String defineRegisterJar = ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__");
         	List<Map<String, String>> registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 
@@ -255,6 +257,19 @@ imports="
 				<%if(setZNodeParent && zNodeParent!=null && !"".equals(zNodeParent) && !"\"\"".equals(zNodeParent)) {%>
 					statement_<%=cid%>.execute("SET zookeeper.znode.parent="+<%=zNodeParent%>);
 				<%}%>
+
+				<%if(useKrb){%>
+					statement_<%=cid%>.execute("SET hbase.security.authentication=kerberos");
+					statement_<%=cid%>.execute("SET hbase.rpc.engine=org.apache.hadoop.hbase.ipc.SecureRpcEngine");
+
+					<%if(hbaseMasterPrincipal!=null && !"".equals(hbaseMasterPrincipal) && !"\"\"".equals(hbaseMasterPrincipal)){%>
+						statement_<%=cid%>.execute("SET hbase.master.kerberos.principal="+<%=hbaseMasterPrincipal%>);
+					<%}%>
+					<%if(hbaseReigonServerPrincipal!=null && !"".equals(hbaseReigonServerPrincipal) && !"\"\"".equals(hbaseReigonServerPrincipal)){%>
+						statement_<%=cid%>.execute("SET hbase.regionserver.kerberos.principal="+<%=hbaseReigonServerPrincipal%>);
+					<%}%>
+				<%}%>
+
         		<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
         			for(Map<String, String> jar : registerJarForHBase){
         				String path = jar.get("JAR_PATH");
