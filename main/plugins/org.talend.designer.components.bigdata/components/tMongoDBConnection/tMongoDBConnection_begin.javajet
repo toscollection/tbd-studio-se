@@ -24,6 +24,9 @@
     List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
     boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));
     String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
+    if (dbversion.equals("MONGODB_2_1_2") || dbversion.equals("MONGODB_2_2_3")) {
+        setReadPreference = false;
+    }
 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     if(useReplicaSet){
@@ -56,6 +59,7 @@
 	    }
 	}
 	%>
+	mongo_<%=cid%>.getAddress() ;
 	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 	<%
 	if (authentication){
