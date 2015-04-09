@@ -607,17 +607,25 @@
                 <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))">
                     <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
                         <IMPORT
-                            MODULE="cassandra-driver-core-2.1.5.jar"
-                            NAME="cassandra-driver-core-2.1.5.jar"/>
-                        <IMPORT
-                            MODULE="slf4j-api-1.7.5.jar"
-                            NAME="slf4j-api-1.7.5.jar"/>    
-                        <IMPORT
-                            MODULE="guava-14.0.1.jar"
-                            NAME="guava-14.0.1.jar"/>
-                        <IMPORT
-                            MODULE="metrics-core-3.0.2.jar"
-                            NAME="metrics-core-3.0.2.jar"/>    
+	                        MODULE="cassandra-driver-core-2.1.5.jar"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-2.1.5.jar"
+	                        NAME="cassandra-driver-core-2.1.5.jar"/>
+	                    <IMPORT
+	                        MODULE="slf4j-api-1.7.5.jar"
+	                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
+	                        NAME="slf4j-api-1.7.5.jar"/>    
+	                    <IMPORT
+	                        MODULE="guava-14.0.1.jar"
+	                        UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.1.jar"
+	                        NAME="guava-14.0.1.jar"/>
+	                    <IMPORT
+	                        MODULE="metrics-core-3.0.2.jar"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.0.2.jar"
+	                        NAME="metrics-core-3.0.2.jar"/>
+	                    <IMPORT
+	                        MODULE="netty-3.9.0.Final.jar"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-3.9.0.Final.jar"
+	                        NAME="netty-3.9.0.Final.jar"/> 
                     </IMPORTS>
                 </IMPORTS>
             </IMPORTS>

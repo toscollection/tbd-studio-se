@@ -226,7 +226,11 @@
 	                <IMPORT
 	                    MODULE="metrics-core-3.0.2.jar"
 	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.0.2.jar"
-	                    NAME="metrics-core-3.0.2.jar"/>    
+	                    NAME="metrics-core-3.0.2.jar"/>
+	                <IMPORT
+                        MODULE="netty-3.9.0.Final.jar"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-3.9.0.Final.jar"
+                        NAME="netty-3.9.0.Final.jar"/>    
                 </IMPORTS>
             </IMPORTS>
     	</IMPORTS>
