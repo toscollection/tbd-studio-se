@@ -20,7 +20,6 @@
     String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
     boolean authentication = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     boolean useReplicaSet = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
-    boolean useSSL = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
     String dbport = ElementParameterParser.getValue(node, "__PORT__");
     List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
     boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));
@@ -29,50 +28,37 @@
         setReadPreference = false;
     }
 
-    String mongoDbDriver = "com.mongodb.MongoClient";
-    if (dbversion.equals("MONGODB_2_1_2") || dbversion.equals("MONGODB_2_2_3")) {
-        mongoDbDriver = "com.mongodb.Mongo";
-    }
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-    
-    if (useSSL) {
-        %>
-        MongoClientOptions clientOptions_<%=cid%> = new MongoClientOptions.Builder()
-        .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
-        .build();
-        <%
-    }
-
     if(useReplicaSet){
-	%>
-		List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
-		<%
-		for(Map<String,String> replicaAddr:replicaAddrs){
-		%>
-			addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
-		<%
-		}
-        if (useSSL) {
+    %>
+        List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+        <%
+        for(Map<String,String> replicaAddr:replicaAddrs){
             %>
-	        com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>, clientOptions_<%=cid%>);
-	        <%
-	    } else {
-	        %>
-            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>);
+            addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
             <%
-	    }
-	}else{
-        if (useSSL) {
+        }
+        if (dbversion.equals("MONGODB_2_4_X") || dbversion.equals("MONGODB_2_5_X") || dbversion.equals("MONGODB_2_6_X")) {
             %>
-            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%> + ":" +  <%=dbport%>, clientOptions_<%=cid%>);
+            com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.MongoClient(addrs_<%=cid%>);
             <%
         } else {
             %>
-            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%>, <%=dbport%>);
+            com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
             <%
         }
-	}
+    }else{
+        if (dbversion.equals("MONGODB_2_4_X") || dbversion.equals("MONGODB_2_5_X") || dbversion.equals("MONGODB_2_6_X")) {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.MongoClient(<%=dbhost%>, <%=dbport%>);
+            <%
+        } else {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
+            <%
+        }
+    }
 	%>
 	mongo_<%=cid%>.getAddress() ;
 	com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
