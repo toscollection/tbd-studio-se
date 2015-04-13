@@ -309,7 +309,6 @@ imports="
 
 			boolean useSsl = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
 			String sslTrustStore = ElementParameterParser.getValue(node, "__SSL_TRUST_STORE__");
-			String sslTrustStorePassword = ElementParameterParser.getValue(node, "__SSL_TRUST_STORE_PASSWORD__");
 
 			if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer))
 			 || ("HDP_1_3".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer)) || ("HDP_2_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer))
@@ -424,8 +423,18 @@ imports="
 				} else {
 					// Using SSL in non Secure Mode
 					if(useSsl){
+						String sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
+						if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
-						String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + <%=sslTrustStorePassword%>;
+							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
+<%
+						}else{
+%>
+							String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(node, sslStorepasswordFieldName)%>; 
+<%
+						}
+%>
+						String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
 					}else{
 %>
