@@ -125,7 +125,23 @@
 				}
 			}else{
 	 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
-	   			if(useReplicaSet){
+	 		    boolean useSSL = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
+	 		    String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+
+	 		    String mongoDbDriver = "com.mongodb.MongoClient";
+	 		    if (dbversion.equals("MONGODB_2_1_2") || dbversion.equals("MONGODB_2_2_3")) {
+	 		        mongoDbDriver = "com.mongodb.Mongo";
+	 		        useSSL = false;
+	 		    }
+
+	 		    if (useSSL) {
+	 		        %>
+	 		        com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder()
+	 		        .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
+	 		        .build();
+	 		        <%
+	 		    }
+	 		    if(useReplicaSet){
 				%>
 					List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
 					<%
@@ -134,13 +150,25 @@
 					addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
 					<%
 					}
-					%>
-				mongo_<%=cid%> = new com.mongodb.Mongo(addrs_<%=cid%>);
-				<%
+			        if (useSSL) {
+			            %>
+			            mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>, clientOptions_<%=cid%>);
+			            <%
+			        } else {
+			            %>
+			            mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>);
+			            <%
+			        }
 				}else{
-				%>
-					mongo_<%=cid%> = new com.mongodb.Mongo(<%=dbhost%>, <%=dbport%>);
-				<%
+			        if (useSSL) {
+			            %>
+			            mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%> + ":" +  <%=dbport%>, clientOptions_<%=cid%>);
+			            <%
+			        } else {
+			            %>
+			            mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%>, <%=dbport%>);
+			            <%
+			        }
 				}
 				%>
 				resourceMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
