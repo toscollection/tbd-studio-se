@@ -18,6 +18,7 @@
     String dbhost   = ElementParameterParser.getValue(node, "__HOST__");
     String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
     String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
+    boolean useSSL ="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
@@ -128,6 +129,11 @@
 			args_<%=cid%>.add("--host");
 			args_<%=cid%>.add(repHosts_<%=cid%>.toString());
 		<%
+		}
+		if (useSSL) {
+		    %>
+            args_<%=cid%>.add("--ssl");
+            <%
 		}
 	}
 	
