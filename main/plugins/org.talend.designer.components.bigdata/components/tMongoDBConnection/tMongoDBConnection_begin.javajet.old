@@ -1,0 +1,128 @@
+<%@ jet 
+    imports="
+        org.talend.core.model.process.INode 
+        org.talend.core.model.process.ElementParameterParser 
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        
+        java.util.Map
+        java.util.List
+    " 
+%>
+<%
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+
+    INode node = (INode)codeGenArgument.getArgument();
+    String cid = node.getUniqueName();
+    String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
+    String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
+    String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+    boolean authentication = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    boolean useReplicaSet = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
+    boolean useSSL = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
+    String dbport = ElementParameterParser.getValue(node, "__PORT__");
+    List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
+    boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));
+    String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
+    
+    String mongoDbDriver = "com.mongodb.MongoClient";
+    if (dbversion.equals("MONGODB_2_1_2") || dbversion.equals("MONGODB_2_2_3")) {
+        mongoDbDriver = "com.mongodb.Mongo";
+        useSSL = false;
+        setReadPreference = false;
+    }
+    
+    boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    
+    if (useSSL) {
+        %>
+        com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder()
+        .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
+        .build();
+        <%
+    }
+
+    if(useReplicaSet){
+    %>
+        List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
+        <%
+        for(Map<String,String> replicaAddr:replicaAddrs){
+        %>
+            addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
+        <%
+        }
+        if (useSSL) {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>, clientOptions_<%=cid%>);
+            <%
+        } else {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>);
+            <%
+        }
+    }else{
+        if (useSSL) {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%> + ":" +  <%=dbport%>, clientOptions_<%=cid%>);
+            <%
+        } else {
+            %>
+            com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%>, <%=dbport%>);
+            <%
+        }
+    }
+    %>
+    mongo_<%=cid%>.getAddress() ;
+    com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+    <%
+    if (authentication){
+    %>
+    
+        <%
+        String passwordFieldName = "__PASSWORD__";
+        %>
+        
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+    
+        db_<%=cid%>.authenticate(<%=dbuser%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+    <%
+    }
+    if(isLog4jEnabled){
+    %>  
+        log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
+    <%
+    }
+
+    if (setReadPreference) {
+        if (readPreference.equals("PRIMARY")) {
+            %>
+            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.primary());
+            <%
+        } else if (readPreference.equals("PRIMARY_PREFERRED")) {
+            %>
+            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.primaryPreferred());
+            <%
+        } else if (readPreference.equals("SECONDARY")) {
+            %>
+            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.secondary());
+            <%
+        } else if (readPreference.equals("SECONDARY_PREFERRED")) {
+            %>
+            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.secondaryPreferred());
+            <%
+        } else if (readPreference.equals("NEAREST")) {
+            %>
+            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.nearest());
+            <%
+        } else {
+            %>
+            // Unhandled
+            <%
+        }
+    }
+    %>
+    
+    globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
+    globalMap.put("db_<%=cid%>", db_<%=cid%>);
+    
