@@ -171,6 +171,11 @@
 					.setPageToken(pageToken).execute();
 		
 		List<com.google.api.services.bigquery.model.TableRow> rows_<%=cid %> = dataList_<%=cid %>.getRows();
+
+		if(rows_<%=cid %> == null) {
+			// Means there is no record.
+			rows_<%=cid %> = new java.util.ArrayList<com.google.api.services.bigquery.model.TableRow>();
+		}
 		
 		for (com.google.api.services.bigquery.model.TableRow row_<%=cid %> : rows_<%=cid %>) {
 			java.util.List<com.google.api.services.bigquery.model.TableCell> field_<%=cid %> = row_<%=cid %>.getF();
@@ -203,6 +208,7 @@
 								String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern(); 
 								%>
 								value_<%=cid%> = field_<%=cid %>.get(<%=i%>).getV();
+								if(com.google.api.client.util.Data.isNull(value_<%=cid%>)) value_<%=cid%> = null;
 								if(value_<%=cid%> != null){
 									
 									<%
