@@ -25,6 +25,8 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.utils.ContextParameterUtils;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.common.IHadoopClusterInfoForm;
@@ -63,13 +65,33 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         super(parent, SWT.NONE, existingNames);
         this.connectionItem = connectionItem;
         setConnectionItem(connectionItem);
-        setupForm();
+        setupForm(true);
         init();
         setLayoutData(new GridData(GridData.FILL_BOTH));
         GridLayout layout = (GridLayout) getLayout();
         layout.marginWidth = 0;
         layout.marginHeight = 0;
         setLayout(layout);
+    }
+
+    @Override
+    protected void initialize() {
+        init();
+    }
+
+    @Override
+    protected void updatePasswordFields() {
+        if (!isContextMode()) {
+            hdiPasswordText.getTextControl().setEchoChar('*');
+            azurePasswordText.getTextControl().setEchoChar('*');
+        } else {
+            if (hdiPasswordText.getText().startsWith(ContextParameterUtils.JAVA_NEW_CONTEXT_PREFIX)) {
+                hdiPasswordText.getTextControl().setEchoChar('\0');
+            }
+            if (azurePasswordText.getText().startsWith(ContextParameterUtils.JAVA_NEW_CONTEXT_PREFIX)) {
+                azurePasswordText.getTextControl().setEchoChar('\0');
+            }
+        }
     }
 
     public void init() {
@@ -107,6 +129,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
                 ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
         azureDeployBlobText.setText(azureDeployBlob);
 
+        updatePasswordFields();
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -124,6 +147,23 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         azureUsernameText.setReadOnly(readOnly);
         azurePasswordText.setReadOnly(readOnly);
         azureDeployBlobText.setReadOnly(readOnly);
+    }
+
+    @Override
+    protected void updateEditableStatus(boolean isEditable) {
+        whcHostnameText.setEditable(isEditable);
+        whcPortText.setEditable(isEditable);
+        whcPortText.setEditable(isEditable);
+        whcUsernameText.setEditable(isEditable);
+        whcJobResultFolderText.setEditable(isEditable);
+        hdiUsernameText.setEditable(isEditable);
+        hdiPasswordText.setEditable(isEditable);
+        azureHostnameText.setEditable(isEditable);
+        azureContainerText.setEditable(isEditable);
+        azureUsernameText.setEditable(isEditable);
+        azurePasswordText.setEditable(isEditable);
+        azureDeployBlobText.setEditable(isEditable);
+        ((HadoopClusterForm) this.getParent()).updateEditableStatus(isEditable);
     }
 
     @Override
@@ -149,6 +189,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         hdiUsernameText = new LabelledText(hdiGroup, Messages.getString("HadoopClusterForm.text.hdi.username"), 1); //$NON-NLS-1$
         hdiPasswordText = new LabelledText(hdiGroup,
                 Messages.getString("HadoopClusterForm.text.hdi.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        hdiPasswordText.getTextControl().setEchoChar('*');
     }
 
     private void addAzureFields() {
@@ -159,6 +200,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         azureUsernameText = new LabelledText(azureGroup, Messages.getString("HadoopClusterForm.text.azure.username"), 1); //$NON-NLS-1$
         azurePasswordText = new LabelledText(azureGroup,
                 Messages.getString("HadoopClusterForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        azurePasswordText.getTextControl().setEchoChar('*');
         azureDeployBlobText = new LabelledText(azureGroup, Messages.getString("HadoopClusterForm.text.azure.deployBlob"), 1); //$NON-NLS-1$
     }
 
@@ -259,7 +301,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
 
     @Override
     public void updateForm() {
-        // Do nothing
+        adaptFormToEditable();
     }
 
     @Override
@@ -328,6 +370,33 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         if (visible) {
             updateStatus(getStatusLevel(), getStatus());
         }
+    }
+
+    @Override
+    protected void collectConParameters() {
+        collectWebHcatParameters(true);
+        collectHdiParameters(true);
+        collectKeyAzureParameters(true);
+    }
+
+    private void collectWebHcatParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.WebHostName, isUse);
+        addContextParams(EHadoopParamName.WebPort, isUse);
+        addContextParams(EHadoopParamName.WebUser, isUse);
+        addContextParams(EHadoopParamName.WebJobResFolder, isUse);
+    }
+
+    private void collectHdiParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.HDIUser, isUse);
+        addContextParams(EHadoopParamName.HDIPassword, isUse);
+    }
+
+    private void collectKeyAzureParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.KeyAzureHost, isUse);
+        addContextParams(EHadoopParamName.KeyAzureContainer, isUse);
+        addContextParams(EHadoopParamName.KeyAzuresUser, isUse);
+        addContextParams(EHadoopParamName.KeyAzurePassword, isUse);
+        addContextParams(EHadoopParamName.KeyAzureDeployBlob, isUse);
     }
 
 }

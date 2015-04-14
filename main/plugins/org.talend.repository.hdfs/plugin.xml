@@ -94,5 +94,18 @@
          </importItemsHandler>
       </importItemsProvider>
    </extension>
+   <extension
+         point="org.talend.core.repository.repository_context">
+      <RepositoryContext
+            class="org.talend.repository.hdfs.ui.handler.HdfsContextHandler">
+      </RepositoryContext>
+   </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.hdfs.ui.handler.HdfsContextUpdateService"
+            serviceId="IRepositoryContextUpdateService">
+      </Service>
+   </extension>
 
 </plugin>

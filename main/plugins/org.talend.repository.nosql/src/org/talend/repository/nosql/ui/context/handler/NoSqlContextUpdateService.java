@@ -14,7 +14,7 @@ package org.talend.repository.nosql.ui.context.handler;
 
 import java.util.Map;
 
-import org.talend.core.IRepositoryContextUpdateService;
+import org.talend.core.AbstractRepositoryContextUpdateService;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.repository.model.nosql.NoSQLConnection;
 
@@ -22,15 +22,15 @@ import org.talend.repository.model.nosql.NoSQLConnection;
  * created by ldong on Mar 5, 2015 Detailled comment
  * 
  */
-public class NoSqlContextUpdateService implements IRepositoryContextUpdateService {
+public class NoSqlContextUpdateService extends AbstractRepositoryContextUpdateService {
 
     @Override
-    public void updateRelatedContextVariableName(Connection conn, String oldName, String newName) {
+    public void updateRelatedContextVariable(Connection conn, String oldValue, String newValue) {
         if (conn instanceof NoSQLConnection) {
             NoSQLConnection noSqlConn = (NoSQLConnection) conn;
             for (Map.Entry<String, String> attr : noSqlConn.getAttributes()) {
-                if (attr.getValue().equals(oldName)) {
-                    attr.setValue(newName);
+                if (attr.getValue().equals(oldValue)) {
+                    attr.setValue(newValue);
                 }
             }
         }

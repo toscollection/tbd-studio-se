@@ -38,7 +38,7 @@ import org.talend.commons.utils.data.list.IListenableListListener;
 import org.talend.commons.utils.data.list.ListenableListEvent;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.utils.ContextParameterUtils;
-import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.mongodb.IMongoConstants;
@@ -468,9 +468,9 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
     }
 
     private void collectReplicaParameters(boolean isNeed) {
-        addContextParams(ENoSQLParamName.Server, isNeed);
-        addContextParams(ENoSQLParamName.Port, isNeed);
-        addContextParams(ENoSQLParamName.Database, true);
+        addContextParams(EHadoopParamName.Server, isNeed);
+        addContextParams(EHadoopParamName.Port, isNeed);
+        addContextParams(EHadoopParamName.Database, true);
     }
 
     /*

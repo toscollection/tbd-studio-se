@@ -13,6 +13,7 @@
 package org.talend.repository.hadoopcluster.ui.common;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -40,6 +41,10 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         // Do nothing by default.
     }
 
+    protected void updatePasswordFields() {
+
+    }
+
     @Override
     protected void addUtilsButtonListeners() {
         // Do nothing by default.
@@ -56,6 +61,24 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
     }
 
     @Override
+    protected void adaptFormToEditable() {
+        super.adaptFormToEditable();
+        updateEditableStatus(isEditable());
+    }
+
+    public void processWhenShowPage(WizardPage page) {
+        adaptFormToEditable();
+    }
+
+    protected void updateEditableStatus(boolean isEditable) {
+        // Do nothing by default.
+    }
+
+    protected boolean isEditable() {
+        return !isReadOnly() && !isContextMode();
+    }
+
+    @Override
     public boolean checkFieldsValue() {
         return false;
     }
@@ -68,6 +91,7 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         return StringUtils.isNotEmpty(value);
     }
 
+    @Override
     protected void hideControl(Control control, boolean hide) {
         GridData dataBtn = (GridData) control.getLayoutData();
         dataBtn.exclude = hide;
@@ -107,6 +131,26 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         }
 
         return array;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.metadata.managment.ui.wizard.AbstractForm#exportAsContext()
+     */
+    @Override
+    protected void exportAsContext() {
+        collectConParameters();
+        super.exportAsContext();
+    }
+
+    @Override
+    protected void revertContext() {
+        super.revertContext();
+    }
+
+    protected void collectConParameters() {
+
     }
 
 }

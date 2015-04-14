@@ -13,11 +13,11 @@
 package org.talend.repository.hadoopcluster.ui;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.metadata.managment.ui.wizard.AbstractForm;
+import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopClusterWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
@@ -26,7 +26,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
  * created by ycbai on 2013-1-21 Detailled comment
  * 
  */
-public class HadoopClusterWizardPage extends WizardPage {
+public class HadoopClusterWizardPage extends AbstractHadoopClusterWizardPage {
 
     private ConnectionItem connectionItem;
 
@@ -40,7 +40,7 @@ public class HadoopClusterWizardPage extends WizardPage {
 
     public HadoopClusterWizardPage(ConnectionItem connectionItem, boolean isRepositoryObjectEditable, String[] existingNames,
             boolean creation) {
-        super("HadoopClusterWizardPage"); //$NON-NLS-1$
+        super("HadoopClusterWizardPage", creation); //$NON-NLS-1$
         this.connectionItem = connectionItem;
         this.existingNames = existingNames;
         this.creation = creation;
@@ -83,4 +83,24 @@ public class HadoopClusterWizardPage extends WizardPage {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp("org.talend.help.hadoop_cluster_metadata");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
+     */
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            AbstractHadoopForm form = getForm();
+            if (form != null) {
+                form.processWhenShowPage(this);
+            }
+        }
+    }
+
+    @Override
+    protected AbstractHadoopForm getForm() {
+        return hadoopClusterForm;
+    }
 }

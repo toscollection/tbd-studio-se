@@ -33,7 +33,7 @@ import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
-import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.ENoSQLParamName;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.nosql.RepositoryNoSQLPlugin;
 import org.talend.repository.nosql.constants.INoSQLConstants;
 import org.talend.repository.nosql.context.NoSQLConnectionContextManager;
@@ -213,8 +213,8 @@ public abstract class AbstractNoSQLConnForm extends AbstractNoSQLForm {
     }
 
     protected void collectAuthParams(boolean isNeed) {
-        addContextParams(ENoSQLParamName.UserName, isNeed);
-        addContextParams(ENoSQLParamName.Password, isNeed);
+        addContextParams(EHadoopParamName.UserName, isNeed);
+        addContextParams(EHadoopParamName.Password, isNeed);
     }
 
     protected void collectNoSqlAttributesForContext() {

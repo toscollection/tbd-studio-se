@@ -23,6 +23,7 @@ import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.oozie.i18n.Messages;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
@@ -250,6 +251,14 @@ public class OozieForm extends AbstractOozieForm {
         return true;
     }
 
+    @Override
+    protected void updateEditableStatus(boolean isEditable) {
+        kerbBtn.setEnabled(isEditable && enableKerberos);
+        userNameText.setEditable(isEditable && !enableKerberos);
+        endPonitText.setEditable(isEditable);
+        updateHadoopPropertiesFields(isEditable);
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -264,6 +273,7 @@ public class OozieForm extends AbstractOozieForm {
             adaptFormToReadOnly();
         }
         if (visible) {
+            adaptFormToEditable();
             updateStatus(getStatusLevel(), getStatus());
         }
     }
@@ -274,6 +284,21 @@ public class OozieForm extends AbstractOozieForm {
 
     public List<HashMap<String, Object>> getProperties() {
         return properties;
+    }
+
+    @Override
+    protected void collectConParameters() {
+        collectAuthSetingParameters(!enableKerberos);
+        collectConnSetingParameters(true);
+
+    }
+
+    private void collectAuthSetingParameters(boolean useKerberos) {
+        addContextParams(EHadoopParamName.OozieUser, useKerberos);
+    }
+
+    private void collectConnSetingParameters(boolean isUse) {
+        addContextParams(EHadoopParamName.OozieEndpoint, true);
     }
 
 }

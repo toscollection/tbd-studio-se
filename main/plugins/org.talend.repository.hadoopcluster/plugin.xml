@@ -243,4 +243,17 @@
              name="Property Type (Hadoop Cluster)">
        </parameterHandler>
     </extension>
+    <extension
+          point="org.talend.core.repository.repository_context">
+       <RepositoryContext
+             class="org.talend.repository.hadoopcluster.ui.context.handler.HadoopClusterContextHandler">
+       </RepositoryContext>
+    </extension>
+    <extension
+          point="org.talend.core.runtime.service">
+       <Service
+             class="org.talend.repository.hadoopcluster.ui.context.handler.HadoopClusterContextUpdateService"
+             serviceId="IRepositoryContextUpdateService">
+       </Service>
+    </extension>
 </plugin>

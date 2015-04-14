@@ -46,6 +46,7 @@ import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 import org.talend.designer.hdfsbrowse.hadoop.service.check.CheckHadoopServicesDialog;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.metadata.managment.ui.dialog.HadoopPropertiesDialog;
+import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.common.IHadoopClusterInfoForm;
@@ -85,6 +86,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private Group customGroup;
 
+    private HadoopPropertiesDialog propertiesDialog;
+
     private UtilsButton checkServicesBtn;
 
     private final boolean creation;
@@ -92,6 +95,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     protected EHadoopDistributions hadoopDistribution;
 
     protected EHadoopVersion4Drivers hadoopVersison;
+
+    private boolean needInitializeContext = false;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             EHadoopDistributions hadoopDistribution, EHadoopVersion4Drivers hadoopVersison) {
@@ -101,13 +106,21 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         this.hadoopDistribution = hadoopDistribution;
         this.hadoopVersison = hadoopVersison;
         setConnectionItem(connectionItem);
-        setupForm();
+        setupForm(true);
         init();
         setLayoutData(new GridData(GridData.FILL_BOTH));
         GridLayout layout = (GridLayout) getLayout();
         layout.marginWidth = 0;
         layout.marginHeight = 0;
         setLayout(layout);
+    }
+
+    @Override
+    public void initialize() {
+        // initialize for context mode
+        if (needInitializeContext) {
+            init();
+        }
     }
 
     public void init() {
@@ -130,7 +143,10 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         userNameText.setText(connection.getUserName());
         groupText.setText(connection.getGroup());
 
-        fillDefaults();
+        if (!isContextMode()) {
+            fillDefaults();
+        }
+        needInitializeContext = true;
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -145,6 +161,26 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         jobHistoryPrincipalText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
         groupText.setReadOnly(readOnly);
+    }
+
+    @Override
+    protected void updateEditableStatus(boolean isEditable) {
+        authenticationCombo.setEnabled(isEditable);
+        namenodeUriText.setEditable(isEditable);
+        jobtrackerUriText.setEditable(isEditable);
+        kerberosBtn.setEnabled(isEditable && (isCurrentHadoopVersionSupportSecurity() || isCustomUnsupportHasSecurity()));
+        boolean isKerberosEditable = kerberosBtn.isEnabled() && kerberosBtn.getSelection();
+        namenodePrincipalText.setEditable(isKerberosEditable);
+        jtOrRmPrincipalText.setEditable(isKerberosEditable);
+        jobHistoryPrincipalText.setEditable(isKerberosEditable);
+        userNameText.setEditable(isEditable && !kerberosBtn.getSelection());
+        groupText.setEditable(isEditable && (isCurrentHadoopVersionSupportGroup() || isCustomUnsupportHasGroup()));
+        keytabBtn.setEnabled(isEditable && kerberosBtn.getSelection());
+        boolean isKeyTabEditable = keytabBtn.isEnabled() && keytabBtn.getSelection();
+        keytabText.setEditable(isKeyTabEditable);
+        keytabPrincipalText.setEditable(isKeyTabEditable);
+        getConnection().getHadoopProperties();
+        updateOtherFormRelateFields(isEditable);
     }
 
     @Override
@@ -234,14 +270,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     protected void addHadoopPropertiesFields() {
         String hadoopProperties = getConnection().getHadoopProperties();
         List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
-        new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
+        propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
 
             @Override
             public void applyProperties(List<Map<String, Object>> properties) {
                 getConnection().setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesJsonStr(properties));
             }
 
-        }.createPropertiesFields(this);
+        };
+        propertiesDialog.createPropertiesFields(this);
     }
 
     private void addCheckFields() {
@@ -437,7 +474,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     public void updateForm() {
         HadoopClusterConnection connection = getConnection();
         String distribution = connection.getDistribution();
-        if (EHadoopDistributions.CUSTOM.getName().equals(distribution)) {
+        boolean isCustomDistribution = EHadoopDistributions.CUSTOM.getName().equals(distribution);
+        if (isCustomDistribution) {
             hideControl(customGroup, false);
             String authModeName = connection.getAuthMode();
             if (authModeName != null) {
@@ -491,9 +529,13 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             groupText.setEditable(version4Drivers.isSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
+
         }
         updateMRRelatedContent();
         updateConnectionContent();
+        if (isContextMode()) {
+            adaptFormToEditable();
+        }
     }
 
     /**
@@ -534,6 +576,43 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         return isSupport;
     }
 
+    private boolean isCurrentHadoopVersionSupportGroup() {
+        boolean supportGroup = false;
+        EHadoopVersion4Drivers driver = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
+        if (driver != null) {
+            supportGroup = driver.isSupportGroup();
+        }
+        return supportGroup;
+    }
+
+    private boolean isCustomUnsupportHasGroup() {
+        EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(getConnection().getAuthMode(), false);
+        return authMode.equals(EAuthenticationMode.UGI);
+    }
+
+    private boolean isCustomUnsupportHasSecurity() {
+        EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(getConnection().getAuthMode(), false);
+        return authMode.equals(EAuthenticationMode.KRB);
+    }
+
+    private boolean isCurrentHadoopVersionSupportSecurity() {
+        boolean supportSecurity = false;
+        EHadoopVersion4Drivers driver = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
+        if (driver != null) {
+            supportSecurity = driver.isSupportSecurity();
+        }
+        return supportSecurity;
+    }
+
+    private boolean isCurrentHadoopVersionSupportYarn() {
+        boolean supportYarn = false;
+        EHadoopVersion4Drivers driver = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
+        if (driver != null) {
+            supportYarn = driver.isSupportYARN();
+        }
+        return supportYarn;
+    }
+
     private void updateMRRelatedContent() {
         boolean useYarn = getConnection().isUseYarn();
         jobtrackerUriText
@@ -557,6 +636,27 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         if (!userNameText.getEditable()) {
             userNameText.setText(EMPTY_STRING);
+        }
+    }
+
+    private void updateOtherFormRelateFields(boolean isEditable) {
+        ((HadoopClusterForm) this.getParent()).updateEditableStatus(isEditable);
+        refreshHadoopProperties(isEditable);
+        updatePropertiesFileds(isEditable);
+    }
+
+    private void refreshHadoopProperties(boolean isEditable) {
+        if (propertiesDialog != null) {
+            List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(getConnection()
+                    .getHadoopProperties());
+            propertiesDialog.setInitProperties(hadoopPropertiesList);
+            propertiesDialog.updateStatusLabel(hadoopPropertiesList);
+        }
+    }
+
+    private void updatePropertiesFileds(boolean isEditable) {
+        if (propertiesDialog != null) {
+            propertiesDialog.updatePropertiesFields(isEditable);
         }
     }
 
@@ -738,8 +838,35 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             adaptFormToReadOnly();
         }
         if (visible) {
+            adaptFormToEditable();
             updateStatus(getStatusLevel(), getStatus());
         }
     }
 
+    @Override
+    protected void collectConParameters() {
+        collectConFieldContextParameters(isCurrentHadoopVersionSupportYarn());
+        collectAuthFieldContextParameters(kerberosBtn.getSelection());
+        collectKeyTabContextParameters(kerberosBtn.getSelection() && keytabBtn.getSelection());
+    }
+
+    private void collectConFieldContextParameters(boolean useYarn) {
+        addContextParams(EHadoopParamName.NameNodeUri, true);
+        addContextParams(EHadoopParamName.JobTrackerUri, !useYarn);
+        addContextParams(EHadoopParamName.ResourceManager, useYarn);
+    }
+
+    private void collectAuthFieldContextParameters(boolean useKerberos) {
+        addContextParams(EHadoopParamName.NameNodePrin, useKerberos);
+        addContextParams(EHadoopParamName.JTOrRMPrin, useKerberos);
+        addContextParams(EHadoopParamName.JobHistroyPrin, useKerberos);
+        addContextParams(EHadoopParamName.User, !useKerberos);
+        addContextParams(EHadoopParamName.Group, !useKerberos
+                && (isCurrentHadoopVersionSupportGroup() || isCustomUnsupportHasGroup()));
+    }
+
+    private void collectKeyTabContextParameters(boolean useKeyTab) {
+        addContextParams(EHadoopParamName.Principal, useKeyTab);
+        addContextParams(EHadoopParamName.KeyTab, useKeyTab);
+    }
 }

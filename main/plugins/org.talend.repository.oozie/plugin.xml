@@ -74,5 +74,18 @@
          </importItemsHandler>
       </importItemsProvider>
    </extension>
+   <extension
+         point="org.talend.core.repository.repository_context">
+      <RepositoryContext
+            class="org.talend.repository.oozie.ui.handler.OozieContextHandler">
+      </RepositoryContext>
+   </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.core.IRepositoryContextUpdateService.OozieContextUpdateService"
+            serviceId="IRepositoryContextUpdateService">
+      </Service>
+   </extension>
 
 </plugin>

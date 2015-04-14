@@ -99,6 +99,13 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     @Override
+    protected void updateEditableStatus(boolean isEditable) {
+        distributionCombo.setEnabled(isEditable);
+        versionCombo.setEnabled(isEditable);
+        useYarnButton.setEnabled(isEditable);
+    }
+
+    @Override
     protected void addFields() {
         addVersionFields();
     }
@@ -282,8 +289,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             adaptFormToReadOnly();
         }
         if (visible) {
+            adaptFormToEditable();
             updateStatus(getStatusLevel(), getStatus());
         }
     }
-
 }
