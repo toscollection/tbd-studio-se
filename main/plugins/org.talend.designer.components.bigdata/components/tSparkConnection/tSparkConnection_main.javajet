@@ -27,7 +27,6 @@ java.util.Map
 	boolean isStreaming = "true".equals(ElementParameterParser.getValue(node, "__STREAMING__"));
 	String batchSize = ElementParameterParser.getValue(node, "__STREAMING_BATCH_SIZE__");
 	List<Map<String, String>> sparkAdvancedProperties = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SPARK_ADVANCED_PROPERTIES__");
-	String sparkAppName = "\"TalendSpark_"+cid+"\"";
 	
 	boolean useLocalMode = "LOCAL".equals(sparkMode);
 	boolean useStandaloneMode = "CLUSTER".equals(sparkMode);
@@ -38,7 +37,7 @@ java.util.Map
 %>
 
 	org.apache.spark.SparkConf conf_<%=cid%> = new  org.apache.spark.SparkConf();
-	conf_<%=cid%>.setAppName(<%=sparkAppName%>);
+	conf_<%=cid%>.setAppName(projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
 <%
 	for(Map<String, String> property : sparkAdvancedProperties){
 %>
