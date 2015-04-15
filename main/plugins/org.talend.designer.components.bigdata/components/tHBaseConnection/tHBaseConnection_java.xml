@@ -230,7 +230,7 @@
 				REQUIRED="false"
 				REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='HDP_1_0') AND (DISTRIBUTION!='CUSTOM')" />
 				
-            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_0' OR HBASE_VERSION=='HDP_1_2' OR HBASE_VERSION=='HDP_1_3' OR HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='HDP_2_1' OR HBASE_VERSION=='HDP_2_2' OR HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='Cloudera_CDH4' OR HBASE_VERSION=='Cloudera_CDH4_YARN' OR HBASE_VERSION=='Cloudera_CDH5' OR HBASE_VERSION=='Cloudera_CDH5_1' OR HBASE_VERSION=='Cloudera_CDH5_1_MR1' OR HBASE_VERSION=='PIVOTAL_HD_2_0') AND (USE_KRB=='true') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_0' OR HBASE_VERSION=='HDP_1_2' OR HBASE_VERSION=='HDP_1_3' OR HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='HDP_2_1' OR HBASE_VERSION=='HDP_2_2' OR HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='Cloudera_CDH4' OR HBASE_VERSION=='Cloudera_CDH4_YARN' OR HBASE_VERSION=='Cloudera_CDH5' OR HBASE_VERSION=='Cloudera_CDH5_1' OR HBASE_VERSION=='Cloudera_CDH5_1_MR1' OR HBASE_VERSION=='PIVOTAL_HD_2_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='APACHE_2_4_0_EMR') AND (USE_KRB=='true') AND (DISTRIBUTION!='CUSTOM')" />
 
 			<!-- Amazon EMR 2.4.0 -->
 			<IMPORT NAME="zookeeper-3.4.5" MODULE="zookeeper-3.4.5.jar"
