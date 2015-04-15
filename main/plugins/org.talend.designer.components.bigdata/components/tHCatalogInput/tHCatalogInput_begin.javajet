@@ -174,8 +174,9 @@
 <%
 		} else {
 %>
-		pathHDFS_<%=cid%> = "/" + (location_<%=cid%>.split(":")[2]).split("/", 2)[1];
-		namenode_<%=cid%> = location_<%=cid%>.substring(0, location_<%=cid%>.length()- pathHDFS_<%=cid%>.length());
+		java.net.URI uri_location_<%=cid%> = java.net.URI.create(location_<%=cid%>);
+		pathHDFS_<%=cid%> = uri_location_<%=cid%>.getPath();
+		namenode_<%=cid%> = uri_location_<%=cid%>.getScheme() + "://" + uri_location_<%=cid%>.getAuthority();
 <%
 		}
 %>
