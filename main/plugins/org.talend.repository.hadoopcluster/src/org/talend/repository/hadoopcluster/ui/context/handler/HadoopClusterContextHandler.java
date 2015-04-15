@@ -47,7 +47,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
 
     @Override
     public List<IContextParameter> createContextParameters(String prefixName, Connection connection, Set<IConnParamName> paramSet) {
-        List<IContextParameter> varList = new ArrayList<>();
+        List<IContextParameter> varList = new ArrayList<IContextParameter>();
         if (connection instanceof HadoopClusterConnection) {
             HadoopClusterConnection conn = (HadoopClusterConnection) connection;
 

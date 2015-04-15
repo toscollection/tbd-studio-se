@@ -49,7 +49,7 @@ public class OozieContextHandler extends AbstractRepositoryContextHandler {
 
     @Override
     public List<IContextParameter> createContextParameters(String prefixName, Connection connection, Set<IConnParamName> paramSet) {
-        List<IContextParameter> varList = new ArrayList<>();
+        List<IContextParameter> varList = new ArrayList<IContextParameter>();
         if (connection instanceof OozieConnection) {
             OozieConnection conn = (OozieConnection) connection;
 
