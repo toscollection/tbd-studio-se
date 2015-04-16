@@ -101,5 +101,12 @@
          </importItemsHandler>
       </importItemsProvider>
    </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.hcatalog.service.HCatalogService"
+            serviceId="IHCatalogService">
+      </Service>
+   </extension>
 
 </plugin>

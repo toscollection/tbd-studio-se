@@ -94,5 +94,12 @@
          </importItemsHandler>
       </importItemsProvider>
    </extension>
+   <extension
+         point="org.talend.core.runtime.service">
+      <Service
+            class="org.talend.repository.hdfs.service.HDFSService"
+            serviceId="IHDFSService">
+      </Service>
+   </extension>
 
 </plugin>
