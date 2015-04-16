@@ -20,6 +20,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.components.IComponentsService;
@@ -135,6 +136,8 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EParameterNameForComponent.PARA_NAME_REMOTE_FOLDER.getName().equals(value)) {
             return TalendQuoteUtils.addQuotesIfNotExist(hcConnection.getParameters().get(
                     ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
+        } else if (EHDFSRepositoryToComponent.HADOOP_ADVANCED_PROPERTIES.getRepositoryValue().equals(value)) {
+            return HadoopRepositoryUtil.getHadoopPropertiesFullList(hcConnection, hcConnection.getHadoopProperties(), true);
         }
 
         return null;
