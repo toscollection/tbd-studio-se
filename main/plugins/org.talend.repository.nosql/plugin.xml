@@ -256,5 +256,9 @@
             class="org.talend.repository.nosql.ui.context.handler.NoSqlContextUpdateService"
             serviceId="IRepositoryContextUpdateService">
       </Service>
+      <Service
+            class="org.talend.repository.nosql.service.NOSQLService"
+            serviceId="INOSQLService">
+      </Service>
    </extension>
 </plugin>

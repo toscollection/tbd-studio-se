@@ -105,6 +105,10 @@
       <Service
             class="org.talend.repository.hdfs.ui.handler.HdfsContextUpdateService"
             serviceId="IRepositoryContextUpdateService">
+         </Service>
+      <Service
+            class="org.talend.repository.hdfs.service.HDFSService"
+            serviceId="IHDFSService">
       </Service>
    </extension>
 

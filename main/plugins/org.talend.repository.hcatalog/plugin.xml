@@ -113,6 +113,10 @@
             class="org.talend.repository.hcatalog.ui.handler.HCatalogContextUpdateService"
             serviceId="IRepositoryContextUpdateService">
       </Service>
+      <Service
+            class="org.talend.repository.hcatalog.service.HCatalogService"
+            serviceId="IHCatalogService">
+      </Service>
    </extension>
 
 </plugin>
