@@ -89,6 +89,8 @@ imports="
         	String zookeeperClientPortForHBase = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
         	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
 			String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
+			String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
+			String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REIGONSERVER_PRINCIPAL__");
         	String defineRegisterJar = ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__");
         	List<Map<String, String>> registerJarForHBase = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
 
@@ -265,6 +267,19 @@ imports="
 				<%if(setZNodeParent && zNodeParent!=null && !"".equals(zNodeParent) && !"\"\"".equals(zNodeParent)) {%>
 					statement_<%=cid%>.execute("SET zookeeper.znode.parent="+<%=zNodeParent%>);
 				<%}%>
+
+				<%if(useKrb){%>
+					statement_<%=cid%>.execute("SET hbase.security.authentication=kerberos");
+					statement_<%=cid%>.execute("SET hbase.rpc.engine=org.apache.hadoop.hbase.ipc.SecureRpcEngine");
+
+					<%if(hbaseMasterPrincipal!=null && !"".equals(hbaseMasterPrincipal) && !"\"\"".equals(hbaseMasterPrincipal)){%>
+						statement_<%=cid%>.execute("SET hbase.master.kerberos.principal="+<%=hbaseMasterPrincipal%>);
+					<%}%>
+					<%if(hbaseReigonServerPrincipal!=null && !"".equals(hbaseReigonServerPrincipal) && !"\"\"".equals(hbaseReigonServerPrincipal)){%>
+						statement_<%=cid%>.execute("SET hbase.regionserver.kerberos.principal="+<%=hbaseReigonServerPrincipal%>);
+					<%}%>
+				<%}%>
+
         		<%if("true".equalsIgnoreCase(defineRegisterJar) && registerJarForHBase!=null && registerJarForHBase.size()>0) {
         			for(Map<String, String> jar : registerJarForHBase){
         				String path = jar.get("JAR_PATH");
@@ -301,6 +316,9 @@ imports="
 			boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
 			boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
 			String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
+
+			boolean useSsl = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
+			String sslTrustStore = ElementParameterParser.getValue(node, "__SSL_TRUST_STORE__");
 
 			if(!isCustom && (("HDP_1_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode)) || ("HDP_1_2".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer))
 			 || ("HDP_1_3".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer)) || ("HDP_2_0".equals(hiveVersion) && "STANDALONE".equals(connectionMode) && "HIVE".equalsIgnoreCase(hiveServer))
@@ -402,13 +420,37 @@ imports="
 				}
 			} else {
 				if(securedStandaloneHive2) {
+					// Using SSL in Secure Mode
+					if(useSsl){
 %>
-					String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
+						String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>+";sasl.qop=auth-conf";
 <%
+					}else{
+%>
+						String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
+<%
+					}
 				} else {
+					// Using SSL in non Secure Mode
+					if(useSsl){
+						String sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
+						if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
-					String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
 <%
+						}else{
+%>
+							String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(node, sslStorepasswordFieldName)%>; 
+<%
+						}
+%>
+						String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
+<%
+					}else{
+%>
+						String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+<%
+					}
 				}
 			}
 		}
