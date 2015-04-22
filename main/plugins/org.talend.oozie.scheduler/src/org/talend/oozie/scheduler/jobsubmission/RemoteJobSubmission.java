@@ -25,6 +25,8 @@ import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.apache.oozie.client.WorkflowJob;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.oozie.scheduler.OozieSchedulerPlugin;
+import org.talend.oozie.scheduler.constants.IOoziePrefConstants;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 
@@ -32,8 +34,6 @@ import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
  * JobSubmission implementation that launches the ETL job on the Hadoop Cluster using Oozie workflow
  */
 public class RemoteJobSubmission extends AbstractOozieJobSubmission {
-
-    public static final int TIMEOUT = 30;
 
     @Override
     public String submit(JobContext jobContext) throws JobSubmissionException, InterruptedException, URISyntaxException {
@@ -87,13 +87,38 @@ public class RemoteJobSubmission extends AbstractOozieJobSubmission {
         statusCallable = getStatus(jobHandle, oozieEndPoint);
         ExecutorService executor = Executors.newSingleThreadExecutor();
         Future<Status> future = executor.submit(statusCallable);
+        Integer timeout = getTimeout();
         try {
-            status = future.get(TIMEOUT, TimeUnit.SECONDS);
+            if (timeout != null) {
+                status = future.get(timeout, TimeUnit.SECONDS);
+            } else {
+                status = future.get();
+            }
         } catch (Exception e) {
             future.cancel(true);
             throw new JobSubmissionException("Error getting status for job: " + jobHandle, e);
         }
         return status;
+    }
+
+    private Integer getTimeout() {
+        String timeoutValue = OozieSchedulerPlugin.getDefault().getPreferenceStore()
+                .getString(IOoziePrefConstants.OOZIE_STATUS_TIMEOUT);
+        String defaultTimeoutValue = OozieSchedulerPlugin.getDefault().getPreferenceStore()
+                .getDefaultString(IOoziePrefConstants.OOZIE_STATUS_TIMEOUT);
+        if (defaultTimeoutValue.equals(timeoutValue)) {
+            return null;
+        }
+        Integer timeout;
+        try {
+            timeout = Integer.parseInt(timeoutValue);
+        } catch (NumberFormatException e) {
+            timeout = null;
+        }
+        if (timeout != null && timeout.intValue() < 0) {
+            return null;
+        }
+        return timeout;
     }
 
     private Callable<Status> getStatus(final String jobHandle, final String oozieEndPoint) {

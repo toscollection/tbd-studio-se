@@ -21,5 +21,20 @@
             name="Oozie(Deprecated)">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            category="org.talend.designer.runprocess"
+            class="org.talend.oozie.scheduler.ui.prefs.OozieExecutionPreferencePage"
+            id="org.talend.oozie.scheduler.ui.prefs.OoziePreferencePage"
+            name="Oozie">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.talend.oozie.scheduler.ui.prefs.OozieExecutionPreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>
