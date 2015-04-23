@@ -22,24 +22,11 @@
         public String getDBType(){
         	return column.getType();
         }
-        public String getType(){
-        	String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
-        	
-        	if(typeToGenerate.equals("byte[]")) {
-                typeToGenerate = "Bytes";
-            } else if(typeToGenerate.equals("java.util.Date")) {
-                typeToGenerate = "Date";
-            } else if(typeToGenerate.equals("Integer")) {
-                typeToGenerate = "Int";
-            } else {
-                typeToGenerate=typeToGenerate.substring(0,1).toUpperCase()+typeToGenerate.substring(1);
-            }
-
-        	return typeToGenerate;
+        public JavaType getJavaType(){
+        	return JavaTypesManager.getJavaTypeFromId(getTalendType());
         }
         public boolean isObject(){
-        	java.util.List<String> objectTypes = java.util.Arrays.asList(new String[]{"String", "Object", "List", "Boolean", "byte[]", "java.util.Date", "BigDecimal", "Double", "Float", "Integer", "Long"}); //TODO: missing some types, but for cassandra, it's enough
-        	return JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable()).contains(getType());
+        	return !JavaTypesManager.isJavaPrimitiveType(getJavaType(), column.isNullable());
         }
         public boolean isKey(){
         	return column.isKey();
@@ -555,7 +542,11 @@
             }
 
             if("ascii".equals(dbType) || "text".equals(dbType) || "varchar".equals(dbType)){
-                setStmt.append(assignStmt +".setString(" + index + ", " + columnValue + ");\r\n");
+            	if(JavaTypesManager.STRING == column.getJavaType()){
+                    setStmt.append(assignStmt +".setString(" + index + ", " + columnValue + ");\r\n");
+            	}else if(JavaTypesManager.CHARACTER == column.getJavaType()){
+            		setStmt.append(assignStmt +".setString(" + index + ", String.valueOf(" + columnValue + "));\r\n");
+            	}
             }else if("timeuuid".equals(dbType) || "uuid".equals(dbType)){
                 setStmt.append(assignStmt +".setUUID(" + index + ", java.util.UUID.fromString(" + columnValue + "));\r\n");
             }else if("varint".equals(dbType)){
@@ -581,7 +572,7 @@
             }else if("float".equals(dbType)){
                 setStmt.append(assignStmt +".setFloat(" + index + ", " + columnValue + ");\r\n");
             }else if("int".equals(dbType)){
-                setStmt.append(assignStmt +".setInt(" + index + ", " + columnValue + ");\r\n");
+            	setStmt.append(assignStmt +".setInt(" + index + ", " + columnValue + ");\r\n");
             }else if("bigint".equals(dbType) || "count".equals(dbType)){
                 setStmt.append(assignStmt +".setLong(" + index + ", " + columnValue + ");\r\n");
             }
