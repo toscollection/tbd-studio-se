@@ -95,6 +95,7 @@ public class HadoopClusterWizardPage extends AbstractHadoopClusterWizardPage {
             AbstractHadoopForm form = getForm();
             if (form != null) {
                 form.processWhenShowPage(this);
+                form.checkFieldsValue();
             }
         }
     }
