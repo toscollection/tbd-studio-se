@@ -2250,8 +2250,8 @@
 			<!-- Cloudera_CDH5_1 -->
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_1_LASTEST" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5_1') AND DISTRIBUTION!='CUSTOM'" />
 			
-			<!-- Cloudera_CDH5_4 -->
-			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_4_LASTEST" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5_4') AND DISTRIBUTION!='CUSTOM'" />
+			<!-- Cloudera_CDH5_4: we use CDH5_1 libraries as an issue exist in the elephant-bird-->
+			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_1_LASTEST" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5_4') AND DISTRIBUTION!='CUSTOM'" />
 			
 			<!-- Cloudera_CDH5_1_MR1 -->
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_1_LASTEST" REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='RCFILEPIGSTORAGE') AND (PIG_VERSION=='Cloudera_CDH5_1_MR1') AND DISTRIBUTION!='CUSTOM'" />
@@ -2334,7 +2334,7 @@
 
             <IMPORT NAME="parquet-pig-bundle-1.2.5-cdh5.1.3" MODULE="parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
-                REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='PARQUETLOADER' AND DISTRIBUTION!='CUSTOM' AND (PIG_VERSION!='Cloudera_CDH5_4' AND PIG_VERSION=='Cloudera_CDH5_1' OR PIG_VERSION=='Cloudera_CDH5_1_MR1'))" />
+                REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='PARQUETLOADER' AND DISTRIBUTION!='CUSTOM' AND (PIG_VERSION=='Cloudera_CDH5_1' OR PIG_VERSION=='Cloudera_CDH5_4' OR PIG_VERSION=='Cloudera_CDH5_1_MR1'))" />
 
             <IMPORT NAME="parquet-pig-bundle-1.2.5-cdh5.0.4" MODULE="parquet-pig-bundle-1.2.5-cdh5.0.4.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.2.5-cdh5.0.4.jar"
