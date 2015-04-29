@@ -22,6 +22,7 @@
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+    java.util.List<java.util.Map<String, String>> mappings = (java.util.List<java.util.Map<String, String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
     
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -50,17 +51,43 @@
 				for (int i = 0; i < sizeColumns; i++) {
 					IMetadataColumn column = columnList.get(i);
 					
+					for (java.util.Map<String, String> mapping: mappings) {
+					    %>
+					    // HEy : <%=mapping%>
+					    // ho : <%=column%> <%=column.isKey()%>
+					    <%
+					    if (column.getLabel().equals(mapping.get("SCHEMA_COLUMN"))) {
+	                        if ("true".equals(mapping.get("REMOVE_NULL_FIELD"))) {
+	                            %>
+	                            if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+    	                            <%
+    	                            if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
+    	                                %>
+    	                                    queryObjectUtil_<%=cid%>.putkeyNode(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+    	                                    countKey_<%=cid%>++;
+    	                                <%
+                                    }
+                                    %>
+                                    updateObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+	                            }
+                                <%
+                            } else {
+                                if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
+                                    %>
+                                        queryObjectUtil_<%=cid%>.putkeyNode(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+                                        countKey_<%=cid%>++;
+                                    <%
+                                }
+                                %>
+                                updateObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+                                <%
+                            }
+                            break;
+                        }
+		            }
+		               
+
 					
-					if (!"INSERT".equalsIgnoreCase(dataAction) && column.isKey()){
-					%>
-						queryObjectUtil_<%=cid%>.putkeyNode(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
-						countKey_<%=cid%>++;
-					<%
-					}
-					%>
-					
-      				updateObjectUtil_<%=cid%>.put(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
-				<%
   				}
 				%>
 				com.mongodb.BasicDBObject updateObj_<%=cid%> = updateObjectUtil_<%=cid%>.getObject();

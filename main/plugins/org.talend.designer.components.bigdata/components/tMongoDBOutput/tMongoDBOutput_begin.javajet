@@ -107,9 +107,10 @@
 					path="\"\"";
 				}
 				String schemaColumn=mapping.get(i).get("SCHEMA_COLUMN");
+
 				%>
 				pathMap_<%=cid%>.put("<%=schemaColumn%>",<%=path%>);
-			<%
+				<%
 			}
       		if (useExistingConnection){
       			String connection = ElementParameterParser.getValue(node, "__CONNECTION__");

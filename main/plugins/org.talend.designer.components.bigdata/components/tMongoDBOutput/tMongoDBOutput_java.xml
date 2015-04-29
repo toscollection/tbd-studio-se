@@ -200,6 +200,7 @@
         >
             <ITEMS BASED_ON_SCHEMA="true">
                 <ITEM NAME="PARENT_NODE_PATH" FIELD="TEXT" />
+                <ITEM NAME="REMOVE_NULL_FIELD" FIELD="CHECK" VALUE="false"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER
@@ -218,6 +219,10 @@
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
+        
+
+        
+        
         <PARAMETER
             NAME="ROOT"
             FIELD="TABLE"
@@ -276,6 +281,16 @@
             GROUP="JSON_CONFIGURATION"
         >
             <DEFAULT />
+        </PARAMETER>
+
+        <PARAMETER
+            NAME="CREATE_EMPTY_ELEMENT"
+            FIELD="CHECK"
+            NUM_ROW="50"
+            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+            GROUP="JSON_CONFIGURATION"
+        >
+            <DEFAULT>true</DEFAULT>
         </PARAMETER>
 
         <PARAMETER
@@ -346,6 +361,7 @@
             <TEMPLATE_PARAM SOURCE="self.LOOP" TARGET="In.LOOP" />
             <TEMPLATE_PARAM SOURCE="self.COMPACT_FORMAT" TARGET="In.COMPACT_FORMAT" />
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="In.SCHEMA" />
+            <TEMPLATE_PARAM SOURCE="self.CREATE_EMPTY_ELEMENT" TARGET="In.CREATE_EMPTY_ELEMENT" />
 
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_FLOW" TARGET="Out.SCHEMA" />
             <TEMPLATE_PARAM SOURCE="self.USE_EXISTING_CONNECTION" TARGET="Out.USE_EXISTING_CONNECTION" />
