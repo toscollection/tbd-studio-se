@@ -31,7 +31,7 @@
     	}
     	createTableSQL.append(" INTO TABLE ");
 %>
-		String tablename_<%=cid%> = <%=tablename%>;
+		String tablename_<%=cid%> = <%=database%> + "." + <%=tablename%>;
 <%
     	createTableSQL.append("\" + ");
     	createTableSQL.append("tablename_");
@@ -67,7 +67,7 @@
 			}
 			createTableSQL.append("TABLE ");
 %>
-			String tablename_<%=cid%> = <%=tablename%>;
+			String tablename_<%=cid%> = <%=database%> + "." + <%=tablename%>;
 <%
 	    	createTableSQL.append("\" + ");
         	createTableSQL.append("tablename_");

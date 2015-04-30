@@ -40,6 +40,18 @@ imports="
 	final String cid = loadCid;
 	INode node = loadNode;
 	
+	String database = ElementParameterParser.getValue(loadNode, "__DBNAME__");
+	
+	if(useExistingConnection) {
+		String connection = ElementParameterParser.getValue(loadNode, "__CONNECTION__");
+		for (INode pNode : loadNode.getProcess().getNodesOfType("tImpalaConnection")) {
+			if(connection!=null && connection.equals(pNode.getUniqueName())) {
+				database = ElementParameterParser.getValue(pNode, "__DBNAME__");
+				break;
+			}
+		}
+	}
+	
 	String loadAction = ElementParameterParser.getValue(node, "__LOAD_ACTION__");
 	boolean local = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	String path = ElementParameterParser.getValue(node, "__FILEPATH__");

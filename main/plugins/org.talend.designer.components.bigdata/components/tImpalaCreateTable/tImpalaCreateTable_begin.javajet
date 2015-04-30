@@ -34,15 +34,17 @@
 
 	String impalaVersion = ElementParameterParser.getValue(createTableNode, "__IMPALA_VERSION__");
 	String distribution = ElementParameterParser.getValue(createTableNode, "__DISTRIBUTION__");
+	String database = ElementParameterParser.getValue(createTableNode, "__DBNAME__");
 	
 	if(useExistingConnection) {
 		distribution = "";
 		impalaVersion = "";
 		String connection = ElementParameterParser.getValue(createTableNode, "__CONNECTION__");
-		for (INode pNode : createTableNode.getProcess().getNodesOfType("tHiveConnection")) {
+		for (INode pNode : createTableNode.getProcess().getNodesOfType("tImpalaConnection")) {
 			if(connection!=null && connection.equals(pNode.getUniqueName())) {
 				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
-				impalaVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+				impalaVersion = ElementParameterParser.getValue(pNode, "__IMPALA_VERSION__");
+				database = ElementParameterParser.getValue(pNode, "__DBNAME__");
 				break;
 			}
 		}
@@ -108,7 +110,7 @@
 %>
 	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 	String query_<%=cid %> = "";
-	String tableName_<%=cid%> = <%=tableName%>;
+	String tableName_<%=cid%> = <%=database%> + "." + <%=tableName%>;
 <%
 	List<IMetadataColumn> listColumn = null;
 	List<IMetadataTable> metadatas = createTableNode.getMetadataList();
