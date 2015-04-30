@@ -44,6 +44,20 @@ imports="
 	final String cid = outputCid;
 	INode node = outputNode;
 	
+	String database = ElementParameterParser.getValue(outputNode, "__DBNAME__");
+	
+	if(useExistingConnection) {
+		String connection = ElementParameterParser.getValue(outputNode, "__CONNECTION__");
+		for (INode pNode : outputNode.getProcess().getNodesOfType("tImpalaConnection")) {
+			if(connection!=null && connection.equals(pNode.getUniqueName())) {
+				database = ElementParameterParser.getValue(pNode, "__DBNAME__");
+				break;
+			}
+		}
+	}
+	
+	
+	
 	String dbmsId = ElementParameterParser.getValue(node,"__MAPPING__");
 	String tableName = ElementParameterParser.getValue(node,"__TABLE__");
 	String action = ElementParameterParser.getValue(node, "__ACTION__");
@@ -61,7 +75,7 @@ imports="
 	    stmtStructure = getManager(dbmsId, cid).createColumnList(columnList, false, null, null);
 	}
 %>
-	String tableName_<%=cid%> = <%=tableName%>;
+	String tableName_<%=cid%> = <%=database%> + "." + <%=tableName%>;
 	int nb_line_<%=cid%> = 0;
 <%
     Map<String, StringBuilder> actionSQLMap = getManager(dbmsId, cid).createProcessSQL(stmtStructure);
