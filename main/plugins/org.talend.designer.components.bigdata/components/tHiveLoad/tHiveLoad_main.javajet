@@ -239,6 +239,8 @@ imports="
 <%
         }
     }
+    
+    String database = "\"\"";
 
 %>
     <%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveLoad/loadQueryGeneration.javajet"%>

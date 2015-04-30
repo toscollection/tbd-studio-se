@@ -75,7 +75,14 @@ imports="
 	    stmtStructure = getManager(dbmsId, cid).createColumnList(columnList, false, null, null);
 	}
 %>
-	String tableName_<%=cid%> = <%=database%> + "." + <%=tableName%>;
+	String database_<%=cid%> = <%=database%>;
+	String tableName_<%=cid%> = null;
+	if(database_<%=cid%>!=null && !database_<%=cid%>.isEmpty()) {
+		tableName_<%=cid%> = database_<%=cid%> + "." + <%=tableName%>;
+	} else {
+		tableName_<%=cid%> = <%=tableName%>;
+	}
+	
 	int nb_line_<%=cid%> = 0;
 <%
     Map<String, StringBuilder> actionSQLMap = getManager(dbmsId, cid).createProcessSQL(stmtStructure);
