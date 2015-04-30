@@ -75,7 +75,7 @@
 					<%
 					if(isLog4jEnabled){
 					%>
-						log.info("<%=cid%> - Connection to" + mongo_<%=cid%>.getServerAddressList() + " closed.");
+						log.info("<%=cid%> - The connection was closed successfully.");
 					<%
 					}
 					%>

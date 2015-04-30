@@ -26,7 +26,7 @@
 				<%
 				if(isLog4jEnabled){
 				%>
-					log.info("<%=cid%> - Connection to" + ((com.mongodb.Mongo)resourceMap.get("mongo_<%=cid%>")).getServerAddressList() + " closed.");
+					log.info("<%=cid%> - The connection was closed successfully.");
 				<%
 				}
 				%>
