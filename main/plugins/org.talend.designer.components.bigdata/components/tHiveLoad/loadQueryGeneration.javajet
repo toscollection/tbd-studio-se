@@ -31,7 +31,13 @@
     	}
     	createTableSQL.append(" INTO TABLE ");
 %>
-		String tablename_<%=cid%> = <%=database%> + "." + <%=tablename%>;
+		String database_<%=cid%> = <%=database%>;
+		String tablename_<%=cid%> = null;
+		if(database_<%=cid%>!=null && !database_<%=cid%>.isEmpty()) {
+			tablename_<%=cid%> = database_<%=cid%> + "." + <%=tablename%>;
+		} else {
+			tablename_<%=cid%> = <%=tablename%>;
+		}
 <%
     	createTableSQL.append("\" + ");
     	createTableSQL.append("tablename_");
@@ -67,7 +73,13 @@
 			}
 			createTableSQL.append("TABLE ");
 %>
-			String tablename_<%=cid%> = <%=database%> + "." + <%=tablename%>;
+			String database_<%=cid%> = <%=database%>;
+			String tablename_<%=cid%> = null;
+			if(database_<%=cid%>!=null && !database_<%=cid%>.isEmpty()) {
+				tablename_<%=cid%> = database_<%=cid%> + "." + <%=tablename%>;
+			} else {
+				tablename_<%=cid%> = <%=tablename%>;
+			}
 <%
 	    	createTableSQL.append("\" + ");
         	createTableSQL.append("tablename_");
