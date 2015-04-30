@@ -208,6 +208,14 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
     }
 
+    @Override
+    public void setListener(ICheckListener listener) {
+        super.setListener(listener);
+        if (hcInfoForm != null) {
+            hcInfoForm.setListener(listener);
+        }
+    }
+
     private void switchToInfoForm() {
         if (hcInfoForm != null) {
             hcInfoForm.dispose();
