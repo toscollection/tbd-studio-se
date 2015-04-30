@@ -83,4 +83,18 @@ public class HadoopClusterWizardPage extends WizardPage {
         PlatformUI.getWorkbench().getHelpSystem().displayHelp("org.talend.help.hadoop_cluster_metadata");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.jface.dialogs.DialogPage#setVisible(boolean)
+     */
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        if (visible) {
+            if (hadoopClusterForm != null) {
+                hadoopClusterForm.checkFieldsValue();
+            }
+        }
+    }
 }
