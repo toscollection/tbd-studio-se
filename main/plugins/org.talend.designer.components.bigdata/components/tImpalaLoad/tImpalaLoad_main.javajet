@@ -27,30 +27,28 @@ imports="
 	
 	if(useExistingConnection) { // We re-use a connection. Get the connection from the global map.
 		String connection = ElementParameterParser.getValue(loadNode, "__CONNECTION__");
+		String db = "db_" + connection;
 %>
 		java.sql.Connection conn_<%=loadCid%> = (java.sql.Connection)globalMap.get("conn_<%=connection%>");
+		String dbname_<%=loadCid%> = (String)globalMap.get("<%=db%>");
 <%
 	} else { //We do not use an existing connection. Create it.
 %>
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnection_begin.javajet"%>
+		String dbname_<%=loadCid%> = <%=dbname%>;
 <%
 		// The connection object is created in the tImpalaConnection_begin.javajet.
 	}
 	
 	final String cid = loadCid;
 	INode node = loadNode;
-	
-	String database = ElementParameterParser.getValue(loadNode, "__DBNAME__");
-	
-	if(useExistingConnection) {
-		String connection = ElementParameterParser.getValue(loadNode, "__CONNECTION__");
-		for (INode pNode : loadNode.getProcess().getNodesOfType("tImpalaConnection")) {
-			if(connection!=null && connection.equals(pNode.getUniqueName())) {
-				database = ElementParameterParser.getValue(pNode, "__DBNAME__");
-				break;
-			}
-		}
-	}
+%>
+	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+		java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+		goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+		goToDatabase_<%=cid%>.close();
+    }	
+<%
 	
 	String loadAction = ElementParameterParser.getValue(node, "__LOAD_ACTION__");
 	boolean local = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));

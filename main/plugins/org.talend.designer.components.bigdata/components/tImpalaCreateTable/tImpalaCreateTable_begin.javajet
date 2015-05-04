@@ -20,21 +20,30 @@
 	
 	if(useExistingConnection) { // We re-use a connection. Get the connection from the global map.
 		String connection = ElementParameterParser.getValue(createTableNode, "__CONNECTION__");
+		String db = "db_" + connection;
 %>
 		java.sql.Connection conn_<%=createTableCid%> = (java.sql.Connection)globalMap.get("conn_<%=connection%>");
+		String dbname_<%=createTableCid%> = (String)globalMap.get("<%=db%>");
 <%
 	} else { //We do not use an existing connection. Create it.
 %>
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnection_begin.javajet"%>
+		String dbname_<%=createTableCid%> = <%=dbname%>;
 <%
 		// The connection object is created in the tImpalaConnection_begin.javajet.
 	}
 	
 	final String cid = createTableCid; // The variable named cid is required in the javajet GetJarsToRegister.
+%>
+	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+		java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+		goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+		goToDatabase_<%=cid%>.close();
+    }
+<%
 
 	String impalaVersion = ElementParameterParser.getValue(createTableNode, "__IMPALA_VERSION__");
 	String distribution = ElementParameterParser.getValue(createTableNode, "__DISTRIBUTION__");
-	String database = ElementParameterParser.getValue(createTableNode, "__DBNAME__");
 	
 	if(useExistingConnection) {
 		distribution = "";
@@ -44,7 +53,6 @@
 			if(connection!=null && connection.equals(pNode.getUniqueName())) {
 				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
 				impalaVersion = ElementParameterParser.getValue(pNode, "__IMPALA_VERSION__");
-				database = ElementParameterParser.getValue(pNode, "__DBNAME__");
 				break;
 			}
 		}
@@ -110,14 +118,7 @@
 %>
 	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 	String query_<%=cid %> = "";
-	
-	String database_<%=cid%> = <%=database%>;
-	String tableName_<%=cid%> = null;
-	if(database_<%=cid%>!=null && !database_<%=cid%>.isEmpty()) {
-		tableName_<%=cid%> = database_<%=cid%> + "." + <%=tableName%>;
-	} else {
-		tableName_<%=cid%> = <%=tableName%>;
-	}
+	String tableName_<%=cid%> = <%=tableName%>;
 <%
 	List<IMetadataColumn> listColumn = null;
 	List<IMetadataTable> metadatas = createTableNode.getMetadataList();
