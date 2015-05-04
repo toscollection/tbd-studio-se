@@ -1150,7 +1150,11 @@
 
             <IMPORT NAME="parquet-pig-bundle-1.2.5-cdh5.1.3" MODULE="parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.2.5-cdh5.1.3.jar"
-                REQUIRED_IF="(STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND ((#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_1') OR (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_4') OR (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_1_MR1'))" />
+                REQUIRED_IF="(STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND ((#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_1') OR (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_1_MR1'))" />
+                
+            <IMPORT NAME="parquet-pig-bundle-1.5.0-cdh5.4.0" MODULE="parquet-pig-bundle-1.5.0-cdh5.4.0.jar"
+                REQUIRED_IF="(STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_4')" />
+                
             <IMPORT NAME="parquet-pig-bundle-1.2.5-cdh5.0.4" MODULE="parquet-pig-bundle-1.2.5-cdh5.0.4.jar"
                 UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.2.5-cdh5.0.4.jar"
                 REQUIRED_IF="(STORE=='PARQUETSTORER') AND (DISTRIBUTION!='CUSTOM') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5')" />

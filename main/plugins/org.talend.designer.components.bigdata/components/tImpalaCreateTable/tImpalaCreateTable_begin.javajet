@@ -20,17 +20,27 @@
 	
 	if(useExistingConnection) { // We re-use a connection. Get the connection from the global map.
 		String connection = ElementParameterParser.getValue(createTableNode, "__CONNECTION__");
+		String db = "db_" + connection;
 %>
 		java.sql.Connection conn_<%=createTableCid%> = (java.sql.Connection)globalMap.get("conn_<%=connection%>");
+		String dbname_<%=createTableCid%> = (String)globalMap.get("<%=db%>");
 <%
 	} else { //We do not use an existing connection. Create it.
 %>
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnection_begin.javajet"%>
+		String dbname_<%=createTableCid%> = <%=dbname%>;
 <%
 		// The connection object is created in the tImpalaConnection_begin.javajet.
 	}
 	
 	final String cid = createTableCid; // The variable named cid is required in the javajet GetJarsToRegister.
+%>
+	if(dbname_<%=cid%>!=null && !"".equals(dbname_<%=cid%>.trim()) && !"default".equals(dbname_<%=cid%>.trim())) {
+		java.sql.Statement goToDatabase_<%=cid%> = conn_<%=cid%>.createStatement();
+		goToDatabase_<%=cid%>.execute("use " + dbname_<%=cid%>);
+		goToDatabase_<%=cid%>.close();
+    }
+<%
 
 	String impalaVersion = ElementParameterParser.getValue(createTableNode, "__IMPALA_VERSION__");
 	String distribution = ElementParameterParser.getValue(createTableNode, "__DISTRIBUTION__");
