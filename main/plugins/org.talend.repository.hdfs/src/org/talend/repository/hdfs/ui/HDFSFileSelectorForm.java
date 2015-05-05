@@ -142,6 +142,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private byte[] lock = new byte[0];
 
+    private IHDFSNode selectedNode;
+
     // store column number for each table name
     private final Map<String, Integer> tableColumnNums = new HashMap<String, Integer>();
 
@@ -464,6 +466,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                             treeItem.setText(3, EMPTY_STRING);
                             treeItem.setText(4, Messages.getString("HDFSFileSelectorForm.Pending")); //$NON-NLS-1$
                             parentWizardPage.setPageComplete(false);
+                            selectedNode = (IHDFSNode) treeItem.getData();
                             refreshTable(treeItem, -1);
                         } else {
                             clearTreeItem(treeItem);
@@ -480,6 +483,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                                             "HDFSFileSelectorForm.confirm.executeConfirm", new Object[] { INFORM_SIZE })); //$NON-NLS-1$
                         }
                         if (continueCheck) {
+                            selectedNode = (IHDFSNode) treeItem.getData();
                             updateItems(treeItem.getItems(), promptNeeded, true);
                         } else {
                             treeItem.setGrayed(!promptNeeded);
@@ -1200,5 +1204,9 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
             });
         }
 
+    }
+
+    public IHDFSNode getSelectedHDFSNode() {
+        return this.selectedNode;
     }
 }

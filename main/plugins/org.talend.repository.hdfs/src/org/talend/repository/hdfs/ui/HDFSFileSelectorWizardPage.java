@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.metadata.managment.ui.wizard.AbstractForm;
 import org.talend.repository.model.hdfs.HDFSConnection;
 
@@ -78,4 +79,7 @@ public class HDFSFileSelectorWizardPage extends WizardPage {
         }
     }
 
+    public IHDFSNode getSelectedFile() {
+        return hdfsFileSelectorForm.getSelectedHDFSNode();
+    }
 }

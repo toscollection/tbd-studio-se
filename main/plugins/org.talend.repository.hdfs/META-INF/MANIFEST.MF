@@ -29,3 +29,8 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
+Export-Package: org.talend.repository.hdfs.action,
+ org.talend.repository.hdfs.node.model,
+ org.talend.repository.hdfs.ui,
+ org.talend.repository.hdfs.ui.metadata,
+ org.talend.repository.model.hdfs
