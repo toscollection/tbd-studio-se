@@ -31,10 +31,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.help,
  org.talend.repository.view.di
 Bundle-ActivationPolicy: lazy
-Export-Package: org.talend.repository.hadoopcluster.action.common,
+Export-Package: org.talend.repository.hadoopcluster.action,
+ org.talend.repository.hadoopcluster.action.common,
  org.talend.repository.hadoopcluster.model.migration,
  org.talend.repository.hadoopcluster.node.model,
  org.talend.repository.hadoopcluster.service,
+ org.talend.repository.hadoopcluster.ui,
  org.talend.repository.hadoopcluster.ui.common,
  org.talend.repository.hadoopcluster.ui.viewer,
  org.talend.repository.hadoopcluster.ui.viewer.handler,

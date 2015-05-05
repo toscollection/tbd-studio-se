@@ -42,7 +42,6 @@ import org.talend.metadata.managment.ui.wizard.AbstractRepositoryFileTableWizard
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
-
 import orgomg.cwm.objectmodel.core.Package;
 
 /**
@@ -178,4 +177,7 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         return this.connectionItem;
     }
 
+    protected HDFSConnection getTempHDFSConnection() {
+        return this.temConnection;
+    }
 }

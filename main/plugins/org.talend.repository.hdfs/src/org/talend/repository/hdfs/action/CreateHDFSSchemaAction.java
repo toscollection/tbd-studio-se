@@ -150,7 +150,7 @@ public class CreateHDFSSchemaAction extends AbstractCreateAction {
         }
     }
 
-    private boolean checkHDFSConnection(final HDFSConnection connection) {
+    protected boolean checkHDFSConnection(final HDFSConnection connection) {
         final boolean[] result = new boolean[] { true };
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 
