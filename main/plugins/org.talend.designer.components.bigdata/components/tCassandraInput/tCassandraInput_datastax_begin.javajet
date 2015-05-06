@@ -30,34 +30,7 @@
 	<%
 	}else{	
 	%>
-		<%
-        String host = ElementParameterParser.getValue(node,"__HOST__");
-        String port = ElementParameterParser.getValue(node,"__PORT__");
-        String keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE_DATASTAX__");
-        String userName = ElementParameterParser.getValue(node, "__USERNAME__");
-        String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
-    	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
-    	
-    	if(authentication){
-            String passwordFieldName = "__PASSWORD__";
-            %>
-            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>    	
-        <%
-        }	
-        %>
-        com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
-        															.addContactPoints(<%=host%>.split(","))
-        															.withPort(Integer.valueOf(<%=port%>))
-                                                                	<%
-                                                                	if(authentication){
-                                                                	%>
-                                                                    	withCredentials(<%=userName%>, decryptedPassword_<%=cid%>)
-                                                                	<%
-                                                                	}
-                                                                	%>
-        															.build();
-    	
-    	com.datastax.driver.core.Session connection_<%=cid%> = cluster_<%=cid%>.connect(<%=keyspace%>);
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/tCassandraConnection_datastax_connect.javajet"%>
 	<%
 	}
 	String query = ElementParameterParser.getValue(node, "__QUERY__").replaceAll("[\r\n]", " ");	
