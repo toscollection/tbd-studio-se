@@ -45,7 +45,8 @@
     		JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
     		String columnName = column.getLabel();	
     		String dbColumnName = column.getOriginalDbColumnName();
-    		
+			dbColumnName = "\\\"" + dbColumnName + "\\\"";
+			
     		if(javaType == JavaTypesManager.STRING){
     			if("ascii".equals(dbType) || "text".equals(dbType) || "varchar".equals(dbType)){
     			%>

@@ -33,7 +33,7 @@
 	
 	com.datastax.driver.core.Session connection_<%=cid%> = null;
 	if(<%=keyspace%> != null && !"".equals(<%=keyspace%>)){
-		connection_<%=cid%> = cluster_<%=cid%>.connect(<%=keyspace%>);
+		connection_<%=cid%> = cluster_<%=cid%>.connect(StringHandling.DQUOTE(<%=keyspace%>));
 	}else{
 		connection_<%=cid%> = cluster_<%=cid%>.connect();
 	}

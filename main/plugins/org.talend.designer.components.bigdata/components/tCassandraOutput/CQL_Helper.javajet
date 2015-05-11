@@ -69,7 +69,7 @@
         public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
             this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
-            this.tableName = ElementParameterParser.getValue(node, "__TABLE__");
+            this.tableName = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__TABLE__") + ")";
             createColumnList(columnList);
         }
 
@@ -181,19 +181,23 @@
             return false;
         }
         private String getLProtectedChar(String keyword){
-            if(isKeyword(keyword)){
-                return "\\\"";
-            }
-            return ""; 
+            //if(isKeyword(keyword)){
+            //    return "\\\"";
+            //}
+            return "\\\""; 
         }
         private String getRProtectedChar(String keyword){
-            if(isKeyword(keyword)){
-                return "\\\"";
-            }
-            return "";
+            //if(isKeyword(keyword)){
+            //    return "\\\"";
+            //}
+            return "\\\"";
         }  
         private String wrapProtectedChar(String keyword){
-        	return getLProtectedChar(keyword) + keyword + getRProtectedChar(keyword);
+        	if(keyword.matches("^[a-z]+$")){
+        		return keyword;
+        	}else{
+        		return getLProtectedChar(keyword) + keyword + getRProtectedChar(keyword);
+        	}
         }
  	    public String getDropTableSQL(){
  	    	StringBuilder dropTableSQL = new StringBuilder();
