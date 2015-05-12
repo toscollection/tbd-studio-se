@@ -81,6 +81,11 @@ imports="
     boolean setZNodeParent = false;
     String zNodeParent = null;
 
+    String sslTrustStore = null;
+
+    boolean useSsl = false;
+    String additionalJdbcSettings = "";
+
     String defineRegisterJar = null;
     List<Map<String, String>> registerJarForHBase = null;
 
@@ -91,6 +96,11 @@ imports="
         dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
         hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
         distribution = ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__");
+
+        additionalJdbcSettings = ElementParameterParser.getValue(previousNode, "__HIVE_ADDITIONAL_JDBC__");
+        useSsl = "true".equals(ElementParameterParser.getValue(previousNode, "__USE_SSL__"));
+        sslTrustStore = ElementParameterParser.getValue(previousNode, "__SSL_TRUST_STORE__");
+
 
         storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
         zookeeperQuorumForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_QUORUM__");
@@ -287,14 +297,53 @@ if(useExistingConn) {
             }
         } else {
             if(securedStandaloneHive2) {
+                if(useSsl) {
+%>
+                    String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>+";sasl.qop=auth-conf";
+<%
+                } else {
 %>
                 String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
+                }
 <%
             } else {
+                // Using SSL in non Secure Mode
+                if(useSsl) {
+                    String sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
+                    if(previousNode != null) {
+                        if (ElementParameterParser.canEncrypt(previousNode, sslStorepasswordFieldName)) {
+%>
+                            String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(previousNode, sslStorepasswordFieldName)%>);
+    <%
+                        } else {
+    %>
+                            String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(previousNode, sslStorepasswordFieldName)%>; 
+    <%
+                        }                       
+                    }
+                    else {
+%>
+                        String decryptedSslStorePassword_<%=cid%> = "";
+<%                        
+                    }
+%>
+                    String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
+<%
+                } else {                            
 %>
                 String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
 <%
             }
+        }
+%>
+            String additionalJdbcSettings_<%=cid%> = <%=additionalJdbcSettings%>;
+            if(!"".equals(additionalJdbcSettings_<%=cid%>.trim())) {
+                if(!additionalJdbcSettings_<%=cid%>.startsWith(";")) {
+                    additionalJdbcSettings_<%=cid%> = ";" + additionalJdbcSettings_<%=cid%>;
+                }
+                url_<%=cid%> += additionalJdbcSettings_<%=cid%>;
+            }
+<%
         }
 %>
         java.lang.Class.forName("<%=javaDbDriver %>");
