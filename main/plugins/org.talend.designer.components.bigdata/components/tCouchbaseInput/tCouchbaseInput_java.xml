@@ -484,13 +484,13 @@
       <TEMPLATE_PARAM SOURCE="self.UNIQUE_NAME" TARGET="Out.DESTINATION" />
     </TEMPLATES>
     <IMPORTS>
-      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
-      <IMPORT NAME="couchbase-client-1.1.0.jar"  MODULE="couchbase-client-1.1.0.jar" UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/couchbase-client-1.1.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
-      <IMPORT NAME="httpcore-4.1.1.jar"  MODULE="httpcore-4.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
-      <IMPORT NAME="httpcore-nio-4.1.1.jar"  MODULE="httpcore-nio-4.1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-nio-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
-      <IMPORT NAME="jettison-1.1.jar"  MODULE="jettison-1.1.jar" UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/jettison-1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
-      <IMPORT NAME="netty-3.5.5.Final.jar"  MODULE="netty-3.5.5.Final.jar" UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/netty-3.5.5.Final.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
-      <IMPORT NAME="spymemcached-2.8.9.jar"  MODULE="spymemcached-2.8.9.jar" UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/spymemcached-2.8.9.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="commons-codec-1.5.jar"  MODULE="commons-codec-1.5.jar" MVN="mvn:org.talend.libraries/commons-codec-1.5/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.5.jar"  REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')" />
+      <IMPORT NAME="couchbase-client-1.1.0.jar"  MODULE="couchbase-client-1.1.0.jar" MVN="mvn:org.talend.libraries/couchbase-client-1.1.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/couchbase-client-1.1.0.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="httpcore-4.1.1.jar"  MODULE="httpcore-4.1.1.jar" MVN="mvn:org.talend.libraries/httpcore-4.1.1/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="httpcore-nio-4.1.1.jar"  MODULE="httpcore-nio-4.1.1.jar" MVN="mvn:org.talend.libraries/httpcore-nio-4.1.1/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-nio-4.1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="jettison-1.1.jar"  MODULE="jettison-1.1.jar" MVN="mvn:org.talend.libraries/jettison-1.1/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/jettison-1.1.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="netty-3.5.5.Final.jar"  MODULE="netty-3.5.5.Final.jar" MVN="mvn:org.talend.libraries/netty-3.5.5.Final/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/netty-3.5.5.Final.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
+      <IMPORT NAME="spymemcached-2.8.9.jar"  MODULE="spymemcached-2.8.9.jar" MVN="mvn:org.talend.libraries/spymemcached-2.8.9/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.couchbase/lib/spymemcached-2.8.9.jar" REQUIRED_IF="(DB_VERSION == 'COUCHBASE_2_0')"/>
     </IMPORTS>
    </CODEGENERATION>
 

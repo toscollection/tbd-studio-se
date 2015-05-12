@@ -87,150 +87,150 @@
                 <!-- Cassandra 1.1.2 -->
 	            <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_1_1_2')">
 					<IMPORT
-		                MODULE="hector-core-1.1-4.jar"
+		                MODULE="hector-core-1.1-4.jar" MVN="mvn:org.talend.libraries/hector-core-1.1-4/6.0.0" 
 		                NAME="hector-core-1.1-4"
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"/>
 					<IMPORT
-		                MODULE="apache-cassandra-1.1.2.jar"
+		                MODULE="apache-cassandra-1.1.2.jar" MVN="mvn:org.talend.libraries/apache-cassandra-1.1.2/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.1.2.jar"
 		                NAME="apache-cassandra-1.1.2"/>
 					<IMPORT
-		                MODULE="apache-cassandra-thrift-1.1.2.jar"
+		                MODULE="apache-cassandra-thrift-1.1.2.jar" MVN="mvn:org.talend.libraries/apache-cassandra-thrift-1.1.2/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.1.2.jar"
 		                NAME="apache-cassandra-thrift-1.1.2"/>
 					<IMPORT
-		                MODULE="slf4j-api-1.6.1.jar"
+		                MODULE="slf4j-api-1.6.1.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.6.1/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"
 		                NAME="slf4j-api-1.6.1"/>
 					<IMPORT
-		                MODULE="slf4j-log4j12-1.6.1.jar"
+		                MODULE="slf4j-log4j12-1.6.1.jar" MVN="mvn:org.talend.libraries/slf4j-log4j12-1.6.1/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.6.1.jar"
 		                NAME="slf4j-log4j12-1.6.1"/>
 					<IMPORT
-		                MODULE="log4j-1.2.16.jar"
+		                MODULE="log4j-1.2.16.jar" MVN="mvn:org.talend.libraries/log4j-1.2.16/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
 		                NAME="log4j-1.2.16"/>
 					<IMPORT
-		                MODULE="libthrift-0.7.0.jar"
+		                MODULE="libthrift-0.7.0.jar" MVN="mvn:org.talend.libraries/libthrift-0.7.0/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
 		                NAME="libthrift-0.7.0"/>
 		            <IMPORT
-		                MODULE="guava-12.0.1.jar"
+		                MODULE="guava-12.0.1.jar" MVN="mvn:org.talend.libraries/guava-12.0.1/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-12.0.1.jar"
 		                NAME="guava-12.0.1"/>
 		            <IMPORT
-		                MODULE="commons-lang-2.6.jar"
+		                MODULE="commons-lang-2.6.jar" MVN="mvn:org.talend.libraries/commons-lang-2.6/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
 		                NAME="commons-lang-2.6"/>
 	            </IMPORTS>
 	            <!-- Cassandra 1.2.2 -->
 	            <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_1_2_2')">
 		            <IMPORT
-		                MODULE="hector-core-1.1-4.jar"
+		                MODULE="hector-core-1.1-4.jar" MVN="mvn:org.talend.libraries/hector-core-1.1-4/6.0.0" 
 		                NAME="hector-core-1.1-4"
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-1.1-4.jar"/>
 		            <IMPORT
-		                MODULE="apache-cassandra-1.2.2.jar"
+		                MODULE="apache-cassandra-1.2.2.jar" MVN="mvn:org.talend.libraries/apache-cassandra-1.2.2/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-1.2.2.jar"
 		                NAME="apache-cassandra-1.2.2"/>
 		            <IMPORT
-		                MODULE="apache-cassandra-thrift-1.2.2.jar"
+		                MODULE="apache-cassandra-thrift-1.2.2.jar" MVN="mvn:org.talend.libraries/apache-cassandra-thrift-1.2.2/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/apache-cassandra-thrift-1.2.2.jar"
 		                NAME="apache-cassandra-thrift-1.2.2"/>
 		            <IMPORT
-		                MODULE="slf4j-api-1.7.2.jar"
+		                MODULE="slf4j-api-1.7.2.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.7.2/6.0.0" 
 		                NAME="slf4j-api-1.7.2"/>
 		            <IMPORT
-		                MODULE="slf4j-log4j12-1.7.2.jar"
+		                MODULE="slf4j-log4j12-1.7.2.jar" MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.2/6.0.0" 
 		                NAME="slf4j-log4j12-1.7.2"
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/slf4j-log4j12-1.7.2.jar"/>
 		            <IMPORT
-		                MODULE="log4j-1.2.16.jar"
+		                MODULE="log4j-1.2.16.jar" MVN="mvn:org.talend.libraries/log4j-1.2.16/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
 		                NAME="log4j-1.2.16"/>
 		            <IMPORT
-		                MODULE="libthrift-0.7.0.jar"
+		                MODULE="libthrift-0.7.0.jar" MVN="mvn:org.talend.libraries/libthrift-0.7.0/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
 		                NAME="libthrift-0.7.0"/>
 		            <IMPORT
-		                MODULE="guava-13.0.1.jar"
+		                MODULE="guava-13.0.1.jar" MVN="mvn:org.talend.libraries/guava-13.0.1/6.0.0" 
 		                NAME="guava-13.0.1"
 		                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-13.0.1.jar"/>
 		            <IMPORT
-		                MODULE="commons-lang-2.6.jar"
+		                MODULE="commons-lang-2.6.jar" MVN="mvn:org.talend.libraries/commons-lang-2.6/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
 		                NAME="commons-lang-2.6"/>
 	            </IMPORTS>
 	            <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
 		            <!-- Cassandra 2.1.x with latest = 2.0.8 / 2.1 -->
 		            <IMPORT
-		                MODULE="hector-core-2.0-0.jar"
+		                MODULE="hector-core-2.0-0.jar" MVN="mvn:org.talend.libraries/hector-core-2.0-0/6.0.0" 
 		                NAME="hector-core-2.0-0"
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-2.0-0.jar"/>
 		            <IMPORT
-		                MODULE="cassandra-thrift-2.0.4.jar"
+		                MODULE="cassandra-thrift-2.0.4.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-2.0.4/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.0.4.jar"
 		                NAME="cassandra-thrift-2.0.4"/>
 		            <IMPORT
-		                MODULE="slf4j-api-1.7.5.jar"
+		                MODULE="slf4j-api-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.7.5/6.0.0" 
 		                NAME="slf4j-api-1.7.5"
 		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"/>
 		            <IMPORT
-		                MODULE="slf4j-log4j12-1.7.5.jar"
+		                MODULE="slf4j-log4j12-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0" 
 		                NAME="slf4j-log4j12-1.7.5"
 		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>
 		            <IMPORT
-		                MODULE="log4j-1.2.16.jar"
+		                MODULE="log4j-1.2.16.jar" MVN="mvn:org.talend.libraries/log4j-1.2.16/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.16.jar"
 		                NAME="log4j-1.2.16"/>
 		            <IMPORT
 		                NAME="libthrift-0.9.1"
-		                MODULE="libthrift-0.9.1.jar"
+		                MODULE="libthrift-0.9.1.jar" MVN="mvn:org.talend.libraries/libthrift-0.9.1/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"/>
 		            <IMPORT
-		                MODULE="guava-14.0.jar"
+		                MODULE="guava-14.0.jar" MVN="mvn:org.talend.libraries/guava-14.0/6.0.0" 
 		                NAME="guava-14.0"
 		                UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.jar"/>
 		            <IMPORT
-		                MODULE="commons-lang-2.6.jar"
+		                MODULE="commons-lang-2.6.jar" MVN="mvn:org.talend.libraries/commons-lang-2.6/6.0.0" 
 		                UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
 		                NAME="commons-lang-2.6"/>
 		        </IMPORTS>
 	            
 	            <!-- Imported for all versions -->
 	            <IMPORT
-	                MODULE="uuid-3.4.jar"
+	                MODULE="uuid-3.4.jar" MVN="mvn:org.talend.libraries/uuid-3.4/6.0.0" 
 	                NAME="uuid-3.4"
 	                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"/>
 	            <IMPORT
 	                NAME="jackson-core-asl-1.9.7"
-	                MODULE="jackson-core-asl-1.9.7.jar"
+	                MODULE="jackson-core-asl-1.9.7.jar" MVN="mvn:org.talend.libraries/jackson-core-asl-1.9.7/6.0.0" 
 	                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-core-asl-1.9.7.jar"/>
 	            <IMPORT
 	                NAME="jackson-mapper-asl-1.9.7"
-	                MODULE="jackson-mapper-asl-1.9.7.jar"
+	                MODULE="jackson-mapper-asl-1.9.7.jar" MVN="mvn:org.talend.libraries/jackson-mapper-asl-1.9.7/6.0.0" 
 	                UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-mapper-asl-1.9.7.jar"/>
 	    	</IMPORTS>
 	    	<IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))">
                 <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
 	                <IMPORT
-	                    MODULE="cassandra-driver-core-2.1.5.jar"
+	                    MODULE="cassandra-driver-core-2.1.5.jar" MVN="mvn:org.talend.libraries/cassandra-driver-core-2.1.5/6.0.0" 
 	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-2.1.5.jar"
 	                    NAME="cassandra-driver-core-2.1.5.jar"/>
 	                <IMPORT
-	                    MODULE="slf4j-api-1.7.5.jar"
+	                    MODULE="slf4j-api-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.7.5/6.0.0" 
 	                    UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
 	                    NAME="slf4j-api-1.7.5.jar"/>    
 	                <IMPORT
-	                    MODULE="guava-14.0.1.jar"
+	                    MODULE="guava-14.0.1.jar" MVN="mvn:org.talend.libraries/guava-14.0.1/6.0.0" 
 	                    UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.1.jar"
 	                    NAME="guava-14.0.1.jar"/>
 	                <IMPORT
-	                    MODULE="metrics-core-3.0.2.jar"
+	                    MODULE="metrics-core-3.0.2.jar" MVN="mvn:org.talend.libraries/metrics-core-3.0.2/6.0.0" 
 	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.0.2.jar"
 	                    NAME="metrics-core-3.0.2.jar"/>
 	                <IMPORT
-                        MODULE="netty-3.9.0.Final.jar"
+                        MODULE="netty-3.9.0.Final.jar" MVN="mvn:org.talend.libraries/netty-3.9.0.Final/6.0.0" 
                         UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-3.9.0.Final.jar"
                         NAME="netty-3.9.0.Final.jar"/>    
                 </IMPORTS>

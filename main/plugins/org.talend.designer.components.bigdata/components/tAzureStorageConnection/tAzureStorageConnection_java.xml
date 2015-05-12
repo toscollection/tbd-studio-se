@@ -54,7 +54,7 @@
 
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="microsoft-windowsazure-api-0.4.6" MODULE="microsoft-windowsazure-api-0.4.6.jar"
+            <IMPORT NAME="microsoft-windowsazure-api-0.4.6" MODULE="microsoft-windowsazure-api-0.4.6.jar" MVN="mvn:org.talend.libraries/microsoft-windowsazure-api-0.4.6/6.0.0" 
 				REQUIRED="true" />
 		</IMPORTS>
 	</CODEGENERATION>

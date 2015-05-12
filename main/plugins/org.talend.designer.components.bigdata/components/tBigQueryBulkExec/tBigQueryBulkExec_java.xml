@@ -157,20 +157,20 @@
    </ADVANCED_PARAMETERS>
    <CODEGENERATION>
      <IMPORTS>
-		<IMPORT NAME="google-api-client-1.19.0.jar" MODULE="google-api-client-1.19.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-api-client-1.19.0.jar" REQUIRED="true" />
-		<IMPORT NAME="google-api-services-oauth2-v2-rev78-1.19.0.jar" MODULE="google-api-services-oauth2-v2-rev78-1.19.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-api-services-oauth2-v2-rev78-1.19.0.jar" REQUIRED="true" />
-		<IMPORT NAME="google-api-services-bigquery-v2-rev168-1.19.0.jar" MODULE="google-api-services-bigquery-v2-rev168-1.19.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-api-services-bigquery-v2-rev168-1.19.0.jar" REQUIRED="true" />
-		<IMPORT NAME="google-http-client-1.19.0.jar" MODULE="google-http-client-1.19.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-http-client-1.19.0.jar" REQUIRED="true" />
-		<IMPORT NAME="google-oauth-client-1.19.0.jar" MODULE="google-oauth-client-1.19.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-oauth-client-1.19.0.jar" REQUIRED="true" />
-		<IMPORT NAME="google-http-client-jackson2-1.19.0.jar" MODULE="google-http-client-jackson2-1.19.0.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-http-client-jackson2-1.19.0.jar" REQUIRED="true" />
-		<IMPORT NAME="guava-jdk5-13.0.jar" MODULE="guava-jdk5-13.0.jar" UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-jdk5-13.0.jar" REQUIRED="true" />
-		<IMPORT NAME="jackson-core-2.2.2.jar" MODULE="jackson-core-2.2.2.jar" UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-2.2.2.jar" REQUIRED="true" />
+		<IMPORT NAME="google-api-client-1.19.0.jar" MODULE="google-api-client-1.19.0.jar" MVN="mvn:org.talend.libraries/google-api-client-1.19.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-api-client-1.19.0.jar" REQUIRED="true" />
+		<IMPORT NAME="google-api-services-oauth2-v2-rev78-1.19.0.jar" MODULE="google-api-services-oauth2-v2-rev78-1.19.0.jar" MVN="mvn:org.talend.libraries/google-api-services-oauth2-v2-rev78-1.19.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-api-services-oauth2-v2-rev78-1.19.0.jar" REQUIRED="true" />
+		<IMPORT NAME="google-api-services-bigquery-v2-rev168-1.19.0.jar" MODULE="google-api-services-bigquery-v2-rev168-1.19.0.jar" MVN="mvn:org.talend.libraries/google-api-services-bigquery-v2-rev168-1.19.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-api-services-bigquery-v2-rev168-1.19.0.jar" REQUIRED="true" />
+		<IMPORT NAME="google-http-client-1.19.0.jar" MODULE="google-http-client-1.19.0.jar" MVN="mvn:org.talend.libraries/google-http-client-1.19.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-http-client-1.19.0.jar" REQUIRED="true" />
+		<IMPORT NAME="google-oauth-client-1.19.0.jar" MODULE="google-oauth-client-1.19.0.jar" MVN="mvn:org.talend.libraries/google-oauth-client-1.19.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-oauth-client-1.19.0.jar" REQUIRED="true" />
+		<IMPORT NAME="google-http-client-jackson2-1.19.0.jar" MODULE="google-http-client-jackson2-1.19.0.jar" MVN="mvn:org.talend.libraries/google-http-client-jackson2-1.19.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.google/lib/google-http-client-jackson2-1.19.0.jar" REQUIRED="true" />
+		<IMPORT NAME="guava-jdk5-13.0.jar" MODULE="guava-jdk5-13.0.jar" MVN="mvn:org.talend.libraries/guava-jdk5-13.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-jdk5-13.0.jar" REQUIRED="true" />
+		<IMPORT NAME="jackson-core-2.2.2.jar" MODULE="jackson-core-2.2.2.jar" MVN="mvn:org.talend.libraries/jackson-core-2.2.2/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-core-2.2.2.jar" REQUIRED="true" />
 		<!-- REQUIRED FOR GOOGLE STORAGE -->
-		<IMPORT NAME="jets3t-0.9.1" MODULE="jets3t-0.9.1.jar" REQUIRED="true" />
-		<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="true" />
-		<IMPORT NAME="httpclient-4.2.1" MODULE="httpclient-4.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.2.1.jar" REQUIRED="true" />
-		<IMPORT NAME="httpcore-4.2.1" MODULE="httpcore-4.2.1.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.2.1.jar" REQUIRED="true" />
-		<IMPORT NAME="commons-codec-1.4" MODULE="commons-codec-1.4.jar" UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar" REQUIRED="true" />
+		<IMPORT NAME="jets3t-0.9.1" MODULE="jets3t-0.9.1.jar" MVN="mvn:org.talend.libraries/jets3t-0.9.1/6.0.0"  REQUIRED="true" />
+		<IMPORT NAME="commons-logging-1.1.1" MODULE="commons-logging-1.1.1.jar" MVN="mvn:org.talend.libraries/commons-logging-1.1.1/6.0.0"  UrlPath="platform:/base/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar" REQUIRED="true" />
+		<IMPORT NAME="httpclient-4.2.1" MODULE="httpclient-4.2.1.jar" MVN="mvn:org.talend.libraries/httpclient-4.2.1/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.2.1.jar" REQUIRED="true" />
+		<IMPORT NAME="httpcore-4.2.1" MODULE="httpcore-4.2.1.jar" MVN="mvn:org.talend.libraries/httpcore-4.2.1/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpcore-4.2.1.jar" REQUIRED="true" />
+		<IMPORT NAME="commons-codec-1.4" MODULE="commons-codec-1.4.jar" MVN="mvn:org.talend.libraries/commons-codec-1.4/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-codec-1.4.jar" REQUIRED="true" />
      </IMPORTS>
    </CODEGENERATION>
    <RETURNS>
