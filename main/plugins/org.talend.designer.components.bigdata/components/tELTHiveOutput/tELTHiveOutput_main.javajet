@@ -84,6 +84,8 @@ imports="
     String sslTrustStore = null;
 
     boolean useSsl = false;
+    String additionalJdbcSettings = "";
+
     String defineRegisterJar = null;
     List<Map<String, String>> registerJarForHBase = null;
 
@@ -95,6 +97,7 @@ imports="
         hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
         distribution = ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__");
 
+        additionalJdbcSettings = ElementParameterParser.getValue(previousNode, "__HIVE_ADDITIONAL_JDBC__");
         useSsl = "true".equals(ElementParameterParser.getValue(previousNode, "__USE_SSL__"));
         sslTrustStore = ElementParameterParser.getValue(previousNode, "__SSL_TRUST_STORE__");
 
@@ -332,6 +335,15 @@ if(useExistingConn) {
 <%
                 }
             }
+%>
+            String additionalJdbcSettings_<%=cid%> = <%=additionalJdbcSettings%>;
+            if(!"".equals(additionalJdbcSettings_<%=cid%>.trim())) {
+                if(!additionalJdbcSettings_<%=cid%>.startsWith(";")) {
+                    additionalJdbcSettings_<%=cid%> = ";" + additionalJdbcSettings_<%=cid%>;
+                }
+                url_<%=cid%> += additionalJdbcSettings_<%=cid%>;
+            }
+<%
         }
 %>
         java.lang.Class.forName("<%=javaDbDriver %>");

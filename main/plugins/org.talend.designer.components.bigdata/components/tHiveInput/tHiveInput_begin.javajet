@@ -442,6 +442,16 @@ imports="
 <%
 					}
 				}
+				String additionalJdbcSettings = ElementParameterParser.getValue(node, "__HIVE_ADDITIONAL_JDBC__");
+%>
+				String additionalJdbcSettings_<%=cid%> = <%=additionalJdbcSettings%>;
+				if(!"".equals(additionalJdbcSettings_<%=cid%>.trim())) {
+					if(!additionalJdbcSettings_<%=cid%>.startsWith(";")) {
+						additionalJdbcSettings_<%=cid%> = ";" + additionalJdbcSettings_<%=cid%>;
+					}
+					url_<%=cid%> += additionalJdbcSettings_<%=cid%>;
+				}
+<%
 			}
 		}
 
