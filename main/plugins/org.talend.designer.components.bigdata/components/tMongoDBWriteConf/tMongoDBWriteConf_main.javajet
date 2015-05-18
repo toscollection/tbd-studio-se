@@ -89,7 +89,7 @@
 				<%
 				}
 				
-                if (!dbversion.equals("MONGODB_2_6_X")) {
+                if (dbversion.equals("MONGODB_2_5_X")) {
                 %>
     				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
     					<%

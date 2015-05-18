@@ -52,10 +52,6 @@
 					IMetadataColumn column = columnList.get(i);
 					
 					for (java.util.Map<String, String> mapping: mappings) {
-					    %>
-					    // HEy : <%=mapping%>
-					    // ho : <%=column%> <%=column.isKey()%>
-					    <%
 					    if (column.getLabel().equals(mapping.get("SCHEMA_COLUMN"))) {
 	                        if ("true".equals(mapping.get("REMOVE_NULL_FIELD"))) {
 	                            %>
@@ -138,7 +134,7 @@
 				
 				
 
-                if (!dbversion.equals("MONGODB_2_6_X")) {
+                if (dbversion.equals("MONGODB_2_5_X")) {
                     %>
     				if(resultMessage_<%=cid%>!=null && resultMessage_<%=cid%>.getError()!=null){
     					<%
