@@ -27,11 +27,6 @@
     String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
     
     String mongoDbDriver = "com.mongodb.MongoClient";
-    if (dbversion.equals("MONGODB_2_1_2") || dbversion.equals("MONGODB_2_2_3")) {
-        mongoDbDriver = "com.mongodb.Mongo";
-        useSSL = false;
-        setReadPreference = false;
-    }
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     
