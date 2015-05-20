@@ -25,7 +25,10 @@
     
     List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
     boolean useReplicaSet="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_REPLICA_SET__"));
-    
+
+    boolean setWriteConcern = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_WRITE_CONCERN__"));
+    String writeConcern = ElementParameterParser.getValue(node, "__WRITE_CONCERN__");
+ 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	%>
 	int nb_line_<%=cid %> = 0;
@@ -184,6 +187,13 @@
 				<%
 				}
 			}
+
+			if(setWriteConcern){
+				%>
+				mongo_<%=cid%>.setWriteConcern(com.mongodb.WriteConcern.<%=writeConcern%>);
+				<%
+			}
+
 			%>
 			<%
 			if(isLog4jEnabled){
