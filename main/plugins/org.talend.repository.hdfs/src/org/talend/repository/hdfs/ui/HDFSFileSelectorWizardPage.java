@@ -45,7 +45,7 @@ public class HDFSFileSelectorWizardPage extends WizardPage {
 
     @Override
     public void createControl(final Composite parent) {
-        hdfsFileSelectorForm = new HDFSFileSelectorForm(parent, connectionItem, temConnection, this);
+        hdfsFileSelectorForm = createForm(parent);
         hdfsFileSelectorForm.setReadOnly(!isRepositoryObjectEditable);
 
         AbstractForm.ICheckListener listener = new AbstractForm.ICheckListener() {
@@ -82,4 +82,9 @@ public class HDFSFileSelectorWizardPage extends WizardPage {
     public IHDFSNode getSelectedFile() {
         return hdfsFileSelectorForm.getSelectedHDFSNode();
     }
+
+    protected HDFSFileSelectorForm createForm(final Composite parent) {
+        return new HDFSFileSelectorForm(parent, connectionItem, temConnection, this);
+    }
+
 }

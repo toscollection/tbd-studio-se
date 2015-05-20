@@ -671,11 +671,15 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
         }
     }
 
-    private void changeTableNavigatorStatus(boolean isEnabled) {
+    protected void changeTableNavigatorStatus(boolean isEnabled) {
         Composite leftGroup = tableNavigator.getParent().getParent().getParent();
         Control[] children = leftGroup.getChildren();
         leftGroup.setEnabled(isEnabled);
         changeControlStatus(children, isEnabled);
+    }
+
+    protected MetadataTable getMetadataTable() {
+        return this.metadataTable;
     }
 
     public void setButtonsVisibility(boolean isVisible) {
