@@ -123,8 +123,25 @@
                         <%
                     }
 				}
+                %>
 
-			    if (setReadPreference) {
+				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+				<%
+				if (authentication){
+				%>
+				
+                    <%
+                    String passwordFieldName = "__PASSWORD__";
+                    %>
+                    
+                    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>						
+                
+					db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
+				<%
+				}
+			}
+
+			if (setReadPreference) {
 			        if (readPreference.equals("PRIMARY")) {
 			            %>
 			            mongo_<%=cid%>.setReadPreference(com.mongodb.ReadPreference.primary());
@@ -150,27 +167,8 @@
 			            // Unhandled
 			            <%
 			        }
-			    }
-
-                %>
-
-				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
-				<%
-				if (authentication){
-				%>
-				
-                    <%
-                    String passwordFieldName = "__PASSWORD__";
-                    %>
-                    
-                    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>						
-                
-					db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
-				<%
-				}
 			}
-			%>
-			<%
+
 			if(isLog4jEnabled){
 			%>	
 				log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
@@ -226,12 +224,13 @@
 				pathMap_<%=cid%>.put("<%=schemaColumn%>",<%=path%>);
 <%
 			}
-			
+
 			if (limit != null && !"\"\"".equals(limit) && limit.length() > 0){
 %>
 	  			cursor_<%=cid%> = cursor_<%=cid%>.limit(<%=limit%>);
 <%
 			}
+
 			if(sorts.size()>0){
 %>
 		  		com.mongodb.DBObject orderBy_<%=cid%> = new com.mongodb.BasicDBObject();
