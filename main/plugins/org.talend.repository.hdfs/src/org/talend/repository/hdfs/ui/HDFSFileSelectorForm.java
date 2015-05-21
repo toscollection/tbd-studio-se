@@ -605,7 +605,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         updateParentItemCheckStatus(parentItem);
     }
 
-    private void refreshTable(final TreeItem treeItem, final int size) {
+    protected void refreshTable(final TreeItem treeItem, final int size) {
         IHDFSNode node = (IHDFSNode) treeItem.getData();
         if (!threadExecutor.isThreadRunning(treeItem)) {
             if (node.getType() == EHadoopFileTypes.FILE) {
