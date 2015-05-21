@@ -180,6 +180,11 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+        <PARAMETER NAME="NOTE_ISOLATION" FIELD="LABEL"
+            NUM_ROW="17">
+            <DEFAULT>If you are running on a Sharded Cluster, please, be sure to use to include shard key on the query.</DEFAULT>
+        </PARAMETER>
+
         <PARAMETER
             FIELD="MEMO"
             NAME="QUERY"
