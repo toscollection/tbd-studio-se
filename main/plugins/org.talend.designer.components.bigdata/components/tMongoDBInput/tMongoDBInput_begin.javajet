@@ -192,7 +192,9 @@
 							return null;
 						}
 						if (parentNode == null || "".equals(parentNode)) {
-							if(dbObject.get(currentName)!=null){
+						    if ("*".equals(currentName)) {
+						        value = dbObject;
+						    } else if (dbObject.get(currentName)!=null){
 								value=dbObject.get(currentName);
 							}
 						}else{
@@ -204,7 +206,9 @@
 									break;
 								}
 							}
-							if(currentObj!=null){
+							if ("*".equals(currentName)) {
+                                value = currentObj;
+                            } else if(currentObj!=null){
 								value=currentObj.get(currentName);
 							}
 						}
@@ -267,7 +271,7 @@
 					JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 					String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
 %>
-					valueObj_<%=cid%>=dbObjectInputUtil_<%=cid%>.getValue(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>",o_<%=cid%>);
+                    valueObj_<%=cid%>=dbObjectInputUtil_<%=cid%>.getValue(pathMap_<%=cid%>.get("<%=column.getLabel() %>"),"<%=column.getOriginalDbColumnName() %>",o_<%=cid%>);
 <%
           			if(javaType == JavaTypesManager.OBJECT) {
 %>
