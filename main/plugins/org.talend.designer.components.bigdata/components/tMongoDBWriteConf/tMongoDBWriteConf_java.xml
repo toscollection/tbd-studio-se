@@ -122,11 +122,39 @@
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
 
+        <PARAMETER FIELD="CHECK" NAME="SET_WRITE_CONCERN" NUM_ROW="9" GROUP="WRITE_CONCERN_GROUP">
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER NAME="WRITE_CONCERN" FIELD="CLOSED_LIST" NUM_ROW="10" SHOW_IF="SET_WRITE_CONCERN=='true'" GROUP="WRITE_CONCERN_GROUP">
+            <ITEMS DEFAULT="ACKNOWLEDGED">
+                <ITEM NAME="ACKNOWLEDGED" VALUE="ACKNOWLEDGED"/>
+                <ITEM NAME="UNACKNOWLEDGED" VALUE="UNACKNOWLEDGED"/>
+                <ITEM NAME="JOURNALED" VALUE="JOURNALED"/>
+                <ITEM NAME="REPLICA_ACKNOWLEDGED" VALUE="REPLICA_ACKNOWLEDGED"/>
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER FIELD="CHECK" NAME="SET_BULK_WRITE" NUM_ROW="11" NOT_SHOW_IF="DB_VERSION=='MONGODB_2_5_X'" GROUP="BULK_WRITE_GROUP">
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER NAME="BULK_WRITE_TYPE" FIELD="CLOSED_LIST" NUM_ROW="12" SHOW_IF="(SET_BULK_WRITE=='true') AND (DB_VERSION!='MONGODB_2_5_X')" GROUP="BULK_WRITE_GROUP">
+            <ITEMS DEFAULT="UNORDERED">
+                <ITEM NAME="UNORDERED" VALUE="Unordered"/>
+                <ITEM NAME="ORDERED" VALUE="Ordered"/>
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="BULK_WRITE_SIZE" REPOSITORY_VALUE="BULK_WRITE_SIZE" NUM_ROW="13" SHOW_IF="(SET_BULK_WRITE=='true') AND (DB_VERSION!='MONGODB_2_5_X')" NOT_SHOW_IF="DB_VERSION=='MONGODB_2_5_X'" GROUP="BULK_WRITE_GROUP">
+            <DEFAULT>"1000"</DEFAULT>
+        </PARAMETER>
+
         <PARAMETER
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
             REPOSITORY_VALUE="REQUIRED_AUTHENTICATION"
-            NUM_ROW="12"
+            NUM_ROW="14"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
             GROUP="AUTHENTICATION"
         >
@@ -136,7 +164,7 @@
             FIELD="TEXT"
             NAME="USERNAME"
             REPOSITORY_VALUE="USERNAME"
-            NUM_ROW="13"
+            NUM_ROW="15"
             SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
@@ -146,7 +174,7 @@
             FIELD="PASSWORD"
             NAME="PASSWORD"
             REPOSITORY_VALUE="PASSWORD"
-            NUM_ROW="13"
+            NUM_ROW="16"
             SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
@@ -156,14 +184,14 @@
             FIELD="TEXT"
             NAME="COLLECTION"
             REQUIRED="true"
-            NUM_ROW="16"
+            NUM_ROW="17"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="DROP_COLLECTION_CREATE"
             FIELD="CHECK"
-            NUM_ROW="16"
+            NUM_ROW="17"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
