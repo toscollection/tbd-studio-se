@@ -18,7 +18,7 @@
     String dbuser = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass = ElementParameterParser.getValue(node, "__PASSWORD__");
     String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
-    boolean authentication = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_AUTHENTICATION__"));
+    boolean authentication = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
     String authenticationMechanism = ElementParameterParser.getValue(node, "__AUTHENTICATION_MECHANISM__");
     String krbUserPrincipal = ElementParameterParser.getValue(node, "__KRB_USER_PRINCIPAL__");
     String krbRealm = ElementParameterParser.getValue(node, "__KRB_REALM__");
@@ -80,7 +80,7 @@
                 mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
                 <%
             }
-        } else {
+        } else { // GSSAPI SASL (KERBEROS)
             %>
             System.setProperty("java.security.krb5.realm", <%=krbRealm%>);
             System.setProperty("java.security.krb5.kdc", <%=krbKdc%>);
@@ -93,9 +93,11 @@
         <%
     }
 
-    // Replica set
+
+
+    // The client
     if(useReplicaSet){
-    %>
+        %>
         List<com.mongodb.ServerAddress> serverAddressList_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
         <%
         for(Map<String,String> replicaAddr:replicaAddrs){
@@ -103,23 +105,13 @@
             serverAddressList_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
         <%
         }
-    }
-
-    // Server Address
-    %>
-    com.mongodb.ServerAddress serverAddress_<%=cid%> = new com.mongodb.ServerAddress(<%=dbhost%>, <%=dbport%>);
-    <%
-
-    // The client
-    if(useReplicaSet){
         %>
         com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddressList_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
-
         <%
     }else{
         %>
+        com.mongodb.ServerAddress serverAddress_<%=cid%> = new com.mongodb.ServerAddress(<%=dbhost%>, <%=dbport%>);
         com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddress_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
-
         <%
     }
 
@@ -129,12 +121,11 @@
     <%
 
     if(isLog4jEnabled){
-    %>  
+    %>
         log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
     <%
     }
 
     %>
-    
     globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
     globalMap.put("db_<%=cid%>", db_<%=cid%>);
