@@ -145,12 +145,23 @@
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
+
+        <PARAMETER NAME="AUTHENTICATION_MECHANISM" REPOSITORY_VALUE="AUTHENTICATION_MECHANISM" FIELD="CLOSED_LIST" NUM_ROW="15"
+                SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (REQUIRED_AUTHENTICATION == 'true')" GROUP="AUTHENTICATION">
+            <ITEMS DEFAULT="NEGOTIATE_MEC">
+                <ITEM NAME="NEGOTIATE_MEC" VALUE="NEGOTIATE_MEC"/>
+                <ITEM NAME="PLAIN_MEC" VALUE="PLAIN_MEC"/>
+                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC"/>
+                <ITEM NAME="KERBEROS_MEC" VALUE="KERBEROS_MEC"/>
+            </ITEMS>
+        </PARAMETER>
+
         <PARAMETER
             FIELD="TEXT"
             NAME="USERNAME"
             REPOSITORY_VALUE="USERNAME"
-            NUM_ROW="12"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            NUM_ROW="20"
+            SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='PLAIN_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
             <DEFAULT>""</DEFAULT>
@@ -159,29 +170,48 @@
             FIELD="PASSWORD"
             NAME="PASSWORD"
             REPOSITORY_VALUE="PASSWORD"
-            NUM_ROW="12"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            NUM_ROW="20"
+            SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='PLAIN_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="KRB_USER_PRINCIPAL" REPOSITORY_VALUE="KRB_USER_PRINCIPAL" NUM_ROW="21"
+            SHOW_IF="(AUTHENTICATION_MECHANISM=='KERBEROS_MEC') AND (REQUIRED_AUTHENTICATION=='true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>"mongouser@EXAMPLE.COM"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="KRB_REALM" REPOSITORY_VALUE="KRB_REALM" NUM_ROW="22"
+            SHOW_IF="(AUTHENTICATION_MECHANISM=='KERBEROS_MEC') AND (REQUIRED_AUTHENTICATION=='true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>"EXAMPLE.COM"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="KRB_KDC" REPOSITORY_VALUE="KRB_KDC" NUM_ROW="23"
+            SHOW_IF="(AUTHENTICATION_MECHANISM=='KERBEROS_MEC') AND (REQUIRED_AUTHENTICATION=='true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>"kdc.example.com"</DEFAULT>
+        </PARAMETER>
+
+
+
+
         <PARAMETER
             FIELD="TEXT"
             NAME="COLLECTION"
             REQUIRED="true"
-            NUM_ROW="15"
+            NUM_ROW="30"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="SCHEMA_FLOW"
             FIELD="SCHEMA_TYPE"
-            NUM_ROW="16"
+            NUM_ROW="35"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="NOTE_ISOLATION" FIELD="LABEL"
-            NUM_ROW="17">
+            NUM_ROW="40">
             <DEFAULT>If you are running on a Sharded Cluster, please, be sure to use to include shard key on the query.</DEFAULT>
         </PARAMETER>
 
@@ -189,7 +219,7 @@
             FIELD="MEMO"
             NAME="QUERY"
             REQUIRED="true"
-            NUM_ROW="30"
+            NUM_ROW="41"
             NB_LINES="5"
         >
             <DEFAULT>"{}"</DEFAULT>
@@ -198,7 +228,7 @@
             NAME="MAPPING"
             FIELD="TABLE"
             REQUIRED="true"
-            NUM_ROW="35"
+            NUM_ROW="45"
             NB_LINES="5" >
             <ITEMS BASED_ON_SCHEMA="true">
                 <ITEM NAME="PARENT_NODE_PATH" FIELD="TEXT" />
@@ -208,7 +238,7 @@
             NAME="SORT"
             FIELD="TABLE"
             REQUIRED="false"
-            NUM_ROW="40"
+            NUM_ROW="50"
             NB_LINES="5"
         >
             <ITEMS>
@@ -224,7 +254,7 @@
         <PARAMETER
             FIELD="TEXT"
             NAME="LIMIT"
-            NUM_ROW="45"
+            NUM_ROW="55"
         />
     </PARAMETERS>
 

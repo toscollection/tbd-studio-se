@@ -23,6 +23,10 @@
     String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
     String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String authenticationMechanism = ElementParameterParser.getValue(node, "__AUTHENTICATION_MECHANISM__");
+    String krbUserPrincipal = ElementParameterParser.getValue(node, "__KRB_USER_PRINCIPAL__");
+    String krbRealm = ElementParameterParser.getValue(node, "__KRB_REALM__");
+    String krbKdc = ElementParameterParser.getValue(node, "__KRB_KDC__");
     String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
@@ -75,7 +79,7 @@
 				}
 			}else{
 			%>
-			try{
+			try{ // link with the "finally" on the "finally.javajet"
 				<%
 	 			List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
 
@@ -83,17 +87,64 @@
                 String dbversion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 
                 String mongoDbDriver = "com.mongodb.MongoClient";
+                %>
 
+                // Empty client options
+                com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().build();
+                <%
                 if (useSSL) {
                     %>
-                    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder()
+                    clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder()
                     .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
                     .build();
                     <%
                 }
+                
+                // Client Credentials
+                %>
+                // Empty client credentials list
+                java.util.List<com.mongodb.MongoCredential> mongoCredentialList_<%=cid%> = new java.util.ArrayList<com.mongodb.MongoCredential>();
 
+                <%
+                // Authentication
+                if (authentication){
+                    %>
+                    com.mongodb.MongoCredential mongoCredential_<%=cid%>;
+                    <%
+                    if((authenticationMechanism.equals("NEGOTIATE_MEC"))||(authenticationMechanism.equals("PLAIN_MEC"))||(authenticationMechanism.equals("SCRAMSHA1_MEC"))){
+                        String passwordFieldName = "__PASSWORD__";
+                        %>
+                        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+                        <%
+                        if(authenticationMechanism.equals("NEGOTIATE_MEC")){
+                            %>
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            <%
+                        } else if(authenticationMechanism.equals("PLAIN_MEC")){
+                            %>
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createPlainCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            <%
+                        } else if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
+                            %>
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            <%
+                        }
+                    } else { // GSSAPI SASL (KERBEROS)
+                        %>
+                        System.setProperty("java.security.krb5.realm", <%=krbRealm%>);
+                        System.setProperty("java.security.krb5.kdc", <%=krbKdc%>);
+                        System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");
+                        mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createGSSAPICredential(<%=krbUserPrincipal%>);
+                        <%
+                    }
+                    %>
+                    mongoCredentialList_<%=cid%>.add(mongoCredential_<%=cid%>);
+                    <%
+                }
+
+                // the client
 				if(useReplicaSet){
-				%>
+				    %>
 					List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<com.mongodb.ServerAddress>();
 					<%
 					for(Map<String,String> replicaAddr:replicaAddrs){
@@ -101,44 +152,19 @@
 						addrs_<%=cid%>.add(new com.mongodb.ServerAddress(<%=replicaAddr.get("REPLICA_HOST")%>,<%=replicaAddr.get("REPLICA_PORT")%>));
 					<%
 					}
-
-					if (useSSL) {
-                        %>
-                        mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>, clientOptions_<%=cid%>);
-                        <%
-                    } else {
-                        %>
-                        mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>);
-                        <%
-                    }
-
+                    %>
+                    mongo_<%=cid%> = new <%=mongoDbDriver%>(addrs_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
+                    <%
 				}else{
-				    if (useSSL) {
-                        %>
-                        mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%> + ":" +  <%=dbport%>, clientOptions_<%=cid%>);
-                        <%
-                    } else {
-                        %>
-                        mongo_<%=cid%> = new <%=mongoDbDriver%>(<%=dbhost%>, <%=dbport%>);
-                        <%
-                    }
+                    %>
+                    com.mongodb.ServerAddress serverAddress_<%=cid%> = new com.mongodb.ServerAddress(<%=dbhost%>, <%=dbport%>);
+                    mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddress_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
+                    <%
 				}
                 %>
 
 				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 				<%
-				if (authentication){
-				%>
-				
-                    <%
-                    String passwordFieldName = "__PASSWORD__";
-                    %>
-                    
-                    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>						
-                
-					db_<%=cid%>.authenticate(<%=dbuser%>, decryptedPassword_<%=cid%>.toCharArray());
-				<%
-				}
 			}
 
 			if (setReadPreference) {
