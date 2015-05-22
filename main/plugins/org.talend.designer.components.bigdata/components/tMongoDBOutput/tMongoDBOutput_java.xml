@@ -151,22 +151,34 @@
             <DEFAULT>"1000"</DEFAULT>
         </PARAMETER>
 
+
         <PARAMETER
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
             REPOSITORY_VALUE="REQUIRED_AUTHENTICATION"
-            NUM_ROW="14"
+            NUM_ROW="15"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
             GROUP="AUTHENTICATION"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
+
+        <PARAMETER NAME="AUTHENTICATION_MECHANISM" REPOSITORY_VALUE="AUTHENTICATION_MECHANISM" FIELD="CLOSED_LIST" NUM_ROW="16"
+                SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (REQUIRED_AUTHENTICATION == 'true')" GROUP="AUTHENTICATION">
+            <ITEMS DEFAULT="NEGOTIATE_MEC">
+                <ITEM NAME="NEGOTIATE_MEC" VALUE="NEGOTIATE_MEC"/>
+                <ITEM NAME="PLAIN_MEC" VALUE="PLAIN_MEC"/>
+                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC"/>
+                <ITEM NAME="KERBEROS_MEC" VALUE="KERBEROS_MEC"/>
+            </ITEMS>
+        </PARAMETER>
+
         <PARAMETER
             FIELD="TEXT"
             NAME="USERNAME"
             REPOSITORY_VALUE="USERNAME"
-            NUM_ROW="15"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            NUM_ROW="20"
+            SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='PLAIN_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
             <DEFAULT>""</DEFAULT>
@@ -175,31 +187,50 @@
             FIELD="PASSWORD"
             NAME="PASSWORD"
             REPOSITORY_VALUE="PASSWORD"
-            NUM_ROW="13"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            NUM_ROW="20"
+            SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='PLAIN_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="KRB_USER_PRINCIPAL" REPOSITORY_VALUE="KRB_USER_PRINCIPAL" NUM_ROW="21"
+            SHOW_IF="(AUTHENTICATION_MECHANISM=='KERBEROS_MEC') AND (REQUIRED_AUTHENTICATION=='true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>"mongouser@EXAMPLE.COM"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="KRB_REALM" REPOSITORY_VALUE="KRB_REALM" NUM_ROW="22"
+            SHOW_IF="(AUTHENTICATION_MECHANISM=='KERBEROS_MEC') AND (REQUIRED_AUTHENTICATION=='true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>"EXAMPLE.COM"</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER FIELD="TEXT" NAME="KRB_KDC" REPOSITORY_VALUE="KRB_KDC" NUM_ROW="23"
+            SHOW_IF="(AUTHENTICATION_MECHANISM=='KERBEROS_MEC') AND (REQUIRED_AUTHENTICATION=='true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>"kdc.example.com"</DEFAULT>
+        </PARAMETER>
+
+
+
+
         <PARAMETER
             FIELD="TEXT"
             NAME="COLLECTION"
             REQUIRED="true"
-            NUM_ROW="16"
+            NUM_ROW="30"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="DROP_COLLECTION_CREATE"
             FIELD="CHECK"
-            NUM_ROW="16"
+            NUM_ROW="35"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="DATA_ACTION"
           FIELD="CLOSED_LIST"
-          NUM_ROW="21"
+          NUM_ROW="40"
         >
             <ITEMS DEFAULT="INSERT">
                 <ITEM NAME="INSERT" VALUE="INSERT" />
@@ -211,7 +242,7 @@
         <PARAMETER
             NAME="SCHEMA_FLOW"
             FIELD="SCHEMA_TYPE"
-            NUM_ROW="26"
+            NUM_ROW="45"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -219,7 +250,7 @@
             NAME="MAPPING"
             FIELD="TABLE"
             REQUIRED="true"
-            NUM_ROW="31"
+            NUM_ROW="46"
             NB_LINES="5"
             SHOW_IF="(IS_VIRTUAL_COMPONENT == 'false')"
         >
@@ -231,7 +262,7 @@
         <PARAMETER
             NAME="DIE_ON_ERROR"
             FIELD="CHECK"
-            NUM_ROW="36">
+            NUM_ROW="50">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
     </PARAMETERS>
