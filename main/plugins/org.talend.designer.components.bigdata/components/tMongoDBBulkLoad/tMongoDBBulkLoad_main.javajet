@@ -20,6 +20,9 @@
     String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
     boolean useSSL ="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
+    String authenticationMechanism = ElementParameterParser.getValue(node, "__AUTHENTICATION_MECHANISM__");
+    String gssapiServiceName = ElementParameterParser.getValue(node, "__KRB_SERVICE_NAME__");
+    String gssapiHostName = ElementParameterParser.getValue(node, "__KRB_HOST_NAME__");
     String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
@@ -149,27 +152,68 @@
 		args_<%=cid%>.add(<%=collection%>);
 	<%
 	}
+
 	if (authentication){
-		if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
-		%>
- 			args_<%=cid%>.add("--username"); 
- 			args_<%=cid%>.add(<%=dbuser%>); 
-		<%
-		}
-		if(dbpass!= null && !"".equals(dbpass)&& !"\"\"".equals(dbpass)){
-		%>
-		
-        <%
-        String passwordFieldName = "__PASSWORD__";
-        %>
-        
-        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>			
-		
- 		args_<%=cid%>.add("--password"); 
- 		args_<%=cid%>.add(decryptedPassword_<%=cid%>); 
-		<%
-		}
-	}
+        if((authenticationMechanism.equals("SCRAMSHA1_MEC")) || (authenticationMechanism.equals("MONGODBX509_MEC"))
+                || (authenticationMechanism.equals("MONGODBCR_MEC") || (authenticationMechanism.equals("PLAIN_MEC")))) {
+            if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
+            %>
+                args_<%=cid%>.add("--username"); 
+                args_<%=cid%>.add(<%=dbuser%>); 
+            <%
+            }
+            if(dbpass!= null && !"".equals(dbpass)&& !"\"\"".equals(dbpass)){
+                String passwordFieldName = "__PASSWORD__";
+                %>
+
+                <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+                args_<%=cid%>.add("--password"); 
+                args_<%=cid%>.add(decryptedPassword_<%=cid%>); 
+                <%
+            }
+
+            if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
+                %>
+                args_<%=cid%>.add("--authenticationMechanism");
+                args_<%=cid%>.add("SCRAM-SHA-1");
+                <%
+            } else if(authenticationMechanism.equals("MONGODBX509_MEC")){
+                %>
+                args_<%=cid%>.add("--authenticationMechanism");
+                args_<%=cid%>.add("MONGODB-X509");
+                <%
+            } else if(authenticationMechanism.equals("MONGODBCR_MEC")){
+                %>
+                args_<%=cid%>.add("--authenticationMechanism");
+                args_<%=cid%>.add("MONGODB-CR");
+                <%
+            } else if(authenticationMechanism.equals("PLAIN_MEC")){
+                %>
+                args_<%=cid%>.add("--authenticationMechanism");
+                args_<%=cid%>.add("PLAIN");
+                <%
+            }
+        } else { // GSSAPI SASL (KERBEROS)
+            %>
+            args_<%=cid%>.add("--authenticationMechanism");
+            args_<%=cid%>.add("GSSAPI");
+            <%
+            if(gssapiServiceName!= null && !"".equals(gssapiServiceName)&& !"\"\"".equals(gssapiServiceName)){
+                %>
+                args_<%=cid%>.add("--gssapiServiceName");
+                args_<%=cid%>.add(<%=gssapiServiceName%>);
+                <%
+            }
+            if(gssapiHostName!= null && !"".equals(gssapiHostName)&& !"\"\"".equals(gssapiHostName)){
+                %>
+                args_<%=cid%>.add("--gssapiHostName");
+                args_<%=cid%>.add(<%=gssapiHostName%>);
+                <%
+            }
+        }
+	} // authentication
+
 	if(fileType!= null && !"".equals(fileType)&& !"\"\"".equals(fileType)){
 	%>
 		args_<%=cid%>.add("--type");
