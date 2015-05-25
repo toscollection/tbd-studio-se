@@ -196,40 +196,38 @@
 			}
 
 			if(isLog4jEnabled){
-			%>	
+			    %>	
 				log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
-
-
-	            <%
-                // Add warning if an index is not in the query.
-				for (IMetadataColumn column: metadata.getListColumns()) {
-				    if ((column.isKey()) // is a key
-				            && (!query.matches(".*\\\\\"" + column.getOriginalDbColumnName() + "\\\\\"[^,]*:.*"))) { 
-				        // The regexp is:
-				        // - contain the db DBcolumnName between two backslashed quotes
-				        // - is followed at some point by a colon
-				        // - there is no comma between the the DBcolumnName and the colon
-
-				        if (column.getOriginalDbColumnName().equals(column.getLabel())) {
-	                        %>
-	                        log.warn("<%=cid%> - The query does not contain any reference to the index <%=column.getOriginalDbColumnName()%>.");
-	                        <%
-				        } else {
-	                        %>
-	                        log.warn("<%=cid%> - The query does not contain any reference to the index <%=column.getOriginalDbColumnName()%>"
-	                                + " associated to the column <%=column.getLabel()%>.");
-	                        <%
-				        }
-				    }
-				}
+				<%
 			}
 			log4jFileUtil.startRetriveDataInfo();
-			
 
-			
 			%>
 
 				com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
+				
+				// Add warning if an index is not in the query.
+                for (com.mongodb.DBObject index: coll_<%=cid%>.getIndexInfo()) {
+                    for (String key: ((com.mongodb.DBObject)index.get("key")).keySet()) {
+                        if  (!<%=query%>.matches(".*" + key + "[^,]*:.*")) {
+                            // The regexp is:
+                            // - contain the db DBcolumnName between two backslashed quotes
+                            // - is followed at some point by a colon
+                            // - there is no comma between the the DBcolumnName and the colon
+                            <%
+                            if(isLog4jEnabled){
+                                %>
+                                log.warn("<%=cid%> - The query does not contain any reference to the index " + key + ".");
+                                <%
+                            } else {
+                                %>
+                                System.err.println("<%=cid%> - The query does not contain any reference to the index " + key + ".");
+                                <%
+                            }
+                            %>
+                        }
+                    }
+                }
 	    		com.mongodb.DBObject myQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
 
 	    		com.mongodb.DBObject fields_<%=cid%> = new com.mongodb.BasicDBObject();
