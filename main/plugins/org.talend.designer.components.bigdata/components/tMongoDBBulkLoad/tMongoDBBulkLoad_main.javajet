@@ -98,11 +98,16 @@
 			<%
 			}
 		}else{
-			String replicaSetName = ElementParameterParser.getValue(node, "__REPLICA_NAME__");
-			%>
-			StringBuffer repHosts_<%=cid%>=new StringBuffer();
-			repHosts_<%=cid%>.append(<%=replicaSetName%>+"/");
-			<%
+		    %>
+		    StringBuffer repHosts_<%=cid%>=new StringBuffer();
+            <%
+            boolean specifyReplicaSet ="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SPECIFY_REPLICA_SET__"));
+            if (specifyReplicaSet) {
+                String replicaSetName = ElementParameterParser.getValue(node, "__REPLICA_NAME__");
+                %>
+                repHosts_<%=cid%>.append(<%=replicaSetName%>+"/");
+                <%
+            }
 		  	List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
 		  	boolean isFirstHost=true;
 		  	for(Map<String,String> replicaAddr:replicaAddrs){
@@ -299,8 +304,16 @@
 			sb.append(s + " ");
 		}
 		log.info("<%=cid%> - Execute command " + sb.toString() + ".");
-		log.info("<%=cid%> - Start to import the data into ["+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%>+"]");
-	<%
+		<%
+		if (useReplicaSet) {
+		    %>
+	        log.info("<%=cid%> - Start to import the data");
+		    <%
+		} else {
+		    %>
+	        log.info("<%=cid%> - Start to import the data into ["+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%>+"]");
+		    <%
+		}
 	}
 	%>
 	final Process process_<%=cid%> = runtime_<%=cid%>.start();

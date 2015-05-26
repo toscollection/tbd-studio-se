@@ -82,10 +82,20 @@
         </PARAMETER>
 
         <PARAMETER
+            FIELD="CHECK"
+            NAME="SPECIFY_REPLICA_SET"
+            NUM_ROW="19"
+            SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
+            GROUP="CONNECTION"
+        >
+            <DEFAULT>true</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER
 			FIELD="TEXT"
 			NAME="REPLICA_NAME"
 			NUM_ROW="20"
-			SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
+			SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false') AND (SPECIFY_REPLICA_SET == 'true')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>"rep1"</DEFAULT>
