@@ -207,28 +207,39 @@
 				com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
 				
 				// Add warning if an index is not in the query.
+				boolean needIndexWarning = true;
+				String indexList = "";
                 for (com.mongodb.DBObject index: coll_<%=cid%>.getIndexInfo()) {
                     for (String key: ((com.mongodb.DBObject)index.get("key")).keySet()) {
-                        if  (!<%=query%>.matches(".*" + key + "[^,]*:.*")) {
-                            // The regexp is:
-                            // - contain the db DBcolumnName between two backslashed quotes
-                            // - is followed at some point by a colon
-                            // - there is no comma between the the DBcolumnName and the colon
-                            <%
-                            if(isLog4jEnabled){
-                                %>
-                                log.warn("<%=cid%> - The query does not contain any reference to the index " + key + ".");
-                                <%
-                            } else {
-                                %>
-                                System.err.println("<%=cid%> - The query does not contain any reference to the index " + key + ".");
-                                <%
-                            }
-                            %>
+                        // The regexp is:
+                        // - contain the db DBcolumnName between two backslashed quotes
+                        // - is followed at some point by a colon
+                        // - there is no comma between the the DBcolumnName and the colon
+                        if  (<%=query%>.matches(".*" + key + "[^,]*:.*")) {
+                            // We have an index, do not print error message
+                            needIndexWarning = false;
+                        } else {
+                            // This index is not in the query, add it into the indexList
+                            indexList += ", " + key;
                         }
                     }
                 }
-	    		com.mongodb.DBObject myQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
+                if ((!"".equals(indexList)) && (needIndexWarning)) {
+                    <%
+                    if(isLog4jEnabled){
+                        %>
+                        log.warn("<%=cid%> - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
+                        <%
+                    } else {
+                        %>
+                        System.err.println("<%=cid%> - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
+                        <%
+                    }
+                    %>
+                }
+
+                
+                com.mongodb.DBObject myQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
 
 	    		com.mongodb.DBObject fields_<%=cid%> = new com.mongodb.BasicDBObject();
 	  			com.mongodb.DBCursor cursor_<%=cid%> = coll_<%=cid%>.find(myQuery_<%=cid%>, fields_<%=cid%>);
