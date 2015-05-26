@@ -23,6 +23,8 @@
     String authenticationMechanism = ElementParameterParser.getValue(node, "__AUTHENTICATION_MECHANISM__");
     String gssapiServiceName = ElementParameterParser.getValue(node, "__KRB_SERVICE_NAME__");
     String gssapiHostName = ElementParameterParser.getValue(node, "__KRB_HOST_NAME__");
+    String userPrincipal = ElementParameterParser.getValue(node, "__KRB_USER_PRINCIPAL__");
+    String authenticationDatabase = ElementParameterParser.getValue(node, "__KRB_AUTH_DATABASE__");
     String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
     String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
@@ -138,7 +140,8 @@
 			args_<%=cid%>.add(repHosts_<%=cid%>.toString());
 		<%
 		}
-		if (useSSL) {
+		// SSL is not compatible with Kerberos in mongoimport
+		if (useSSL && !(authenticationMechanism.equals("KERBEROS_MEC"))) {
 		    %>
             args_<%=cid%>.add("--ssl");
             <%
@@ -200,22 +203,37 @@
                 <%
             }
         } else { // GSSAPI SASL (KERBEROS)
-            %>
-            args_<%=cid%>.add("--authenticationMechanism");
-            args_<%=cid%>.add("GSSAPI");
-            <%
-            if(gssapiServiceName!= null && !"".equals(gssapiServiceName)&& !"\"\"".equals(gssapiServiceName)){
-                %>
-                args_<%=cid%>.add("--gssapiServiceName");
-                args_<%=cid%>.add(<%=gssapiServiceName%>);
-                <%
-            }
-            if(gssapiHostName!= null && !"".equals(gssapiHostName)&& !"\"\"".equals(gssapiHostName)){
-                %>
-                args_<%=cid%>.add("--gssapiHostName");
-                args_<%=cid%>.add(<%=gssapiHostName%>);
-                <%
-            }
+        	// SSL is not compatible with Kerberos in mongoimport
+        	if(!useSSL){
+	        	%>
+	            args_<%=cid%>.add("--authenticationMechanism");
+	            args_<%=cid%>.add("GSSAPI");
+	            <%
+	            if(gssapiServiceName!= null && !"".equals(gssapiServiceName)&& !"\"\"".equals(gssapiServiceName)){
+	                %>
+	                args_<%=cid%>.add("--gssapiServiceName");
+	                args_<%=cid%>.add(<%=gssapiServiceName%>);
+	                <%
+	            }
+	            if(gssapiHostName!= null && !"".equals(gssapiHostName)&& !"\"\"".equals(gssapiHostName)){
+	                %>
+	                args_<%=cid%>.add("--gssapiHostName");
+	                args_<%=cid%>.add(<%=gssapiHostName%>);
+	                <%
+	            }
+	            if(userPrincipal!= null && !"".equals(userPrincipal)&& !"\"\"".equals(userPrincipal)){
+	                %>
+	                args_<%=cid%>.add("--username");
+	                args_<%=cid%>.add(<%=userPrincipal%>);
+	                <%
+	            }
+	            if(authenticationDatabase!= null && !"".equals(authenticationDatabase)&& !"\"\"".equals(authenticationDatabase)){
+	                %>
+	                args_<%=cid%>.add("--authenticationDatabase");
+	                args_<%=cid%>.add(<%=authenticationDatabase%>);
+	                <%
+	            }
+        	}
         }
 	} // authentication
 
