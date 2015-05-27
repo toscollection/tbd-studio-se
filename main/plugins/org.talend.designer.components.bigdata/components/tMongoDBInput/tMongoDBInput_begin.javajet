@@ -354,9 +354,33 @@
 %>
 					<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>.toString();
 <%
-						} else {
+						} else if (javaType == JavaTypesManager.INTEGER){
 %>
-					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+                            if (valueObj_<%=cid%>.getClass().equals(Double.class)) {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Double(valueObj_<%=cid%>.toString()).intValue();
+                            } else {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+                            }
+<%
+                        } else if (javaType == JavaTypesManager.LONG){
+%>
+                            if (valueObj_<%=cid%>.getClass().equals(Double.class)) {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Double(valueObj_<%=cid%>.toString()).longValue();
+                            } else {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+                            }
+<%
+                        } else if (javaType == JavaTypesManager.SHORT){
+%>
+                            if (valueObj_<%=cid%>.getClass().equals(Double.class)) {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Double(valueObj_<%=cid%>.toString()).shortValue();
+                            } else {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+                            }
+<%
+                        } else {
+%>
+                            <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
 <%
 						}
 %>
