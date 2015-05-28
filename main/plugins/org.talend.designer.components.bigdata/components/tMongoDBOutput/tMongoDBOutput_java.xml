@@ -235,7 +235,9 @@
             <ITEMS DEFAULT="INSERT">
                 <ITEM NAME="INSERT" VALUE="INSERT" />
                 <ITEM NAME="UPDATE" VALUE="UPDATE"/>
+                <ITEM NAME="SET" VALUE="SET"/>
                 <ITEM NAME="UPSERT" VALUE="UPSERT"/>
+                <ITEM NAME="UPSERT_WITH_SET" VALUE="UPSERT_WITH_SET"/>
                 <ITEM NAME="DELETE" VALUE="DELETE"/>
             </ITEMS>
         </PARAMETER>
