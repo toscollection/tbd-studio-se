@@ -55,10 +55,11 @@
 					if(bulkWrite){
 						// Add inserts untill bulksize is reached then execute and re-initialze the bulk operation
 						%>
-						if(bulkWriteOperationCounter_<%=cid%> <= bulkWriteOperationSize_<%=cid%>){
+						if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
 							bulkWriteOperation_<%=cid%>.insert((com.mongodb.DBObject)data_<%=cid%>);
 							bulkWriteOperationCounter_<%=cid%>++;
 						} else {
+                            bulkWriteOperation_<%=cid%>.insert((com.mongodb.DBObject)data_<%=cid%>);
 							bulkWriteOperation_<%=cid%>.execute();
 							bulkWriteOperationCounter_<%=cid%>=0;
 							bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
@@ -75,10 +76,11 @@
 				// Bulk Delete
 					if(bulkWrite){
 						%>
-						if(bulkWriteOperationCounter_<%=cid%> <= bulkWriteOperationSize_<%=cid%>){
+						if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
 							bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)data_<%=cid%>).remove();
 							bulkWriteOperationCounter_<%=cid%>++;
 						}else{
+                            bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)data_<%=cid%>).remove();
 							bulkWriteOperation_<%=cid%>.execute();
 							bulkWriteOperationCounter_<%=cid%>=0;
 							bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
@@ -99,10 +101,11 @@
 						// Bulk Updates
 							if(bulkWrite){
 								%>
-								if(bulkWriteOperationCounter_<%=cid%> <= bulkWriteOperationSize_<%=cid%>){
+								if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
 									bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
 									bulkWriteOperationCounter_<%=cid%>++;
 								}else{
+                                    bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
 									bulkWriteOperation_<%=cid%>.execute();
 									bulkWriteOperationCounter_<%=cid%>=0;
 									bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
@@ -117,12 +120,15 @@
 						// Bulk Upsert
 							if(bulkWrite){
 								%>
-								if(bulkWriteOperationCounter_<%=cid%> <= bulkWriteOperationSize_<%=cid%>){
+								if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
 									com.mongodb.BulkWriteRequestBuilder bulkWriteRequestBuilder_<%=cid%> = bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>);
 									com.mongodb.BulkUpdateRequestBuilder bulkUpdateRequestBuilder_<%=cid%> = bulkWriteRequestBuilder_<%=cid%>.upsert();
 									bulkUpdateRequestBuilder_<%=cid%>.update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
 									bulkWriteOperationCounter_<%=cid%>++;
 								}else{
+                                    com.mongodb.BulkWriteRequestBuilder bulkWriteRequestBuilder_<%=cid%> = bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>);
+                                    com.mongodb.BulkUpdateRequestBuilder bulkUpdateRequestBuilder_<%=cid%> = bulkWriteRequestBuilder_<%=cid%>.upsert();
+                                    bulkUpdateRequestBuilder_<%=cid%>.update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
 									bulkWriteOperation_<%=cid%>.execute();
 									bulkWriteOperationCounter_<%=cid%>=0;
 									bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();

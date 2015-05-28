@@ -180,7 +180,7 @@
 			if(bulkWrite){
 			%>
 				com.mongodb.BulkWriteOperation bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
-				int bulkWriteOperationCounter_<%=cid%> = 0;
+				int bulkWriteOperationCounter_<%=cid%> = 1;
 				int bulkWriteOperationSize_<%=cid%> = Integer.parseInt(<%=bulkWriteOperationSize%>);
 				<%
 			}
