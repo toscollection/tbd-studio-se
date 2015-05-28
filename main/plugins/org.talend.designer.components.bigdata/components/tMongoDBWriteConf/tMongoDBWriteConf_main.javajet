@@ -98,37 +98,56 @@
 					if(data_<%=cid%>!=null && queryObj_<%=cid%>!=null){
 						<%
 						if("UPDATE".equalsIgnoreCase(dataAction)){
-						// Bulk Updates
-							if(bulkWrite){
-								%>
-								if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
-									bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
-									bulkWriteOperationCounter_<%=cid%>++;
-								}else{
+	                        // Bulk Updates
+                            if(bulkWrite){
+                                %>
+                                if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
+                                    bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).replaceOne((com.mongodb.DBObject)data_<%=cid%>);
+                                    bulkWriteOperationCounter_<%=cid%>++;
+                                }else{
+                                    bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).replaceOne((com.mongodb.DBObject)data_<%=cid%>);
+                                    bulkWriteOperation_<%=cid%>.execute();
+                                    bulkWriteOperationCounter_<%=cid%>=0;
+                                    bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
+                                }
+                                <%
+                            }else{
+                                %>
+                                resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>);
+                                <%
+                            }
+                        } else if("SET".equalsIgnoreCase(dataAction)){
+                            // Bulk Updates
+                            if(bulkWrite){
+                                %>
+                                if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
                                     bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
-									bulkWriteOperation_<%=cid%>.execute();
-									bulkWriteOperationCounter_<%=cid%>=0;
-									bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
-								}
-								<%
-							}else{
-								%>
-								resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>);
-								<%
-							}
-						}else if("UPSERT".equalsIgnoreCase(dataAction)){
-						// Bulk Upsert
+                                    bulkWriteOperationCounter_<%=cid%>++;
+                                }else{
+                                    bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>).update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
+                                    bulkWriteOperation_<%=cid%>.execute();
+                                    bulkWriteOperationCounter_<%=cid%>=0;
+                                    bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
+                                }
+                                <%
+                            }else{
+                                %>
+                                resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
+                                <%
+                            }
+                        } else if("UPSERT".equalsIgnoreCase(dataAction)){
+                            // Bulk Upsert
 							if(bulkWrite){
 								%>
 								if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
 									com.mongodb.BulkWriteRequestBuilder bulkWriteRequestBuilder_<%=cid%> = bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>);
 									com.mongodb.BulkUpdateRequestBuilder bulkUpdateRequestBuilder_<%=cid%> = bulkWriteRequestBuilder_<%=cid%>.upsert();
-									bulkUpdateRequestBuilder_<%=cid%>.update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
+									bulkUpdateRequestBuilder_<%=cid%>.replaceOne((com.mongodb.DBObject)data_<%=cid%>);
 									bulkWriteOperationCounter_<%=cid%>++;
 								}else{
                                     com.mongodb.BulkWriteRequestBuilder bulkWriteRequestBuilder_<%=cid%> = bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>);
                                     com.mongodb.BulkUpdateRequestBuilder bulkUpdateRequestBuilder_<%=cid%> = bulkWriteRequestBuilder_<%=cid%>.upsert();
-                                    bulkUpdateRequestBuilder_<%=cid%>.update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
+                                    bulkUpdateRequestBuilder_<%=cid%>.replaceOne((com.mongodb.DBObject)data_<%=cid%>);
 									bulkWriteOperation_<%=cid%>.execute();
 									bulkWriteOperationCounter_<%=cid%>=0;
 									bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
@@ -139,7 +158,30 @@
 								resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,(com.mongodb.DBObject)data_<%=cid%>,true,false);
 								<%
 							}
-						}
+                        } else if("UPSERT_WITH_SET".equalsIgnoreCase(dataAction)){
+                            // Bulk Upsert
+                            if(bulkWrite){
+                                %>
+                                if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>){
+                                    com.mongodb.BulkWriteRequestBuilder bulkWriteRequestBuilder_<%=cid%> = bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>);
+                                    com.mongodb.BulkUpdateRequestBuilder bulkUpdateRequestBuilder_<%=cid%> = bulkWriteRequestBuilder_<%=cid%>.upsert();
+                                    bulkUpdateRequestBuilder_<%=cid%>.update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
+                                    bulkWriteOperationCounter_<%=cid%>++;
+                                }else{
+                                    com.mongodb.BulkWriteRequestBuilder bulkWriteRequestBuilder_<%=cid%> = bulkWriteOperation_<%=cid%>.find((com.mongodb.DBObject)queryObj_<%=cid%>);
+                                    com.mongodb.BulkUpdateRequestBuilder bulkUpdateRequestBuilder_<%=cid%> = bulkWriteRequestBuilder_<%=cid%>.upsert();
+                                    bulkUpdateRequestBuilder_<%=cid%>.update(new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>));
+                                    bulkWriteOperation_<%=cid%>.execute();
+                                    bulkWriteOperationCounter_<%=cid%>=0;
+                                    bulkWriteOperation_<%=cid%> = coll_<%=cid%>.initialize<%=bulkWriteType%>BulkOperation();
+                                }
+                                <%
+                            }else{
+                                %>
+                                resultMessage_<%=cid%>=coll_<%=cid%>.update((com.mongodb.DBObject)queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", (com.mongodb.DBObject)data_<%=cid%>),true,false);
+                                <%
+                            }
+                        }
 						%>	
 					}else{
 						<%
