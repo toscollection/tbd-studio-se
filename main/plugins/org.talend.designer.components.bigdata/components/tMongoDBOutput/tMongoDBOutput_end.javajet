@@ -22,7 +22,10 @@
 	// Last write if number of rows added is less than bulksize
 	if(bulkWrite){
 		%>
-		bulkWriteOperation_<%=cid%>.execute();
+		// if bulkWriteOperationCounter_<%=cid%> == 1 the ulkWriteOperation_<%=cid%> is empty, do not execute.
+		if (bulkWriteOperationCounter_<%=cid%> != 1) {
+		    bulkWriteOperation_<%=cid%>.execute();
+		}
 		<%
 	}
 
