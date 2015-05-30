@@ -37,6 +37,7 @@ import org.talend.core.ILibraryManagerUIService;
 import org.talend.core.context.Context;
 import org.talend.core.context.RepositoryContext;
 import org.talend.core.model.general.ILibrariesService;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.model.properties.ByteArray;
 import org.talend.core.model.properties.PigudfItem;
 import org.talend.core.model.properties.PropertiesFactory;
@@ -164,7 +165,7 @@ public class NewPigudfWizard extends Wizard {
             repositoryFactory.create(pigUDFItem, mainPage.getDestinationPath());
             if (libExist) {
                 // to force to update the classpath of the routine
-                CorePlugin.getDefault().getRunProcessService().updateLibraries(new HashSet<String>(), null);
+                CorePlugin.getDefault().getRunProcessService().updateLibraries(new HashSet<ModuleNeeded>(), null);
             }
         } catch (PersistenceException e) {
             ExceptionHandler.process(e);

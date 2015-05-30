@@ -23,6 +23,7 @@ import org.talend.commons.ui.runtime.exception.MessageBoxExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.core.CorePlugin;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.PigudfItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -97,7 +98,7 @@ public class EditPigudfAction extends AbstractRoutineAction {
             openRoutineEditor(pigudfItem, false);
             // refresh(repositoryNode);
             CorePlugin.getDefault().getLibrariesService().resetModulesNeeded();
-            CorePlugin.getDefault().getRunProcessService().updateLibraries(new HashSet<String>(), null);
+            CorePlugin.getDefault().getRunProcessService().updateLibraries(new HashSet<ModuleNeeded>(), null);
         } catch (PartInitException e) {
             MessageBoxExceptionHandler.process(e);
         } catch (SystemException e) {
