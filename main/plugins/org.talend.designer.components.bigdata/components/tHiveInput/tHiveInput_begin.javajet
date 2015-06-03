@@ -315,6 +315,7 @@ imports="
 
 			boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
 			boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
+			boolean securedEmbeddedHive2 = securedEmbedded && "HIVE2".equalsIgnoreCase(hiveServer);
 			String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 
 			boolean useSsl = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
@@ -363,7 +364,18 @@ imports="
 %>
 				System.setProperty("hive.metastore.sasl.enabled", "true");
 				System.setProperty("javax.jdo.option.ConnectionDriverName", <%=driverClass%>);
-				System.setProperty("hive.security.authorization.enabled", "true");
+
+				<%if(securedEmbeddedHive2){
+					// Disable authorization when using local HiveServer2 in secure mode
+					%>
+                    System.setProperty("hive.security.authorization.enabled", "false");
+                    <%
+                }else{
+                    %>
+                    System.setProperty("hive.security.authorization.enabled", "true");
+                    <%
+                 }
+                %>
 				System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
 				System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
 
@@ -379,7 +391,14 @@ imports="
 
 				System.setProperty("javax.jdo.option.ConnectionPassword", decryptedMetastorePassword_<%=cid%>);
 				System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);
-
+                <%
+               	if(securedEmbeddedHive2){
+                %>
+                	System.setProperty("hive.server2.authentication.kerberos.principal", <%=ElementParameterParser.getValue(node, "__HIVESERVER2_LOCAL_PRINCIPAL__")%>);
+               		System.setProperty("hive.server2.authentication.kerberos.keytab", <%=ElementParameterParser.getValue(node, "__HIVESERVER2_LOCAL_KEYTAB__")%>);
+               <%
+                }
+                %>
 <%
 				if(useKeytab) {
 %>
