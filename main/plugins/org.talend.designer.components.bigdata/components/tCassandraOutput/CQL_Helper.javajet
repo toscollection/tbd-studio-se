@@ -65,12 +65,18 @@
         private INode node;
         private String action;
         private String tableName;
+        private Boolean useSpark = false;
 
         public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
             this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
             this.tableName = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__TABLE__") + ")";
             createColumnList(columnList);
+        }
+        
+        public CQLManager(INode node, List<IMetadataColumn> columnList, boolean useSpark){
+            this(node, columnList);
+            this.useSpark = useSpark;
         }
 
         private List<Column> all;
@@ -566,7 +572,11 @@
             }else if("boolean".equals(dbType)){
                 setStmt.append(assignStmt +".setBool(" + index + ", " + columnValue + ");\r\n");
             }else if("blob".equals(dbType)){
-                setStmt.append(assignStmt +".setBytes(" + index + ", java.nio.ByteBuffer.wrap(" + columnValue + "));\r\n");
+                if (useSpark) {
+                    setStmt.append(assignStmt +".setBytes(" + index + ", " + columnValue + ");\r\n");
+                } else {
+                    setStmt.append(assignStmt +".setBytes(" + index + ", java.nio.ByteBuffer.wrap(" + columnValue + "));\r\n");
+                }
             }else if("timestamp".equals(dbType)){
                 setStmt.append(assignStmt +".setDate(" + index + ", " + columnValue + ");\r\n");
             }else if("decimal".equals(dbType)){
