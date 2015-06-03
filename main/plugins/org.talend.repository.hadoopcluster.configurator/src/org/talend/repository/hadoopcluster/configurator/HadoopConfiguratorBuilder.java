@@ -21,6 +21,7 @@ import java.security.cert.CertificateException;
 
 import javax.net.ssl.TrustManager;
 
+import org.talend.repository.hadoopcluster.configurator.ambari.HadoopAmbariConfigurator;
 import org.talend.repository.hadoopcluster.configurator.cloudera.HadoopCMConfigurator;
 
 /**
@@ -97,7 +98,7 @@ public class HadoopConfiguratorBuilder {
             throw new IllegalArgumentException("url must be set");
         }
         if (vendorType == HadoopConfigurationManager.AMBARI) {
-            return null;
+            return new HadoopAmbariConfigurator.Builder(url).withUsernamePassword(user, password).withTrustManagers(tms).build();
         } else if (vendorType == HadoopConfigurationManager.CLOUDERA_MANAGER) {
             return new HadoopCMConfigurator.Builder(url).withUsernamePassword(user, password).withTrustManagers(tms).build();
         } else {

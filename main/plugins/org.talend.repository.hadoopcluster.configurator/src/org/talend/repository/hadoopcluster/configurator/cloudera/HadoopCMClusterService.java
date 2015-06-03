@@ -41,11 +41,13 @@ import com.cloudera.api.v3.ServicesResourceV3;
  */
 public class HadoopCMClusterService implements HadoopClusterService {
 
+    private static final String SUPPORT_FILE = "site.xml"; //$NON-NLS-1$
+
     private ServicesResourceV3 cluster;
 
     private String serviceName;
 
-    private Map<String, Configuration> confs;
+    private Map<String, Configuration> confs;// only contains *-site.xml
 
     /**
      * DOC bchen HadoopCMClusterService constructor comment.
@@ -62,7 +64,7 @@ public class HadoopCMClusterService implements HadoopClusterService {
      * DOC bchen Comment method "init".
      */
     private void init() {
-        confs = new HashMap<String, Configuration>();
+        confs = new HashMap<>();
         InputStreamDataSource clientConfig = null;
         try {
             clientConfig = cluster.getClientConfig(serviceName);
@@ -83,7 +85,7 @@ public class HadoopCMClusterService implements HadoopClusterService {
                 if (configFile.contains(File.separator)) {
                     configFile = configFile.substring(configFile.lastIndexOf(File.separator), configFile.length());
                 }
-                if (!configFile.endsWith("site.xml")) {
+                if (!configFile.endsWith(SUPPORT_FILE)) {
                     continue;
                 }
                 directory.mkdirs();
@@ -105,6 +107,7 @@ public class HadoopCMClusterService implements HadoopClusterService {
                 Configuration conf = new Configuration(false);
                 conf.addResource(new Path(file.toURI()));
                 confs.put(configFile, conf);
+
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -119,7 +122,7 @@ public class HadoopCMClusterService implements HadoopClusterService {
      */
     @Override
     public Map<String, String> getConfiguration() {
-        Map<String, String> confMapping = new HashMap<String, String>();
+        Map<String, String> confMapping = new HashMap<>();
         for (String key : confs.keySet()) {
             confMapping.putAll(getConfiguration(key));
         }
@@ -133,13 +136,9 @@ public class HadoopCMClusterService implements HadoopClusterService {
      * org.talend.repository.hadoopcluster.configurator.HadoopClusterService#getConfigurationByRegex(java.lang.String)
      */
     @Override
-    public Map<String, String> getConfigurationByRegex(String regex) {
-        Map<String, String> confMapping = new HashMap<String, String>();
-        for (String key : confs.keySet()) {
-            Configuration conf = confs.get(key);
-            confMapping.putAll(conf.getValByRegex(regex));
-        }
-        return confMapping;
+    public String getConfigurationValue(String key) {
+        Map<String, String> confMapping = getConfiguration();
+        return confMapping.get(key);
     }
 
     /*
@@ -147,8 +146,7 @@ public class HadoopCMClusterService implements HadoopClusterService {
      * 
      * @see org.talend.repository.hadoopcluster.configurator.HadoopClusterService#getConfiguration(java.lang.String)
      */
-    @Override
-    public Map<String, String> getConfiguration(String confName) {
+    private Map<String, String> getConfiguration(String confName) {
         Configuration conf = confs.get(confName);
         return conf.getValByRegex(".*"); //$NON-NLS-1$;
     }
@@ -173,8 +171,7 @@ public class HadoopCMClusterService implements HadoopClusterService {
      * org.talend.repository.hadoopcluster.configurator.HadoopClusterService#exportConfigurationToXml(java.lang.String,
      * java.lang.String)
      */
-    @Override
-    public void exportConfigurationToXml(String folderPath, String confName) {
+    private void exportConfigurationToXml(String folderPath, String confName) {
         Configuration conf = confs.get(confName);
         if (conf == null) {
             return;
@@ -192,7 +189,6 @@ public class HadoopCMClusterService implements HadoopClusterService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
     /*

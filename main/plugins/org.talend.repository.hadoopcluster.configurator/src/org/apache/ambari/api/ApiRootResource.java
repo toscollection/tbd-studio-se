@@ -10,22 +10,26 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hadoopcluster.configurator;
+package org.apache.ambari.api;
 
-import java.util.Map;
-import java.util.Set;
+import javax.ws.rs.Path;
+
+import org.apache.ambari.api.v1.RootResourceV1;
 
 /**
- * created by bchen on May 28, 2015 Detailled comment
+ * created by bchen on Jun 2, 2015 Detailled comment
  *
  */
-public interface HadoopClusterService {
+/**
+ * Root resource for the API. Provides access to the version-specific resources.
+ */
+@Path("/")
+public interface ApiRootResource {
 
-    public Map<String, String> getConfiguration();
+    /**
+     * @return The v1 root resource.
+     */
+    @Path("/v1")
+    RootResourceV1 getRootV1();
 
-    public String getConfigurationValue(String key);
-
-    public void exportConfigurationToXml(String folderPath);
-
-    public Set<String> getConfFiles();
 }

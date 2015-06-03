@@ -24,7 +24,13 @@ public enum HadoopHostedService {
     HIVE,
     HBASE,
     OOZIE,
-    SPARK;
+    SPARK, // CDH
+    MAPREDUCE2, // AMBARI
+    PIG, // AMBARI
+    SQOOP, // AMBARI
+    STORM, // AMBARI
+    TEZ, // AMBARI
+    ZOOKEEPER;// AMBARI
 
     private static String SUPPORTED_SERVICES = Joiner.on(", ").join(values()).toLowerCase();
 

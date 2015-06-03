@@ -10,22 +10,33 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hadoopcluster.configurator;
+package org.apache.ambari.api.model;
 
 import java.util.Map;
-import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * created by bchen on May 28, 2015 Detailled comment
+ * created by bchen on Jun 3, 2015 Detailled comment
  *
  */
-public interface HadoopClusterService {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ApiConfigFile {
 
-    public Map<String, String> getConfiguration();
+    public ApiConfigFile() {
 
-    public String getConfigurationValue(String key);
+    }
 
-    public void exportConfigurationToXml(String folderPath);
+    private String type;
 
-    public Set<String> getConfFiles();
+    public String getType() {
+        return type;
+    }
+
+    private Map<String, String> properties;
+
+    public Map<String, String> getProperties() {
+        return properties;
+    }
+
 }

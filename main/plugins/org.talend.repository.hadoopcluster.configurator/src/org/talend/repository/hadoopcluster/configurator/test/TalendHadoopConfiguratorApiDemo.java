@@ -31,10 +31,14 @@ public class TalendHadoopConfiguratorApiDemo {
 
     public static void main(String[] args) {
         try {
-            String folder = "/tmp";
+            String folder = "/tmp/cm";
             HadoopConfigurator configurator = new HadoopConfiguratorBuilder()
-                    .withVendor(HadoopConfigurationManager.CLOUDERA_MANAGER).withBaseURL(new URL("http://192.168.31.172:7180"))
+                    .withVendor(HadoopConfigurationManager.CLOUDERA_MANAGER).withBaseURL(new URL("http://192.168.31.147:7180"))
                     .withUsernamePassword("cloudera", "cloudera").build();
+
+            // HadoopConfigurator configurator = new
+            // HadoopConfiguratorBuilder().withVendor(HadoopConfigurationManager.AMBARI)
+            // .withBaseURL(new URL("http://192.168.33.74:8080")).withUsernamePassword("admin", "admin").build();
 
             System.out.println(configurator.getAllClusters());
 
@@ -53,6 +57,7 @@ public class TalendHadoopConfiguratorApiDemo {
                 // service.exportConfigurationToXml(folder + "/" + serviceName);
                 service.exportConfigurationToXml(folder);
             }
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }

@@ -10,22 +10,23 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hadoopcluster.configurator;
-
-import java.util.Map;
-import java.util.Set;
+package org.apache.ambari.api.v1;
 
 /**
- * created by bchen on May 28, 2015 Detailled comment
+ * created by bchen on Jun 2, 2015 Detailled comment
  *
  */
-public interface HadoopClusterService {
+import javax.ws.rs.Path;
 
-    public Map<String, String> getConfiguration();
+/**
+ * The root of the Cloudera API. Provides access to all sub-resources available in version 1 of the API.
+ */
+public interface RootResourceV1 {
 
-    public String getConfigurationValue(String key);
+    /**
+     * @return The clusters resource handler.
+     */
+    @Path("/clusters")
+    public ClustersResource getClustersResource();
 
-    public void exportConfigurationToXml(String folderPath);
-
-    public Set<String> getConfFiles();
 }
