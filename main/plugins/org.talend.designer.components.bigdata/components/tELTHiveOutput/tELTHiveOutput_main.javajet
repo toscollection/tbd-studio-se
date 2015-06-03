@@ -303,9 +303,9 @@ if(useExistingConn) {
 <%
                 } else {
 %>
-                String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
-                }
+                    String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
 <%
+                }
             } else {
                 // Using SSL in non Secure Mode
                 if(useSsl) {
