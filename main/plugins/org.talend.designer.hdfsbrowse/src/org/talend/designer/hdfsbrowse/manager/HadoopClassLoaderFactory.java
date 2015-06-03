@@ -12,9 +12,15 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.manager;
 
+import java.net.MalformedURLException;
 import java.util.Set;
 
+import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.GlobalServiceRegister;
 import org.talend.core.classloader.ClassLoaderFactory;
+import org.talend.core.classloader.DynamicClassLoader;
+import org.talend.core.hadoop.EHadoopConfigurationJars;
+import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.hadoop.version.custom.ECustomVersionType;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
@@ -45,7 +51,30 @@ public class HadoopClassLoaderFactory {
             return loader;
         }
 
-        return getClassLoader(distribution, version, enableKerberos, true);
+        loader = getClassLoader(distribution, version, enableKerberos, true);
+        if (connectionBean.isUseCustomConfs() && loader instanceof DynamicClassLoader) {
+            try {
+                loader = DynamicClassLoader.createNewOneBaseLoader((DynamicClassLoader) loader,
+                        new String[] { getCustomConfsJarName(connectionBean.getRelativeHadoopClusterId()) },
+                        EHadoopConfigurationJars.HDFS.getEnableSecurityJars());
+            } catch (MalformedURLException e) {
+                ExceptionHandler.process(e);
+            }
+        }
+
+        return loader;
+    }
+
+    private static String getCustomConfsJarName(String clusterId) {
+        IHadoopClusterService hadoopClusterService = null;
+        if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
+            hadoopClusterService = (IHadoopClusterService) GlobalServiceRegister.getDefault().getService(
+                    IHadoopClusterService.class);
+        }
+        if (hadoopClusterService != null) {
+            return hadoopClusterService.getCustomConfsJarName(clusterId);
+        }
+        return null;
     }
 
     public static ClassLoader getClassLoader(String distribution, String version, boolean enableKerberos,

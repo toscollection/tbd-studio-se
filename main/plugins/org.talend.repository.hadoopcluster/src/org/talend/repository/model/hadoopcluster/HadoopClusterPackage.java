@@ -632,13 +632,58 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES = ConnectionPackage.CONNECTION_FEATURE_COUNT + 19;
 
     /**
+     * The feature id for the '<em><b>Rm Scheduler</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER = ConnectionPackage.CONNECTION_FEATURE_COUNT + 20;
+
+    /**
+     * The feature id for the '<em><b>Job History</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__JOB_HISTORY = ConnectionPackage.CONNECTION_FEATURE_COUNT + 21;
+
+    /**
+     * The feature id for the '<em><b>Staging Directory</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY = ConnectionPackage.CONNECTION_FEATURE_COUNT + 22;
+
+    /**
+     * The feature id for the '<em><b>Use DN Host</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__USE_DN_HOST = ConnectionPackage.CONNECTION_FEATURE_COUNT + 23;
+
+    /**
+     * The feature id for the '<em><b>Use Custom Confs</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 24;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 20;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 25;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1488,6 +1533,61 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopClusterConnection_HadoopProperties();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getRmScheduler <em>Rm Scheduler</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Rm Scheduler</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getRmScheduler()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_RmScheduler();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobHistory <em>Job History</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Job History</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobHistory()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_JobHistory();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getStagingDirectory <em>Staging Directory</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Staging Directory</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getStagingDirectory()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_StagingDirectory();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseDNHost <em>Use DN Host</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Use DN Host</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseDNHost()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_UseDNHost();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseCustomConfs <em>Use Custom Confs</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Use Custom Confs</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseCustomConfs()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_UseCustomConfs();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1764,6 +1864,46 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES = eINSTANCE.getHadoopClusterConnection_HadoopProperties();
+
+        /**
+         * The meta object literal for the '<em><b>Rm Scheduler</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER = eINSTANCE.getHadoopClusterConnection_RmScheduler();
+
+        /**
+         * The meta object literal for the '<em><b>Job History</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__JOB_HISTORY = eINSTANCE.getHadoopClusterConnection_JobHistory();
+
+        /**
+         * The meta object literal for the '<em><b>Staging Directory</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY = eINSTANCE.getHadoopClusterConnection_StagingDirectory();
+
+        /**
+         * The meta object literal for the '<em><b>Use DN Host</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__USE_DN_HOST = eINSTANCE.getHadoopClusterConnection_UseDNHost();
+
+        /**
+         * The meta object literal for the '<em><b>Use Custom Confs</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS = eINSTANCE.getHadoopClusterConnection_UseCustomConfs();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.

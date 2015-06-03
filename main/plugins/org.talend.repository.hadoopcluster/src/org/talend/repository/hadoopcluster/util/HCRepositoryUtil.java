@@ -424,6 +424,7 @@ public class HCRepositoryUtil {
             map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL, hcConnection.getNameNodeURI());
             map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL, hcConnection.getJobTrackerURI());
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_YARN, String.valueOf(hcConnection.isUseYarn()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_USE_CUSTOM_CONFS, String.valueOf(hcConnection.isUseCustomConfs()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_KRB, String.valueOf(hcConnection.isEnableKerberos()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, hcConnection.getPrincipal());
             map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL, hcConnection.getJtOrRmPrincipal());

@@ -57,6 +57,11 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getKeytabPrincipal <em>Keytab Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getKeytab <em>Keytab</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getHadoopProperties <em>Hadoop Properties</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getRmScheduler <em>Rm Scheduler</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getJobHistory <em>Job History</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getStagingDirectory <em>Staging Directory</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseDNHost <em>Use DN Host</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseCustomConfs <em>Use Custom Confs</em>}</li>
  * </ul>
  * </p>
  *
@@ -442,6 +447,106 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected String hadoopProperties = HADOOP_PROPERTIES_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getRmScheduler() <em>Rm Scheduler</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getRmScheduler()
+     * @generated
+     * @ordered
+     */
+    protected static final String RM_SCHEDULER_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getRmScheduler() <em>Rm Scheduler</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getRmScheduler()
+     * @generated
+     * @ordered
+     */
+    protected String rmScheduler = RM_SCHEDULER_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getJobHistory() <em>Job History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getJobHistory()
+     * @generated
+     * @ordered
+     */
+    protected static final String JOB_HISTORY_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getJobHistory() <em>Job History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getJobHistory()
+     * @generated
+     * @ordered
+     */
+    protected String jobHistory = JOB_HISTORY_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getStagingDirectory() <em>Staging Directory</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStagingDirectory()
+     * @generated
+     * @ordered
+     */
+    protected static final String STAGING_DIRECTORY_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getStagingDirectory() <em>Staging Directory</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStagingDirectory()
+     * @generated
+     * @ordered
+     */
+    protected String stagingDirectory = STAGING_DIRECTORY_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isUseDNHost() <em>Use DN Host</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseDNHost()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean USE_DN_HOST_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isUseDNHost() <em>Use DN Host</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseDNHost()
+     * @generated
+     * @ordered
+     */
+    protected boolean useDNHost = USE_DN_HOST_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isUseCustomConfs() <em>Use Custom Confs</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseCustomConfs()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean USE_CUSTOM_CONFS_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isUseCustomConfs() <em>Use Custom Confs</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseCustomConfs()
+     * @generated
+     * @ordered
+     */
+    protected boolean useCustomConfs = USE_CUSTOM_CONFS_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -869,6 +974,111 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public String getRmScheduler() {
+        return rmScheduler;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setRmScheduler(String newRmScheduler) {
+        String oldRmScheduler = rmScheduler;
+        rmScheduler = newRmScheduler;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER, oldRmScheduler, rmScheduler));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getJobHistory() {
+        return jobHistory;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setJobHistory(String newJobHistory) {
+        String oldJobHistory = jobHistory;
+        jobHistory = newJobHistory;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY, oldJobHistory, jobHistory));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getStagingDirectory() {
+        return stagingDirectory;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setStagingDirectory(String newStagingDirectory) {
+        String oldStagingDirectory = stagingDirectory;
+        stagingDirectory = newStagingDirectory;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY, oldStagingDirectory, stagingDirectory));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isUseDNHost() {
+        return useDNHost;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUseDNHost(boolean newUseDNHost) {
+        boolean oldUseDNHost = useDNHost;
+        useDNHost = newUseDNHost;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_DN_HOST, oldUseDNHost, useDNHost));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isUseCustomConfs() {
+        return useCustomConfs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUseCustomConfs(boolean newUseCustomConfs) {
+        boolean oldUseCustomConfs = useCustomConfs;
+        useCustomConfs = newUseCustomConfs;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS, oldUseCustomConfs, useCustomConfs));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -927,6 +1137,16 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return getKeytab();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
                 return getHadoopProperties();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER:
+                return getRmScheduler();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY:
+                return getJobHistory();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY:
+                return getStagingDirectory();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_DN_HOST:
+                return isUseDNHost();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
+                return isUseCustomConfs();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1001,6 +1221,21 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
                 setHadoopProperties((String)newValue);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER:
+                setRmScheduler((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY:
+                setJobHistory((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY:
+                setStagingDirectory((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_DN_HOST:
+                setUseDNHost((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
+                setUseCustomConfs((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1073,6 +1308,21 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
                 setHadoopProperties(HADOOP_PROPERTIES_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER:
+                setRmScheduler(RM_SCHEDULER_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY:
+                setJobHistory(JOB_HISTORY_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY:
+                setStagingDirectory(STAGING_DIRECTORY_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_DN_HOST:
+                setUseDNHost(USE_DN_HOST_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
+                setUseCustomConfs(USE_CUSTOM_CONFS_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -1125,6 +1375,16 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return KEYTAB_EDEFAULT == null ? keytab != null : !KEYTAB_EDEFAULT.equals(keytab);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES:
                 return HADOOP_PROPERTIES_EDEFAULT == null ? hadoopProperties != null : !HADOOP_PROPERTIES_EDEFAULT.equals(hadoopProperties);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER:
+                return RM_SCHEDULER_EDEFAULT == null ? rmScheduler != null : !RM_SCHEDULER_EDEFAULT.equals(rmScheduler);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__JOB_HISTORY:
+                return JOB_HISTORY_EDEFAULT == null ? jobHistory != null : !JOB_HISTORY_EDEFAULT.equals(jobHistory);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY:
+                return STAGING_DIRECTORY_EDEFAULT == null ? stagingDirectory != null : !STAGING_DIRECTORY_EDEFAULT.equals(stagingDirectory);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_DN_HOST:
+                return useDNHost != USE_DN_HOST_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
+                return useCustomConfs != USE_CUSTOM_CONFS_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -1177,6 +1437,16 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(keytab);
         result.append(", hadoopProperties: ");
         result.append(hadoopProperties);
+        result.append(", rmScheduler: ");
+        result.append(rmScheduler);
+        result.append(", jobHistory: ");
+        result.append(jobHistory);
+        result.append(", stagingDirectory: ");
+        result.append(stagingDirectory);
+        result.append(", useDNHost: ");
+        result.append(useDNHost);
+        result.append(", useCustomConfs: ");
+        result.append(useCustomConfs);
         result.append(')');
         return result.toString();
     }

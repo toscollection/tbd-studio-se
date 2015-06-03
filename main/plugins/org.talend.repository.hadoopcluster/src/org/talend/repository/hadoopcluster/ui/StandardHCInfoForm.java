@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
@@ -28,6 +29,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.Label;
+import org.talend.commons.ui.runtime.image.EImage;
+import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
@@ -50,8 +54,10 @@ import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.common.IHadoopClusterInfoForm;
+import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 
 /**
  * 
@@ -59,6 +65,8 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
  *
  */
 public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnection> implements IHadoopClusterInfoForm {
+
+    private Composite parentForm;
 
     private LabelledCombo authenticationCombo;
 
@@ -69,6 +77,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     private LabelledText namenodeUriText;
 
     private LabelledText jobtrackerUriText;
+
+    private LabelledText rmSchedulerText;
+
+    private LabelledText jobHistoryText;
+
+    private LabelledText stagingDirectoryText;
 
     private LabelledText namenodePrincipalText;
 
@@ -81,6 +95,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     private LabelledText userNameText;
 
     private LabelledText groupText;
+
+    private Button useDNHostBtn;
+
+    private Button hadoopConfsButton;
+
+    private Button useCustomConfBtn;
 
     private LabelledFileField keytabText;
 
@@ -101,6 +121,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             EHadoopDistributions hadoopDistribution, EHadoopVersion4Drivers hadoopVersison) {
         super(parent, SWT.NONE, existingNames);
+        this.parentForm = parent;
         this.connectionItem = connectionItem;
         this.creation = creation;
         this.hadoopDistribution = hadoopDistribution;
@@ -123,6 +144,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
     }
 
+    @Override
     public void init() {
         EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(getConnection().getAuthMode(), false);
         if (authMode != null) {
@@ -133,7 +155,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         HadoopClusterConnection connection = getConnection();
         namenodeUriText.setText(connection.getNameNodeURI());
         jobtrackerUriText.setText(connection.getJobTrackerURI());
-        kerberosBtn.setSelection(connection.isEnableKerberos());
+        rmSchedulerText.setText(StringUtils.trimToEmpty(connection.getRmScheduler()));
+        jobHistoryText.setText(StringUtils.trimToEmpty(connection.getJobHistory()));
+        stagingDirectoryText.setText(StringUtils.trimToEmpty(connection.getStagingDirectory()));
+        useDNHostBtn.setSelection(connection.isUseDNHost());
+        useCustomConfBtn.setSelection(connection.isUseCustomConfs());
+        hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
         namenodePrincipalText.setText(connection.getPrincipal());
         jtOrRmPrincipalText.setText(connection.getJtOrRmPrincipal());
         jobHistoryPrincipalText.setText(connection.getJobHistoryPrincipal());
@@ -155,6 +182,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         readOnly = isReadOnly();
         namenodeUriText.setReadOnly(readOnly);
         jobtrackerUriText.setReadOnly(readOnly);
+        rmSchedulerText.setReadOnly(readOnly);
+        jobHistoryText.setReadOnly(readOnly);
+        stagingDirectoryText.setReadOnly(readOnly);
+        useDNHostBtn.setEnabled(!readOnly);
+        useCustomConfBtn.setEnabled(!readOnly);
+        hadoopConfsButton.setEnabled(!readOnly && useCustomConfBtn.getSelection());
         kerberosBtn.setEnabled(!readOnly);
         namenodePrincipalText.setReadOnly(readOnly);
         jtOrRmPrincipalText.setReadOnly(readOnly);
@@ -168,6 +201,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         authenticationCombo.setEnabled(isEditable);
         namenodeUriText.setEditable(isEditable);
         jobtrackerUriText.setEditable(isEditable);
+        rmSchedulerText.setEditable(isEditable);
+        jobHistoryText.setEditable(isEditable);
+        stagingDirectoryText.setEditable(isEditable);
+        useDNHostBtn.setEnabled(isEditable);
+        useCustomConfBtn.setEnabled(isEditable);
+        hadoopConfsButton.setEnabled(isEditable && useCustomConfBtn.getSelection());
         kerberosBtn.setEnabled(isEditable && (isCurrentHadoopVersionSupportSecurity() || isCustomUnsupportHasSecurity()));
         boolean isKerberosEditable = kerberosBtn.isEnabled() && kerberosBtn.getSelection();
         namenodePrincipalText.setEditable(isKerberosEditable);
@@ -189,6 +228,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         addConnectionFields();
         addAuthenticationFields();
         addHadoopPropertiesFields();
+        addHadoopConfsFields();
         addCheckFields();
     }
 
@@ -213,6 +253,13 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         uriPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         namenodeUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.namenodeURI"), 1); //$NON-NLS-1$
         jobtrackerUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.jobtrackerURI"), 1); //$NON-NLS-1$
+        rmSchedulerText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.rmScheduler"), 1); //$NON-NLS-1$
+        jobHistoryText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.jobHistory"), 1); //$NON-NLS-1$
+        stagingDirectoryText = new LabelledText(uriPartComposite,
+                Messages.getString("HadoopClusterForm.text.stagingDirectory"), 1); //$NON-NLS-1$
+        useDNHostBtn = new Button(uriPartComposite, SWT.CHECK);
+        useDNHostBtn.setText(Messages.getString("HadoopClusterForm.button.useDNHost")); //$NON-NLS-1$
+        useDNHostBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
     }
 
     private void addAuthenticationFields() {
@@ -267,7 +314,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
     }
 
-    protected void addHadoopPropertiesFields() {
+    private void addHadoopPropertiesFields() {
         String hadoopProperties = getConnection().getHadoopProperties();
         List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
         propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
@@ -279,6 +326,27 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
         };
         propertiesDialog.createPropertiesFields(this);
+    }
+
+    private void addHadoopConfsFields() {
+        Composite hadoopConfsComposite = new Composite(this, SWT.NONE);
+        GridLayout hadoopConfsCompLayout = new GridLayout(3, false);
+        hadoopConfsCompLayout.marginWidth = 5;
+        hadoopConfsCompLayout.marginHeight = 5;
+        hadoopConfsComposite.setLayout(hadoopConfsCompLayout);
+        hadoopConfsComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        useCustomConfBtn = new Button(hadoopConfsComposite, SWT.CHECK);
+        useCustomConfBtn.setText(Messages.getString("HadoopClusterForm.button.useCustomConf")); //$NON-NLS-1$
+        useCustomConfBtn.setLayoutData(new GridData());
+
+        hadoopConfsButton = new Button(hadoopConfsComposite, SWT.NONE);
+        hadoopConfsButton.setImage(ImageProvider.getImage(EImage.THREE_DOTS_ICON));
+        hadoopConfsButton.setLayoutData(new GridData(30, 25));
+        hadoopConfsButton.setEnabled(false);
+
+        Label displayLabel = new Label(hadoopConfsComposite, SWT.NONE);
+        displayLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
     }
 
     private void addCheckFields() {
@@ -329,6 +397,64 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             public void modifyText(final ModifyEvent e) {
                 getConnection().setJobTrackerURI(jobtrackerUriText.getText());
                 checkFieldsValue();
+            }
+        });
+
+        rmSchedulerText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setRmScheduler(rmSchedulerText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        jobHistoryText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setJobHistory(jobHistoryText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        stagingDirectoryText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setStagingDirectory(stagingDirectoryText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        useDNHostBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setUseDNHost(useDNHostBtn.getSelection());
+                checkFieldsValue();
+            }
+        });
+
+        useCustomConfBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
+                getConnection().setUseCustomConfs(useCustomConfBtn.getSelection());
+                checkFieldsValue();
+            }
+        });
+
+        hadoopConfsButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                AbstractHadoopForm form = null;
+                if (parentForm instanceof AbstractHadoopForm) {
+                    form = (AbstractHadoopForm) parentForm;
+                }
+                HadoopConfsUtils.openHadoopConfsWizard(form, (HadoopClusterConnectionItem) connectionItem, creation);
             }
         });
 
@@ -664,6 +790,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     private void fillDefaults() {
         if (creation) {
             HadoopClusterConnection connection = getConnection();
+            if (connection.isUseCustomConfs()) {
+                return;
+            }
             String distribution = connection.getDistribution();
             String version = connection.getDfVersion();
             if (distribution == null) {

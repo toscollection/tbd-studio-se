@@ -92,6 +92,14 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     @Override
+    public void reload() {
+        init();
+        if (hcInfoForm != null) {
+            hcInfoForm.init();
+        }
+    }
+
+    @Override
     protected void adaptFormToReadOnly() {
         readOnly = isReadOnly();
         distributionCombo.setReadOnly(readOnly);

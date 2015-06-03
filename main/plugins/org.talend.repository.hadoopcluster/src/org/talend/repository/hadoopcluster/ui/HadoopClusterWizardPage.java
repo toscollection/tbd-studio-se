@@ -19,7 +19,8 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.metadata.managment.ui.wizard.AbstractForm;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopClusterWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
-import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 
 /**
  * 
@@ -30,7 +31,7 @@ public class HadoopClusterWizardPage extends AbstractHadoopClusterWizardPage {
 
     private ConnectionItem connectionItem;
 
-    private AbstractHadoopForm<HadoopClusterConnection> hadoopClusterForm;
+    private HadoopClusterForm hadoopClusterForm;
 
     private final String[] existingNames;
 
@@ -80,7 +81,7 @@ public class HadoopClusterWizardPage extends AbstractHadoopClusterWizardPage {
      */
     @Override
     public void performHelp() {
-        PlatformUI.getWorkbench().getHelpSystem().displayHelp("org.talend.help.hadoop_cluster_metadata");
+        PlatformUI.getWorkbench().getHelpSystem().displayHelp("org.talend.help.hadoop_cluster_metadata"); //$NON-NLS-1$
     }
 
     /*
@@ -92,6 +93,9 @@ public class HadoopClusterWizardPage extends AbstractHadoopClusterWizardPage {
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
+            if (creation) {
+                HadoopConfsUtils.openHadoopConfsWizard(hadoopClusterForm, (HadoopClusterConnectionItem) connectionItem, creation);
+            }
             AbstractHadoopForm form = getForm();
             if (form != null) {
                 form.processWhenShowPage(this);

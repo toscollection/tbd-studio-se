@@ -27,6 +27,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/keytabPrincipal"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/keytab"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/hadoopProperties"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/rmScheduler"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/jobHistory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/stagingDirectory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/useDNHost"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/useCustomConfs"/>
     </genClasses>
     <genClasses ecoreClass="hadoopcluster.ecore#//HadoopClusterConnectionItem"/>
     <genClasses ecoreClass="hadoopcluster.ecore#//HadoopAdditionalProperties">

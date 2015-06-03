@@ -41,6 +41,10 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         // Do nothing by default.
     }
 
+    public void reload() {
+        // Do nothing by default.
+    }
+
     protected void updatePasswordFields() {
 
     }

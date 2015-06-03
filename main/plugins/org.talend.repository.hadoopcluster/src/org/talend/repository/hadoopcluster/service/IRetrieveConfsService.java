@@ -10,26 +10,24 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hadoopcluster.ui.common;
+package org.talend.repository.hadoopcluster.service;
 
-import org.talend.metadata.managment.ui.wizard.AbstractForm.ICheckListener;
+import java.util.List;
 
 /**
- * created by ycbai on 2014年9月15日 Detailled comment
+ * created by ycbai on 2015年6月1日 Detailled comment
  *
  */
-public interface IHadoopClusterInfoForm {
+public interface IRetrieveConfsService {
 
-    public void updateForm();
+    public final static String CONF_FILE_EXT = ".xml"; //$NON-NLS-1$
 
-    public void init();
+    public void reload();
 
-    public void setListener(ICheckListener listener);
+    public String getConfValue(String confType, String key) throws Exception;
 
-    public void setReadOnly(boolean readOnly);
+    public List<String> getAllServices() throws Exception;
 
-    public boolean checkFieldsValue();
-
-    public void dispose();
+    public String exportConfs(List<String> services) throws Exception;
 
 }

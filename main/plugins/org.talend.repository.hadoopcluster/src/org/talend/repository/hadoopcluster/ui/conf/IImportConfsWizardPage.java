@@ -10,26 +10,23 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hadoopcluster.ui.common;
+package org.talend.repository.hadoopcluster.ui.conf;
 
-import org.talend.metadata.managment.ui.wizard.AbstractForm.ICheckListener;
+import java.util.List;
+
+import org.eclipse.jface.wizard.IWizardPage;
+import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 
 /**
- * created by ycbai on 2014年9月15日 Detailled comment
+ * created by ycbai on 2015年5月29日 Detailled comment
  *
  */
-public interface IHadoopClusterInfoForm {
+public interface IImportConfsWizardPage extends IWizardPage {
 
-    public void updateForm();
+    public boolean isLastPage();
 
-    public void init();
+    public IRetrieveConfsService getConfsService();
 
-    public void setListener(ICheckListener listener);
-
-    public void setReadOnly(boolean readOnly);
-
-    public boolean checkFieldsValue();
-
-    public void dispose();
+    public List<String> getSelectedServices();
 
 }

@@ -39,6 +39,8 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
  */
 public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> implements IHadoopClusterInfoForm {
 
+    private Composite parentForm;
+
     private LabelledText whcHostnameText;
 
     private LabelledText whcPortText;
@@ -63,6 +65,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
 
     public HDIInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation) {
         super(parent, SWT.NONE, existingNames);
+        this.parentForm = parent;
         this.connectionItem = connectionItem;
         setConnectionItem(connectionItem);
         setupForm(true);
@@ -94,6 +97,7 @@ public class HDIInfoForm extends AbstractHadoopForm<HadoopClusterConnection> imp
         }
     }
 
+    @Override
     public void init() {
         String whcHostName = StringUtils.trimToEmpty(getConnection().getParameters().get(
                 ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_HOSTNAME));

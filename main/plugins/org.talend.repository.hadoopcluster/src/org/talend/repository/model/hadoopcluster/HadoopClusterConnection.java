@@ -41,6 +41,11 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytabPrincipal <em>Keytab Principal</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getKeytab <em>Keytab</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getHadoopProperties <em>Hadoop Properties</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getRmScheduler <em>Rm Scheduler</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobHistory <em>Job History</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getStagingDirectory <em>Staging Directory</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseDNHost <em>Use DN Host</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseCustomConfs <em>Use Custom Confs</em>}</li>
  * </ul>
  * </p>
  *
@@ -558,5 +563,138 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setHadoopProperties(String value);
+
+    /**
+     * Returns the value of the '<em><b>Rm Scheduler</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Rm Scheduler</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Rm Scheduler</em>' attribute.
+     * @see #setRmScheduler(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_RmScheduler()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getRmScheduler();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getRmScheduler <em>Rm Scheduler</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Rm Scheduler</em>' attribute.
+     * @see #getRmScheduler()
+     * @generated
+     */
+    void setRmScheduler(String value);
+
+    /**
+     * Returns the value of the '<em><b>Job History</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Job History</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Job History</em>' attribute.
+     * @see #setJobHistory(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_JobHistory()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getJobHistory();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getJobHistory <em>Job History</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Job History</em>' attribute.
+     * @see #getJobHistory()
+     * @generated
+     */
+    void setJobHistory(String value);
+
+    /**
+     * Returns the value of the '<em><b>Staging Directory</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Staging Directory</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Staging Directory</em>' attribute.
+     * @see #setStagingDirectory(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_StagingDirectory()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getStagingDirectory();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getStagingDirectory <em>Staging Directory</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Staging Directory</em>' attribute.
+     * @see #getStagingDirectory()
+     * @generated
+     */
+    void setStagingDirectory(String value);
+
+    /**
+     * Returns the value of the '<em><b>Use DN Host</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Use DN Host</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Use DN Host</em>' attribute.
+     * @see #setUseDNHost(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_UseDNHost()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isUseDNHost();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseDNHost <em>Use DN Host</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Use DN Host</em>' attribute.
+     * @see #isUseDNHost()
+     * @generated
+     */
+    void setUseDNHost(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Use Custom Confs</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Use Custom Confs</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Use Custom Confs</em>' attribute.
+     * @see #setUseCustomConfs(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_UseCustomConfs()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isUseCustomConfs();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseCustomConfs <em>Use Custom Confs</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Use Custom Confs</em>' attribute.
+     * @see #isUseCustomConfs()
+     * @generated
+     */
+    void setUseCustomConfs(boolean value);
 
 } // HadoopClusterConnection

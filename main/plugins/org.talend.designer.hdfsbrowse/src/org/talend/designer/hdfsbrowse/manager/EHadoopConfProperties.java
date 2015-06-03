@@ -26,38 +26,56 @@ public enum EHadoopConfProperties {
     /**
      * Property name for naming the job tracker (URI).
      */
-    JOB_TRACKER_URI("mapred.job.tracker", "localhost:8021"),
+    JOB_TRACKER_URI("mapred.job.tracker", "localhost:8021"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    RESOURCE_MANAGER("yarn.resourcemanager.address", "localhost:8032"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    RESOURCEMANAGER_SCHEDULER("yarn.resourcemanager.scheduler.address", "localhost:8030"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    JOBHISTORY("mapreduce.jobhistory.address", "localhost:10020"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    STAGING_DIR("yarn.app.mapreduce.am.staging-dir", "/user"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * Property name for naming the default file system (URI).
      */
-    FS_DEFAULT_URI("fs.default.name", "hdfs://localhost:8020/"),
+    FS_DEFAULT_URI("fs.default.name", "hdfs://localhost:8020/"), //$NON-NLS-1$ //$NON-NLS-2$
 
-    FS_HDFS_IMPL_DISABLE_CACHE("fs.hdfs.impl.disable.cache", "false"),
+    FS_DEFAULT_URI_NEW("fs.defaultFS", "hdfs://localhost:8020/"), //$NON-NLS-1$ //$NON-NLS-2$
 
-    HADOOP_SECURITY_KERBEROS_TICKET_CACHE_PATH("hadoop.security.kerberos.ticket.cache.path", ""),
+    FS_HDFS_IMPL_DISABLE_CACHE("fs.hdfs.impl.disable.cache", "false"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    HADOOP_SECURITY_KERBEROS_TICKET_CACHE_PATH("hadoop.security.kerberos.ticket.cache.path", ""), //$NON-NLS-1$ //$NON-NLS-2$
+
+    AUTHENTICATION("hadoop.security.authentication", "simple"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * Property name for kerberos principal.
      */
-    KERBEROS_PRINCIPAL("dfs.namenode.kerberos.principal", "nn/_HOST@EXAMPLE.COM"),
+    KERBEROS_PRINCIPAL("dfs.namenode.kerberos.principal", "nn/_HOST@EXAMPLE.COM"), //$NON-NLS-1$ //$NON-NLS-2$
 
-    KERBEROS_COMMAND_KINIT("hadoop.kerberos.kinit.command", "/usr/kerberos/bin/kinit"),
+    RM_PRINCIPAL("yarn.resourcemanager.principal", "yarn/_HOST@EXAMPLE.COM"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    JT_PRINCIPAL("mapreduce.jobtracker.kerberos.principal", "mapred/_HOST@EXAMPLE.COM"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    JH_PRINCIPAL("mapreduce.jobhistory.principal", "mapred/_HOST@EXAMPLE.COM"), //$NON-NLS-1$ //$NON-NLS-2$
+
+    KERBEROS_COMMAND_KINIT("hadoop.kerberos.kinit.command", "/usr/kerberos/bin/kinit"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * Property name for job ugi.
      */
-    JOB_UGI("hadoop.job.ugi", "username,supergroup"),
+    JOB_UGI("hadoop.job.ugi", "username,supergroup"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * Property name for the default socket factory:
      */
-    SOCKET_FACTORY_DEFAULT("hadoop.rpc.socket.factory.class.default", "org.apache.hadoop.net.StandardSocketFactory"),
+    SOCKET_FACTORY_DEFAULT("hadoop.rpc.socket.factory.class.default", "org.apache.hadoop.net.StandardSocketFactory"), //$NON-NLS-1$ //$NON-NLS-2$
 
     /**
      * Property name for the SOCKS server URI.
      */
-    SOCKS_SERVER("hadoop.socks.server", "host:1080"),
+    SOCKS_SERVER("hadoop.socks.server", "host:1080"), //$NON-NLS-1$ //$NON-NLS-2$
 
     ;
 

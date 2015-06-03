@@ -329,6 +329,51 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHadoopClusterConnection_RmScheduler() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(20);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_JobHistory() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(21);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_StagingDirectory() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(22);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_UseDNHost() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(23);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_UseCustomConfs() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(24);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getHadoopClusterConnectionItem() {
         return hadoopClusterConnectionItemEClass;
     }
@@ -445,6 +490,11 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__KEYTAB_PRINCIPAL);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__KEYTAB);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__HADOOP_PROPERTIES);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__RM_SCHEDULER);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__JOB_HISTORY);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__STAGING_DIRECTORY);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__USE_DN_HOST);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS);
 
         hadoopClusterConnectionItemEClass = createEClass(HADOOP_CLUSTER_CONNECTION_ITEM);
 
@@ -519,6 +569,11 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         initEAttribute(getHadoopClusterConnection_KeytabPrincipal(), theXMLTypePackage.getString(), "keytabPrincipal", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_Keytab(), theXMLTypePackage.getString(), "keytab", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_HadoopProperties(), theXMLTypePackage.getString(), "hadoopProperties", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_RmScheduler(), theXMLTypePackage.getString(), "rmScheduler", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_JobHistory(), theXMLTypePackage.getString(), "jobHistory", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_StagingDirectory(), theXMLTypePackage.getString(), "stagingDirectory", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_UseDNHost(), theXMLTypePackage.getBoolean(), "useDNHost", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_UseCustomConfs(), theXMLTypePackage.getBoolean(), "useCustomConfs", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hadoopClusterConnectionItemEClass, HadoopClusterConnectionItem.class, "HadoopClusterConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

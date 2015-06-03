@@ -50,6 +50,8 @@ public class HDFSConnectionBean {
 
     private String keytab;
 
+    private boolean useCustomConfs;
+
     private Map<String, Object> configurations = new HashMap<String, Object>();
 
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
@@ -152,6 +154,14 @@ public class HDFSConnectionBean {
 
     public void setUseCustomVersion(boolean useCustomVersion) {
         this.useCustomVersion = useCustomVersion;
+    }
+
+    public boolean isUseCustomConfs() {
+        return this.useCustomConfs;
+    }
+
+    public void setUseCustomConfs(boolean useCustomConfs) {
+        this.useCustomConfs = useCustomConfs;
     }
 
     public boolean isUseKeytab() {

@@ -14,6 +14,7 @@ package org.talend.repository.hadoopcluster.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +27,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.IHadoopClusterService;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.process.IElementParameter;
@@ -38,6 +40,7 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.core.model.components.EParameterName;
 import org.talend.designer.core.model.components.EmfComponent;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
+import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubMultiRepTypeProcessor;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.IHadoopSubnodeRepositoryContentHandler;
@@ -256,6 +259,40 @@ public class HadoopClusterService implements IHadoopClusterService {
         }
 
         return null;
+    }
+
+    @Override
+    public String getCustomConfsJarName(String clusterId) {
+        HadoopClusterConnectionItem connectionItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
+        if (connectionItem != null) {
+            return HadoopConfsUtils.getConfsJarDefaultName(connectionItem);
+        }
+        return null;
+    }
+
+    @Override
+    public void useCustomConfsJarIfNeeded(List<ModuleNeeded> modulesNeeded, String clusterId) {
+        HadoopClusterConnectionItem connectionItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
+        if (connectionItem == null) { // In case it is a hadoopsubconnection.
+            connectionItem = HCRepositoryUtil.getHadoopClusterItemBySubitemId(clusterId);
+        }
+        if (connectionItem != null) {
+            HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
+            if (connection.isUseCustomConfs()) {
+                String customConfsJarName = HadoopConfsUtils.getConfsJarDefaultName(connectionItem);
+                String context = customConfsJarName.substring(0, customConfsJarName.lastIndexOf(".")); //$NON-NLS-1$
+                ModuleNeeded customConfsModule = new ModuleNeeded(context, customConfsJarName, null, true);
+                Iterator<ModuleNeeded> moduleIterator = modulesNeeded.iterator();
+                while (moduleIterator.hasNext()) {
+                    ModuleNeeded module = moduleIterator.next();
+                    String moduleName = module.getModuleName();
+                    if ("hadoop-conf.jar".equals(moduleName) || "hadoop-conf-kerberos.jar".equals(moduleName) || customConfsJarName.equals(moduleName)) { //$NON-NLS-1$ //$NON-NLS-2$
+                        moduleIterator.remove();
+                    }
+                }
+                modulesNeeded.add(customConfsModule);
+            }
+        }
     }
 
 }
