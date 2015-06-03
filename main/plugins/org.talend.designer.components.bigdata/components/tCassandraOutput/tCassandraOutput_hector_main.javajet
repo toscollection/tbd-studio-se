@@ -13,8 +13,10 @@
     boolean delSuperColumn = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DELETE_SUPER_COLUMN__"));
     Map<String,String> deleteColumns=new java.util.HashMap<String,String>();
     boolean dieOnError = ("true").equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
-    for(Map<String,String> delColumn:listDeleteCols){
-    	deleteColumns.put(delColumn.get("DELETE_COLUMN"),delColumn.get("DELETE_COLUMN"));
+    if(listDeleteCols != null) {
+    	for(Map<String,String> delColumn:listDeleteCols){
+    		deleteColumns.put(delColumn.get("DELETE_COLUMN"),delColumn.get("DELETE_COLUMN"));
+    	}
     }
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
