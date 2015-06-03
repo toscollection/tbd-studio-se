@@ -458,6 +458,64 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         });
 
+        rmSchedulerText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setRmScheduler(rmSchedulerText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        jobHistoryText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setJobHistory(jobHistoryText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        stagingDirectoryText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setStagingDirectory(stagingDirectoryText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        useDNHostBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setUseDNHost(useDNHostBtn.getSelection());
+                checkFieldsValue();
+            }
+        });
+
+        useCustomConfBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
+                getConnection().setUseCustomConfs(useCustomConfBtn.getSelection());
+                checkFieldsValue();
+            }
+        });
+
+        hadoopConfsButton.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                AbstractHadoopForm form = null;
+                if (parentForm instanceof AbstractHadoopForm) {
+                    form = (AbstractHadoopForm) parentForm;
+                }
+                HadoopConfsUtils.openHadoopConfsWizard(form, (HadoopClusterConnectionItem) connectionItem, creation);
+            }
+        });
+
         namenodePrincipalText.addModifyListener(new ModifyListener() {
 
             @Override

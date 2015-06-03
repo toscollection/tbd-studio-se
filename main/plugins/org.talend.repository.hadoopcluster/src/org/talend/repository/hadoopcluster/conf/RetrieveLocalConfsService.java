@@ -1,0 +1,124 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.repository.hadoopcluster.conf;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.hadoop.conf.Configuration;
+import org.talend.commons.utils.io.FilesUtils;
+import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
+import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
+
+/**
+ * created by ycbai on 2015年6月1日 Detailled comment
+ *
+ */
+public class RetrieveLocalConfsService implements IRetrieveConfsService {
+
+    private String confsDirPath;
+
+    private Map<String, Configuration> confsMap;
+
+    public RetrieveLocalConfsService(String confsDirPath) {
+        this.confsDirPath = confsDirPath;
+    }
+
+    private Map<String, Configuration> getConfsMap() throws MalformedURLException {
+        if (confsMap != null) {
+            return confsMap;
+        }
+        confsMap = new LinkedHashMap<>();
+        List<File> confFiles = FilesUtils.getFilesFromFolderByName(new File(confsDirPath), null, new String[] { CONF_FILE_EXT },
+                null, true);
+        Map<String, File> confFilesMap = new HashMap<>();
+        for (File confFile : confFiles) {
+            confFilesMap.put(confFile.getName(), confFile);
+        }
+        EHadoopConfs[] confs = EHadoopConfs.values();
+        for (EHadoopConfs conf : confs) {
+            String[] confFileNames = conf.getConfFiles();
+            Configuration configuration = new Configuration();
+            boolean addedResource = false;
+            for (String confFileName : confFileNames) {
+                File confFile = confFilesMap.get(confFileName);
+                if (confFile != null) {
+                    configuration.addResource(confFile.toURI().toURL());
+                    addedResource = true;
+                } else {
+                    addedResource = false;
+                }
+            }
+            if (addedResource) {
+                confsMap.put(conf.getName(), configuration);
+            }
+        }
+        return confsMap;
+    }
+
+    @Override
+    public void reload() {
+        confsMap = null;
+    }
+
+    @Override
+    public String getConfValue(String confType, String key) throws Exception {
+        Configuration configuration = getConfsMap().get(confType);
+        if (configuration != null) {
+            return configuration.get(key);
+        }
+        return null;
+    }
+
+    @Override
+    public List<String> getAllServices() throws Exception {
+        List<String> services = new ArrayList<>();
+        Set<String> confs = getConfsMap().keySet();
+        services.addAll(confs);
+        return services;
+    }
+
+    @Override
+    public String exportConfs(List<String> services) throws Exception {
+        final Set<String> confs = new HashSet<>();
+        for (String service : services) {
+            EHadoopConfs conf = EHadoopConfs.getConfByName(service);
+            confs.addAll(Arrays.asList(conf.getConfFiles()));
+        }
+        if (confs.size() > 0) {
+            File sourceFolder = new File(confsDirPath);
+            String targetFolderPath = HadoopConfsUtils.getConfsSitesTempFolder();
+            File targetFolder = new File(targetFolderPath);
+            final FileFilter sourceFileFilter = new FileFilter() {
+
+                @Override
+                public boolean accept(File file) {
+                    return confs.contains(file.getName());
+                }
+            };
+            FilesUtils.copyFolder(sourceFolder, targetFolder, true, null, sourceFileFilter, true);
+            return targetFolderPath;
+        }
+        return null;
+    }
+
+}
