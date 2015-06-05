@@ -82,8 +82,8 @@ public class HadoopCMClusterService implements HadoopClusterService {
             ZipEntry configInputZipEntry = null;
             while ((configInputZipEntry = zipInputStream.getNextEntry()) != null) {
                 String configFile = configInputZipEntry.getName();
-                if (configFile.contains(File.separator)) {
-                    configFile = configFile.substring(configFile.lastIndexOf(File.separator), configFile.length());
+                if (configFile.contains("/")) { //$NON-NLS-1$
+                    configFile = configFile.substring(configFile.lastIndexOf("/") + 1, configFile.length()); //$NON-NLS-1$
                 }
                 if (!configFile.endsWith(SUPPORT_FILE)) {
                     continue;
