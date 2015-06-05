@@ -155,7 +155,7 @@ public class HadoopConfsUtils {
             rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RESOURCE_MANAGER.getName());
         } else {
             rmOrJt = confsService
-                    .getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.JOB_TRACKER_URI.getName());
+                    .getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOB_TRACKER_URI.getName());
         }
         if (rmOrJt != null) {
             connection.setJobTrackerURI(rmOrJt);
@@ -165,11 +165,11 @@ public class HadoopConfsUtils {
         if (rms != null) {
             connection.setRmScheduler(rms);
         }
-        String jh = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.JOBHISTORY.getName());
+        String jh = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOBHISTORY.getName());
         if (jh != null) {
             connection.setJobHistory(jh);
         }
-        String sd = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.STAGING_DIR.getName());
+        String sd = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.STAGING_DIR.getName());
         if (sd != null) {
             connection.setStagingDirectory(sd);
         }
@@ -186,13 +186,13 @@ public class HadoopConfsUtils {
             rmOrJtPrincipal = confsService
                     .getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RM_PRINCIPAL.getName());
         } else {
-            rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(),
+            rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
                     EHadoopConfProperties.JT_PRINCIPAL.getName());
         }
         if (rmOrJtPrincipal != null) {
             connection.setJtOrRmPrincipal(rmOrJtPrincipal);
         }
-        String jhp = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
+        String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
         if (jhp != null) {
             connection.setJobHistoryPrincipal(jhp);
         }

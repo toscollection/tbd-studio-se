@@ -111,6 +111,11 @@ public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage 
     }
 
     @Override
+    public List<String> getSelectedServices() {
+        return servicesTableComp.getSelectedServices();
+    }
+
+    @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Exception exception = null;
         String propertyName = evt.getPropertyName();
