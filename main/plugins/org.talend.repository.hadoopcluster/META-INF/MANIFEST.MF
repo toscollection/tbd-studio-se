@@ -3,9 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.talend.repository.hadoopcluster;singleton:=true
 Bundle-Version: 6.0.0.qualifier
-Bundle-ClassPath: .,
- lib/commons-logging-1.0.4.jar,
- lib/hadoop-core-1.0.0.jar
+Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
@@ -32,7 +30,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.designer.core,
  org.talend.repository.items.importexport,
  org.eclipse.help,
- org.talend.repository.view.di
+ org.talend.repository.view.di,
+ org.talend.libraries.hadoop,
+ org.talend.repository.hadoopcluster.configurator
 Bundle-ActivationPolicy: lazy
 Export-Package: org.talend.repository.hadoopcluster.action,
  org.talend.repository.hadoopcluster.action.common,

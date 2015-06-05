@@ -13,6 +13,8 @@
 package org.talend.repository.hadoopcluster.ui.conf;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.IWizard;
@@ -29,6 +31,10 @@ import org.talend.core.model.repository.ResourceModelUtils;
 import org.talend.designer.hdfsbrowse.manager.EHadoopConfProperties;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.conf.EHadoopConfs;
+import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
+import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
+import org.talend.repository.hadoopcluster.configurator.HadoopConfigurator;
+import org.talend.repository.hadoopcluster.configurator.HadoopConfiguratorBuilder;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -108,6 +114,24 @@ public class HadoopConfsUtils {
     public static String getConfsJarDefaultName(HadoopClusterConnectionItem connectionItem) {
         String connLabel = connectionItem.getProperty().getLabel();
         return CONFS_JAR_PREFIX.concat(connLabel).concat(CONFS_JAR_EXT);
+    }
+
+    public static HadoopConfigurationManager getConfigurationManager(String distribution) {
+        EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
+        if (EHadoopDistributions.HORTONWORKS.equals(dist)) {
+            return HadoopConfigurationManager.AMBARI;
+        } else if (EHadoopDistributions.CLOUDERA.equals(dist)) {
+            return HadoopConfigurationManager.CLOUDERA_MANAGER;
+        }
+        return null;
+    }
+
+    public static HadoopConfigurator getHadoopConfigurator(HadoopConfigurationManager configurationManager,
+            HadoopConfsConnection confsConnection) throws MalformedURLException {
+        HadoopConfigurator configurator = new HadoopConfiguratorBuilder().withVendor(configurationManager)
+                .withBaseURL(new URL(confsConnection.getConnURL()))
+                .withUsernamePassword(confsConnection.getUsername(), confsConnection.getPassword()).build();
+        return configurator;
     }
 
     public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, String distribution, String version,

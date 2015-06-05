@@ -160,7 +160,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         stagingDirectoryText.setText(StringUtils.trimToEmpty(connection.getStagingDirectory()));
         useDNHostBtn.setSelection(connection.isUseDNHost());
         useCustomConfBtn.setSelection(connection.isUseCustomConfs());
-        hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
+        // hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
         namenodePrincipalText.setText(connection.getPrincipal());
         jtOrRmPrincipalText.setText(connection.getJtOrRmPrincipal());
         jobHistoryPrincipalText.setText(connection.getJobHistoryPrincipal());
@@ -501,18 +501,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
                 getConnection().setUseCustomConfs(useCustomConfBtn.getSelection());
                 checkFieldsValue();
-            }
-        });
-
-        hadoopConfsButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                AbstractHadoopForm form = null;
-                if (parentForm instanceof AbstractHadoopForm) {
-                    form = (AbstractHadoopForm) parentForm;
-                }
-                HadoopConfsUtils.openHadoopConfsWizard(form, (HadoopClusterConnectionItem) connectionItem, creation);
             }
         });
 

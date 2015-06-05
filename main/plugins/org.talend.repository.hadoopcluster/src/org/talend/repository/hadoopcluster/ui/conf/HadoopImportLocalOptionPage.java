@@ -12,7 +12,6 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.formtools.LabelledDirectoryField;
 import org.talend.repository.hadoopcluster.conf.RetrieveLocalConfsService;
 import org.talend.repository.hadoopcluster.i18n.Messages;
-import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 
 /**
  * 
@@ -20,8 +19,6 @@ import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
  *
  */
 public class HadoopImportLocalOptionPage extends AbstractHadoopImportConfsPage {
-
-    private IRetrieveConfsService confsService;
 
     private LabelledDirectoryField locationDirField;
 
@@ -81,11 +78,6 @@ public class HadoopImportLocalOptionPage extends AbstractHadoopImportConfsPage {
     @Override
     public List<String> getSelectedServices() {
         return servicesTableComp.getSelectedServices();
-    }
-
-    @Override
-    public IRetrieveConfsService getConfsService() {
-        return confsService;
     }
 
 }
