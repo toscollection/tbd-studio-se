@@ -310,7 +310,7 @@
             NAME="TABLE"
             REQUIRED="true"
             NUM_ROW="15"
-            SHOW_IF="API_SELECTED == 'datastax'"
+            SHOW_IF="(API_SELECTED == 'datastax') OR (API_TYPE == 'make_API_TYPE_modification_responsable')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
