@@ -22,6 +22,8 @@ import java.util.Set;
  */
 public class HadoopServiceProperties {
 
+    private String relativeHadoopClusterId;
+
     private String distribution;
 
     private String version;
@@ -200,6 +202,14 @@ public class HadoopServiceProperties {
 
     public void setHadoopProperties(List<Map<String, Object>> hadoopProperties) {
         this.hadoopProperties = hadoopProperties;
+    }
+
+    public String getRelativeHadoopClusterId() {
+        return this.relativeHadoopClusterId;
+    }
+
+    public void setRelativeHadoopClusterId(String relativeHadoopClusterId) {
+        this.relativeHadoopClusterId = relativeHadoopClusterId;
     }
 
 }

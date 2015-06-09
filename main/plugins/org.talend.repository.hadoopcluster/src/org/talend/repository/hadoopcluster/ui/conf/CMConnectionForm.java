@@ -51,8 +51,8 @@ public class CMConnectionForm extends AbstractConnectionForm {
     @Override
     protected void fillDefaultValues() {
         connURLText.setText("http://localhost:7180/"); //$NON-NLS-1$
-        usernameText.setText("cloudera"); //$NON-NLS-1$
-        passwordText.setText("cloudera"); //$NON-NLS-1$
+        usernameText.setText("admin"); //$NON-NLS-1$
+        passwordText.setText("admin"); //$NON-NLS-1$
     }
 
     @Override

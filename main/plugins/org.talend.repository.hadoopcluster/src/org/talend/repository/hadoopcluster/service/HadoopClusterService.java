@@ -265,7 +265,10 @@ public class HadoopClusterService implements IHadoopClusterService {
     public String getCustomConfsJarName(String clusterId) {
         HadoopClusterConnectionItem connectionItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
         if (connectionItem != null) {
-            return HadoopConfsUtils.getConfsJarDefaultName(connectionItem);
+            HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
+            if (connection != null && connection.isUseCustomConfs()) {
+                return HadoopConfsUtils.getConfsJarDefaultName(connectionItem);
+            }
         }
         return null;
     }

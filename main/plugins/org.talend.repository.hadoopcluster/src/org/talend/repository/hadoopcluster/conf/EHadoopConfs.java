@@ -32,6 +32,18 @@ public enum EHadoopConfs {
 
     OOZIE("OOZIE", new String[] { "oozie-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ 
 
+    SPARK("SPARK", new String[0]), //$NON-NLS-1$
+
+    PIG("PIG", new String[0]), //$NON-NLS-1$
+
+    SQOOP("SQOOP", new String[] { "sqoop-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$
+
+    STORM("STORM", new String[0]), //$NON-NLS-1$
+
+    TEZ("TEZ", new String[0]), //$NON-NLS-1$
+
+    ZOOKEEPER("ZOOKEEPER", new String[0]), //$NON-NLS-1$
+
     ;
 
     private String name;

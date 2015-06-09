@@ -100,7 +100,7 @@ public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage 
         selectClusterButton = new Button(clusterGroup, SWT.PUSH);
         GridData selectClusterBtnGD = new GridData(SWT.BEGINNING, SWT.CENTER, false, false);
         selectClusterButton.setLayoutData(selectClusterBtnGD);
-        selectClusterButton.setText(Messages.getString("HadoopImportRemoteOptionPage.button.select")); //$NON-NLS-1$
+        selectClusterButton.setText(Messages.getString("HadoopImportRemoteOptionPage.button.fetch")); //$NON-NLS-1$
 
         servicesTableComp = new HadoopServicesTableComposite(clusterGroup, SWT.NONE);
         GridData servicesTableGD = new GridData(GridData.FILL_BOTH);

@@ -640,6 +640,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         properties.setKeytabPrincipal(connection.getKeytabPrincipal());
         properties.setKeytab(connection.getKeytab());
         properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties()));
+        properties.setRelativeHadoopClusterId(connectionItem.getProperty().getId());
     }
 
     @Override
@@ -885,6 +886,21 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     EHadoopProperties.JOBHISTORY_PRINCIPAL.getName());
             if (defaultJobHistoryPrincipal != null) {
                 jobHistoryPrincipalText.setText(defaultJobHistoryPrincipal);
+            }
+            String defaultRMS = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS.getName());
+            if (defaultRMS != null) {
+                rmSchedulerText.setText(defaultRMS);
+            }
+            String defaultJH = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.JOBHISTORY_ADDRESS.getName());
+            if (defaultJH != null) {
+                jobHistoryText.setText(defaultJH);
+            }
+            String defaultSD = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.STAGING_DIRECTORY.getName());
+            if (defaultSD != null) {
+                stagingDirectoryText.setText(defaultSD);
             }
         }
     }

@@ -429,6 +429,10 @@ public class HCRepositoryUtil {
             map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, hcConnection.getPrincipal());
             map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL, hcConnection.getJtOrRmPrincipal());
             map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL, hcConnection.getJobHistoryPrincipal());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_RESOURCEMANAGER_SCHEDULER_ADDRESS, hcConnection.getRmScheduler());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS, hcConnection.getJobHistory());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_STAGING_DIRECTORY, hcConnection.getStagingDirectory());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_USE_DATANODE_HOSTNAME, String.valueOf(hcConnection.isUseDNHost()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER,
                     HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, hcConnection.getUserName());
