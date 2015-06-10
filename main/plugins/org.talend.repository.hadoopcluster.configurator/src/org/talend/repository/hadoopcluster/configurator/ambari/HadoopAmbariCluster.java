@@ -12,12 +12,22 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.configurator.ambari;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.NotFoundException;
+
+import org.apache.ambari.api.model.ApiActualConfigs;
+import org.apache.ambari.api.model.ApiComponents;
+import org.apache.ambari.api.model.ApiConfigFile;
+import org.apache.ambari.api.model.ApiConfigFileList;
+import org.apache.ambari.api.model.ApiConfigFileList2;
+import org.apache.ambari.api.model.ApiHostComponents;
 import org.apache.ambari.api.model.ApiService;
 import org.apache.ambari.api.model.ApiServiceList;
-import org.apache.ambari.api.v1.ConfigsResource;
+import org.apache.ambari.api.v1.ClusterResource;
 import org.apache.ambari.api.v1.ServicesResource;
 import org.talend.repository.hadoopcluster.configurator.HadoopCluster;
 import org.talend.repository.hadoopcluster.configurator.HadoopClusterService;
@@ -29,16 +39,24 @@ import org.talend.repository.hadoopcluster.configurator.HadoopHostedService;
  */
 public class HadoopAmbariCluster implements HadoopCluster {
 
+    ClusterResource cluster;
+
     ServicesResource services;
 
-    ConfigsResource configs;
+    // if the server support service_config_versions
+    boolean supportSCV = true;
 
     /**
      * DOC bchen HadoopAmbariCluster constructor comment.
      */
-    public HadoopAmbariCluster(ServicesResource services, ConfigsResource configs) {
-        this.services = services;
-        this.configs = configs;
+    public HadoopAmbariCluster(ClusterResource cluster) {
+        this.cluster = cluster;
+        this.services = cluster.getServicesResource();
+        try {
+            cluster.getConfigsResource().hasConfig();
+        } catch (NotFoundException noe) {
+            supportSCV = false;
+        }
     }
 
     /*
@@ -48,16 +66,81 @@ public class HadoopAmbariCluster implements HadoopCluster {
      */
     @Override
     public Map<HadoopHostedService, HadoopClusterService> getHostedServices() {
+        if (supportSCV) {
+            return getHostedServicesForNew(allSupportedServices());
+        } else {
+            return getHostedServicesForOld(allSupportedServices());
+        }
+    }
+
+    private Map<HadoopHostedService, HadoopClusterService> getHostedServicesForNew(List<String> servicesName) {
+        Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<>();
+        for (String serviceName : servicesName) {
+            servicesMapping.put(HadoopHostedService.fromString(serviceName), new HadoopAmbariClusterService(
+                    getConfigFiles(serviceName)));
+        }
+        return servicesMapping;
+    }
+
+    private Map<HadoopHostedService, HadoopClusterService> getHostedServicesForOld(List<String> servicesName) {
+        Map<String, Map<String, String>> actualConfigVersion = getActualConfigVersion();
+        Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<>();
+        for (String serviceName : servicesName) {
+            servicesMapping.put(HadoopHostedService.fromString(serviceName), new HadoopAmbariClusterService(
+                    getConfigFiles(actualConfigVersion.get(serviceName))));
+        }
+        return servicesMapping;
+    }
+
+    private List<String> allSupportedServices() {
+        List<String> servicesName = new ArrayList<>();
         ApiServiceList sers = services.readServices();
-        Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<HadoopHostedService, HadoopClusterService>();
         for (ApiService service : sers.getServices()) {
             String serviceName = service.getInfo().getServiceName();
             if (HadoopHostedService.isSupport(serviceName)) {
-                servicesMapping.put(HadoopHostedService.fromString(serviceName), new HadoopAmbariClusterService(serviceName,
-                        configs));
+                servicesName.add(serviceName);
             }
         }
-        return servicesMapping;
+        return servicesName;
+    }
+
+    private Map<String, Map<String, String>> getActualConfigVersion() {
+        Map<String, Map<String, String>> serviceConfigVersion = new HashMap<>();
+        List<ApiActualConfigs> actualConfigs = cluster
+                .readActucalConfigs("components/host_components/HostRoles/actual_configs").getActualConfigs(); //$NON-NLS-1$
+        for (ApiActualConfigs actualConfig : actualConfigs) {
+            String serviceName = actualConfig.getServiceInfo().getServiceName();
+            Map<String, String> actualConfigVersions = new HashMap<>();
+            for (ApiComponents component : actualConfig.getComponents()) {
+                for (ApiHostComponents hostComponent : component.getHostComponents()) {
+                    Map<String, Map<String, String>> actualConfigFiles = hostComponent.getHostRoles().getActualConfigs();
+                    for (String configFileType : actualConfigFiles.keySet()) {
+                        String version = actualConfigFiles.get(configFileType).get("tag"); //$NON-NLS-1$
+                        actualConfigVersions.put(configFileType, version);
+                    }
+                }
+            }
+            serviceConfigVersion.put(serviceName, actualConfigVersions);
+        }
+        return serviceConfigVersion;
+    }
+
+    private List<ApiConfigFile> getConfigFiles(Map<String, String> actualConfigFilesVersion) {
+        List<ApiConfigFile> configFiles = new ArrayList<>();
+        for (String type : actualConfigFilesVersion.keySet()) {
+            String version = actualConfigFilesVersion.get(type);
+            ApiConfigFileList2 configFile = cluster.getConfigsResource().readConfig(type, version);
+            configFiles.addAll(configFile.getFiles());
+        }
+        return configFiles;
+    }
+
+    private List<ApiConfigFile> getConfigFiles(String serviceName) {
+        List<ApiConfigFile> configFiles = new ArrayList<>();
+        for (ApiConfigFileList configFileList : cluster.getConfigsResource().readConfig(serviceName, true).getConfigs()) {
+            configFiles.addAll(configFileList.getFiles());
+        }
+        return configFiles;
     }
 
 }
