@@ -16,6 +16,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.jface.wizard.WizardDialog;
@@ -128,9 +129,14 @@ public class HadoopConfsUtils {
 
     public static HadoopConfigurator getHadoopConfigurator(HadoopConfigurationManager configurationManager,
             HadoopConfsConnection confsConnection) throws MalformedURLException {
-        HadoopConfigurator configurator = new HadoopConfiguratorBuilder().withVendor(configurationManager)
+        HadoopConfiguratorBuilder configuratorBuilder = new HadoopConfiguratorBuilder().withVendor(configurationManager)
                 .withBaseURL(new URL(confsConnection.getConnURL()))
-                .withUsernamePassword(confsConnection.getUsername(), confsConnection.getPassword()).build();
+                .withUsernamePassword(confsConnection.getUsername(), confsConnection.getPassword());
+        if (confsConnection.isUseAuth()) {
+            configuratorBuilder = configuratorBuilder.withTrustManagers(confsConnection.getTrustStoreFile(),
+                    confsConnection.getTrustStoreType(), confsConnection.getTrustStorePassword());
+        }
+        HadoopConfigurator configurator = configuratorBuilder.build();
         return configurator;
     }
 
@@ -143,16 +149,41 @@ public class HadoopConfsUtils {
         boolean supportYARN = ver.isSupportYARN();
         connection.setDistribution(dist.getName());
         connection.setDfVersion(ver.getVersionValue());
-        String nn = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.FS_DEFAULT_URI_NEW.getName());
-        if (nn == null) {
-            nn = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.FS_DEFAULT_URI.getName());
+        String namenodeURI = null;
+        String ns = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.DFS_NAMESERVICES.getName());
+        if (StringUtils.isNotEmpty(ns)) {
+            namenodeURI = "hdfs://" + ns; //$NON-NLS-1$
+        } else {
+            namenodeURI = confsService.getConfValue(EHadoopConfs.HDFS.getName(),
+                    EHadoopConfProperties.FS_DEFAULT_URI_NEW.getName());
+            if (StringUtils.isEmpty(namenodeURI)) {
+                namenodeURI = confsService.getConfValue(EHadoopConfs.HDFS.getName(),
+                        EHadoopConfProperties.FS_DEFAULT_URI.getName());
+            }
         }
-        if (nn != null) {
-            connection.setNameNodeURI(nn);
+        if (namenodeURI != null) {
+            connection.setNameNodeURI(namenodeURI);
         }
         String rmOrJt = null;
         if (supportYARN) {
-            rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RESOURCE_MANAGER.getName());
+            String useRmHa = confsService.getConfValue(EHadoopConfs.YARN.getName(),
+                    EHadoopConfProperties.YARN_RESOURCEMANAGER_HA_ENABLED.getName());
+            boolean isUseRmHa = Boolean.valueOf(useRmHa);
+            if (isUseRmHa) {
+                String rmIds = confsService.getConfValue(EHadoopConfs.YARN.getName(),
+                        EHadoopConfProperties.YARN_RESOURCEMANAGER_HA_RM_IDS.getName());
+                if (rmIds != null) {
+                    String[] rmIdsArray = rmIds.split(","); //$NON-NLS-1$
+                    if (rmIdsArray.length > 0) {
+                        String rmId = rmIdsArray[0];
+                        String adminRmIdKey = String.format(
+                                EHadoopConfProperties.YARN_RESOURCEMANAGER_ADMIN_ADDRESS_RM_ID.getName(), rmId);
+                        rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), adminRmIdKey);
+                    }
+                }
+            } else {
+                rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RESOURCE_MANAGER.getName());
+            }
         } else {
             rmOrJt = confsService
                     .getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOB_TRACKER_URI.getName());
@@ -162,23 +193,29 @@ public class HadoopConfsUtils {
         }
         String rms = confsService.getConfValue(EHadoopConfs.YARN.getName(),
                 EHadoopConfProperties.RESOURCEMANAGER_SCHEDULER.getName());
-        if (rms != null) {
+        if (StringUtils.isNotEmpty(rms)) {
             connection.setRmScheduler(rms);
         }
         String jh = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOBHISTORY.getName());
-        if (jh != null) {
+        if (StringUtils.isEmpty(jh)) {
+            jh = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.JOBHISTORY.getName());
+        }
+        if (StringUtils.isNotEmpty(jh)) {
             connection.setJobHistory(jh);
         }
         String sd = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.STAGING_DIR.getName());
-        if (sd != null) {
+        if (StringUtils.isEmpty(sd)) {
+            sd = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.STAGING_DIR.getName());
+        }
+        if (StringUtils.isNotEmpty(sd)) {
             connection.setStagingDirectory(sd);
         }
         String at = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.AUTHENTICATION.getName());
-        if (at != null) {
+        if (StringUtils.isNotEmpty(at)) {
             connection.setEnableKerberos("kerberos".equals(at)); //$NON-NLS-1$
         }
         String nnp = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.KERBEROS_PRINCIPAL.getName());
-        if (nnp != null) {
+        if (StringUtils.isNotEmpty(nnp)) {
             connection.setPrincipal(nnp);
         }
         String rmOrJtPrincipal = null;
@@ -193,7 +230,7 @@ public class HadoopConfsUtils {
             connection.setJtOrRmPrincipal(rmOrJtPrincipal);
         }
         String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
-        if (jhp != null) {
+        if (StringUtils.isNotEmpty(jhp)) {
             connection.setJobHistoryPrincipal(jhp);
         }
     }

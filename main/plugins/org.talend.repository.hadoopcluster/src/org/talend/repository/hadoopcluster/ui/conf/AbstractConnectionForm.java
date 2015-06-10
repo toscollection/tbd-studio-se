@@ -15,17 +15,24 @@ package org.talend.repository.hadoopcluster.ui.conf;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.commons.ui.swt.formtools.LabelledCombo;
+import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
+import org.talend.repository.hadoopcluster.conf.ETrustStoreType;
 import org.talend.repository.hadoopcluster.conf.IPropertyConstants;
 import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurator;
+import org.talend.repository.hadoopcluster.i18n.Messages;
 
 /**
  * created by ycbai on 2015年6月4日 Detailled comment
@@ -38,6 +45,14 @@ public abstract class AbstractConnectionForm extends Composite {
     protected LabelledText usernameText;
 
     protected LabelledText passwordText;
+
+    protected Button useAuthBtn;
+
+    protected LabelledCombo trustStoreTypeCombo;
+
+    protected LabelledFileField trustStoreFileText;
+
+    protected LabelledText trustStorePasswordText;
 
     protected Button connButton;
 
@@ -57,7 +72,31 @@ public abstract class AbstractConnectionForm extends Composite {
     protected abstract void createControl();
 
     protected void addListener() {
-        // do nothing by default.
+        if (useAuthBtn != null) {
+            useAuthBtn.addSelectionListener(new SelectionAdapter() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    updateAuthFieldsState(useAuthBtn.getSelection());
+                }
+            });
+        }
+        if (connButton != null) {
+            connButton.addSelectionListener(new SelectionAdapter() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    checkConnection();
+                }
+            });
+        }
+    }
+
+    private void updateAuthFieldsState(boolean useAuth) {
+        trustStoreTypeCombo.getCombo().setEnabled(useAuth);
+        trustStorePasswordText.getTextControl().setEditable(useAuth);
+        trustStoreFileText.getTextControl().setEditable(useAuth);
+        trustStoreFileText.getButtonControl().setEnabled(useAuth);
     }
 
     protected void fillDefaultValues() {
@@ -84,6 +123,22 @@ public abstract class AbstractConnectionForm extends Composite {
         return connectionGroup;
     }
 
+    protected void createAuthenticationFields(Composite parent) {
+        useAuthBtn = new Button(parent, SWT.CHECK);
+        useAuthBtn.setText(Messages.getString("HadoopImportRemoteOptionPage.auth.check")); //$NON-NLS-1$
+        GridData useAuthGD = new GridData();
+        useAuthGD.horizontalSpan = 3;
+        useAuthBtn.setLayoutData(useAuthGD);
+        trustStoreTypeCombo = new LabelledCombo(parent, Messages.getString("HadoopImportRemoteOptionPage.auth.type"), //$NON-NLS-1$
+                null, ETrustStoreType.getAllTrustStoreTypeNames().toArray(new String[0]), 2, true);
+        trustStoreTypeCombo.select(0);
+        trustStorePasswordText = new LabelledText(parent, Messages.getString("HadoopImportRemoteOptionPage.auth.pwd"), 2); //$NON-NLS-1$
+        trustStorePasswordText.getTextControl().setEchoChar('*');
+        trustStoreFileText = new LabelledFileField(parent,
+                Messages.getString("HadoopImportRemoteOptionPage.auth.file"), new String[] { "*.*" }); //$NON-NLS-1$ //$NON-NLS-2$
+        updateAuthFieldsState(false);
+    }
+
     protected HadoopConfigurator getHadoopConfigurator() throws Exception {
         return HadoopConfsUtils.getHadoopConfigurator(getHadoopConfigurationManager(), getHadoopConfsConnection());
     }
@@ -100,7 +155,17 @@ public abstract class AbstractConnectionForm extends Composite {
 
     protected abstract HadoopConfigurationManager getHadoopConfigurationManager();
 
-    protected abstract HadoopConfsConnection getHadoopConfsConnection();
+    protected HadoopConfsConnection getHadoopConfsConnection() {
+        HadoopConfsConnection confsConnection = new HadoopConfsConnection();
+        confsConnection.setConnURL(getConnURL());
+        confsConnection.setUsername(getUsername());
+        confsConnection.setPassword(getPassword());
+        confsConnection.setUseAuth(isUseAuth());
+        confsConnection.setTrustStoreType(getTrustStoreType());
+        confsConnection.setTrustStorePassword(getTrustStorePassword());
+        confsConnection.setTrustStoreFile(getTrustStoreFile());
+        return confsConnection;
+    }
 
     public String getConnURL() {
         if (connURLText != null) {
@@ -121,6 +186,34 @@ public abstract class AbstractConnectionForm extends Composite {
             return passwordText.getText();
         }
         return null;
+    }
+
+    public String getTrustStoreType() {
+        if (trustStoreTypeCombo != null) {
+            return trustStoreTypeCombo.getText();
+        }
+        return null;
+    }
+
+    public String getTrustStoreFile() {
+        if (trustStoreFileText != null) {
+            return trustStoreFileText.getText();
+        }
+        return null;
+    }
+
+    public String getTrustStorePassword() {
+        if (trustStorePasswordText != null) {
+            return trustStorePasswordText.getText();
+        }
+        return null;
+    }
+
+    public boolean isUseAuth() {
+        if (useAuthBtn != null) {
+            return useAuthBtn.getSelection();
+        }
+        return false;
     }
 
 }

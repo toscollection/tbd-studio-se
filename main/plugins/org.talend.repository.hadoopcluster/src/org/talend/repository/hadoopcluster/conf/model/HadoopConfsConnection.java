@@ -24,6 +24,14 @@ public class HadoopConfsConnection {
 
     private String password;
 
+    private boolean useAuth;
+
+    private String trustStoreType;
+
+    private String trustStoreFile;
+
+    private String trustStorePassword;
+
     public String getConnURL() {
         return this.connURL;
     }
@@ -46,6 +54,38 @@ public class HadoopConfsConnection {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isUseAuth() {
+        return this.useAuth;
+    }
+
+    public void setUseAuth(boolean useAuth) {
+        this.useAuth = useAuth;
+    }
+
+    public String getTrustStoreType() {
+        return this.trustStoreType;
+    }
+
+    public void setTrustStoreType(String trustStoreType) {
+        this.trustStoreType = trustStoreType;
+    }
+
+    public String getTrustStoreFile() {
+        return this.trustStoreFile;
+    }
+
+    public void setTrustStoreFile(String trustStoreFile) {
+        this.trustStoreFile = trustStoreFile;
+    }
+
+    public String getTrustStorePassword() {
+        return this.trustStorePassword;
+    }
+
+    public void setTrustStorePassword(String trustStorePassword) {
+        this.trustStorePassword = trustStorePassword;
     }
 
 }

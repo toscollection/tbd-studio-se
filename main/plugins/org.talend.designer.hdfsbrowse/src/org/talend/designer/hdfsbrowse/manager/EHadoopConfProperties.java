@@ -43,6 +43,16 @@ public enum EHadoopConfProperties {
 
     FS_DEFAULT_URI_NEW("fs.defaultFS", "hdfs://localhost:8020/"), //$NON-NLS-1$ //$NON-NLS-2$
 
+    DFS_NAMESERVICES("dfs.nameservices", ""), //$NON-NLS-1$ //$NON-NLS-2$
+
+    DFS_HA_NAMENODES_NAMESERVICE_ID("dfs.ha.namenodes.%s", ""), //$NON-NLS-1$//$NON-NLS-2$
+
+    YARN_RESOURCEMANAGER_HA_ENABLED("yarn.resourcemanager.ha.enabled", false), //$NON-NLS-1$
+
+    YARN_RESOURCEMANAGER_HA_RM_IDS("yarn.resourcemanager.ha.rm-ids", ""), //$NON-NLS-1$ //$NON-NLS-2$
+
+    YARN_RESOURCEMANAGER_ADMIN_ADDRESS_RM_ID("yarn.resourcemanager.admin.address.%s", ""), //$NON-NLS-1$ //$NON-NLS-2$
+
     FS_HDFS_IMPL_DISABLE_CACHE("fs.hdfs.impl.disable.cache", "false"), //$NON-NLS-1$ //$NON-NLS-2$
 
     HADOOP_SECURITY_KERBEROS_TICKET_CACHE_PATH("hadoop.security.kerberos.ticket.cache.path", ""), //$NON-NLS-1$ //$NON-NLS-2$
@@ -95,9 +105,9 @@ public enum EHadoopConfProperties {
 
     public final String name;
 
-    public final String defVal;
+    public final Object defVal;
 
-    EHadoopConfProperties(String name, String defVal) {
+    EHadoopConfProperties(String name, Object defVal) {
         this.name = name;
         this.defVal = defVal;
 
