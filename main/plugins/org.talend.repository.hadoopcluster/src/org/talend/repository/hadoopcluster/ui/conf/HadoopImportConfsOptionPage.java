@@ -154,7 +154,7 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
     private IWizardPage getOptionPage() {
         IWizardPage optionPage = null;
         if (remoteBtn.getSelection()) {
-            optionPage = new HadoopImportRemoteOptionPage();
+            optionPage = new HadoopImportRemoteOptionPage(getDistribution());
         } else if (localBtn.getSelection()) {
             optionPage = new HadoopImportLocalOptionPage();
         }

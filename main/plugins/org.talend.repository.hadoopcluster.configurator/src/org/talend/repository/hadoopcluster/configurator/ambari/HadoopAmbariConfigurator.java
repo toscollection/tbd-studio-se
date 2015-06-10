@@ -21,9 +21,8 @@ import javax.net.ssl.TrustManager;
 import org.apache.ambari.api.AmbariClientBuilder;
 import org.apache.ambari.api.model.ApiCluster;
 import org.apache.ambari.api.model.ApiClusterList;
-import org.apache.ambari.api.v1.ConfigsResource;
+import org.apache.ambari.api.v1.ClusterResource;
 import org.apache.ambari.api.v1.RootResourceV1;
-import org.apache.ambari.api.v1.ServicesResource;
 import org.talend.repository.hadoopcluster.configurator.HadoopCluster;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurator;
 
@@ -95,8 +94,7 @@ public class HadoopAmbariConfigurator implements HadoopConfigurator {
      */
     @Override
     public HadoopCluster getCluster(String name) {
-        ServicesResource services = api.getClustersResource().getServicesResource(name);
-        ConfigsResource configs = api.getClustersResource().getConfigsResource(name);
-        return new HadoopAmbariCluster(services, configs);
+        ClusterResource cluster = api.getClustersResource().getClusterResource(name);
+        return new HadoopAmbariCluster(cluster);
     }
 }

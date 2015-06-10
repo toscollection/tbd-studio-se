@@ -58,8 +58,8 @@ public class CheckedJobtrackerProvider extends AbstractCheckedServiceProvider {
             loader = HadoopClassLoaderFactory2.getHadoopCustomClassLoader(serviceProperties.getUid(),
                     serviceProperties.getCustomJars());
         } else {
-            loader = HadoopClassLoaderFactory2.getMRClassLoader(serviceProperties.getDistribution(),
-                    serviceProperties.getVersion(), serviceProperties.isUseKrb());
+            loader = HadoopClassLoaderFactory2.getMRClassLoader(serviceProperties.getRelativeHadoopClusterId(),
+                    serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb());
         }
 
         return loader;

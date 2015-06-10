@@ -27,6 +27,7 @@ public class HBaseClassLoaderFactory {
     public static ClassLoader getClassLoader(IMetadataConnection metadataConnection) {
         ClassLoader loader = null;
         if (metadataConnection != null) {
+            String clusterId = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
             String distribution = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION);
             if (EHBaseDistributions.CUSTOM.getName().equals(distribution)) {
                 return getCustomClassLoader(metadataConnection);
@@ -35,7 +36,7 @@ public class HBaseClassLoaderFactory {
             if (StringUtils.isNotEmpty(distribution) && StringUtils.isNotEmpty(version)) {
                 boolean useKrb = Boolean.valueOf((String) metadataConnection
                         .getParameter(ConnParameterKeys.CONN_PARA_KEY_USE_KRB));
-                loader = HadoopClassLoaderFactory2.getHBaseClassLoader(distribution, version, useKrb);
+                loader = HadoopClassLoaderFactory2.getHBaseClassLoader(clusterId, distribution, version, useKrb);
             }
         }
         if (loader == null) {

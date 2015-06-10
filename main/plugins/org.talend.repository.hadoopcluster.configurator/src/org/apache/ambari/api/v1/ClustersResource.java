@@ -39,12 +39,9 @@ public interface ClustersResource {
     public ApiClusterList readClusters();
 
     /**
-     * @return The services resource handler.
+     * @return The cluster resource handler.
      */
-    @Path("/{clusterName}/services")
-    public ServicesResource getServicesResource(@PathParam(CLUSTER_NAME) String clusterName);
-
-    @Path("/{clusterName}/configurations")
-    public ConfigsResource getConfigsResource(@PathParam(CLUSTER_NAME) String clusterName);
+    @Path("/{clusterName}")
+    public ClusterResource getClusterResource(@PathParam(CLUSTER_NAME) String clusterName);
 
 }

@@ -142,6 +142,14 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
                     ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
         } else if (EHDFSRepositoryToComponent.HADOOP_ADVANCED_PROPERTIES.getRepositoryValue().equals(value)) {
             return HadoopRepositoryUtil.getHadoopPropertiesFullList(hcConnection, hcConnection.getHadoopProperties(), true);
+        } else if (EHDFSRepositoryToComponent.RESOURCEMANAGER_SCHEDULER_ADDRESS.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getRmScheduler()));
+        } else if (EHDFSRepositoryToComponent.JOBHISTORY_ADDRESS.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobHistory()));
+        } else if (EHDFSRepositoryToComponent.STAGING_DIRECTORY.getRepositoryValue().equals(value)) {
+            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getStagingDirectory()));
+        } else if (EHDFSRepositoryToComponent.USE_DATANODE_HOSTNAME.getRepositoryValue().equals(value)) {
+            return hcConnection.isUseDNHost();
         }
 
         return null;

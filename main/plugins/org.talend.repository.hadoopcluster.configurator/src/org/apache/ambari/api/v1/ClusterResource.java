@@ -12,8 +12,6 @@
 // ============================================================================
 package org.apache.ambari.api.v1;
 
-import static org.apache.ambari.api.Parameters.*;
-
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -21,30 +19,27 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.apache.ambari.api.model.ApiConfigList;
-import org.apache.ambari.api.model.ApiConfigFileList2;
+import org.apache.ambari.api.model.ApiActualConfigsList;
 
 /**
- * created by bchen on Jun 3, 2015 Detailled comment
+ * created by bchen on Jun 10, 2015 Detailled comment
  *
  */
 @Produces({ MediaType.TEXT_PLAIN })
-public interface ConfigsResource {
+public interface ClusterResource {
 
     /**
-     * Lists all known services.
-     *
-     * @return List of known services.
+     * @return The services resource handler.
      */
-    @GET
-    @Path("/service_config_versions")
-    public ApiConfigList readConfig(@QueryParam(SERVICE_NAME) String serviceName,
-            @DefaultValue("true") @QueryParam("is_current") boolean isCurrent);
+    @Path("/services")
+    public ServicesResource getServicesResource();
+
+    @Path("/configurations")
+    public ConfigsResource getConfigsResource();
 
     @GET
-    @Path("/service_config_versions")
-    public String hasConfig();
+    @Path("/services")
+    public ApiActualConfigsList readActucalConfigs(
+            @DefaultValue("components/host_components/HostRoles/actual_configs") @QueryParam("fields") String param);
 
-    @GET
-    public ApiConfigFileList2 readConfig(@QueryParam("type") String configFileType, @QueryParam("tag") String version);
 }

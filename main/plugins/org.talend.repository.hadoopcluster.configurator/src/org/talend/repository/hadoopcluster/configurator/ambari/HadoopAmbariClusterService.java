@@ -24,8 +24,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.ambari.api.model.ApiConfigFile;
-import org.apache.ambari.api.model.ApiConfigFileList;
-import org.apache.ambari.api.v1.ConfigsResource;
 import org.apache.hadoop.conf.Configuration;
 import org.talend.repository.hadoopcluster.configurator.HadoopClusterService;
 
@@ -37,10 +35,6 @@ public class HadoopAmbariClusterService implements HadoopClusterService {
 
     private static final String SUPPORT_FILE = "site"; //$NON-NLS-1$
 
-    private String serviceName;
-
-    private ConfigsResource configs;
-
     private Map<String, Configuration> confs;// only contains *-site.xml
 
     private List<ApiConfigFile> configFiles;
@@ -48,29 +42,24 @@ public class HadoopAmbariClusterService implements HadoopClusterService {
     /**
      * DOC bchen HadoopAmbariClusterService constructor comment.
      */
-    public HadoopAmbariClusterService(String serviceName, ConfigsResource configs) {
-        this.serviceName = serviceName;
-        this.configs = configs;
+    public HadoopAmbariClusterService(List<ApiConfigFile> configFiles) {
+        this.configFiles = configFiles;
         init();
     }
 
     private void init() {
         confs = new HashMap<>();
-        List<ApiConfigFileList> serviceConfigList = configs.readConfig(serviceName, true).getConfigs();
-        for (ApiConfigFileList serviceConfig : serviceConfigList) {
-            configFiles = serviceConfig.getFiles();
-            for (ApiConfigFile file : configFiles) {
-                String type = file.getType();
-                if (!type.endsWith(SUPPORT_FILE)) {
-                    continue;
-                }
-                Configuration conf = new Configuration(false);
-                Map<String, String> properties = file.getProperties();
-                for (String key : properties.keySet()) {
-                    conf.set(key, properties.get(key));
-                }
-                confs.put(type, conf);
+        for (ApiConfigFile file : configFiles) {
+            String type = file.getType();
+            if (!type.endsWith(SUPPORT_FILE)) {
+                continue;
             }
+            Configuration conf = new Configuration(false);
+            Map<String, String> properties = file.getProperties();
+            for (String key : properties.keySet()) {
+                conf.set(key, properties.get(key));
+            }
+            confs.put(type, conf);
         }
     }
 
@@ -145,6 +134,7 @@ public class HadoopAmbariClusterService implements HadoopClusterService {
      * 
      * @see org.talend.repository.hadoopcluster.configurator.HadoopClusterService#getConfFiles()
      */
+    @Override
     public Set<String> getConfFiles() {
         Set<String> fileNames = new HashSet<>();
         for (ApiConfigFile file : configFiles) {

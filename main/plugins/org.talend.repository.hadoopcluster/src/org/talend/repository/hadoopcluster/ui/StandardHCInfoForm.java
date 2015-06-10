@@ -160,7 +160,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         stagingDirectoryText.setText(StringUtils.trimToEmpty(connection.getStagingDirectory()));
         useDNHostBtn.setSelection(connection.isUseDNHost());
         useCustomConfBtn.setSelection(connection.isUseCustomConfs());
-        hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
+        // hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
         namenodePrincipalText.setText(connection.getPrincipal());
         jtOrRmPrincipalText.setText(connection.getJtOrRmPrincipal());
         jobHistoryPrincipalText.setText(connection.getJobHistoryPrincipal());
@@ -504,18 +504,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         });
 
-        hadoopConfsButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                AbstractHadoopForm form = null;
-                if (parentForm instanceof AbstractHadoopForm) {
-                    form = (AbstractHadoopForm) parentForm;
-                }
-                HadoopConfsUtils.openHadoopConfsWizard(form, (HadoopClusterConnectionItem) connectionItem, creation);
-            }
-        });
-
         namenodePrincipalText.addModifyListener(new ModifyListener() {
 
             @Override
@@ -652,6 +640,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         properties.setKeytabPrincipal(connection.getKeytabPrincipal());
         properties.setKeytab(connection.getKeytab());
         properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties()));
+        properties.setRelativeHadoopClusterId(connectionItem.getProperty().getId());
     }
 
     @Override
@@ -897,6 +886,21 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     EHadoopProperties.JOBHISTORY_PRINCIPAL.getName());
             if (defaultJobHistoryPrincipal != null) {
                 jobHistoryPrincipalText.setText(defaultJobHistoryPrincipal);
+            }
+            String defaultRMS = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS.getName());
+            if (defaultRMS != null) {
+                rmSchedulerText.setText(defaultRMS);
+            }
+            String defaultJH = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.JOBHISTORY_ADDRESS.getName());
+            if (defaultJH != null) {
+                jobHistoryText.setText(defaultJH);
+            }
+            String defaultSD = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                    EHadoopProperties.STAGING_DIRECTORY.getName());
+            if (defaultSD != null) {
+                stagingDirectoryText.setText(defaultSD);
             }
         }
     }

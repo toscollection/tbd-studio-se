@@ -28,6 +28,8 @@ import org.talend.repository.hadoopcluster.ui.ICheckListener;
  */
 public abstract class AbstractHadoopImportConfsPage extends WizardPage implements IImportConfsWizardPage {
 
+    protected IRetrieveConfsService confsService;
+
     protected AbstractHadoopImportConfsPage(String pageName) {
         super(pageName);
     }
@@ -70,7 +72,7 @@ public abstract class AbstractHadoopImportConfsPage extends WizardPage implement
 
     @Override
     public IRetrieveConfsService getConfsService() {
-        return null;
+        return confsService;
     }
 
     @Override

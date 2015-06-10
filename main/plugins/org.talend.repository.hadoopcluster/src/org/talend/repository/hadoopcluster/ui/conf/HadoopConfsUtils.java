@@ -13,6 +13,8 @@
 package org.talend.repository.hadoopcluster.ui.conf;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.wizard.IWizard;
@@ -29,6 +31,10 @@ import org.talend.core.model.repository.ResourceModelUtils;
 import org.talend.designer.hdfsbrowse.manager.EHadoopConfProperties;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.conf.EHadoopConfs;
+import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
+import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
+import org.talend.repository.hadoopcluster.configurator.HadoopConfigurator;
+import org.talend.repository.hadoopcluster.configurator.HadoopConfiguratorBuilder;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -110,6 +116,24 @@ public class HadoopConfsUtils {
         return CONFS_JAR_PREFIX.concat(connLabel).concat(CONFS_JAR_EXT);
     }
 
+    public static HadoopConfigurationManager getConfigurationManager(String distribution) {
+        EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
+        if (EHadoopDistributions.HORTONWORKS.equals(dist)) {
+            return HadoopConfigurationManager.AMBARI;
+        } else if (EHadoopDistributions.CLOUDERA.equals(dist)) {
+            return HadoopConfigurationManager.CLOUDERA_MANAGER;
+        }
+        return null;
+    }
+
+    public static HadoopConfigurator getHadoopConfigurator(HadoopConfigurationManager configurationManager,
+            HadoopConfsConnection confsConnection) throws MalformedURLException {
+        HadoopConfigurator configurator = new HadoopConfiguratorBuilder().withVendor(configurationManager)
+                .withBaseURL(new URL(confsConnection.getConnURL()))
+                .withUsernamePassword(confsConnection.getUsername(), confsConnection.getPassword()).build();
+        return configurator;
+    }
+
     public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, String distribution, String version,
             IRetrieveConfsService confsService) throws Exception {
         HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
@@ -131,7 +155,7 @@ public class HadoopConfsUtils {
             rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RESOURCE_MANAGER.getName());
         } else {
             rmOrJt = confsService
-                    .getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.JOB_TRACKER_URI.getName());
+                    .getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOB_TRACKER_URI.getName());
         }
         if (rmOrJt != null) {
             connection.setJobTrackerURI(rmOrJt);
@@ -141,11 +165,11 @@ public class HadoopConfsUtils {
         if (rms != null) {
             connection.setRmScheduler(rms);
         }
-        String jh = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.JOBHISTORY.getName());
+        String jh = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOBHISTORY.getName());
         if (jh != null) {
             connection.setJobHistory(jh);
         }
-        String sd = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.STAGING_DIR.getName());
+        String sd = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.STAGING_DIR.getName());
         if (sd != null) {
             connection.setStagingDirectory(sd);
         }
@@ -162,13 +186,13 @@ public class HadoopConfsUtils {
             rmOrJtPrincipal = confsService
                     .getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RM_PRINCIPAL.getName());
         } else {
-            rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(),
+            rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
                     EHadoopConfProperties.JT_PRINCIPAL.getName());
         }
         if (rmOrJtPrincipal != null) {
             connection.setJtOrRmPrincipal(rmOrJtPrincipal);
         }
-        String jhp = confsService.getConfValue(EHadoopConfs.MAP_REDUCE.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
+        String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
         if (jhp != null) {
             connection.setJobHistoryPrincipal(jhp);
         }

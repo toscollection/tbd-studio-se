@@ -30,7 +30,9 @@ public enum HadoopHostedService {
     SQOOP, // AMBARI
     STORM, // AMBARI
     TEZ, // AMBARI
-    ZOOKEEPER;// AMBARI
+    ZOOKEEPER, // AMBARI
+    WEBHCAT, // AMBARI
+    ;
 
     private static String SUPPORTED_SERVICES = Joiner.on(", ").join(values()).toLowerCase();
 

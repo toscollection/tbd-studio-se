@@ -20,17 +20,29 @@ public enum EHadoopConfs {
 
     HDFS("HDFS", new String[] { "core-site.xml", "hdfs-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    MAP_REDUCE("MapReduce", new String[] { "core-site.xml", "mapred-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    MAPREDUCE2("MAPREDUCE2", new String[] { "core-site.xml", "mapred-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    YARN("Yarn", new String[] { "core-site.xml", "yarn-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    YARN("YARN", new String[] { "core-site.xml", "yarn-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    HCATALOG("HCatalog", new String[] { "webhcat-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ 
+    HCATALOG("HCATALOG", new String[] { "webhcat-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ 
 
-    HIVE("Hive", new String[] { "mapred-site.xml", "hive-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    HIVE("HIVE", new String[] { "mapred-site.xml", "hive-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    HBASE("HBase", new String[] { "hdfs-site.xml", "hbase-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    HBASE("HBASE", new String[] { "hdfs-site.xml", "hbase-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
-    OOZIE("Oozie", new String[] { "oozie-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ 
+    OOZIE("OOZIE", new String[] { "oozie-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$ 
+
+    SPARK("SPARK", new String[0]), //$NON-NLS-1$
+
+    PIG("PIG", new String[0]), //$NON-NLS-1$
+
+    SQOOP("SQOOP", new String[] { "sqoop-site.xml" }), //$NON-NLS-1$ //$NON-NLS-2$
+
+    STORM("STORM", new String[0]), //$NON-NLS-1$
+
+    TEZ("TEZ", new String[0]), //$NON-NLS-1$
+
+    ZOOKEEPER("ZOOKEEPER", new String[0]), //$NON-NLS-1$
 
     ;
 
