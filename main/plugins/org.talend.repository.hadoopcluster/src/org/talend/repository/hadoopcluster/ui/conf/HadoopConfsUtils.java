@@ -197,10 +197,16 @@ public class HadoopConfsUtils {
             connection.setRmScheduler(rms);
         }
         String jh = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOBHISTORY.getName());
+        if (StringUtils.isEmpty(jh)) {
+            jh = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.JOBHISTORY.getName());
+        }
         if (StringUtils.isNotEmpty(jh)) {
             connection.setJobHistory(jh);
         }
         String sd = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.STAGING_DIR.getName());
+        if (StringUtils.isEmpty(sd)) {
+            sd = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.STAGING_DIR.getName());
+        }
         if (StringUtils.isNotEmpty(sd)) {
             connection.setStagingDirectory(sd);
         }

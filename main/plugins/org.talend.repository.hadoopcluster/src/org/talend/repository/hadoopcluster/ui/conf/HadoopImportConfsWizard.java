@@ -78,8 +78,8 @@ public class HadoopImportConfsWizard extends Wizard {
                                 monitor.beginTask(
                                         Messages.getString("HadoopImportConfsWizard.doingImport"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
                                 try {
-                                    // HadoopConfsUtils.buildAndDeployConfsJar(confsDir,
-                                    // HadoopConfsUtils.getConfsJarDefaultName(connectionItem));
+                                    HadoopConfsUtils.buildAndDeployConfsJar(confsDir,
+                                            HadoopConfsUtils.getConfsJarDefaultName(connectionItem));
                                     if (creation) {
                                         getShell().getDisplay().asyncExec(new Runnable() {
 
