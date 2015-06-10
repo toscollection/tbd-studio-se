@@ -13,13 +13,10 @@
 package org.talend.repository.hadoopcluster.ui.conf;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.commons.ui.swt.formtools.LabelledText;
-import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 
@@ -36,14 +33,15 @@ public class ABRConnectionForm extends AbstractConnectionForm {
     @Override
     protected void createControl() {
         Composite connectionGroup = createParentGroup(
-                Messages.getString("HadoopImportRemoteOptionPage.group.connection.abr"), this, 2); //$NON-NLS-1$
-        connURLText = new LabelledText(connectionGroup, Messages.getString("HadoopImportRemoteOptionPage.text.connURL.abr"), 1); //$NON-NLS-1$
-        usernameText = new LabelledText(connectionGroup, Messages.getString("HadoopImportRemoteOptionPage.text.username"), 1); //$NON-NLS-1$
-        passwordText = new LabelledText(connectionGroup, Messages.getString("HadoopImportRemoteOptionPage.text.password"), 1); //$NON-NLS-1$
+                Messages.getString("HadoopImportRemoteOptionPage.group.connection.abr"), this, 3); //$NON-NLS-1$
+        connURLText = new LabelledText(connectionGroup, Messages.getString("HadoopImportRemoteOptionPage.text.connURL.abr"), 2); //$NON-NLS-1$
+        usernameText = new LabelledText(connectionGroup, Messages.getString("HadoopImportRemoteOptionPage.text.username"), 2); //$NON-NLS-1$
+        passwordText = new LabelledText(connectionGroup, Messages.getString("HadoopImportRemoteOptionPage.text.password"), 2); //$NON-NLS-1$
         passwordText.getTextControl().setEchoChar('*');
+        createAuthenticationFields(connectionGroup);
         connButton = new Button(connectionGroup, SWT.PUSH);
         GridData connBtnGD = new GridData(SWT.END, SWT.CENTER, false, false);
-        connBtnGD.horizontalSpan = 2;
+        connBtnGD.horizontalSpan = 3;
         connButton.setLayoutData(connBtnGD);
         connButton.setText(Messages.getString("HadoopImportRemoteOptionPage.button.connect")); //$NON-NLS-1$
     }
@@ -56,28 +54,8 @@ public class ABRConnectionForm extends AbstractConnectionForm {
     }
 
     @Override
-    protected void addListener() {
-        connButton.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                checkConnection();
-            }
-        });
-    }
-
-    @Override
     protected HadoopConfigurationManager getHadoopConfigurationManager() {
         return HadoopConfigurationManager.AMBARI;
-    }
-
-    @Override
-    protected HadoopConfsConnection getHadoopConfsConnection() {
-        HadoopConfsConnection confsConnection = new HadoopConfsConnection();
-        confsConnection.setConnURL(getConnURL());
-        confsConnection.setUsername(getUsername());
-        confsConnection.setPassword(getPassword());
-        return confsConnection;
     }
 
 }
