@@ -3,6 +3,10 @@
     org.talend.core.model.process.INode 
     org.talend.core.model.process.ElementParameterParser 
     org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.HashMap
+    java.util.Map.Entry
 " 
 %>
 
@@ -16,6 +20,38 @@ String cid = node.getUniqueName();
 TKafkaCreateTopicUtil tKafkaCreateTopicUtil = new TKafkaCreateTopicUtil(node);
 %>
 
+// Topic configuration
+java.util.Properties <%=cid%>_topicProperties = new java.util.Properties();
+<%
+	if(tKafkaCreateTopicUtil.isRetentionSet()) {
+%>
+<%=cid%>_topicProperties.put("retention.ms", "<%=tKafkaCreateTopicUtil.getRetention()%>");
+<%
+	}
+%>
+<%
+	for(Entry<String, String> topicProperty : tKafkaCreateTopicUtil.getKafkaTopicProperties().entrySet()) {
+%>
+<%=cid%>_topicProperties.put(<%=topicProperty.getKey()%>, <%=topicProperty.getValue()%>);
+<%
+	}
+%>
+	
 org.I0Itec.zkclient.ZkClient <%=cid%>_zkClient = new org.I0Itec.zkclient.ZkClient(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, 10000, 10000, kafka.utils.ZKStringSerializer$.MODULE$);
-kafka.admin.AdminUtils.createTopic(<%=cid%>_zkClient, <%=tKafkaCreateTopicUtil.getTopic()%>, Integer.valueOf(<%=tKafkaCreateTopicUtil.getNbPartitions()%>), Integer.valueOf(<%=tKafkaCreateTopicUtil.getReplicationFactor()%>), new java.util.Properties());
 
+try{
+	kafka.admin.AdminUtils.createTopic(<%=cid%>_zkClient, <%=tKafkaCreateTopicUtil.getTopic()%>, Integer.valueOf(<%=tKafkaCreateTopicUtil.getNbPartitions()%>), Integer.valueOf(<%=tKafkaCreateTopicUtil.getReplicationFactor()%>), <%=cid%>_topicProperties);
+} catch (kafka.common.TopicExistsException e) {
+<% 
+	if (tKafkaCreateTopicUtil.isCreateIfNotExist()) {
+%>
+	// nothing to do even through the topic already exists, continue the job
+<% 
+	} else {
+%>
+	// topic already exists, stop the job
+	throw e;
+<%
+	}
+%>
+}
