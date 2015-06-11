@@ -153,3 +153,4 @@ Export-Package: org.apache.commons.lang,
  org.apache.zookeeper.version,
  org.apache.zookeeper.version.util
 Require-Bundle: org.talend.libraries.apache
+Eclipse-BundleShape: dir

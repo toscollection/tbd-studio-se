@@ -214,24 +214,28 @@ public class HadoopConfsUtils {
         if (StringUtils.isNotEmpty(at)) {
             connection.setEnableKerberos("kerberos".equals(at)); //$NON-NLS-1$
         }
-        String nnp = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.KERBEROS_PRINCIPAL.getName());
-        if (StringUtils.isNotEmpty(nnp)) {
-            connection.setPrincipal(nnp);
-        }
-        String rmOrJtPrincipal = null;
-        if (supportYARN) {
-            rmOrJtPrincipal = confsService
-                    .getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RM_PRINCIPAL.getName());
-        } else {
-            rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
-                    EHadoopConfProperties.JT_PRINCIPAL.getName());
-        }
-        if (rmOrJtPrincipal != null) {
-            connection.setJtOrRmPrincipal(rmOrJtPrincipal);
-        }
-        String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
-        if (StringUtils.isNotEmpty(jhp)) {
-            connection.setJobHistoryPrincipal(jhp);
+        if (connection.isEnableKerberos()) {
+            String nnp = confsService.getConfValue(EHadoopConfs.HDFS.getName(),
+                    EHadoopConfProperties.KERBEROS_PRINCIPAL.getName());
+            if (StringUtils.isNotEmpty(nnp)) {
+                connection.setPrincipal(nnp);
+            }
+            String rmOrJtPrincipal = null;
+            if (supportYARN) {
+                rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.YARN.getName(),
+                        EHadoopConfProperties.RM_PRINCIPAL.getName());
+            } else {
+                rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
+                        EHadoopConfProperties.JT_PRINCIPAL.getName());
+            }
+            if (rmOrJtPrincipal != null) {
+                connection.setJtOrRmPrincipal(rmOrJtPrincipal);
+            }
+            String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
+                    EHadoopConfProperties.JH_PRINCIPAL.getName());
+            if (StringUtils.isNotEmpty(jhp)) {
+                connection.setJobHistoryPrincipal(jhp);
+            }
         }
     }
 }
