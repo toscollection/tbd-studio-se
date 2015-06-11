@@ -177,6 +177,7 @@ imports="
 				if ("true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"))) {
 				    %>
 	                init_<%=cid%>.execute("SET dfs.client.use.datanode.hostname=true");
+	                init_<%=cid%>.execute("SET dfs.datanode.use.datanode.hostname=true");
 	                <%
 				}
 
