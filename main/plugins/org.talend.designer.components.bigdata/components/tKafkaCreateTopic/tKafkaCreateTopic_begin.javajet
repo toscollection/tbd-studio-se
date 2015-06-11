@@ -1,0 +1,21 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+" 
+%>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaCreateTopic/tKafkaCreateTopic_util.javajet"%>
+
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+TKafkaCreateTopicUtil tKafkaCreateTopicUtil = new TKafkaCreateTopicUtil(node);
+%>
+
+org.I0Itec.zkclient.ZkClient <%=cid%>_zkClient = new org.I0Itec.zkclient.ZkClient(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, 10000, 10000, kafka.utils.ZKStringSerializer$.MODULE$);
+kafka.admin.AdminUtils.createTopic(<%=cid%>_zkClient, <%=tKafkaCreateTopicUtil.getTopic()%>, Integer.valueOf(<%=tKafkaCreateTopicUtil.getNbPartitions()%>), Integer.valueOf(<%=tKafkaCreateTopicUtil.getReplicationFactor()%>), new java.util.Properties());
+
