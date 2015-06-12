@@ -65,8 +65,8 @@ public class HadoopImportConfsWizard extends Wizard {
         IImportConfsWizardPage currentPage = getCurrentConfPage();
         if (currentPage != null) {
             final IRetrieveConfsService confsService = currentPage.getConfsService();
-            if (confsService != null) {
-                try {
+            try {
+                if (confsService != null) {
                     final String confsDir = confsService.exportConfs(currentPage.getSelectedServices());
                     if (confsDir != null) {
 
@@ -80,23 +80,6 @@ public class HadoopImportConfsWizard extends Wizard {
                                 try {
                                     HadoopConfsUtils.buildAndDeployConfsJar(confsDir,
                                             HadoopConfsUtils.getConfsJarDefaultName(connectionItem));
-                                    if (creation) {
-                                        getShell().getDisplay().asyncExec(new Runnable() {
-
-                                            @Override
-                                            public void run() {
-                                                try {
-                                                    HadoopConfsUtils.setConnectionParameters(connectionItem,
-                                                            optionPage.getDistribution(), optionPage.getVersion(), confsService);
-                                                    if (parentForm != null) {
-                                                        parentForm.reload();
-                                                    }
-                                                } catch (Exception e) {
-                                                    ExceptionHandler.process(e);
-                                                }
-                                            }
-                                        });
-                                    }
                                 } catch (Exception e) {
                                     throw new InvocationTargetException(e);
                                 } finally {
@@ -105,9 +88,16 @@ public class HadoopImportConfsWizard extends Wizard {
                             }
                         });
                     }
-                } catch (Exception e) {
-                    ExceptionHandler.process(e);
                 }
+                if (creation) {
+                    HadoopConfsUtils.setConnectionParameters(connectionItem, optionPage.getDistribution(),
+                            optionPage.getVersion(), confsService);
+                    if (parentForm != null) {
+                        parentForm.reload();
+                    }
+                }
+            } catch (Exception e) {
+                ExceptionHandler.process(e);
             }
         }
         return true;

@@ -149,6 +149,9 @@ public class HadoopConfsUtils {
         boolean supportYARN = ver.isSupportYARN();
         connection.setDistribution(dist.getName());
         connection.setDfVersion(ver.getVersionValue());
+        if (confsService == null) {
+            return;
+        }
         String namenodeURI = null;
         String ns = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.DFS_NAMESERVICES.getName());
         if (StringUtils.isNotEmpty(ns)) {
