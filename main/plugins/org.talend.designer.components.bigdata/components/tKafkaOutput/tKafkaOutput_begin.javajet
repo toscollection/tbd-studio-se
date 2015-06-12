@@ -1,0 +1,50 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.IConnectionCategory
+    org.talend.core.model.metadata.IMetadataTable 
+    org.talend.core.model.metadata.IMetadataColumn 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.Map.Entry
+    java.util.HashMap
+    "
+%>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaOutput/tKafkaOutput_util.javajet"%>
+
+<%
+// Parse the inputs to this javajet generator.
+final CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+final INode node = (INode)codeGenArgument.getArgument();
+final String cid = node.getUniqueName();
+
+TKafkaOutputUtil tKafkaOutputUtil = new TKafkaOutputUtil(node);
+%>
+
+// Producer configuration
+java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
+<%
+	if(tKafkaOutputUtil.getBrokerList() == null || "".equals(tKafkaOutputUtil.getBrokerList())){
+%>
+	if(true){
+		throw new Exception("A broker list must be provided.");
+	}
+<% 
+	} else {
+%>
+	<%=cid%>_kafkaProperties.setProperty("bootstrap.servers", <%=tKafkaOutputUtil.getBrokerList()%>);
+	<%=cid%>_kafkaProperties.setProperty("compression.type", "<%=tKafkaOutputUtil.getCompression()%>");
+<%
+		for(Entry<String, String> kafkaProperty : tKafkaOutputUtil.getKafkaProducerProperties().entrySet()) {
+%>
+	<%=cid%>_kafkaProperties.setProperty(<%=kafkaProperty.getKey()%>, <%=kafkaProperty.getValue()%>);
+<%
+		} // end for
+	} // end else
+%>
+
+org.apache.kafka.clients.producer.KafkaProducer<byte[], byte[]> <%=cid%>_kafkaProducer = new org.apache.kafka.clients.producer.KafkaProducer<byte[], byte[]>(<%=cid%>_kafkaProperties, new org.apache.kafka.common.serialization.ByteArraySerializer(), new org.apache.kafka.common.serialization.ByteArraySerializer());
