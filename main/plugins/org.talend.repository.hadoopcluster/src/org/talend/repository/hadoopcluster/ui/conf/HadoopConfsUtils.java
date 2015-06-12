@@ -113,8 +113,9 @@ public class HadoopConfsUtils {
     }
 
     public static String getConfsJarDefaultName(HadoopClusterConnectionItem connectionItem) {
-        String connLabel = connectionItem.getProperty().getLabel();
-        return CONFS_JAR_PREFIX.concat(connLabel).concat(CONFS_JAR_EXT);
+        // String connLabel = connectionItem.getProperty().getLabel();
+        String itemId = connectionItem.getProperty().getId();
+        return CONFS_JAR_PREFIX.concat(itemId).concat(CONFS_JAR_EXT);
     }
 
     public static HadoopConfigurationManager getConfigurationManager(String distribution) {
@@ -149,6 +150,9 @@ public class HadoopConfsUtils {
         boolean supportYARN = ver.isSupportYARN();
         connection.setDistribution(dist.getName());
         connection.setDfVersion(ver.getVersionValue());
+        if (confsService == null) {
+            return;
+        }
         String namenodeURI = null;
         String ns = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.DFS_NAMESERVICES.getName());
         if (StringUtils.isNotEmpty(ns)) {
@@ -214,24 +218,28 @@ public class HadoopConfsUtils {
         if (StringUtils.isNotEmpty(at)) {
             connection.setEnableKerberos("kerberos".equals(at)); //$NON-NLS-1$
         }
-        String nnp = confsService.getConfValue(EHadoopConfs.HDFS.getName(), EHadoopConfProperties.KERBEROS_PRINCIPAL.getName());
-        if (StringUtils.isNotEmpty(nnp)) {
-            connection.setPrincipal(nnp);
-        }
-        String rmOrJtPrincipal = null;
-        if (supportYARN) {
-            rmOrJtPrincipal = confsService
-                    .getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RM_PRINCIPAL.getName());
-        } else {
-            rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
-                    EHadoopConfProperties.JT_PRINCIPAL.getName());
-        }
-        if (rmOrJtPrincipal != null) {
-            connection.setJtOrRmPrincipal(rmOrJtPrincipal);
-        }
-        String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
-        if (StringUtils.isNotEmpty(jhp)) {
-            connection.setJobHistoryPrincipal(jhp);
+        if (connection.isEnableKerberos()) {
+            String nnp = confsService.getConfValue(EHadoopConfs.HDFS.getName(),
+                    EHadoopConfProperties.KERBEROS_PRINCIPAL.getName());
+            if (StringUtils.isNotEmpty(nnp)) {
+                connection.setPrincipal(nnp);
+            }
+            String rmOrJtPrincipal = null;
+            if (supportYARN) {
+                rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.YARN.getName(),
+                        EHadoopConfProperties.RM_PRINCIPAL.getName());
+            } else {
+                rmOrJtPrincipal = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
+                        EHadoopConfProperties.JT_PRINCIPAL.getName());
+            }
+            if (rmOrJtPrincipal != null) {
+                connection.setJtOrRmPrincipal(rmOrJtPrincipal);
+            }
+            String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
+                    EHadoopConfProperties.JH_PRINCIPAL.getName());
+            if (StringUtils.isNotEmpty(jhp)) {
+                connection.setJobHistoryPrincipal(jhp);
+            }
         }
     }
 }

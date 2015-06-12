@@ -1,0 +1,145 @@
+<COMPONENT>
+	<HEADER PLATEFORM="ALL" SERIAL="" VERSION="0.101" STATUS="ALPHA"
+		COMPATIBILITY="ALL" AUTHOR="Talend" RELEASE_DATE="20070210A"
+		STARTABLE="true">
+		<SIGNATURE />
+	</HEADER>
+
+	<FAMILIES>
+		<FAMILY>Internet/Kafka</FAMILY>
+	</FAMILIES>
+
+	<DOCUMENTATION>
+		<URL />
+	</DOCUMENTATION>
+
+	<CONNECTORS>
+		<CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="0" />
+		<CONNECTOR NAME="PARTITION" CTYPE="FLOW" MAX_INPUT="0"
+			MAX_OUTPUT="0" />
+		<CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0" />
+		<CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
+		<CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
+		<CONNECTOR CTYPE="COMPONENT_OK" />
+		<CONNECTOR CTYPE="COMPONENT_ERROR" />
+		<CONNECTOR CTYPE="RUN_IF" />
+	</CONNECTORS>
+
+	<PARAMETERS>
+		<!-- PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" SHOW="true" NUM_ROW="1"/ -->
+
+		<PARAMETER NAME="KAFKA_VERSION" FIELD="CLOSED_LIST" NUM_ROW="15"
+			REQUIRED="true" GROUP="KAFKA_GROUP">
+			<ITEMS DEFAULT="KAFKA_0_8_2_0">
+				<ITEM NAME="KAFKA_0_8_2_0" VALUE="KAFKA_0_8_2_0" />
+			</ITEMS>
+		</PARAMETER>
+
+		<PARAMETER NAME="ZOOKEEPER_CONNECT" FIELD="TEXT" NUM_ROW="20"
+			REQUIRED="true" GROUP="KAFKA_GROUP">
+			<DEFAULT>"zk1:port1,zk2:port2,..."</DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER NAME="TOPICACTION" FIELD="CLOSED_LIST" NUM_ROW="25"
+            GROUP="KAFKA_GROUP">
+            <ITEMS DEFAULT="CREATE_TOPIC">
+                <ITEM NAME="CREATE_TOPIC" VALUE="CREATE_TOPIC" />
+                <ITEM NAME="CREATE_IF_NOT_EXIST" VALUE="CREATE_IF_NOT_EXIST" />
+            </ITEMS>
+        </PARAMETER>
+
+		<PARAMETER NAME="KAFKA_TOPIC" FIELD="TEXT" REQUIRED="true"
+			NUM_ROW="30" GROUP="KAFKA_GROUP">
+			<DEFAULT>"mytopic"</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="KAFKA_REPLICATION" FIELD="TEXT" REQUIRED="true"
+			NUM_ROW="31" GROUP="KAFKA_GROUP">
+			<DEFAULT>1</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="KAFKA_PARTITION" FIELD="TEXT" REQUIRED="true"
+			NUM_ROW="32" GROUP="KAFKA_GROUP">
+			<DEFAULT>1</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="KAFKA_RETENTION_CHECK" FIELD="CHECK"
+			REQUIRED="false" NUM_ROW="33" GROUP="KAFKA_GROUP">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="KAFKA_RETENTION" FIELD="TEXT"
+			REQUIRED_IF="(KAFKA_RETENTION_CHECK == 'true')" NUM_ROW="33" GROUP="KAFKA_GROUP"
+			SHOW_IF="(KAFKA_RETENTION_CHECK == 'true')">
+			<DEFAULT>604800000</DEFAULT>
+		</PARAMETER>
+
+	</PARAMETERS>
+
+	<ADVANCED_PARAMETERS>
+		<PARAMETER NAME="KAFKA_TOPIC_PROPERTIES" FIELD="TABLE"
+			REQUIRED="false" NUM_ROW="40" NB_LINES="3">
+			<ITEMS>
+				<ITEM NAME="PROPERTY" />
+				<ITEM NAME="VALUE" />
+			</ITEMS>
+		</PARAMETER>
+	</ADVANCED_PARAMETERS>
+
+	<CODEGENERATION>
+		<IMPORTS>
+			<!-- Kafka_2.10-0.8.2.0 -->
+			<IMPORT NAME="kafka_2.10-0.8.2.0.jar" MODULE="kafka_2.10-0.8.2.0.jar"
+				MVN="mvn:org.talend.libraries/kafka_2.10-0.8.2.0/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/kafka_2.10-0.8.2.0.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="scala-library-2.10.4.jar" MODULE="scala-library-2.10.4.jar"
+				MVN="mvn:org.talend.libraries/scala-library-2.10.4/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/scala-library-2.10.4.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="jopt-simple-3.2.jar" MODULE="jopt-simple-3.2.jar"
+				MVN="mvn:org.talend.libraries/jopt-simple-3.2/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/jopt-simple-3.2.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="kafka-clients-0.8.2.0.jar" MODULE="kafka-clients-0.8.2.0.jar"
+				MVN="mvn:org.talend.libraries/kafka-clients-0.8.2.0/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/kafka-clients-0.8.2.0.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="lz4-1.2.0.jar" MODULE="lz4-1.2.0.jar"
+				MVN="mvn:org.talend.libraries/lz4-1.2.0/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/lz4-1.2.0.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="metrics-core-2.2.0.jar" MODULE="metrics-core-2.2.0.jar"
+				MVN="mvn:org.talend.libraries/metrics-core-2.2.0/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/metrics-core-2.2.0.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="snappy-java-1.1.1.6.jar" MODULE="snappy-java-1.1.1.6.jar"
+				MVN="mvn:org.talend.libraries/snappy-java-1.1.1.6/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/snappy-java-1.1.1.6.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="zkclient-0.3.jar" MODULE="zkclient-0.3.jar"
+				MVN="mvn:org.talend.libraries/zkclient-0.3/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/zkclient-0.3.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="zookeeper-3.4.6.jar" MODULE="zookeeper-3.4.6.jar"
+				MVN="mvn:org.talend.libraries/zookeeper-3.4.6/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/zookeeper-3.4.6.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar"
+				MVN="mvn:org.talend.libraries/log4j-1.2.16/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/log4j-1.2.16.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="slf4j-api-1.7.6.jar" MODULE="slf4j-api-1.7.6.jar"
+				MVN="mvn:org.talend.libraries/slf4j-api-1.7.6/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-api-1.7.6.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar"
+				MVN="mvn:org.talend.libraries/slf4j-log4j12-1.6.1/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-log4j12-1.6.1.jar"
+				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+		</IMPORTS>
+	</CODEGENERATION>
+
+	<RETURNS />
+
+</COMPONENT>

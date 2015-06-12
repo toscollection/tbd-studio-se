@@ -1,0 +1,101 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode 
+    org.talend.core.model.process.ElementParameterParser 
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.IConnectionCategory
+    org.talend.core.model.metadata.IMetadataTable 
+    org.talend.core.model.metadata.IMetadataColumn 
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.HashMap
+" 
+%>
+
+<%
+class TKafkaInputUtil {
+	
+	private INode node;
+	
+	private IConnection outgoingConnection;
+	
+	private Map<String, String> kafkaConsumerProperties;
+	
+	public TKafkaInputUtil(INode node) {
+		this.node = node;
+		this.outgoingConnection = findOutgoingConnection();
+		this.kafkaConsumerProperties = findKafkaConsumerProperties();
+	}
+	
+	public String getTopic() {
+		return ElementParameterParser.getValue(node, "__KAFKA_TOPIC__");
+	}
+	
+	public String getEncoding() {
+		String encoding = ElementParameterParser.getValue(node, "__ENCODING__");
+		if (encoding == null || "".equals(encoding)) {
+		    encoding = "\"UTF-8\"";
+		}
+		return encoding;
+   }
+	
+	public Map<String, String> getKafkaConsumerProperties() {
+		return this.kafkaConsumerProperties;
+	}
+	
+	public String getZookeeperConnect() {
+		return ElementParameterParser.getValue(node, "__ZOOKEEPER_CONNECT__");
+	}
+	
+	public String getGroupId() {
+		return ElementParameterParser.getValue(node, "__GROUP_ID__");
+	}
+	
+	public String getCommitInterval() {
+		return ElementParameterParser.getValue(node, "__KAFKA_COMMIT_INTERVAL__");
+	}
+	
+	public String getConsumerTimeout() {
+		return ElementParameterParser.getValue(node, "__KAFKA_CONSUMER_TIMEOUT__");
+	}
+	
+	public String getAutoOffsetReset() {
+		return ElementParameterParser.getValue(node, "__AUTO_OFFSET_RESET__").toLowerCase();
+   }
+	
+	public String getOutStructName() {
+		return this.outgoingConnection.getName() + "Struct";
+	}
+	
+	public String getOutgoingConnectionName() {
+		return this.outgoingConnection.getName();
+	}
+	
+	public String getOutgoingColumnName() {
+		return this.outgoingConnection.getMetadataTable().getListColumns().get(0).getLabel();
+	}
+	
+	private Map<String, String> findKafkaConsumerProperties() {
+		Map<String, String> result = new HashMap<String, String>();
+		List<Map<String, String>> consumerPropertiesFromStudio = (List<Map<String, String>>) ElementParameterParser
+		        .getObjectValue(node, "__KAFKA_CONSUMER_PROPERTIES__");
+		for (Map<String, String> consumerPropertyFromStudio : consumerPropertiesFromStudio) {
+		    result.put(consumerPropertyFromStudio.get("PROPERTY"), consumerPropertyFromStudio.get("VALUE"));
+		}
+		return result;
+   }
+	
+	private IConnection findOutgoingConnection() {
+		IConnection result = null;
+		List<? extends IConnection> connections = node.getOutgoingConnections();
+		for(IConnection connection : connections) {
+			if(connection.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				result = connection;
+				break;
+			}
+		}
+		return result;
+	}
+}
+%>

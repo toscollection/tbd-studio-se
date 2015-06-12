@@ -24,6 +24,13 @@
 		globalMap.put("connection_" + "<%=cid%>", myAzureStorageAccount_<%=cid%>);
 		globalMap.put("<%=cid%>_ACCOUNT_NAME", <%=accountName%>);
 		globalMap.put("<%=cid%>_ACCOUNT_KEY", <%=accountSecret%>);
+<%
+	if(isLog4jEnabled) {
+%>
+		log.info("<%=cid%> - Success to create cloud storage account object.");
+<%
+	}
+%>
 	} catch (java.lang.Exception e_<%=cid%>) {
 <%
 		if(dieOnError) {
@@ -31,16 +38,14 @@
 			throw e_<%=cid%>;
 <%
 		} else {
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+<%
+			}
 %>
 			System.err.println(e_<%=cid%>.getMessage());
 <%
 		}
 %>
 	}
-<%
-	if(isLog4jEnabled) {
-%>
-		//LOGGING
-<%
-	}
-%>

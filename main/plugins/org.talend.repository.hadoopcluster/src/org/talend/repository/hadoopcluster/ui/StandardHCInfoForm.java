@@ -160,7 +160,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         stagingDirectoryText.setText(StringUtils.trimToEmpty(connection.getStagingDirectory()));
         useDNHostBtn.setSelection(connection.isUseDNHost());
         useCustomConfBtn.setSelection(connection.isUseCustomConfs());
-        // hadoopConfsButton.setEnabled(useCustomConfBtn.getSelection());
+        kerberosBtn.setSelection(connection.isEnableKerberos());
         namenodePrincipalText.setText(connection.getPrincipal());
         jtOrRmPrincipalText.setText(connection.getJtOrRmPrincipal());
         jobHistoryPrincipalText.setText(connection.getJobHistoryPrincipal());

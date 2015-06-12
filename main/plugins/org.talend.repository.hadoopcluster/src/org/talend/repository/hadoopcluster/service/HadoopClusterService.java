@@ -262,6 +262,15 @@ public class HadoopClusterService implements IHadoopClusterService {
     }
 
     @Override
+    public Item getHadoopClusterItemById(String id) {
+        HadoopClusterConnectionItem connectionItem = HCRepositoryUtil.getRelativeHadoopClusterItem(id);
+        if (connectionItem == null) { // In case it is a hadoopsubconnection.
+            connectionItem = HCRepositoryUtil.getHadoopClusterItemBySubitemId(id);
+        }
+        return connectionItem;
+    }
+
+    @Override
     public String getCustomConfsJarName(String clusterId) {
         HadoopClusterConnectionItem connectionItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
         if (connectionItem != null) {
@@ -275,11 +284,9 @@ public class HadoopClusterService implements IHadoopClusterService {
 
     @Override
     public void useCustomConfsJarIfNeeded(List<ModuleNeeded> modulesNeeded, String clusterId) {
-        HadoopClusterConnectionItem connectionItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
-        if (connectionItem == null) { // In case it is a hadoopsubconnection.
-            connectionItem = HCRepositoryUtil.getHadoopClusterItemBySubitemId(clusterId);
-        }
-        if (connectionItem != null) {
+        Item item = getHadoopClusterItemById(clusterId);
+        if (item instanceof HadoopClusterConnectionItem) {
+            HadoopClusterConnectionItem connectionItem = (HadoopClusterConnectionItem) item;
             HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
             if (connection.isUseCustomConfs()) {
                 String customConfsJarName = HadoopConfsUtils.getConfsJarDefaultName(connectionItem);

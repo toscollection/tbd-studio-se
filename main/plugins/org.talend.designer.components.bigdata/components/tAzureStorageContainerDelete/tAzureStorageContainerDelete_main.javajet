@@ -26,17 +26,33 @@
 %>
 		com.microsoft.windowsazure.services.core.storage.CloudStorageAccount azureStorageAccount_<%=cid%> = (com.microsoft.windowsazure.services.core.storage.CloudStorageAccount)globalMap.get("connection_" + "<%=azure_connection%>");
 <%
+		if(isLog4jEnabled) {
+%>
+		log.info("<%=cid%> - get existed cloud storage account object from <%=azure_connection%>.");
+<%
+		}
 	}else{
 %>
 		String myAzureStorageConn_<%=cid%> = "DefaultEndpointsProtocol=<%=protocol.toLowerCase()%>;" + "AccountName=" + <%=accountName%> + ";" + "AccountKey=" + <%=accountSecret%>;
 		com.microsoft.windowsazure.services.core.storage.CloudStorageAccount azureStorageAccount_<%=cid%> = com.microsoft.windowsazure.services.core.storage.CloudStorageAccount.parse(myAzureStorageConn_<%=cid%>);
-<%		
+<%
+		if(isLog4jEnabled) {
+%>
+		log.info("<%=cid%> - Success to create cloud storage account object.");
+<%
+		}
 	}
 %>
 	com.microsoft.windowsazure.services.blob.client.CloudBlobClient blobClient = azureStorageAccount_<%=cid%>.createCloudBlobClient();
 	com.microsoft.windowsazure.services.blob.client.CloudBlobContainer blobContainer = blobClient.getContainerReference(<%=containerName%>);
 	blobContainer.delete();
-		
+<%
+	if(isLog4jEnabled) {
+%>
+		log.info("<%=cid%> - Success to delete container.");
+<%
+	}
+%>
 	}catch(com.microsoft.windowsazure.services.core.storage.StorageException e_<%=cid%>) {
 <%
 		if (("true").equals(dieOnError)) {
@@ -44,6 +60,11 @@
 		throw(e_<%=cid%>);
 <%
 		} else {
+			if(isLog4jEnabled) {
+%>
+			log.error("<%=cid%> - " + e_<%=cid%>.getMessage());
+<%
+			}
 %>
 		System.err.println("Exception in component <%=cid%>:");
 		System.err.println(e_<%=cid%>.getMessage());

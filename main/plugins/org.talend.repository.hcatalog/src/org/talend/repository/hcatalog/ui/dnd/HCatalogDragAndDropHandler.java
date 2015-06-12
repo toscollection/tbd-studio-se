@@ -25,7 +25,6 @@ import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.utils.AbstractDragAndDropServiceHandler;
 import org.talend.core.model.utils.IComponentName;
 import org.talend.core.repository.RepositoryComponentSetting;
-import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hcatalog.i18n.Messages;
@@ -80,31 +79,31 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
         } else if (EHCatalogRepositoryToComponent.HCAT_VERSION.getRepositoryValue().equals(value)) {
             return hcConnection.getDfVersion();
         } else if (EHCatalogRepositoryToComponent.TEMPLETON_HOST.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getHostName()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getHostName()));
         } else if (EHCatalogRepositoryToComponent.TEMPLETON_PORT.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getPort()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getPort()));
         } else if (EHCatalogRepositoryToComponent.USE_KRB.getRepositoryValue().equals(value)) {
             return hcConnection.isEnableKerberos();
         } else if (EHCatalogRepositoryToComponent.KRB_PRINC.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbPrincipal()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getKrbPrincipal()));
         } else if (EHCatalogRepositoryToComponent.KRB_REALM.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbRealm()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getKrbRealm()));
         } else if (EHCatalogRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getPrincipal()));
         } else if (EHCatalogRepositoryToComponent.USE_KEYTAB.getRepositoryValue().equals(value)) {
             return hcConnection.isUseKeytab();
         } else if (EHCatalogRepositoryToComponent.KEYTAB_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
         } else if (EHCatalogRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytab()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getKeytab()));
         } else if (EHCatalogRepositoryToComponent.DATABASE_NAME.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getDatabase()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getDatabase()));
         } else if (EHCatalogRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getUserName()));
         } else if (EHCatalogRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHCatalogRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getFieldSeparator()));
         } else if (EHCatalogRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
             return false;
         } else if (EHCatalogRepositoryToComponent.MAPREDUCE.getRepositoryValue().equals(value)) {
@@ -114,11 +113,11 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
         } else if (EHCatalogRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)
                 || EHCatalogRepositoryToComponent.MAPRED_RESOURCE_MANAGER.getRepositoryValue().equals(value)
                 || EHCatalogRepositoryToComponent.RESOURCE_MANAGER.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
         } else if (EHCatalogRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getNameNodeURI()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getNameNodeURI()));
         } else if (EHCatalogRepositoryToComponent.JOBTRACKER_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getKrbPrincipal()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getKrbPrincipal()));
         } else if (EHCatalogRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
             return HCATALOG_LOAD;
         } else if (EHCatalogRepositoryToComponent.STORE.getRepositoryValue().equals(value)) {
@@ -260,7 +259,7 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
         IElementParameter tableNameParameter = ele.getElementParameter(EHCatalogRepositoryToComponent.TABLE_NAME
                 .getParameterName());
         if (tableNameParameter != null) {
-            tableNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(tableName));
+            tableNameParameter.setValue(getRepositoryValueOfStringType(connection, tableName));
         }
         String partition = metadataTable.getAdditionalProperties().get(HCatalogConstants.PARTITIONS);
         if (StringUtils.isNotEmpty(partition)) {
@@ -269,7 +268,7 @@ public class HCatalogDragAndDropHandler extends AbstractDragAndDropServiceHandle
             if (partitionParameter != null) {
                 String partitionName = ExtractMetaDataFromHCatalog.extractPartitionNameByJsonStr(partition);
                 if (StringUtils.isNotEmpty(partitionName)) {
-                    partitionParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(partitionName));
+                    partitionParameter.setValue(getRepositoryValueOfStringType(connection, partitionName));
                 }
             }
         }
