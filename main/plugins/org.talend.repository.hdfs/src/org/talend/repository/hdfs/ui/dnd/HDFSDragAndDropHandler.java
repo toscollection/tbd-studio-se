@@ -42,7 +42,6 @@ import org.talend.core.model.utils.AbstractDragAndDropServiceHandler;
 import org.talend.core.model.utils.IComponentName;
 import org.talend.core.repository.RepositoryComponentSetting;
 import org.talend.core.repository.model.repositoryObject.MetadataTableRepositoryObject;
-import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.model.EHDFSFileTypes;
 import org.talend.designer.hdfsbrowse.util.EHDFSRepositoryToComponent;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -101,30 +100,30 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.AUTHENTICATION_MODE.getRepositoryValue().equals(value)) {
             return hcConnection.getAuthMode();
         } else if (EHDFSRepositoryToComponent.FS_DEFAULT_NAME.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getNameNodeURI()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getNameNodeURI()));
         } else if (EHDFSRepositoryToComponent.USE_KRB.getRepositoryValue().equals(value)) {
             return hcConnection.isEnableKerberos();
         } else if (EHDFSRepositoryToComponent.NAMENODE_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getPrincipal()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getPrincipal()));
         } else if (EHDFSRepositoryToComponent.JOBTRACKER_PRINCIPAL.getRepositoryValue().equals(value)
                 || EHDFSRepositoryToComponent.RESOURCEMANAGER_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJtOrRmPrincipal()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getJtOrRmPrincipal()));
         } else if (EHDFSRepositoryToComponent.JOBHISTORY_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobHistoryPrincipal()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getJobHistoryPrincipal()));
         } else if (EHDFSRepositoryToComponent.USE_KEYTAB.getRepositoryValue().equals(value)) {
             return hcConnection.isUseKeytab();
         } else if (EHDFSRepositoryToComponent.KEYTAB_PRINCIPAL.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getKeytabPrincipal()));
         } else if (EHDFSRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getKeytab()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getKeytab()));
         } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getUserName()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getUserName()));
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getGroup()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getGroup()));
         } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getRowSeparator()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getFieldSeparator()));
         } else if (EHDFSRepositoryToComponent.HEADER.getRepositoryValue().equals(value)) {
             return StringUtils.trimToNull(connection.getHeaderValue());
         } else if (EHDFSRepositoryToComponent.LOCAL.getRepositoryValue().equals(value)) {
@@ -136,19 +135,19 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.MAPRED_JOB_TRACKER.getRepositoryValue().equals(value)
                 || EHDFSRepositoryToComponent.MAPRED_RESOURCE_MANAGER.getRepositoryValue().equals(value)
                 || EHDFSRepositoryToComponent.RESOURCE_MANAGER.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getJobTrackerURI()));
         } else if (EHDFSRepositoryToComponent.FIELD_SEPARATOR_CHAR.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(connection.getFieldSeparator()));
+            return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getFieldSeparator()));
         } else if (EHDFSRepositoryToComponent.LOAD.getRepositoryValue().equals(value)) {
             return "PigStorage"; //$NON-NLS-1$
         } else if (EHDFSRepositoryToComponent.HADOOP_ADVANCED_PROPERTIES.getRepositoryValue().equals(value)) {
             return HadoopRepositoryUtil.getHadoopPropertiesFullList(connection, connection.getHadoopProperties(), true);
         } else if (EHDFSRepositoryToComponent.RESOURCEMANAGER_SCHEDULER_ADDRESS.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getRmScheduler()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getRmScheduler()));
         } else if (EHDFSRepositoryToComponent.JOBHISTORY_ADDRESS.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getJobHistory()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getJobHistory()));
         } else if (EHDFSRepositoryToComponent.STAGING_DIRECTORY.getRepositoryValue().equals(value)) {
-            return TalendQuoteUtils.addQuotesIfNotExist(StringUtils.trimToNull(hcConnection.getStagingDirectory()));
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getStagingDirectory()));
         } else if (EHDFSRepositoryToComponent.USE_DATANODE_HOSTNAME.getRepositoryValue().equals(value)) {
             return hcConnection.isUseDNHost();
         }
@@ -356,9 +355,9 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         String hdfsPath = metadataTable.getAdditionalProperties().get(HDFSConstants.HDFS_PATH);
         if (hdfsPath != null) {
             if (fileNameParameter != null) {
-                fileNameParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
+                fileNameParameter.setValue(getRepositoryValueOfStringType(connection, hdfsPath));
             } else if (filePatheParameter != null) {
-                filePatheParameter.setValue(TalendQuoteUtils.addQuotesIfNotExist(hdfsPath));
+                filePatheParameter.setValue(getRepositoryValueOfStringType(connection, hdfsPath));
             }
         }
         IElementParameter fileTypeParameter = ele.getElementParameter(EHDFSRepositoryToComponent.FILETYPE.getParameterName());
