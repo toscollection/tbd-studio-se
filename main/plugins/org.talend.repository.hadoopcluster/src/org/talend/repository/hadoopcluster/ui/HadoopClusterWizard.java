@@ -84,9 +84,12 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
 
     private boolean isToolBar;
 
+    private IProxyRepositoryFactory factory;
+
     public HadoopClusterWizard(IWorkbench workbench, boolean creation, RepositoryNode node, String[] existingNames) {
         super(workbench, creation);
         this.existingNames = existingNames;
+        factory = ProxyRepositoryFactory.getInstance();
         setNeedsProgressMonitor(true);
         switch (node.getType()) {
         case SIMPLE_FOLDER:
@@ -129,6 +132,9 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
             this.originalDescription = this.connectionItem.getProperty().getDescription();
             this.originalPurpose = this.connectionItem.getProperty().getPurpose();
             this.originalStatus = this.connectionItem.getProperty().getStatusCode();
+        } else {
+            String nextId = factory.getNextId();
+            connectionProperty.setId(nextId);
         }
         // initialize the context mode
         ConnectionContextHelper.checkContextMode(connectionItem);
@@ -174,15 +180,12 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
     @Override
     public boolean performFinish() {
         if (mainPage.isPageComplete()) {
-            final IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
             String displayName = connectionProperty.getDisplayName();
             connectionProperty.setLabel(displayName);
             this.connection.setName(displayName);
             this.connection.setLabel(displayName);
             try {
                 if (creation) {
-                    String nextId = factory.getNextId();
-                    connectionProperty.setId(nextId);
                     factory.create(connectionItem, propertiesPage.getDestinationPath());
                 } else {
                     updateDbConnections();
@@ -224,7 +227,6 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
     }
 
     private void updateDbConnections() throws PersistenceException {
-        IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
         List<DatabaseConnectionItem> dbConnectionItems = HCRepositoryUtil.getHadoopRelatedDbConnectionItems(connectionProperty
                 .getId());
         Map<String, String> hadoopDbParameters = HCRepositoryUtil.getHadoopDbParameters(connectionProperty.getId());

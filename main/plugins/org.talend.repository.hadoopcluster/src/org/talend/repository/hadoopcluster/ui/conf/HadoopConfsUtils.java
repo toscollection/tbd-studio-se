@@ -113,8 +113,9 @@ public class HadoopConfsUtils {
     }
 
     public static String getConfsJarDefaultName(HadoopClusterConnectionItem connectionItem) {
-        String connLabel = connectionItem.getProperty().getLabel();
-        return CONFS_JAR_PREFIX.concat(connLabel).concat(CONFS_JAR_EXT);
+        // String connLabel = connectionItem.getProperty().getLabel();
+        String itemId = connectionItem.getProperty().getId();
+        return CONFS_JAR_PREFIX.concat(itemId).concat(CONFS_JAR_EXT);
     }
 
     public static HadoopConfigurationManager getConfigurationManager(String distribution) {
