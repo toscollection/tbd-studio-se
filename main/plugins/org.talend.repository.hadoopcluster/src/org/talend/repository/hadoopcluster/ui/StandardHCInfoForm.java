@@ -205,8 +205,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         jobHistoryText.setEditable(isEditable);
         stagingDirectoryText.setEditable(isEditable);
         useDNHostBtn.setEnabled(isEditable);
-        useCustomConfBtn.setEnabled(isEditable);
-        hadoopConfsButton.setEnabled(isEditable && useCustomConfBtn.getSelection());
         kerberosBtn.setEnabled(isEditable && (isCurrentHadoopVersionSupportSecurity() || isCustomUnsupportHasSecurity()));
         boolean isKerberosEditable = kerberosBtn.isEnabled() && kerberosBtn.getSelection();
         namenodePrincipalText.setEditable(isKerberosEditable);
@@ -218,8 +216,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         boolean isKeyTabEditable = keytabBtn.isEnabled() && keytabBtn.getSelection();
         keytabText.setEditable(isKeyTabEditable);
         keytabPrincipalText.setEditable(isKeyTabEditable);
-        getConnection().getHadoopProperties();
-        updateOtherFormRelateFields(isEditable);
     }
 
     @Override
@@ -315,6 +311,13 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private void addHadoopPropertiesFields() {
+        Composite hadoopPropertiesComposite = new Composite(this, SWT.NONE);
+        GridLayout hadoopPropertiesLayout = new GridLayout(1, false);
+        hadoopPropertiesLayout.marginWidth = 0;
+        hadoopPropertiesLayout.marginHeight = 0;
+        hadoopPropertiesComposite.setLayout(hadoopPropertiesLayout);
+        hadoopPropertiesComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
         String hadoopProperties = getConnection().getHadoopProperties();
         List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
         propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
@@ -325,7 +328,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
 
         };
-        propertiesDialog.createPropertiesFields(this);
+        propertiesDialog.createPropertiesFields(hadoopPropertiesComposite);
     }
 
     private void addHadoopConfsFields() {
@@ -810,27 +813,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         if (!userNameText.getEditable()) {
             userNameText.setText(EMPTY_STRING);
-        }
-    }
-
-    private void updateOtherFormRelateFields(boolean isEditable) {
-        ((HadoopClusterForm) this.getParent()).updateEditableStatus(isEditable);
-        refreshHadoopProperties(isEditable);
-        updatePropertiesFileds(isEditable);
-    }
-
-    private void refreshHadoopProperties(boolean isEditable) {
-        if (propertiesDialog != null) {
-            List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(getConnection()
-                    .getHadoopProperties());
-            propertiesDialog.setInitProperties(hadoopPropertiesList);
-            propertiesDialog.updateStatusLabel(hadoopPropertiesList);
-        }
-    }
-
-    private void updatePropertiesFileds(boolean isEditable) {
-        if (propertiesDialog != null) {
-            propertiesDialog.updatePropertiesFields(isEditable);
         }
     }
 
