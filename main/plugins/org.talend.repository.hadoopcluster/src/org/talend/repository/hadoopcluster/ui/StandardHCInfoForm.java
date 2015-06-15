@@ -903,7 +903,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             return false;
         }
 
-        if (!HadoopParameterValidator.isValidNamenodeURI(namenodeUriText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidNamenodeURI(namenodeUriText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodeURI.invalid")); //$NON-NLS-1$
             return false;
         }
@@ -914,7 +914,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             return false;
         }
 
-        if (!HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
             updateStatus(IStatus.ERROR,
                     Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
             return false;
@@ -925,7 +925,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodePrincipal")); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidPrincipal(namenodePrincipalText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(namenodePrincipalText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodePrincipal.invalid")); //$NON-NLS-1$
                 return false;
             }
@@ -937,7 +937,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                         Messages.getString("HadoopClusterForm.check.jtOrRmPrincipal", jtOrRmPrincipalText.getLabelText())); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidPrincipal(jtOrRmPrincipalText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(jtOrRmPrincipalText.getText())) {
                 updateStatus(IStatus.ERROR,
                         Messages.getString("HadoopClusterForm.check.jtOrRmPrincipal.invalid", jtOrRmPrincipalText.getLabelText())); //$NON-NLS-1$
                 return false;
@@ -949,7 +949,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal")); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidPrincipal(jobHistoryPrincipalText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(jobHistoryPrincipalText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal.invalid")); //$NON-NLS-1$
                 return false;
             }
@@ -964,7 +964,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group")); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidGroup(groupText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidGroup(groupText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group.invalid")); //$NON-NLS-1$
                 return false;
             }
@@ -980,7 +980,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytabPrincipal")); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidPrincipal(keytabPrincipalText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(keytabPrincipalText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytabPrincipal.invalid")); //$NON-NLS-1$
                 return false;
             }
