@@ -144,7 +144,7 @@ public class HadoopConfsUtils {
     public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, String distribution, String version,
             IRetrieveConfsService confsService) throws Exception {
         HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
-        connection.setUseCustomConfs(true);
+        connection.setUseCustomConfs(confsService != null);
         EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
         EHadoopVersion4Drivers ver = EHadoopVersion4Drivers.indexOfByVersionDisplay(version);
         boolean supportYARN = ver.isSupportYARN();
