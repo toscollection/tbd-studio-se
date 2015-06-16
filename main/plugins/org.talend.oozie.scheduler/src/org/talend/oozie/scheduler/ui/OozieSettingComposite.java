@@ -227,6 +227,7 @@ public class OozieSettingComposite extends ScrolledComposite {
 
         oozieRepositoryText = new Text(propertyTypeGroup, SWT.BORDER);
         oozieRepositoryText.setEditable(false);
+        GridDataFactory.fillDefaults().grab(true, false).span(1, 1).align(SWT.FILL, SWT.CENTER).applyTo(oozieRepositoryText);
         oozieSelectBtn = new Button(propertyTypeGroup, SWT.PUSH);
         oozieSelectBtn.setImage(ImageProvider.getImage(EImage.THREE_DOTS_ICON));
         if (OozieJobTrackerListener.getProcess() == null) {
@@ -254,8 +255,8 @@ public class OozieSettingComposite extends ScrolledComposite {
                 }
             }
         }
-        oozieRepositoryText.setVisible(false);
-        oozieSelectBtn.setVisible(false);
+        oozieRepositoryText.setVisible(true);
+        oozieSelectBtn.setVisible(true);
     }
 
     protected void preInitialization() {
