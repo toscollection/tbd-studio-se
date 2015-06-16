@@ -28,12 +28,12 @@ class TKafkaInputUtil {
 		this.kafkaConsumerProperties = findKafkaConsumerProperties();
 	}
 	
-	public String getOffsetsStorage() {
-		return ElementParameterParser.getValue(node, "__KAFKA_OFFSETS_STORAGE__").toLowerCase();
+	public String getOffsetStorage() {
+		return ElementParameterParser.getValue(node, "__KAFKA_OFFSET_STORAGE__").toLowerCase();
 	}
 	
 	public boolean isDualCommit() {
-		return "kafka".equals(getOffsetsStorage()) && "true".equals(ElementParameterParser.getValue(node, "__KAFKA_DUAL_COMMIT_CHECK__"));
+		return "kafka".equals(getOffsetStorage()) && "true".equals(ElementParameterParser.getValue(node, "__KAFKA_DUAL_COMMIT_CHECK__"));
 	}
 	
 	public String getTopic() {

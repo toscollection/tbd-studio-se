@@ -60,14 +60,9 @@ java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 <%=cid%>_kafkaProperties.put("auto.offset.reset", "<%=tKafkaInputUtil.getAutoOffsetReset()%>");
 <%=cid%>_kafkaProperties.put("consumer.timeout.ms", <%=tKafkaInputUtil.getConsumerTimeout()%>);
 <%=cid%>_kafkaProperties.put("auto.commit.interval.ms", <%=tKafkaInputUtil.getCommitInterval()%>);
-<%=cid%>_kafkaProperties.put("offsets.storage", "<%=tKafkaInputUtil.getOffsetsStorage()%>");
-<% 
-	if(tKafkaInputUtil.isDualCommit()) {
-%>
-<%=cid%>_kafkaProperties.put("dual.commit.enabled", "true");
+<%=cid%>_kafkaProperties.put("offsets.storage", "<%=tKafkaInputUtil.getOffsetStorage()%>");
+<%=cid%>_kafkaProperties.put("dual.commit.enabled", "<%=tKafkaInputUtil.isDualCommit()%>");
 <%
-	}
-	
 	for(java.util.Map.Entry<String, String> kafkaProperty : tKafkaInputUtil.getKafkaConsumerProperties().entrySet()) {
 %>
 <%=cid%>_kafkaProperties.put(<%=kafkaProperty.getKey()%>, <%=kafkaProperty.getValue()%>);
