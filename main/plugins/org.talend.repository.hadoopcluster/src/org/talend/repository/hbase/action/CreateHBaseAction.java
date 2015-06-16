@@ -49,7 +49,7 @@ public class CreateHBaseAction extends CreateHadoopDBNodeAction {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-            if (EHadoopVersion4Drivers.MAPR_EMR.equals(version4Drivers) || EHadoopVersion4Drivers.MAPR1.equals(version4Drivers)
+            if (EHadoopVersion4Drivers.MAPR1.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_0_20_204.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_0_20_2.equals(version4Drivers)) {
                 return true;

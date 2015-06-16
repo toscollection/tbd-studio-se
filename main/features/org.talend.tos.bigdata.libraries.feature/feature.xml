@@ -213,19 +213,7 @@
          version="0.0.0"/>
 
    <plugin
-         id="org.talend.libraries.hadoop.cloudera.0.20.cdh3"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="org.talend.libraries.hadoop.cloudera.cdh4"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
-         id="org.talend.libraries.hadoop.hdp.1.0"
          download-size="0"
          install-size="0"
          version="0.0.0"/>

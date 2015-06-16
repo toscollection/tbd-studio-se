@@ -62,14 +62,12 @@
 		<module>main/plugins/org.talend.libraries.hadoop.apache.0.20.204</module>
 		<module>main/plugins/org.talend.libraries.hadoop.apache.1.0.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.apache.2.4.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.cloudera.0.20.cdh3</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh4</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5.1</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5.4</module>
 		<module>main/plugins/org.talend.libraries.hadoop.emc.pivotal.1.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.emc.pivotal.2.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.hdp.1.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.hdp.1.2</module>
 		<module>main/plugins/org.talend.libraries.hadoop.hdp.1.3</module>
 		<module>main/plugins/org.talend.libraries.hadoop.hdp.2.0</module>

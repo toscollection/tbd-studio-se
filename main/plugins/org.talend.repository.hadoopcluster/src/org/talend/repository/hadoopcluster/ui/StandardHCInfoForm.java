@@ -829,8 +829,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
             String[] versionPrefix = new String[] { distribution };
             if (EHadoopDistributions.AMAZON_EMR.getName().equals(distribution)
-                    && (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue().equals(version)
-                            || EHadoopVersion4Drivers.MAPR_EMR.getVersionValue().equals(version) || EHadoopVersion4Drivers.APACHE_2_4_0_EMR
+                    && (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue().equals(version) || EHadoopVersion4Drivers.APACHE_2_4_0_EMR
                             .getVersionValue().equals(version))) {
                 versionPrefix = (String[]) ArrayUtils.add(versionPrefix, version);
             }
