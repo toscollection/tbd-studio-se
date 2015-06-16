@@ -48,8 +48,7 @@ public class CreateOozieAction extends CreateHadoopNodeAction {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-            if (EHadoopVersion4Drivers.MAPR_EMR.equals(version4Drivers)
-                    || EHadoopVersion4Drivers.APACHE_1_0_3_EMR.equals(version4Drivers)
+            if (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_2_4_0_EMR.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_1_0_0.equals(version4Drivers)
                     || EHadoopVersion4Drivers.APACHE_0_20_204.equals(version4Drivers)
