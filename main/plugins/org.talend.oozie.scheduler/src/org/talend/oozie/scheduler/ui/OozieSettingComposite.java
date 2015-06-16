@@ -107,8 +107,6 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     private String customJars;
 
-    private LabelledCombo ooziePropertyTypeCombo;
-
     private Text oozieRepositoryText;
 
     private Button oozieSelectBtn;
@@ -160,16 +158,16 @@ public class OozieSettingComposite extends ScrolledComposite {
      * @param style
      */
 
-    public OozieSettingComposite(Composite parent, int style, boolean forPrefPage) {
+    public OozieSettingComposite(Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout());
         setLayoutData(new GridData(GridData.FILL_BOTH));
         setExpandHorizontal(true);
         setExpandVertical(true);
-        createContents(this, forPrefPage);
+        createContents(this);
     }
 
-    protected void createContents(Composite parent, boolean forPrefPage) {
+    protected void createContents(Composite parent) {
         preInitialization();
 
         Composite comp = new Composite(parent, SWT.NONE);
@@ -181,20 +179,18 @@ public class OozieSettingComposite extends ScrolledComposite {
         setContent(comp);
 
         IProcess2 process = OozieJobTrackerListener.getProcess();
-        if (!forPrefPage) {
-            if (!GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
-                if (process != null) {
-                    process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue("");
-                }
-            } else {
-                addPropertyType(comp);
+        if (!GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
+            if (process != null) {
+                process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue("");
             }
+        } else {
+            addPropertyType(comp);
         }
         addVersionFields(comp);
         addCustomFields(comp);
         addAuthenticationFields(comp);
         addConnectionFields(comp);
-        if (!forPrefPage && process != null) {
+        if (process != null) {
             addHadoopPropertiesFields(comp);
         }
         updateVersionPart(getHadoopDistribution());
@@ -229,20 +225,11 @@ public class OozieSettingComposite extends ScrolledComposite {
         propertyTypeGroup = Form.createGroup(comp, 5, "Property");
         propertyTypeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        String[] types = new String[] { "from preference(Deprecated)", "from repository" };
-        ooziePropertyTypeCombo = new LabelledCombo(propertyTypeGroup, "Property Type", "", types, 1, true);
-        GridDataFactory.fillDefaults().span(1, 1).align(SWT.FILL, SWT.CENTER).applyTo(ooziePropertyTypeCombo.getCombo());
         oozieRepositoryText = new Text(propertyTypeGroup, SWT.BORDER);
         oozieRepositoryText.setEditable(false);
-        GridDataFactory.fillDefaults().grab(true, false).hint(SWT.DEFAULT, ooziePropertyTypeCombo.getCombo().getItemHeight())
-                .span(2, 1).align(SWT.FILL, SWT.CENTER).applyTo(oozieRepositoryText);
         oozieSelectBtn = new Button(propertyTypeGroup, SWT.PUSH);
         oozieSelectBtn.setImage(ImageProvider.getImage(EImage.THREE_DOTS_ICON));
-        GridDataFactory.fillDefaults().grab(false, false).hint(SWT.DEFAULT, ooziePropertyTypeCombo.getCombo().getItemHeight())
-                .align(SWT.BEGINNING, SWT.FILL).span(1, 1).applyTo(oozieSelectBtn);
         if (OozieJobTrackerListener.getProcess() == null) {
-            ooziePropertyTypeCombo.setReadOnly(true);
-            ooziePropertyTypeCombo.select(0);
             oozieSelectBtn.setEnabled(false);
         }
         initPropertyCombo();
@@ -257,7 +244,6 @@ public class OozieSettingComposite extends ScrolledComposite {
             String connId = (String) process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName())
                     .getValue();
             if (StringUtils.isNotEmpty(connId)) {
-                ooziePropertyTypeCombo.select(1);
                 this.repositoryId = connId;
                 Connection connection = TOozieParamUtils.getOozieConnectionById(connId);
                 if (connection != null) {
@@ -268,7 +254,6 @@ public class OozieSettingComposite extends ScrolledComposite {
                 }
             }
         }
-        ooziePropertyTypeCombo.select(0);
         oozieRepositoryText.setVisible(false);
         oozieSelectBtn.setVisible(false);
     }
@@ -386,13 +371,8 @@ public class OozieSettingComposite extends ScrolledComposite {
         if (version4Drivers == null) {
             return;
         }
-        if (ooziePropertyTypeCombo != null && ooziePropertyTypeCombo.getSelectionIndex() == 1) {
-            // from repository
-            updateSettingFromRep(version4Drivers);
-        } else {
-            // from perf
-            updateSettingFromPref(version4Drivers);
-        }
+        // from repository
+        updateSettingFromRep(version4Drivers);
         nameNodeEndPointTxt.setText(nameNodeEndPointValue == null ? "" : nameNodeEndPointValue); //$NON-NLS-1$
         jobTrackerEndPointTxt.setText(jobTrackerEndPointValue == null ? "" : jobTrackerEndPointValue); //$NON-NLS-1$
         oozieEndPointTxt.setText(oozieEndPointValue == null ? "" : oozieEndPointValue); //$NON-NLS-1$
@@ -430,40 +410,6 @@ public class OozieSettingComposite extends ScrolledComposite {
         kerbBtn.setSelection(enableKerberos);
         ooKerbBtn.setSelection(enableOoKerberos);
         keytabBtn.setSelection(useKeytab);
-    }
-
-    private void updateSettingFromPref(EHadoopVersion4Drivers version4Drivers) {
-        boolean isSupportSecurity = version4Drivers.isSupportSecurity();
-        boolean isSupportGroup = version4Drivers.isSupportGroup();
-        hadoopDistributionCombo.setReadOnly(false);
-        hadoopVersionCombo.setReadOnly(false);
-        authenticationCombo.setReadOnly(false);
-        nameNodeEndPointTxt.setEditable(true);
-        jobTrackerEndPointTxt.setEditable(true);
-        oozieEndPointTxt.setEditable(true);
-        kerbBtn.setEnabled(isSupportSecurity || EHadoopDistributions.CUSTOM.equals(version4Drivers.getDistribution()));
-        kerbBtn.setSelection(enableKerberos && kerbBtn.isEnabled());
-        ooKerbBtn.setEnabled(isSupportSecurity);
-        ooKerbBtn.setSelection(enableOoKerberos && ooKerbBtn.isEnabled());
-        useYarnButton.setEnabled(true);
-        keytabBtn.setEnabled(kerbBtn.isEnabled() && kerbBtn.getSelection());
-        keytabBtn.setSelection(useKeytab && keytabBtn.isEnabled());
-        nnPrincipalText.setEditable(kerbBtn.getEnabled() && kerbBtn.getSelection());
-        ktPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
-        ktText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
-        userNameTxt.setEditable(!nnPrincipalText.getEditable());
-        groupText.setEditable(isSupportGroup);
-        if (propertiesTableView != null) {
-            propertiesTableView.setReadOnly(false);
-        }
-        if (EHadoopDistributions.CUSTOM.equals(version4Drivers.getDistribution())) {
-            updateCustomSetting();
-        }
-        ktPrincipalText.setText(ktPrincipalText.getEditable() ? ktPrincipal : "");//$NON-NLS-1$
-        ktText.setText(ktText.getEditable() ? keytab : "");//$NON-NLS-1$
-        groupText.setText(groupText.getEditable() ? group : ""); //$NON-NLS-1$
-        nnPrincipalText.setText(nnPrincipalText.getEditable() ? nnPrincipalValue : "");//$NON-NLS-1$
-        userNameTxt.setText(userNameTxt.getEditable() && userNameValue != null ? userNameValue : ""); //$NON-NLS-1$
     }
 
     private void updateCustomSetting() {
@@ -584,25 +530,6 @@ public class OozieSettingComposite extends ScrolledComposite {
                 setKeytab(ktText.getText());
             }
         });
-        if (ooziePropertyTypeCombo != null) {
-            ooziePropertyTypeCombo.addModifyListener(new ModifyListener() {
-
-                @Override
-                public void modifyText(ModifyEvent e) {
-                    oozieSelectBtn.setVisible(ooziePropertyTypeCombo.getSelectionIndex() == 1);
-                    oozieRepositoryText.setVisible(ooziePropertyTypeCombo.getSelectionIndex() == 1);
-                    if (ooziePropertyTypeCombo.getSelectionIndex() == 0) {
-                        IProcess2 process = OozieJobTrackerListener.getProcess();
-                        process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName()).setValue("");
-                        oozieRepositoryText.setText("");
-                        setRepositoryId("");
-                        model.setProperties(new ArrayList<HashMap<String, Object>>());
-                        propertiesTableView.getTable().redraw();
-                    }
-                    updateProperty();
-                }
-            });
-        }
         if (oozieSelectBtn != null) {
             oozieSelectBtn.addSelectionListener(new SelectionAdapter() {
 
@@ -732,7 +659,7 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     protected void updateProperty() {
-        if (ooziePropertyTypeCombo != null && ooziePropertyTypeCombo.getSelectionIndex() == 1 && repositoryId != null
+        if (repositoryId != null
                 && repositoryId.length() != 0) {
             setHadoopDistributionValue((String) TOozieParamUtils.getParamValueFromRepositoryById(
                     ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, repositoryId));
@@ -762,37 +689,6 @@ public class OozieSettingComposite extends ScrolledComposite {
                     ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL, repositoryId));
             setKeytab((String) TOozieParamUtils.getParamValueFromRepositoryById(
                     ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH, repositoryId));
-        } else {
-            setHadoopDistributionValue((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION));
-            setHadoopVersionValue((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_VERSION));
-            setUseYarn((Boolean) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN));
-            setAuthMode((String) TOozieParamUtils.getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_AUTH_MODE));
-            setNameNodeEndPointValue((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT));
-            setJobTrackerEndPointValue((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_JOB_TRACKER_ENDPOINT));
-            setOozieEndPointValue((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SHCEDULER_OOZIE_ENDPOINT));
-            setUserNameValue((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME));
-            setGroup((String) TOozieParamUtils.getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP));
-            setCustomJars((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_CUSTOM_JARS));
-            setEnableKerberos((Boolean) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS));
-            setEnableOoKerberos((Boolean) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS));
-            setPrincipal((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL));
-            setUseKeytab((Boolean) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB));
-            setKtPrincipal((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL));
-            setKeytab((String) TOozieParamUtils
-                    .getParamValueFromPreference(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH));
         }
         initUI();
     }

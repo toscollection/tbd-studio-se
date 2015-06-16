@@ -129,21 +129,8 @@ public class TOozieParamUtils {
         Object value = "";
         if (isFromRepository()) {
             value = getParamValueFromRepository(prefKey);
-        } else {
-            value = getParamValueFromPreference(prefKey);
         }
         return value != null ? value : "";
-    }
-
-    public static Object getParamValueFromPreference(String prefKey) {
-        Object versionValue = CorePlugin.getDefault().getPreferenceStore().getString(prefKey);
-        if (ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KERBEROS.equals(prefKey)
-                || ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS.equals(prefKey)
-                || ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_KEYTAB.equals(prefKey)
-                || ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_USE_YARN.endsWith(prefKey)) {
-            versionValue = CorePlugin.getDefault().getPreferenceStore().getBoolean(prefKey);
-        }
-        return versionValue;
     }
 
     public static Object getParamValueFromRepository(String prefKey) {

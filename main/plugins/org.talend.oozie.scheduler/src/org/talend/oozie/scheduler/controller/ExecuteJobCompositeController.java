@@ -851,10 +851,6 @@ public class ExecuteJobCompositeController {
         return endDate;
     }
 
-    private boolean isFromRepository() {
-        return TOozieParamUtils.isFromRepository();
-    }
-
     private String getNameNode() {
         return TOozieParamUtils.getNameNode();
     }
