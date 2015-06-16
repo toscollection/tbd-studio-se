@@ -1028,6 +1028,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         addContextParams(EHadoopParamName.NameNodeUri, true);
         addContextParams(EHadoopParamName.JobTrackerUri, !useYarn);
         addContextParams(EHadoopParamName.ResourceManager, useYarn);
+        addContextParams(EHadoopParamName.ResourceManagerScheduler, true);
+        addContextParams(EHadoopParamName.JobHistory, true);
+        addContextParams(EHadoopParamName.StagingDirectory, true);
     }
 
     private void collectAuthFieldContextParameters(boolean useKerberos) {

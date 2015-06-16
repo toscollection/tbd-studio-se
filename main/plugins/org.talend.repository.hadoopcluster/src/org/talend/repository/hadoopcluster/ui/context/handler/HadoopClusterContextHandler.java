@@ -67,6 +67,15 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case ResourceManager:
                         ConnectionContextHelper.createParameters(varList, paramName, conn.getJobTrackerURI());
                         break;
+                    case ResourceManagerScheduler:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getRmScheduler());
+                        break;
+                    case JobHistory:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getJobHistory());
+                        break;
+                    case StagingDirectory:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getStagingDirectory());
+                        break;
                     case NameNodePrin:
                         ConnectionContextHelper.createParameters(varList, paramName, conn.getPrincipal());
                         break;
@@ -245,6 +254,15 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
         case ResourceManager:
             hadoopConn.setJobTrackerURI(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
+        case ResourceManagerScheduler:
+            hadoopConn.setRmScheduler(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case JobHistory:
+            hadoopConn.setJobHistory(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case StagingDirectory:
+            hadoopConn.setStagingDirectory(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
         case NameNodePrin:
             hadoopConn.setPrincipal(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
@@ -322,6 +340,12 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     conn.getNameNodeURI()));
             String jobTrackerUri = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
                     conn.getJobTrackerURI()));
+            String rmScheduler = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getRmScheduler()));
+            String jobHistory = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getJobHistory()));
+            String stagingDir = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getStagingDirectory()));
             String nameNodePrin = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
                     conn.getPrincipal()));
             String jtOrRmPrin = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
@@ -346,6 +370,9 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
 
             conn.setNameNodeURI(nameNodeUri);
             conn.setJobTrackerURI(jobTrackerUri);
+            conn.setRmScheduler(rmScheduler);
+            conn.setJobHistory(jobHistory);
+            conn.setStagingDirectory(stagingDir);
             conn.setPrincipal(nameNodePrin);
             conn.setJtOrRmPrincipal(jtOrRmPrin);
             conn.setJobHistoryPrincipal(jobHisPrin);
