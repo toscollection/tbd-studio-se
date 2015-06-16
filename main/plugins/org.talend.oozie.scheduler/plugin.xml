@@ -15,15 +15,6 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            category="org.talend.core.prefs"
-            class="org.talend.oozie.scheduler.ui.prefs.OozieSchedulerPreferencePage"
-            id="org.talend.designer.core.oozie.scheduler"
-            name="Oozie(Deprecated)">
-      </page>
-   </extension>
-   <extension
-         point="org.eclipse.ui.preferencePages">
-      <page
             category="org.talend.designer.runprocess"
             class="org.talend.oozie.scheduler.ui.prefs.OozieExecutionPreferencePage"
             id="org.talend.oozie.scheduler.ui.prefs.OoziePreferencePage"
