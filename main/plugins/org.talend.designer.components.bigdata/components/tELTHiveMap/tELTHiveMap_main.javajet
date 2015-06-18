@@ -28,14 +28,14 @@
     List<IConnection> outputConnections = (List<IConnection>) node.getOutgoingConnections();
     ExternalDbMapData data = (ExternalDbMapData) node.getExternalData();
     uniqueNameComponent = node.getUniqueName();
-    
+
 	boolean isExecutedThroughWebHCat = "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
-    
+
 	String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 	String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 	String fsDefalutName = "fs.default.name";
-    
+
 	boolean setTempPath = "true".equals(ElementParameterParser.getValue(node, "__SET_TEMP_PATH__")); 
 	if(setTempPath) { 
 		String tempPath = ElementParameterParser.getValue(node, "__TEMP_PATH__"); 
@@ -48,17 +48,19 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 	boolean setMapredJT = "true".equals(ElementParameterParser.getValue(node, "__SET_MAPRED_JT__"));
 	boolean setNamenode = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
-	
+
 	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
-	
+
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	boolean cdhCanBeSecured = ("Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion) || "Cloudera_CDH5_4".equals(hiveVersion) || "Cloudera_CDH5_1_MR1".equals(hiveVersion)) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
 	boolean pivotalCanBeSecured = ("PIVOTAL_HD_2_0".equals(hiveVersion)) && (("HIVE".equalsIgnoreCase(hiveServer) && "EMBEDDED".equalsIgnoreCase(connectionMode)) || "HIVE2".equalsIgnoreCase(hiveServer));
 	boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "HDP_2_2".equals(hiveVersion) || cdhCanBeSecured || pivotalCanBeSecured));
-			
+
 	boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
 	String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
+	boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
+
 	boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
 
 	if(hadoopProps.size() > 0){
@@ -121,7 +123,7 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 		System.setProperty("mapred.job.tracker", <%=mapredJT%>);
 <%
 	}
-		
+
 	if(setNamenode) {
 		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 %>
