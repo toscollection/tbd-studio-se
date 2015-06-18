@@ -59,6 +59,7 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 			
 	boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
 	String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
+	boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
 
 	if(hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
@@ -101,7 +102,19 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 <%
 			}
 		}
-	
+
+		 if(securedStandaloneHive2) {
+		 	// using keytab with HiveServer2 in standalone mode
+		 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+		 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+		 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+		 	if(useKeytab) {
+		 	%>
+		 		org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+		 	<%
+		 	}
+		 }
+
 	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"PIVOTAL_HD_2_0".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"HDP_2_1".equals(hiveVersion) && !"HDP_2_2".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion) && !"Cloudera_CDH5".equals(hiveVersion) && !"Cloudera_CDH5_1".equals(hiveVersion) && !"Cloudera_CDH5_4".equals(hiveVersion) && !"MAPR401".equals(hiveVersion) && !"APACHE_2_4_0_EMR".equals(hiveVersion))) && setMapredJT) {
 		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
 %>
