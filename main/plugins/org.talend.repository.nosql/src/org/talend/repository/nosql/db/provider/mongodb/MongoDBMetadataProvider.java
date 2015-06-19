@@ -13,6 +13,7 @@
 package org.talend.repository.nosql.db.provider.mongodb;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -91,6 +92,15 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
             }
             List<String> existColumnNames = new ArrayList<String>();
             Object dbCollection = NoSQLReflection.invokeMethod(db, "getCollection", new Object[] { collectionName }); //$NON-NLS-1$
+            Set<String> indexColNames = new HashSet<String>();
+            List<Object> indexes = (List<Object>) NoSQLReflection.invokeMethod(dbCollection, "getIndexInfo", new Object[0]); //$NON-NLS-1$
+            for (Object index : indexes) {
+                Object keyObj = NoSQLReflection.invokeMethod(index, "get", new Object[] { "key" }); //$NON-NLS-1$//$NON-NLS-2$
+                if (keyObj != null) {
+                    Set<String> indexKeys = (Set<String>) NoSQLReflection.invokeMethod(keyObj, "keySet", new Object[0]); //$NON-NLS-1$
+                    indexColNames.addAll(indexKeys);
+                }
+            }
             Object dbCursor = NoSQLReflection.invokeMethod(dbCollection, "find"); //$NON-NLS-1$
             int rowNum = 0;
             while ((Boolean) NoSQLReflection.invokeMethod(dbCursor, "hasNext")) { //$NON-NLS-1$
@@ -113,6 +123,10 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
                         javaType = JavaTypesManager.STRING;
                     }
                     column.setTalendType(javaType.getId());
+                    if (indexColNames.contains(colName)) {
+                        column.setKey(true);
+                        column.setNullable(false);
+                    }
                     metadataColumns.add(column);
                     existColumnNames.add(colName);
                 }
