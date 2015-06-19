@@ -26,7 +26,7 @@
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
-	
+
 	java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
 	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1",
 	"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
@@ -60,6 +60,7 @@
 <%
 		}
 	}
+
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    for(int i=0;i<properties.size();i++){
@@ -72,5 +73,3 @@
    }
 %>
 	globalMap.put("conn_<%=cid%>",config<%=cid%>);
-	
-

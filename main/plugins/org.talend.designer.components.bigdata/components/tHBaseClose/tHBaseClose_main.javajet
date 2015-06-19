@@ -39,4 +39,3 @@ imports="
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
 		globalMap.remove("<%=conn%>");
 	}
-

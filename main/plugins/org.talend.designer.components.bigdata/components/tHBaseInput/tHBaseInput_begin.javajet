@@ -26,7 +26,11 @@ imports="
 	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
 	boolean isByFilter = ("true").equals(ElementParameterParser.getValue(node, "__IS_BY_FILTER__"));
 	boolean defineSelection = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_ROW_SELECTION__"));
-	
+
+	boolean setTableNsMapping = "true".equals(ElementParameterParser.getValue(node, "__SET_TABLE_NS_MAPPING__"));
+	String tableNsMapping = ElementParameterParser.getValue(node, "__TABLE_NS_MAPPING__");
+	boolean useTableNsMapping = setTableNsMapping && ((tableNsMapping != null)&&(!tableNsMapping.equals("")));
+
 	log4jFileUtil.componentStartInfo(node);
 
 	java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
@@ -77,6 +81,12 @@ try{
 		}
 	}
 
+	if(useTableNsMapping){
+%>
+		conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
+<%
+	}
+
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    	for(int i=0;i<properties.size();i++){
@@ -96,6 +106,11 @@ try{
 		throw new RuntimeException("<%=cid %>'s connection is null!");
 	}
 <%
+	if(useTableNsMapping){
+%>
+		conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
+<%
+	}
 }
 
 if(defineSelection) {
