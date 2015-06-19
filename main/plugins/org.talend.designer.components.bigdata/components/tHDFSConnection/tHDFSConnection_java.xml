@@ -67,6 +67,7 @@
 				<ITEM NAME="MAPR301" VALUE="MAPR301" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR401" VALUE="MAPR401" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR410" VALUE="MAPR410" SHOW_IF="DISTRIBUTION=='MAPR'" />
                 <ITEM NAME="APACHE_2_4_0_EMR" VALUE="APACHE_2_4_0_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="MapR_EMR" VALUE="MapR_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
                 <ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR" SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
@@ -356,6 +357,8 @@
             <IMPORT NAME="protobuf-java-2.4.1.jar" MODULE="protobuf-java-2.4.1.jar" MVN="mvn:org.talend.libraries/protobuf-java-2.4.1/6.0.0"   REQUIRED_IF="(DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')"/>
             <!-- MAPR401 -->
             <IMPORT MODULE_GROUP="HDFS-LIB-MAPR40X_LASTEST" REQUIRED_IF="(DB_VERSION=='MAPR401') AND (DISTRIBUTION!='CUSTOM')" />
+            <!-- MAPR410 -->
+            <IMPORT MODULE_GROUP="HDFS-LIB-MAPR41X_LASTEST" REQUIRED_IF="(DB_VERSION=='MAPR410') AND (DISTRIBUTION!='CUSTOM')" />
             <!-- PIVOTAL_HD_1_0_1 -->
             <IMPORT NAME="hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0.jar" MVN="mvn:org.talend.libraries/hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-hdfs-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" MODULE="hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" MVN="mvn:org.talend.libraries/hadoop-common-2.0.2-alpha-gphd-2.0.1.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hadoop-common-2.0.2-alpha-gphd-2.0.1.0.jar" REQUIRED_IF="(DB_VERSION=='PIVOTAL_HD_1_0_1') AND (DISTRIBUTION!='CUSTOM')" />
