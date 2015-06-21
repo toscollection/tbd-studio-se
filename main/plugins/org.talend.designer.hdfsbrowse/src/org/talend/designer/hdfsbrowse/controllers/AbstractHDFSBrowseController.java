@@ -48,6 +48,7 @@ import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
+import org.talend.core.model.process.BigDataNode;
 import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
@@ -138,6 +139,60 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                     }
                 }
             }
+        } else if (node != null && node.getComponent() != null && node.getComponent().getPaletteType() != null
+                && node.getComponent().getPaletteType().startsWith("SPARK")) { //$NON-NLS-1$
+            // SPARK and SPARKSTREAMING
+            boolean browseIsSupported = false;
+            boolean defineStorageConfiguration = (Boolean) getParameterValue(node, "DEFINE_STORAGE_CONFIGURATION"); //$NON-NLS-1$
+            if (defineStorageConfiguration) {
+                String configurationComponent = (String) getParameterValue(node, "STORAGE_CONFIGURATION"); //$NON-NLS-1$
+                if (configurationComponent.startsWith("tHDFSConfiguration")) { //$NON-NLS-1$
+                    List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+                    for (INode iNode : nodes) {
+                        if (configurationComponent.equals(iNode.getUniqueName())) {
+                            browseIsSupported = true;
+                            isMr = true;
+                            node = iNode;
+                            String versionParameter = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
+                            if (versionParameter != null) {
+                                connectionBean.setDfVersion(versionParameter);
+                            }
+                            String nameNodeParameter = (String) getParameterValue(node, EHadoopParameter.NAMENODE_URI.getName());
+                            if (nameNodeParameter != null) {
+                                connectionBean.setNameNodeURI(nameNodeParameter);
+                            }
+                        }
+                    }
+                }
+            }
+            if (!browseIsSupported) {
+                IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
+
+                    @Override
+                    public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+                        monitor.beginTask(
+                                Messages.getString("AbstractHDFSBrowseController.checkConnection"), IProgressMonitor.UNKNOWN); //$NON-NLS-1$
+                        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                new ErrorDialogWidthDetailArea(
+                                        PlatformUI.getWorkbench().getDisplay().getActiveShell(),
+                                        HDFSPlugin.PLUGIN_ID,
+                                        Messages.getString("AbstractHDFSBrowseController.unsupportedOperation.mainMsg"), Messages.getString("AbstractHDFSBrowseController.unsupportedOperation.detailMsg")); //$NON-NLS-1$ //$NON-NLS-2$
+                                return;
+                            }
+                        });
+                    }
+                };
+                ProgressMonitorDialog dialog = new ProgressMonitorDialog(PlatformUI.getWorkbench().getDisplay().getActiveShell());
+                try {
+                    dialog.run(true, true, runnableWithProgress);
+                } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                }
+                return null;
+            }
         }
 
         if (node == null) {
@@ -210,9 +265,8 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     private Object getTheParameterValue(INode node, String paramName) {
         Object value = null;
-        if (node instanceof DataNode) {
-            DataNode dataNode = (DataNode) node;
-            IElementParameter parameter = dataNode.getElementParameter(paramName);
+        if (node instanceof DataNode || node instanceof BigDataNode) {
+            IElementParameter parameter = node.getElementParameter(paramName);
             if (parameter != null) {
                 value = parameter.getValue();
             }
@@ -377,7 +431,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         @Override
         public void widgetSelected(SelectionEvent event) {
             HDFSConnectionBean connection = getHDFSConnectionBean();
-            if (checkHDFSConnection(connection)) {
+            if (connection != null && checkHDFSConnection(connection)) {
                 Command command = createCommand(event, connection);
                 executeCommand(command);
             }
