@@ -49,7 +49,7 @@
         <PARAMETER NAME="NOTE" FIELD="LABEL" NUM_ROW="3" COLOR="255;0;0"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION=='NEO4J_2_1_X')"
             GROUP="CONNECTION_GROUP">
-            <DEFAULT>This component requires a Java 1.7.</DEFAULT>
+            <DEFAULT>This component requires a Java 1.7 or higher.</DEFAULT>
         </PARAMETER>
 
 		<PARAMETER NAME="REMOTE_SERVER" FIELD="CHECK"
