@@ -21,7 +21,7 @@
 	DbMapComponent node = (DbMapComponent) codeGenArgument.getArgument();
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
     org.talend.designer.dbmap.language.hive.HiveGenerationManager gm = new org.talend.designer.dbmap.language.hive.HiveGenerationManager();
     String uniqueNameComponent = null;
 
@@ -73,7 +73,7 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
     // force hive2
     if ((!isCustom)
             && (("Cloudera_CDH5_4".equals(hiveVersion))
-                    || ("APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion)))) {
+                    || ("APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion)) || ("MAPR410".equals(hiveVersion)))) {
         hiveServer = "HIVE2";
     }
 	
@@ -123,13 +123,13 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 			}
 		}
 
-	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"PIVOTAL_HD_2_0".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"HDP_2_1".equals(hiveVersion) && !"HDP_2_2".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion) && !"Cloudera_CDH5".equals(hiveVersion) && !"Cloudera_CDH5_1".equals(hiveVersion) && !"Cloudera_CDH5_4".equals(hiveVersion) && !"MAPR401".equals(hiveVersion) && !"APACHE_2_4_0_EMR".equals(hiveVersion) && !"APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion))) && setMapredJT) {
+	if(((isCustom && !useYarn) || (!isCustom && !"PIVOTAL_HD_1_0_1".equals(hiveVersion) && !"PIVOTAL_HD_2_0".equals(hiveVersion) && !"HDP_2_0".equals(hiveVersion) && !"HDP_2_1".equals(hiveVersion) && !"HDP_2_2".equals(hiveVersion) && !"Cloudera_CDH4_YARN".equals(hiveVersion) && !"Cloudera_CDH5".equals(hiveVersion) && !"Cloudera_CDH5_1".equals(hiveVersion) && !"Cloudera_CDH5_4".equals(hiveVersion) && !"MAPR401".equals(hiveVersion) && !"MAPR410".equals(hiveVersion) && !"APACHE_2_4_0_EMR".equals(hiveVersion) && !"APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion))) && setMapredJT) {
 		String mapredJT = ElementParameterParser.getValue(node, "__MAPRED_JT__");
 %>
 		System.setProperty("mapred.job.tracker", <%=mapredJT%>);
 <%
 	}
-		
+
 	if(setNamenode) {
 		String namenode = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 %>

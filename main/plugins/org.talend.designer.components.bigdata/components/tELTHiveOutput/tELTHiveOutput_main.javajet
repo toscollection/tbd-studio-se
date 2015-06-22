@@ -237,7 +237,7 @@ if(useExistingConn) {
         // force hive2
         if ((!isCustom)
                 && (("Cloudera_CDH5_4".equals(hiveVersion))
-                        || ("APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion)))) {
+                        || ("APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion)) || ("MAPR410".equals(hiveVersion)))) {
             hiveServer = "HIVE2";
         }
 
@@ -255,6 +255,7 @@ if(useExistingConn) {
                         || "MAPR301".equals(hiveVersion)
                         || "MAPR310".equals(hiveVersion)
                         || "MAPR401".equals(hiveVersion)
+                        || "MAPR410".equals(hiveVersion)
                         || "HDP_2_0".equals(hiveVersion)
                         || "HDP_2_1".equals(hiveVersion)
                         || "HDP_2_2".equals(hiveVersion)
@@ -398,7 +399,7 @@ if(useExistingConn) {
         }
 
         boolean isKerberosAvailableHadoop2 = !isCustom && ("HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "HDP_2_2".equals(hiveVersion) || "Cloudera_CDH4_YARN".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion) || "Cloudera_CDH5_4".equals(hiveVersion) || "PIVOTAL_HD_2_0".equals(hiveVersion));
-        boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(hiveVersion) || "APACHE_2_4_0_EMR".equals(hiveVersion) || "APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion) || "MAPR401".equals(hiveVersion) ||  isKerberosAvailableHadoop2;
+        boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(hiveVersion) || "APACHE_2_4_0_EMR".equals(hiveVersion) || "APACHE_2_4_0_EMR_0_13_1".equals(hiveVersion) || "MAPR401".equals(hiveVersion) || "MAPR410".equals(hiveVersion) ||  isKerberosAvailableHadoop2;
 
         boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "Cloudera_CDH4".equals(hiveVersion) || "Cloudera_CDH5_1_MR1".equals(hiveVersion));
 
@@ -458,7 +459,7 @@ if(useExistingConn) {
             }
 
             if("EMBEDDED".equals(connectionMode)) {
-                if(!isCustom && ("HDP_2_1".equals(hiveVersion) || "HDP_2_2".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion) || "Cloudera_CDH5_4".equals(hiveVersion) || "MAPR401".equals(hiveVersion))) {
+                if(!isCustom && ("HDP_2_1".equals(hiveVersion) || "HDP_2_2".equals(hiveVersion) || "Cloudera_CDH5".equals(hiveVersion) || "Cloudera_CDH5_1".equals(hiveVersion) || "Cloudera_CDH5_4".equals(hiveVersion) || "MAPR401".equals(hiveVersion) || "MAPR410".equals(hiveVersion))) {
 %>
                 init_<%=cid%>.execute("SET mapreduce.app-submission.cross-platform=true");
 <%
