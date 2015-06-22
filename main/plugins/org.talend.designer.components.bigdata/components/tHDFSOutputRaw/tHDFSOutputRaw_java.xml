@@ -6,7 +6,8 @@
 	</HEADER>
 
 	<FAMILIES>
-		<FAMILY>File/Output</FAMILY>
+		<FAMILY>File/Hadoop</FAMILY>
+		<FAMILY>Big Data/HDFS</FAMILY>
 	</FAMILIES>
 
 	<DOCUMENTATION>
