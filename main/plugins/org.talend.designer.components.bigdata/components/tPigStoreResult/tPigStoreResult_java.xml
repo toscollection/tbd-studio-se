@@ -161,6 +161,7 @@
 					SHOW_IF="(DISTRIBUTION=='MAPR') AND (STORE!='HCATSTORER')" />
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR401" VALUE="MAPR401" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR410" VALUE="MAPR410" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR"
 					SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
@@ -478,6 +479,9 @@
 			
 			<!-- MAPR401 -->
 			<IMPORT MODULE_GROUP="PIG-HCAT-LIB-MAPR40X_LASTEST" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR401') AND (DISTRIBUTION!='CUSTOM')" />
+
+			<!-- MAPR410 -->
+			<IMPORT MODULE_GROUP="PIG-HCAT-LIB-MAPR41X_LASTEST" REQUIRED_IF="(STORE=='HCATSTORER') AND (HBASE_VERSION=='MAPR410') AND (DISTRIBUTION!='CUSTOM')" />
 
 			<IMPORT NAME="hcatalog-core-0.12-mapr-1401-140130.jar" MODULE="hcatalog-core-0.12-mapr-1401-140130.jar" MVN="mvn:org.talend.libraries/hcatalog-core-0.12-mapr-1401-140130/6.0.0" 
 				UrlPath="platform:/plugin/org.talend.libraries.hcatalog/lib/hcatalog-core-0.12-mapr-1401-140130.jar"
@@ -859,6 +863,8 @@
 			
 			<!-- MAPR401 -->
 			<IMPORT MODULE_GROUP="PIG-HBASE-LIB-MAPR40X_LASTEST" REQUIRED_IF="(HBASE_VERSION=='MAPR401' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')" />
+			<!-- MAPR410 -->
+			<IMPORT MODULE_GROUP="PIG-HBASE-LIB-MAPR41X_LASTEST" REQUIRED_IF="(HBASE_VERSION=='MAPR410' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')" />
 			<!-- HBASE Support End -->
 
 			<IMPORT NAME="elephant-bird-pig-4.1.jar" MODULE="elephant-bird-pig-4.1.jar" MVN="mvn:org.talend.libraries/elephant-bird-pig-4.1/6.0.0" 
@@ -1072,6 +1078,9 @@
 			<!-- MAPR401 -->
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-MAPR40X_LASTEST" REQUIRED_IF="(HBASE_VERSION=='MAPR401') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
+			<!-- MAPR410 -->
+			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-MAPR41X_LASTEST" REQUIRED_IF="(HBASE_VERSION=='MAPR410') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
+
 			<!-- PIVOTAL_HD_1_0_1 -->
 			<IMPORT NAME="hive-serde-0.9.1-gphd-2.0.1.0.jar" MODULE="hive-serde-0.9.1-gphd-2.0.1.0.jar" MVN="mvn:org.talend.libraries/hive-serde-0.9.1-gphd-2.0.1.0/6.0.0" 
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.emc.pivotal.1.0/lib/hive-serde-0.9.1-gphd-2.0.1.0.jar"
@@ -1098,7 +1107,7 @@
 			<!-- AVRO Support Start -->
 			<IMPORT NAME="piggybank.jar" MODULE="piggybank.jar" MVN="mvn:org.talend.libraries/piggybank/6.0.0" 
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar"
-				REQUIRED_IF="((STORE=='AVROSTORAGE') AND ((DISTRIBUTION!='CLOUDERA') OR (HBASE_VERSION=='Cloudera_CDH3')) AND (HBASE_VERSION!='MAPR401') AND (HBASE_VERSION!='PIVOTAL_HD_1_0_1') AND (HBASE_VERSION!='PIVOTAL_HD_2_0') AND (HBASE_VERSION!='HDP_2_0') AND (HBASE_VERSION!='HDP_2_1') AND (HBASE_VERSION!='HDP_2_2')) AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="((STORE=='AVROSTORAGE') AND ((DISTRIBUTION!='CLOUDERA') OR (HBASE_VERSION=='Cloudera_CDH3')) AND (HBASE_VERSION!='MAPR401' OR HBASE_VERSION!='MAPR410') AND (HBASE_VERSION!='PIVOTAL_HD_1_0_1') AND (HBASE_VERSION!='PIVOTAL_HD_2_0') AND (HBASE_VERSION!='HDP_2_0') AND (HBASE_VERSION!='HDP_2_1') AND (HBASE_VERSION!='HDP_2_2')) AND DISTRIBUTION!='CUSTOM'" />
 
 			<IMPORT NAME="piggybank-cdh4.jar" MODULE="piggybank-cdh4.jar" MVN="mvn:org.talend.libraries/piggybank-cdh4/6.0.0" 
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank-cdh4.jar"
@@ -1123,7 +1132,7 @@
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar"
 				REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='HDP_2_1' OR HBASE_VERSION=='Cloudera_CDH4_YARN' OR HBASE_VERSION=='Cloudera_CDH5' OR HBASE_VERSION=='PIVOTAL_HD_2_0')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar" MVN="mvn:org.talend.libraries/avro-1.5.4/6.0.0" 
-				REQUIRED_IF="(STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH5') AND (HBASE_VERSION!='Cloudera_CDH5_1') AND (HBASE_VERSION!='Cloudera_CDH5_4') AND (HBASE_VERSION!='Cloudera_CDH5_1_MR1') AND (HBASE_VERSION!='HDP_2_2') AND (HBASE_VERSION!='MAPR401') AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="(STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH5') AND (HBASE_VERSION!='Cloudera_CDH5_1') AND (HBASE_VERSION!='Cloudera_CDH5_4') AND (HBASE_VERSION!='Cloudera_CDH5_1_MR1') AND (HBASE_VERSION!='HDP_2_2') AND (HBASE_VERSION!='MAPR401' OR HBASE_VERSION!='MAPR410') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="json_simple-1.1.jar" MODULE="json_simple-1.1.jar" MVN="mvn:org.talend.libraries/json_simple-1.1/6.0.0" 
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar"
 				REQUIRED_IF="(STORE=='AVROSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
@@ -1140,6 +1149,9 @@
 
 			<!-- MAPR401 -->
 			<IMPORT MODULE_GROUP="PIG-AVRO-LIB-MAPR40X_LASTEST" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='MAPR401')) AND DISTRIBUTION!='CUSTOM'" />
+
+			<!-- MAPR410 -->
+			<IMPORT MODULE_GROUP="PIG-AVRO-LIB-MAPR41X_LASTEST" REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='MAPR410')) AND DISTRIBUTION!='CUSTOM'" />
 			<!-- AVRO Support End -->
 
 			<!-- Parquet Support Begin -->
