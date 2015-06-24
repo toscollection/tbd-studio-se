@@ -34,7 +34,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-			log.info("<%=cid%> - get existed cloud storage account object from <%=connection%>.");
+			log.info("<%=cid%> - Get the existed cloud storage account object from <%=connection%>.");
 <%
 			}
 		} else {
@@ -45,7 +45,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-			log.info("<%=cid%> - Success to create cloud storage account object.");
+			log.info("<%=cid%> - Create the cloud storage account object successfully.");
 <%
 			}
 %>
@@ -78,6 +78,13 @@
 				}
 %>
 				blob_<%=cid%>.download(new java.io.FileOutputStream(<%=localFolder%> + "/" + blob_<%=cid%>.getName()));
+<%
+				if(isLog4jEnabled) {
+%>
+				log.info("<%=cid%> - Download the blob : " + blob_<%=cid%>.getName() + " successfully.");
+<%
+				}
+%>
 			    }
 			}
 <%

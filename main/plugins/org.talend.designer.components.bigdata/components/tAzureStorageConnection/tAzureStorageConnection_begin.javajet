@@ -27,7 +27,7 @@
 <%
 	if(isLog4jEnabled) {
 %>
-		log.info("<%=cid%> - Success to create cloud storage account object.");
+		log.info("<%=cid%> - Create the cloud storage account object successfully.");
 <%
 	}
 %>

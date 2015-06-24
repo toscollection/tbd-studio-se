@@ -39,7 +39,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-			log.info("<%=cid%> - get existed cloud storage account object from <%=connection%>.");
+			log.info("<%=cid%> - Get the existed cloud storage account object from <%=connection%>.");
 <%
 			}
 		} else {
@@ -50,7 +50,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-			log.info("<%=cid%> - Success to create cloud storage account object.");
+			log.info("<%=cid%> - Create the cloud storage account object successfully.");
 <%
 			}
 %>
@@ -97,6 +97,13 @@
 			com.microsoft.windowsazure.services.blob.client.CloudBlockBlob object_<%=cid%> = container_<%=cid%>.getBlockBlobReference(entry_<%=cid%>.getValue().toString());
 			java.io.File source_<%=cid%> = new java.io.File(entry_<%=cid%>.getKey().toString());
 			object_<%=cid%>.upload(new java.io.FileInputStream(source_<%=cid%>), source_<%=cid%>.length());
+<%
+			if(isLog4jEnabled) {
+%>
+			log.info("<%=cid%> - Upload the file : " + source_<%=cid%>.getName() + " successfully.");
+<%
+			}
+%>
 		}
 		
 		

@@ -34,7 +34,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-			log.info("<%=cid%> - get existed cloud storage account object from <%=connection%>.");
+			log.info("<%=cid%> - Get the existed cloud storage account object from <%=connection%>.");
 <%
 			}
 		} else {
@@ -45,7 +45,7 @@
 <%
 			if(isLog4jEnabled) {
 %>
-			log.info("<%=cid%> - Success to create cloud storage account object.");
+			log.info("<%=cid%> - Create the cloud storage account object successfully.");
 <%
 			}
 %>
@@ -82,6 +82,9 @@
 				if(blobItem_<%=cid%> instanceof com.microsoft.windowsazure.services.blob.client.CloudBlob) {
 					com.microsoft.windowsazure.services.blob.client.CloudBlob blob_<%=cid%> = (com.microsoft.windowsazure.services.blob.client.CloudBlob) blobItem_<%=cid%>;
 					globalMap.put("<%=cid%>_CURRENT_BLOB", blob_<%=cid%>.getName());
+					<%if(isLog4jEnabled) {%>
+					log.info("<%=cid%> - The current blob : " + blob_<%=cid%>.getName());
+	  				<%}%>
 				} else {
 					break;
 				}
