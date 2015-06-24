@@ -195,6 +195,13 @@ imports="
 <%
 					}
 
+					if("MAPR410".equals(hiveVersion)){
+%>
+						init_<%=cid%>.execute("SET mapreduce.job.map.output.collector.class=org.apache.hadoop.mapred.MapRFsOutputBuffer");
+						init_<%=cid%>.execute("SET mapreduce.job.reduce.shuffle.consumer.plugin.class=org.apache.hadoop.mapreduce.task.reduce.DirectShuffle");
+<%
+					}
+
 					if(!isCustom && "HDP_2_1".equals(hiveVersion)) {
 %>
 					init_<%=cid%>.execute("SET yarn.application.classpath=/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*");
