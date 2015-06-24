@@ -12,12 +12,15 @@
 // ============================================================================
 package org.talend.oozie.scheduler.jobsubmission.model;
 
+import org.talend.core.runtime.process.TalendProcessArgumentConstant;
+
 public class LocalJobSubmission implements JobSubmission {
 
     @Override
     public String submit(JobContext jobContext) throws JobSubmissionException {
         StringBuilder command = new StringBuilder(1024);
-        command.append("java -cp lib/classpath.jar; ").append(jobContext.getJobFQClassName()).append(" --context=Default %*");
+        command.append("java -cp lib/classpath.jar; ").append(jobContext.getJobFQClassName())
+                .append(' ' + TalendProcessArgumentConstant.CMD_ARG_CONTEXT_NAME + "Default %*");
 
         try {
             Process process = Runtime.getRuntime().exec(command.toString());

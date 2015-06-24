@@ -22,6 +22,7 @@ import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.core.runtime.process.TalendProcessArgumentConstant;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
@@ -122,7 +123,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
         String tosContextPath = jobContext.getTosContextPath();
         if (tosContextPath != null) {
-            action.addArgument("--context=" + tosContextPath);//$NON-NLS-1$
+            action.addArgument(TalendProcessArgumentConstant.CMD_ARG_CONTEXT_NAME + tosContextPath);//$NON-NLS-1$
         }
         return new Workflow(jobContext.getJobName(), action);
     }
