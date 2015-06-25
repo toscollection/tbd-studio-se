@@ -16,11 +16,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.talend.core.model.utils.ContextParameterUtils;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
+
 /**
  * created by ycbai on Aug 6, 2014 Detailled comment
  *
  */
 public class HadoopServiceProperties {
+
+    private ContextType contextType;
 
     private String relativeHadoopClusterId;
 
@@ -60,8 +65,20 @@ public class HadoopServiceProperties {
 
     private List<Map<String, Object>> hadoopProperties;
 
+    private String getRealValue(String value) {
+        if (contextType == null) {
+            return value;
+        } else {
+            return ContextParameterUtils.getOriginalValue(contextType, value);
+        }
+    }
+
+    public void setContextType(ContextType contextType) {
+        this.contextType = contextType;
+    }
+
     public String getDistribution() {
-        return this.distribution;
+        return getRealValue(this.distribution);
     }
 
     public void setDistribution(String distribution) {
@@ -69,7 +86,7 @@ public class HadoopServiceProperties {
     }
 
     public String getVersion() {
-        return this.version;
+        return getRealValue(this.version);
     }
 
     public void setVersion(String version) {
@@ -85,7 +102,7 @@ public class HadoopServiceProperties {
     }
 
     public String getNameNode() {
-        return this.nameNode;
+        return getRealValue(this.nameNode);
     }
 
     public void setNameNode(String nameNode) {
@@ -93,7 +110,7 @@ public class HadoopServiceProperties {
     }
 
     public String getJobTracker() {
-        return this.jobTracker;
+        return getRealValue(this.jobTracker);
     }
 
     public void setJobTracker(String jobTracker) {
@@ -101,7 +118,7 @@ public class HadoopServiceProperties {
     }
 
     public String getResourceManager() {
-        return this.resourceManager;
+        return getRealValue(this.resourceManager);
     }
 
     public void setResourceManager(String resourceManager) {
@@ -109,7 +126,7 @@ public class HadoopServiceProperties {
     }
 
     public String getUserName() {
-        return this.userName;
+        return getRealValue(this.userName);
     }
 
     public void setUserName(String userName) {
@@ -117,7 +134,7 @@ public class HadoopServiceProperties {
     }
 
     public String getGroup() {
-        return this.group;
+        return getRealValue(this.group);
     }
 
     public void setGroup(String group) {
@@ -149,7 +166,7 @@ public class HadoopServiceProperties {
     }
 
     public String getPrincipal() {
-        return this.principal;
+        return getRealValue(this.principal);
     }
 
     public void setPrincipal(String principal) {
@@ -157,7 +174,7 @@ public class HadoopServiceProperties {
     }
 
     public String getJtOrRmPrincipal() {
-        return this.jtOrRmPrincipal;
+        return getRealValue(this.jtOrRmPrincipal);
     }
 
     public void setJtOrRmPrincipal(String jtOrRmPrincipal) {
@@ -165,7 +182,7 @@ public class HadoopServiceProperties {
     }
 
     public String getJobHistoryPrincipal() {
-        return this.jobHistoryPrincipal;
+        return getRealValue(this.jobHistoryPrincipal);
     }
 
     public void setJobHistoryPrincipal(String jobHistoryPrincipal) {
@@ -181,7 +198,7 @@ public class HadoopServiceProperties {
     }
 
     public String getKeytabPrincipal() {
-        return this.keytabPrincipal;
+        return getRealValue(this.keytabPrincipal);
     }
 
     public void setKeytabPrincipal(String keytabPrincipal) {
@@ -189,7 +206,7 @@ public class HadoopServiceProperties {
     }
 
     public String getKeytab() {
-        return this.keytab;
+        return getRealValue(this.keytab);
     }
 
     public void setKeytab(String keytab) {

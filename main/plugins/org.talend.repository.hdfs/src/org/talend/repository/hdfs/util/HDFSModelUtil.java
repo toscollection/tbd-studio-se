@@ -23,7 +23,9 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -45,10 +47,20 @@ public class HDFSModelUtil {
      * @return
      */
     public static HDFSConnectionBean convert2HDFSConnectionBean(HDFSConnection connection) {
+        ContextType contextType = null;
+        if (connection.isContextMode()) {
+            contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
+        }
         HDFSConnectionBean bean = new HDFSConnectionBean();
+        bean.setContextType(contextType);
         try {
             HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
             if (hcConnection != null) {
+                ContextType parentContextType = null;
+                if (hcConnection.isContextMode()) {
+                    parentContextType = ConnectionContextHelper.getContextTypeForContextMode(hcConnection);
+                }
+                bean.setParentContextType(parentContextType);
                 BeanUtils.copyProperties(bean, hcConnection);
                 Map<String, Object> properties = bean.getAdditionalProperties();
                 Map<String, Set<String>> customVersionMap = HCVersionUtil.getCustomVersionMap(hcConnection);

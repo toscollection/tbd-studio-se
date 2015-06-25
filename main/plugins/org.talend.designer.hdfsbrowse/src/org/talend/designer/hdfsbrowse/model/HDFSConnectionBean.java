@@ -15,10 +15,17 @@ package org.talend.designer.hdfsbrowse.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.talend.core.model.utils.ContextParameterUtils;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
+
 /**
  * DOC ycbai class global comment. Detailled comment
  */
 public class HDFSConnectionBean {
+
+    private ContextType parentContextType;
+
+    private ContextType contextType;
 
     private String distribution;
 
@@ -56,8 +63,34 @@ public class HDFSConnectionBean {
 
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
+    private String getRealValue(String value) {
+        return getRealValue(value, false);
+    }
+
+    private String getRealValue(String value, boolean isParentParam) {
+        ContextType ct = null;
+        if (isParentParam) {
+            ct = parentContextType;
+        } else {
+            ct = contextType;
+        }
+        if (ct == null) {
+            return value;
+        } else {
+            return ContextParameterUtils.getOriginalValue(ct, value);
+        }
+    }
+
+    public void setParentContextType(ContextType parentContextType) {
+        this.parentContextType = parentContextType;
+    }
+
+    public void setContextType(ContextType contextType) {
+        this.contextType = contextType;
+    }
+
     public String getDistribution() {
-        return this.distribution;
+        return getRealValue(this.distribution, true);
     }
 
     public void setDistribution(String distribution) {
@@ -65,7 +98,7 @@ public class HDFSConnectionBean {
     }
 
     public String getDfVersion() {
-        return this.dfVersion;
+        return getRealValue(this.dfVersion, true);
     }
 
     public void setDfVersion(String dfVersion) {
@@ -73,7 +106,7 @@ public class HDFSConnectionBean {
     }
 
     public String getNameNodeURI() {
-        return this.nameNodeURI;
+        return getRealValue(this.nameNodeURI, true);
     }
 
     public void setNameNodeURI(String nameNodeURI) {
@@ -81,7 +114,7 @@ public class HDFSConnectionBean {
     }
 
     public String getJobtrackerURI() {
-        return this.jobtrackerURI;
+        return getRealValue(this.jobtrackerURI, true);
     }
 
     public void setJobtrackerURI(String jobtrackerURI) {
@@ -97,7 +130,7 @@ public class HDFSConnectionBean {
     }
 
     public String getPrincipal() {
-        return this.principal;
+        return getRealValue(this.principal, true);
     }
 
     public void setPrincipal(String principal) {
@@ -105,7 +138,7 @@ public class HDFSConnectionBean {
     }
 
     public String getUserName() {
-        return this.userName;
+        return getRealValue(this.userName);
     }
 
     public void setUserName(String userName) {
@@ -113,7 +146,7 @@ public class HDFSConnectionBean {
     }
 
     public String getGroup() {
-        return this.group;
+        return getRealValue(this.group, true);
     }
 
     public void setGroup(String group) {
@@ -121,7 +154,7 @@ public class HDFSConnectionBean {
     }
 
     public String getRowSeparator() {
-        return this.rowSeparator;
+        return getRealValue(this.rowSeparator);
     }
 
     public void setRowSeparator(String rowSeparator) {
@@ -129,7 +162,7 @@ public class HDFSConnectionBean {
     }
 
     public String getFieldSeparator() {
-        return this.fieldSeparator;
+        return getRealValue(this.fieldSeparator);
     }
 
     public void setFieldSeparator(String fieldSeparator) {
@@ -173,7 +206,7 @@ public class HDFSConnectionBean {
     }
 
     public String getKeytabPrincipal() {
-        return this.keytabPrincipal;
+        return getRealValue(this.keytabPrincipal, true);
     }
 
     public void setKeytabPrincipal(String keytabPrincipal) {
@@ -181,7 +214,7 @@ public class HDFSConnectionBean {
     }
 
     public String getKeytab() {
-        return this.keytab;
+        return getRealValue(this.keytab, true);
     }
 
     public void setKeytab(String keytab) {

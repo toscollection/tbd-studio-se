@@ -45,11 +45,13 @@ import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.designer.hdfsbrowse.hadoop.service.EHadoopServiceType;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 import org.talend.designer.hdfsbrowse.hadoop.service.check.CheckHadoopServicesDialog;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.metadata.managment.ui.dialog.HadoopPropertiesDialog;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
@@ -631,6 +633,11 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private void initCommonProperties(HadoopServiceProperties properties) {
         HadoopClusterConnection connection = getConnection();
+        ContextType contextType = null;
+        if (getConnection().isContextMode()) {
+            contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
+        }
+        properties.setContextType(contextType);
         properties.setDistribution(connection.getDistribution());
         properties.setVersion(connection.getDfVersion());
         properties.setGroup(connection.getGroup());
