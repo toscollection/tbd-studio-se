@@ -191,7 +191,7 @@
             <IMPORT
                 NAME="libthrift-0.7.0"
                 MODULE="libthrift-0.7.0.jar" MVN="mvn:org.talend.libraries/libthrift-0.7.0/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.7.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="log4j-1.2.16"
@@ -274,7 +274,7 @@
             <IMPORT
                 NAME="libthrift-0.7.0"
                 MODULE="libthrift-0.7.0.jar" MVN="mvn:org.talend.libraries/libthrift-0.7.0/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.7.0.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"

@@ -221,7 +221,7 @@
                             NAME="log4j-1.2.16"/>
                         <IMPORT
                             MODULE="libthrift-0.7.0.jar" MVN="mvn:org.talend.libraries/libthrift-0.7.0/6.0.0" 
-                            UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.7.0.jar"
                             NAME="libthrift-0.7.0"/>
                         <IMPORT
                             MODULE="guava-12.0.1.jar" MVN="mvn:org.talend.libraries/guava-12.0.1/6.0.0" 
@@ -259,7 +259,7 @@
                             NAME="log4j-1.2.16"/>
                         <IMPORT
                             MODULE="libthrift-0.7.0.jar" MVN="mvn:org.talend.libraries/libthrift-0.7.0/6.0.0" 
-                            UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.0/lib/libthrift-0.7.0.jar"
+                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.7.0.jar"
                             NAME="libthrift-0.7.0"/>
                         <IMPORT
                             MODULE="guava-13.0.1.jar" MVN="mvn:org.talend.libraries/guava-13.0.1/6.0.0" 
