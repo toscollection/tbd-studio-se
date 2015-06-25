@@ -102,8 +102,9 @@
 		kbInterceptor_<%=cid%>.setLoginConfig(new KerberosPolicyConfig_<%=cid%>(properties_<%=cid%>));
 <%
 	}	
-%>	
-	org.apache.cxf.jaxrs.client.WebClient client_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templetonHost%> + ":" + <%=templetonPort%> + "?user.name=" + <%=user%>);
+%>
+	String credentials_<%=cid%> = "?user.name=" + <%=user%> + "&format=extended";
+	org.apache.cxf.jaxrs.client.WebClient client_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templetonHost%> + ":" + <%=templetonPort%> + credentials_<%=cid%>);
 
 <%
 	if(useKerberos) {
@@ -112,8 +113,11 @@
 <%
 	}
 %>
+	String pathEndpoint_<%=cid%> = "/templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%>;
+	if(!"".equals(<%=partition%>)) {
+		pathEndpoint_<%=cid%> += "/partition/" + <%=partition%>;
+	}
 	
-	String pathEndpoint_<%=cid%> = "templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%> + "/partition/" + <%=partition%>;
 	String location_<%=cid%> = "";
 	<%@ include file="../templates/HCatalog/RestResponse.javajet"%>
 <%
@@ -180,7 +184,7 @@
 <%
         boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
         String hcatVersion = ElementParameterParser.getValue(node, "__HCAT_VERSION__");
-        if(!isCustom && hcatVersion!=null && "MAPR310,MAPR401".contains(hcatVersion)) {
+        if(!isCustom && hcatVersion!=null && hcatVersion.contains("MAPR")) {
 %>
 		pathHDFS_<%=cid%> = location_<%=cid%>;
 		namenode_<%=cid%> = "maprfs:///";
