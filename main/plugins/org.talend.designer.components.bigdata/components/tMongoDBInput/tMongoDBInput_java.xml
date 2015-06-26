@@ -150,8 +150,8 @@
                 SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (REQUIRED_AUTHENTICATION == 'true')" GROUP="AUTHENTICATION">
             <ITEMS DEFAULT="NEGOTIATE_MEC">
                 <ITEM NAME="NEGOTIATE_MEC" VALUE="NEGOTIATE_MEC"/>
-                <ITEM NAME="PLAIN_MEC" VALUE="PLAIN_MEC"/>
-                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC"/>
+                <ITEM NAME="PLAIN_MEC" VALUE="PLAIN_MEC" SHOW_IF="(DB_VERSION!='MONGODB_2_5_X')"/>
+                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC" SHOW_IF="(DB_VERSION=='MONGODB_3_0_X')" />
                 <ITEM NAME="KERBEROS_MEC" VALUE="KERBEROS_MEC"/>
             </ITEMS>
         </PARAMETER>
@@ -265,7 +265,7 @@
             <IMPORT MODULE="mongo-java-driver-2.11.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.11.2/6.0.0"  NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_5_X') AND (USE_EXISTING_CONNECTION == 'false')" />
             <!-- mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6 -->
             <IMPORT MODULE="mongo-java-driver-2.12.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.12.2/6.0.0"  NAME="mongo-2.12.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.12.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_6_X') AND (USE_EXISTING_CONNECTION == 'false')" />
-            <IMPORT MODULE="mongo-java-driver-2.13.1.jar" MVN="mvn:org.mongodb/mongo-java-driver/2.13.1"  NAME="mongo-java-driver-2.13.1" REQUIRED_IF="(DB_VERSION=='MONGODB_3_0_X') AND (USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT MODULE="mongo-java-driver-2.13.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.13.2/6.0.0"  NAME="mongo-2.13.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.13.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_3_0_X')" />
         </IMPORTS>
     </CODEGENERATION>
     <RETURNS>

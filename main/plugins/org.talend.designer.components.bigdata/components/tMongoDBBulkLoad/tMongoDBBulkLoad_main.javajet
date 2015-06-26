@@ -186,6 +186,7 @@
                 args_<%=cid%>.add("--authenticationMechanism");
                 args_<%=cid%>.add("SCRAM-SHA-1");
                 <%
+                // X509 can't work today without adding a property to locate the x509 certificate
             } else if(authenticationMechanism.equals("MONGODBX509_MEC")){
                 %>
                 args_<%=cid%>.add("--authenticationMechanism");
