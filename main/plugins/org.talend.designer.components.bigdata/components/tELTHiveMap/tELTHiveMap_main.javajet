@@ -61,8 +61,6 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 	String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 	boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
 
-	boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
-
 	if(hadoopProps.size() > 0){
 		for(Map<String, String> item : hadoopProps){
 %>
