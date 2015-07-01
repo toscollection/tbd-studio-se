@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.repository.hadoopcluster.ui.conf;
+package org.talend.repository.hadoopcluster.conf;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -24,20 +24,21 @@ import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.hadoop.conf.EHadoopConfProperties;
+import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.general.ILibrariesService;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.repository.ResourceModelUtils;
-import org.talend.designer.hdfsbrowse.manager.EHadoopConfProperties;
 import org.talend.repository.ProjectManager;
-import org.talend.repository.hadoopcluster.conf.EHadoopConfs;
 import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurator;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfiguratorBuilder;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
+import org.talend.repository.hadoopcluster.ui.conf.HadoopImportConfsWizard;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JarBuilder;

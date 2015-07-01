@@ -17,9 +17,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.PlatformUI;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.metadata.managment.ui.wizard.AbstractForm;
+import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopClusterWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
-import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 
 /**

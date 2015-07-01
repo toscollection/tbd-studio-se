@@ -87,5 +87,11 @@
             serviceId="IRepositoryContextUpdateService">
       </Service>
    </extension>
+   <extension
+         point="org.talend.core.runtime.hadoopConnectionCreator">
+      <creator
+            class="org.talend.repository.oozie.creator.OozieConnectionCreator">
+      </creator>
+   </extension>
 
 </plugin>

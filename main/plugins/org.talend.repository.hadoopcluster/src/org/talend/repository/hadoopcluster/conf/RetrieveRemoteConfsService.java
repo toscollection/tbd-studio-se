@@ -23,7 +23,6 @@ import org.talend.repository.hadoopcluster.configurator.HadoopCluster;
 import org.talend.repository.hadoopcluster.configurator.HadoopClusterService;
 import org.talend.repository.hadoopcluster.configurator.HadoopHostedService;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
-import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
 
 /**
  * 
@@ -40,7 +39,8 @@ public class RetrieveRemoteConfsService implements IRetrieveConfsService {
         this.cluster = cluster;
     }
 
-    private Map<String, Map<String, String>> getConfsMap() throws MalformedURLException {
+    @Override
+    public Map<String, Map<String, String>> getConfsMap() throws MalformedURLException {
         if (confsMap != null) {
             return confsMap;
         }
