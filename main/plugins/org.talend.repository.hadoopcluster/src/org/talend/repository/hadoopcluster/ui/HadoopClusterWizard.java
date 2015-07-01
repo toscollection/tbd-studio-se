@@ -45,6 +45,7 @@ import org.talend.designer.runprocess.IRunProcessService;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.metadata.managment.ui.wizard.CheckLastVersionRepositoryWizard;
 import org.talend.repository.hadoopcluster.HadoopClusterPlugin;
+import org.talend.repository.hadoopcluster.conf.HadoopConfsManager;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
@@ -187,6 +188,9 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
             try {
                 if (creation) {
                     factory.create(connectionItem, propertiesPage.getDestinationPath());
+                    if (connection.isUseCustomConfs()) {
+                        HadoopConfsManager.getInstance().createHadoopConnectionsFromConfs();
+                    }
                 } else {
                     updateDbConnections();
                     HadoopClusterUpdateManager.updateHadoopClusterConnection(connectionItem);

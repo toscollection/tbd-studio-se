@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.service;
 
+import java.net.MalformedURLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * created by ycbai on 2015年6月1日 Detailled comment
@@ -23,6 +25,8 @@ public interface IRetrieveConfsService {
     public final static String CONF_FILE_EXT = ".xml"; //$NON-NLS-1$
 
     public void reload();
+
+    public Map<String, Map<String, String>> getConfsMap() throws MalformedURLException;
 
     public String getConfValue(String confType, String key) throws Exception;
 

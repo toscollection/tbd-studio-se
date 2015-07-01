@@ -123,5 +123,11 @@
             libraries="commons-codec-1.7.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.2.0-gphd-3.0.0.0.jar;hadoop-common-2.2.0-gphd-3.0.0.0.jar;hbase-client-0.96.0-hadoop2-gphd-3.0.0.0.jar;hbase-common-0.96.0-hadoop2-gphd-3.0.0.0.jar;hbase-protocol-0.96.0-hadoop2-gphd-3.0.0.0.jar;htrace-core-2.01.jar;jackson-core-asl-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;log4j-1.2.16.jar;slf4j-log4j12-1.6.1.jar;protobuf-java-2.5.0.jar;slf4j-api-1.6.1.jar;zookeeper-3.4.5-gphd-3.0.0.0.jar;netty-3.6.6.Final.jar">
       </classloader>
    </extension>
+   <extension
+         point="org.talend.core.runtime.hadoopConnectionCreator">
+      <creator
+            class="org.talend.repository.hbaseprovider.creator.HBaseConnectionCreator">
+      </creator>
+   </extension>
 
 </plugin>

@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.conf.IPropertyConstants;
 import org.talend.repository.hadoopcluster.conf.RetrieveRemoteConfsService;
 import org.talend.repository.hadoopcluster.configurator.HadoopCluster;

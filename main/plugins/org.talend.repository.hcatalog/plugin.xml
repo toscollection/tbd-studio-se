@@ -118,5 +118,11 @@
             serviceId="IHCatalogService">
       </Service>
    </extension>
+   <extension
+         point="org.talend.core.runtime.hadoopConnectionCreator">
+      <creator
+            class="org.talend.repository.hcatalog.creator.HCatalogConnectionCreator">
+      </creator>
+   </extension>
 
 </plugin>

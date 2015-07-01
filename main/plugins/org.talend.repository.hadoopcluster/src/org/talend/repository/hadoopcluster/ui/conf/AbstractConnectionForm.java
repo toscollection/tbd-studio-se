@@ -28,6 +28,7 @@ import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.repository.hadoopcluster.conf.ETrustStoreType;
+import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.conf.IPropertyConstants;
 import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;

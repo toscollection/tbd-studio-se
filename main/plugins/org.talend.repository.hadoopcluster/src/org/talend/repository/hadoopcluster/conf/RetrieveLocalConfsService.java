@@ -19,15 +19,17 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
 import org.talend.commons.utils.io.FilesUtils;
+import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
-import org.talend.repository.hadoopcluster.ui.conf.HadoopConfsUtils;
 
 /**
  * created by ycbai on 2015年6月1日 Detailled comment
@@ -37,13 +39,13 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
 
     private String confsDirPath;
 
-    private Map<String, Configuration> confsMap;
+    private Map<String, Map<String, String>> confsMap;
 
     public RetrieveLocalConfsService(String confsDirPath) {
         this.confsDirPath = confsDirPath;
     }
 
-    private Map<String, Configuration> getConfsMap() throws MalformedURLException {
+    public Map<String, Map<String, String>> getConfsMap() throws MalformedURLException {
         if (confsMap != null) {
             return confsMap;
         }
@@ -69,10 +71,20 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
                 }
             }
             if (addedResource) {
-                confsMap.put(conf.getName(), configuration);
+                confsMap.put(conf.getName(), configurationToMap(configuration));
             }
         }
         return confsMap;
+    }
+
+    private Map<String, String> configurationToMap(Configuration configuration) {
+        Map<String, String> cMap = new HashMap<>();
+        Iterator<Entry<String, String>> confsIter = configuration.iterator();
+        while (confsIter.hasNext()) {
+            Entry<String, String> confsEntry = confsIter.next();
+            cMap.put(confsEntry.getKey(), confsEntry.getValue());
+        }
+        return cMap;
     }
 
     @Override
@@ -82,7 +94,7 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
 
     @Override
     public String getConfValue(String confType, String key) throws Exception {
-        Configuration configuration = getConfsMap().get(confType);
+        Map<String, String> configuration = getConfsMap().get(confType);
         if (configuration != null) {
             return configuration.get(key);
         }

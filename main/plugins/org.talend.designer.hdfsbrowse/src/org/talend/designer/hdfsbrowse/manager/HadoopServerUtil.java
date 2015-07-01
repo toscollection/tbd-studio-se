@@ -32,6 +32,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.classloader.DynamicClassLoader;
+import org.talend.core.hadoop.conf.EHadoopConfProperties;
 import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.model.general.ModuleNeeded.ELibraryInstallStatus;
 import org.talend.core.repository.model.connection.ConnectionStatus;
