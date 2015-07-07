@@ -32,6 +32,7 @@ import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.IProcess;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
@@ -126,6 +127,31 @@ public class HadoopClusterService implements IHadoopClusterService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isHadoopSubItem2(Item item) {
+        return getHadoopClusterBySubitemId(item.getProperty().getId()) != null;
+    }
+
+    @Override
+    public boolean isInContextMode(ConnectionItem connItem) {
+        if (connItem == null) {
+            return false;
+        }
+        boolean isContextMode = false;
+        Connection connection = connItem.getConnection();
+        if (isHadoopClusterItem(connItem)) {
+            isContextMode = connection.isContextMode();
+        } else {
+            Item hadoopClusterItem = getHadoopClusterBySubitemId(connItem.getProperty().getId());
+            Connection hcConnection = null;
+            if (hadoopClusterItem != null) {
+                hcConnection = ((ConnectionItem) hadoopClusterItem).getConnection();
+            }
+            isContextMode = connection.isContextMode() || (hcConnection != null && hcConnection.isContextMode());
+        }
+        return isContextMode;
     }
 
     @Override
