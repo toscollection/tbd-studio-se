@@ -26,8 +26,11 @@ import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
+import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -124,7 +127,16 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
                 hadoopConnection.setPassword(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD));
             } else {
                 hadoopConnection.setUserName(hcConnection.getUserName());
-                hadoopConnection.setHostName(HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
+
+                String nameNodeUri = hcConnection.getNameNodeURI();
+                String originalNameNodeUri = null;
+                if (hcConnectionItem.getConnection().isContextMode()) {
+                    ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(
+                            hcConnectionItem.getConnection(), hcConnectionItem.getConnection().getContextName());
+                    originalNameNodeUri = TalendQuoteUtils.removeQuotes(ConnectionContextHelper.getOriginalValue(contextType,
+                            nameNodeUri));
+                }
+                hadoopConnection.setHostName(HadoopParameterUtil.getHostNameFromNameNodeURI(originalNameNodeUri));
             }
         }
     }
