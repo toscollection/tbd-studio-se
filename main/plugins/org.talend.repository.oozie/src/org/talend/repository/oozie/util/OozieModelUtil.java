@@ -31,7 +31,7 @@ public class OozieModelUtil {
             if (hcConnection != null) {
                 ContextType parentContextType = null;
                 if (hcConnection.isContextMode()) {
-                    parentContextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
+                    parentContextType = ConnectionContextHelper.getContextTypeForContextMode(hcConnection);
                 }
                 bean.setParentContextType(parentContextType);
                 BeanUtils.copyProperties(bean, hcConnection);
