@@ -40,6 +40,10 @@
             name="applicationCSSResources"
             value="platform:/plugin/org.talend.themes.css.talend/themes/">
       </property>
+      <property
+            name="lifeCycleURI"
+            value="bundleclass://org.talend.core.ui/org.talend.core.ui.TalendStudioLifeCycleManager">
+      </property>
    </product>
 </extension>
    <extension
