@@ -126,13 +126,12 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                 if (component != null && component.getName() != null && component.getName().equals("tMRConfiguration")) { //$NON-NLS-1$
                     isMr = true;
                     node = iNode;
-                    if (node instanceof DataNode) {
-                        DataNode dataNode = (DataNode) node;
-                        IElementParameter versionParameter = dataNode.getElementParameter(EHadoopParameter.MR_VERSION.getName());
+                    if (node instanceof DataNode || node instanceof BigDataNode) {
+                        IElementParameter versionParameter = node.getElementParameter(EHadoopParameter.MR_VERSION.getName());
                         if (versionParameter != null) {
                             connectionBean.setDfVersion((String) versionParameter.getValue());
                         }
-                        IElementParameter nameNodeParameter = dataNode.getElementParameter(EHadoopParameter.NAMENODE.getName());
+                        IElementParameter nameNodeParameter = node.getElementParameter(EHadoopParameter.NAMENODE.getName());
                         if (nameNodeParameter != null) {
                             connectionBean.setNameNodeURI((String) nameNodeParameter.getValue());
                         }
