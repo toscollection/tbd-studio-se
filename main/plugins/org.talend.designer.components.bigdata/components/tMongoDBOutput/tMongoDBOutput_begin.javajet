@@ -184,7 +184,7 @@
                 			}
                         } else if(authenticationMechanism.equals("PLAIN_MEC")){
                             %>
-                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createPlainCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createPlainCredential(<%=dbuser%>, "$external", new String(decryptedPassword_<%=cid%>).toCharArray());
                             <%
                         } else if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
                             %>
