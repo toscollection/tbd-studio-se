@@ -59,7 +59,7 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="4"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-            <ITEMS DEFAULT="CASSANDRA_1_1_2">
+            <ITEMS DEFAULT="CASSANDRA_2_0_0">
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
@@ -70,7 +70,7 @@
             FIELD="CLOSED_LIST"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')"
             NUM_ROW="4">
-            <ITEMS DEFAULT="HECTOR">
+            <ITEMS DEFAULT="DATASTAX">
                 <ITEM NAME="HECTOR" VALUE="HECTOR"/>
                 <ITEM NAME="DATASTAX" VALUE="DATASTAX"/>
             </ITEMS>
@@ -85,8 +85,8 @@
             <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">datastax</DEFAULT>
         </PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="HOST"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="HOST"
 			REQUIRED="true"
 			NUM_ROW="6"
@@ -95,27 +95,16 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="PORT"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="PORT"
 			REQUIRED="true"
 			NUM_ROW="6"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
-			<DEFAULT IF="API_SELECTED == 'hector'">"9160"</DEFAULT>
-            <DEFAULT IF="API_SELECTED == 'datastax'">"9042"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">"9160"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">"9042"</DEFAULT>
 		</PARAMETER>
-		<!-- do not want GROUP="KEYSPACE_CONFIGURATION", have to add different PARAMETER  -->
-        <PARAMETER
-            NAME="KEY_SPACE_DATASTAX"
-            FIELD="TEXT"
-            REPOSITORY_VALUE="KEY_SPACE"
-            REQUIRED="true"
-            NUM_ROW="9"
-            SHOW_IF="(API_SELECTED == 'datastax') AND (USE_EXISTING_CONNECTION == 'false')"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
 		<PARAMETER
 			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"
@@ -126,8 +115,8 @@
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="USERNAME"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="USERNAME"
 			REQUIRED="true"
 			NUM_ROW="12"
@@ -136,8 +125,8 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="PASSWORD"
 			NAME="PASSWORD"
+			FIELD="PASSWORD"
 			REPOSITORY_VALUE="PASSWORD"
 			REQUIRED="true"
 			NUM_ROW="12"
@@ -146,19 +135,18 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="KEY_SPACE"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="KEY_SPACE"
 			REQUIRED="true"
 			NUM_ROW="16"
-			SHOW_IF="API_SELECTED == 'hector'"
-			GROUP="KEYSPACE_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
+		<!-- common setting end -->
 		<PARAMETER
-            FIELD="TEXT"
             NAME="TABLE"
+            FIELD="TEXT"
             REQUIRED="true"
             NUM_ROW="17"
             SHOW_IF="API_SELECTED == 'datastax'"
@@ -166,8 +154,8 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
-			FIELD="TEXT"
 			NAME="COLUMN_FAMILY"
+			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="17"
 			SHOW_IF="API_SELECTED == 'hector'"
@@ -188,23 +176,23 @@
             </ITEMS>
         </PARAMETER>
 		<PARAMETER
-			FIELD="CHECK"
 			NAME="INC_KEY"
+			FIELD="CHECK"
 			NUM_ROW="21"
 			SHOW_IF="API_SELECTED == 'hector'"
             >
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="COLUMN_LIST"
 			NAME="KEY_COLUMN"
+			FIELD="COLUMN_LIST"
 			NUM_ROW="21"
 			SHOW_IF="(INC_KEY == 'true') AND (API_SELECTED == 'hector')"
 		/>
         <PARAMETER
+            NAME="ROW_KEY_TYPE"
             FIELD="OPENED_LIST"
             RAW="true"
-            NAME="ROW_KEY_TYPE"
             NUM_ROW="22"
             REQUIRED="true"
             SHOW_IF="API_SELECTED == 'hector'"
@@ -225,8 +213,8 @@
             </ITEMS>
         </PARAMETER>
         <PARAMETER
-            FIELD="CLOSED_LIST"
             NAME="ROW_KEY_C_TYPE"
+            FIELD="CLOSED_LIST"
             NUM_ROW="22"
             REQUIRED="true"
             SHOW_IF="API_SELECTED == 'hector'"
@@ -250,23 +238,23 @@
             </ITEMS>
         </PARAMETER>
 		<PARAMETER
-            FIELD="CHECK"
             NAME="INC_SUPER_KEY"
+            FIELD="CHECK"
             NUM_ROW="23"
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (API_SELECTED == 'hector')"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER
-            FIELD="COLUMN_LIST"
             NAME="SUPER_KEY_COLUMN"
+            FIELD="COLUMN_LIST"
             NUM_ROW="23"
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true') AND (API_SELECTED == 'hector')"
         />
     	<PARAMETER
+        	NAME="SUPER_COLUMN_TYPE"
         	FIELD="OPENED_LIST"
         	RAW="true"
-        	NAME="SUPER_COLUMN_TYPE"
         	NUM_ROW="24"
         	REQUIRED="true"
         	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (API_SELECTED == 'hector')">
@@ -286,8 +274,8 @@
     		</ITEMS>
     	</PARAMETER>
         <PARAMETER
-            FIELD="CLOSED_LIST"
             NAME="SUPER_COLUMN_C_TYPE"
+            FIELD="CLOSED_LIST"
             NUM_ROW="24"
             REQUIRED="true"
             SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (API_SELECTED == 'hector')">
@@ -310,8 +298,8 @@
             </ITEMS>
         </PARAMETER>
         <PARAMETER
-            FIELD="CHECK"
             NAME="SPECIFY_KEYS"
+            FIELD="CHECK"
             NUM_ROW="25"
             SHOW_IF="API_SELECTED == 'hector'"
             GROUP="QUERY_CONFIGURATION"
@@ -319,8 +307,8 @@
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER
-            FIELD="TEXT"
             NAME="ROW_KEYS"
+            FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="26"
             SHOW_IF="(SPECIFY_KEYS == 'true') AND (API_SELECTED == 'hector')"
@@ -329,8 +317,8 @@
             <DEFAULT></DEFAULT>
         </PARAMETER>
 		<PARAMETER
-            FIELD="TEXT"
             NAME="KEY_START"
+            FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="26"
             SHOW_IF="(SPECIFY_KEYS == 'false') AND (API_SELECTED == 'hector')"
@@ -339,8 +327,8 @@
             <DEFAULT></DEFAULT>
         </PARAMETER>
         <PARAMETER
-            FIELD="TEXT"
             NAME="KEY_END"
+            FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="26"
             SHOW_IF="(SPECIFY_KEYS == 'false') AND (API_SELECTED == 'hector')"
@@ -349,8 +337,8 @@
             <DEFAULT></DEFAULT>
         </PARAMETER>
 		<PARAMETER
-            FIELD="TEXT"
             NAME="KEY_LIMIT"
+            FIELD="TEXT"
             REQUIRED="true"
             NUM_ROW="27"
             GROUP="QUERY_CONFIGURATION"
@@ -359,8 +347,8 @@
             <DEFAULT>1000</DEFAULT>
         </PARAMETER>
         <PARAMETER
-            FIELD="CHECK"
             NAME="SPECIFY_COLUMNS"
+            FIELD="CHECK"
             NUM_ROW="29"
             SHOW_IF="API_SELECTED == 'hector'"
             GROUP="QUERY_CONFIGURATION"
@@ -368,8 +356,8 @@
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER
-            FIELD="TEXT"
             NAME="COLUMNS"
+            FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="30"
             SHOW_IF="(SPECIFY_COLUMNS == 'true') AND (API_SELECTED == 'hector')"
@@ -378,8 +366,8 @@
             <DEFAULT></DEFAULT>
         </PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="COLUMN_START"
+			FIELD="TEXT"
 			REQUIRED="false"
 			NUM_ROW="31"
 			SHOW_IF="(SPECIFY_COLUMNS == 'false') AND (API_SELECTED == 'hector')"
@@ -388,8 +376,8 @@
 			<DEFAULT></DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="COLUMN_END"
+			FIELD="TEXT"
 			REQUIRED="false"
 			NUM_ROW="31"
 			SHOW_IF="(SPECIFY_COLUMNS == 'false') AND (API_SELECTED == 'hector')"
@@ -398,8 +386,8 @@
 			<DEFAULT></DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="COLUMN_LIMIT"
+			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="33"
 			SHOW_IF="(SPECIFY_COLUMNS == 'false') AND (API_SELECTED == 'hector')"

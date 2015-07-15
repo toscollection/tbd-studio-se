@@ -51,7 +51,7 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="3"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-            <ITEMS DEFAULT="CASSANDRA_1_1_2">
+            <ITEMS DEFAULT="CASSANDRA_2_0_0">
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
@@ -62,7 +62,7 @@
             FIELD="CLOSED_LIST"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')"
             NUM_ROW="3">
-            <ITEMS DEFAULT="HECTOR">
+            <ITEMS DEFAULT="DATASTAX">
                 <ITEM NAME="HECTOR" VALUE="HECTOR"/>
                 <ITEM NAME="DATASTAX" VALUE="DATASTAX"/>
             </ITEMS>
@@ -77,8 +77,8 @@
             <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">datastax</DEFAULT>
         </PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="HOST"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="HOST"
 			REQUIRED="true"
 			NUM_ROW="5"
@@ -87,27 +87,16 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="PORT"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="PORT"
 			REQUIRED="true"
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
-			<DEFAULT IF="API_SELECTED == 'hector'">"9160"</DEFAULT>
-            <DEFAULT IF="API_SELECTED == 'datastax'">"9042"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">"9160"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">"9042"</DEFAULT>
 		</PARAMETER>
-		<!-- do not want GROUP="KEYSPACE_CONFIGURATION", have to add different PARAMETER  -->
-        <PARAMETER
-            NAME="KEY_SPACE_DATASTAX"
-            FIELD="TEXT"
-            REPOSITORY_VALUE="KEY_SPACE"
-            REQUIRED="true"
-            NUM_ROW="9"
-            SHOW_IF="(API_SELECTED == 'datastax') AND (USE_EXISTING_CONNECTION == 'false')"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
 		<PARAMETER
 			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"
@@ -118,8 +107,8 @@
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="USERNAME"
+			FIELD="TEXT"
 			REPOSITORY_VALUE="USERNAME"
 			REQUIRED="true"
 			NUM_ROW="11"
@@ -128,8 +117,8 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-			FIELD="PASSWORD"
 			NAME="PASSWORD"
+			FIELD="PASSWORD"
 			REPOSITORY_VALUE="PASSWORD"
 			REQUIRED="true"
 			NUM_ROW="11"
@@ -143,14 +132,12 @@
             REPOSITORY_VALUE="KEY_SPACE"
             REQUIRED="true"
             NUM_ROW="13"
-            SHOW_IF="API_SELECTED == 'hector'"
-            GROUP="KEYSPACE_CONFIGURATION"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 		<PARAMETER
-			FIELD="TEXT"
 			NAME="COLUMN_FAMILY"
+			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="15"
             SHOW_IF="API_SELECTED == 'hector'"
@@ -159,8 +146,8 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
         <PARAMETER
-            FIELD="TEXT"
             NAME="TABLE"
+            FIELD="TEXT"
             REQUIRED="true"
             NUM_ROW="15"
             SHOW_IF="API_SELECTED == 'datastax'"

@@ -64,13 +64,15 @@
         
         private INode node;
         private String action;
+        private String keyspace;
         private String tableName;
         private Boolean useSpark = false;
 
         public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
             this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
-            this.tableName = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__TABLE__") + ")";
+            this.keyspace = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__KEY_SPACE__") + ")";
+            this.tableName = this.keyspace + " + \".\" + " + "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__TABLE__") + ")";
             createColumnList(columnList);
         }
         
@@ -177,25 +179,10 @@
         protected String getDBMSId(){
             return CASSANDRA;
         }
-        //do not consider keyword as it instability, but you can wrap double quote in dbname on schema manually
-        private boolean isKeyword (String keyword){
-            //for(int i = 0; i < KeyWords.length; i++){
-            //    if(KeyWords[i].equalsIgnoreCase(keyword)){
-            //        return true;
-            //    }
-            //}
-            return false;
-        }
         private String getLProtectedChar(String keyword){
-            //if(isKeyword(keyword)){
-            //    return "\\\"";
-            //}
             return "\\\""; 
         }
         private String getRProtectedChar(String keyword){
-            //if(isKeyword(keyword)){
-            //    return "\\\"";
-            //}
             return "\\\"";
         }  
         private String wrapProtectedChar(String keyword){
@@ -204,6 +191,43 @@
         	}else{
         		return getLProtectedChar(keyword) + keyword + getRProtectedChar(keyword);
         	}
+        }
+        public String getDropKSSQL(boolean ifExists){
+        	StringBuilder dropKSSQL = new StringBuilder();
+        	dropKSSQL.append("\"DROP KEYSPACE ");
+        	if(ifExists){
+        		dropKSSQL.append("IF EXISTS ");
+        	}
+        	dropKSSQL.append("\" + ");
+        	dropKSSQL.append(this.keyspace);
+        	return dropKSSQL.toString();
+        }
+        public String getCreateKSSQL(boolean ifNotExists){
+        	StringBuilder createKSSQL = new StringBuilder();
+        	createKSSQL.append("\"CREATE KEYSPACE ");
+        	if(ifNotExists){
+        		createKSSQL.append("IF NOT EXISTS ");
+        	}
+        	createKSSQL.append("\" + ");
+        	createKSSQL.append(this.keyspace);
+        	createKSSQL.append(" + \"");
+        	createKSSQL.append("WITH REPLICATION = {\'class\' : \'" + ElementParameterParser.getValue(this.node, "__REPLICA_STRATEGY__") + "\',");
+        	if("SimpleStrategy".equals(ElementParameterParser.getValue(this.node, "__REPLICA_STRATEGY__"))){
+        		createKSSQL.append("'replication_factor' : \" + " + ElementParameterParser.getValue(this.node, "__SIMEPLE_REPLICA_NUMBER__") + " + \"}\"");
+        	}else{
+        		List<Map<String, String>> replicas = ElementParameterParser.getTableValue(this.node, "__NETWORK_REPLICA_TABLE__");
+        		int count = 1;
+        		for(Map<String, String> replica : replicas){
+        			createKSSQL.append("\'\" + " + replica.get("DATACENTER_NAME") + " + \"\' : \" + " + replica.get("REPLICA_NUMBER") + " + \"");
+        			if(count < replicas.size()){
+        				createKSSQL.append(",");
+        			}
+        			count++;
+        		}
+        		createKSSQL.append("}\"");
+        	}
+        	
+        	return createKSSQL.toString();
         }
  	    public String getDropTableSQL(){
  	    	StringBuilder dropTableSQL = new StringBuilder();
