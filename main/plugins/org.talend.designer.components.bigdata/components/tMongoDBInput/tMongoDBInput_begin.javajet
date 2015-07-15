@@ -128,7 +128,7 @@
                 			}
                         } else if(authenticationMechanism.equals("PLAIN_MEC")){
                             %>
-                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createPlainCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createPlainCredential(<%=dbuser%>, "$external", new String(decryptedPassword_<%=cid%>).toCharArray());
                             <%
                         } else if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
                             %>
@@ -212,37 +212,43 @@
 
 				com.mongodb.DBCollection coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
 				
-				// Add warning if an index is not in the query.
-				boolean needIndexWarning = true;
-				String indexList = "";
-                for (com.mongodb.DBObject index: coll_<%=cid%>.getIndexInfo()) {
-                    for (String key: ((com.mongodb.DBObject)index.get("key")).keySet()) {
-                        // The regexp is:
-                        // - contain the db DBcolumnName between two backslashed quotes
-                        // - is followed at some point by a colon
-                        // - there is no comma between the the DBcolumnName and the colon
-                        if  (<%=query%>.matches(".*" + key + "[^,]*:.*")) {
-                            // We have an index, do not print error message
-                            needIndexWarning = false;
-                        } else {
-                            // This index is not in the query, add it into the indexList
-                            indexList += ", " + key;
-                        }
-                    }
-                }
-                if ((!"".equals(indexList)) && (needIndexWarning)) {
-                    <%
-                    if(isLog4jEnabled){
-                        %>
-                        log.warn("<%=cid%> - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
-                        <%
-                    } else {
-                        %>
-                        System.err.println("<%=cid%> - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
-                        <%
-                    }
-                    %>
-                }
+				try{
+					// Add warning if an index is not in the query.
+					boolean needIndexWarning = true;
+					String indexList = "";
+	                for (com.mongodb.DBObject index: coll_<%=cid%>.getIndexInfo()) {
+	                    for (String key: ((com.mongodb.DBObject)index.get("key")).keySet()) {
+	                        // The regexp is:
+	                        // - contain the db DBcolumnName between two backslashed quotes
+	                        // - is followed at some point by a colon
+	                        // - there is no comma between the the DBcolumnName and the colon
+	                        if  (<%=query%>.matches(".*" + key + "[^,]*:.*")) {
+	                            // We have an index, do not print error message
+	                            needIndexWarning = false;
+	                        } else {
+	                            // This index is not in the query, add it into the indexList
+	                            indexList += ", " + key;
+	                        }
+	                    }
+	                }
+	                if ((!"".equals(indexList)) && (needIndexWarning)) {
+	                    <%
+	                    if(isLog4jEnabled){
+	                        %>
+	                        log.warn("<%=cid%> - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
+	                        <%
+	                    } else {
+	                        %>
+	                        System.err.println("<%=cid%> - The query does not contain any reference an index.  [" + indexList.substring(1) + " ]");
+	                        <%
+	                    }
+	                    %>
+	                }
+	            }catch(com.mongodb.MongoException e){
+	            	// caught an exception after issuing the getIndexInfo()
+	            	// don't fail the whole job
+	            	// maybe due to authorization
+	            }
 
                 
                 com.mongodb.DBObject myQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);

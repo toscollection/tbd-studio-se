@@ -58,6 +58,7 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 	boolean securityIsEnabled = useKrb && (isCustom || ("HDP_1_0".equals(hiveVersion) || "HDP_1_2".equals(hiveVersion) || "HDP_1_3".equals(hiveVersion) || "HDP_2_0".equals(hiveVersion) || "HDP_2_1".equals(hiveVersion) || "HDP_2_2".equals(hiveVersion) || cdhCanBeSecured || pivotalCanBeSecured));
 
 	boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
+	boolean securedEmbeddedHive2 = securedEmbedded && "HIVE2".equalsIgnoreCase(hiveServer);
 	String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 
 	boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
@@ -87,7 +88,17 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
 %>
 			System.setProperty("hive.metastore.sasl.enabled", "true");
 			System.setProperty("javax.jdo.option.ConnectionDriverName", <%=driverClass%>);
-			System.setProperty("hive.security.authorization.enabled", "true");
+			<%if(securedEmbeddedHive2){
+				// Disable authorization when using local HiveServer2 in secure mode
+				%>
+				System.setProperty("hive.security.authorization.enabled", "false");
+				<%
+			}else{
+				%>
+				System.setProperty("hive.security.authorization.enabled", "true");
+				<%
+			}
+			%>
 			System.setProperty("javax.jdo.option.ConnectionURL", <%=metastoreUrl%>);
 			System.setProperty("javax.jdo.option.ConnectionUserName", <%=metastoreUsername%>);
 			
@@ -99,8 +110,16 @@ if(("false").equals(useExistingConn) && !isExecutedThroughWebHCat) {
         	String decryptedMetastorePassword_<%=uniqueNameComponent%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
    		 	<%} else {%>
         	String decryptedMetastorePassword_<%=uniqueNameComponent%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
-			<%}%>
+			<%}
 			
+			if(securedEmbeddedHive2){
+				%>
+				System.setProperty("hive.server2.authentication.kerberos.principal", <%=ElementParameterParser.getValue(node, "__HIVESERVER2_LOCAL_PRINCIPAL__")%>);
+				System.setProperty("hive.server2.authentication.kerberos.keytab", <%=ElementParameterParser.getValue(node, "__HIVESERVER2_LOCAL_KEYTAB__")%>);
+				<%
+			}
+			%>
+
 			System.setProperty("javax.jdo.option.ConnectionPassword", decryptedMetastorePassword_<%=uniqueNameComponent%>);
 			System.setProperty("hive.metastore.kerberos.principal", <%=hivePrincipal%>);				
 <%

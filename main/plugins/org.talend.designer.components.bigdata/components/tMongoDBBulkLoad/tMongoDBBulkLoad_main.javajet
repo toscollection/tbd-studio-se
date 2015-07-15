@@ -201,6 +201,8 @@
                 %>
                 args_<%=cid%>.add("--authenticationMechanism");
                 args_<%=cid%>.add("PLAIN");
+                args_<%=cid%>.add("--authenticationDatabase");
+                args_<%=cid%>.add("'$external'");
                 <%
             }
         } else { // GSSAPI SASL (KERBEROS)
