@@ -404,7 +404,7 @@
 		</PARAMETER>
 		<PARAMETER
 			NAME="QUERY"
-			FIELD="MEMO_SQL"
+			FIELD="MEMO"
 			NUM_ROW="40"
             REQUIRED="true"
             SHOW_IF="API_SELECTED == 'datastax'"
