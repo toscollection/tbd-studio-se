@@ -36,6 +36,7 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.gef.commands.CommandStack;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.window.Window;
+import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -107,12 +108,19 @@ public class ExecuteJobCompositeController {
 
     TOozieJobTraceManager traceManager;
 
+	private ScrolledComposite scrolledComposite;
+
     public ExecuteJobCompositeController(ExecuteJobComposite executeJobComposite) {
         traceManager = TOozieJobTraceManager.getInstance();
         this.executeJobComposite = executeJobComposite;
     }
 
-    public void initValues() {
+    public ExecuteJobCompositeController(ScrolledComposite  scrolledComposite) {
+    	traceManager = TOozieJobTraceManager.getInstance();
+        this.scrolledComposite = scrolledComposite;
+	}
+
+	public void initValues() {
         Text pathText = executeJobComposite.getPathText();
         Text outputText = executeJobComposite.getOutputTxt();
 
@@ -904,6 +912,15 @@ public class ExecuteJobCompositeController {
             updateAllEnabledOrNot();
         }
     }
+    
+    public void doSettingActionForOozie(TOozieSettingDialog settingDialog) {
+    	this.settingDialog=settingDialog;
+        initSettingForJob(settingDialog);
+        //updateHadoopProperties();
+        //updateAllEnabledOrNot();
+        
+	}
+
 
     /**
      * DOC plv Comment method "updateHadoopProperties".
@@ -915,6 +932,8 @@ public class ExecuteJobCompositeController {
             if (param != null) {
                 param.setValue(settingDialog.getPropertiesValue());
             }
+            getCommandStack().execute(
+                    new PropertyChangeCommand(process, EParameterName.HADOOP_ADVANCED_PROPERTIES.getName(), param.getValue()));
         }
     }
 
@@ -930,49 +949,183 @@ public class ExecuteJobCompositeController {
      * Initializes the setup before opening scheduler setting dialog. Sets back the job setting when a job is opened.
      */
     protected void initSettingForJob(TOozieSettingDialog settingDialog) {
-        String hadoopDistributionValue = getHadoopDistribution();
-        String hadoopVersionValue = getHadoopVersion();
-        String nameNodeEPValue = getNameNode();
-        String jobTrackerEPValue = getJobTracker();
-        String oozieEPValue = getOozieEndPoint();
-        String userNameValue = getUserNameForHadoop();
-        String group = TOozieParamUtils.getGroupForHadoop();
-        String customJars = getHadoopCustomJars();
-        boolean enableKerberos = TOozieParamUtils.enableKerberos();
-        String principal = TOozieParamUtils.getPrincipal();
-        boolean useKeytab = TOozieParamUtils.isUseKeytab();
-        String ktPrincipal = TOozieParamUtils.getKeytabPrincipal();
-        String keytab = TOozieParamUtils.getKeytabPath();
+    	 String propertyTypeValue=getPropertyType();
+    	 //This is for distinguishing the Repository and Built-in
+    	 if(TOozieParamUtils.isBuiltInForOozie()&&!"Repository".equals(settingDialog.getDialogPropertyTypeValue()))	{
+    		 String hadoopDistributionValue = getBIHadoopDistribution();
+        	 String hadoopVersionValue = getBIHadoopVersion();
+        	 String nameNodeEPValue = getBINameNode();
+        	 String jobTrackerEPValue = getBIJobTracker();
+        	 String oozieEPValue = getBIOozieEndPoint();
+        	 String userNameValue = getBIUserNameForHadoop();
+        	 String group = getBIGroup();
+        	 //String customJars = getBICustomJars();
+        	 boolean enableOoKerberos = getBIEnableOoKerberos();
+        	 boolean enableKerberos = getBIEnableKerberos();
+        	 String principal = getBIPrincipal();
+        	 boolean useKeytab = getBIUseKeytab();
+        	 String ktPrincipal = getBIKtprincipal();
+        	 String keytab = getBIKeytab();
+
+        	 settingDialog.setPropertyType(propertyTypeValue);
+        	 settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
+        	 settingDialog.setHadoopVersionValue(hadoopVersionValue);
+        	 settingDialog.setNameNodeEndPointValue(nameNodeEPValue);
+        	 settingDialog.setJobTrackerEndPointValue(jobTrackerEPValue);
+        	 settingDialog.setOozieEndPointValue(oozieEPValue);
+        	 settingDialog.setUserNameValue(userNameValue);
+        	 settingDialog.setGroup(group);
+        	 //settingDialog.setCustomJars(customJars);
+        	 settingDialog.setEnableKerberos(enableKerberos);
+        	 settingDialog.setEnableOoKerberos(enableOoKerberos);
+        	 settingDialog.setPrincipalValue(principal);
+        	 settingDialog.setUseKeytab(useKeytab);
+        	 settingDialog.setKtPrincipal(ktPrincipal);
+        	 settingDialog.setKeytab(keytab);
+    	 } else	{
+    		 propertyTypeValue="Repository";
+    		 TOozieParamUtils.setBuiltInForOozie(false);
+        	 String hadoopDistributionValue = getHadoopDistribution();
+        	 String hadoopVersionValue = getHadoopVersion();
+        	 String nameNodeEPValue = getNameNode();
+        	 String jobTrackerEPValue = getJobTracker();
+        	 String oozieEPValue = getOozieEndPoint();
+        	 String userNameValue = getUserNameForHadoop();
+        	 String group = TOozieParamUtils.getGroupForHadoop();
+        	 String customJars = getHadoopCustomJars();
+        	 boolean enableKerberos = TOozieParamUtils.enableKerberos();
+        	 boolean enableOoKerberos=TOozieParamUtils.enableOoKerberos();
+        	 String principal = TOozieParamUtils.getPrincipal();
+        	 boolean useKeytab = TOozieParamUtils.isUseKeytab();
+        	 String ktPrincipal = TOozieParamUtils.getKeytabPrincipal();
+        	 String keytab = TOozieParamUtils.getKeytabPath();
+
+        	 settingDialog.setPropertyType(propertyTypeValue);
+        	 settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
+        	 settingDialog.setHadoopVersionValue(hadoopVersionValue);
+        	 settingDialog.setNameNodeEndPointValue(nameNodeEPValue);
+        	 settingDialog.setJobTrackerEndPointValue(jobTrackerEPValue);
+        	 settingDialog.setOozieEndPointValue(oozieEPValue);
+        	 settingDialog.setUserNameValue(userNameValue);
+        	 settingDialog.setGroup(group);
+        	 settingDialog.setCustomJars(customJars);
+        	 settingDialog.setEnableKerberos(enableKerberos);
+        	 settingDialog.setEnableOoKerberos(enableOoKerberos);
+        	 settingDialog.setPrincipalValue(principal);
+        	 settingDialog.setUseKeytab(useKeytab);
+        	 settingDialog.setKtPrincipal(ktPrincipal);
+        	 settingDialog.setKeytab(keytab);
+        }
         List<HashMap<String, Object>> properties = new ArrayList<HashMap<String, Object>>();
         IProcess2 process = OozieJobTrackerListener.getProcess();
         if (process != null) {
-            IElementParameter param = process.getElementParameter(EParameterName.HADOOP_ADVANCED_PROPERTIES.getName());
-            if (param != null && param.getValue() != null) {
-                properties.addAll((List<HashMap<String, Object>>) param.getValue());
-                IElementParameter param2 = process.getElementParameter(EParameterName.USE_HADOOP_PROPERTIES.getName());
-                if (param2 != null) {
-                    param2.setValue(true);
-                }
-            }
+        	IElementParameter param = process.getElementParameter(EParameterName.HADOOP_ADVANCED_PROPERTIES.getName());
+        	if (param != null && param.getValue() != null) {
+        		properties.addAll((List<HashMap<String, Object>>) param.getValue());
+        		IElementParameter param2 = process.getElementParameter(EParameterName.USE_HADOOP_PROPERTIES.getName());
+        		if (param2 != null) {
+        			param2.setValue(true);
+        		}
+        	}
         }
-
-        settingDialog.setHadoopDistributionValue(hadoopDistributionValue);
-        settingDialog.setHadoopVersionValue(hadoopVersionValue);
-        settingDialog.setNameNodeEndPointValue(nameNodeEPValue);
-        settingDialog.setJobTrackerEndPointValue(jobTrackerEPValue);
-        settingDialog.setOozieEndPointValue(oozieEPValue);
-        settingDialog.setUserNameValue(userNameValue);
-        settingDialog.setGroup(group);
-        settingDialog.setCustomJars(customJars);
-        settingDialog.setEnableKerberos(enableKerberos);
-        settingDialog.setPrincipalValue(principal);
-        settingDialog.setUseKeytab(useKeytab);
-        settingDialog.setKtPrincipal(ktPrincipal);
-        settingDialog.setKeytab(keytab);
         settingDialog.setPropertiesValue(properties);
     }
+    //Provide these methods below for Built-in mode 
+    private String getBIKeytab() {
+    	IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.KEY_TAB.getName());
+        return (String)elementParameter.getValue();
+	}
 
-    public void doModifyPathAction() {
+	private String getBIKtprincipal() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.KT_PRINCIPAL.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private boolean getBIUseKeytab() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.USE_KEYTAB.getName());
+        if(elementParameter.getValue() instanceof String)	{
+        	return Boolean.parseBoolean((String) elementParameter.getValue());
+        } else {
+        	return (boolean)elementParameter.getValue();
+        }
+	}
+
+	private String getBIPrincipal() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.NAME_NODE_PRINCIPAL.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private boolean getBIEnableKerberos() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.ENABLE_KERBEROS.getName());
+        if(elementParameter.getValue() instanceof String)	{
+        	return Boolean.parseBoolean((String) elementParameter.getValue());
+        } else {
+        	return (boolean)elementParameter.getValue();
+        }
+	}
+	
+	private boolean getBIEnableOoKerberos() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.ENABLE_OO_KERBEROS.getName());
+        if(elementParameter.getValue() instanceof String)	{
+        	return Boolean.parseBoolean((String) elementParameter.getValue());
+        } else {
+        	return (boolean)elementParameter.getValue();
+        }
+	}
+
+	private String getBIGroup() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.GROUP.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getBIUserNameForHadoop() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.USERNAME.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getBIOozieEndPoint() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_END_POINT.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getBIJobTracker() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.JOB_TRACKER_ENDPOINT.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getBINameNode() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.NAME_NODE_END_POINT.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getBIHadoopVersion() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.HADOOP_VERSION.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getBIHadoopDistribution() {
+    	IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.HADOOP_DISTRIBUTION.getName());
+        return (String)elementParameter.getValue();
+	}
+
+	private String getPropertyType() {
+    	return TOozieParamUtils.getPropertyType();
+	}
+
+	public void doModifyPathAction() {
         if (OozieJobTrackerListener.getProcess() != null) {
             String path = executeJobComposite.getPathValue();
             IProcess2 process = OozieJobTrackerListener.getProcess();
@@ -1340,7 +1493,6 @@ public class ExecuteJobCompositeController {
         String nameNodeEPValue = getNameNode();
         String jobTrackerEPValue = getJobTracker();
         String oozieEPValue = getOozieEndPoint();
-
         if ("".equals(distributionValue)
                 || ("".equals(versionValue) && !EHadoopDistributions.CUSTOM.getName().equals(distributionValue))
                 || "".equals(nameNodeEPValue) || "".equals(jobTrackerEPValue) || "".equals(oozieEPValue)) {
@@ -1363,6 +1515,7 @@ public class ExecuteJobCompositeController {
         return jobSubStatus;
     }
 
+	
     /**
      * This method is called when job editor is closed.
      */
