@@ -44,7 +44,13 @@ import org.talend.repository.model.IProxyRepositoryFactory;
  */
 public class TOozieParamUtils {
 
-    /**
+    private static boolean builtInForOozie;
+
+	public static void setBuiltInForOozie(boolean buildInForOozie) {
+		TOozieParamUtils.builtInForOozie = buildInForOozie;
+	}
+
+	/**
      * DOC plv Comment method "getRepositoryOozieParam". Get oozie param from repository
      * 
      * @return OozieParam
@@ -275,4 +281,16 @@ public class TOozieParamUtils {
 
         return connection;
     }
+
+	public static String getPropertyType() {
+		IProcess2 process = OozieJobTrackerListener.getProcess();
+	    IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.PROPERTY_TYPENAME.getName());
+	    if(elementParameter!=null)	
+	    	return (String)elementParameter.getValue();
+	    return "";
+	}
+	//This method is getting whether it is from the built-in mode
+	public static boolean isBuiltInForOozie()	{
+		return builtInForOozie;
+	}
 }

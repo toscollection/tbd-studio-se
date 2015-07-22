@@ -35,6 +35,8 @@ public class TOozieUIConstants {
 
     public static final String OOZIE_LBL_FREQUENCY = Messages.getString("TOozieUIConstants_LBL_Frequency"); //$NON-NLS-1$
 
+    public static final String OOZIE_LBL_PROPERTY_TYPE = Messages.getString("TOozieUIConstants_LBL_Property_Type");
+
     public static final String OOZIE_LBL_VERSION_GROUP = Messages.getString("TOozieUIConstants_LBL_version_group"); //$NON-NLS-1$
 
     public static final String OOZIE_LBL_CONNECTION_GROUP = Messages.getString("TOozieUIConstants_LBL_connection_group"); //$NON-NLS-1$
@@ -70,5 +72,6 @@ public class TOozieUIConstants {
 
     public static final String OOZIE_DLG_DATE_ERROR_START_GREATER_END = Messages
             .getString("TOozieUIConstants_DLG_date_error_startGreaterEnd"); //$NON-NLS-1$
+
 
 }
