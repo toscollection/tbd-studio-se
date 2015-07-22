@@ -16,11 +16,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.exception.PersistenceException;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.properties.Item;
 import org.talend.core.model.relationship.Relation;
 import org.talend.core.model.relationship.RelationshipItemBuilder;
 import org.talend.core.model.update.EUpdateItemType;
 import org.talend.core.model.update.RepositoryUpdateManager;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 
 /**
  * 
@@ -52,6 +56,18 @@ public class HadoopClusterUpdateManager {
     public static boolean updateHadoopClusterConnection(ConnectionItem connectionItem, boolean show, final boolean onlySimpleShow) {
         List<Relation> relations = RelationshipItemBuilder.getInstance().getItemsRelatedTo(connectionItem.getProperty().getId(),
                 RelationshipItemBuilder.LATEST_VERSION, RelationshipItemBuilder.PROPERTY_RELATION);
+
+        try {
+            Set<Item> subitems = HCRepositoryUtil.getSubitemsOfHadoopCluster(connectionItem);
+            for (Item subitem : subitems) {
+                List<Relation> subitemRelations = RelationshipItemBuilder.getInstance().getItemsRelatedTo(
+                        subitem.getProperty().getId(), RelationshipItemBuilder.LATEST_VERSION,
+                        RelationshipItemBuilder.PROPERTY_RELATION);
+                relations.addAll(subitemRelations);
+            }
+        } catch (PersistenceException e) {
+            ExceptionHandler.process(e);
+        }
 
         RepositoryUpdateManager repositoryUpdateManager = new RepositoryUpdateManager(connectionItem, relations) {
 
