@@ -283,17 +283,17 @@
 			args_<%=cid%>.add("--ignoreBlanks");
 		<%
 		}
-		if(!"".equals(fileds)){
-		%>
-			args_<%=cid%>.add("--fields");
-			args_<%=cid%>.add("<%=fileds%>");
-		<%
-		}
 		if(isFirstLineHeader){
-		%>
-			args_<%=cid%>.add("--headerline");
-		<%
+		    %>
+		    args_<%=cid%>.add("--headerline");
+		    <%
+		} else if(!"".equals(fileds)){
+		    %>
+			args_<%=cid%>.add("--fields");
+	        args_<%=cid%>.add("<%=fileds%>");
+	        <%
 		}
+
 	} else {
 	    if (jsonArray) {
 	        %>
