@@ -192,7 +192,7 @@
       </classloader>
       <classloader
             index="NOSQL:MONGODB:MONGODB_3_0_X"
-            libraries="mongo-java-driver-2.13.1.jar">
+            libraries="mongo-java-driver-2.13.2.jar">
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_1_1_2"
