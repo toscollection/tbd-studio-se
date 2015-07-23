@@ -66,8 +66,8 @@
 	
 	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	
-	java.util.List<String> supportHcatVersionList = java.util.Arrays.<String>asList("HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1","MAPR310","MAPR401","MAPR410","MICROSOFT_HD_INSIGHT_3_1");
-	java.util.List<String> priorPig012HcatVersionList = java.util.Arrays.<String>asList("HDP_1_0","HDP_1_2","HDP_1_3","MAPR310");
+	java.util.List<String> supportHcatVersionList = java.util.Arrays.<String>asList("HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1","MAPR310","MAPR401","MAPR410","MICROSOFT_HD_INSIGHT_3_1");
+	java.util.List<String> priorPig012HcatVersionList = java.util.Arrays.<String>asList("HDP_1_2","HDP_1_3","MAPR310");
 	String hcatPackage = (priorPig012HcatVersionList.contains(pigVersion)) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
 	
 	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || (pigVersion!=null && supportHcatVersionList.contains(pigVersion))) && "HCatLoader".equals(function) && !defineJarsToRegister);
@@ -303,7 +303,7 @@
 			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion));
 			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || isKerberosAvailableHadoop2;
 			
-			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_0".equals(pigVersion) || "HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || "Cloudera_CDH5_1_MR1".equals(pigVersion));
+			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || "Cloudera_CDH5_1_MR1".equals(pigVersion));
 			
 			if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>

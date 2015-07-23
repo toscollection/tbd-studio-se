@@ -56,16 +56,7 @@
 		sqoopOptions_<%=cid%>.setPasswordFilePath(<%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>);
 		sqoopOptions_<%=cid%>.setPassword(org.apache.sqoop.util.CredentialsUtil.fetchPassword<%="HDP_2_0".equals(version)?"FromFile":""%>(sqoopOptions_<%=cid%>));
 	<%}%>
-	
-<%	
-	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
-		if(printLog && verbose){
-%>
-			sqoopOptions_<%=cid%>.setVerbose(true);
-<%
-		}
-	}
-%>
+
 	<%if(direct){%>
 		sqoopOptions_<%=cid%>.setDirectMode(true);
 		<%if(splitInputStreamDirect) {%>
@@ -101,7 +92,7 @@
 		} 
 	}
 	
-	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "Cloudera_CDH4".equals(version) || "PIVOTAL_HD_1_0_1".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "MAPR".equals(distribution)) && !isCustom)) {
+	if(!(("Cloudera_CDH4".equals(version) || "PIVOTAL_HD_1_0_1".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "MAPR".equals(distribution)) && !isCustom)) {
 		if(excludeTable) {
 			List<Map<String,String>> tablesToExclude = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__TABLE_TO_EXCLUDE__");
 			if(tablesToExclude!=null && tablesToExclude.size()>0) {
@@ -128,7 +119,7 @@
 		}
 	} 
 
-	if(overrideHiveMapping && !(("MAPR1".equals(version) || "Cloudera_CDH3".equals(version)))) {
+	if(overrideHiveMapping) {
 		List<Map<String,String>> hiveMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__HIVE_TYPE_MAPPING__");
 		if(hiveMappings!=null && hiveMappings.size()>0) {
 	%>
@@ -155,17 +146,9 @@
 	%>
 	
 	sqoopOptions_<%=cid%>.loadProperties(additionalProperties_<%=cid%>);
-<%
-	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
-%>
-		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	} else {
-%>
-		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	}
-%>
+
+	org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
+
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tSqoopImport/sqoop-avro-dependency.javajet"%>
 	try {
 <%
