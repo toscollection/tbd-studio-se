@@ -151,26 +151,7 @@
 		sqoopOptions_<%=cid%>.setClassName("SqoopMerge_<%=cid%>");
     <%}%>
 		
-<%	
-	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
-		if(printLog && verbose){
-%>
-			sqoopOptions_<%=cid%>.setVerbose(true);
-<%
-		}
-	}
-%>
-<%
-	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
-%>
-		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	} else {
-%>
-		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	}
-%>
+	org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 	try {
 		int result_<%=cid%> = sqoop_<%=cid%>.run(null);
 		globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);

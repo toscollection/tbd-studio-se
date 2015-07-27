@@ -50,7 +50,7 @@
         conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
         <%
     }
-	if("MAPR".equals(distribution) || (!isCustom && ("APACHE_0_20_2".equals(hadoopVersion) || "MapR_EMR".equals(hadoopVersion))) || (isCustom && "UGI".equals(auth))){
+	if("MAPR".equals(distribution) || (isCustom && "UGI".equals(auth))){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");
 		%>
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
@@ -59,7 +59,7 @@
 	
 	List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
 		"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1",
-		"HDP_1_0","HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
+		"HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
 		"APACHE_1_0_0","APACHE_1_0_3_EMR",
 		"PIVOTAL_HD_2_0"
 	);

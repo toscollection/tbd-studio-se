@@ -198,7 +198,6 @@
    	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-            <IMPORT NAME="apache-hadoop" MODULE="hadoop-core-1.0.0.jar" MVN="mvn:org.talend.libraries/hadoop-core-1.0.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.1.0.0/lib/hadoop-core-1.0.0.jar" REQUIRED="false" REQUIRED_IF="HCAT_VERSION=='HDP_1_0' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-core-1.1.2.21.jar" MODULE="hadoop-core-1.1.2.21.jar" MVN="mvn:org.talend.libraries/hadoop-core-1.1.2.21/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/hadoop-core-1.1.2.21.jar" REQUIRED_IF="HCAT_VERSION=='HDP_1_2' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="hadoop-core-1.2.0.1.3.0.0-107.jar" MODULE="hadoop-core-1.2.0.1.3.0.0-107.jar" MVN="mvn:org.talend.libraries/hadoop-core-1.2.0.1.3.0.0-107/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.3/lib/hadoop-core-1.2.0.1.3.0.0-107.jar" REQUIRED_IF="HCAT_VERSION=='HDP_1_3' AND (DISTRIBUTION!='CUSTOM')" />
 
