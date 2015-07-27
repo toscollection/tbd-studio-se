@@ -63,16 +63,7 @@
 		sqoopOptions_<%=cid%>.setPasswordFilePath(<%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>);
 		sqoopOptions_<%=cid%>.setPassword(org.apache.sqoop.util.CredentialsUtil.fetchPassword<%="HDP_2_0".equals(version)?"FromFile":""%>(sqoopOptions_<%=cid%>));
 	<%}%>
-		
-<%	
-	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
-		if(printLog && verbose){
-%>
-			sqoopOptions_<%=cid%>.setVerbose(true);
-<%
-		}
-	}
-%>
+
 	<%if(direct && (!defineUpdateMode || "updateonly".equals(updateMode))){%>sqoopOptions_<%=cid%>.setDirectMode(true);<%}%>
 	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
 	<%if(useBatchMode){%>sqoopOptions_<%=cid%>.setBatchMode(true);<%}%>
@@ -105,7 +96,7 @@
 	<%
 			}
 		}
-		if(overrideJavaMapping && !(("MAPR1".equals(version) || "Cloudera_CDH3".equals(version)))) {
+		if(overrideJavaMapping) {
 			List<Map<String,String>> javaMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__JAVA_TYPE_MAPPING__");
 			if(javaMappings!=null && javaMappings.size()>0) {
 	%>
@@ -154,15 +145,7 @@
 	} 
 %>
 	sqoopOptions_<%=cid%>.loadProperties(additionalProperties_<%=cid%>);
-<%
-	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
-%>
-		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	} else {
-%>
-		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
+	org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 	}
 
 %>

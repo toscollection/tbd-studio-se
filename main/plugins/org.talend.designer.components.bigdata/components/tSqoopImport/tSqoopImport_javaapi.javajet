@@ -87,15 +87,6 @@
 		<%if(useColumns){%>sqoopOptions_<%=cid%>.setColumns(lColumns_<%=cid%>.toArray(new String[lColumns_<%=cid%>.size()]));<%}%>
 		<%if(useWhere){%>sqoopOptions_<%=cid%>.setWhereClause(<%=where%>); // __WHERE__<%}%>
 	<%}%>
-<%	
-	if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom)) {
-		if(printLog && verbose){
-%>
-			sqoopOptions_<%=cid%>.setVerbose(true);
-<%
-		}
-	}
-%>
 	<%if(append){%>sqoopOptions_<%=cid%>.setAppendMode(true);<%}%>
 	<%if(direct){%>
 		sqoopOptions_<%=cid%>.setDirectMode(true);
@@ -113,7 +104,7 @@
 	<%if(fileFormat.equals("sequencefile")){%>sqoopOptions_<%=cid%>.setFileLayout(com.cloudera.sqoop.SqoopOptions.FileLayout.SequenceFile);<%} else if(fileFormat.equals("textfile")){%>sqoopOptions_<%=cid%>.setFileLayout(com.cloudera.sqoop.SqoopOptions.FileLayout.TextFile);<%} else {%>sqoopOptions_<%=cid%>.setFileLayout(com.cloudera.sqoop.SqoopOptions.FileLayout.AvroDataFile);<%}%>
 	<%if(useMappers){%>sqoopOptions_<%=cid%>.setNumMappers(Integer.valueOf(<%=mappers%>));<%}%>
 	<%if(useSplit){%>sqoopOptions_<%=cid%>.setSplitByCol(<%=split%>);<%}%>
-	<%if(!(("HDP_1_0".equals(version) || "Cloudera_CDH3".equals(version) || "Cloudera_CDH4".equals(version) || "PIVOTAL_HD_1_0_1".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "MAPR".equals(distribution)) && !isCustom)) {%>
+	<%if(!(("Cloudera_CDH4".equals(version) || "PIVOTAL_HD_1_0_1".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "MAPR".equals(distribution)) && !isCustom)) {%>
 		<%if(deleteTargetDirectory){%>
 			sqoopOptions_<%=cid%>.setDeleteMode(true);
 		<%}%>
@@ -121,7 +112,7 @@
 	
 	<%
 	
-	if(overrideJavaMapping && !(("MAPR1".equals(version) || "Cloudera_CDH3".equals(version)))) {
+	if(overrideJavaMapping) {
 		List<Map<String,String>> javaMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__JAVA_TYPE_MAPPING__");
 		if(javaMappings!=null && javaMappings.size()>0) {
 	%>
@@ -146,7 +137,7 @@
 		}
 	}
 
-	if(overrideHiveMapping && !(("MAPR1".equals(version) || "Cloudera_CDH3".equals(version)))) {
+	if(overrideHiveMapping) {
 		List<Map<String,String>> hiveMappings = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__HIVE_TYPE_MAPPING__");
 		if(hiveMappings!=null && hiveMappings.size()>0) {
 	%>
@@ -193,17 +184,7 @@
 	} 
 %>
 	sqoopOptions_<%=cid%>.loadProperties(additionalProperties_<%=cid%>);
-<%
-	if(("Cloudera_CDH3".equals(version) || "MAPR1".equals(version)) && !isCustom) {
-%>
-		com.cloudera.sqoop.Sqoop sqoop_<%=cid%> = new com.cloudera.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	} else {
-%>
-		org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
-<%
-	}
-%>	
+	org.apache.sqoop.Sqoop sqoop_<%=cid%> = new org.apache.sqoop.Sqoop(sqoopTool_<%=cid%>, configuration_<%=cid%>, sqoopOptions_<%=cid%>);
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tSqoopImport/sqoop-avro-dependency.javajet"%>
 	try {
 <%
