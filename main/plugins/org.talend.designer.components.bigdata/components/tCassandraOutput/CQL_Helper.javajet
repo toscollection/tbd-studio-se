@@ -72,7 +72,7 @@
         	this.node = node;
             this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
             this.keyspace = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__KEY_SPACE__") + ")";
-            this.tableName = this.keyspace + " + \".\" + " + "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__TABLE__") + ")";
+            this.tableName = this.keyspace + " + \".\" + " + "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__COLUMN_FAMILY__") + ")";
             createColumnList(columnList);
         }
         

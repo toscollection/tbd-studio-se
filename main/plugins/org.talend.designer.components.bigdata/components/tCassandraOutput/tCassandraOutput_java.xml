@@ -151,7 +151,7 @@
 	     	FIELD="CLOSED_LIST"
 	      	NUM_ROW="12"
 	      	GROUP="KEYSPACE_CONFIGURATION"
-	      	SHOW_IF="(API_SELECTED == 'hector') OR ((API_SELECTED == 'datastax') AND (DATA_ACTION != 'DELETE'))"
+	      	SHOW_IF="(API_SELECTED == 'hector') OR ((API_SELECTED == 'datastax') AND (DATA_ACTION != 'DELETE')) OR (API_TYPE == 'make_API_TYPE_modification_responsable')"
     	>
 		   	<ITEMS DEFAULT="NONE">
 		    	<ITEM NAME="NONE" VALUE="NONE" />
@@ -200,7 +200,6 @@
 			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="15"
-            SHOW_IF="API_SELECTED == 'hector'"
 			GROUP="COLUMN_FAMILY_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
@@ -220,9 +219,9 @@
 		<PARAMETER
 			NAME="ACTION_ON_COLUMN_FAMILY"
 	     	FIELD="CLOSED_LIST"
-	      	NUM_ROW="16"
-            SHOW_IF="API_SELECTED == 'hector'"
+	      	NUM_ROW="15"
 	      	GROUP="COLUMN_FAMILY_CONFIGURATION"
+	      	SHOW_IF="(API_SELECTED == 'hector') OR ((API_SELECTED == 'datastax') AND (ACTION_ON_DATA != 'DELETE'))"
     	>
 		   	<ITEMS DEFAULT="NONE">
 		    	<ITEM NAME="NONE" VALUE="NONE" />
@@ -326,29 +325,6 @@
             </ITEMS>
         </PARAMETER>
         <!--parameter only for datastax-->
-        <PARAMETER
-            NAME="TABLE"
-            FIELD="TEXT"
-            REQUIRED="true"
-            NUM_ROW="15"
-            SHOW_IF="(API_SELECTED == 'datastax') OR (API_TYPE == 'make_API_TYPE_modification_responsable')"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
-        <PARAMETER
-            NAME="TABLE_ACTION"
-            FIELD="CLOSED_LIST"
-            NUM_ROW="15"
-            SHOW_IF="(API_SELECTED == 'datastax') AND (DATA_ACTION != 'DELETE')"
-        >
-            <ITEMS DEFAULT="NONE">
-                <ITEM NAME="NONE" VALUE="NONE" />
-                <ITEM NAME="CREATE_IF_NOT_EXISTS" VALUE="CREATE_IF_NOT_EXISTS"/>
-                <ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE" />
-                <!--ITEM NAME="CLEAR" VALUE="CLEAR"/-->
-                <ITEM NAME="TRUNCATE" VALUE="TRUNCATE"/>
-            </ITEMS>
-        </PARAMETER>
         <PARAMETER
             NAME="DATA_ACTION"
             FIELD="CLOSED_LIST"

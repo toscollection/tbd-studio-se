@@ -21,7 +21,6 @@
     %>
     <% 
     boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
-    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     if(!useExistConn){
     %>
     	if(resourceMap.get("finish_<%=cid%>") == null){

@@ -144,21 +144,11 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<!-- common setting end -->
-		<PARAMETER
-            NAME="TABLE"
-            FIELD="TEXT"
-            REQUIRED="true"
-            NUM_ROW="17"
-            SHOW_IF="API_SELECTED == 'datastax'"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
         <PARAMETER
 			NAME="COLUMN_FAMILY"
 			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="17"
-			SHOW_IF="API_SELECTED == 'hector'"
             GROUP="COLUMN_FAMILY_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>

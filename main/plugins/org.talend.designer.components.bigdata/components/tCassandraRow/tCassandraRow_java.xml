@@ -127,8 +127,8 @@
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 		<PARAMETER
-            FIELD="TEXT"
             NAME="KEY_SPACE"
+            FIELD="TEXT"
             REPOSITORY_VALUE="KEY_SPACE"
             REQUIRED="true"
             NUM_ROW="13"
@@ -140,20 +140,9 @@
 			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="15"
-            SHOW_IF="API_SELECTED == 'hector'"
-			GROUP="COLUMN_FAMILY_CONFIGURATION"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-        <PARAMETER
-            NAME="TABLE"
-            FIELD="TEXT"
-            REQUIRED="true"
-            NUM_ROW="15"
-            SHOW_IF="API_SELECTED == 'datastax'"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
 		<PARAMETER
 			NAME="SCHEMA_FLOW"
 			FIELD="SCHEMA_TYPE"
