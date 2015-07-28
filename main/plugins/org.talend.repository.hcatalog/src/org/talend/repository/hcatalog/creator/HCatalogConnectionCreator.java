@@ -34,18 +34,17 @@ import org.talend.repository.model.hcatalog.HCatalogFactory;
 public class HCatalogConnectionCreator extends AbstractHadoopSubConnectionCreator {
 
     @Override
-    public ConnectionItem create(String relativeHadoopClusterId, Map<String, Map<String, String>> initParams)
-            throws CoreException {
+    public ConnectionItem create(Map<String, Map<String, String>> initParams) throws CoreException {
         HCatalogConnection connection = HCatalogFactory.eINSTANCE.createHCatalogConnection();
         Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
-        setPropertyParameters(relativeHadoopClusterId, connectionProperty);
+        setPropertyParameters(connectionProperty);
 
         HadoopSubConnectionItem connectionItem = HCatalogFactory.eINSTANCE.createHCatalogConnectionItem();
         connectionItem.setProperty(connectionProperty);
         connectionItem.setConnection(connection);
 
         setParameters(connection, initParams);
-        appendToHadoopCluster(relativeHadoopClusterId, connectionItem);
+        appendToHadoopCluster(connectionItem);
 
         return connectionItem;
     }

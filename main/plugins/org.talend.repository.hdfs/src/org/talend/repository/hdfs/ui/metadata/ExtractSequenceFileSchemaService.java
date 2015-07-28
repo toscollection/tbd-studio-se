@@ -47,6 +47,12 @@ public class ExtractSequenceFileSchemaService implements IExtractSchemaService<H
 
     private final static String VALUE_COLUMN_LABEL = "Value"; //$NON-NLS-1$
 
+    private ClassLoader classLoader;
+
+    public ExtractSequenceFileSchemaService(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+    }
+
     /*
      * (non-Javadoc)
      * 
@@ -91,9 +97,8 @@ public class ExtractSequenceFileSchemaService implements IExtractSchemaService<H
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
 
         HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
-        ClassLoader classLoader = HadoopServerUtil.getClassLoader(connectionBean);
-        Object fs = HadoopServerUtil.getDFS(connectionBean);
-        Object conf = HadoopServerUtil.getConfiguration(connectionBean);
+        Object fs = HadoopServerUtil.getDFS(connectionBean, classLoader);
+        Object conf = HadoopServerUtil.getConfiguration(connectionBean, classLoader);
         Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { filePath }); //$NON-NLS-1$
         Object reader = ReflectionUtils.newInstance("org.apache.hadoop.io.SequenceFile$Reader", classLoader, new Object[] { fs, //$NON-NLS-1$
                 pathObj, conf }, Class.forName("org.apache.hadoop.fs.FileSystem", true, classLoader), //$NON-NLS-1$

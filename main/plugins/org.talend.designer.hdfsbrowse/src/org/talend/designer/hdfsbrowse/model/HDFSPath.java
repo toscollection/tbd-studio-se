@@ -37,11 +37,11 @@ public abstract class HDFSPath extends HDFSNode {
         this.provider = provider;
         this.connection = connection;
         try {
-            fileSystem = getOperationManager().getDFS(connection);
+            classLoader = getOperationManager().getClassLoader(connection);
+            fileSystem = getOperationManager().getDFS(connection, classLoader);
         } catch (Exception e) {
             ExceptionHandler.process(e);
         }
-        classLoader = getOperationManager().getClassLoader(connection);
     }
 
     protected HDFSPath(HDFSPath parent) {

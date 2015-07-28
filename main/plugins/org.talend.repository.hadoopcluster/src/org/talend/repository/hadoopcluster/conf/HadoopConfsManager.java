@@ -59,10 +59,10 @@ public class HadoopConfsManager {
             return;
         }
         List<ConnectionItem> connectionItems = new ArrayList<>();
-        List<IHadoopConnectionCreator> creators = HadoopConnectionCreatorManager.getCreators();
+        List<IHadoopConnectionCreator> creators = HadoopConnectionCreatorManager.getCreators(hadoopClusterId);
         for (IHadoopConnectionCreator connectionCreator : creators) {
             if (confsMap.containsKey(connectionCreator.getTypeName())) {
-                ConnectionItem connectionItem = connectionCreator.create(hadoopClusterId, confsMap);
+                ConnectionItem connectionItem = connectionCreator.create(confsMap);
                 connectionItems.add(connectionItem);
             }
         }

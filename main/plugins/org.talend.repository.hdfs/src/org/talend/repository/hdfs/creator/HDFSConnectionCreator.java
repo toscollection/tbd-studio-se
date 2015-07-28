@@ -31,17 +31,16 @@ import org.talend.repository.model.hdfs.HDFSFactory;
 public class HDFSConnectionCreator extends AbstractHadoopSubConnectionCreator {
 
     @Override
-    public ConnectionItem create(String relativeHadoopClusterId, Map<String, Map<String, String>> initParams)
-            throws CoreException {
+    public ConnectionItem create(Map<String, Map<String, String>> initParams) throws CoreException {
         HDFSConnection connection = HDFSFactory.eINSTANCE.createHDFSConnection();
         Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
-        setPropertyParameters(relativeHadoopClusterId, connectionProperty);
+        setPropertyParameters(connectionProperty);
 
         HadoopSubConnectionItem connectionItem = HDFSFactory.eINSTANCE.createHDFSConnectionItem();
         connectionItem.setProperty(connectionProperty);
         connectionItem.setConnection(connection);
 
-        appendToHadoopCluster(relativeHadoopClusterId, connectionItem);
+        appendToHadoopCluster(connectionItem);
 
         return connectionItem;
     }
