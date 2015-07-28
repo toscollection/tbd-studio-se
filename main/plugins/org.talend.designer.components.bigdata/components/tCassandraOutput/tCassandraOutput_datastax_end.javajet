@@ -20,8 +20,7 @@
     }
     %>
     <%
-    boolean useBatch = "true".equals(ElementParameterParser.getValue(node, "__USE_UNLOGGED_BATCH__"));
-    String batchSize = ElementParameterParser.getValue(node, "__BATCH_SIZE__");
+    boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
     if(useBatch){
     %>
         if(batchStmt_<%=cid%>.size() > 0){
@@ -34,8 +33,7 @@
         }
     <%
     }
-    boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
-    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
     if(!useExistConn){
     %>
         connection_<%=cid%>.close();

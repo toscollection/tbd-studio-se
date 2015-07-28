@@ -2,22 +2,9 @@
 	<%
     String host = ElementParameterParser.getValue(node,"__HOST__");
     String port = ElementParameterParser.getValue(node,"__PORT__");
-    String keyspace = "";
-    if("tCassandraConnection".equals(node.getComponent().getName())){
-    	keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
-    }else{
-    	keyspace = ElementParameterParser.getValue(node,"__KEY_SPACE_DATASTAX__");
-    }
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
-    String passWord = ElementParameterParser.getValue(node, "__PASSWORD__");
-	boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
-	
-	if(authentication){
-        String passwordFieldName = "__PASSWORD__";
-        %>
-        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>    	
-    <%
-    }	
+    String passWord = ElementParameterParser.getPasswordValue(node, "__PASSWORD__");
+	boolean authentication= ElementParameterParser.getBooleanValue(node, "__REQUIRED_AUTHENTICATION__");
     %>
     com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
     															.addContactPoints(<%=host%>.split(","))
@@ -25,15 +12,11 @@
                                                             	<%
                                                             	if(authentication){
                                                             	%>
-                                                                	.withCredentials(<%=userName%>, decryptedPassword_<%=cid%>)
+                                                                	.withCredentials(<%=userName%>, <%=passWord%>)
                                                             	<%
                                                             	}
                                                             	%>
     															.build();
 	
 	com.datastax.driver.core.Session connection_<%=cid%> = null;
-	if(<%=keyspace%> != null && !"".equals(<%=keyspace%>)){
-		connection_<%=cid%> = cluster_<%=cid%>.connect(StringHandling.DQUOTE(<%=keyspace%>));
-	}else{
-		connection_<%=cid%> = cluster_<%=cid%>.connect();
-	}
+	connection_<%=cid%> = cluster_<%=cid%>.connect();

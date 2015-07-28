@@ -27,7 +27,7 @@
     <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
     <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/API_selector.javajet"%>
     <%
-	if((new API_selector()).useDatastax("true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__")) ? NodeUtil.getNodeByUniqueName(node.getProcess(), ElementParameterParser.getValue(node, "__CONNECTION__")) : node)){
+	if((new API_selector()).useDatastax(ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__") ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node)){
 	%>
     	<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/tCassandraOutput_datastax_finally.javajet"%>
     <%

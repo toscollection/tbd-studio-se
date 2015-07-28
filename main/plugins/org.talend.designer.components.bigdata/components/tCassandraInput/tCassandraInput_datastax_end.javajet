@@ -23,7 +23,7 @@
 	}
 	globalMap.put("<%=cid%>_NB_LINE", nb_line_<%=cid%>);
     <% 
-    boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     if(!useExistConn){
     %>

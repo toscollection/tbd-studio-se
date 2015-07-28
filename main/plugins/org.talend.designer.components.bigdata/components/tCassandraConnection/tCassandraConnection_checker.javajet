@@ -8,7 +8,7 @@
 <%
 // Check the presence of a tCassandraConnection
 {
-    boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+    boolean useExistingConnection = ElementParameterParser.getBooleanValue(node,"__USE_EXISTING_CONNECTION__");
     if (useExistingConnection) {
         String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
         if (connection.isEmpty()) {

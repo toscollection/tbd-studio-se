@@ -1,6 +1,6 @@
 <%@ jet %>
     <% 
-    boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     if(useExistConn){
     %>
@@ -14,7 +14,7 @@
         resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
     <%
     }
-    Boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+    Boolean dieOnError = ElementParameterParser.getBooleanValue(node, "__DIE_ON_ERROR__");
     String query = ElementParameterParser.getValue(node, "__QUERY__").replaceAll("[\r\n]", " ");
     %>
     try{
