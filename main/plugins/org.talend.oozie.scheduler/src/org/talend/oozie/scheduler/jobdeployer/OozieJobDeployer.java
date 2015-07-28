@@ -113,7 +113,7 @@ public class OozieJobDeployer {
             // new java.net.URI(nnURI), config, userName }, classLoader);
             // }
 
-            Object fs = HadoopServerUtil.getDFS(connectionBean);
+            Object fs = HadoopServerUtil.getDFS(connectionBean, classLoader);
 
             // if something has been uploaded already before in the same folder, delete the old content
             Object libPath = HadoopReflection.newInstance(HadoopClassConstants.PATH,

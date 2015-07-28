@@ -50,7 +50,8 @@ public class ExtractHDFSSchemaManager {
         return instance;
     }
 
-    public List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws Exception {
+    public List<MetadataColumn> extractColumns(HDFSConnection connection, ClassLoader classLoader, IHDFSNode node)
+            throws Exception {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || node == null || node.getType() != EHadoopFileTypes.FILE) {
             return columns;
@@ -58,13 +59,15 @@ public class ExtractHDFSSchemaManager {
 
         HDFSFile file = (HDFSFile) node;
         HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
-        Object filePath = getHDFSFilePath(connectionBean, file.getPath());
+        Object filePath = getHDFSFilePath(connectionBean, classLoader, file.getPath());
 
-        IExtractSchemaService<HDFSConnection> service = ExtractHDFSMetaServiceFactory.getService(connectionBean, filePath);
+        IExtractSchemaService<HDFSConnection> service = ExtractHDFSMetaServiceFactory.getService(connectionBean, classLoader,
+                filePath);
         return service.extractColumns(connection, node);
     }
 
-    public List<MetadataColumn> extractColumns(HDFSConnection connection, MetadataTable metadataTable) throws Exception {
+    public List<MetadataColumn> extractColumns(HDFSConnection connection, ClassLoader classLoader, MetadataTable metadataTable)
+            throws Exception {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
         if (connection == null || metadataTable == null) {
             return columns;
@@ -76,20 +79,21 @@ public class ExtractHDFSSchemaManager {
         }
 
         HDFSConnectionBean connectionBean = HDFSModelUtil.convert2HDFSConnectionBean(connection);
-        Object filePath = getHDFSFilePath(connectionBean, hdfsPath);
+        Object filePath = getHDFSFilePath(connectionBean, classLoader, hdfsPath);
 
-        IExtractSchemaService<HDFSConnection> service = ExtractHDFSMetaServiceFactory.getService(connectionBean, filePath);
+        IExtractSchemaService<HDFSConnection> service = ExtractHDFSMetaServiceFactory.getService(connectionBean, classLoader,
+                filePath);
         return service.extractColumns(connection, metadataTable);
     }
 
-    private Object getHDFSFilePath(HDFSConnectionBean connection, String path) throws HadoopServerException {
+    private Object getHDFSFilePath(HDFSConnectionBean connection, ClassLoader classLoader, String path)
+            throws HadoopServerException {
         Object pathObj = null;
         try {
-            Object fileSystem = HadoopServerUtil.getDFS(connection);
+            Object fileSystem = HadoopServerUtil.getDFS(connection, classLoader);
             if (fileSystem == null) {
                 return null;
             }
-            ClassLoader classLoader = HadoopServerUtil.getClassLoader(connection);
             pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { path }); //$NON-NLS-1$
         } catch (Exception e) {
             throw new HadoopServerException(e);

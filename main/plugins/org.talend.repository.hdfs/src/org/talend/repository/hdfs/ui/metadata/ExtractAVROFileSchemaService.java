@@ -112,7 +112,7 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
         HDFSFile file = (HDFSFile) node;
         file.setFileType(EHDFSFileTypes.AVRO);
         InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
-                HDFSModelUtil.convert2HDFSConnectionBean(connection), file.getPath());
+                HDFSModelUtil.convert2HDFSConnectionBean(connection), classLoader, file.getPath());
 
         return extractColumns(connection, inputStream, file.getTable().getName(), file.getValue());
     }
@@ -130,7 +130,7 @@ public class ExtractAVROFileSchemaService implements IExtractSchemaService<HDFSC
             return columns;
         }
         InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
-                HDFSModelUtil.convert2HDFSConnectionBean(connection), hdfsPath);
+                HDFSModelUtil.convert2HDFSConnectionBean(connection), classLoader, hdfsPath);
 
         return extractColumns(connection, inputStream, metadataTable.getLabel(), hdfsPath);
     }

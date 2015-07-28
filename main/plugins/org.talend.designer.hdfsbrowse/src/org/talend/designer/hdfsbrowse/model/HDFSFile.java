@@ -49,7 +49,7 @@ public class HDFSFile extends HDFSPath {
      * @throws SecurityException
      */
     public InputStream open() throws HadoopServerException {
-        return getOperationManager().getFileContent(connection, getPath());
+        return getOperationManager().getFileContent(connection, classLoader, getPath());
     }
 
     @Override

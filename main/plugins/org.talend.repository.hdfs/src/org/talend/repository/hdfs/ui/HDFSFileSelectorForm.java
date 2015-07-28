@@ -86,7 +86,9 @@ import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.TableHelper;
 import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdTable;
+import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
 import org.talend.designer.hdfsbrowse.model.EHadoopFileTypes;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.model.HDFSFile;
 import org.talend.designer.hdfsbrowse.model.IHDFSNode;
 import org.talend.designer.hdfsbrowse.ui.provider.FileSelectorTreeViewerProvider;
@@ -118,7 +120,11 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     private HDFSConnection temConnection;
 
+    private HDFSConnectionBean connectionBean;
+
     private RetrieveSchemaThreadPoolExecutor threadExecutor;
+
+    private ClassLoader classLoader;
 
     private Text nameFilter;
 
@@ -161,6 +167,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
     @Override
     public void initialize() {
         initializeThreadExecutor();
+        classLoader = HadoopServerUtil.getClassLoader(connectionBean);
     }
 
     private void initializeThreadExecutor() {
@@ -287,7 +294,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
         AbstractMetadataExtractorViewProvider viewProvider = new FileSelectorTreeViewerProvider();
         schemaTreeViewer.setLabelProvider(viewProvider);
         schemaTreeViewer.setContentProvider(viewProvider);
-        schemaTreeViewer.setInput(getConnectionBean());
+        schemaTreeViewer.setInput(connectionBean = getConnectionBean());
 
         scrolledCompositeFileViewer.setContent(schemaTree);
         scrolledCompositeFileViewer.setMinSize(schemaTree.computeSize(SWT.DEFAULT, SWT.DEFAULT));
@@ -1041,7 +1048,8 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     hdfsTable.setId(factory.getNextId());
                     hdfsTable.getAdditionalProperties().put(HDFSConstants.HDFS_PATH, file.getPath());
                     try {
-                        metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), file);
+                        metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), classLoader,
+                                file);
                     } catch (final Throwable e) {
                         if (isCanceled()) {
                             return;

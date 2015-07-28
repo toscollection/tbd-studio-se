@@ -37,18 +37,17 @@ import org.talend.metadata.managment.creator.AbstractHadoopDBConnectionCreator;
 public class HBaseConnectionCreator extends AbstractHadoopDBConnectionCreator {
 
     @Override
-    public ConnectionItem create(String relativeHadoopClusterId, Map<String, Map<String, String>> initParams)
-            throws CoreException {
+    public ConnectionItem create(Map<String, Map<String, String>> initParams) throws CoreException {
         DatabaseConnection connection = ConnectionFactory.eINSTANCE.createDatabaseConnection();
         Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
-        setPropertyParameters(relativeHadoopClusterId, connectionProperty);
+        setPropertyParameters(connectionProperty);
 
         DatabaseConnectionItem connectionItem = PropertiesFactory.eINSTANCE.createDatabaseConnectionItem();
         connectionItem.setProperty(connectionProperty);
         connectionItem.setConnection(connection);
 
         Map<String, String> paramsMap = new HashMap<>();
-        retrieveCommonParameters(relativeHadoopClusterId, paramsMap);
+        retrieveCommonParameters(paramsMap);
         retrieveConnParameters(initParams, paramsMap);
         setParameters(connection, paramsMap);
         initializeConnectionParameters(connection);
@@ -62,8 +61,8 @@ public class HBaseConnectionCreator extends AbstractHadoopDBConnectionCreator {
     }
 
     @Override
-    protected void retrieveCommonParameters(String relativeHadoopClusterId, Map<String, String> paramsMap) {
-        super.retrieveCommonParameters(relativeHadoopClusterId, paramsMap);
+    protected void retrieveCommonParameters(Map<String, String> paramsMap) {
+        super.retrieveCommonParameters(paramsMap);
         paramsMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_TYPE, EDatabaseConnTemplate.HBASE.getDBTypeName());
         paramsMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PRODUCT, EDatabaseTypeName.HBASE.getProduct());
         paramsMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PORT, EDatabaseConnTemplate.HBASE.getDefaultPort());
