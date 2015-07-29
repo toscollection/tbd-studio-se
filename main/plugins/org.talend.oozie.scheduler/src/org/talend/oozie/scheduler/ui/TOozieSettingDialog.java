@@ -147,7 +147,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setHadoopDistributionValue(String hadoopDistributionValue) {
-		propertyMap.put(EOozieParameterName.HADOOP_DISTRIBUTION.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_HADOOP_DISTRIBUTION.getName(),
 				hadoopDistributionValue);
 		this.hadoopDistributionValue = hadoopDistributionValue;
 	}
@@ -157,7 +157,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setHadoopVersionValue(String hadoopVersionValue) {
-		propertyMap.put(EOozieParameterName.HADOOP_VERSION.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_HADOOP_VERSION.getName(),
 				hadoopVersionValue);
 		this.hadoopVersionValue = hadoopVersionValue;
 	}
@@ -167,7 +167,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setNameNodeEndPointValue(String nameNodeEndPointValue) {
-		propertyMap.put(EOozieParameterName.NAME_NODE_END_POINT.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_NAME_NODE_END_POINT.getName(),
 				nameNodeEndPointValue);
 		this.nameNodeEndPointValue = nameNodeEndPointValue;
 	}
@@ -177,7 +177,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setJobTrackerEndPointValue(String jobTrackerEndPointValue) {
-		propertyMap.put(EOozieParameterName.JOB_TRACKER_ENDPOINT.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_JOB_TRACKER_ENDPOINT.getName(),
 				jobTrackerEndPointValue);
 		this.jobTrackerEndPointValue = jobTrackerEndPointValue;
 	}
@@ -197,7 +197,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setUserNameValue(String userNameValue) {
-		propertyMap.put(EOozieParameterName.USERNAME.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_USERNAME.getName(),
 				userNameValue);
 		this.userNameValue = userNameValue;
 	}
@@ -223,7 +223,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setEnableKerberos(boolean enableKerberos) {
-		propertyMap.put(EOozieParameterName.ENABLE_KERBEROS.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_ENABLE_KERBEROS.getName(),
 				enableKerberos);
 		this.enableKerberos = enableKerberos;
 	}
@@ -244,7 +244,7 @@ public class TOozieSettingDialog extends Dialog {
 	 *            the enableOoKerberos to set
 	 */
 	public void setEnableOoKerberos(boolean enableOoKerberos) {
-		propertyMap.put(EOozieParameterName.ENABLE_OO_KERBEROS.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_ENABLE_OO_KERBEROS.getName(),
 				enableOoKerberos);
 		this.enableOoKerberos = enableOoKerberos;
 	}
@@ -254,7 +254,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setPrincipalValue(String principalValue) {
-		propertyMap.put(EOozieParameterName.NAME_NODE_PRINCIPAL.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_NAME_NODE_PRINCIPAL.getName(),
 				principalValue);
 		this.principalValue = principalValue;
 	}
@@ -283,7 +283,7 @@ public class TOozieSettingDialog extends Dialog {
 	 *            the group to set
 	 */
 	public void setGroup(String group) {
-		propertyMap.put(EOozieParameterName.GROUP.getName(), group);
+		propertyMap.put(EOozieParameterName.OOZIE_GROUP.getName(), group);
 		this.group = group;
 	}
 
@@ -303,7 +303,7 @@ public class TOozieSettingDialog extends Dialog {
 	 *            the useKeytab to set
 	 */
 	public void setUseKeytab(boolean useKeytab) {
-		propertyMap.put(EOozieParameterName.USE_KEYTAB.getName(), useKeytab);
+		propertyMap.put(EOozieParameterName.OOZIE_USE_KEYTAB.getName(), useKeytab);
 		this.useKeytab = useKeytab;
 	}
 
@@ -333,7 +333,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setPropertyTypeValue(String propertyTypeValue) {
-		propertyMap.put(EOozieParameterName.PROPERTY_TYPENAME.getName(), propertyTypeValue);
+		propertyMap.put(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName(), propertyTypeValue);
 		this.propertyTypeValue = propertyTypeValue;
 	}
 
@@ -344,7 +344,7 @@ public class TOozieSettingDialog extends Dialog {
 	 *            the ktPrincipal to set
 	 */
 	public void setKtPrincipal(String ktPrincipal) {
-		propertyMap.put(EOozieParameterName.KT_PRINCIPAL.getName(), ktPrincipal);
+		propertyMap.put(EOozieParameterName.OOZIE_KT_PRINCIPAL.getName(), ktPrincipal);
 		this.ktPrincipal = ktPrincipal;
 	}
 
@@ -364,7 +364,7 @@ public class TOozieSettingDialog extends Dialog {
 	 *            the keytab to set
 	 */
 	public void setKeytab(String keytab) {
-		propertyMap.put(EOozieParameterName.KEY_TAB.getName(), keytab);
+		propertyMap.put(EOozieParameterName.OOZIE_KEY_TAB.getName(), keytab);
 		this.keytab = keytab;
 	}
 
@@ -462,7 +462,7 @@ public class TOozieSettingDialog extends Dialog {
 	}
 
 	public void setPropertyType(String propertyTypeValue) {
-		propertyMap.put(EOozieParameterName.PROPERTY_TYPENAME.getName(),
+		propertyMap.put(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName(),
 				propertyTypeValue);
 		this.propertyTypeValue = propertyTypeValue;
 

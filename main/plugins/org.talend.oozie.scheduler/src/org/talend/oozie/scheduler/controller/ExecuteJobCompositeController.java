@@ -1033,19 +1033,19 @@ public class ExecuteJobCompositeController {
     //Provide these methods below for Built-in mode 
     private String getBIKeytab() {
     	IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.KEY_TAB.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_KEY_TAB.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private String getBIKtprincipal() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.KT_PRINCIPAL.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_KT_PRINCIPAL.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private boolean getBIUseKeytab() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.USE_KEYTAB.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_USE_KEYTAB.getName());
         if(elementParameter.getValue() instanceof String)	{
         	return Boolean.parseBoolean((String) elementParameter.getValue());
         } else {
@@ -1055,13 +1055,13 @@ public class ExecuteJobCompositeController {
 
 	private String getBIPrincipal() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.NAME_NODE_PRINCIPAL.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_NAME_NODE_PRINCIPAL.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private boolean getBIEnableKerberos() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.ENABLE_KERBEROS.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_ENABLE_KERBEROS.getName());
         if(elementParameter.getValue() instanceof String)	{
         	return Boolean.parseBoolean((String) elementParameter.getValue());
         } else {
@@ -1071,7 +1071,7 @@ public class ExecuteJobCompositeController {
 	
 	private boolean getBIEnableOoKerberos() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.ENABLE_OO_KERBEROS.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_ENABLE_OO_KERBEROS.getName());
         if(elementParameter.getValue() instanceof String)	{
         	return Boolean.parseBoolean((String) elementParameter.getValue());
         } else {
@@ -1081,13 +1081,13 @@ public class ExecuteJobCompositeController {
 
 	private String getBIGroup() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.GROUP.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_GROUP.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private String getBIUserNameForHadoop() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.USERNAME.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_USERNAME.getName());
         return (String)elementParameter.getValue();
 	}
 
@@ -1099,25 +1099,25 @@ public class ExecuteJobCompositeController {
 
 	private String getBIJobTracker() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.JOB_TRACKER_ENDPOINT.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_JOB_TRACKER_ENDPOINT.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private String getBINameNode() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.NAME_NODE_END_POINT.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_NAME_NODE_END_POINT.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private String getBIHadoopVersion() {
 		IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.HADOOP_VERSION.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_HADOOP_VERSION.getName());
         return (String)elementParameter.getValue();
 	}
 
 	private String getBIHadoopDistribution() {
     	IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.HADOOP_DISTRIBUTION.getName());
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_HADOOP_DISTRIBUTION.getName());
         return (String)elementParameter.getValue();
 	}
 
