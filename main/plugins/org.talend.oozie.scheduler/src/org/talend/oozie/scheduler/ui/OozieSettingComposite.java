@@ -279,8 +279,8 @@ public class OozieSettingComposite extends ScrolledComposite {
         if (process != null) {
             String connId = (String) process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName())
                     .getValue();
-            if(process.getElementParameter(EOozieParameterName.PROPERTY_TYPENAME.getName())!=null)
-            	propertyType=(String) process.getElementParameter(EOozieParameterName.PROPERTY_TYPENAME.getName()).getValue();
+            if(process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName())!=null)
+            	propertyType=(String) process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName()).getValue();
             if (StringUtils.isNotEmpty(connId)) {
                 this.repositoryId = connId;
                 Connection connection = TOozieParamUtils.getOozieConnectionById(connId);
@@ -845,17 +845,17 @@ public class OozieSettingComposite extends ScrolledComposite {
         	setHadoopDistributionValue(this.tOozieSettingDialog.getHadoopDistributionValue());
             setHadoopVersionValue(this.tOozieSettingDialog.getHadoopVersionValue());
             //setUseYarn(this.tOozieSettingDialog.getUseYarn());
-            this.jobTrackerEndPointTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.JOB_TRACKER_ENDPOINT.getName()));
-            this.nameNodeEndPointTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.NAME_NODE_END_POINT.getName()));
-            this.nnPrincipalText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.NAME_NODE_PRINCIPAL.getName()));
+            this.jobTrackerEndPointTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_JOB_TRACKER_ENDPOINT.getName()));
+            this.nameNodeEndPointTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_NAME_NODE_END_POINT.getName()));
+            this.nnPrincipalText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_NAME_NODE_PRINCIPAL.getName()));
             this.oozieEndPointTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_END_POINT.getName()));
-            this.userNameTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.USERNAME.getName()));
-            this.groupText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.GROUP.getName()));
-            this.kerbBtn.setSelection((boolean)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.ENABLE_KERBEROS.getName()));
-            this.ooKerbBtn.setSelection((boolean)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.ENABLE_OO_KERBEROS.getName()));
-            this.keytabBtn.setSelection((boolean)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.USE_KEYTAB.getName()));
-            this.ktPrincipalText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.KT_PRINCIPAL.getName()));
-            this.ktText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.KEY_TAB.getName()));
+            this.userNameTxt.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_USERNAME.getName()));
+            this.groupText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_GROUP.getName()));
+            this.kerbBtn.setSelection((boolean)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_ENABLE_KERBEROS.getName()));
+            this.ooKerbBtn.setSelection((boolean)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_ENABLE_OO_KERBEROS.getName()));
+            this.keytabBtn.setSelection((boolean)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_USE_KEYTAB.getName()));
+            this.ktPrincipalText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_KT_PRINCIPAL.getName()));
+            this.ktText.setText((String)this.tOozieSettingDialog.getPropertyMap().get(EOozieParameterName.OOZIE_KEY_TAB.getName()));
         }
         }
     }
