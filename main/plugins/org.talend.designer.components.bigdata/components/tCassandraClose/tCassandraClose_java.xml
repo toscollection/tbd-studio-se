@@ -32,6 +32,14 @@
 	</CONNECTORS>
 
   	<PARAMETERS>
+  	    <PARAMETER
+            NAME="USE_EXISTING_CONNECTION"
+            FIELD="CHECK"
+            NUM_ROW="3"
+            SHOW="false"
+        >
+            <DEFAULT>true</DEFAULT>
+        </PARAMETER> 
     	<PARAMETER
 	      NAME="CONNECTION"
 	      FIELD="COMPONENT_LIST"
