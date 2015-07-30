@@ -17,11 +17,16 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.IHadoopClusterService;
+import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
+import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler;
 import org.talend.repository.items.importexport.handlers.model.ImportItem;
 import org.talend.repository.items.importexport.manager.ResourcesManager;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
+import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 
 /**
  * DOC ggu class global comment. Detailled comment
@@ -48,20 +53,26 @@ public class HadoopClusterImportHandler extends ImportRepTypeHandler {
 
         List<ImportItem> relatedItemRecords = new ArrayList<ImportItem>();
         relatedItemRecords.addAll(super.findRelatedImportItems(monitor, resManager, importItem, allImportItemRecords));
-
         if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
             IHadoopClusterService hadoopClusterService = (IHadoopClusterService) GlobalServiceRegister.getDefault().getService(
                     IHadoopClusterService.class);
             final Item item = importItem.getItem();
             if (hadoopClusterService != null && hadoopClusterService.isHadoopClusterItem(item)) {
                 resolveItem(resManager, importItem);
-
-                List<String> subitemIds = hadoopClusterService.getSubitemIdsOfHadoopCluster(item);
-                if (!subitemIds.isEmpty() && allImportItemRecords != null) {
-                    for (ImportItem ir : allImportItemRecords) {
-                        if (ir.getProperty() != null && subitemIds.contains(ir.getProperty().getId())) {
-                            relatedItemRecords.add(ir);
-                        }
+                String clusterId = item.getProperty().getId();
+                for (ImportItem ir : allImportItemRecords) {
+                    resolveItem(resManager, ir);
+                    Item subItem = ir.getItem();
+                    String hcId = null;
+                    if (subItem instanceof HadoopSubConnectionItem) {
+                        hcId = ((HadoopSubConnection) ((HadoopSubConnectionItem) subItem).getConnection())
+                                .getRelativeHadoopClusterId();
+                    } else if (subItem instanceof DatabaseConnectionItem) {
+                        hcId = ((DatabaseConnection) ((DatabaseConnectionItem) subItem).getConnection()).getParameters().get(
+                                ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
+                    }
+                    if (clusterId.equals(hcId)) {
+                        relatedItemRecords.add(ir);
                     }
                 }
             }
