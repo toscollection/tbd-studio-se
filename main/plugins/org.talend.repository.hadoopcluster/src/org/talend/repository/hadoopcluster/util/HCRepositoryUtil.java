@@ -35,8 +35,12 @@ import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
@@ -421,21 +425,25 @@ public class HCRepositoryUtil {
         if (clusterItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) clusterItem.getConnection();
             map.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, clusterItem.getProperty().getId());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL, hcConnection.getNameNodeURI());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL, hcConnection.getJobTrackerURI());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL, getRealValue(hcConnection, hcConnection.getNameNodeURI()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL, getRealValue(hcConnection, hcConnection.getJobTrackerURI()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_YARN, String.valueOf(hcConnection.isUseYarn()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_CUSTOM_CONFS, String.valueOf(hcConnection.isUseCustomConfs()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_KRB, String.valueOf(hcConnection.isEnableKerberos()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, hcConnection.getPrincipal());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL, hcConnection.getJtOrRmPrincipal());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL, hcConnection.getJobHistoryPrincipal());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_RESOURCEMANAGER_SCHEDULER_ADDRESS, hcConnection.getRmScheduler());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS, hcConnection.getJobHistory());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_STAGING_DIRECTORY, hcConnection.getStagingDirectory());
+            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, getRealValue(hcConnection, hcConnection.getPrincipal()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL,
+                    getRealValue(hcConnection, hcConnection.getJtOrRmPrincipal()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL,
+                    getRealValue(hcConnection, hcConnection.getJobHistoryPrincipal()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_RESOURCEMANAGER_SCHEDULER_ADDRESS,
+                    getRealValue(hcConnection, hcConnection.getRmScheduler()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS, getRealValue(hcConnection, hcConnection.getJobHistory()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_STAGING_DIRECTORY,
+                    getRealValue(hcConnection, hcConnection.getStagingDirectory()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_DATANODE_HOSTNAME, String.valueOf(hcConnection.isUseDNHost()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER,
-                    HadoopParameterUtil.getHostNameFromNameNodeURI(hcConnection.getNameNodeURI()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, hcConnection.getUserName());
+                    HadoopParameterUtil.getHostNameFromNameNodeURI(getRealValue(hcConnection, hcConnection.getNameNodeURI())));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, getRealValue(hcConnection, hcConnection.getUserName()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION, hcConnection.getDistribution());
             map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION, hcConnection.getDfVersion());
             map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION, hcConnection.getDistribution());
@@ -443,13 +451,24 @@ public class HCRepositoryUtil {
             if (hcConnection.isEnableKerberos()) {
                 map.put(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB, String.valueOf(hcConnection.isUseKeytab()));
                 if (hcConnection.isUseKeytab()) {
-                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL, hcConnection.getKeytabPrincipal());
-                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB, hcConnection.getKeytab());
+                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL,
+                            getRealValue(hcConnection, hcConnection.getKeytabPrincipal()));
+                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB, getRealValue(hcConnection, hcConnection.getKeytab()));
                 }
             }
         }
 
         return map;
+    }
+
+    private static String getRealValue(Connection connection, String value) {
+        String realValue = value;
+        if (connection.isContextMode()) {
+            ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection,
+                    connection.getContextName());
+            realValue = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, value));
+        }
+        return realValue;
     }
 
     /**
