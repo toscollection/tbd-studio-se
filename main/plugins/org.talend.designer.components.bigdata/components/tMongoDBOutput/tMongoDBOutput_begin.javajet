@@ -22,7 +22,8 @@
     String krbKdc = ElementParameterParser.getValue(node, "__KRB_KDC__");
     String dbuser   = ElementParameterParser.getValue(node, "__USERNAME__");
     String dbpass   = ElementParameterParser.getValue(node, "__PASSWORD__");
-    String dbport  	= ElementParameterParser.getValue(node, "__PORT__");
+    String mongoPort = ElementParameterParser.getValue(node, "__PORT__");
+    String dbport = mongoPort.startsWith("context.") ? "Integer.valueOf(" + mongoPort + ").intValue()" : mongoPort.replace("\"", "");
     String collection=ElementParameterParser.getValue(node, "__COLLECTION__");
     boolean dropExistCollection="true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__DROP_COLLECTION_CREATE__"));
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
