@@ -35,8 +35,18 @@ class <%=cid%>_ValueDecoder implements kafka.serializer.Decoder<<%=outStructName
 
     public <%=outStructName%> fromBytes(byte[] bytes) {
         <%=outStructName%> result = new <%=outStructName%>();
-        String line = this.stringDecoder.fromBytes(bytes);
-        result.<%=tKafkaInputUtil.getOutgoingColumnName()%> = line;
+<%
+	if("STRING".equals(tKafkaInputUtil.getOutputType())) {
+%>
+			String line = this.stringDecoder.fromBytes(bytes);
+			result.<%=tKafkaInputUtil.getOutgoingColumnName()%> = line;
+<%
+	} else if("BYTES".equals(tKafkaInputUtil.getOutputType())) {
+%>
+			result.<%=tKafkaInputUtil.getOutgoingColumnName()%> = bytes;
+<%
+	}
+%>
         return result;
     }
 }

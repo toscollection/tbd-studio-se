@@ -84,6 +84,10 @@ class TKafkaInputUtil {
 		return this.outgoingConnection.getMetadataTable().getListColumns().get(0).getLabel();
 	}
 	
+	public String getOutputType() {
+   	return ElementParameterParser.getValue(node, "__OUTPUT_TYPE__");
+   }
+	
 	private Map<String, String> findKafkaConsumerProperties() {
 		Map<String, String> result = new HashMap<String, String>();
 		List<Map<String, String>> consumerPropertiesFromStudio = (List<Map<String, String>>) ElementParameterParser
