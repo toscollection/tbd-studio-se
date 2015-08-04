@@ -81,8 +81,10 @@ class TKafkaOutputUtil {
         Map<String, String> result = new HashMap<String, String>();
         List<Map<String, String>> producerPropertiesFromStudio = (List<Map<String, String>>) ElementParameterParser
                 .getObjectValue(node, "__KAFKA_PRODUCER_PROPERTIES__");
-        for (Map<String, String> producerPropertyFromStudio : producerPropertiesFromStudio) {
-            result.put(producerPropertyFromStudio.get("PROPERTY"), producerPropertyFromStudio.get("VALUE"));
+        if(producerPropertiesFromStudio != null) {
+	        for (Map<String, String> producerPropertyFromStudio : producerPropertiesFromStudio) {
+	            result.put(producerPropertyFromStudio.get("PROPERTY"), producerPropertyFromStudio.get("VALUE"));
+	        }
         }
         return result;
     }
