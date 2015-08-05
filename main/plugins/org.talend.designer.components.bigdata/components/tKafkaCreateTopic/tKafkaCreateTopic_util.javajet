@@ -21,8 +21,16 @@ class TKafkaCreateTopicUtil {
 		this.kafkaTopicProperties = findKafkaTopicProperties();
 	}
 	
-	public boolean isCreateIfNotExist() {
-		return "CREATE_IF_NOT_EXIST".equals(ElementParameterParser.getValue(node, "__TOPICACTION__"));
+	public boolean isCreate() {
+		return "CREATE".equals(ElementParameterParser.getValue(node, "__TOPICACTION__")) || isCreateIfNotExists();
+	}
+	
+	public boolean isCreateIfNotExists() {
+		return "CREATE_IF_NOT_EXISTS".equals(ElementParameterParser.getValue(node, "__TOPICACTION__"));
+	}
+	
+	public boolean isAlter() {
+		return "ALTER_TOPIC".equals(ElementParameterParser.getValue(node, "__TOPICACTION__"));
 	}
 	
 	public String getZookeeperConnect() {
