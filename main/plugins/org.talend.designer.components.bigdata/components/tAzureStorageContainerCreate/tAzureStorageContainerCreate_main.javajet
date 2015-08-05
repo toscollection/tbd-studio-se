@@ -45,8 +45,8 @@
 		}
 	}
 %>
-	com.microsoft.windowsazure.services.blob.client.CloudBlobClient blobClient = azureStorageAccount_<%=cid%>.createCloudBlobClient();
-	com.microsoft.windowsazure.services.blob.client.CloudBlobContainer blobContainer = blobClient.getContainerReference(<%=containerName%>);
+	com.microsoft.windowsazure.services.blob.client.CloudBlobClient blobClient_<%=cid%> = azureStorageAccount_<%=cid%>.createCloudBlobClient();
+	com.microsoft.windowsazure.services.blob.client.CloudBlobContainer blobContainer_<%=cid%> = blobClient_<%=cid%>.getContainerReference(<%=containerName%>);
 <%
 	if(isLog4jEnabled) {
 %>
@@ -54,7 +54,7 @@
 <%
 	}
 %>
-	blobContainer.createIfNotExist();
+	blobContainer_<%=cid%>.createIfNotExist();
 <%
 	if(isLog4jEnabled) {
 %>
@@ -68,9 +68,9 @@
 	
 	if("CONTAINER_ACL_PUBLIC".equals(containerAcl)){
 %>
-	com.microsoft.windowsazure.services.blob.client.BlobContainerPermissions blobContainerPerms = new com.microsoft.windowsazure.services.blob.client.BlobContainerPermissions();
-	blobContainerPerms.setPublicAccess(com.microsoft.windowsazure.services.blob.client.BlobContainerPublicAccessType.CONTAINER);
-	blobContainer.uploadPermissions(blobContainerPerms);
+	com.microsoft.windowsazure.services.blob.client.BlobContainerPermissions blobContainerPerms_<%=cid%> = new com.microsoft.windowsazure.services.blob.client.BlobContainerPermissions();
+	blobContainerPerms_<%=cid%>.setPublicAccess(com.microsoft.windowsazure.services.blob.client.BlobContainerPublicAccessType.CONTAINER);
+	blobContainer_<%=cid%>.uploadPermissions(blobContainerPerms_<%=cid%>);
 <%
 	}
 %>
