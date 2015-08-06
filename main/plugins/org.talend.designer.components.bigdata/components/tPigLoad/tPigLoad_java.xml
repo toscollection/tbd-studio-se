@@ -2899,6 +2899,7 @@
 
 			<IMPORT NAME="parquet-pig-bundle-1.5.0-cdh5.4.0" MODULE="parquet-pig-bundle-1.5.0-cdh5.4.0.jar"
 				MVN="mvn:org.talend.libraries/parquet-pig-bundle-1.5.0-cdh5.4.0/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-pig-bundle-1.5.0-cdh5.4.0.jar"
 				REQUIRED_IF="(MAPREDUCE == 'true' AND LOAD=='PARQUETLOADER' AND DISTRIBUTION!='CUSTOM' AND PIG_VERSION=='Cloudera_CDH5_4')" />
 
 			<IMPORT NAME="parquet-pig-bundle-1.2.5-cdh5.0.4" MODULE="parquet-pig-bundle-1.2.5-cdh5.0.4.jar"
