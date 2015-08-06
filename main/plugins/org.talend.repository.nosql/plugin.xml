@@ -247,6 +247,15 @@
             name="UnifyPasswordEncryption4NoSQLConnectionMigrationTask"
             version="5.6.0">
       </projecttask>
+      <projecttask
+            beforeLogon="false"
+            breaks="6.0.0"
+            class="org.talend.repository.nosql.repository.migration.ChangeMongoDBConnectionMinimalVersionMigrationTask"
+            id="org.talend.repository.nosql.repository.migration.ChangeMongoDBConnectionMinimalVersionMigrationTask"
+            description="Change mongoDB connection version to 3.0.X"
+            name="ChangeMongoDBConnectionMinimalVersionMigrationTask"
+            version="6.0.0">
+       </projecttask>
    </extension>
    <extension
          point="org.talend.core.repository.repository_context">
