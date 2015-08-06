@@ -137,9 +137,16 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
             String nextId = factory.getNextId();
             connectionProperty.setId(nextId);
         }
+        initParameters();
         // initialize the context mode
         ConnectionContextHelper.checkContextMode(connectionItem);
         setHelpAvailable(true);
+    }
+
+    private void initParameters() {
+        if (creation) {
+            connection.setUseDNHost(true);
+        }
     }
 
     public void setToolBar(boolean isToolbar) {

@@ -78,6 +78,8 @@ import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.cwm.helper.TableHelper;
 import org.talend.designer.hdfsbrowse.manager.HadoopOperationManager;
+import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
+import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.hdfs.ui.metadata.ExtractHDFSSchemaManager;
 import org.talend.repository.hdfs.util.HDFSConstants;
@@ -573,9 +575,12 @@ public class HDFSSchemaForm extends AbstractHDFSForm {
             }
             if (doit) {
                 List<MetadataColumn> metadataColumns;
+                HDFSConnectionBean connectionBean = getConnectionBean();
                 try {
-                    HadoopOperationManager.getInstance().getDFS(getConnectionBean()); // reconnect the HDFS server.
-                    metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), metadataTable);
+                    ClassLoader classLoader = HadoopServerUtil.getClassLoader(connectionBean);
+                    HadoopOperationManager.getInstance().getDFS(connectionBean, classLoader); // reconnect the HDFS
+                    metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), classLoader,
+                            metadataTable);
                 } catch (Exception e) {
                     ExceptionMessageDialog.openError(getShell(),
                             Messages.getString("HDFSSchemaForm.checkSchema.errorDialog.title"), e.getMessage(), e); //$NON-NLS-1$

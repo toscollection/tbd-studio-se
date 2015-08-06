@@ -56,6 +56,10 @@ public class HadoopServerUtil {
 
     // public static final int TIMEOUT = 20; // the max time(second) which achieve DFS connection use.
 
+    public static Object getDFS(HDFSConnectionBean connection) throws HadoopServerException {
+        return getDFS(connection, null);
+    }
+
     /**
      * DOC ycbai Comment method "getDFS".
      * 
@@ -65,7 +69,7 @@ public class HadoopServerUtil {
      * @return
      * @throws HadoopServerException
      */
-    public static Object getDFS(HDFSConnectionBean connection) throws HadoopServerException {
+    public static Object getDFS(HDFSConnectionBean connection, ClassLoader currentClassLoader) throws HadoopServerException {
         if (connection == null) {
             return null;
         }
@@ -75,19 +79,20 @@ public class HadoopServerUtil {
         }
 
         Object dfs = null;
+        ClassLoader classLoader = currentClassLoader;
         ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
-            ClassLoader classLoader = getClassLoader(connection);
+            if (classLoader == null) {
+                classLoader = getClassLoader(connection);
+            }
             Thread.currentThread().setContextClassLoader(classLoader);
-
-            Object conf = getConfiguration(connection);
+            Object conf = getConfiguration(connection, classLoader);
             boolean enableKerberos = connection.isEnableKerberos();
             String userName = StringUtils.trimToNull(connection.getUserName());
             if (enableKerberos) {
                 userName = null;
             }
             String group = StringUtils.trimToNull(connection.getGroup());
-
             if (userName == null || group != null) {
                 dfs = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", //$NON-NLS-1$ //$NON-NLS-2$
                         new Object[] { conf });
@@ -95,7 +100,6 @@ public class HadoopServerUtil {
                 dfs = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", new Object[] { //$NON-NLS-1$ //$NON-NLS-2$
                         new URI(EHadoopConfProperties.FS_DEFAULT_URI.get(conf)), conf, userName });
             }
-
         } catch (Exception e) {
             throw new HadoopServerException(e);
         } finally {
@@ -106,6 +110,11 @@ public class HadoopServerUtil {
     }
 
     public static Object getConfiguration(HDFSConnectionBean connection) throws HadoopServerException {
+        return getConfiguration(connection, null);
+    }
+
+    public static Object getConfiguration(HDFSConnectionBean connection, ClassLoader currentClassLoader)
+            throws HadoopServerException {
         Object conf = null;
 
         String userName = StringUtils.trimToNull(connection.getUserName());
@@ -134,8 +143,13 @@ public class HadoopServerUtil {
             keytab = TalendQuoteUtils.removeQuotesIfExist(keytab);
         }
 
+        ClassLoader classLoader = currentClassLoader;
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
-            ClassLoader classLoader = getClassLoader(connection);
+            if (classLoader == null) {
+                classLoader = getClassLoader(connection);
+            }
+            Thread.currentThread().setContextClassLoader(classLoader);
             conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
             EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
             if (enableKerberos) {
@@ -169,6 +183,8 @@ public class HadoopServerUtil {
             }
         } catch (Exception e) {
             throw new HadoopServerException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
 
         return conf;
@@ -278,11 +294,10 @@ public class HadoopServerUtil {
                 || "ALL".equals(enumName);
     }
 
-    public static String extractUsername(HDFSConnectionBean connection) throws HadoopServerException {
+    public static String extractUsername(HDFSConnectionBean connection, ClassLoader classLoader) throws HadoopServerException {
         String username = null;
         try {
-            Object ugi = ReflectionUtils.invokeStaticMethod(
-                    "org.apache.hadoop.security.UserGroupInformation", getClassLoader(connection), //$NON-NLS-1$
+            Object ugi = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
                     "getCurrentUser", new String[0]); //$NON-NLS-1$
             if (ugi != null) {
                 username = (String) ReflectionUtils.invokeMethod(ugi, "getShortUserName", new Object[0]); //$NON-NLS-1$
@@ -294,11 +309,10 @@ public class HadoopServerUtil {
         return username;
     }
 
-    public static String extractGroups(HDFSConnectionBean connection) throws HadoopServerException {
+    public static String extractGroups(HDFSConnectionBean connection, ClassLoader classLoader) throws HadoopServerException {
         StringBuffer groupBuf = new StringBuffer();
         try {
-            Object ugi = ReflectionUtils.invokeStaticMethod(
-                    "org.apache.hadoop.security.UserGroupInformation", getClassLoader(connection), //$NON-NLS-1$
+            Object ugi = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
                     "getCurrentUser", new String[0]); //$NON-NLS-1$
             if (ugi != null) {
                 String[] groups = (String[]) ReflectionUtils.invokeMethod(ugi, "getGroupNames", new Object[0]); //$NON-NLS-1$
@@ -333,11 +347,11 @@ public class HadoopServerUtil {
         try {
             ClassLoader classLoader = getClassLoader(connection);
             Thread.currentThread().setContextClassLoader(classLoader);
-            dfs = getDFS(connection);
+            dfs = getDFS(connection, classLoader);
             if (dfs != null) {
                 // Check if we can access the HDFS file content.
-                Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", getClassLoader(connection),
-                        new Object[] { ROOT_PATH });
+                Object pathObj = ReflectionUtils
+                        .newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { ROOT_PATH });
                 ReflectionUtils.invokeMethod(dfs, "listStatus", new Object[] { pathObj });
 
                 connectionStatus.setResult(true);

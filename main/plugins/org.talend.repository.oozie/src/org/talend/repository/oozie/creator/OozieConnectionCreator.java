@@ -34,18 +34,17 @@ import org.talend.repository.model.oozie.OozieFactory;
 public class OozieConnectionCreator extends AbstractHadoopSubConnectionCreator {
 
     @Override
-    public ConnectionItem create(String relativeHadoopClusterId, Map<String, Map<String, String>> initParams)
-            throws CoreException {
+    public ConnectionItem create(Map<String, Map<String, String>> initParams) throws CoreException {
         OozieConnection connection = OozieFactory.eINSTANCE.createOozieConnection();
         Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
-        setPropertyParameters(relativeHadoopClusterId, connectionProperty);
+        setPropertyParameters(connectionProperty);
 
         HadoopSubConnectionItem connectionItem = OozieFactory.eINSTANCE.createOozieConnectionItem();
         connectionItem.setProperty(connectionProperty);
         connectionItem.setConnection(connection);
 
         setParameters(connection, initParams);
-        appendToHadoopCluster(relativeHadoopClusterId, connectionItem);
+        appendToHadoopCluster(connectionItem);
 
         return connectionItem;
     }

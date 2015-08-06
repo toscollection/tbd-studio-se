@@ -94,10 +94,33 @@ class CassandraOutputGenHelper{
 		String tableAction = ElementParameterParser.getValue(node, "__ACTION_ON_COLUMN_FAMILY__");
 	    String dataAction = ElementParameterParser.getValue(node, "__DATA_ACTION__");
 		if(!"NONE".equals(tableAction) && !"DELETE".equals(dataAction)){
-	        if("DROP_IF_EXISTS_AND_CREATE".equals(tableAction)){
+			if("DROP_CREATE".equals(tableAction)){
+			%>
+				connection_<%=cid%>.execute(<%=cqlManager.getDropTableSQL(false)%>);
+	            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL(false)%>);
+	            <%
+	            if(cqlManager.containsUnsupportTypes()){
+	            %>
+	                System.err.println("Don't support create table with set/list/map");
+	            <%
+	            }
+	            %>
+			<%
+			}else if("CREATE".equals(tableAction)){
+			%>
+				connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL(false)%>);
+	            <%
+	            if(cqlManager.containsUnsupportTypes()){
+	            %>
+	                System.err.println("Don't support create table with set/list/map");
+	            <%
+	            }
+	            %>
+			<%
+	        }else if("DROP_IF_EXISTS_AND_CREATE".equals(tableAction)){
 	        %>
-	            connection_<%=cid%>.execute(<%=cqlManager.getDropTableSQL()%>);
-	            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL()%>);
+	            connection_<%=cid%>.execute(<%=cqlManager.getDropTableSQL(true)%>);
+	            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL(false)%>);
 	            <%
 	            if(cqlManager.containsUnsupportTypes()){
 	            %>
@@ -108,7 +131,7 @@ class CassandraOutputGenHelper{
 	        <%    
 	        }else if("CREATE_IF_NOT_EXISTS".equals(tableAction)){
 	        %>
-	            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL()%>);
+	            connection_<%=cid%>.execute(<%=cqlManager.getCreateTableSQL(true)%>);
 	            <%
 	            if(cqlManager.containsUnsupportTypes()){
 	            %>

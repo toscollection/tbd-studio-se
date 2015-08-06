@@ -123,7 +123,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
 
         String tosContextPath = jobContext.getTosContextPath();
         if (tosContextPath != null) {
-            action.addArgument(TalendProcessArgumentConstant.CMD_ARG_CONTEXT_NAME + tosContextPath);//$NON-NLS-1$
+            action.addArgument(TalendProcessArgumentConstant.CMD_ARG_CONTEXT_NAME + tosContextPath);
         }
         return new Workflow(jobContext.getJobName(), action);
     }
@@ -172,7 +172,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
             // }
 
             String appPath = jobContext.get(OozieClient.APP_PATH);
-            Object fs = HadoopServerUtil.getDFS(connectionBean);
+            Object fs = HadoopServerUtil.getDFS(connectionBean, classLoader);
             Object wfFile = HadoopReflection.newInstance(HadoopClassConstants.PATH, new Object[] { appPath + asFile },
                     classLoader);
             Object outputStream = null;

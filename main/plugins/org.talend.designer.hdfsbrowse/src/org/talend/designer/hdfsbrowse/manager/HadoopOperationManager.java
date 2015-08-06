@@ -50,14 +50,16 @@ public class HadoopOperationManager {
             return;
         }
 
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
+            Thread.currentThread().setContextClassLoader(classLoader);
             Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { path });
             Object[] statusList = (Object[]) ReflectionUtils.invokeMethod(fileSystem, "listStatus", new Object[] { pathObj });
             if (statusList == null) {
                 return;
             }
             for (Object status : statusList) {
-                if (!canAccess(connection, status)) {
+                if (!canAccess(connection, classLoader, status)) {
                     continue;
                 }
                 HDFSPath content = null;
@@ -86,6 +88,8 @@ public class HadoopOperationManager {
             }
         } catch (Exception e) {
             throw new HadoopServerException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
     }
 
@@ -109,7 +113,9 @@ public class HadoopOperationManager {
             return null;
         }
 
+        ClassLoader oldClassLoaderLoader = Thread.currentThread().getContextClassLoader();
         try {
+            Thread.currentThread().setContextClassLoader(classLoader);
             Object pathObj = ReflectionUtils.newInstance("org.apache.hadoop.fs.Path", classLoader, new Object[] { filePath });
             Object factory = ReflectionUtils.newInstance("org.apache.hadoop.io.compress.CompressionCodecFactory", classLoader,
                     new Object[] { configuration });
@@ -123,18 +129,20 @@ public class HadoopOperationManager {
             }
         } catch (Exception e) {
             throw new HadoopServerException(e);
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
 
         return stream;
     }
 
-    public InputStream getFileContent(HDFSConnectionBean connection, String filePath) throws HadoopServerException {
-        Object fileSystem = getDFS(connection);
+    public InputStream getFileContent(HDFSConnectionBean connection, ClassLoader classLoader, String filePath)
+            throws HadoopServerException {
+        Object fileSystem = getDFS(connection, classLoader);
         if (fileSystem == null) {
             return null;
         }
-        ClassLoader classLoader = getClassLoader(connection);
-        Object configuration = getConfiguration(connection);
+        Object configuration = getConfiguration(connection, classLoader);
         return getFileContent(fileSystem, configuration, classLoader, filePath);
     }
 
@@ -143,11 +151,15 @@ public class HadoopOperationManager {
     }
 
     public Object getDFS(HDFSConnectionBean connectionBean) throws HadoopServerException {
-        return HadoopServerUtil.getDFS(connectionBean);
+        return getDFS(connectionBean, null);
     }
 
-    public Object getConfiguration(HDFSConnectionBean connectionBean) throws HadoopServerException {
-        return HadoopServerUtil.getConfiguration(connectionBean);
+    public Object getDFS(HDFSConnectionBean connectionBean, ClassLoader classLoader) throws HadoopServerException {
+        return HadoopServerUtil.getDFS(connectionBean, classLoader);
+    }
+
+    public Object getConfiguration(HDFSConnectionBean connectionBean, ClassLoader classLoader) throws HadoopServerException {
+        return HadoopServerUtil.getConfiguration(connectionBean, classLoader);
     }
 
     public ClassLoader getClassLoader(HDFSConnectionBean connectionBean) {
@@ -169,7 +181,7 @@ public class HadoopOperationManager {
         return table;
     }
 
-    private boolean canAccess(HDFSConnectionBean connection, Object status) throws HadoopServerException {
+    private boolean canAccess(HDFSConnectionBean connection, ClassLoader classLoader, Object status) throws HadoopServerException {
         if (status == null) {
             return false;
         }
@@ -180,10 +192,10 @@ public class HadoopOperationManager {
             group = connection.getGroup();
         }
         if (StringUtils.trimToNull(userName) == null) {
-            userName = HadoopServerUtil.extractUsername(connection);
+            userName = HadoopServerUtil.extractUsername(connection, classLoader);
         }
         if (StringUtils.trimToNull(group) == null) {
-            group = HadoopServerUtil.extractGroups(connection);
+            group = HadoopServerUtil.extractGroups(connection, classLoader);
         }
 
         return HadoopServerUtil.hasReadAuthority(status, userName, group);

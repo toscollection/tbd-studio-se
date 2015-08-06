@@ -13,8 +13,8 @@
 package org.talend.repository.hadoopcluster.creator;
 
 import org.talend.core.hadoop.creator.AbstractHadoopConnectionCreator;
-import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 
@@ -24,9 +24,10 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
  */
 public abstract class AbstractHadoopSubConnectionCreator extends AbstractHadoopConnectionCreator {
 
-    protected void appendToHadoopCluster(String relativeHadoopClusterId, HadoopSubConnectionItem connectionItem) {
+    protected void appendToHadoopCluster(HadoopSubConnectionItem connectionItem) {
         HadoopSubConnection connection = (HadoopSubConnection) connectionItem.getConnection();
-        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(relativeHadoopClusterId);
+        HadoopClusterConnection hcConnection = (HadoopClusterConnection) ((HadoopClusterConnectionItem) relativeHadoopClusterItem)
+                .getConnection();
         if (hcConnection != null) {
             connection.setRelativeHadoopClusterId(relativeHadoopClusterId);
             hcConnection.getConnectionList().add(connectionItem.getProperty().getId());

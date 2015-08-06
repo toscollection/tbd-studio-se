@@ -73,6 +73,12 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
 
     private final static String DEFAULT_FILE_SERVER = "Localhost 127.0.0.1"; //$NON-NLS-1$
 
+    private ClassLoader classLoader;
+
+    public ExtractTextFileSchemaService(ClassLoader classLoader) {
+        this.classLoader = classLoader;
+    }
+
     @Override
     public List<MetadataColumn> extractColumns(HDFSConnection connection, IHDFSNode node) throws Exception {
         List<MetadataColumn> columns = new ArrayList<MetadataColumn>();
@@ -83,7 +89,7 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
         HDFSFile file = (HDFSFile) node;
         file.setFileType(EHDFSFileTypes.TEXT);
         InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
-                HDFSModelUtil.convert2HDFSConnectionBean(connection), file.getPath());
+                HDFSModelUtil.convert2HDFSConnectionBean(connection), classLoader, file.getPath());
 
         return extractColumns(connection, inputStream, file.getTable().getName());
     }
@@ -101,7 +107,7 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
             return columns;
         }
         InputStream inputStream = HadoopOperationManager.getInstance().getFileContent(
-                HDFSModelUtil.convert2HDFSConnectionBean(connection), hdfsPath);
+                HDFSModelUtil.convert2HDFSConnectionBean(connection), classLoader, hdfsPath);
 
         return extractColumns(connection, inputStream, metadataTable.getLabel());
     }

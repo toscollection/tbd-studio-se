@@ -35,13 +35,13 @@ public class ExtractHDFSMetaServiceFactory {
      * @param path
      * @return
      */
-    public static IExtractSchemaService<HDFSConnection> getService(HDFSConnectionBean connectionBean, Object path) {
+    public static IExtractSchemaService<HDFSConnection> getService(HDFSConnectionBean connectionBean, ClassLoader classLoader,
+            Object path) {
         IExtractSchemaService<HDFSConnection> service = null;
         boolean isSequenceFile = true;
-        ClassLoader classLoader = HadoopServerUtil.getClassLoader(connectionBean);
         try {
-            Object fs = HadoopServerUtil.getDFS(connectionBean);
-            Object conf = HadoopServerUtil.getConfiguration(connectionBean);
+            Object fs = HadoopServerUtil.getDFS(connectionBean, classLoader);
+            Object conf = HadoopServerUtil.getConfiguration(connectionBean, classLoader);
             ReflectionUtils.newInstance("org.apache.hadoop.io.SequenceFile$Reader", classLoader, new Object[] { fs, path, conf },
                     Class.forName("org.apache.hadoop.fs.FileSystem", true, classLoader),
                     Class.forName("org.apache.hadoop.fs.Path", true, classLoader),
@@ -50,11 +50,11 @@ public class ExtractHDFSMetaServiceFactory {
             isSequenceFile = false;
         }
         if (isSequenceFile) {
-            service = new ExtractSequenceFileSchemaService();
+            service = new ExtractSequenceFileSchemaService(classLoader);
         } else if (ExtractAVROFileSchemaService.isAnAVROFormattedFile(String.valueOf(path))) {
             service = new ExtractAVROFileSchemaService(classLoader);
         } else {
-            service = new ExtractTextFileSchemaService();
+            service = new ExtractTextFileSchemaService(classLoader);
         }
 
         return service;
