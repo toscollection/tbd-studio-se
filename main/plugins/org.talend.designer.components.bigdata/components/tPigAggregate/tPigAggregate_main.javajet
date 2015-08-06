@@ -4,6 +4,7 @@
 		org.talend.core.model.process.IConnection
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.IMetadataColumn
 		java.util.List
 		java.util.Map
 		"
@@ -36,9 +37,11 @@
 	}
 	
 	String outputConnectionName = "";
+	List<IMetadataColumn> outputMetadataColumns = null;
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
+		outputMetadataColumns = outputConnections.get(0).getMetadataTable().getListColumns();
 	}
 	
 	List<Map<String, String>> key_fields = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__KEY_FIELDS__");
@@ -96,29 +99,37 @@
 
 		sb_<%=cid%> = new StringBuilder();
 		sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT = FOREACH <%=cid%>_GROUP GENERATE ");
-<%
-		if(key_fields != null && key_fields.size()>0) {
-    		for(Map<String, String> key_field : key_fields) {
-%>
-    			sb_<%=cid%>.append("group<%=key_fields.size()>1?"."+key_field.get("INPUT_COLUMN"):""%> AS <%=key_field.get("INPUT_COLUMN")%>");
-    			sb_<%=cid%>.append(",");
-<%
-			}
-		}
 
-		java.util.Iterator<Map<String, String>> iterator = operations_config.iterator();
-		
-		while(iterator.hasNext()) {
-			Map<String, String> operation_config = iterator.next();
-%>
-			sb_<%=cid%>.append(" <%=operation_config.get("FUNCTION")%>(<%=previous_node%>_<%=previousOutputConnectionName%>_RESULT.<%=operation_config.get("INPUT_COLUMN")%>) AS <%=operation_config.get("OUTPUT_COLUMN")%>");
-<%
-			if(iterator.hasNext()) {
-%>
-			sb_<%=cid%>.append(",");
-<%
-			}
+		<%
+        Boolean notFirst = false;
+		for (IMetadataColumn outputColumn: outputMetadataColumns) {
+            boolean isOperationConfig = false;
+		    if (notFirst) {
+		        %>
+	            sb_<%=cid%>.append(",");
+	            <%
+		    } else {
+		        notFirst = true;
+		    }
+		    for (Map<String, String> operationConfig: operations_config) {
+		        if (operationConfig.get("OUTPUT_COLUMN").equals(outputColumn.getLabel())) {
+		            %>
+	                sb_<%=cid%>.append(" <%=operationConfig.get("FUNCTION")%>(<%=previous_node%>_<%=previousOutputConnectionName%>_RESULT.<%=operationConfig.get("INPUT_COLUMN")%>) AS <%=operationConfig.get("OUTPUT_COLUMN")%>");
+            		<%
+            		isOperationConfig = true;
+		        }
+		    }
+		    if (!isOperationConfig) {
+	            for(Map<String, String> keyField : key_fields) {
+	                if (keyField.get("INPUT_COLUMN").equals(outputColumn.getLabel())) {
+	                    %>
+	                    sb_<%=cid%>.append("group.<%=keyField.get("INPUT_COLUMN")%> AS <%=keyField.get("INPUT_COLUMN")%>");
+	                    <%
+	                }
+                }
+		    }
 		}
+	
 %>
 		sb_<%=cid%>.append(";");
 		
