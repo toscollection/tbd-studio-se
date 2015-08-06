@@ -5,11 +5,13 @@
 			<value>DISTRIBUTION</value>
 		</map>
 		<map key="VERSION">
+		    <value>MR_VERSION</value>
 			<value>DB_VERSION</value>
 			<value>HCAT_VERSION</value>
 		</map>
 		<map key="NAMENODE_URI">
 			<value>FS_DEFAULT_NAME</value>
+			<value>NAMENODE</value>
 		</map>
 		<map key="USERNAME">
 			<value>USERNAME</value>

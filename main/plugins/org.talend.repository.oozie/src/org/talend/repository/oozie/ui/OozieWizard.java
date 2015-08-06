@@ -101,7 +101,7 @@ public class OozieWizard extends HadoopRepositoryWizard<OozieConnection> {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             hadoopConnection.setRelativeHadoopClusterId(hcConnectionItem.getProperty().getId());
-            hadoopConnection.setUserName(hcConnection.getUserName());
+            hadoopConnection.setUserName(HCRepositoryUtil.getParamValueOffContext(hcConnection, hcConnection.getUserName()));
         }
     }
 

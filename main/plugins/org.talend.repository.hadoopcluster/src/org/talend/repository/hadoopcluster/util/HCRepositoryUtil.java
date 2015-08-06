@@ -425,25 +425,30 @@ public class HCRepositoryUtil {
         if (clusterItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) clusterItem.getConnection();
             map.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, clusterItem.getProperty().getId());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL, getRealValue(hcConnection, hcConnection.getNameNodeURI()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL, getRealValue(hcConnection, hcConnection.getJobTrackerURI()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL,
+                    getParamValueOffContext(hcConnection, hcConnection.getNameNodeURI()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL,
+                    getParamValueOffContext(hcConnection, hcConnection.getJobTrackerURI()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_YARN, String.valueOf(hcConnection.isUseYarn()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_CUSTOM_CONFS, String.valueOf(hcConnection.isUseCustomConfs()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_KRB, String.valueOf(hcConnection.isEnableKerberos()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, getRealValue(hcConnection, hcConnection.getPrincipal()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL,
+                    getParamValueOffContext(hcConnection, hcConnection.getPrincipal()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL,
-                    getRealValue(hcConnection, hcConnection.getJtOrRmPrincipal()));
+                    getParamValueOffContext(hcConnection, hcConnection.getJtOrRmPrincipal()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL,
-                    getRealValue(hcConnection, hcConnection.getJobHistoryPrincipal()));
+                    getParamValueOffContext(hcConnection, hcConnection.getJobHistoryPrincipal()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_RESOURCEMANAGER_SCHEDULER_ADDRESS,
-                    getRealValue(hcConnection, hcConnection.getRmScheduler()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS, getRealValue(hcConnection, hcConnection.getJobHistory()));
+                    getParamValueOffContext(hcConnection, hcConnection.getRmScheduler()));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS,
+                    getParamValueOffContext(hcConnection, hcConnection.getJobHistory()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_STAGING_DIRECTORY,
-                    getRealValue(hcConnection, hcConnection.getStagingDirectory()));
+                    getParamValueOffContext(hcConnection, hcConnection.getStagingDirectory()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_USE_DATANODE_HOSTNAME, String.valueOf(hcConnection.isUseDNHost()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER,
-                    HadoopParameterUtil.getHostNameFromNameNodeURI(getRealValue(hcConnection, hcConnection.getNameNodeURI())));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, getRealValue(hcConnection, hcConnection.getUserName()));
+                    HadoopParameterUtil.getHostNameFromNameNodeURI(getParamValueOffContext(hcConnection,
+                            hcConnection.getNameNodeURI())));
+            map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, getParamValueOffContext(hcConnection, hcConnection.getUserName()));
             map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION, hcConnection.getDistribution());
             map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION, hcConnection.getDfVersion());
             map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION, hcConnection.getDistribution());
@@ -452,8 +457,9 @@ public class HCRepositoryUtil {
                 map.put(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB, String.valueOf(hcConnection.isUseKeytab()));
                 if (hcConnection.isUseKeytab()) {
                     map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL,
-                            getRealValue(hcConnection, hcConnection.getKeytabPrincipal()));
-                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB, getRealValue(hcConnection, hcConnection.getKeytab()));
+                            getParamValueOffContext(hcConnection, hcConnection.getKeytabPrincipal()));
+                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB,
+                            getParamValueOffContext(hcConnection, hcConnection.getKeytab()));
                 }
             }
         }
@@ -461,7 +467,7 @@ public class HCRepositoryUtil {
         return map;
     }
 
-    private static String getRealValue(Connection connection, String value) {
+    public static String getParamValueOffContext(Connection connection, String value) {
         String realValue = value;
         if (connection.isContextMode()) {
             ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection,
