@@ -38,10 +38,6 @@ public enum EHadoopParameter {
 
     GROUP,
 
-    MR_VERSION,
-
-    NAMENODE,
-
     AUTHENTICATION_MODE,
 
     HADOOP_CUSTOM_JARS,

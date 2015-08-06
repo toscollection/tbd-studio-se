@@ -24,6 +24,7 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.oozie.i18n.Messages;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
@@ -208,7 +209,9 @@ public class OozieForm extends AbstractOozieForm {
         if (!StringUtils.isEmpty(endPointVal)) {
             endPonitText.setText(endPointVal);
         } else {
-            String hostName = HadoopParameterUtil.getHostNameFromNameNodeURI(clusterConnection.getNameNodeURI());
+            String originalNameNodeUri = HCRepositoryUtil.getParamValueOffContext(clusterConnection,
+                    clusterConnection.getNameNodeURI());
+            String hostName = HadoopParameterUtil.getHostNameFromNameNodeURI(originalNameNodeUri);
             endPointVal = "http://" + hostName + ":11000/oozie"; //$NON-NLS-1$//$NON-NLS-2$ 
             endPonitText.setText(endPointVal);
             getConnection().setOozieEndPoind(endPointVal);
