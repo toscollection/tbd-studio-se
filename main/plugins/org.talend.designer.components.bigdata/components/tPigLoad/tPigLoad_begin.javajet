@@ -272,7 +272,7 @@
 				
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,HDP_2_2,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,Cloudera_CDH5_4,Cloudera_CDH5_1_MR1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0,APACHE_2_4_0_EMR".contains(pigVersion)))) {
+				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,HDP_2_2,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,Cloudera_CDH5_4,Cloudera_CDH5_1_MR1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0,APACHE_2_4_0_EMR,EMR_4_0_0".contains(pigVersion)))) {
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 					String username_<%=cid %> = <%=username%>;
@@ -301,7 +301,7 @@
                 <%
             }
 			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion));
-			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || isKerberosAvailableHadoop2;
+			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || isKerberosAvailableHadoop2;
 			
 			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || "Cloudera_CDH5_1_MR1".equals(pigVersion));
 			
@@ -325,7 +325,7 @@
 <%
 				}
 				
-				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion))) {
+				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion))) {
 %>
 					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 <%
@@ -340,7 +340,7 @@
 					props_<%=cid%>.put("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
 					props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*");
 					<%
-				} else if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
+				} else if(!isCustom && ("APACHE_2_4_0_EMR".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion))) {
 		            %>
 		            props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*");
 	                <%
