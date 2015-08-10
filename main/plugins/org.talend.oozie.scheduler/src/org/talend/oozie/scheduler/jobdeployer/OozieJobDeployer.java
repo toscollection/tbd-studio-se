@@ -14,35 +14,32 @@ package org.talend.oozie.scheduler.jobdeployer;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.SubProgressMonitor;
+import org.talend.commons.CommonsPlugin;
+import org.talend.commons.utils.resource.FileExtensions;
 import org.talend.core.CorePlugin;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.properties.ProcessItem;
 import org.talend.core.prefs.ITalendCorePrefConstants;
-import org.talend.core.ui.export.ArchiveFileExportOperationFullPath;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
 import org.talend.designer.hdfsbrowse.reflection.HadoopClassConstants;
 import org.talend.designer.hdfsbrowse.reflection.HadoopReflection;
-import org.talend.designer.runprocess.IProcessor;
 import org.talend.designer.runprocess.ProcessorException;
 import org.talend.designer.runprocess.ProcessorUtilities;
 import org.talend.oozie.scheduler.exceptions.OozieJobDeployException;
 import org.talend.oozie.scheduler.utils.OozieClassLoaderFactory;
 import org.talend.oozie.scheduler.utils.TOozieParamUtils;
-import org.talend.repository.documentation.ExportFileResource;
 import org.talend.repository.ui.utils.ZipToFile;
 import org.talend.repository.ui.wizards.exportjob.JavaJobScriptsExportWSWizardPage.JobExportType;
-import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JobScriptsManager;
+import org.talend.repository.ui.wizards.exportjob.scriptsmanager.BuildJobManager;
 import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JobScriptsManager.ExportChoice;
 import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JobScriptsManagerFactory;
+import org.talend.utils.io.FilesUtils;
 
 /**
  */
@@ -66,8 +63,14 @@ public class OozieJobDeployer {
      */
     private static void unzipAndUploadProcess(IProcess2 process, String archiveZipFileStr) throws OozieJobDeployException {
         String tempUnzipFolder = unzipProcess(process, archiveZipFileStr);
-        uploadProcess(process, tempUnzipFolder);
-        deleteProcess(tempUnzipFolder);
+        try {
+            uploadProcess(process, tempUnzipFolder);
+        } finally {
+            if (!CommonsPlugin.isDebugMode()) { // if debug, won't remove the zip file
+                new File(archiveZipFileStr).delete();
+            }
+            FilesUtils.deleteFolder(new File(tempUnzipFolder), true); // remove the decompressed files.
+        }
     }
 
     private static String unzipProcess(IProcess2 process, String archiveZipFileStr) throws OozieJobDeployException {
@@ -94,24 +97,6 @@ public class OozieJobDeployer {
         try {
             ClassLoader classLoader = OozieClassLoaderFactory.getClassLoader(connectionBean);
             Thread.currentThread().setContextClassLoader(classLoader);
-
-            // Object config = HadoopReflection.newInstance(HadoopClassConstants.CONFIGURATION, classLoader);
-            //
-            // HadoopReflection.invokeMethod(
-            // config,
-            // "set",
-            // new Object[] { "fs.default.name",
-            // TOozieParamUtils.getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT) });
-            //
-            // String userName = TOozieParamUtils.getUserNameForHadoop();
-            // if (StringUtils.isEmpty(userName)) {
-            // HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] { config },
-            // classLoader);
-            // } else {
-            // String nnURI = (String) HadoopReflection.invokeMethod(config, "get", new Object[] { "fs.default.name" });
-            // fs = HadoopReflection.invokeStaticMethod(HadoopClassConstants.FILESYSTEM, "get", new Object[] {
-            // new java.net.URI(nnURI), config, userName }, classLoader);
-            // }
 
             Object fs = HadoopServerUtil.getDFS(connectionBean, classLoader);
 
@@ -153,67 +138,33 @@ public class OozieJobDeployer {
         }
     }
 
-    private static void deleteProcess(String zipFile) {
-        new File(zipFile).delete();
-    }
-
     private static String buildExportZip(IProcess2 process, IProgressMonitor progressMonitor) throws ProcessorException {
+        // should same as the AbstractJavaProcessor.buildExportZip
         Map<ExportChoice, Object> exportChoiceMap = JobScriptsManagerFactory.getDefaultExportChoiceMap();
         exportChoiceMap.put(ExportChoice.needLauncher, false);
         exportChoiceMap.put(ExportChoice.needJobItem, false);
         exportChoiceMap.put(ExportChoice.needJobScript, true);
         exportChoiceMap.put(ExportChoice.needSourceCode, false);
+        exportChoiceMap.put(ExportChoice.binaries, true);
+        exportChoiceMap.put(ExportChoice.includeLibs, true);
         exportChoiceMap.put(ExportChoice.needContext, true);
-
-        // IProcess2 process = findProcessFromRepository(processItem.getProperty().getId(),
-        // processItem.getProperty().getVersion());
-
         ProcessItem processItem = (ProcessItem) process.getProperty().getItem();
+        String contextName = processItem.getProcess().getDefaultContext();
+        exportChoiceMap.put(ExportChoice.contextName, contextName);
 
-        String processName = processItem.getProperty().getLabel();
-
-        ExportFileResource fileResource = new ExportFileResource(processItem, processName);
-
-        ExportFileResource[] exportFileResources = new ExportFileResource[] { fileResource };
-
-        if (progressMonitor.isCanceled()) {
-            throw new ProcessorException(new InterruptedException());
-        }
-        JobScriptsManager jobScriptsManager = JobScriptsManagerFactory.createManagerInstance(exportChoiceMap, processItem
-                .getProcess().getDefaultContext(), JobScriptsManager.ALL_ENVIRONMENTS, IProcessor.NO_STATISTICS,
-                IProcessor.NO_TRACES, JobExportType.POJO);
-        String codeOptions = null;
-        List<ExportFileResource> exportResources = jobScriptsManager.getExportResources(exportFileResources, codeOptions);
-
-        if (progressMonitor.isCanceled()) {
-            throw new ProcessorException(new InterruptedException());
-        }
-
-        final String archiveFilePath = Path.fromOSString(CorePlugin.getDefault().getPreferenceStore()
-                .getString(ITalendCorePrefConstants.FILE_PATH_TEMP))
-                + "/export.zip"; //$NON-NLS-1$
-        final ArchiveFileExportOperationFullPath exporterOperation = new ArchiveFileExportOperationFullPath(exportResources,
-                archiveFilePath);
-        exporterOperation.setCreateLeadupStructure(true);
-        exporterOperation.setUseCompression(true);
-
-        final IProgressMonitor subProgressMonitor = new SubProgressMonitor(progressMonitor, 1);
-
-        if (progressMonitor.isCanceled()) {
-            throw new ProcessorException(new InterruptedException());
-        }
+        final String archiveFilePath = Path
+                .fromOSString(CorePlugin.getDefault().getPreferenceStore().getString(ITalendCorePrefConstants.FILE_PATH_TEMP))
+                .append("Oozie_export_" + process.getName() + FileExtensions.ZIP_FILE_SUFFIX).toString(); //$NON-NLS-1$
 
         try {
-            exporterOperation.run(subProgressMonitor);
-        } catch (InvocationTargetException e) {
+            BuildJobManager.getInstance().buildJob(archiveFilePath, processItem, processItem.getProperty().getVersion(),
+                    processItem.getProcess().getDefaultContext(), exportChoiceMap, JobExportType.POJO, progressMonitor);
+        } catch (Exception e) {
             throw new ProcessorException(e);
-        } catch (InterruptedException e) {
-            throw new ProcessorException(e);
+        } finally {
+            ProcessorUtilities.resetExportConfig();
         }
 
-        // path can like name/name
-        jobScriptsManager.deleteTempFiles();
-        ProcessorUtilities.resetExportConfig();
         return archiveFilePath;
     }
 
