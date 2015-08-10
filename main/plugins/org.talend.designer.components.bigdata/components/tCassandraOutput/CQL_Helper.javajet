@@ -246,9 +246,12 @@
             }
             createSQL.append("\" + " + tableName + " + \"(");
             List<Column> columns = new ArrayList<Column>();
-            if("INSERT".equals(action) || "UPSERT".equals(action)){
+            if(!"DELETE".equals(action)){
             	columns.addAll(keys);
             	columns.addAll(normals);
+            	if("UPDATE".equals(action)){
+            		columns.addAll(conditions);
+            	}
             }
             int count = 1;
             for(Column column : columns){
