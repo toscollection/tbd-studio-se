@@ -8,6 +8,7 @@
 		    <value>MR_VERSION</value>
 			<value>DB_VERSION</value>
 			<value>HCAT_VERSION</value>
+			<value>HIVE_VERSION</value>
 		</map>
 		<map key="NAMENODE_URI">
 			<value>FS_DEFAULT_NAME</value>
