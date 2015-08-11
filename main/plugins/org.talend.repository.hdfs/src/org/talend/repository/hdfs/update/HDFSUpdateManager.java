@@ -55,6 +55,7 @@ public class HDFSUpdateManager {
             public Set<EUpdateItemType> getTypes() {
                 Set<EUpdateItemType> types = new HashSet<EUpdateItemType>();
                 types.add(EUpdateItemType.NODE_PROPERTY);
+                types.add(EUpdateItemType.JOB_PROPERTY_STORM);
                 types.add(EUpdateItemType.JOB_PROPERTY_MAPREDUCE);
 
                 return types;
