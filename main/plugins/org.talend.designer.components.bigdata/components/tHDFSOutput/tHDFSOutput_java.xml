@@ -905,6 +905,8 @@
 			<!-- EMR_4_0_0 -->
 			<IMPORT MODULE_GROUP="HDFS-LIB-EMR_4_0_0_LATEST"
 				REQUIRED_IF="(DB_VERSION=='EMR_4_0_0') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false')" />
+			<IMPORT MODULE_GROUP="AVRO-LIB-EMR_4_0_0_LATEST"
+				REQUIRED_IF="(DB_VERSION=='EMR_4_0_0') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION=='false')" />
 
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
