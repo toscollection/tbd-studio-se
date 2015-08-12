@@ -67,6 +67,7 @@
         private String keyspace;
         private String tableName;
         private Boolean useSpark = false;
+        private List<Column> valueColumns;
 
         public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
@@ -74,6 +75,7 @@
             this.keyspace = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__KEY_SPACE__") + ")";
             this.tableName = this.keyspace + " + \".\" + " + "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__COLUMN_FAMILY__") + ")";
             createColumnList(columnList);
+            this.valueColumns = collectValueColumns();
         }
         
         public CQLManager(INode node, List<IMetadataColumn> columnList, boolean useSpark){
@@ -176,6 +178,44 @@
                 }
             }
         }
+        private List<Column> collectValueColumns(){
+        	List<Column> columns = new ArrayList<Column>();
+        	if("INSERT".equals(action)){
+	        	columns.addAll(keys);
+	        	columns.addAll(normals);
+	        	if(ttl != null)
+	        		columns.add(ttl);
+	        	if(timestamp != null)
+	        		columns.add(timestamp);
+        	}else if("UPDATE".equals(action)){
+	        	if(ttl != null)
+	        		columns.add(ttl);
+	        	if(timestamp != null)
+	        		columns.add(timestamp);
+	            for(Column normal : normals){
+	                if(normal.getAssignmentKey() != null){
+	                    columns.add(normal.getAssignmentKey());
+	                }
+	                columns.add(normal);
+	            }
+	        	columns.addAll(keys);
+	        	columns.addAll(conditions);
+        	}else if("DELETE".equals(action)){
+	            for(Column column : normals){
+	                if(column.getAsColumnKey()){
+	                    columns.add(column);
+	                }
+	            }
+	        	if(timestamp != null)
+	        		columns.add(timestamp);
+	        	columns.addAll(keys);
+	        	boolean ifExist = "true".equals(ElementParameterParser.getValue(node, "__DELETE_IF_EXISTS__"));
+	            if(!ifExist){
+		        	columns.addAll(conditions);
+		        }
+		    }
+        	return columns;
+        }
         protected String getDBMSId(){
             return CASSANDRA;
         }
@@ -191,6 +231,13 @@
         	}else{
         		return getLProtectedChar(keyword) + keyword + getRProtectedChar(keyword);
         	}
+        }
+        public List<String> getValueColumns(){
+        	java.util.List<String> valueColumnsName = new java.util.ArrayList<String>();
+        	for(Column col : valueColumns){
+        		valueColumnsName.add(col.getName());
+        	}
+        	return valueColumnsName;
         }
         public String getDropKSSQL(boolean ifExists){
         	StringBuilder dropKSSQL = new StringBuilder();
@@ -315,12 +362,14 @@
         	}
         }
         public String generateStmt(String assignStmt, String inConnName){
-        	if("INSERT".equals(action)){
-        		return generateInsertStmt(assignStmt, inConnName);
-        	}else if("UPDATE".equals(action)){
-        		return generateUpdateStmt(assignStmt, inConnName);
-        	}else if("DELETE".equals(action)){
-        		return generateDeleteStmt(assignStmt, inConnName);
+        	if("INSERT".equals(action) || "UPDATE".equals(action) || "DELETE".equals(action)){
+	        	StringBuilder stmt = new StringBuilder();
+	        	int index = 0;
+	        	for(Column column : valueColumns){
+	        		stmt.append(generateSetStmt(assignStmt, column, inConnName, index));
+	        		index++;
+	        	}
+	        	return stmt.toString();
         	}else{
         		return "";
         	}
@@ -373,22 +422,6 @@
             }
             preInsertSQL.append("\"");
             return preInsertSQL.toString();
-        }
-        private String generateInsertStmt(String assignStmt, String inConnName){
-        	StringBuilder insertStmt = new StringBuilder();
-        	List<Column> columns = new ArrayList<Column>();
-        	columns.addAll(keys);
-        	columns.addAll(normals);
-        	if(ttl != null)
-        		columns.add(ttl);
-        	if(timestamp != null)
-        		columns.add(timestamp);
-        	int index = 0;
-        	for(Column column : columns){
-        		insertStmt.append(generateSetStmt(assignStmt, column, inConnName, index));
-        		index++;
-        	}
-        	return insertStmt.toString();
         }
         private String generatePreUpdateSQL(){
         	StringBuilder preUpdateSQL = new StringBuilder();
@@ -471,28 +504,6 @@
             }
             return false;
         }
-        private String generateUpdateStmt(String assignStmt, String inConnName){
-        	StringBuilder updateStmt = new StringBuilder();
-        	List<Column> columns = new ArrayList<Column>();
-        	if(ttl != null)
-        		columns.add(ttl);
-        	if(timestamp != null)
-        		columns.add(timestamp);
-            for(Column normal : normals){
-                if(normal.getAssignmentKey() != null){
-                    columns.add(normal.getAssignmentKey());
-                }
-                columns.add(normal);
-            }
-        	columns.addAll(keys);
-        	columns.addAll(conditions);
-        	int index = 0;
-        	for(Column column : columns){
-        		updateStmt.append(generateSetStmt(assignStmt, column, inConnName, index));
-        		index++;
-        	}
-        	return updateStmt.toString();
-        }
         private String generatePreDeleteSQL(){
         	StringBuilder preDeleteSQL = new StringBuilder();
         	preDeleteSQL.append("\"DELETE ");
@@ -545,28 +556,6 @@
 		    }
             preDeleteSQL.append("\"");
             return preDeleteSQL.toString();
-        }
-        private String generateDeleteStmt(String assignStmt, String inConnName){
-        	StringBuilder deleteStmt = new StringBuilder();
-        	List<Column> columns = new ArrayList<Column>();
-            for(Column column : normals){
-                if(column.getAsColumnKey()){
-                    columns.add(column);
-                }
-            }
-        	if(timestamp != null)
-        		columns.add(timestamp);
-        	columns.addAll(keys);
-        	boolean ifExist = "true".equals(ElementParameterParser.getValue(node, "__DELETE_IF_EXISTS__"));
-            if(!ifExist){
-	        	columns.addAll(conditions);
-	        }
-        	int index = 0;
-        	for(Column column : columns){
-        		deleteStmt.append(generateSetStmt(assignStmt, column, inConnName, index));
-        		index++;
-        	}
-        	return deleteStmt.toString();
         }
         private String validateDBType(Column column){
         	String dbType = column.getDBType();

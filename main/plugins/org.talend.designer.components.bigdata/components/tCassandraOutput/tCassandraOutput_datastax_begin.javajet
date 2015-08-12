@@ -9,6 +9,7 @@
     outputGenHelper.genConn();
     outputGenHelper.genKSAction();
     outputGenHelper.genCFAction();
+    outputGenHelper.genBatchUtilClass();
 	outputGenHelper.genInit();
     %>
     
