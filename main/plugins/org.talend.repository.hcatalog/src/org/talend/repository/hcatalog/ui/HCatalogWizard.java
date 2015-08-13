@@ -28,6 +28,7 @@ import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -123,9 +124,10 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
                 hadoopConnection.setPort(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_PORT));
                 hadoopConnection.setPassword(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD));
             } else {
-                hadoopConnection.setUserName(HCRepositoryUtil.getParamValueOffContext(hcConnection, hcConnection.getUserName()));
-                String originalNameNodeUri = HCRepositoryUtil
-                        .getParamValueOffContext(hcConnection, hcConnection.getNameNodeURI());
+                hadoopConnection.setUserName(ConnectionContextHelper.getParamValueOffContext(hcConnection,
+                        hcConnection.getUserName()));
+                String originalNameNodeUri = ConnectionContextHelper.getParamValueOffContext(hcConnection,
+                        hcConnection.getNameNodeURI());
                 hadoopConnection.setHostName(HadoopParameterUtil.getHostNameFromNameNodeURI(originalNameNodeUri));
             }
         }
