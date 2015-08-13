@@ -40,6 +40,8 @@
 		previousOutputConnectionName = connection.getName();
 	}
 	
+	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	
 	String resultFile = ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__");
 	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));
     String s3bucket = ElementParameterParser.getValue(node, "__S3_BUCKET__");
@@ -63,7 +65,7 @@
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> priorPig012HcatVersionList = java.util.Arrays.<String>asList("HDP_1_0","HDP_1_2","HDP_1_3","MAPR310");
-	String hcatPackage = (priorPig012HcatVersionList.contains(ElementParameterParser.getValue(node, "__HBASE_VERSION__"))) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
+	String hcatPackage = (priorPig012HcatVersionList.contains(ElementParameterParser.getValue(node, "__HBASE_VERSION__")) && !isCustom) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
 	
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
