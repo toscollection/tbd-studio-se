@@ -15,6 +15,7 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -101,7 +102,8 @@ public class OozieWizard extends HadoopRepositoryWizard<OozieConnection> {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             hadoopConnection.setRelativeHadoopClusterId(hcConnectionItem.getProperty().getId());
-            hadoopConnection.setUserName(HCRepositoryUtil.getParamValueOffContext(hcConnection, hcConnection.getUserName()));
+            hadoopConnection
+                    .setUserName(ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getUserName()));
         }
     }
 
