@@ -28,7 +28,6 @@ import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
-import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.ui.common.HadoopPropertiesWizardPage;
 import org.talend.repository.hadoopcluster.ui.common.HadoopRepositoryWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;

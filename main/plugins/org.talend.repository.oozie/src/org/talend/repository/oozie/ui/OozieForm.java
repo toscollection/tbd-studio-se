@@ -25,6 +25,7 @@ import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.oozie.i18n.Messages;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
