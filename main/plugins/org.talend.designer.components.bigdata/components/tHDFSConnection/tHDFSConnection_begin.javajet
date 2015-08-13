@@ -16,10 +16,13 @@
 	String cid = node.getUniqueName();
 	
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-	boolean isCustom = "CUSTOM".equals(distribution);
-	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
-	
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+
+	org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+	boolean isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+
+	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
+
 	String fsDefalutName = "fs.default.name";
 	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	String username = ElementParameterParser.getValue(node, "__USERNAME__");
@@ -45,27 +48,19 @@
 		<% 
 		} 
 	}
-	if (mrUseDatanodeHostname) {
+	if (hdfsDistrib.doSupportUseDatanodeHostname() && mrUseDatanodeHostname) {
         %>
         conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
         <%
     }
-	if("MAPR".equals(distribution) || (isCustom && "UGI".equals(auth))){
+	if(hdfsDistrib.doSupportGroup() || (isCustom && "UGI".equals(auth))){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");
 		%>
 		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
 	<%
 	}
 	
-	List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
-		"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1",
-		"HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
-		"APACHE_1_0_0","APACHE_1_0_3_EMR",
-		"PIVOTAL_HD_2_0"
-	);
-	
-	if(((hadoopVersion!=null && supportKrbVersionList.contains(hadoopVersion)) && useKrb && !isCustom)
-	   || (isCustom && "KRB".equals(auth))) {
+	if((hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth))) {
 %>
 		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%

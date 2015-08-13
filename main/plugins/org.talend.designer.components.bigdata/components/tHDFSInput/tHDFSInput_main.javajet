@@ -61,10 +61,10 @@ if (conns!=null) {
 			}
 			
 			String hadoopVersion = null;
-			boolean isCustom = false;
+			String distribution = null;
 			boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
 			if(!useExistingConnection) {
-				isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+				distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 				hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 			} else {
 				String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
@@ -72,11 +72,14 @@ if (conns!=null) {
 				for(INode targetNode : nodes){
 					if (targetNode.getUniqueName().equals(connectionSid)) {
 						hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__"); 
-						isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
+						distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
 						break;
 					}
 				}
 			}
+
+			org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+			boolean isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
 %>
 			<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HDFS/SequenceFileMapping.javajet"%>
 		
