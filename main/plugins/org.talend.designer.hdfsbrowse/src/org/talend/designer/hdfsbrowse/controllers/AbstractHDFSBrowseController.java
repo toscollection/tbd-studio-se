@@ -50,10 +50,14 @@ import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.IComponent;
 import org.talend.core.model.process.BigDataNode;
 import org.talend.core.model.process.ElementParameterParser;
+import org.talend.core.model.process.IContext;
+import org.talend.core.model.process.IContextManager;
+import org.talend.core.model.process.IElement;
 import org.talend.core.model.process.IElementParameter;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.process.IProcess;
 import org.talend.core.model.process.IProcess2;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.ui.CoreUIPlugin;
 import org.talend.core.ui.properties.tab.IDynamicProperty;
 import org.talend.core.utils.TalendQuoteUtils;
@@ -106,6 +110,13 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     protected HDFSConnectionBean getHDFSConnectionBean() {
         INode node = (INode) elem;
+        IProcess process = node.getProcess();
+        IContext context = null;
+        IContextManager cm = process.getContextManager();
+        if (cm != null) {
+            context = cm.getDefaultContext();
+        }
+
         boolean isMr = false;
         HDFSConnectionBean connectionBean = new HDFSConnectionBean();
         String useExistingConnection = ElementParameterParser.getValue(elem, "__USE_EXISTING_CONNECTION__"); //$NON-NLS-1$
@@ -127,13 +138,14 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                     isMr = true;
                     node = iNode;
                     if (node instanceof DataNode || node instanceof BigDataNode) {
-                        IElementParameter versionParameter = node.getElementParameter(EHadoopParameter.MR_VERSION.getName());
+                        String versionParameter = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
                         if (versionParameter != null) {
-                            connectionBean.setDfVersion((String) versionParameter.getValue());
+                            connectionBean.setDfVersion(versionParameter);
                         }
-                        IElementParameter nameNodeParameter = node.getElementParameter(EHadoopParameter.NAMENODE.getName());
+                        String nameNodeParameter = getParameterValueWithContext(node, context,
+                                EHadoopParameter.NAMENODE_URI.getName());
                         if (nameNodeParameter != null) {
-                            connectionBean.setNameNodeURI((String) nameNodeParameter.getValue());
+                            connectionBean.setNameNodeURI(nameNodeParameter);
                         }
                     }
                 }
@@ -156,7 +168,8 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
                             if (versionParameter != null) {
                                 connectionBean.setDfVersion(versionParameter);
                             }
-                            String nameNodeParameter = (String) getParameterValue(node, EHadoopParameter.NAMENODE_URI.getName());
+                            String nameNodeParameter = getParameterValueWithContext(node, context,
+                                    EHadoopParameter.NAMENODE_URI.getName());
                             if (nameNodeParameter != null) {
                                 connectionBean.setNameNodeURI(nameNodeParameter);
                             }
@@ -194,29 +207,25 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             }
         }
 
-        if (node == null) {
-            return connectionBean;
-        }
-
         String distribution = (String) getParameterValue(node, EHadoopParameter.DISTRIBUTION.getName());
         if (!isMr) {
             String version = (String) getParameterValue(node, EHadoopParameter.VERSION.getName());
-            String nameNodeUri = (String) getParameterValue(node, EHadoopParameter.NAMENODE_URI.getName());
+            String nameNodeUri = getParameterValueWithContext(node, context, EHadoopParameter.NAMENODE_URI.getName());
             connectionBean.setDfVersion(version);
             connectionBean.setNameNodeURI(nameNodeUri);
         }
         // check support the group or not
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connectionBean.getDfVersion());
         if (version4Drivers.isSupportGroup()) {
-            String group = (String) getParameterValue(node, EHadoopParameter.GROUP.getName());
+            String group = getParameterValueWithContext(node, context, EHadoopParameter.GROUP.getName());
             connectionBean.setGroup(group);
         }
-        String userName = (String) getParameterValue(node, EHadoopParameter.USERNAME.getName());
+        String userName = getParameterValueWithContext(node, context, EHadoopParameter.USERNAME.getName());
         Boolean useKrb = (Boolean) getParameterValue(node, EHadoopParameter.USE_KRB.getName());
-        String nnPrincipal = (String) getParameterValue(node, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
+        String nnPrincipal = getParameterValueWithContext(node, context, EHadoopParameter.NAMENODE_PRINCIPAL.getName());
         Boolean useKeytab = (Boolean) getParameterValue(node, EHadoopParameter.USE_KEYTAB.getName());
-        String ktPrincipal = (String) getParameterValue(node, EHadoopParameter.PRINCIPAL.getName());
-        String ktPath = (String) getParameterValue(node, EHadoopParameter.KEYTAB_PATH.getName());
+        String ktPrincipal = getParameterValueWithContext(node, context, EHadoopParameter.PRINCIPAL.getName());
+        String ktPath = getParameterValueWithContext(node, context, EHadoopParameter.KEYTAB_PATH.getName());
         Boolean isUseCustom = EHadoopDistributions.CUSTOM.getName().equals(distribution);
         if (isUseCustom) {
             Object authMode = getParameterValue(node, EHadoopParameter.AUTHENTICATION_MODE.getName());
@@ -237,7 +246,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         if (StringUtils.isNotBlank(customJars)) {
             connectionBean.getAdditionalProperties().put(ECustomVersionGroup.COMMON.getName(), customJars);
         }
-        IProcess process = node.getProcess();
+
         if (process instanceof IProcess2) {
             IProcess2 pro = (IProcess2) process;
             connectionBean.setRelativeHadoopClusterId(pro.getProperty().getId());
@@ -246,7 +255,36 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         return connectionBean;
     }
 
-    private Object getParameterValue(INode node, String paramName) {
+    protected String getParameterValueWithContext(IElement ele, IContext context, String paramName) {
+        Object parameterValue = getParameterValue(ele, paramName);
+        if (parameterValue != null && context != null) {
+            if (parameterValue instanceof String) {
+                return ContextParameterUtils.parseScriptContextCode((String) parameterValue, context);
+            } else if (parameterValue instanceof List) {
+                // for jdbc parm driver jars
+                String jarValues = "";
+                List list = (List) parameterValue;
+                for (int i = 0; i < list.size(); i++) {
+                    Object object = list.get(i);
+                    if (object instanceof Map) {
+                        Map valueMap = (Map) object;
+                        if (valueMap.get("JAR_NAME") != null) {
+                            if (jarValues.equals("")) {
+                                jarValues = jarValues + valueMap.get("JAR_NAME");
+                            } else {
+                                jarValues = jarValues + ";" + valueMap.get("JAR_NAME");
+                            }
+                        }
+                    }
+                }
+                return ContextParameterUtils.parseScriptContextCode(jarValues, context);
+            }
+
+        }
+        return "";
+    }
+
+    private Object getParameterValue(IElement node, String paramName) {
         Map<String, List<String>> componentParamsMap = HadoopMappingManager.getInstance().getComponentParamsMap();
         List<String> paramslist = componentParamsMap.get(paramName);
         if (paramslist != null && paramslist.size() > 0) {
@@ -262,7 +300,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         return getTheParameterValue(node, paramName);
     }
 
-    private Object getTheParameterValue(INode node, String paramName) {
+    private Object getTheParameterValue(IElement node, String paramName) {
         Object value = null;
         if (node instanceof DataNode || node instanceof BigDataNode) {
             IElementParameter parameter = node.getElementParameter(paramName);
