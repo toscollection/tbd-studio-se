@@ -20,9 +20,10 @@ String user = null;
 
 String fsDefalutName = "fs.default.name";
 
+String distribution = null;
 String hadoopVersion = null;
-
 boolean isCustom = false;
+org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = null;
 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
@@ -33,17 +34,22 @@ String username_<%=cid%> = "";
 org.apache.hadoop.fs.FileSystem fs_<%=cid%> = null;
 <%
 if(!useExistingConnection) { // if we don't use an existing connection, we create a new hadoop configuration
+	distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String kerberosPrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
     boolean mrUseDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
-	
-	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 
-	org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+	try {
+		hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+	} catch (java.lang.Exception e) {
+		e.printStackTrace();
+		return "";
+	}
     isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
 
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
@@ -65,7 +71,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		}
 	}
 	
-	if(!((hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth)))) {
+	if(!((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth)))) {
 		user = ElementParameterParser.getValue(node, "__USERNAME__");
 	} else {
 %>
@@ -78,7 +84,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		}
 	}
 	
-	if(hdfsDistrib.doSupportGroup() || (isCustom && "UGI".equals(auth))){
+	if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");
 	%>
     	conf_<%=cid%>.set("hadoop.job.ugi",<%=user%>+","+<%=group%>);
@@ -103,23 +109,28 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 	List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
     for(INode targetNode : nodes){
 		if (targetNode.getUniqueName().equals(connectionSid)) {
+        	distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
         	hadoopVersion = ElementParameterParser.getValue(targetNode, "__DB_VERSION__"); 
+
     		boolean useKrb = "true".equals(ElementParameterParser.getValue(targetNode, "__USE_KRB__"));
     		String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
-    		
-    		String distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
 
-			org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+			try {
+				hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+			} catch (java.lang.Exception e) {
+				e.printStackTrace();
+				return "";
+			}
     		isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
 
     		String auth = ElementParameterParser.getValue(targetNode, "__AUTHENTICATION_MODE__");
 		
-	      	if(hdfsDistrib.doSupportGroup() || (isCustom && "UGI".equals(auth))){
+	      	if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
 		    %>
 		    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 			<%
 		  	}else{
-				if(!((hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth)))) {
+				if(!((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth)))) {
 					user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
 				} else {
 %>
