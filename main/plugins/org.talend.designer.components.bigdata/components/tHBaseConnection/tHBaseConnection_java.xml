@@ -105,7 +105,7 @@
 		</PARAMETER>
 		
 		<PARAMETER NAME="USE_KRB" FIELD="CHECK" NUM_ROW="50" REPOSITORY_VALUE="USE_KRB"
-            SHOW_IF="isShow[DISTRIBUTION] AND ((((HBASE_VERSION=='APACHE_1_0_0') OR (HBASE_VERSION=='APACHE_1_0_3_EMR') OR (HBASE_VERSION=='APACHE_2_4_0_EMR') OR (HBASE_VERSION=='PIVOTAL_HD_2_0')) AND (DISTRIBUTION!='CUSTOM')) OR (DISTRIBUTION=='HORTONWORKS') OR (DISTRIBUTION=='CUSTOM') OR (DISTRIBUTION=='CLOUDERA'))"
+            SHOW_IF="isShow[DISTRIBUTION] AND (DISTRIBUTION=='CUSTOM' OR DISTRIB[DISTRIBUTION, HBASE_VERSION].doSupportKerberos[])"
             GROUP="AUTHENTICATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -198,7 +198,7 @@
 				REQUIRED="false"
 				REQUIRED_IF="(HBASE_VERSION=='APACHE_1_0_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR') AND (DISTRIBUTION!='CUSTOM')" />
 				
-            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="(HBASE_VERSION=='HDP_1_2' OR HBASE_VERSION=='HDP_1_3' OR HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='HDP_2_1' OR HBASE_VERSION=='HDP_2_2' OR HBASE_VERSION=='APACHE_1_0_0' OR (DISTRIBUTION=='CLOUDERA') OR HBASE_VERSION=='PIVOTAL_HD_2_0' OR HBASE_VERSION=='APACHE_1_0_3_EMR' OR HBASE_VERSION=='APACHE_2_4_0_EMR') AND (USE_KRB=='true') AND (DISTRIBUTION!='CUSTOM')" />
+            <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar" MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar" REQUIRED_IF="DISTRIB[DISTRIBUTION, HBASE_VERSION].doSupportKerberos[] AND (USE_KRB=='true') AND (DISTRIBUTION!='CUSTOM')" />
 
 			<!-- Amazon EMR 2.4.0 -->
 			<IMPORT NAME="zookeeper-3.4.5" MODULE="zookeeper-3.4.5.jar" MVN="mvn:org.talend.libraries/zookeeper-3.4.5/6.0.0" 

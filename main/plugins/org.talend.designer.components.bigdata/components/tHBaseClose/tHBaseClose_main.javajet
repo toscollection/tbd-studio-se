@@ -20,15 +20,24 @@ imports="
 
     String conn = "conn_" + connection;
     
+    String distribution = null;
     String hbaseVersion = null;
+    org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
     boolean isCustom = false;
     boolean isHadoop2 = false;
 	List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
     for(INode targetNode : nodes){
 		if (targetNode.getUniqueName().equals(connection)) {
+            distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
         	hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-            isCustom = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
             isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
+            try {
+                hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+            } catch (java.lang.Exception e) {
+                e.printStackTrace();
+                return "";
+            }
+            isCustom = hbaseDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
             break;
 	    }
     }

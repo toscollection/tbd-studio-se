@@ -23,28 +23,22 @@ imports="
 	String tableNsMapping = ElementParameterParser.getValue(node, "__TABLE_NS_MAPPING__");
 	boolean useTableNsMapping = setTableNsMapping && ((tableNsMapping != null)&&(!tableNsMapping.equals("")));
 	
-	String version = null;
-    boolean isCustomTemp = false;
-	boolean isHadoop2Temp = false;
-
-	java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
-	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1",
-	"HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
-	"APACHE_1_0_0","APACHE_1_0_3_EMR",
-	"PIVOTAL_HD_2_0", "APACHE_2_4_0_EMR");
+	String distribution = null;
+	String hbaseVersion = null;
+	boolean isHadoop2 = false;
 
 	if(!"true".equals(useExistingConn)) {
-		version = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
-		isCustomTemp = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
-		isHadoop2Temp = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
+		distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+		hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
+		isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
 	} else {
 		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
 		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
 		for(INode targetNode : nodes){
 			if (targetNode.getUniqueName().equals(connectionSid)) {
-				version = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-				isCustomTemp = "CUSTOM".equals(ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__"));
-				isHadoop2Temp = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
+				distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
+				hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
+				isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
 				break;
 			}
 		}
@@ -52,11 +46,26 @@ imports="
 	
 	log4jFileUtil.componentStartInfo(node);
 	
-	final String hbaseVersion = version;
-	final boolean isCustom = isCustomTemp;
-	final boolean isHadoop2 = isHadoop2Temp;
+	org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+	try {
+		hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+	} catch (java.lang.Exception e) {
+		e.printStackTrace();
+		return "";
+	}
+	boolean isCustom = hbaseDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
 
 	class GenerateCode {
+
+		private boolean isCustom;
+		private boolean isHadoop2;
+		private org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib;
+
+		public GenerateCode(boolean isCustom, boolean isHadoop2, org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib) {
+			this.isCustom = isCustom;
+			this.isHadoop2 = isHadoop2;
+			this.hbaseDistrib = hbaseDistrib;
+		}
 		
 		public void generateCreateTable(INode node) {
 			List<Map<String,String>> familyParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILY_PARAMETERS__");
@@ -82,10 +91,6 @@ imports="
 				String family_scope = mapParamLine.get("FAMILY_SCOPE");
 				String family_timetolive = mapParamLine.get("FAMILY_TIMETOLIVE");
 				
-				java.util.List<String> supportNewHbaseApiVersionList = java.util.Arrays.<String>asList(
-					"HDP_2_0","HDP_2_1","HDP_2_2","PIVOTAL_HD_2_0","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1"
-				);
-				
 				if(family_inmemory!=null&&!"".equals(family_inmemory)){
 %>
 					family_<%=cid%>.setInMemory(<%=family_inmemory%>);
@@ -99,7 +104,7 @@ imports="
 				if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
 %>
 					family_<%=cid%>.setBloomFilterType(
-						<%if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+						<%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
 						org.apache.hadoop.hbase.regionserver.BloomType.<%=family_bloomfiltertype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>
@@ -115,7 +120,7 @@ imports="
 				if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
 %>
 					family_<%=cid%>.setCompactionCompressionType(
-						<%if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+						<%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
 						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compactioncompressiontype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>
@@ -126,7 +131,7 @@ imports="
 				if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
 %>
 					family_<%=cid%>.setCompressionType(
-						<%if((isCustom && isHadoop2) || (!isCustom && hbaseVersion!=null && supportNewHbaseApiVersionList.contains(hbaseVersion))) {%>
+						<%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
 						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compressiontype%>
 						<%} else {%>
 						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>
@@ -168,7 +173,7 @@ imports="
 <%
 		}
 	}
-	GenerateCode generateCode = new GenerateCode();
+	GenerateCode generateCode = new GenerateCode(isCustom, isHadoop2, hbaseDistrib);
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
@@ -196,7 +201,7 @@ if(!"true".equals(useExistingConn)){
 	conn_<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
 <%
 	}
-	if((hbaseVersion!=null && supportKrbVersionList.contains(hbaseVersion)) && useKrb){
+	if(hbaseDistrib.doSupportKerberos() && useKrb){
 %>
 		conn_<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
 		conn_<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);

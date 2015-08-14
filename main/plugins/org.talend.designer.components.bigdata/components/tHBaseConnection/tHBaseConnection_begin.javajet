@@ -19,6 +19,7 @@
 	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
 	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
 
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
@@ -27,11 +28,13 @@
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
 
-	java.util.List<String> supportKrbVersionList = java.util.Arrays.<String>asList(
-	"Cloudera_CDH4","Cloudera_CDH4_YARN","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1",
-	"HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2",
-	"APACHE_1_0_0","APACHE_1_0_3_EMR",
-	"PIVOTAL_HD_2_0", "APACHE_2_4_0_EMR");
+	org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+	try {
+		hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+	} catch (java.lang.Exception e) {
+		e.printStackTrace();
+		return "";
+	}
 
 	log4jFileUtil.componentStartInfo(node);
 %>
@@ -46,7 +49,7 @@
 	config<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
 <%
 	}
-	if((hbaseVersion!=null && supportKrbVersionList.contains(hbaseVersion)) && useKrb){
+	if(hbaseDistrib.doSupportKerberos() && useKrb){
 %>
 		config<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
 		config<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);
