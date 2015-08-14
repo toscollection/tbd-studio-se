@@ -16,10 +16,12 @@ import java.util.Map;
 
 import org.eclipse.core.runtime.CoreException;
 import org.talend.core.hadoop.conf.EHadoopConfs;
+import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
 import org.talend.repository.hadoopcluster.creator.AbstractHadoopSubConnectionCreator;
+import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 import org.talend.repository.model.hdfs.HDFSConnection;
 import org.talend.repository.model.hdfs.HDFSFactory;
@@ -35,6 +37,7 @@ public class HDFSConnectionCreator extends AbstractHadoopSubConnectionCreator {
         HDFSConnection connection = HDFSFactory.eINSTANCE.createHDFSConnection();
         Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
         setPropertyParameters(connectionProperty);
+        initializeConnectionParameters(connection);
 
         HadoopSubConnectionItem connectionItem = HDFSFactory.eINSTANCE.createHDFSConnectionItem();
         connectionItem.setProperty(connectionProperty);
@@ -50,4 +53,13 @@ public class HDFSConnectionCreator extends AbstractHadoopSubConnectionCreator {
         return EHadoopConfs.HDFS.getName();
     }
 
+    @Override
+    protected void initializeConnectionParameters(Connection conn) {
+        if (!(conn instanceof HDFSConnection)) {
+            return;
+        }
+        HDFSConnection connection = (HDFSConnection) conn;
+        connection.setRowSeparator(IExtractSchemaService.DEFAULT_ROW_SEPARATOR);
+        connection.setFieldSeparator(IExtractSchemaService.DEFAULT_FIELD_SEPARATOR);
+    }
 }
