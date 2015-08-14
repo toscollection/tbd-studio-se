@@ -18,6 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.talend.core.hadoop.conf.EHadoopConfProperties;
 import org.talend.core.hadoop.conf.EHadoopConfs;
+import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
@@ -44,6 +45,7 @@ public class OozieConnectionCreator extends AbstractHadoopSubConnectionCreator {
         connectionItem.setConnection(connection);
 
         setParameters(connection, initParams);
+        initializeConnectionParameters(connection);
         appendToHadoopCluster(connectionItem);
 
         return connectionItem;
@@ -69,6 +71,11 @@ public class OozieConnectionCreator extends AbstractHadoopSubConnectionCreator {
                 connection.setOozieEndPoind(oozieUrl);
             }
         }
+    }
+
+    @Override
+    protected void initializeConnectionParameters(Connection connection) {
+        // nothing need to do
     }
 
 }
