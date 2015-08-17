@@ -1,7 +1,16 @@
 <%
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-	boolean isCustom = "CUSTOM".equals(distribution);
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
+
+	org.talend.core.hadoop.api.components.SqoopComponent sqoopDistrib = null;
+	try {
+		sqoopDistrib = (org.talend.core.hadoop.api.components.SqoopComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, version);
+	} catch (java.lang.Exception e) {
+		e.printStackTrace();
+		return "";
+	}
+
+	boolean isCustom = sqoopDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
 	
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	

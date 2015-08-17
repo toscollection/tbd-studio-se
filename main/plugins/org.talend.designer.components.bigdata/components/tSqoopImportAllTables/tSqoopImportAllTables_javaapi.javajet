@@ -2,8 +2,18 @@
 %>
 <%
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-	boolean isCustom = "CUSTOM".equals(distribution);
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
+
+	org.talend.core.hadoop.api.components.SqoopComponent sqoopDistrib = null;
+	try {
+		sqoopDistrib = (org.talend.core.hadoop.api.components.SqoopComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, version);
+	} catch (java.lang.Exception e) {
+		e.printStackTrace();
+		return "";
+	}
+
+	boolean isCustom = sqoopDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+
 	String processId = node.getProcess().getId();
 
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
@@ -46,7 +56,7 @@
 	sqoopOptions_<%=cid%>.setConnectString(<%=connection%>); // __CONNECTION__
 	sqoopOptions_<%=cid%>.setUsername(<%=username%>); // __USERNAME__
 	
-   <%if(!passwordStoredInFile || !(("Cloudera_CDH5".equals(version) || "Cloudera_CDH5_1".equals(version) || "Cloudera_CDH5_4".equals(version) || "HDP_2_0".equals(version) || "HDP_2_1".equals(version) || "HDP_2_2".equals(version) || "PIVOTAL_HD_2_0".equals(version) || "APACHE_2_4_0_EMR".equals(version)))) {%>
+   <%if(!passwordStoredInFile || !sqoopDistrib.doJavaAPISupportStorePasswordInFile()) {%>
 		<%
     		String passwordFieldName = "__PASSWORD__";
     	%>
@@ -92,7 +102,7 @@
 		} 
 	}
 	
-	if(!(("Cloudera_CDH4".equals(version) || "PIVOTAL_HD_1_0_1".equals(version) || "HDP_1_2".equals(version) || "HDP_1_3".equals(version) || "MAPR".equals(distribution)) && !isCustom)) {
+	if(!isCustom && sqoopDistrib.doJavaAPISqoopImportAllTablesSupportExcludeTable()) {
 		if(excludeTable) {
 			List<Map<String,String>> tablesToExclude = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__TABLE_TO_EXCLUDE__");
 			if(tablesToExclude!=null && tablesToExclude.size()>0) {
