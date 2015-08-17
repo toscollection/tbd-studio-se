@@ -245,7 +245,7 @@ public class OozieForm extends AbstractOozieForm {
             updateStatus(IStatus.ERROR, Messages.getString("OozieForm.endPointInvalid")); //$NON-NLS-1$
             return false;
         }
-        if (!HadoopParameterValidator.isValidOozieEndPoint(endPonitText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidOozieEndPoint(endPonitText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("OozieForm.endPointInvalid.invalid")); //$NON-NLS-1$
             return false;
         }
