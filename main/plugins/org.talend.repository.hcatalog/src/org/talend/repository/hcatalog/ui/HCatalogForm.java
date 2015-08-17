@@ -443,7 +443,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
             return false;
         }
 
-        if (!HadoopParameterValidator.isValidHostName(hostText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidHostName(hostText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.host.invalid")); //$NON-NLS-1$
             return false;
         }
@@ -453,7 +453,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
             return false;
         }
 
-        if (!HadoopParameterValidator.isValidPort(portText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidPort(portText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.port.invalid")); //$NON-NLS-1$
             return false;
         }
@@ -470,7 +470,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
             }
         }
 
-        if (!HadoopParameterValidator.isValidUserName(userNameText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidUserName(userNameText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.userName.invalid")); //$NON-NLS-1$
             return false;
         }
@@ -480,7 +480,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
             return false;
         }
 
-        if (!HadoopParameterValidator.isValidDatabase(databaseText.getText())) {
+        if (!isContextMode() && !HadoopParameterValidator.isValidDatabase(databaseText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.database.invalid")); //$NON-NLS-1$
             return false;
         }
@@ -490,7 +490,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbPrincipal")); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidPrincipal(krbPrincipalText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(krbPrincipalText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbPrincipal.invalid")); //$NON-NLS-1$
                 return false;
             }
@@ -498,7 +498,7 @@ public class HCatalogForm extends AbstractHCatalogForm {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbRealm")); //$NON-NLS-1$
                 return false;
             }
-            if (!HadoopParameterValidator.isValidRealm(krbRealmText.getText())) {
+            if (!isContextMode() && !HadoopParameterValidator.isValidRealm(krbRealmText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HCatalogForm.check.krbRealm.invalid")); //$NON-NLS-1$
                 return false;
             }

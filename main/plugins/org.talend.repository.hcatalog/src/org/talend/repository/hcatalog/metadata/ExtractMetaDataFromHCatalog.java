@@ -26,6 +26,7 @@ import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.types.JavaType;
 import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.cwm.relational.TdTable;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hcatalog.service.HCatalogServiceUtil;
 import org.talend.repository.hcatalog.util.HCatalogSchemaUtil;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
@@ -74,7 +75,7 @@ public class ExtractMetaDataFromHCatalog {
             return tables;
         }
 
-        String path = connection.getDatabase() + SEPARATOR + TABLE;
+        String path = ConnectionContextHelper.getParamValueOffContext(connection, connection.getDatabase()) + SEPARATOR + TABLE;
         WebClient client = HCatalogServiceUtil.getHCatalogClient(connection, path);
         JSONObject obj = HCatalogServiceUtil.getDataFromHCatalog(client);
         JSONArray tableArray = (JSONArray) obj.get(TABLES);
@@ -111,7 +112,8 @@ public class ExtractMetaDataFromHCatalog {
             return columns;
         }
 
-        String path = connection.getDatabase() + SEPARATOR + TABLE + SEPARATOR + tableName;
+        String path = ConnectionContextHelper.getParamValueOffContext(connection, connection.getDatabase()) + SEPARATOR + TABLE
+                + SEPARATOR + tableName;
         WebClient client = HCatalogServiceUtil.getHCatalogClient(connection, path);
         JSONObject obj = HCatalogServiceUtil.getDataFromHCatalog(client);
         JSONArray columnArray = (JSONArray) obj.get(COLUMNS);
@@ -180,7 +182,8 @@ public class ExtractMetaDataFromHCatalog {
      * @throws Exception
      */
     public static synchronized String extractPartitionsJsonStr(HCatalogConnection connection, String tableName) throws Exception {
-        String path = connection.getDatabase() + SEPARATOR + TABLE + SEPARATOR + tableName + SEPARATOR + PARTITION;
+        String path = ConnectionContextHelper.getParamValueOffContext(connection, connection.getDatabase()) + SEPARATOR + TABLE
+                + SEPARATOR + tableName + SEPARATOR + PARTITION;
         WebClient client = HCatalogServiceUtil.getHCatalogClient(connection, path);
         JSONObject obj = HCatalogServiceUtil.getDataFromHCatalog(client, tableName);
         if (obj != null) {
