@@ -20,7 +20,19 @@
 	String cid = node.getUniqueName();
 	String processId = node.getProcess().getId();
 	
+	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
+
+	org.talend.core.hadoop.api.components.PigComponent pigDistrib = null;
+	try {
+		pigDistrib = (org.talend.core.hadoop.api.components.PigComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, pigVersion);
+	} catch (java.lang.Exception e) {
+		e.printStackTrace();
+		return "";
+	}
+
+	boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
@@ -50,7 +62,6 @@
 	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
 	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");	
 	
-	boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
@@ -64,19 +75,17 @@
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
 	
-	boolean isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+	boolean isExecutedThroughWebHCat = !isLocal && pigDistrib.isExecutedThroughWebHCat();
 	
-	java.util.List<String> supportHcatVersionList = java.util.Arrays.<String>asList("HDP_1_2","HDP_1_3","HDP_2_0","HDP_2_1","HDP_2_2","Cloudera_CDH5","Cloudera_CDH5_1","Cloudera_CDH5_4","Cloudera_CDH5_1_MR1","MAPR310","MAPR401","MAPR410","MICROSOFT_HD_INSIGHT_3_1");
-	java.util.List<String> priorPig012HcatVersionList = java.util.Arrays.<String>asList("HDP_1_2","HDP_1_3","MAPR310");
-	String hcatPackage = (priorPig012HcatVersionList.contains(pigVersion) && !isCustom) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
+	String hcatPackage = (pigDistrib.pigVersionPriorTo_0_12() && !isCustom) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
 	
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || (pigVersion!=null && supportHcatVersionList.contains(pigVersion))) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || pigDistrib.doSupportHCatalog()) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 	
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 	
-	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function);
+	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function) && pigDistrib.doSupportHBase();
 	
 	boolean generateRegisterJarCodeForSequenceFile = !isLocal && "SequenceFileStorage".equals(function);
 	
@@ -181,7 +190,7 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 	
-	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__"));
+	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__")) && pigDistrib.doSupportTez();
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
 <%
@@ -272,7 +281,7 @@
 				
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-				if(isCustom || (!isCustom && (pigVersion!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,HDP_2_2,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,Cloudera_CDH5_4,Cloudera_CDH5_1_MR1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0,APACHE_2_4_0_EMR,EMR_4_0_0".contains(pigVersion)))) {
+				if(isCustom || (!isCustom && pigDistrib.doSupportImpersonation())) {
 					String username = ElementParameterParser.getValue(node, "__USERNAME__");
 %>
 					String username_<%=cid %> = <%=username%>;
@@ -300,10 +309,9 @@
                 props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
                 <%
             }
-			boolean isKerberosAvailableHadoop2 = !isCustom && ("PIVOTAL_HD_2_0".equals(pigVersion) || "HDP_2_0".equals(pigVersion) || "HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH4_YARN".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion));
-			boolean isHadoop2 = "PIVOTAL_HD_1_0_1".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || isKerberosAvailableHadoop2;
-			
-			boolean isKerberosAvailableHadoop1 = !isCustom && ("HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion) || "APACHE_1_0_0".equals(pigVersion) || "APACHE_1_0_3_EMR".equals(pigVersion) || "Cloudera_CDH4".equals(pigVersion) || "Cloudera_CDH5_1_MR1".equals(pigVersion));
+			boolean isKerberosAvailableHadoop2 = !isCustom && pigDistrib.isHadoop2() && pigDistrib.doSupportKerberos();
+			boolean isHadoop2 = !isCustom && pigDistrib.isHadoop2();
+			boolean isKerberosAvailableHadoop1 = !isCustom && pigDistrib.isHadoop1() && pigDistrib.doSupportKerberos();
 			
 			if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>
@@ -325,43 +333,22 @@
 <%
 				}
 				
-				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion))) {
+				boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
+				if((!isCustom && pigDistrib.doSupportCrossPlatformSubmission()) || (isCustom && useYarn && crossPlatformSubmission)) {
 %>
 					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 <%
 				}
-				
-				if(!isCustom && "HDP_2_1".equals(pigVersion)) {
-				    %>
-					props_<%=cid%>.put("yarn.application.classpath","/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*");
-					<%
-				} else if(!isCustom && "HDP_2_2".equals(pigVersion)) {
-					%>
+
+				if(!isCustom && "HDP_2_2".equals(pigVersion)) {
+%>
 					props_<%=cid%>.put("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
-					props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*");
-					<%
-				} else if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
-		            %>
-		            props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*");
-	                <%
-		        } else if(!isCustom && "EMR_4_0_0".equals(pigVersion)) {
-		        	%>
-		            props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,/usr/lib/hadoop-lzo/lib/*,/usr/share/aws/emr/emrfs/conf, /usr/share/aws/emr/emrfs/lib/*,/usr/share/aws/emr/emrfs/auxlib/*,/usr/share/aws/emr/lib/*,/usr/share/aws/emr/ddb/lib/emr-ddb-hadoop.jar, /usr/share/aws/emr/goodies/lib/emr-hadoop-goodies.jar,/usr/share/aws/emr/kinesis/lib/emr-kinesis-hadoop.jar,/usr/lib/spark/yarn/lib/datanucleus-api-jdo.jar,/usr/lib/spark/yarn/lib/datanucleus-core.jar,/usr/lib/spark/yarn/lib/datanucleus-rdbms.jar,/usr/share/aws/emr/cloudwatch-sink/lib/*");
-	                <%
-		        } else {
-		            %>
-    				//set default yarn classpath with environment variable
-                    props_<%=cid%>.put("yarn.application.classpath","$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*");
-    				<%
-				}
-				
-        		boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
-        		if(isCustom && useYarn && crossPlatformSubmission) {
-%>
-					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 <%
 				}
 				
+%>
+				props_<%=cid%>.put("yarn.application.classpath", "<%=pigDistrib.getYarnApplicationClasspath()%>");
+<%		
 				boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
 				if(setMemory) {
 					String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
@@ -386,13 +373,13 @@
 <%
 			}
 			
-			if("HCatLoader".equals(function)) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
+			if("HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
 %>
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
 			}
 			
-			if("HBaseStorage".equals(function)) {
+			if("HBaseStorage".equals(function) && pigDistrib.doSupportHBase()) {
 %>
 				props_<%=cid%>.put("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
 				props_<%=cid%>.put("hbase.zookeeper.property.clientPort", <%=zookeeper_client_port%>);
@@ -642,7 +629,7 @@
 			} 
 		} 
 
-		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
+		if(!isLocal && "HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
 			if(!generateRegisterJarCodeForHCatalog) {
 				if(defineJarsToRegister && registerJarForHCatalog.size() > 0){
 					for(Map<String, String> item : registerJarForHCatalog){
@@ -874,7 +861,7 @@
 		
 		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 <%
-		if(!isLocal && "HCatLoader".equals(function)) { // If the HCatalog loader is used, we will have to consider the partition filter
+		if(!isLocal && "HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we will have to consider the partition filter
 			if(partitionFilter.size() > 0){
 				int i = 0;
 %>

@@ -11,7 +11,7 @@
 	
 	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
-	if(isCustom || (!isCustom && (version!=null && "HDP_1_2,HDP_1_3,HDP_2_0,HDP_2_1,HDP_2_2,Cloudera_CDH4,Cloudera_CDH4_YARN,Cloudera_CDH5,Cloudera_CDH5_1,Cloudera_CDH5_4,Cloudera_CDH5_1_MR1,PIVOTAL_HD_1_0_1,PIVOTAL_HD_2_0,APACHE_2_4_0_EMR".contains(version)))) {
+	if(isCustom || (!isCustom && sqoopDistrib.doSupportImpersonation())) {
 		String hadoopUser = ElementParameterParser.getValue(node, "__HADOOP_USER__");
 %>
 		String username_<%=cid %> = <%=hadoopUser%>;
