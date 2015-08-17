@@ -115,7 +115,13 @@ public class HadoopAmbariCluster implements HadoopCluster {
                 for (ApiHostComponents hostComponent : component.getHostComponents()) {
                     Map<String, Map<String, String>> actualConfigFiles = hostComponent.getHostRoles().getActualConfigs();
                     for (String configFileType : actualConfigFiles.keySet()) {
-                        String version = actualConfigFiles.get(configFileType).get("tag"); //$NON-NLS-1$
+                        String version = ""; //$NON-NLS-1$
+                        // tag for HDP 2.0
+                        version = actualConfigFiles.get(configFileType).get("tag"); //$NON-NLS-1$
+                        if (version == null || "".equals(version)) { //$NON-NLS-1$
+                            // default for HDP 2.1
+                            version = actualConfigFiles.get(configFileType).get("default"); //$NON-NLS-1$
+                        }
                         actualConfigVersions.put(configFileType, version);
                     }
                 }
