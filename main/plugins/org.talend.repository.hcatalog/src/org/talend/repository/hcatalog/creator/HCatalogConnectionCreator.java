@@ -18,10 +18,12 @@ import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.CoreException;
 import org.talend.core.hadoop.conf.EHadoopConfProperties;
 import org.talend.core.hadoop.conf.EHadoopConfs;
+import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.PropertiesFactory;
 import org.talend.core.model.properties.Property;
 import org.talend.repository.hadoopcluster.creator.AbstractHadoopSubConnectionCreator;
+import org.talend.repository.hadoopcluster.service.IExtractSchemaService;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 import org.talend.repository.model.hcatalog.HCatalogConnection;
 import org.talend.repository.model.hcatalog.HCatalogFactory;
@@ -38,6 +40,7 @@ public class HCatalogConnectionCreator extends AbstractHadoopSubConnectionCreato
         HCatalogConnection connection = HCatalogFactory.eINSTANCE.createHCatalogConnection();
         Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
         setPropertyParameters(connectionProperty);
+        initializeConnectionParameters(connection);
 
         HadoopSubConnectionItem connectionItem = HCatalogFactory.eINSTANCE.createHCatalogConnectionItem();
         connectionItem.setProperty(connectionProperty);
@@ -71,4 +74,13 @@ public class HCatalogConnectionCreator extends AbstractHadoopSubConnectionCreato
         }
     }
 
+    @Override
+    protected void initializeConnectionParameters(Connection conn) {
+        if (!(conn instanceof HCatalogConnection)) {
+            return;
+        }
+        HCatalogConnection connection = (HCatalogConnection) conn;
+        connection.setRowSeparator(IExtractSchemaService.DEFAULT_ROW_SEPARATOR);
+        connection.setFieldSeparator(IExtractSchemaService.DEFAULT_FIELD_SEPARATOR);
+    }
 }

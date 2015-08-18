@@ -52,6 +52,7 @@ import org.talend.cwm.relational.RelationalFactory;
 import org.talend.cwm.relational.TdColumn;
 import org.talend.cwm.relational.TdTable;
 import org.talend.designer.core.IDesignerCoreService;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hbaseprovider.Activator;
 import org.talend.repository.hbaseprovider.util.HBaseClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -110,6 +111,11 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
     }
 
     private Object getConfiguration(IMetadataConnection metadataConnection) throws Exception {
+        DatabaseConnection databaseConnection = null;
+        Object currentConnection = metadataConnection.getCurrentConnection();
+        if (currentConnection instanceof DatabaseConnection) {
+            databaseConnection = (DatabaseConnection) currentConnection;
+        }
         Object config = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.hbase.HBaseConfiguration", classLoader, "create", //$NON-NLS-1$ //$NON-NLS-2$
                 new Object[0]);
         ReflectionUtils
@@ -123,22 +129,29 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authorization", "true" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             String masterPrincipal = (String) metadataConnection
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MASTERPRINCIPAL);
-            ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.master.kerberos.principal", masterPrincipal }); //$NON-NLS-1$ //$NON-NLS-2$ 
+            ReflectionUtils
+                    .invokeMethod(
+                            config,
+                            "set", new Object[] { "hbase.master.kerberos.principal", ConnectionContextHelper.getParamValueOffContext(databaseConnection, masterPrincipal) }); //$NON-NLS-1$ //$NON-NLS-2$ 
             String regionServerPrincipal = (String) metadataConnection
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_REGIONSERVERPRINCIPAL);
-            ReflectionUtils.invokeMethod(config,
-                    "set", new Object[] { "hbase.regionserver.kerberos.principal", regionServerPrincipal }); //$NON-NLS-1$ //$NON-NLS-2$
+            ReflectionUtils
+                    .invokeMethod(
+                            config,
+                            "set", new Object[] { "hbase.regionserver.kerberos.principal", ConnectionContextHelper.getParamValueOffContext(databaseConnection, regionServerPrincipal) }); //$NON-NLS-1$ //$NON-NLS-2$
             boolean useKeytab = Boolean.valueOf((String) metadataConnection
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB));
             if (useKeytab) {
                 String keytabPrincipal = (String) metadataConnection
                         .getParameter(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL);
                 String keytabPath = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_KEYTAB);
-                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
-                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytabPath }); //$NON-NLS-1$
+                ReflectionUtils
+                        .invokeStaticMethod(
+                                "org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
+                                "loginUserFromKeytab", new String[] { ConnectionContextHelper.getParamValueOffContext(databaseConnection, keytabPrincipal), ConnectionContextHelper.getParamValueOffContext(databaseConnection, keytabPath) }); //$NON-NLS-1$
             }
         }
-        updateHadoopProperties(config, metadataConnection);
+        updateHadoopProperties(config, metadataConnection, databaseConnection);
 
         return config;
     }
@@ -155,12 +168,16 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
 
     }
 
-    private void updateHadoopProperties(Object hbaseConfiguration, IMetadataConnection metadataConnection) throws Exception {
+    private void updateHadoopProperties(Object hbaseConfiguration, IMetadataConnection metadataConnection,
+            DatabaseConnection databaseConnection) throws Exception {
         String hadoopProperties = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_PROPERTIES);
         List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
         for (Map<String, Object> hadoopPros : hadoopPropertiesList) {
-            ReflectionUtils.invokeMethod(hbaseConfiguration, "set", //$NON-NLS-1$
-                    new Object[] { hadoopPros.get("PROPERTY"), hadoopPros.get("VALUE") }); //$NON-NLS-1$ //$NON-NLS-2$
+            ReflectionUtils
+                    .invokeMethod(hbaseConfiguration,
+                            "set", //$NON-NLS-1$
+                            new Object[] {
+                                    hadoopPros.get("PROPERTY"), ConnectionContextHelper.getParamValueOffContext(databaseConnection, String.valueOf(hadoopPros.get("VALUE"))) }); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 

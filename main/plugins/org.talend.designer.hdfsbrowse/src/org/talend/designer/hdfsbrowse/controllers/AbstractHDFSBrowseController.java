@@ -216,7 +216,7 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
         }
         // check support the group or not
         EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connectionBean.getDfVersion());
-        if (version4Drivers.isSupportGroup()) {
+        if (version4Drivers != null && version4Drivers.isSupportGroup()) {
             String group = getParameterValueWithContext(node, context, EHadoopParameter.GROUP.getName());
             connectionBean.setGroup(group);
         }

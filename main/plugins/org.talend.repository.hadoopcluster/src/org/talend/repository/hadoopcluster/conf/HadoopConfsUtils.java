@@ -24,6 +24,7 @@ import org.eclipse.ui.PlatformUI;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.conf.EHadoopConfProperties;
 import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.core.hadoop.version.EHadoopDistributions;
@@ -168,6 +169,11 @@ public class HadoopConfsUtils {
         }
         if (namenodeURI != null) {
             connection.setNameNodeURI(namenodeURI);
+        }
+        String yarnHostName = confsService.getConfValue(EHadoopConfs.YARN.getName(),
+                EHadoopConfProperties.YARN_RESOURCEMANAGER_HOSTNAME.getName());
+        if (StringUtils.isNotEmpty(yarnHostName)) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_YARN_HOSTNAME, yarnHostName);
         }
         String rmOrJt = null;
         if (supportYARN) {

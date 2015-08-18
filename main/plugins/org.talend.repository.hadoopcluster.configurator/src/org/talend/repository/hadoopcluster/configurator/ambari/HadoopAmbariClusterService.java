@@ -72,7 +72,9 @@ public class HadoopAmbariClusterService implements HadoopClusterService {
     public Map<String, String> getConfiguration() {
         Map<String, String> confMapping = new HashMap<>();
         for (ApiConfigFile file : configFiles) {
-            confMapping.putAll(file.getProperties());
+            if (file.getProperties() != null) {
+                confMapping.putAll(file.getProperties());
+            }
         }
         return confMapping;
     }
