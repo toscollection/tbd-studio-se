@@ -29,6 +29,8 @@ import org.talend.commons.exception.PersistenceException;
 import org.talend.core.hadoop.IHadoopConnectionCreator;
 import org.talend.core.hadoop.creator.HadoopConnectionCreatorManager;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.properties.Item;
+import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.repository.model.IProxyRepositoryFactory;
 
@@ -80,6 +82,7 @@ public class HadoopConfsManager {
                     for (ConnectionItem item : connectionItems) {
                         factory.create(item, new Path("")); //$NON-NLS-1$
                     }
+                    updateHadoopCluster();
                 } catch (PersistenceException e) {
                     ExceptionHandler.process(e);
                 }
@@ -89,6 +92,17 @@ public class HadoopConfsManager {
         // the update the project files need to be done in the workspace runnable to avoid all
         // notification of changes before the end of the modifications.
         workspace.run(operation, schedulingRule, IWorkspace.AVOID_UPDATE, new NullProgressMonitor());
+    }
+
+    private void updateHadoopCluster() throws CoreException, PersistenceException {
+        Item item = null;
+        IRepositoryViewObject repObj = factory.getLastVersion(hadoopClusterId);
+        if (repObj != null && repObj.getProperty() != null) {
+            item = repObj.getProperty().getItem();
+        }
+        if (item != null) {
+            factory.save(item);
+        }
     }
 
     private void reset() {
