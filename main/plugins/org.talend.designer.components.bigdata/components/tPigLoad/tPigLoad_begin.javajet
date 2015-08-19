@@ -325,7 +325,7 @@
 <%
 				}
 				
-				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion))) {
+				if(!isCustom && ("HDP_2_1".equals(pigVersion) || "HDP_2_2".equals(pigVersion) || "Cloudera_CDH5".equals(pigVersion) || "Cloudera_CDH5_1".equals(pigVersion) || "Cloudera_CDH5_4".equals(pigVersion) || "MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion) || "EMR_4_0_0".equals(pigVersion) || "APACHE_2_4_0_EMR".equals(pigVersion) || "APACHE_2_4_0_EMR_0_13_1".equals(pigVersion))) {
 %>
 					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
 <%
