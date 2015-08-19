@@ -60,6 +60,7 @@
         <PARAMETER
             NAME="API_TYPE"
             FIELD="CLOSED_LIST"
+            REPOSITORY_VALUE="API_TYPE"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')"
             NUM_ROW="3">
             <ITEMS DEFAULT="DATASTAX">

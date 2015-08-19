@@ -36,6 +36,8 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
         if (ICassandraAttributies.DB_VERSION.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.DB_VERSION),
                     false);
+        } else if (ICassandraAttributies.API_TYPE.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.API_TYPE), false);
         } else if (ICassandraAttributies.HOST.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.HOST));
         } else if (ICassandraAttributies.PORT.equals(value)) {
@@ -66,6 +68,11 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.DB_VERSION, value);
+            }
+        } else if (ICassandraAttributies.API_TYPE.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
+            if (value != null) {
+                connection.getAttributes().put(ICassandraAttributies.API_TYPE, value);
             }
         } else if (ICassandraAttributies.HOST.equals(param.getRepositoryValue())) {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);

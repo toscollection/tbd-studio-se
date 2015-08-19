@@ -20,6 +20,8 @@ public interface INoSQLCommonAttributes {
 
     public static final String DB_VERSION = "DB_VERSION"; //$NON-NLS-1$
 
+    public static final String API_TYPE = "API_TYPE"; //$NON-NLS-1$
+
     public static final String HOST = "HOST"; //$NON-NLS-1$
 
     public static final String PORT = "PORT"; //$NON-NLS-1$
