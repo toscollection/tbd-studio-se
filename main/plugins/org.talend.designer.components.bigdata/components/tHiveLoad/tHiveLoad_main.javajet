@@ -30,20 +30,30 @@ imports="
     String dbname= ElementParameterParser.getValue(node, "__DBNAME__");
     String dbuser= ElementParameterParser.getValue(node, "__USER__");
 
-
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-    boolean isExecutedThroughWebHCat = "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
+    String theDistribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+    String theVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+
     if("true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"))) {
-        isExecutedThroughWebHCat = false;
         String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
         for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
             if(connection!=null && connection.equals(pNode.getUniqueName())) {
-                isExecutedThroughWebHCat = "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(pNode, "__DISTRIBUTION__"));
+                theDistribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+                theVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
             }
         }
     }
 
-    if(isExecutedThroughWebHCat) {
+    org.talend.core.hadoop.api.components.HiveComponent hiveDistrib = null;
+    try {
+        hiveDistrib = (org.talend.core.hadoop.api.components.HiveComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(theDistribution, theVersion);
+    } catch (java.lang.Exception e) {
+        e.printStackTrace();
+        return "";
+    }
+    boolean isCustom = hiveDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+
+    if(hiveDistrib.isExecutedThroughWebHCat()) {
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetAzureConnection.javajet"%>
 <%
@@ -94,25 +104,17 @@ imports="
 
     boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 
-    String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-    String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
-    boolean isCustom = "CUSTOM".equals(ElementParameterParser.getValue(node, "__DISTRIBUTION__"));
     String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
     boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
     String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 
-    if(useExistingConnection  & !isExecutedThroughWebHCat) {
-        distribution = "";
-        hiveVersion = "";
-        connectionMode = "";
+    if(useExistingConnection && !hiveDistrib.isExecutedThroughWebHCat()) {
         setFsDefaultName = false;
         fsDefaultName = "";
         dbuser = "";
         String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
         for (INode pNode : node.getProcess().getNodesOfType("tHiveConnection")) {
             if(connection!=null && connection.equals(pNode.getUniqueName())) {
-                distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
-                hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
                 connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
                 setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
                 fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
@@ -126,13 +128,7 @@ imports="
 
     boolean targetTableUsesParquetFormat = "true".equals(ElementParameterParser.getValue(node, "__TARGET_TABLE_IS_A_PARQUET_TABLE__"));
 
-    java.util.List<String> hiveVersionList = new java.util.ArrayList<String>();
-    hiveVersionList.add("Cloudera_CDH4");
-    hiveVersionList.add("APACHE_1_0_0");
-    hiveVersionList.add("MAPR2");
-    hiveVersionList.add("PIVOTAL_HD_1_0_1");
-
-    boolean isParquetSupported = "CUSTOM".equals(distribution) || !hiveVersionList.contains(hiveVersion);
+    boolean isParquetSupported = isCustom || hiveDistrib.doSupportParquetFormat();
     if(targetTableUsesParquetFormat && !isParquetSupported) {
 %>
         if(true) {
@@ -169,7 +165,7 @@ imports="
         }
 
         if(jarsToRegister!=null && jars!=null) {
-            if("EMBEDDED".equalsIgnoreCase(connectionMode) || isExecutedThroughWebHCat) {
+            if("EMBEDDED".equalsIgnoreCase(connectionMode) || hiveDistrib.isExecutedThroughWebHCat()) {
 %>
                 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>
                 GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
@@ -186,7 +182,7 @@ imports="
             }
 
             if(generateAddJarCodeForAll) {
-                if(!isExecutedThroughWebHCat) { // Then we create a SQL statement to add the jars.
+                if(!hiveDistrib.isExecutedThroughWebHCat()) { // Then we create a SQL statement to add the jars.
 %>
                     java.sql.Statement addJar_<%=cid%> = null;
 <%
@@ -196,7 +192,7 @@ imports="
                     String jarToRegister = jarsToRegister.get(i);
                     for(int j=0; j<jars.size(); j++) {
                         if(jars.get(j).contains(jarToRegister)) {
-                            if(!isExecutedThroughWebHCat) { // Then we use the created SQL statement to add the jars.
+                            if(!hiveDistrib.isExecutedThroughWebHCat()) { // Then we use the created SQL statement to add the jars.
 %>
                                 addJar_<%=cid%> = conn_<%=cid%>.createStatement();
                                 try {
@@ -221,7 +217,7 @@ imports="
 
         // End of parquet format handling.
 
-        if(!isExecutedThroughWebHCat) {
+        if(!hiveDistrib.isExecutedThroughWebHCat()) {
 %>
             java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
             try {
@@ -240,7 +236,7 @@ imports="
 %>
     <%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveLoad/loadQueryGeneration.javajet"%>
 <%
-    if(!isExecutedThroughWebHCat) {
+    if(!hiveDistrib.isExecutedThroughWebHCat()) {
 %>
 
         java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
