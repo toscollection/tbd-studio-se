@@ -21,11 +21,16 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.hadoop.conf.EHadoopProperties;
+import org.talend.core.hadoop.conf.HadoopDefaultConfsManager;
+import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
@@ -529,6 +534,73 @@ public class HCRepositoryUtil {
         }
 
         return false;
+    }
+
+    public static void fillDefaultValuesOfHadoopCluster(HadoopClusterConnection connection) {
+        String distribution = connection.getDistribution();
+        String version = connection.getDfVersion();
+        if (distribution == null) {
+            return;
+        }
+
+        String[] versionPrefix = new String[] { distribution };
+        if (EHadoopDistributions.AMAZON_EMR.getName().equals(distribution)
+                && (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue().equals(version)
+                        || EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionValue().equals(version) || EHadoopVersion4Drivers.EMR_4_0_0
+                        .getVersionValue().equals(version))) {
+            versionPrefix = (String[]) ArrayUtils.add(versionPrefix, version);
+        }
+        boolean isYarn = connection.isUseYarn();
+
+        String defaultJTORRM = null;
+        String defaultJTORRMPrincipal = null;
+        if (isYarn) {
+            defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER.getName()));
+            defaultJTORRMPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER_PRINCIPAL.getName()));
+        } else {
+            defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER.getName()));
+            defaultJTORRMPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER_PRINCIPAL.getName()));
+        }
+        if (defaultJTORRM != null) {
+            connection.setJobTrackerURI(defaultJTORRM);
+        }
+        String defaultRMS = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS.getName());
+        if (defaultRMS != null) {
+            connection.setRmScheduler(defaultRMS);
+        }
+        if (defaultJTORRMPrincipal != null) {
+            connection.setJtOrRmPrincipal(defaultJTORRMPrincipal);
+        }
+        String defaultNN = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
+                (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.NAMENODE_URI.getName()));
+        if (defaultNN != null) {
+            connection.setNameNodeURI(defaultNN);
+        }
+        String defaultNNP = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.NAMENODE_PRINCIPAL.getName());
+        if (defaultNNP != null) {
+            connection.setPrincipal(defaultNNP);
+        }
+        String defaultJobHistoryPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.JOBHISTORY_PRINCIPAL.getName());
+        if (defaultJobHistoryPrincipal != null) {
+            connection.setJobHistoryPrincipal(defaultJobHistoryPrincipal);
+        }
+        String defaultJH = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.JOBHISTORY_ADDRESS.getName());
+        if (defaultJH != null) {
+            connection.setJobHistory(defaultJH);
+        }
+        String defaultSD = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.STAGING_DIRECTORY.getName());
+        if (defaultSD != null) {
+            connection.setStagingDirectory(defaultSD);
+        }
     }
 
 }
