@@ -40,6 +40,7 @@ import org.talend.repository.hadoopcluster.configurator.HadoopConfiguratorBuilde
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.conf.HadoopImportConfsWizard;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JarBuilder;
@@ -149,9 +150,12 @@ public class HadoopConfsUtils {
         connection.setUseCustomConfs(confsService != null);
         EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
         EHadoopVersion4Drivers ver = EHadoopVersion4Drivers.indexOfByVersionDisplay(version);
-        boolean supportYARN = ver.isSupportYARN();
         connection.setDistribution(dist.getName());
         connection.setDfVersion(ver.getVersionValue());
+        boolean supportYARN = ver.isSupportYARN();
+        boolean supportMR1 = ver.isSupportMR1();
+        connection.setUseYarn(supportYARN && !supportMR1);
+        HCRepositoryUtil.fillDefaultValuesOfHadoopCluster(connection);
         if (confsService == null) {
             return;
         }
@@ -199,14 +203,16 @@ public class HadoopConfsUtils {
             rmOrJt = confsService
                     .getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOB_TRACKER_URI.getName());
         }
-        if (rmOrJt != null) {
-            connection.setJobTrackerURI(rmOrJt);
+        if (rmOrJt == null && yarnHostName != null) {
+            rmOrJt = replaceHostName(connection.getJobTrackerURI(), yarnHostName);
         }
+        connection.setJobTrackerURI(rmOrJt);
         String rms = confsService.getConfValue(EHadoopConfs.YARN.getName(),
                 EHadoopConfProperties.RESOURCEMANAGER_SCHEDULER.getName());
-        if (StringUtils.isNotEmpty(rms)) {
-            connection.setRmScheduler(rms);
+        if (rms == null && yarnHostName != null) {
+            rms = replaceHostName(connection.getRmScheduler(), yarnHostName);
         }
+        connection.setRmScheduler(rms);
         String jh = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(), EHadoopConfProperties.JOBHISTORY.getName());
         if (StringUtils.isEmpty(jh)) {
             jh = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.JOBHISTORY.getName());
@@ -248,5 +254,14 @@ public class HadoopConfsUtils {
                 connection.setJobHistoryPrincipal(jhp);
             }
         }
+    }
+
+    private static String replaceHostName(String param, String hostName) {
+        String newParam = param;
+        if (newParam != null && newParam.indexOf(":") != -1) { //$NON-NLS-1$
+            String[] paramArray = newParam.split(":"); //$NON-NLS-1$
+            newParam = newParam.replaceFirst(paramArray[0], hostName);
+        }
+        return newParam;
     }
 }
