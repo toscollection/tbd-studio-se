@@ -22,6 +22,7 @@ import org.talend.core.model.metadata.builder.connection.ConnectionFactory;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.types.JavaType;
 import org.talend.core.model.metadata.types.JavaTypesManager;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.mongodb.IMongoConstants;
 import org.talend.repository.nosql.db.common.mongodb.IMongoDBAttributes;
@@ -51,7 +52,8 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
                 if (parent != null && IMongoConstants.DATABASE.equals(parent.getNodeType())) {
                     dbName = parent.getName();
                 } else {
-                    dbName = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
+                    dbName = ConnectionContextHelper.getParamValueOffContext(connection,
+                            connection.getAttributes().get(IMongoDBAttributes.DATABASE));
                 }
                 if (dbName == null) {
                     return metadataColumns;
@@ -74,6 +76,7 @@ public class MongoDBMetadataProvider extends AbstractMetadataProvider {
         }
         try {
             String dbName = NoSQLSchemaUtil.getSchemaNameByTableLabel(connection, tableName);
+            dbName = ConnectionContextHelper.getParamValueOffContext(connection, dbName);
             metadataColumns.addAll(extractTheColumns(connection, dbName, tableName));
         } catch (Exception e) {
             throw new NoSQLExtractSchemaException(e);

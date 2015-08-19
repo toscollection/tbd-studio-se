@@ -32,6 +32,7 @@ import org.json.simple.JSONValue;
 import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.repository.model.connection.ConnectionStatus;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.hcatalog.util.KerberosPolicyConfig;
@@ -74,7 +75,8 @@ public class HCatalogServiceUtil {
      * @return the HCatalog client of the special database from HCatalogConnection.
      */
     public static WebClient getHCatalogDBClient(HCatalogConnection connection) {
-        String database = StringUtils.trimToEmpty(connection.getDatabase());
+        String database = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection,
+                connection.getDatabase()));
         WebClient client = getHCatalogClient(connection, database);
         return client;
     }
@@ -126,10 +128,13 @@ public class HCatalogServiceUtil {
 
     private static WebClient getHCatalogRootClient(HCatalogConnection connection) {
         boolean isHDI = HCVersionUtil.isHDI(connection);
-        String host = StringUtils.trimToEmpty(connection.getHostName());
-        String port = StringUtils.trimToEmpty(connection.getPort());
-        String userName = StringUtils.trimToEmpty(connection.getUserName());
-        String password = StringUtils.trimToEmpty(connection.getPassword());
+        String host = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection,
+                connection.getHostName()));
+        String port = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection, connection.getPort()));
+        String userName = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection,
+                connection.getUserName()));
+        String password = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection,
+                connection.getPassword()));
         String protocol;
         if (isHDI) {
             protocol = "https://"; //$NON-NLS-1$

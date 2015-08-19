@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.swt.SWT;
@@ -37,9 +36,6 @@ import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
-import org.talend.core.database.conn.ConnParameterKeys;
-import org.talend.core.hadoop.conf.EHadoopProperties;
-import org.talend.core.hadoop.conf.HadoopDefaultConfsManager;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
 import org.talend.core.hadoop.version.EHadoopDistributions;
@@ -58,6 +54,7 @@ import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.common.IHadoopClusterInfoForm;
+import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
@@ -149,6 +146,10 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     @Override
     public void init() {
+        if (!isContextMode()) {
+            fillDefaults();
+        }
+
         EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(getConnection().getAuthMode(), false);
         if (authMode != null) {
             authenticationCombo.setText(authMode.getDisplayName());
@@ -173,9 +174,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         userNameText.setText(connection.getUserName());
         groupText.setText(connection.getGroup());
 
-        if (!isContextMode()) {
-            fillDefaults();
-        }
         needInitializeContext = true;
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -751,6 +749,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 case CLOUDERA_CDH5_4:
                 case MAPR401:
                 case APACHE_2_4_0_EMR:
+                case EMR_4_0_0:
                     isSupport = true;
                     break;
                 default:
@@ -825,98 +824,10 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private void fillDefaults() {
-        if (creation) {
-            HadoopClusterConnection connection = getConnection();
-            String distribution = connection.getDistribution();
-            String version = connection.getDfVersion();
-            if (distribution == null) {
-                return;
-            }
-            String[] versionPrefix = new String[] { distribution };
-            if (EHadoopDistributions.AMAZON_EMR.getName().equals(distribution)
-                    && (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue().equals(version) || EHadoopVersion4Drivers.APACHE_2_4_0_EMR
-                            .getVersionValue().equals(version))) {
-                versionPrefix = (String[]) ArrayUtils.add(versionPrefix, version);
-            }
-            boolean useCustomConfs = connection.isUseCustomConfs();
-            boolean isYarn = connection.isUseYarn();
-            String defaultJTORRM = null;
-            String defaultJTORRMPrincipal = null;
-            if (isYarn) {
-                defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                        (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER.getName()));
-                defaultJTORRMPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                        (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER_PRINCIPAL.getName()));
-            } else {
-                defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                        (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER.getName()));
-                defaultJTORRMPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                        (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER_PRINCIPAL.getName()));
-            }
-            String yarnHostName = connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_YARN_HOSTNAME);
-            if (defaultJTORRM != null) {
-                if (useCustomConfs) {
-                    if (isYarn && yarnHostName != null) {
-                        defaultJTORRM = replaceHostName(defaultJTORRM, yarnHostName);
-                        jobtrackerUriText.setText(defaultJTORRM);
-                    }
-                } else {
-                    jobtrackerUriText.setText(defaultJTORRM);
-                }
-            }
-            String defaultRMS = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                    EHadoopProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS.getName());
-            if (defaultRMS != null) {
-                if (useCustomConfs) {
-                    if (isYarn && yarnHostName != null) {
-                        defaultRMS = replaceHostName(defaultRMS, yarnHostName);
-                        rmSchedulerText.setText(defaultRMS);
-                    }
-                } else {
-                    rmSchedulerText.setText(defaultRMS);
-                }
-            }
-            if (useCustomConfs) {
-                return;
-            }
-            if (defaultJTORRMPrincipal != null) {
-                jtOrRmPrincipalText.setText(defaultJTORRMPrincipal);
-            }
-            String defaultNN = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.NAMENODE_URI.getName()));
-            if (defaultNN != null) {
-                namenodeUriText.setText(defaultNN);
-            }
-            String defaultNNP = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                    EHadoopProperties.NAMENODE_PRINCIPAL.getName());
-            if (defaultNNP != null) {
-                namenodePrincipalText.setText(defaultNNP);
-            }
-            String defaultJobHistoryPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                    EHadoopProperties.JOBHISTORY_PRINCIPAL.getName());
-            if (defaultJobHistoryPrincipal != null) {
-                jobHistoryPrincipalText.setText(defaultJobHistoryPrincipal);
-            }
-            String defaultJH = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                    EHadoopProperties.JOBHISTORY_ADDRESS.getName());
-            if (defaultJH != null) {
-                jobHistoryText.setText(defaultJH);
-            }
-            String defaultSD = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                    EHadoopProperties.STAGING_DIRECTORY.getName());
-            if (defaultSD != null) {
-                stagingDirectoryText.setText(defaultSD);
-            }
+        HadoopClusterConnection connection = getConnection();
+        if (creation && !connection.isUseCustomConfs()) {
+            HCRepositoryUtil.fillDefaultValuesOfHadoopCluster(connection);
         }
-    }
-
-    private String replaceHostName(String param, String hostName) {
-        String newParam = param;
-        if (param.indexOf(":") != -1) { //$NON-NLS-1$
-            String[] paramArray = param.split(":"); //$NON-NLS-1$
-            newParam = newParam.replaceFirst(paramArray[0], hostName);
-        }
-        return newParam;
     }
 
     @Override
