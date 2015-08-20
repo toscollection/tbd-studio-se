@@ -69,6 +69,7 @@ public class HadoopConfsManager {
             }
         }
         createConnectionItems(connectionItems);
+        updateHadoopCluster();
         reset();
     }
 
@@ -82,7 +83,6 @@ public class HadoopConfsManager {
                     for (ConnectionItem item : connectionItems) {
                         factory.create(item, new Path("")); //$NON-NLS-1$
                     }
-                    updateHadoopCluster();
                 } catch (PersistenceException e) {
                     ExceptionHandler.process(e);
                 }
@@ -94,15 +94,30 @@ public class HadoopConfsManager {
         workspace.run(operation, schedulingRule, IWorkspace.AVOID_UPDATE, new NullProgressMonitor());
     }
 
-    private void updateHadoopCluster() throws CoreException, PersistenceException {
-        Item item = null;
-        IRepositoryViewObject repObj = factory.getLastVersion(hadoopClusterId);
-        if (repObj != null && repObj.getProperty() != null) {
-            item = repObj.getProperty().getItem();
-        }
-        if (item != null) {
-            factory.save(item);
-        }
+    private void updateHadoopCluster() throws CoreException {
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        IWorkspaceRunnable operation = new IWorkspaceRunnable() {
+
+            @Override
+            public void run(IProgressMonitor monitor) throws CoreException {
+                Item item = null;
+                try {
+                    IRepositoryViewObject repObj = factory.getLastVersion(hadoopClusterId);
+                    if (repObj != null && repObj.getProperty() != null) {
+                        item = repObj.getProperty().getItem();
+                    }
+                    if (item != null) {
+                        factory.save(item);
+                    }
+                } catch (PersistenceException e) {
+                    ExceptionHandler.process(e);
+                }
+            }
+        };
+        ISchedulingRule schedulingRule = workspace.getRoot();
+        // the update the project files need to be done in the workspace runnable to avoid all
+        // notification of changes before the end of the modifications.
+        workspace.run(operation, schedulingRule, IWorkspace.AVOID_UPDATE, new NullProgressMonitor());
     }
 
     private void reset() {
