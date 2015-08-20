@@ -123,7 +123,7 @@
 	            for(Map<String, String> keyField : key_fields) {
 	                if (keyField.get("INPUT_COLUMN").equals(outputColumn.getLabel())) {
 	                    %>
-	                    sb_<%=cid%>.append("group.<%=keyField.get("INPUT_COLUMN")%> AS <%=keyField.get("INPUT_COLUMN")%>");
+	                    sb_<%=cid%>.append("group<%=key_fields.size()>1?"."+keyField.get("INPUT_COLUMN"):""%> AS <%=keyField.get("INPUT_COLUMN")%>");
 	                    <%
 	                }
                 }
