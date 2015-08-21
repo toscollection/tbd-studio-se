@@ -163,7 +163,7 @@
 				<ITEM NAME="MAPR410" VALUE="MAPR410" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="APACHE_1_0_0" VALUE="APACHE_1_0_0" SHOW_IF="DISTRIBUTION=='APACHE'" />
 				<ITEM NAME="EMR_4_0_0" VALUE="EMR_4_0_0"
-					SHOW_IF="DISTRIBUTION=='AMAZON_EMR' AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE') AND (STORE!='RCFILEPIGSTORAGE')" />
+					SHOW_IF="DISTRIBUTION=='AMAZON_EMR' AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE')" />
 				<ITEM NAME="APACHE_1_0_3_EMR" VALUE="APACHE_1_0_3_EMR"
 					SHOW_IF="DISTRIBUTION=='AMAZON_EMR'" />
 				<ITEM NAME="APACHE_2_4_0_EMR" VALUE="APACHE_2_4_0_EMR"
@@ -999,15 +999,30 @@
 			<IMPORT NAME="elephant-bird-core-4.1.jar" MODULE="elephant-bird-core-4.1.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-core-4.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.1.jar"
-				REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="elephant-bird-hadoop-compat-4.1.jar" MODULE="elephant-bird-hadoop-compat-4.1.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-hadoop-compat-4.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.1.jar"
-				REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="elephant-bird-rcfile-4.1.jar" MODULE="elephant-bird-rcfile-4.1.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-rcfile-4.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.1.jar"
-				REQUIRED_IF="(STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+
+			<IMPORT NAME="elephant-bird-core-4.9.jar" MODULE="elephant-bird-core-4.9.jar"
+				MVN="mvn:org.talend.libraries/elephant-bird-core-4.9/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.9.jar"
+				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION=='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+			<IMPORT NAME="elephant-bird-hadoop-compat-4.9.jar" MODULE="elephant-bird-hadoop-compat-4.9.jar"
+				MVN="mvn:org.talend.libraries/elephant-bird-hadoop-compat-4.9/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.9.jar"
+				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION=='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+			<IMPORT NAME="elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
+				MODULE="elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
+				MVN="mvn:org.talend.libraries/elephant-bird-rcfile-4.9-patched-hive-1.x/6.0.0"
+				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
+				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION=='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+
 			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar"
 				MVN="mvn:org.talend.libraries/slf4j-api-1.6.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.6.1.jar"
@@ -1215,9 +1230,12 @@
 			<!-- EMR_4_0_0 -->
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-EMR_4_0_0_LATEST"
 				REQUIRED_IF="(HBASE_VERSION=='EMR_4_0_0') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
+			<IMPORT MODULE_GROUP="S3-LIB-EMR_4_0_0_LATEST"
+				REQUIRED_IF="(HBASE_VERSION=='EMR_4_0_0') AND (S3_LOCATION=='true') AND DISTRIBUTION!='CUSTOM'" />				
 
 			<!-- MAPR401 -->
-			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-MAPR40X_LASTEST"
+			<IMPORT MODULE_GROUP="
+				PIG-RCFILE-LIB-MAPR40X_LASTEST "
 				REQUIRED_IF="(HBASE_VERSION=='MAPR401') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
 			<!-- MAPR410 -->
