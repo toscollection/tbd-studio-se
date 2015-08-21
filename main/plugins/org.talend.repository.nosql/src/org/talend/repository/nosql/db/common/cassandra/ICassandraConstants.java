@@ -24,5 +24,11 @@ public interface ICassandraConstants {
 
     public final static String DEFAULT_PORT = "9160"; //$NON-NLS-1$
 
+    public final static String DATASTAX_PORT = "9042"; //$NON-NLS-1$
+
     public final static String DBM_ID = "cassandra_id"; //$NON-NLS-1$
+
+    public final static String[] API_TYPES = { "DATASTAX", "HECTOR" };//$NON-NLS-1$//$NON-NLS-2$
+
+    public final static String[] DBVERSIONS = { "CASSANDRA_2_0_0", "CASSANDRA_1_2_2", "CASSANDRA_1_1_2" };//$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 }

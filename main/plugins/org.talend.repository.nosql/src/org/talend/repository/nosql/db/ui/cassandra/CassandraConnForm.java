@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.repository.nosql.db.ui.cassandra;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.eclipse.jface.fieldassist.ControlDecoration;
@@ -58,6 +59,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
     protected LabelledCombo dbVersionCombo;
 
+    protected LabelledCombo apiTypeCombo;
+
     protected LabelledText serverText;
 
     protected LabelledText portText;
@@ -85,6 +88,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
     protected void initializeFields() {
         NoSQLConnection conn = getConnection();
         String dbVersion = conn.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        String apiType = conn.getAttributes().get(INoSQLCommonAttributes.API_TYPE);
         String server = conn.getAttributes().get(INoSQLCommonAttributes.HOST);
         String port = conn.getAttributes().get(INoSQLCommonAttributes.PORT);
         String database = conn.getAttributes().get(INoSQLCommonAttributes.DATABASE);
@@ -95,9 +99,18 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             dbVersionCombo.setText(repositoryTranslator.getLabel(dbVersion));
         } else {
             dbVersionCombo.select(0);
+            if (apiTypeCombo != null && !apiTypeCombo.getCombo().isDisposed()) {
+                apiTypeCombo.setHideWidgets(false);
+            }
+        }
+        portText.setText(port == null ? ICassandraConstants.DEFAULT_PORT : port);
+        if (validText(apiType)) {
+            apiTypeCombo.setText(repositoryTranslator.getLabel(apiType));
+        } else {
+            apiTypeCombo.select(0);
+            portText.setText(ICassandraConstants.DATASTAX_PORT);
         }
         serverText.setText(server == null ? ICassandraConstants.DEFAULT_HOST : server);
-        portText.setText(port == null ? ICassandraConstants.DEFAULT_PORT : port);
         databaseText.setText(database == null ? "" : database); //$NON-NLS-1$
         checkRequireAuthBtn.setSelection(isUseRequireAuth);
         if (checkRequireAuthBtn.getSelection()) {
@@ -112,6 +125,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         super.saveAttributes();
         NoSQLConnection conn = getConnection();
         conn.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, repositoryTranslator.getValue(dbVersionCombo.getText()));
+        conn.getAttributes().put(INoSQLCommonAttributes.API_TYPE, repositoryTranslator.getValue(apiTypeCombo.getText()));
         conn.getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
         conn.getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
         conn.getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
@@ -159,12 +173,26 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         connCompLayout.marginHeight = 0;
         connComposite.setLayout(connCompLayout);
 
+        // create dbVersion and apiType group composite
+        Composite dbVersionGroupComposite = new Composite(connComposite, SWT.NONE);
+        dbVersionGroupComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+        GridLayout dbVersionGroupCompLayout = new GridLayout(4, false);
+        dbVersionGroupCompLayout.marginWidth = 0;
+        dbVersionGroupCompLayout.marginHeight = 0;
+        dbVersionGroupComposite.setLayout(dbVersionGroupCompLayout);
+
         NoSQLRepositoryFactory repFactory = NoSQLRepositoryFactory.getInstance();
         List<String> dbVersions = repFactory.getDBVersions(getConnection().getDbType());
         List<String> dbVersionLabels = repositoryTranslator.getLabels(dbVersions);
         dbVersionCombo = new LabelledCombo(
-                connComposite,
-                Messages.getString("CassandraConnForm.dbVersion"), Messages.getString("CassandraConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
+                dbVersionGroupComposite,
+                Messages.getString("CassandraConnForm.dbVersion"), Messages.getString("CassandraConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 1, true); //$NON-NLS-1$ //$NON-NLS-2$
+        String[] apiTypes = ICassandraConstants.API_TYPES;
+        List<String> apiTypeLabels = repositoryTranslator.getLabels(Arrays.asList(apiTypes));
+        apiTypeCombo = new LabelledCombo(
+                dbVersionGroupComposite,
+                Messages.getString("CassandraConnForm.apiType"), Messages.getString("CassandraConnForm.apiTypeTip"), apiTypeLabels.toArray(new String[0]), 1, true); //$NON-NLS-1$ //$NON-NLS-2$
+        updateAPITypeComboField();
         serverText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.server"), 1); //$NON-NLS-1$
         portText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.port"), 1); //$NON-NLS-1$
         updatePortDecoration();
@@ -184,6 +212,16 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             portWarningDecorator.hide();
         } else {
             portWarningDecorator.show();
+        }
+
+        // update port
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        if (ICassandraConstants.DBVERSIONS[0].equals(dbVersion)) {
+            if (ICassandraConstants.API_TYPES[0].equals(repositoryTranslator.getLabel(apiTypeCombo.getText()))) {
+                portText.setText(ICassandraConstants.DATASTAX_PORT);
+            } else {
+                portText.setText(ICassandraConstants.DEFAULT_PORT);
+            }
         }
     }
 
@@ -221,9 +259,16 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         }
     }
 
+    private void updateAPITypeComboField() {
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        boolean hide = ICassandraConstants.DBVERSIONS[0].equals(dbVersion);
+        apiTypeCombo.setHideWidgets(!hide);
+    }
+
     @Override
     protected void updateEditableStatus(boolean editable) {
         dbVersionCombo.setEnabled(editable);
+        apiTypeCombo.setEnabled(editable);
         serverText.setEnabled(editable);
         portText.setEnabled(editable);
         databaseText.setEnabled(editable);
@@ -268,6 +313,18 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 checkFieldsValue();
                 getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
                         repositoryTranslator.getValue(dbVersionCombo.getText()));
+                updateAPITypeComboField();
+                updatePortDecoration();
+            }
+        });
+
+        apiTypeCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                getConnection().getAttributes().put(INoSQLCommonAttributes.API_TYPE,
+                        repositoryTranslator.getValue(apiTypeCombo.getText()));
                 updatePortDecoration();
             }
         });
