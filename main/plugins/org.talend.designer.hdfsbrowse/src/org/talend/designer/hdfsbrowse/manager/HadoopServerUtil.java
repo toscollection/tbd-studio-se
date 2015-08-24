@@ -150,7 +150,7 @@ public class HadoopServerUtil {
                 classLoader = getClassLoader(connection);
             }
             Thread.currentThread().setContextClassLoader(classLoader);
-            conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance();
+            conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance(); //$NON-NLS-1$
             EHadoopConfProperties.FS_DEFAULT_URI.set(conf, nameNodeURI);
             if (enableKerberos) {
                 assert namenodePrincipal != null;
@@ -165,8 +165,8 @@ public class HadoopServerUtil {
             if (useKeytab) {
                 assert keytabPrincipal != null;
                 assert keytab != null;
-                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader,
-                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytab });
+                ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
+                        "loginUserFromKeytab", new String[] { keytabPrincipal, keytab }); //$NON-NLS-1$
             }
 
             Map<String, Object> configurations = connection.getConfigurations();
@@ -179,8 +179,10 @@ public class HadoopServerUtil {
                     continue;
                 }
                 ReflectionUtils
-                        .invokeMethod(conf, "set", new Object[] { key, String.valueOf(value) }, String.class, String.class);
+                        .invokeMethod(conf, "set", new Object[] { key, String.valueOf(value) }, String.class, String.class); //$NON-NLS-1$
             }
+            ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.client.use.datanode.hostname", "true" }, String.class, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    String.class);
         } catch (Exception e) {
             throw new HadoopServerException(e);
         } finally {
