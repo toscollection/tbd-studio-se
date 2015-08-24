@@ -39,15 +39,20 @@ public class ExtractHDFSMetaServiceFactory {
             Object path) {
         IExtractSchemaService<HDFSConnection> service = null;
         boolean isSequenceFile = true;
+        ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
         try {
             Object fs = HadoopServerUtil.getDFS(connectionBean, classLoader);
             Object conf = HadoopServerUtil.getConfiguration(connectionBean, classLoader);
+
+            Thread.currentThread().setContextClassLoader(classLoader);
             ReflectionUtils.newInstance("org.apache.hadoop.io.SequenceFile$Reader", classLoader, new Object[] { fs, path, conf },
                     Class.forName("org.apache.hadoop.fs.FileSystem", true, classLoader),
                     Class.forName("org.apache.hadoop.fs.Path", true, classLoader),
                     Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader));
         } catch (Exception e) {
             isSequenceFile = false;
+        } finally {
+            Thread.currentThread().setContextClassLoader(oldClassLoader);
         }
         if (isSequenceFile) {
             service = new ExtractSequenceFileSchemaService(classLoader);
