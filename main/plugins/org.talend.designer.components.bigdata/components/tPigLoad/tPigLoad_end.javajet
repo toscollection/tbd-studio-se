@@ -46,7 +46,7 @@
 <%
 				if(isLog4jEnabled) {
 %>
-					log.error("<%=cid%> - " + e.getMessage());
+					log.error("<%=cid%> - The Pig job failed. Please read the logs for more details");
 <%
 				}
 			}
