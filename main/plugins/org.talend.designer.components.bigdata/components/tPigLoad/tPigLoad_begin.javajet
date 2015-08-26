@@ -613,7 +613,7 @@
 			script_<%=cid%>.append("SET tez.lib.uris ");
 			int tezLibPathCount_<%=cid%> = 1;
 			for(String tezLibPathKey_<%=cid%> : tezLibPaths_<%=cid%>){
-				 script_<%=cid%>.append(<%=fsDefaultName%> + "/" + tezLibPath_<%=cid%>);
+				 script_<%=cid%>.append(<%=fsDefaultName%> + "/" + tezLibPathKey_<%=cid%>);
 				 if(tezLibPathCount_<%=cid%> < tezLibPaths_<%=cid%>.length){
 				 	script_<%=cid%>.append(",");
 				 }
