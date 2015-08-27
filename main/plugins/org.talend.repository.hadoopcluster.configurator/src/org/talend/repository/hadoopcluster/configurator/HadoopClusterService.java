@@ -28,4 +28,7 @@ public interface HadoopClusterService {
     public void exportConfigurationToXml(String folderPath);
 
     public Set<String> getConfFiles();
+
+    // return true if contains site.xml files
+    public boolean hasConfigurations();
 }
