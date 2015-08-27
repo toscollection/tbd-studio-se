@@ -35,14 +35,26 @@
 
 		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="10"
 			REQUIRED="true">
-			<TABLE IF="OUTPUT_TYPE == 'BYTES'" READONLY="true">
-				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
-					CUSTOM="true" />
-			</TABLE>
-			<TABLE IF="OUTPUT_TYPE == 'STRING'" READONLY="true">
-				<COLUMN NAME="payload" TYPE="id_String" READONLY="true"
-					CUSTOM="true" />
-			</TABLE>
+            <TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'true')" READONLY="true">
+                <COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
+                    CUSTOM="true" />
+                <COLUMN NAME="offset" TYPE="id_Long" READONLY="true"
+                    CUSTOM="true" />
+            </TABLE>
+            <TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'false')" READONLY="true">
+                <COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
+                    CUSTOM="true" />
+            </TABLE>
+            <TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'true')" READONLY="true">
+                <COLUMN NAME="payload" TYPE="id_String" READONLY="true"
+                    CUSTOM="true" />
+                <COLUMN NAME="offset" TYPE="id_Long" READONLY="true"
+                    CUSTOM="true" />
+            </TABLE>
+            <TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'false')" READONLY="true">
+                <COLUMN NAME="payload" TYPE="id_String" READONLY="true"
+                    CUSTOM="true" />
+            </TABLE>
 		</PARAMETER>
 
 		<PARAMETER NAME="KAFKA_VERSION" FIELD="CLOSED_LIST" NUM_ROW="15"
@@ -108,6 +120,11 @@
 			NUM_ROW="42" REQUIRED="true">
 			<DEFAULT>"5000"</DEFAULT>
 		</PARAMETER>
+
+        <PARAMETER NAME="SAVE_OFFSET" FIELD="CHECK" NUM_ROW="45"
+            REQUIRED="true">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
 
 		<PARAMETER NAME="CUSTOM_ENCODING" FIELD="CHECK" NUM_ROW="50"
 			REQUIRED="true">
