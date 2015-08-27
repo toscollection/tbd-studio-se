@@ -13,6 +13,7 @@
 package org.talend.repository.hadoopcluster.configurator.ambari;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,18 +67,49 @@ public class HadoopAmbariCluster implements HadoopCluster {
      */
     @Override
     public Map<HadoopHostedService, HadoopClusterService> getHostedServices() {
+        Map<HadoopHostedService, HadoopClusterService> hostedServices = null;
+        Map<HadoopHostedService, HadoopClusterService> filteredHostedServices = new HashMap<HadoopHostedService, HadoopClusterService>();
         if (supportSCV) {
-            return getHostedServicesForNew(allSupportedServices());
+            hostedServices = getHostedServicesForNew(allSupportedServices());
         } else {
-            return getHostedServicesForOld(allSupportedServices());
+            hostedServices = getHostedServicesForOld(allSupportedServices());
         }
+        // only return the server which contains site.xml file, because we only need the properties in site.xml for
+        // now(metadata wizard and component)
+        for (HadoopHostedService serviceName : hostedServices.keySet()) {
+            if (hostedServices.get(serviceName).hasConfigurations()) {
+                filteredHostedServices.put(serviceName, hostedServices.get(serviceName));
+            }
+        }
+        return filteredHostedServices;
+    }
+
+    private Map<HadoopHostedService, HadoopClusterService> distributeConfigFilesToService(String serviceName,
+            List<ApiConfigFile> configs) {
+        Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<HadoopHostedService, HadoopClusterService>();
+        HadoopHostedService service = HadoopHostedService.fromString(serviceName);
+        if (service == HadoopHostedService.HIVE) {
+            ApiConfigFile hcatalogConfig = null;
+            for (ApiConfigFile file : configs) {
+                if ("webhcat-site".equals(file.getType())) { //$NON-NLS-1$
+                    hcatalogConfig = file;
+                    break;
+                }
+            }
+            if (hcatalogConfig != null) {
+                configs.remove(hcatalogConfig);
+                servicesMapping.put(HadoopHostedService.WEBHCAT, new HadoopAmbariClusterService(Arrays.asList(hcatalogConfig)));
+            }
+        }
+        servicesMapping.put(service, new HadoopAmbariClusterService(configs));
+        return servicesMapping;
     }
 
     private Map<HadoopHostedService, HadoopClusterService> getHostedServicesForNew(List<String> servicesName) {
         Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<>();
         for (String serviceName : servicesName) {
-            servicesMapping.put(HadoopHostedService.fromString(serviceName), new HadoopAmbariClusterService(
-                    getConfigFiles(serviceName)));
+            List<ApiConfigFile> configFiles = getConfigFiles(serviceName);
+            servicesMapping.putAll(distributeConfigFilesToService(serviceName, configFiles));
         }
         return servicesMapping;
     }
