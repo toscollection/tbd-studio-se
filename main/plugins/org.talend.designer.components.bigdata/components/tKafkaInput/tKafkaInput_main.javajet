@@ -26,3 +26,10 @@ String outStructName = tKafkaInputUtil.getOutStructName();
 
 kafka.message.MessageAndMetadata<byte[], <%=outStructName%>> <%=cid%>_messageAndMetadata = <%=cid%>_consumerIterator.next();
 <%=tKafkaInputUtil.getOutgoingConnectionName()%> = <%=cid%>_messageAndMetadata.message();
+<%
+if (ElementParameterParser.getBooleanValue(node, "__SAVE_OFFSET__")) {
+    %>
+    <%=tKafkaInputUtil.getOutgoingConnectionName()%>.offset = <%=cid%>_messageAndMetadata.offset();
+    <%
+}
+%>

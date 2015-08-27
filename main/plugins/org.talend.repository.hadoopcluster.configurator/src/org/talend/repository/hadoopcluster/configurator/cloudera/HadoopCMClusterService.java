@@ -201,4 +201,14 @@ public class HadoopCMClusterService implements HadoopClusterService {
         return confs.keySet();
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.hadoopcluster.configurator.HadoopClusterService#hasConfigurations()
+     */
+    @Override
+    public boolean hasConfigurations() {
+        return confs.size() > 0;
+    }
+
 }

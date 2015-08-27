@@ -153,6 +153,26 @@ public class CreateNoSQLSchemaAction extends AbstractCreateAction {
     }
 
     private boolean checkNoSQLConnection(final NoSQLConnection connection) {
+        boolean checkedResult = false;
+        try {
+            IMetadataProvider metadataProvider = NoSQLRepositoryFactory.getInstance().getMetadataProvider(connection.getDbType());
+            if (metadataProvider != null) {
+                checkedResult = metadataProvider.checkConnection(connection);
+            }
+        } catch (Exception ex) {
+            checkedResult = false;
+            ExceptionHandler.process(ex);
+        }
+        if (!checkedResult) {
+            String mainMsg = Messages.getString("CreateNoSQLSchemaAction.connectionFailure.mainMsg"); //$NON-NLS-1$
+            String detailMsg = Messages.getString("CreateNoSQLSchemaAction.connectionFailure.detailMsg"); //$NON-NLS-1$
+            new ErrorDialogWidthDetailArea(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(),
+                    RepositoryNoSQLPlugin.PLUGIN_ID, mainMsg, detailMsg);
+        }
+        return checkedResult;
+    }
+
+    protected boolean checkNoSQLConnectionInIndependentThread(final NoSQLConnection connection) {
         final AtomicBoolean checkedResult = new AtomicBoolean(true);
         IRunnableWithProgress runnableWithProgress = new IRunnableWithProgress() {
 

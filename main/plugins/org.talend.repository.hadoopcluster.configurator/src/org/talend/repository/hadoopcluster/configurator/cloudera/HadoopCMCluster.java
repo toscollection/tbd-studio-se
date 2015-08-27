@@ -50,8 +50,10 @@ public class HadoopCMCluster implements HadoopCluster {
         Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<HadoopHostedService, HadoopClusterService>();
         for (ApiService service : services.getServices()) {
             if (HadoopHostedService.isSupport(service.getType())) {
-                servicesMapping.put(HadoopHostedService.fromString(service.getType()),
-                        new HadoopCMClusterService(service.getName(), cluster));
+                HadoopCMClusterService clusterService = new HadoopCMClusterService(service.getName(), cluster);
+                if (clusterService.hasConfigurations()) {
+                    servicesMapping.put(HadoopHostedService.fromString(service.getType()), clusterService);
+                }
             }
         }
         return servicesMapping;
