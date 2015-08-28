@@ -343,7 +343,7 @@ if(likeTable) {
 <%
                     if(isLog4jEnabled) {
 %>
-                        log.error("<%=cid%> - " + e.getMessage());
+                        log.error("<%=cid%> - The Hive job failed. Please read the logs for more details");
 <%
                     }
                 }
@@ -670,7 +670,7 @@ if(originalHadoopUsername_<%=cid%>!=null) {
 <%
                 if(isLog4jEnabled) {
 %>
-                    log.error("<%=cid%> - " + e.getMessage());
+                    log.error("<%=cid%> - The Hive job failed. Please read the logs for more details");
 <%
                 }
             }
