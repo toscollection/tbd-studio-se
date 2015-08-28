@@ -84,8 +84,10 @@
 				<ITEM NAME="PIVOTAL_HD_1_0_1" VALUE="PIVOTAL_HD_1_0_1"
 					SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'" />
 				<ITEM NAME="PIVOTAL_HD_2_0" VALUE="PIVOTAL_HD_2_0" SHOW_IF="DISTRIBUTION=='PIVOTAL_HD'" />
-				<ITEM NAME="MICROSOFT_HD_INSIGHT_3_1" VALUE="MICROSOFT_HD_INSIGHT_3_1"
-					SHOW_IF="DISTRIBUTION=='MICROSOFT_HD_INSIGHT'" />
+                <ITEM NAME="MICROSOFT_HD_INSIGHT_3_1" VALUE="MICROSOFT_HD_INSIGHT_3_1"
+                    SHOW_IF="DISTRIBUTION=='MICROSOFT_HD_INSIGHT'" />
+                <ITEM NAME="MICROSOFT_HD_INSIGHT_3_2" VALUE="MICROSOFT_HD_INSIGHT_3_2"
+                    SHOW_IF="DISTRIBUTION=='MICROSOFT_HD_INSIGHT'" />                    
 			</ITEMS>
 		</PARAMETER>
 
@@ -3172,45 +3174,10 @@
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/jackson-mapper-asl-1.8.8.jar"
 				REQUIRED_IF="(HIVE_VERSION=='HDP_2_1') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<!-- ############## -->
-			<!-- MICROSOFT HD INSIGHT 3.1 -->
-			<IMPORT NAME="talend-webhcat-launcher-1.0.0" MODULE="talend-webhcat-launcher-1.0.0.jar"
-				MVN="mvn:org.talend.libraries/talend-webhcat-launcher-1.0.0/6.0.0"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="cxf-api-2.7.7" MODULE="cxf-api-2.7.7.jar"
-				MVN="mvn:org.talend.libraries/cxf-api-2.7.7/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-api-2.7.7.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="cxf-rt-bindings-xml-2.7.7" MODULE="cxf-rt-bindings-xml-2.7.7.jar"
-				MVN="mvn:org.talend.libraries/cxf-rt-bindings-xml-2.7.7/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-bindings-xml-2.7.7.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="cxf-rt-core-2.7.7" MODULE="cxf-rt-core-2.7.7.jar"
-				MVN="mvn:org.talend.libraries/cxf-rt-core-2.7.7/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-core-2.7.7.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="cxf-rt-frontend-jaxrs-2.7.7" MODULE="cxf-rt-frontend-jaxrs-2.7.7.jar"
-				MVN="mvn:org.talend.libraries/cxf-rt-frontend-jaxrs-2.7.7/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-frontend-jaxrs-2.7.7.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="cxf-rt-transports-http-2.7.7" MODULE="cxf-rt-transports-http-2.7.7.jar"
-				MVN="mvn:org.talend.libraries/cxf-rt-transports-http-2.7.7/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.cxf/lib/cxf-rt-transports-http-2.7.7.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="json-simple" MODULE="json_simple-1.1.jar"
-				MVN="mvn:org.talend.libraries/json_simple-1.1/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="javax.ws.rs-api-2.0-m10" MODULE="javax.ws.rs-api-2.0-m10.jar"
-				MVN="mvn:org.talend.libraries/javax.ws.rs-api-2.0-m10/6.0.0"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="WSDL4J-1_6_3" MODULE="wsdl4j-1.6.3.jar"
-				MVN="mvn:org.talend.libraries/wsdl4j-1.6.3/6.0.0" BundleID="org.apache.servicemix.bundles.wsdl4j"
-				REQUIRED="false"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<IMPORT NAME="azure-storage-1.2.0" MODULE="azure-storage-1.2.0.jar"
-				MVN="mvn:org.talend.libraries/azure-storage-1.2.0/6.0.0"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
-			<!-- #################### -->
+			
+            <!-- MICROSOFT HD INSIGHT 3.1 && MICROSOFT HD INSIGHT 3.2 -->
+            <IMPORT MODULE_GROUP="HD_INSIGHT_COMMON_LIBRARIES_LATEST"
+                REQUIRED_IF="(USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION=='MICROSOFT_HD_INSIGHT')" />
 
 			<!-- PARQUET SUPPORT -->
 			<IMPORT NAME="parquet-hive-bundle-1.5.0" MODULE="parquet-hive-bundle-1.5.0.jar"
