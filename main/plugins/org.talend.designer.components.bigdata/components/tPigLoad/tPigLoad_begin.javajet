@@ -151,7 +151,7 @@
 		if(generateRegisterJarCodeForRCFile) {
 			jarsToRegister.add("elephant-bird-core");
 			jarsToRegister.add("elephant-bird-hadoop-compat");
-			jarsToRegister.add("elephant-bird-rcfile");			
+			jarsToRegister.add("elephant-bird-rcfile");
 			jarsToRegister.add("hive-serde");
 			jarsToRegister.add("hive-common");
 			jarsToRegister.add("hive-exec");
