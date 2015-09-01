@@ -39,6 +39,7 @@ import org.talend.designer.core.IDesignerCoreService;
 import org.talend.metadata.managment.ui.wizard.PropertiesWizard;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.RepositoryPlugin;
+import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
 import org.talend.repository.pigudf.wizard.EditPigudfPropertiesWizard;
@@ -147,7 +148,7 @@ public class EditPigudfPropertiesAction extends EditPropertiesAction {
      * org.talend.repository.model.RepositoryNode, org.eclipse.core.runtime.IPath)
      */
     @Override
-    protected void processRoutineRenameOperation(String originalName, RepositoryNode node, IPath path) {
+    protected void processRoutineRenameOperation(String originalName, IRepositoryNode node, IPath path) {
         if (LanguageManager.getCurrentLanguage() != ECodeLanguage.JAVA) {
             return;
         }
