@@ -89,15 +89,20 @@ public class HCatalogServiceUtil {
             policy.setAuthorizationType(HttpAuthHeader.AUTH_TYPE_NEGOTIATE);
             kbInterceptor.setPolicy(policy);
             java.util.Map<String, String> properties = new HashMap<String, String>();
-            kbInterceptor.setServicePrincipalName(StringUtils.trimToEmpty(connection.getKrbPrincipal()));
-            kbInterceptor.setRealm(StringUtils.trimToEmpty(connection.getKrbRealm()));
+            String krbPrincipal = ConnectionContextHelper.getParamValueOffContext(connection,
+                    StringUtils.trimToEmpty(connection.getKrbPrincipal()));
+            kbInterceptor.setServicePrincipalName(StringUtils.trimToEmpty(krbPrincipal));
+            String krbRealm = ConnectionContextHelper.getParamValueOffContext(connection,
+                    StringUtils.trimToEmpty(connection.getKrbRealm()));
+            kbInterceptor.setRealm(StringUtils.trimToEmpty(krbRealm));
             properties.put("useTicketCache", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             properties.put("refreshKrb5Config", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             properties.put("renewTGT", "true"); //$NON-NLS-1$ //$NON-NLS-2$
             if (hcConnection.isUseKeytab()) {
                 properties.put("useKeyTab", "true"); //$NON-NLS-1$//$NON-NLS-2$
-                properties.put("principal", hcConnection.getKeytabPrincipal()); //$NON-NLS-1$
-                properties.put("keyTab", hcConnection.getKeytab()); //$NON-NLS-1$
+                properties.put("principal", //$NON-NLS-1$
+                        ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytabPrincipal()));
+                properties.put("keyTab", ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytab())); //$NON-NLS-1$
             }
             kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
             WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
