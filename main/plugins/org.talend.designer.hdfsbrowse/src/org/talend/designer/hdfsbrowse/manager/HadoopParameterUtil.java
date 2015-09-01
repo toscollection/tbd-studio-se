@@ -26,6 +26,10 @@ public class HadoopParameterUtil {
 
     public final static String DEFAULT_NAMENODE_PORT = "8020"; //$NON-NLS-1$
 
+    public final static String CONFS_JAR_EXT = ".jar"; //$NON-NLS-1$
+
+    public final static String CONFS_JAR_PREFIX = "hadoop-conf-"; //$NON-NLS-1$
+
     /**
      * DOC ycbai Comment method "getHostNameFromNameNodeURI".
      * 
@@ -72,6 +76,10 @@ public class HadoopParameterUtil {
         }
 
         return port;
+    }
+
+    public static String getConfsJarDefaultName(String itemId) {
+        return CONFS_JAR_PREFIX.concat(itemId).concat(CONFS_JAR_EXT);
     }
 
 }

@@ -35,6 +35,8 @@ public class HadoopServiceProperties {
 
     private boolean isCustom;
 
+    private boolean useCustomConfs;
+
     private String nameNode;
 
     private String jobTracker;
@@ -99,6 +101,14 @@ public class HadoopServiceProperties {
 
     public void setCustom(boolean isCustom) {
         this.isCustom = isCustom;
+    }
+
+    public boolean isUseCustomConfs() {
+        return this.useCustomConfs;
+    }
+
+    public void setUseCustomConfs(boolean useCustomConfs) {
+        this.useCustomConfs = useCustomConfs;
     }
 
     public String getNameNode() {

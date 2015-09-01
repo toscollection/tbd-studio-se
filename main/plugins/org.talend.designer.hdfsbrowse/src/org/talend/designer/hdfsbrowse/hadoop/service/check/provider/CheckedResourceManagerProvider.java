@@ -52,6 +52,7 @@ public class CheckedResourceManagerProvider extends AbstractCheckedServiceProvid
         } else {
             loader = HadoopClassLoaderFactory2.getMRClassLoader(serviceProperties.getRelativeHadoopClusterId(),
                     serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb());
+            loader = addCustomConfsJarIfNeeded(loader, serviceProperties);
         }
 
         return loader;

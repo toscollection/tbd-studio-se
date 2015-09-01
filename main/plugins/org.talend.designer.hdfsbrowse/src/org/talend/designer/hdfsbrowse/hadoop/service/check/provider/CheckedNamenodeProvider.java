@@ -82,6 +82,7 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
         } else {
             loader = HadoopClassLoaderFactory2.getHDFSClassLoader(serviceProperties.getRelativeHadoopClusterId(),
                     serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb());
+            loader = addCustomConfsJarIfNeeded(loader, serviceProperties);
         }
 
         return loader;
