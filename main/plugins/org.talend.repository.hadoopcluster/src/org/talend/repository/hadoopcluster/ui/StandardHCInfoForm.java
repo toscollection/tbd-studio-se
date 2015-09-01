@@ -642,6 +642,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         properties.setGroup(connection.getGroup());
         properties.setUseKrb(connection.isEnableKerberos());
         properties.setCustom(connection.isUseCustomVersion());
+        properties.setUseCustomConfs(connection.isUseCustomConfs());
         properties.setPrincipal(connection.getPrincipal());
         properties.setJtOrRmPrincipal(connection.getJtOrRmPrincipal());
         properties.setJobHistoryPrincipal(connection.getJobHistoryPrincipal());
