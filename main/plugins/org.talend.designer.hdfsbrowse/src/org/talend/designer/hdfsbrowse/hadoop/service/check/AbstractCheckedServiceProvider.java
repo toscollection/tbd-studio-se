@@ -12,12 +12,16 @@
 // ============================================================================
 package org.talend.designer.hdfsbrowse.hadoop.service.check;
 
+import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
+import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.classloader.DynamicClassLoader;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.designer.hdfsbrowse.exceptions.HadoopServerException;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 
 /**
  * created by ycbai on Aug 14, 2014 Detailled comment
@@ -64,6 +68,23 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
                 ReflectionUtils.invokeMethod(conf, "set", new Object[] { key, value }); //$NON-NLS-1$
             }
         }
+    }
+
+    protected ClassLoader addCustomConfsJarIfNeeded(ClassLoader baseLoader, HadoopServiceProperties serviceProperties) {
+        ClassLoader classLoader = baseLoader;
+        if (serviceProperties.isUseCustomConfs()) {
+            String clusterId = serviceProperties.getRelativeHadoopClusterId();
+            if (baseLoader instanceof DynamicClassLoader && clusterId != null) {
+                String customConfsJarName = HadoopParameterUtil.getConfsJarDefaultName(clusterId);
+                try {
+                    classLoader = DynamicClassLoader.createNewOneBaseLoader((DynamicClassLoader) baseLoader,
+                            new String[] { customConfsJarName }, null);
+                } catch (MalformedURLException e) {
+                    ExceptionHandler.process(e);
+                }
+            }
+        }
+        return classLoader;
     }
 
 }

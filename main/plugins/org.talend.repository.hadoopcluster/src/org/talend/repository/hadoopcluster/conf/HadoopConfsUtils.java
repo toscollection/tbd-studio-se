@@ -32,6 +32,7 @@ import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.general.ILibrariesService;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.repository.ResourceModelUtils;
+import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
@@ -50,10 +51,6 @@ import org.talend.repository.ui.wizards.exportjob.scriptsmanager.JarBuilder;
  *
  */
 public class HadoopConfsUtils {
-
-    public final static String CONFS_JAR_EXT = ".jar"; //$NON-NLS-1$
-
-    public final static String CONFS_JAR_PREFIX = "hadoop-conf-"; //$NON-NLS-1$
 
     public final static String CONFS_FOLDER = "hadoopConfs"; //$NON-NLS-1$
 
@@ -116,9 +113,8 @@ public class HadoopConfsUtils {
     }
 
     public static String getConfsJarDefaultName(HadoopClusterConnectionItem connectionItem) {
-        // String connLabel = connectionItem.getProperty().getLabel();
         String itemId = connectionItem.getProperty().getId();
-        return CONFS_JAR_PREFIX.concat(itemId).concat(CONFS_JAR_EXT);
+        return HadoopParameterUtil.getConfsJarDefaultName(itemId);
     }
 
     public static HadoopConfigurationManager getConfigurationManager(String distribution) {
