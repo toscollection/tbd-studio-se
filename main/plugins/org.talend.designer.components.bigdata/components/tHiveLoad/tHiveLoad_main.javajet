@@ -290,8 +290,7 @@ imports="
         if(libjars_<%=cid%>.length() > 0) {
             instance_<%=cid%>.setLibJars(libjars_<%=cid%>.toString().substring(0, libjars_<%=cid%>.length()-1));
         }
-        instance_<%=cid%>.sendFiles();
-        instance_<%=cid%>.callWS(null, true);
+        instance_<%=cid%>.callWS(instance_<%=cid%>.sendFiles());
         int exitCode_<%=cid%> = instance_<%=cid%>.execute();
         if(exitCode_<%=cid%> > 0) {
 

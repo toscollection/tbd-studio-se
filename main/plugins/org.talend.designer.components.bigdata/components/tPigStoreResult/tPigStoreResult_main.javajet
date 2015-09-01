@@ -306,14 +306,10 @@
 		} else {
 %>
 
-			org.talend.webhcat.launcher.fs.FileSystem azureFs_<%=cid%> = new org.talend.webhcat.launcher.fs.AzureFileSystem("DefaultEndpointsProtocol=https;"
-				+ "AccountName="
-				+ instance_<%=start_node%>.getAzureAccountName()
-				+ ";"
-				+ "AccountKey=" + instance_<%=start_node%>.getAzureAccountPassword(), instance_<%=start_node%>.getAzureAccountContainer());
+			org.talend.bigdata.launcher.fs.FileSystem azureFs_<%=cid%> = (org.talend.bigdata.launcher.fs.AzureFileSystem)instance_<%=start_node%>.getFileSystem();
 			
 			String resultFolder_<%=cid%> = <%=resultFile%>;
-			azureFs_<%=cid%>.delete(org.talend.webhcat.launcher.utils.Utils.removeFirstSlash(resultFolder_<%=cid%>));
+			azureFs_<%=cid%>.delete(org.talend.bigdata.launcher.utils.Utils.removeFirstSlash(resultFolder_<%=cid%>));
 <%
 		}
 	} 
