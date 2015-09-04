@@ -33,13 +33,26 @@ imports="
       	if ((inputConns!=null)&&(inputConns.size()>0)) {
       		IConnection incomingConn = inputConns.get(0); 
       		previous_node = incomingConn.getSource().getUniqueName();
-			INode loadNode = node.getDesignSubjobStartNode();
+    			INode loadNode = node.getDesignSubjobStartNode();
 
-			boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
-			isExecutedThroughWebHCat = !isLocal && "MICROSOFT_HD_INSIGHT".equals(ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__"));
-			
-    		start_node = loadNode.getUniqueName();
-    		inMain = loadNode.isSubtreeStart();
+    			boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
+          String loadDistribution = ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__");
+          String loadPigVersion = ElementParameterParser.getValue(loadNode, "__PIG_VERSION__");
+
+          org.talend.core.hadoop.api.components.PigComponent pigDistrib = null;
+          try {
+            pigDistrib = (org.talend.core.hadoop.api.components.PigComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(loadDistribution, loadPigVersion);
+          } catch (java.lang.Exception e) {
+            e.printStackTrace();
+            return "";
+          }
+
+          boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+
+          isExecutedThroughWebHCat = !isLocal && !isCustom && pigDistrib.isExecutedThroughWebHCat();
+  			
+      		start_node = loadNode.getUniqueName();
+      		inMain = loadNode.isSubtreeStart();
       		
       		previousOutputConnectionName = incomingConn.getName();
       	}else{
