@@ -192,7 +192,7 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 
-	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__")) && pigDistrib.doSupportTez();
+	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__"));
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
 <%
