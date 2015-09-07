@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.core.runtime.librariesNeeded">
+         <!-- MAPR 50X libraries-->
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="maprfs-5.0.X-lastest"       
+            name="maprfs-5.0.0-mapr.jar" mvn_uri="mvn:org.talend.libraries/maprfs-5.0.0-mapr/6.1.0" >
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-auth-mapr-5.0.X-lastest"       
+            name="hadoop-auth-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-auth-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-common-mapr-5.0.X-lastest"       
+            name="hadoop-common-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-common-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-app-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-app-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-app-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-common-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-common-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-common-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-contrib-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-contrib-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-contrib-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-core-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-core-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-core-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-hs-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-hs-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-hs-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-hs-plugins-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-hs-plugins-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-hs-plugins-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-jobclient-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-jobclient-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-jobclient-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-mapreduce-client-shuffle-mapr-5.0.X-lastest"       
+            name="hadoop-mapreduce-client-shuffle-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-mapreduce-client-shuffle-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-yarn-api-mapr-5.0.X-lastest"       
+            name="hadoop-yarn-api-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-yarn-api-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-yarn-client-mapr-5.0.X-lastest"       
+            name="hadoop-yarn-client-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-yarn-client-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-yarn-common-mapr-5.0.X-lastest"       
+            name="hadoop-yarn-common-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-yarn-common-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hbase-client-mapr-5.0.X-lastest"       
+            name="hbase-client-0.98.12-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hbase-client-0.98.12-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hbase-common-mapr-5.0.X-lastest"       
+            name="hbase-common-0.98.12-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hbase-common-0.98.12-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hbase-protocol-mapr-5.0.X-lastest"       
+            name="hbase-protocol-0.98.12-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hbase-protocol-0.98.12-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="sqoop-mapr-5.0.X-lastest"       
+            name="sqoop-1.4.6-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="pig-withouthadoop-mapr-5.0.X-lastest"       
+            name="pig-core-h2.jar" mvn_uri="mvn:org.talend.libraries/pig-core-h2/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hadoop-hdfs-mapr-5.0.X-lastest"       
+            name="hadoop-hdfs-2.7.0-mapr-1506.jar" mvn_uri="mvn:org.talend.libraries/hadoop-hdfs-2.7.0-mapr-1506/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hive-exec-mapr-5.0.X-lastest"       
+            name="hive-exec-1.0.0-mapr.jar" mvn_uri="mvn:org.talend.libraries/hive-exec-1.0.0-mapr/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="hive-metastore-mapr-5.0.X-lastest"       
+            name="hive-metastore-1.0.0-mapr.jar" mvn_uri="mvn:org.talend.libraries/hive-metastore-1.0.0-mapr/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeededGroup
+              description="The lastest HDFS libraries of MAPR50X"
+              id="HDFS-LIB-MAPR50X_LASTEST"
+              name="HDFS-LIB-MAPR50X_LASTEST">
+           <library
+                 id="maprfs-5.0.X-lastest">
+           </library>
+           <library
+                 id="hadoop-auth-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hadoop-common-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="zookeeper-mapr-4.1.X-lastest">
+           </library>
+           <library
+                 id="json-20080701.jar">
+           </library>
+           <library
+                 id="guava-13.0.1.jar">
+           </library>
+           <library
+                 id="protobuf-java-2.5.0.jar">
+           </library>
+           <library
+                 id="log4j-1.2.17.jar">
+           </library>
+           <library
+                 id="slf4j-api-1.7.5.jar">
+           </library>
+           <library
+                 id="slf4j-log4j12-1.7.5.jar">
+           </library>
+           <library
+                 id="commons-logging-1.1.3.jar">
+           </library>
+           <library
+                 id="commons-collections-3.2.1.jar">
+           </library>
+           <library
+                 id="commons-configuration-1.6.jar">
+           </library>
+           <library
+                 id="commons-lang-2.6.jar">
+           </library>
+        </libraryNeededGroup>        
+        <libraryNeededGroup
+              description="The lastest Pig libraries of MAPR50X"
+              id="PIG-LIB-MAPR50X_LASTEST"
+              name="PIG-LIB-MAPR50X_LASTEST">
+           <group
+                 id="MAPREDUCE-LIB-MAPR50X_LASTEST">
+           </group>
+           <library
+                 id="pig-withouthadoop-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hadoop-hdfs-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hive-exec-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hive-metastore-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="antlr-runtime-3.4.jar">
+           </library>
+           <library
+                 id="automaton-1.11-8.jar">
+           </library>
+           <library
+                 id="joda-time-2.3.jar">
+           </library>
+        </libraryNeededGroup>     
+        <libraryNeededGroup
+           description="The lastest Map Reduce libraries of MAPR50X"
+           id="MAPREDUCE-LIB-MAPR50X_LASTEST"
+           name="MAPREDUCE-LIB-MAPR50X_LASTEST">
+            <group
+                  id="HDFS-LIB-MAPR50X_LASTEST">
+            </group>
+            <library
+                  id="hadoop-mapreduce-client-app-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-common-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-contrib-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-core-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-hs-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-hs-plugins-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-jobclient-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-mapreduce-client-shuffle-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-yarn-api-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-yarn-client-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hadoop-yarn-common-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="commons-cli-1.2.jar">
+            </library>
+            <library
+                  id="commons-codec-1.5.jar">
+            </library>
+            <library
+                  id="commons-io-2.4.jar">
+            </library>
+            <library
+                  id="jackson-core-asl-1.8.8.jar">
+            </library>
+            <library
+                  id="jackson-mapper-asl-1.8.8.jar">
+            </library>
+            <library
+                  id="htrace-core-3.1.0-incubating.jar">
+            </library>
+         </libraryNeededGroup>        
+         <libraryNeededGroup
+              description="The lastest HBase libraries of MAPR50X"
+              id="HBASE-LIB-MAPR50X_LASTEST"
+              name="HBASE-LIB-MAPR50X_LASTEST">
+           <group
+                 id="HDFS-LIB-MAPR50X_LASTEST">
+           </group>
+           <library
+                 id="hbase-client-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hbase-common-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hbase-protocol-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="htrace-core-2.04.jar">
+           </library>
+           <library
+                 id="commons-codec-1.5.jar">
+           </library>
+        </libraryNeededGroup>        
+        <libraryNeededGroup
+              description="The lastest Sqoop libraries of MAPR50X"
+              id="SQOOP-LIB-MAPR50X_LASTEST"
+              name="SQOOP-LIB-MAPR50X_LASTEST">
+           <group
+                 id="MAPREDUCE-LIB-MAPR50X_LASTEST">
+           </group>
+           <library
+                 id="sqoop-mapr-5.0.X-lastest">
+           </library>
+        </libraryNeededGroup>
+   </extension>
+
+</plugin>
