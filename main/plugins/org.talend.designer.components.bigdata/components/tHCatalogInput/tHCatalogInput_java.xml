@@ -60,6 +60,7 @@
 				<ITEM NAME="MAPR310" VALUE="MAPR310" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR401" VALUE="MAPR401" SHOW_IF="DISTRIBUTION=='MAPR'" />
 				<ITEM NAME="MAPR410" VALUE="MAPR410" SHOW_IF="DISTRIBUTION=='MAPR'" />
+				<ITEM NAME="MAPR500" VALUE="MAPR500" SHOW_IF="DISTRIBUTION=='MAPR'" />
 			</ITEMS>
 		</PARAMETER>
         <PARAMETER NAME="HADOOP_CUSTOM_JARS"  GROUP="VERSION" FIELD="HADOOP_JARS_DIALOG" NUM_ROW="10"  SHOW_IF="DISTRIBUTION=='CUSTOM'" REPOSITORY_VALUE="HADOOP_CUSTOM_JARS" >
@@ -261,6 +262,9 @@
             <!-- MAPR401 -->
             <IMPORT MODULE_GROUP="HDFS-LIB-MAPR41X_LASTEST" REQUIRED_IF="HCAT_VERSION=='MAPR410' AND (DISTRIBUTION!='CUSTOM')" />
 
+            <!-- MAPR500 -->
+            <IMPORT MODULE_GROUP="HDFS-LIB-MAPR50X_LASTEST" REQUIRED_IF="HCAT_VERSION=='MAPR500' AND (DISTRIBUTION!='CUSTOM')" />
+            
 		    <!-- MAPR310 HDFS JARS -->
             <IMPORT NAME="hadoop-core-1.0.3-mapr-3.1.0.jar" MODULE="hadoop-core-1.0.3-mapr-3.1.0.jar" MVN="mvn:org.talend.libraries/hadoop-core-1.0.3-mapr-3.1.0/6.0.0"  UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/hadoop-core-1.0.3-mapr-3.1.0.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')" />
             <IMPORT NAME="commons-logging-1.0.4.jar" MODULE="commons-logging-1.0.4.jar" MVN="mvn:org.talend.libraries/commons-logging-1.0.4/6.0.0"  UrlPath="platform:/base/plugins/org.apache.commons.logging_1.0.4.v201101211617.jar" REQUIRED_IF="HCAT_VERSION=='MAPR310' AND (DISTRIBUTION!='CUSTOM')" />

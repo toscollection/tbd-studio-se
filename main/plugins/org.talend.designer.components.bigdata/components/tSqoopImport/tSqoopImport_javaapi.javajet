@@ -1,3 +1,4 @@
+<%@jet%>
 <%
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");

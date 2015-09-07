@@ -215,12 +215,6 @@ if(!"true".equals(useExistingConn)){
 		}
 	}
 
-	if(useTableNsMapping){
-%>
-		conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
-<%
-	}
-
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    	for(int i=0;i<properties.size();i++){
@@ -240,11 +234,11 @@ if(!"true".equals(useExistingConn)){
 		throw new RuntimeException("<%=cid %>'s connection is null!");
 	}
 <%
-	if(useTableNsMapping){
+}
+if(hbaseDistrib.doSupportMapRDB() && useTableNsMapping){
 %>
-		conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
+	conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
 <%
-	}
 }
 
 String table_action = ElementParameterParser.getValue(node, "__TABLE_ACTION__");

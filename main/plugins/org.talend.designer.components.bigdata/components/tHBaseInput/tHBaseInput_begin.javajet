@@ -35,11 +35,19 @@ imports="
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
-<% 
+<%
+INode connNode = "true".equals(useExistingConn) ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node;
+String distribution = ElementParameterParser.getValue(connNode, "__DISTRIBUTION__");
+String hbaseVersion = ElementParameterParser.getValue(connNode, "__HBASE_VERSION__");
+org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+try {
+	hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+} catch (java.lang.Exception e) {
+	e.printStackTrace();
+	return "";
+}
 // not use existing connection
 if(!"true".equals(useExistingConn)){
-	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-	String hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
@@ -47,13 +55,6 @@ if(!"true".equals(useExistingConn)){
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
 
-	org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
-	try {
-		hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
-	} catch (java.lang.Exception e) {
-		e.printStackTrace();
-		return "";
-	}
 %>
 try{
 	conn_<%=cid %> = org.apache.hadoop.hbase.HBaseConfiguration.create();
@@ -83,12 +84,6 @@ try{
 		}
 	}
 
-	if(useTableNsMapping){
-%>
-		conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
-<%
-	}
-
 	List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
    	for(int i=0;i<properties.size();i++){
@@ -108,11 +103,11 @@ try{
 		throw new RuntimeException("<%=cid %>'s connection is null!");
 	}
 <%
-	if(useTableNsMapping){
+}
+if(hbaseDistrib.doSupportMapRDB() && useTableNsMapping){
 %>
-		conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
+	conn_<%=cid %>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
 <%
-	}
 }
 
 if(defineSelection) {
