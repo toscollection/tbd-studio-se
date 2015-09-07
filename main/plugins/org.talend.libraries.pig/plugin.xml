@@ -6,7 +6,7 @@
               context="plugin:org.talend.librairies.pig"
               language="java"
               message="Needed pigmap"
-              name="pig-0.10.0.jar"
+              name="pig-0.10.0.jar" mvn_uri="mvn:org.talend.libraries/pig-0.10.0/6.0.0" 
               required="true">
         </libraryNeeded>
     </extension>
