@@ -22,7 +22,7 @@ class TKafkaCreateTopicUtil {
 	}
 	
 	public boolean isCreate() {
-		return "CREATE".equals(ElementParameterParser.getValue(node, "__TOPICACTION__")) || isCreateIfNotExists();
+		return "CREATE_TOPIC".equals(ElementParameterParser.getValue(node, "__TOPICACTION__")) || isCreateIfNotExists();
 	}
 	
 	public boolean isCreateIfNotExists() {
