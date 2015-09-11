@@ -80,7 +80,7 @@
         Neo4jBatchUtils neo4jBatchUtils;
         if ("NEO4J_1_X_X".equals(dbVersion)) {
             neo4jBatchUtils = new Neo4jBatchUtils1_9(cid, node, incomingConnName, columnList);
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             neo4jBatchUtils  = new Neo4jBatchUtils2_0(cid, node, incomingConnName, columnList, useLabel, neo4jLabel);
         }
 
@@ -89,7 +89,7 @@
         Neo4jUtils neo4jUtils;
         if ("NEO4J_1_X_X".equals(dbVersion)) {
             neo4jUtils = new Neo4jUtils1_9(cid, node, dataAction, incomingConnName, columnList);
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             neo4jUtils  = new Neo4jUtils2_0(cid, node, dataAction, incomingConnName, columnList, useLabel, neo4jLabel);
         }
 	    if (dataAction.equals("INSERT")) {

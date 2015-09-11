@@ -55,7 +55,7 @@ class Neo4JOutputRelationshipUtil {
             %>
             indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
            %>
            if (!globalMap.containsKey("<%=dbConnectionName%>_indexprovider")) {
                indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
@@ -81,7 +81,7 @@ class Neo4JOutputRelationshipUtil {
                 indexProvider_<%=cid%>.shutdown();
             }
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
            %>
            if ((indexProvider_<%=cid%>!=null) && (globalMap.containsKey("<%=dbConnectionName%>_indexprovider"))) {
                indexProvider_<%=cid%>.shutdown();
@@ -106,7 +106,7 @@ class Neo4JOutputRelationshipUtil {
                 db_<%=cid%>.shutdown();
                 inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
                 <%
-            } else { // NEO4J_2_1_X
+            } else { // NEO4J_2_1_X or NEO4J_2_2_X
                %>
                if (!globalMap.containsKey("<%=dbConnectionName%>_inserter")) {
                    org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
@@ -138,7 +138,7 @@ class Neo4JOutputRelationshipUtil {
                 inserter_<%=cid%>.shutdown();
             }
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
            %>
            if ((inserter_<%=cid%>!=null) && (globalMap.containsKey("<%=dbConnectionName%>_inserter"))) {
                try {
@@ -161,7 +161,7 @@ class Neo4JOutputRelationshipUtil {
             databaseService_<%=cid%> = new org.neo4j.kernel.EmbeddedGraphDatabase(storeDir_<%=cid%>);
             globalMap.put("<%=dbConnectionName%>", databaseService_<%=cid%>);
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
            %>
            // if the db connection is still shutted down, reopen it for further components.
            // Otherwise, that mean that another component with the embedded connection has done it previously

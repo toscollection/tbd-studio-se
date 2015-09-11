@@ -9,7 +9,6 @@
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();	
-    
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     String dbconn = "dbService_" + connection;
 %>

@@ -53,7 +53,7 @@ class Neo4JTransactionHelper {
             %>
             org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             if (!this.batchImport) {
                 %>
                 org.neo4j.graphdb.Transaction tx_<%=cid%> = databaseService_<%=cid%>.beginTx();
@@ -71,7 +71,7 @@ class Neo4JTransactionHelper {
                 tx_<%=this.cid%> = databaseService_<%=this.cid%>.beginTx();
             }
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             if (!this.batchImport) {
                 %>
                 if (counter_<%=this.cid%> % Long.parseLong(<%=commitEvery%>) == 0) {
@@ -92,7 +92,7 @@ class Neo4JTransactionHelper {
                 tx_<%=cid%>.finish();
             }
             <%
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             if (!this.batchImport) {
                 %>
                 if (counter_<%=cid%> % Long.parseLong(<%=commitEvery%>) > 0) {
@@ -107,7 +107,7 @@ class Neo4JTransactionHelper {
     public void startEmbeddedTransaction() {
         if ("NEO4J_1_X_X".equals(this.dbVersion)) {
             // Nothing for neo4j 1.X.X
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             if (!remoteServer) {
                 %>
                 org.neo4j.graphdb.Transaction tx_begin_<%=cid%> = databaseService_<%=cid%>.beginTx();
@@ -121,11 +121,11 @@ class Neo4JTransactionHelper {
     public void closeEmbeddedTransaction() {
         if ("NEO4J_1_X_X".equals(this.dbVersion)) {
             // Nothing for neo4j 1.X.X
-        } else { // NEO4J_2_1_X
+        } else { // NEO4J_2_1_X or NEO4J_2_2_X
             if (!remoteServer) {
                 %>
                 tx_begin_<%=cid%>.success();
-                } // enf of Try
+                } // end of Try
                 finally
                 {
                     tx_begin_<%=cid%>.close();

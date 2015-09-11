@@ -83,7 +83,7 @@
                 globalMap.put("<%=dbconn%>", databaseService_<%=cid%>);
                 <%
             }
-	    } else { // NEO4J_2_1_X
+	    } else { // NEO4J_2_1_X or NEO4J_2_2_X
 	        %>
             // Must shutdown database to prevent data corruption after batch importation
             if ((indexProvider_<%=cid%> != null) && (globalMap.containsKey("<%=dbconn%>_indexprovider"))) {

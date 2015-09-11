@@ -29,10 +29,21 @@
     	<%
     } else {
     	if (remoteServer) {
-    		String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
-    		%>
-    		org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);
-    		<%
+            String serverUrl = ElementParameterParser.getValue(node, "__SERVER_URL__");
+            String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+            boolean setUsername = ElementParameterParser.getBooleanValue(node, "__SET_USERNAME__");
+            String username = ElementParameterParser.getValue(node, "__USERNAME__");
+            String passwordFieldName = "__PASSWORD__";
+            if ((setUsername) || ("NEO4J_2_2_X".equals(dbVersion))) {
+                %>
+                <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>, <%=username%>, decryptedPassword_<%=cid%>);
+                <%
+            } else {
+                %>
+                org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>);
+                <%
+            }
     	} else {
 	    	String databasePath = ElementParameterParser.getValue(node, "__DATABASE_PATH__");
 	    	%>

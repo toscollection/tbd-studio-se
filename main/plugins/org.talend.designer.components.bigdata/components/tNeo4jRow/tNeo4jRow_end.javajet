@@ -33,7 +33,7 @@
             tx_<%=cid%>.finish();
         }
         <%
-    } else { // NEO4J_2_1_X
+    } else { // NEO4J_2_1_X or NEO4J_2_2_X
         %>
         try {
             tx_<%=cid%>.success();
