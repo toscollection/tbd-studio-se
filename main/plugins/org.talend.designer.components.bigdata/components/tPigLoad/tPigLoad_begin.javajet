@@ -19,7 +19,7 @@
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
 	String processId = node.getProcess().getId();
-	
+
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
 
@@ -32,7 +32,7 @@
 	}
 
 	boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
-	
+
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
@@ -43,60 +43,60 @@
 	String tableName = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
 	String function = ElementParameterParser.getValue(node, "__LOAD__");
-	
+
 	String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 	String mapredJobTracker = ElementParameterParser.getValue(node, "__MAPRED_JOB_TRACKER__");
 	String thriftServer = ElementParameterParser.getValue(node, "__THRIFT_SERVER__");
-	
+
 	List<Map<String, String>> advProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADVANCED_PROPERTIES__");
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
-	
+
 	List<Map<String, String>> partitionFilter = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__PARTITION_FILTER__");
-	
+
 	boolean compress = "true".equals(ElementParameterParser.getValue(node, "__COMPRESS__"));
 	String compression = ElementParameterParser.getValue(node, "__COMPRESSION__");
-	
+
 	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
-	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");	
-	
+	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+
 	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
-	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");	
-	
+	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
+
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	boolean setJobHistoryAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_JOBHISTORY_ADDRESS__"));
     boolean useDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
-	
+
 	boolean isParquet = !isLocal && "ParquetLoader".equals(function);
-	
+
 	boolean defineJarsToRegister = "true".equals(ElementParameterParser.getValue(node, "__DEFINE_REGISTER_JAR__"));
 	List<Map<String, String>> registerJarForHCatalog = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__REGISTER_JAR__");
-	
+
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
-	
+
 	boolean isExecutedThroughWebHCat = !isLocal && pigDistrib.isExecutedThroughWebHCat();
-	
+
 	String hcatPackage = (pigDistrib.pigVersionPriorTo_0_12() && !isCustom) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
-	
+
 	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || pigDistrib.doSupportHCatalog()) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
-	
+
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
-	
+
 	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function) && pigDistrib.doSupportHBase();
-	
+
 	boolean generateRegisterJarCodeForSequenceFile = !isLocal && "SequenceFileStorage".equals(function);
-	
+
 	boolean generateRegisterJarCodeForRCFile = !isLocal && "RCFilePigStorage".equals(function);
-	
+
 	boolean generateRegisterJarCodeForAvroFile = !isLocal && "AvroStorage".equals(function);
-	
+
 	boolean generateRegisterJarCodeForParquetFile = isParquet;
-	
+
 	boolean generateRegisterJarCodeForAll = true;
-	
+
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
@@ -106,29 +106,29 @@
 		}
 
 		jarsToRegister = new java.util.ArrayList();
-		
+
 		jarsToRegister.add("datafu");
-		
+
 		if(generateRegisterJarCode) {
 			for(Map<String, String> jar : registerJar){
 				jarsToRegister.add(jar.get("JAR_NAME"));
 			}
 		}
-		
+
 		if(generateRegisterJarCodeForHCatalog) {
 			jarsToRegister.add("hcatalog");
-			
+
 			jarsToRegister.add("hcatalog-core");
-			
+
 			jarsToRegister.add("hive-hcatalog-core");
-			
+
 			jarsToRegister.add("hive-exec");
 			jarsToRegister.add("hive-metastore");
 			jarsToRegister.add("jdo2-api");
 			jarsToRegister.add("libfb303");
 			jarsToRegister.add("libthrift");
 		}
-		
+
 		if(generateRegisterJarCodeForHBase) {
 			jarsToRegister.add("protobuf-java");
 			jarsToRegister.add("hbase");
@@ -140,14 +140,14 @@
 			jarsToRegister.add("guava");
 			jarsToRegister.add("htrace-core");
 		}
-		
+
 		if(generateRegisterJarCodeForSequenceFile) {
 			jarsToRegister.add("elephant-bird-core");
 			jarsToRegister.add("elephant-bird-hadoop-compat");
 			jarsToRegister.add("elephant-bird-pig");
 			jarsToRegister.add("pigutil");
 		}
-		
+
 		if(generateRegisterJarCodeForRCFile) {
 			jarsToRegister.add("elephant-bird-core");
 			jarsToRegister.add("elephant-bird-hadoop-compat");
@@ -156,13 +156,13 @@
 			jarsToRegister.add("hive-common");
 			jarsToRegister.add("hive-exec");
 		}
-		
+
 		if(generateRegisterJarCodeForAvroFile) {
 			jarsToRegister.add("piggybank");
 			jarsToRegister.add("avro");
 			jarsToRegister.add("json_simple");
 		}
-		
+
 		if(generateRegisterJarCodeForParquetFile) {
 			jarsToRegister.add("parquet-pig-bundle");
 			jarsToRegister.add("snappy-java");
@@ -185,16 +185,16 @@
 		inMain = loadNode.isSubtreeStart();
 		start_node = loadNode.getUniqueName();
 	}
-	
+
 	String outputConnectionName = "";
 	List<IConnection> outputConnections = (List<IConnection>)node.getOutgoingConnections();
 	if(outputConnections!=null && outputConnections.size()>0) {
 		outputConnectionName = outputConnections.get(0).getName();
 	}
-	
+
 	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__")) && pigDistrib.doSupportTez();
 %>
-	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>	
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
 <%
 	if(generateRegisterJarCodeForAll) {
 %>
@@ -202,17 +202,17 @@
 		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
 <%
 	}
-	
+
 	if(!isExecutedThroughWebHCat) {
 %>
 		java.util.Properties props_<%=cid%> = new java.util.Properties();
-<% 
+<%
 	}
-	 
+
 	if(inMain && !isExecutedThroughWebHCat) {
 %>
 		props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
-<%  
+<%
 	}
 %>
 	try {
@@ -220,39 +220,39 @@
 		if(inMain && isExecutedThroughWebHCat) {
 			String passwordFieldName = "__HDINSIGHT_PASSWORD__";
 			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
-%> 
+%>
 				final String hdInsightPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
 <%
 			} else {
 %>
-				final String hdInsightPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+				final String hdInsightPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>;
 <%
 			}
-			
+
 			passwordFieldName = "__WASB_PASSWORD__";
 			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
-%> 
+%>
 				final String wasbPassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
 <%
 			} else {
 %>
-				final String wasbPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+				final String wasbPassword_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>;
 <%
 			}
 %>
-			
+
 			java.io.File localPigLatin_<%=cid%> = new java.io.File(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
 			java.io.FileWriter fw_<%=cid%> = new java.io.FileWriter(localPigLatin_<%=cid%>.getAbsoluteFile());
 			java.io.BufferedWriter bw_<%=cid%> = new java.io.BufferedWriter(fw_<%=cid%>);
-			
+
 			java.lang.StringBuilder libjars_<%=cid%> = new StringBuilder();
-			
+
 			org.talend.bigdata.launcher.fs.FileSystem azureFs_<%=cid%> = new org.talend.bigdata.launcher.fs.AzureFileSystem("DefaultEndpointsProtocol=https;"
 				+ "AccountName="
 				+ <%=ElementParameterParser.getValue(node, "__WASB_USERNAME__")%>
 				+ ";"
 				+ "AccountKey=" + wasbPassword_<%=cid%>, <%=ElementParameterParser.getValue(node, "__WASB_CONTAINER__")%>);
-			
+
 			org.talend.bigdata.launcher.webhcat.WebHCatJob instance_<%=cid%> = new org.talend.bigdata.launcher.webhcat.QueryJob(azureFs_<%=cid%>, org.talend.bigdata.launcher.utils.JobType.PIG);
 			instance_<%=cid%>.setCredentials(new org.talend.bigdata.launcher.security.HDInsightCredentials(<%=ElementParameterParser.getValue(node, "__HDINSIGHT_USERNAME__")%>, hdInsightPassword_<%=cid%>));
 			instance_<%=cid%>.setUsername(<%=ElementParameterParser.getValue(node, "__WEBHCAT_USERNAME__")%>);
@@ -260,11 +260,11 @@
 			instance_<%=cid%>.setStatusFolder(org.talend.bigdata.launcher.utils.Utils.removeFirstSlash(<%=ElementParameterParser.getValue(node, "__STATUSDIR__")%>));
 			instance_<%=cid%>.setRemoteFolder(org.talend.bigdata.launcher.utils.Utils.removeFirstSlash(<%=ElementParameterParser.getValue(node, "__REMOTE_FOLDER__")%>));
 			((org.talend.bigdata.launcher.webhcat.QueryJob) instance_<%=cid%>).setFileToExecute(projectName + "_" + jobName + "_" + Thread.currentThread().getId() +".pig");
-			
+
 			String wasbPath_<%=cid%> = azureFs_<%=cid%>.getFileSystemPrefix() + "/"	+ instance_<%=cid%>.getRemoteFolder()	+ "/libjars/";
 <%
 		}
-		
+
 		if(isLocal) { // LOCAL mode
 %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
@@ -275,7 +275,7 @@
 %>
 				globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
 				System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
-				
+
 				globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
 				if(isCustom || (!isCustom && pigDistrib.doSupportImpersonation())) {
@@ -287,7 +287,7 @@
 					}
 <%
 				}
-				
+
 				if(!isCustom && ("MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion))) {//set the default properties
 %>
 			        props_<%=cid%>.put("mapreduce.job.map.output.collector.class", "org.apache.hadoop.mapred.MapRFsOutputBuffer");
@@ -309,7 +309,7 @@
 			boolean isKerberosAvailableHadoop2 = !isCustom && pigDistrib.isHadoop2() && pigDistrib.doSupportKerberos();
 			boolean isHadoop2 = !isCustom && pigDistrib.isHadoop2();
 			boolean isKerberosAvailableHadoop1 = !isCustom && pigDistrib.isHadoop1() && pigDistrib.doSupportKerberos();
-			
+
 			if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>
 				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
@@ -329,7 +329,7 @@
 					props_<%=cid%>.put("yarn.app.mapreduce.am.staging-dir", <%=stagingDirectory%>);
 <%
 				}
-				
+
 				boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
 				if((!isCustom && pigDistrib.doSupportCrossPlatformSubmission()) || (isCustom && useYarn && crossPlatformSubmission)) {
 %>
@@ -337,15 +337,15 @@
 <%
 				}
 
-				if(!isCustom && "HDP_2_2".equals(pigVersion)) {
+				if(!isCustom && ("HDP_2_2".equals(pigVersion) || "HDP_2_3".equals(pigVersion))) {
 %>
 					props_<%=cid%>.put("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
 <%
 				}
-				
+
 %>
 				props_<%=cid%>.put("yarn.application.classpath", "<%=pigDistrib.getYarnApplicationClasspath()%>");
-<%		
+<%
 				boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
 				if(setMemory) {
 					String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
@@ -357,7 +357,7 @@
     				props_<%=cid%>.put("yarn.app.mapreduce.am.resource.mb", <%=amMemory%>);
 <%
 				}
-				
+
 				if(setJobHistoryAddress) {
 					String jobHistoryAddress = ElementParameterParser.getValue(node, "__JOBHISTORY_ADDRESS__");
 %>
@@ -369,13 +369,13 @@
 				props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);
 <%
 			}
-			
+
 			if("HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
 %>
 				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
 			}
-			
+
 			if("HBaseStorage".equals(function) && pigDistrib.doSupportHBase()) {
 %>
 				props_<%=cid%>.put("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
@@ -383,11 +383,11 @@
 <%
 				if(setZNodeParent) {
 %>
-				props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>); 
+				props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>);
 <%
 				}
 			}
-			
+
 			if(useKrb) {
 				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
 				boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
@@ -397,10 +397,10 @@
 				String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASEREIGONSERVER_PRINCIPAL__");
 %>
 				props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
-				props_<%=cid%>.put("hbase.security.authentication","kerberos"); 
+				props_<%=cid%>.put("hbase.security.authentication","kerberos");
 				props_<%=cid%>.put("hbase.regionserver.kerberos.principal",<%=hbaseReigonServerPrincipal%>);
 				props_<%=cid%>.put("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
-<%				
+<%
 				if(isKerberosAvailableHadoop1 || (isCustom && !useYarn)) {
 					String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
 %>
@@ -435,21 +435,21 @@
 				for(Map<String, String> item : hadoopProps){
 %>
 					props_<%=cid%>.put(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
-<% 
-				} 
+<%
+				}
 			}
             if (useDatanodeHostname) {
                 %>
                 props_<%=cid%>.put("dfs.client.use.datanode.hostname", "true");
                 <%
             }
-			
+
 			if(useTez){
 			%>
 				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(new org.apache.pig.backend.hadoop.executionengine.tez.TezExecType(), props_<%=cid%>);
 			<%
 			}else{
-            %>            
+            %>
 				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
 			<%
 			}
@@ -460,16 +460,16 @@
             // Get the decrypted password under the variable decryptedS3Password
 
             if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
-                %> 
+                %>
                 String decryptedS3Password_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
                 <%
             } else {
                 %>
-                String decryptedS3Password_<%=cid%> = <%=ElementParameterParser.getValue(node, passwordFieldName)%>; 
+                String decryptedS3Password_<%=cid%> = <%=ElementParameterParser.getValue(node, passwordFieldName)%>;
                 <%
             }
         }
-		
+
 		if(inMain) {//only main process create the server object,lookup process use the one in main process
 			if(!isExecutedThroughWebHCat) {
 %>
@@ -485,7 +485,7 @@
 		}
 %>
 		routines.system.PigHelper helper_<%=cid%> = new routines.system.PigHelper();
-		
+
 <%
 	if((advProps.size() > 0) || compress || (isLocal && "HBaseStorage".equals(function)) || useTez){
 %>
@@ -494,9 +494,9 @@
 		for(Map<String, String> item : advProps){
 %>
 		script_<%=cid%>.append("SET "+<%=item.get("PROPERTY") %>+" "+<%=item.get("VALUE") %>+";");
-<% 
-		} 
-		
+<%
+		}
+
 		if(compress) {
 %>
 		script_<%=cid%>.append("SET output.compression.enabled true;");
@@ -508,10 +508,10 @@
 			} else if("BZIP2".equals(compression)) {
 %>
 		script_<%=cid%>.append("SET output.compression.codec org.apache.hadoop.io.compress.BZip2Codec;");
-<%		
+<%
 			}
 		}
-		
+
 		if(isLocal && "HBaseStorage".equals(function)) {
 %>
 		script_<%=cid%>.append("SET hbase.zookeeper.quorum ").append(<%=zookeeper_quorum%>).append(";");
@@ -530,7 +530,7 @@
     				if("\"tez.lib.uris\"".equals(item.get("PROPERTY"))){
     				%>
     					System.err.println("Please set the path of Tez lib in 'Tez lib path'!");
-    				<%	
+    				<%
     				}
     			}
     		}
@@ -539,7 +539,7 @@
 				//prepare the folder
 				%>
 				<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/GetFileSystem.javajet"%>
-				<%	
+				<%
 				(new GetFileSystem()).invoke(node);
 				String tezLibFolder = ElementParameterParser.getValue(node, "__TEZ_LIB_FOLDER__");
 				boolean useDefaultTezLibFolder = "\"/tmp/{USERNAME}/talend_tez_libs/{custom|PIG_VERSION}\"".equals(tezLibFolder);
@@ -591,7 +591,7 @@
 				String tezLibPath_<%=cid%> = <%=ElementParameterParser.getValue(node, "__TEZ_LIB_PATH__")%>;
 			<%
 			}
-    		//define the location of tez lib	
+    		//define the location of tez lib
 			%>
 			String[] tezLibPaths_<%=cid%> = tezLibPath_<%=cid%>.split(",");
 			script_<%=cid%>.append("SET tez.lib.uris ");
@@ -614,7 +614,7 @@
 
 		StringBuilder sb_<%=cid%> = new StringBuilder();
 
-<%		
+<%
 		if(generateRegisterJarCodeForAll) {
 			for(int i=0; i<jarsToRegister.size(); i++) {
 				String jarToRegister = jarsToRegister.get(i);
@@ -627,14 +627,14 @@
 				}
 			}
 		}
-		
+
 		if(defineFunctions.size() > 0){
 			for(Map<String, String> item : defineFunctions){
 %>
 				helper_<%=cid%>.add("function", <%=item.get("FUNCTION_ALIAS") %> ,<%=item.get("UDF_FUNCTION") %>);
-<% 
-			} 
-		} 
+<%
+			}
+		}
 
 		if(!isLocal && "HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
 			if(!generateRegisterJarCodeForHCatalog) {
@@ -642,12 +642,12 @@
 					for(Map<String, String> item : registerJarForHCatalog){
 %>
 						helper_<%=cid%>.add("jar",<%=item.get("JAR_PATH") %>);
-<% 
-					} 
+<%
+					}
 				}
 			}
 %>
-			
+
 			System.setProperty("hive.metastore.local", "false");
 			System.setProperty("hive.metastore.uris", <%=thriftServer%>);
 			sb_<%=cid%>.append("<%=cid%>_<%=outputConnectionName%>_RESULT<%=partitionFilter.size()>0?"_TEMP":""%> = LOAD '"+<%=databaseName%>+"."+<%=tableName%>+"' using <%=hcatPackage%>.<%=function%>()");
@@ -658,16 +658,16 @@
 			if(metadatas != null && metadatas.size() > 0) {
 				metadata = metadatas.get(0);
 			}
-			
+
 			String keyColumn = ElementParameterParser.getValue(node,"__KEYCOLUMN__");
 			String valueColumn = ElementParameterParser.getValue(node,"__VALUECOLUMN__");
-			
+
 			String talendKeyClass = "";
 			String talendValueClass = "";
-			
+
 			if(metadata!=null) {
     			List<IMetadataColumn> listColumns = metadata.getListColumns();
-    			
+
     			for (IMetadataColumn column : listColumns) {
     				if (column.getLabel().equals(keyColumn)) {
     					talendKeyClass = column.getTalendType();
@@ -677,7 +677,7 @@
     				}
     			}
 			}
-			
+
 			String keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
 			if (talendKeyClass.equals("id_Boolean")) keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
 			if (talendKeyClass.equals("id_Byte")) keyConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
@@ -688,7 +688,7 @@
 			if (talendKeyClass.equals("id_Long")) keyConverterClass="com.twitter.elephantbird.pig.util.LongWritableConverter";
 			if (talendKeyClass.equals("id_Short")) keyConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
 			if (talendKeyClass.equals("id_String")) keyConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
-			
+
 			String valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
 			if (talendValueClass.equals("id_Boolean")) valueConverterClass="com.twitter.elephantbird.pig.util.TextConverter";
 			if (talendValueClass.equals("id_Byte")) valueConverterClass="com.twitter.elephantbird.pig.util.IntWritableConverter";
@@ -768,20 +768,20 @@
 					sb_<%=cid%>.append("'");
 <%
 					List<Map<String, String>> hbasestorageParams = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__HBASESTORAGE_PARAMETER__");
-					
+
 					if(loadkey) {
 %>
 					sb_<%=cid%>.append(",'-loadKey true");
 <%
 					}
-					
+
 					if(hbasestorageParams!=null) {
 						for(int i=0;i<hbasestorageParams.size();i++) {
 							if(i == 0) {
 								if(!loadkey) {
 %>
 								sb_<%=cid%>.append(",'");
-<%							
+<%
 								} else {
 %>
 								sb_<%=cid%>.append(" ");
@@ -793,19 +793,19 @@
 							String value = param.get("PARAM_VALUE");
 %>
 							sb_<%=cid%>.append("-<%=name%> ").append(<%=value%>);
-<%							
+<%
 							if(i < hbasestorageParams.size()-1) {
 %>
 							sb_<%=cid%>.append(" ");
-<%							
+<%
 							} else if(!loadkey){
 %>
 							sb_<%=cid%>.append("'");
-<%							
+<%
 							}
 						}
 					}
-					
+
 					if(loadkey) {
 %>
 					sb_<%=cid%>.append("'");
@@ -829,7 +829,7 @@
 					if("RCFilePigStorage".equals(function)) {
 						function = "com.twitter.elephantbird.pig.store.RCFilePigStorage";
 					}
-					
+
 					if("AvroStorage".equals(function)) {
 						function = "org.apache.pig.piggybank.storage.avro.AvroStorage";
 					}
@@ -844,7 +844,7 @@
                         <%
                     }
 				}
-			
+
 				if(metadata!=null) {
 					if(metadata.getListColumns() != null && metadata.getListColumns().size() > 0) {
 %>
@@ -865,7 +865,7 @@
 		}
 %>
 		sb_<%=cid%>.append(";");
-		
+
 		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 <%
 		if(!isLocal && "HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we will have to consider the partition filter
@@ -885,13 +885,13 @@
 					sb_<%=cid%>.append("(" + <%=item.get("PART_NAME") %>);
 					sb_<%=cid%>.append(" == ");
 					sb_<%=cid%>.append(<%=item.get("PART_VALUE") %> + ")");
-<% 
+<%
 				}
 %>
 				sb_<%=cid%>.append(";");
-					
+
 				helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
-<%				
+<%
 			}
 		}
 %>

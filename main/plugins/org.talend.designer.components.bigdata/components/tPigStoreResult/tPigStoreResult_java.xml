@@ -143,6 +143,7 @@
 					SHOW_IF="(DISTRIBUTION=='HORTONWORKS') AND (STORE!='HBASESTORAGE')" />
 				<ITEM NAME="HDP_2_1" VALUE="HDP_2_1" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
 				<ITEM NAME="HDP_2_2" VALUE="HDP_2_2" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
+				<ITEM NAME="HDP_2_3" VALUE="HDP_2_3" SHOW_IF="DISTRIBUTION=='HORTONWORKS'" />
 				<ITEM NAME="Cloudera_CDH4" VALUE="Cloudera_CDH4"
 					SHOW_IF="(DISTRIBUTION=='CLOUDERA') AND (STORE!='HCATSTORER') AND (STORE!='PARQUETSTORER')" />
 				<ITEM NAME="Cloudera_CDH4_YARN" VALUE="Cloudera_CDH4_YARN"
@@ -177,7 +178,7 @@
                 <ITEM NAME="MICROSOFT_HD_INSIGHT_3_1" VALUE="MICROSOFT_HD_INSIGHT_3_1"
                     SHOW_IF="(DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND (STORE!='HBASESTORAGE')" />
                 <ITEM NAME="MICROSOFT_HD_INSIGHT_3_2" VALUE="MICROSOFT_HD_INSIGHT_3_2"
-                    SHOW_IF="(DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND (STORE!='HBASESTORAGE')" />  					
+                    SHOW_IF="(DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND (STORE!='HBASESTORAGE')" />
 				<ITEM NAME="MICROSOFT_HD_INSIGHT_3_1" VALUE="MICROSOFT_HD_INSIGHT_3_1"
 					SHOW_IF="(DISTRIBUTION=='MICROSOFT_HD_INSIGHT') AND (STORE!='HBASESTORAGE')" />
 			</ITEMS>
@@ -967,9 +968,13 @@
 			<IMPORT MODULE_GROUP="PIG-HBASE-LIB-CDH_5_1_LASTEST"
 				REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH5_1_MR1' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')" />
 
-			<!-- HDP_2_2 -->
+			<!-- Pig HBase libraries for HDP_2_2 -->
 			<IMPORT MODULE_GROUP="PIG-HBASE-LIB-HDP_2_2_LASTEST"
 				REQUIRED_IF="(HBASE_VERSION=='HDP_2_2' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')" />
+
+			<!-- Pig HBase libraries for HDP_2_3 -->
+			<IMPORT MODULE_GROUP="PIG-HBASE-LIB-HDP_2_3"
+				REQUIRED_IF="(HBASE_VERSION=='HDP_2_3' AND STORE=='HBASESTORAGE') AND (DISTRIBUTION!='CUSTOM')" />
 
 			<!-- MAPR401 -->
 			<IMPORT MODULE_GROUP="PIG-HBASE-LIB-MAPR40X_LASTEST"
@@ -1007,29 +1012,29 @@
             <IMPORT NAME="elephant-bird-core-4.1.jar" MODULE="elephant-bird-core-4.1.jar"
                 MVN="mvn:org.talend.libraries/elephant-bird-core-4.1/6.0.0"
                 UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.1.jar"
-                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0' AND HBASE_VERSION!='HDP_2_3') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="elephant-bird-hadoop-compat-4.1.jar" MODULE="elephant-bird-hadoop-compat-4.1.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-hadoop-compat-4.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.1.jar"
-				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0' AND HBASE_VERSION!='HDP_2_3') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="elephant-bird-rcfile-4.1.jar" MODULE="elephant-bird-rcfile-4.1.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-rcfile-4.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.1.jar"
-				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION!='EMR_4_0_0' AND HBASE_VERSION!='HDP_2_3') AND DISTRIBUTION!='CUSTOM'" />
 
 			<IMPORT NAME="elephant-bird-core-4.9.jar" MODULE="elephant-bird-core-4.9.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-core-4.9/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.9.jar"
-				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION=='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND (HBASE_VERSION=='EMR_4_0_0' OR HBASE_VERSION!='HDP_2_3')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="elephant-bird-hadoop-compat-4.9.jar" MODULE="elephant-bird-hadoop-compat-4.9.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-hadoop-compat-4.9/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.9.jar"
-				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION=='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND (HBASE_VERSION=='EMR_4_0_0' OR HBASE_VERSION!='HDP_2_3')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
 				MODULE="elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
 				MVN="mvn:org.talend.libraries/elephant-bird-rcfile-4.9-patched-hive-1.x/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
-				REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND HBASE_VERSION=='EMR_4_0_0') AND DISTRIBUTION!='CUSTOM'" />
+                REQUIRED_IF="((STORE=='RCFILEPIGSTORAGE') AND (HBASE_VERSION=='EMR_4_0_0' OR HBASE_VERSION!='HDP_2_3')) AND DISTRIBUTION!='CUSTOM'" />
 
 			<IMPORT NAME="slf4j-api-1.6.1.jar" MODULE="slf4j-api-1.6.1.jar"
 				MVN="mvn:org.talend.libraries/slf4j-api-1.6.1/6.0.0"
@@ -1223,7 +1228,7 @@
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_1_LASTEST"
 				REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH5_1') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
-			<!-- Cloudera_CDH5_4: we use CDH5_1 libraries as an issue exist in the 
+			<!-- Cloudera_CDH5_4: we use CDH5_1 libraries as an issue exist in the
 				elephant-bird -->
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_1_LASTEST"
 				REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH5_4') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
@@ -1231,13 +1236,17 @@
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-CDH_5_1_LASTEST"
 				REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH5_1_MR1') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
-			<!-- HDP_2_2 -->
+			<!-- Pig RCFile libraries for HDP_2_2 -->
             <IMPORT MODULE_GROUP="PIG-RCFILE-LIB-HDP_2_2_LASTEST"
                 REQUIRED_IF="(HBASE_VERSION=='HDP_2_2') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
+			<!-- Pig RCFile libraries for HDP_2_3 -->
+            <IMPORT MODULE_GROUP="PIG-RCFILE-LIB-HDP_2_3"
+                REQUIRED_IF="(HBASE_VERSION=='HDP_2_3') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
+
             <!-- HD_INSIGHT_3_2 -->
             <IMPORT MODULE_GROUP="PIG-RCFILE-LIB-HDP_2_2_LASTEST"
-                REQUIRED_IF="(HBASE_VERSION=='MICROSOFT_HD_INSIGHT_3_2') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />                
+                REQUIRED_IF="(HBASE_VERSION=='MICROSOFT_HD_INSIGHT_3_2') AND (STORE=='RCFILEPIGSTORAGE') AND DISTRIBUTION!='CUSTOM'" />
 
 			<!-- HD_INSIGHT_3_1 -->
 			<IMPORT MODULE_GROUP="PIG-RCFILE-LIB-HDP_2_2_LASTEST"
@@ -1290,7 +1299,7 @@
 			<!-- AVRO Support Start -->
 			<IMPORT NAME="piggybank.jar" MODULE="piggybank.jar"
 				MVN="mvn:org.talend.libraries/piggybank/6.0.0" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar"
-				REQUIRED_IF="((STORE=='AVROSTORAGE') AND (DISTRIBUTION!='CLOUDERA') AND (HBASE_VERSION!='MAPR401' OR HBASE_VERSION!='MAPR410') AND (HBASE_VERSION!='PIVOTAL_HD_1_0_1') AND (HBASE_VERSION!='PIVOTAL_HD_2_0') AND (HBASE_VERSION!='HDP_2_0') AND (HBASE_VERSION!='HDP_2_1') AND (HBASE_VERSION!='HDP_2_2') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_1') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_2') AND (HBASE_VERSION!='EMR_4_0_0')) AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="((STORE=='AVROSTORAGE') AND (DISTRIBUTION!='CLOUDERA') AND (HBASE_VERSION!='MAPR401' OR HBASE_VERSION!='MAPR410') AND (HBASE_VERSION!='PIVOTAL_HD_1_0_1') AND (HBASE_VERSION!='PIVOTAL_HD_2_0') AND (HBASE_VERSION!='HDP_2_0') AND (HBASE_VERSION!='HDP_2_1') AND (HBASE_VERSION!='HDP_2_2') AND (HBASE_VERSION!='HDP_2_3') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_1') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_2') AND (HBASE_VERSION!='EMR_4_0_0')) AND DISTRIBUTION!='CUSTOM'" />
 
 			<IMPORT NAME="piggybank-cdh4.jar" MODULE="piggybank-cdh4.jar"
 				MVN="mvn:org.talend.libraries/piggybank-cdh4/6.0.0"
@@ -1322,7 +1331,7 @@
 				REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_0' OR HBASE_VERSION=='HDP_2_1' OR HBASE_VERSION=='Cloudera_CDH4_YARN' OR HBASE_VERSION=='Cloudera_CDH5' OR HBASE_VERSION=='PIVOTAL_HD_2_0')) AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="avro-1.5.4.jar" MODULE="avro-1.5.4.jar"
 				MVN="mvn:org.talend.libraries/avro-1.5.4/6.0.0"
-				REQUIRED_IF="(STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH5') AND (HBASE_VERSION!='Cloudera_CDH5_1') AND (HBASE_VERSION!='Cloudera_CDH5_4') AND (HBASE_VERSION!='Cloudera_CDH5_1_MR1') AND (HBASE_VERSION!='HDP_2_2') AND (HBASE_VERSION!='EMR_4_0_0') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_1') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_2') AND (HBASE_VERSION!='MAPR401' OR HBASE_VERSION!='MAPR410') AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="(STORE=='AVROSTORAGE') AND (HBASE_VERSION!='Cloudera_CDH5') AND (HBASE_VERSION!='Cloudera_CDH5_1') AND (HBASE_VERSION!='Cloudera_CDH5_4') AND (HBASE_VERSION!='Cloudera_CDH5_1_MR1') AND (HBASE_VERSION!='HDP_2_2') AND (HBASE_VERSION!='HDP_2_3') AND (HBASE_VERSION!='EMR_4_0_0') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_1') AND (HBASE_VERSION!='MICROSOFT_HD_INSIGHT_3_2') AND (HBASE_VERSION!='MAPR401' OR HBASE_VERSION!='MAPR410') AND DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="json_simple-1.1.jar" MODULE="json_simple-1.1.jar"
 				MVN="mvn:org.talend.libraries/json_simple-1.1/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar"
@@ -1338,13 +1347,17 @@
 			<IMPORT MODULE_GROUP="PIG-AVRO-LIB-CDH_5_1_LASTEST"
 				REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='Cloudera_CDH5_1_MR1')) AND DISTRIBUTION!='CUSTOM'" />
 
-            <!-- HDP_2_2 -->
+            <!-- Pig Avro libraries for HDP_2_2 -->
             <IMPORT MODULE_GROUP="PIG-AVRO-LIB-HDP_2_2_LASTEST"
                 REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_2')) AND DISTRIBUTION!='CUSTOM'" />
-                
+
+            <!-- Pig Avro libraries for HDP_2_3 -->
+            <IMPORT MODULE_GROUP="PIG-AVRO-LIB-HDP_2_3"
+                REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='HDP_2_3')) AND DISTRIBUTION!='CUSTOM'" />
+
             <!-- HD_INSIGHT_3_2 -->
             <IMPORT MODULE_GROUP="PIG-AVRO-LIB-HDP_2_2_LASTEST"
-                REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='MICROSOFT_HD_INSIGHT_3_2')) AND DISTRIBUTION!='CUSTOM'" />                
+                REQUIRED_IF="((STORE=='AVROSTORAGE') AND (HBASE_VERSION=='MICROSOFT_HD_INSIGHT_3_2')) AND DISTRIBUTION!='CUSTOM'" />
 
 			<!-- HD_INSIGHT_3_1 -->
 			<IMPORT MODULE_GROUP="PIG-AVRO-LIB-HDP_2_2_LASTEST"
