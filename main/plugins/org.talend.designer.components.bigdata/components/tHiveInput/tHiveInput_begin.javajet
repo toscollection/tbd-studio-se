@@ -238,14 +238,14 @@ imports="
 <%
 					}
 
-					if(!this.isCustom && "HDP_2_2".equals(hiveVersion)) {
+					if(!this.isCustom && ("HDP_2_2".equals(hiveVersion) || "HDP_2_3".equals(hiveVersion))) {
 %>
 						init_<%=cid%>.execute("SET mapreduce.application.classpath=$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
 <%
 					}
 %>
 					init_<%=cid%>.execute("SET yarn.application.classpath=<%=this.hiveDistrib.getYarnApplicationClasspath()%>");
-<%	
+<%
     			}
 
     			boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
@@ -272,14 +272,14 @@ imports="
 %>
 			<%
 			boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-			if(!useExistingConnection){	
+			if(!useExistingConnection){
 			%>
             	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/PrepareTez.javajet"%>
             	<%
             	(new PrepareTez()).invoke(node, cid);
-            }	
+            }
             %>
-            
+
 			init_<%=cid%>.close();
 
         	String dbname_<%=cid%> = <%=dbname%>;
@@ -347,7 +347,7 @@ imports="
 			boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
 			boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
 			boolean securedEmbeddedHive2 = securedEmbedded && "HIVE2".equalsIgnoreCase(hiveServer);
-			
+
 			String hivePrincipal = ElementParameterParser.getValue(node, "__HIVE_PRINCIPAL__");
 			boolean useSsl = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
 			String sslTrustStore = ElementParameterParser.getValue(node, "__SSL_TRUST_STORE__");
@@ -488,7 +488,7 @@ imports="
 <%
 						}else{
 %>
-							String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(node, sslStorepasswordFieldName)%>; 
+							String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(node, sslStorepasswordFieldName)%>;
 <%
 						}
 %>
@@ -571,6 +571,7 @@ imports="
 
 				jarsToRegister.add("snappy-java");
 				jarsToRegister.add("parquet-hive-bundle");
+				//jarsToRegister.add("parquet-hadoop-bundle");
 
 				for (int j = 0; j < commandLine.length; j++) {
 					if(commandLine[j].contains("jar")) {

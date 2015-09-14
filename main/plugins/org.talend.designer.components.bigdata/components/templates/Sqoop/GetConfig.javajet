@@ -1,14 +1,14 @@
-<%@ jet 
+<%@ jet
 %>
 <%
 	boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 	String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
-	
+
 	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
 	globalMap.put("current_client_path_separator", System.getProperty("path.separator"));
 	System.setProperty("path.separator", <%=yarnClasspathSeparator%>);
-	
+
 	globalMap.put("HADOOP_USER_NAME_<%=cid%>", System.getProperty("HADOOP_USER_NAME"));
 <%
 	if(isCustom || (!isCustom && sqoopDistrib.doSupportImpersonation())) {
@@ -21,7 +21,7 @@
 <%
 	}
 %>
-	
+
 	org.apache.hadoop.conf.Configuration configuration_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	configuration_<%=cid%>.set("<%=fsDefalutName%>", <%=namenode%>);
 <%
@@ -32,11 +32,11 @@
 	    configuration_<%=cid%>.set("mapreduce.job.reduce.shuffle.consumer.plugin.class", "org.apache.hadoop.mapreduce.task.reduce.DirectShuffle");
 <%
 	}
-	
+
 	boolean isKerberosAvailableHadoop2 = !isCustom && sqoopDistrib.isHadoop2() && sqoopDistrib.doSupportKerberos();
 	boolean isHadoop2 = !isCustom && sqoopDistrib.isHadoop2();
 	boolean isKerberosAvailableHadoop1 = !isCustom && sqoopDistrib.isHadoop1() && sqoopDistrib.doSupportKerberos();
-	
+
 	if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>
     	configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
@@ -49,7 +49,7 @@
 			configuration_<%=cid%>.set("mapreduce.jobhistory.address", <%=jobHistoryAddress%>);
 			<%
 		}
-		
+
 		boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
 		if(setSchedulerAddress) {
 			String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
@@ -64,15 +64,15 @@
 			configuration_<%=cid%>.set("yarn.app.mapreduce.am.staging-dir", <%=stagingDirectory%>);
 <%
 		}
-		
+
 		boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
 		if((!isCustom && sqoopDistrib.doSupportCrossPlatformSubmission()) || (isCustom && useYarn && crossPlatformSubmission)) {
 %>
 			configuration_<%=cid%>.set("mapreduce.app-submission.cross-platform","true");
 <%
 		}
-		
-		if(!isCustom && "HDP_2_2".equals(version)) {
+
+		if(!isCustom && ("HDP_2_2".equals(version) || "HDP_2_3".equals(version))) {
 %>
 			configuration_<%=cid%>.set("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
 <%
@@ -80,7 +80,7 @@
 %>
 		configuration_<%=cid%>.set("yarn.application.classpath", "<%=sqoopDistrib.getYarnApplicationClasspath()%>");
 <%
-		
+
 		boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
 		if(setMemory) {
 			String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
@@ -97,7 +97,7 @@
 		configuration_<%=cid%>.set("mapred.job.tracker", <%=jobtracker%>);
 <%
 	}
-	
+
     if(!isCustom && ("HDP_1_2".equals(version) || "HDP_1_3".equals(version))) {
         String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
         String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
@@ -110,7 +110,7 @@
 		for(Map<String, String> item : hadoopProps){
 %>
 			configuration_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
-<% 
+<%
 		}
 	}
 	if(useKrb) {
@@ -127,7 +127,7 @@
 			configuration_<%=cid%>.set("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
 <%
 		}
-		
+
 		if(isKerberosAvailableHadoop2 || (isCustom && useYarn)) {
 			String resourceManagerPrincipal = ElementParameterParser.getValue(node, "__RESOURCEMANAGER_PRINCIPAL__");
 			String jobHistoryPrincipal = ElementParameterParser.getValue(node, "__JOBHISTORY_PRINCIPAL__");

@@ -155,6 +155,7 @@ imports="
 
             jarsToRegister.add("snappy-java");
             jarsToRegister.add("parquet-hive-bundle");
+            //jarsToRegister.add("parquet-hadoop-bundle");
 
             for (int j = 0; j < commandLine.length; j++) {
                 if(commandLine[j].contains("jar")) {

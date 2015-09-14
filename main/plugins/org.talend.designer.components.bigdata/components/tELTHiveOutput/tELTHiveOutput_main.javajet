@@ -239,7 +239,7 @@ imports="
             boolean securedStandaloneHive2 = securityIsEnabled && "HIVE2".equalsIgnoreCase(hiveServer) && "STANDALONE".equalsIgnoreCase(connectionMode);
             boolean securedEmbedded = securityIsEnabled && "EMBEDDED".equalsIgnoreCase(connectionMode);
             boolean securedEmbeddedHive2 = securedEmbedded && "HIVE2".equalsIgnoreCase(hiveServer);
-            
+
             String hivePrincipal = ElementParameterParser.getValue(previousNode, "__HIVE_PRINCIPAL__");
             if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || hiveDistrib.doSupportHive2())) {
                 hiveServer = hiveServer.toLowerCase();
@@ -257,7 +257,7 @@ imports="
                 }
 <%
             }
-    
+
             if(("STANDALONE".equals(connectionMode) && !hiveDistrib.doSupportStandaloneMode()) || ("EMBEDDED".equals(connectionMode) && !hiveDistrib.doSupportEmbeddedMode())) {
 %>
                 if(true) {
@@ -265,7 +265,7 @@ imports="
                 }
 <%
             }
-    
+
             if("STANDALONE".equals(connectionMode) && "hive".equals(hiveServer) && !hiveDistrib.doSupportHive1Standalone()) {
 %>
                 if(true) {
@@ -338,18 +338,18 @@ imports="
     <%
                             } else {
     %>
-                                String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(previousNode, sslStorepasswordFieldName)%>; 
+                                String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(previousNode, sslStorepasswordFieldName)%>;
     <%
-                            }                       
+                            }
                         } else {
 %>
                             String decryptedSslStorePassword_<%=cid%> = "";
-<%                        
+<%
                         }
 %>
                         String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-                    } else {                            
+                    } else {
 %>
                         String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
 <%
@@ -470,14 +470,14 @@ imports="
 <%
                     }
 
-                    if(!isCustom && "HDP_2_2".equals(hiveVersion)) {
+                    if(!isCustom && ("HDP_2_2".equals(hiveVersion) || "HDP_2_3".equals(hiveVersion))) {
 %>
                         init_<%=cid%>.execute("SET mapreduce.application.classpath=$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
 <%
                     }
 %>
                     init_<%=cid%>.execute("SET yarn.application.classpath=<%=hiveDistrib.getYarnApplicationClasspath()%>");
-<%      
+<%
                 }
 
                 boolean setMemory = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_MEMORY__"));
@@ -505,12 +505,12 @@ imports="
 
 <%
     		boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-    		if(!useExistingConnection){	
+    		if(!useExistingConnection){
 %>
         	   <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/PrepareTez.javajet"%>
 <%
     	       (new PrepareTez()).invoke(previousNode, cid);
-            }	
+            }
 %>
             init_<%=cid%>.close();
 
@@ -592,6 +592,7 @@ imports="
             jarsToRegister = new java.util.ArrayList();
 
             jarsToRegister.add("snappy-java");
+            //jarsToRegister.add("parquet-hadoop-bundle");
             jarsToRegister.add("parquet-hive-bundle");
 
             for (int j = 0; j < commandLine.length; j++) {

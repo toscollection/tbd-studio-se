@@ -169,6 +169,7 @@ imports="
         jarsToRegister = new java.util.ArrayList();
 
         jarsToRegister.add("parquet-hive-bundle");
+        //jarsToRegister.add("parquet-hadoop-bundle");
         jarsToRegister.add("snappy-java");
 
         for (int j = 0; j < commandLine.length; j++) {
@@ -405,7 +406,7 @@ if(clustededOrSkewed) {
     createTableSQL.append(" + \"");
 }
 
-if(storeAsAvro || storeAsParquet) {
+if(storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
     createTableSQL.append(" ROW FORMAT SERDE '" + (storeAsAvro?"org.apache.hadoop.hive.serde2.avro.AvroSerDe":"parquet.hive.serde.ParquetHiveSerDe") + "'");
     util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
 } else if(setRowFormat) {
@@ -491,7 +492,7 @@ if(storeAsAvro || storeAsParquet) {
     }
 }
 
-if(storeAsAvro || storeAsParquet) {
+if (storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
     createTableSQL.append(" STORED AS INPUTFORMAT '" + (storeAsAvro?"org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat":"parquet.hive.DeprecatedParquetInputFormat") + "'");
     createTableSQL.append(" OUTPUTFORMAT '" + (storeAsAvro?"org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat":"parquet.hive.DeprecatedParquetOutputFormat") + "'");
 } else if(!"STORAGE".equals(storedFormat)) {
