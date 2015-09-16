@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.IHadoopClusterService;
@@ -25,6 +26,8 @@ import org.talend.core.model.properties.Item;
 import org.talend.repository.items.importexport.handlers.imports.ImportRepTypeHandler;
 import org.talend.repository.items.importexport.handlers.model.ImportItem;
 import org.talend.repository.items.importexport.manager.ResourcesManager;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 
@@ -59,6 +62,8 @@ public class HadoopClusterImportHandler extends ImportRepTypeHandler {
             final Item item = importItem.getItem();
             if (hadoopClusterService != null && hadoopClusterService.isHadoopClusterItem(item)) {
                 resolveItem(resManager, importItem);
+                HadoopClusterConnection hcConnection = (HadoopClusterConnection) ((HadoopClusterConnectionItem) item)
+                        .getConnection();
                 String clusterId = item.getProperty().getId();
                 for (ImportItem ir : allImportItemRecords) {
                     resolveItem(resManager, ir);
@@ -72,6 +77,13 @@ public class HadoopClusterImportHandler extends ImportRepTypeHandler {
                                 ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
                     }
                     if (clusterId.equals(hcId)) {
+                        if (subItem instanceof HadoopSubConnectionItem) {
+                            EList<String> connectionList = hcConnection.getConnectionList();
+                            String subItemId = subItem.getProperty().getId();
+                            if (!connectionList.contains(subItemId)) {
+                                connectionList.add(subItemId);
+                            }
+                        }
                         relatedItemRecords.add(ir);
                     }
                 }
