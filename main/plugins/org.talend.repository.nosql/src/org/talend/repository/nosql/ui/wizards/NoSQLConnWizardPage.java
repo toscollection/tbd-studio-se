@@ -108,7 +108,7 @@ public class NoSQLConnWizardPage extends AbstractNoSQLWizardPage {
         } else if (dbTypeCombo.getItemCount() > 0) {
             dbTypeCombo.select(0);
         }
-        getForm().checkFieldsValue();
+        // getForm().checkFieldsValue();
     }
 
     protected void addFieldsListeners() {
@@ -174,4 +174,9 @@ public class NoSQLConnWizardPage extends AbstractNoSQLWizardPage {
         }
     }
 
+    @Override
+    public void setVisible(boolean visible) {
+        super.setVisible(visible);
+        getForm().checkFieldsValue();
+    }
 }
