@@ -6,7 +6,7 @@
       <navigatorContent
             activeByDefault="true"
             contentProvider="org.talend.repository.pigudf.content.PigudfContentProvider"
-            icon="icons/pigudf.gif"
+            icon="icons/pigudf.png"
             id="org.talend.repository.viewer.code.PigUdf"
             labelProvider="org.talend.repository.viewer.label.RepositoryViewLabelProvider"
             name="%NavigatorContent.pigUdf"
@@ -82,7 +82,7 @@
          point="org.talend.core.repository.repository_node_provider">
       <repositoryNode
             folder="code/pigudf"
-            icon="icons/pigudf.gif"
+            icon="icons/pigudf.png"
             isResouce="true"
             key="repository.pigUdf"
             label="%NavigatorContent.pigUdf"
