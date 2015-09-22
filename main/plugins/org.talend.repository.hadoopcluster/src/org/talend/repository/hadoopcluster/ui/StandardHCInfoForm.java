@@ -732,7 +732,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         boolean isSupport = false;
         // this strategy is based on tMRConfiguration_java.xml, Parameter: JOBHISTORY_PRINCIPAL
-        if (hadoopVersison == EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_1) {
+        if (hadoopVersison == EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_1
+                || hadoopVersison == EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2) {
             return false;
         } else {
             if (hadoopDistribution == EHadoopDistributions.CUSTOM) {
