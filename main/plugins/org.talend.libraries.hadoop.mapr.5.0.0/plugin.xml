@@ -206,8 +206,8 @@
         </libraryNeededGroup>        
         <libraryNeededGroup
               description="The lastest Pig libraries of MAPR50X"
-              id="PIG-LIB-MAPR50X_LASTEST"
-              name="PIG-LIB-MAPR50X_LASTEST">
+              id="PIG-BASE-LIB-MAPR50X_LASTEST"
+              name="PIG-BASE-LIB-MAPR50X_LASTEST">
            <group
                  id="MAPREDUCE-LIB-MAPR50X_LASTEST">
            </group>
@@ -344,12 +344,6 @@
            <library
                  id="libfb303-0.9.0.jar">
            </library>
-           <library
-                 id="hive-exec-mapr-5.0.X-lastest">
-           </library>
-           <library
-                 id="hive-metastore-mapr-5.0.X-lastest">
-           </library>
         </libraryNeededGroup>
         <libraryNeededGroup
                 description="The lastest pig avro storage libraries of MAPR50X"
@@ -358,17 +352,14 @@
             <library
                 id="piggybank-mapr-5.0.X-lastest">
             </library>
-            <library
-                  id="hive-exec-mapr-5.0.X-lastest">
-            </library>
-            <library
-                  id="hive-metastore-mapr-5.0.X-lastest">
-            </library>
         </libraryNeededGroup>
         <libraryNeededGroup
                 description="The lastest pig rc file storage libraries of MAPR50X"
                 id="PIG-RCFILE-LIB-MAPR50X_LASTEST"
                 name="PIG-RCFILE-LIB-MAPR50X_LASTEST">
+           <group
+                 id="PIG-BASE-LIB-MAPR50X_LASTEST">
+           </group>
             <library
                 id="hive-common-0.13.0-mapr-1501.jar">
              </library>
@@ -439,12 +430,6 @@
             <library
                   id="jline-1.0.jar">
             </library>
-            <library
-                  id="hive-exec-mapr-5.0.X-lastest">
-            </library>
-            <library
-                  id="hive-metastore-mapr-5.0.X-lastest">
-            </library>
         </libraryNeededGroup>
         <libraryNeededGroup
                 description="The lastest Hive hbase storage libraries of MAPR50X"
@@ -456,6 +441,20 @@
             <library
                   id="hive-hbase-handler-5.0.X-lastest">
             </library>
+        </libraryNeededGroup>
+        <libraryNeededGroup
+              description="The lastest Pig libraries of MAPR50X"
+              id="PIG-LIB-MAPR50X_LASTEST"
+              name="PIG-LIB-MAPR50X_LASTEST">
+           <group
+                 id="PIG-BASE-LIB-MAPR50X_LASTEST">
+           </group>
+           <library
+                 id="hive-exec-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hive-metastore-mapr-5.0.X-lastest">
+           </library>
         </libraryNeededGroup>
    </extension>
 
