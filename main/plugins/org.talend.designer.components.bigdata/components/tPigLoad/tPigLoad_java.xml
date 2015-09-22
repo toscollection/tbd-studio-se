@@ -2741,7 +2741,12 @@
 			<!-- AVRO Support Start -->
 			<IMPORT NAME="piggybank.jar" MODULE="piggybank.jar"
 				MVN="mvn:org.talend.libraries/piggybank/6.0.0" UrlPath="platform:/plugin/org.talend.libraries.pig/lib/piggybank.jar"
-				REQUIRED_IF="((LOCAL == 'false') AND (LOAD=='AVROSTORAGE') AND (DISTRIBUTION!='CLOUDERA') AND (PIG_VERSION!='PIVOTAL_HD_1_0_1') AND (PIG_VERSION!='PIVOTAL_HD_2_0') AND (PIG_VERSION!='HDP_2_0') AND (PIG_VERSION!='HDP_2_1') AND (PIG_VERSION!='HDP_2_2') AND (PIG_VERSION!='HDP_2_3') AND (PIG_VERSION!='MICROSOFT_HD_INSIGHT_3_1') AND (PIG_VERSION!='MICROSOFT_HD_INSIGHT_3_2') AND (PIG_VERSION!='EMR_4_0_0') AND (PIG_VERSION!='MAPR401' OR PIG_VERSION!='MAPR410')) AND DISTRIBUTION!='CUSTOM'" />
+				REQUIRED_IF="(LOCAL == 'false') 
+						    AND (LOAD=='AVROSTORAGE') 
+						    AND ((DISTRIBUTION == 'HORTONWORKS') AND ((PIG_VERSION == 'HDP_1_2') OR (PIG_VERSION == 'HDP_1_3')))
+						    AND ((DISTRIBUTION == 'MAPR') AND ((PIG_VERSION == 'MAPR2') OR (PIG_VERSION == 'MAPR212') OR (PIG_VERSION == 'MAPR213') OR (PIG_VERSION == 'MAPR301') OR (PIG_VERSION == 'MAPR310')))
+						    AND (DISTRIBUTION == 'APACHE')
+						    AND ((DISTRIBUTION == 'AMAZON_EMR') AND ((PIG_VERSION == 'APACHE_2_4_0_EMR') OR (PIG_VERSION == 'APACHE_1_0_3_EMR')))"/>
 
 			<IMPORT NAME="piggybank-cdh4.jar" MODULE="piggybank-cdh4.jar"
 				MVN="mvn:org.talend.libraries/piggybank-cdh4/6.0.0"

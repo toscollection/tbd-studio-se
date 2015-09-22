@@ -218,12 +218,6 @@
                  id="hadoop-hdfs-mapr-5.0.X-lastest">
            </library>
            <library
-                 id="hive-exec-mapr-4.1.X-lastest">
-           </library>
-           <library
-                 id="hive-metastore-mapr-4.1.X-lastest">
-           </library>
-           <library
                  id="antlr-runtime-3.4.jar">
            </library>
            <library
@@ -350,6 +344,12 @@
            <library
                  id="libfb303-0.9.0.jar">
            </library>
+           <library
+                 id="hive-exec-mapr-5.0.X-lastest">
+           </library>
+           <library
+                 id="hive-metastore-mapr-5.0.X-lastest">
+           </library>
         </libraryNeededGroup>
         <libraryNeededGroup
                 description="The lastest pig avro storage libraries of MAPR50X"
@@ -357,6 +357,12 @@
                 name="PIG-AVRO-LIB-MAPR50X_LASTEST">
             <library
                 id="piggybank-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hive-exec-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hive-metastore-mapr-5.0.X-lastest">
             </library>
         </libraryNeededGroup>
         <libraryNeededGroup
@@ -368,6 +374,12 @@
              </library>
              <library
                  id="hive-serde-0.13.0-mapr-1501.jar">
+             </library>
+             <library
+                   id="hive-exec-mapr-4.1.X-lastest">
+             </library>
+             <library
+                   id="hive-metastore-mapr-4.1.X-lastest">
              </library>
         </libraryNeededGroup>
         <libraryNeededGroup
@@ -426,6 +438,12 @@
             </library>
             <library
                   id="jline-1.0.jar">
+            </library>
+            <library
+                  id="hive-exec-mapr-5.0.X-lastest">
+            </library>
+            <library
+                  id="hive-metastore-mapr-5.0.X-lastest">
             </library>
         </libraryNeededGroup>
         <libraryNeededGroup
