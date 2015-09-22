@@ -60,7 +60,8 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
             }
             if (distribution == EHadoopDistributions.MAPR
                     && (EHadoopVersion4Drivers.MAPR310.getVersionValue().equals(hcConnection.getDfVersion())
-                            || EHadoopVersion4Drivers.MAPR401.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.MAPR410
+                            || EHadoopVersion4Drivers.MAPR401.getVersionValue().equals(hcConnection.getDfVersion())
+                            || EHadoopVersion4Drivers.MAPR410.getVersionValue().equals(hcConnection.getDfVersion()) || EHadoopVersion4Drivers.MAPR500
                             .getVersionValue().equals(hcConnection.getDfVersion()))) {
                 return false;
             }
