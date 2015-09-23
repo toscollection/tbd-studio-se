@@ -93,8 +93,7 @@
 		java.util.List<String> jarsPath = jarsGenInstance.getJarsToRegisterPath(createTableNode.getProcess().getId());
 		if(jarsPath!=null && jarsGenInstance.jarsToRegister()!=null) {
 %>
-			<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>	
-			GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+			routines.system.GetJarsToRegister getJarsToRegister_<%=cid %> = new routines.system.GetJarsToRegister();
 			java.sql.Statement addJar_<%=cid%> = null;
 <%
 			for(String jarToRegister : jarsGenInstance.jarsToRegister()) {

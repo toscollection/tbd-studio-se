@@ -29,8 +29,7 @@
 		
 	if(jarsToRegister!=null && jars!=null) {
 %>
-		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/GetJarsToRegister.javajet"%>	
-		GetJarsToRegister_<%=cid%> getJarsToRegister_<%=cid %> = new GetJarsToRegister_<%=cid%>();
+		routines.system.GetJarsToRegister getJarsToRegister_<%=cid %> = new routines.system.GetJarsToRegister();
 		java.lang.StringBuilder sb_<%=cid%> = new java.lang.StringBuilder();
 <%
 		
