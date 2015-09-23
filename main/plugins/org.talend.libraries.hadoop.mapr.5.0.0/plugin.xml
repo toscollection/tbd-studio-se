@@ -157,6 +157,11 @@
             id="hive-hbase-handler-5.0.X-lastest"       
             name="hive-hbase-handler-1.0.0-mapr.jar" mvn_uri="mvn:org.talend.libraries/hive-hbase-handler-1.0.0-mapr/6.1.0">
         </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.0.0"
+            id="talend-spark-assembly-1.3.1-hadoop2.5.1-mapr-1501.jar"       
+            name="talend-spark-assembly-1.3.1-hadoop2.5.1-mapr-1501.jar" mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.3.1-hadoop2.5.1-mapr-1501/6.0.0">
+        </libraryNeeded>
         <libraryNeededGroup
               description="The lastest HDFS libraries of MAPR50X"
               id="HDFS-LIB-MAPR50X_LASTEST"
@@ -458,6 +463,18 @@
            <library
                  id="hive-metastore-mapr-5.0.X-lastest">
            </library>
+        </libraryNeededGroup>
+        <libraryNeededGroup
+              description="The lastest Spark libraries of MAPR50X"
+              id="SPARK-LIB-MAPR50X_LASTEST"
+              name="SPARK-LIB-MAPR50X_LASTEST">
+           <library
+                 id="talend-spark-assembly-1.3.1-hadoop2.5.1-mapr-1501.jar">
+           </library>
+           <group
+                 id="MAPREDUCE-LIB-MAPR50X_LASTEST">
+           </group>
+              
         </libraryNeededGroup>
    </extension>
 
