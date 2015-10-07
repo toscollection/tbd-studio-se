@@ -179,5 +179,4 @@ public class NoSQLConnWizardPage extends AbstractNoSQLWizardPage {
         super.setVisible(visible);
         getForm().checkFieldsValue();
     }
-
 }
