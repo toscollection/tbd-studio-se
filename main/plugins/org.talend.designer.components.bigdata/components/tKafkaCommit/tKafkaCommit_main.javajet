@@ -1,0 +1,28 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.IConnectionCategory
+    org.talend.core.model.metadata.IMetadataTable
+    org.talend.core.model.metadata.IMetadataColumn
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.HashMap
+"
+%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+INode kiNode = ElementParameterParser.getLinkedNodeValue(node, "__KAFKA_INPUT_COMPONENT__");
+String kiCid = kiNode.getUniqueName();
+%>
+
+if (globalMap.containsKey("<%=kiCid%>_consumerConnector")) {
+    ((kafka.javaapi.consumer.ConsumerConnector) globalMap.get("<%=kiCid%>_consumerConnector")).commitOffsets();
+} else {
+    throw new RuntimeException("HEY");
+}

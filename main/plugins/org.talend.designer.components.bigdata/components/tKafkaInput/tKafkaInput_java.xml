@@ -26,59 +26,82 @@
 		<!-- PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" SHOW="true" NUM_ROW="1"/ -->
 
 		<PARAMETER NAME="OUTPUT_TYPE" FIELD="CLOSED_LIST" SHOW="true"
-			NUM_ROW="10">
+			NUM_ROW="5">
 			<ITEMS DEFAULT="STRING">
-			    <ITEM NAME="STRING" VALUE="STRING" />
+				<ITEM NAME="STRING" VALUE="STRING" />
 				<ITEM NAME="BYTES" VALUE="BYTES" />
 			</ITEMS>
 		</PARAMETER>
 
-		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="10"
+		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="5"
 			REQUIRED="true">
-            <TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'true')" READONLY="true">
-                <COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
-                    CUSTOM="true" />
-                <COLUMN NAME="offset" TYPE="id_Long" READONLY="true"
-                    CUSTOM="true" />
-            </TABLE>
-            <TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'false')" READONLY="true">
-                <COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
-                    CUSTOM="true" />
-            </TABLE>
-            <TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'true')" READONLY="true">
-                <COLUMN NAME="payload" TYPE="id_String" READONLY="true"
-                    CUSTOM="true" />
-                <COLUMN NAME="offset" TYPE="id_Long" READONLY="true"
-                    CUSTOM="true" />
-            </TABLE>
-            <TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'false')" READONLY="true">
-                <COLUMN NAME="payload" TYPE="id_String" READONLY="true"
-                    CUSTOM="true" />
-            </TABLE>
+			<TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'true')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
+					CUSTOM="true" />
+				<COLUMN NAME="offset" TYPE="id_Long" READONLY="true"
+					CUSTOM="true" />
+			</TABLE>
+			<TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'false')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
+					CUSTOM="true" />
+			</TABLE>
+			<TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'true')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_String" READONLY="true"
+					CUSTOM="true" />
+				<COLUMN NAME="offset" TYPE="id_Long" READONLY="true"
+					CUSTOM="true" />
+			</TABLE>
+			<TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'false')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_String" READONLY="true"
+					CUSTOM="true" />
+			</TABLE>
 		</PARAMETER>
 
-		<PARAMETER NAME="KAFKA_VERSION" FIELD="CLOSED_LIST" NUM_ROW="15"
-			REQUIRED="true" GROUP="KAFKA_GROUP">
+		<PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
+			NUM_ROW="10">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="CONNECTION" FIELD="COMPONENT_LIST"
+			REQUIRED="true" FILTER="tKafkaConnection" NUM_ROW="10"
+			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" />
+
+		<PARAMETER NAME="KAFKA_VERSION" FIELD="CLOSED_LIST" NUM_ROW="20"
+			REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
 			<ITEMS DEFAULT="KAFKA_0_8_2_0">
 				<ITEM NAME="KAFKA_0_8_2_0" VALUE="KAFKA_0_8_2_0" />
 			</ITEMS>
 		</PARAMETER>
 
-		<PARAMETER NAME="ZOOKEEPER_CONNECT" FIELD="TEXT" NUM_ROW="20"
-			REQUIRED="true" GROUP="KAFKA_GROUP">
+		<PARAMETER NAME="ZOOKEEPER_CONNECT" FIELD="TEXT" NUM_ROW="30"
+			REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
 			<DEFAULT>"zk1:port1,zk2:port2,..."</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="AUTO_OFFSET_RESET" FIELD="CLOSED_LIST"
-			NUM_ROW="25" REQUIRED="true" GROUP="KAFKA_GROUP">
+		<PARAMETER NAME="KAFKA_TOPIC" FIELD="TEXT" REQUIRED="true"
+			NUM_ROW="40" NB_LINES="3">
+			<DEFAULT>"mytopic"</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="GROUP_ID" FIELD="TEXT" NUM_ROW="50">
+			<DEFAULT>"mygroup"</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="RESET_OFFSET" FIELD="CHECK" NUM_ROW="60"
+			GROUP="OFFSET_MANAGEMENT_GROUP">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="AUTO_OFFSET_RESET" FIELD="CLOSED_LIST" NUM_ROW="70"
+			GROUP="OFFSET_MANAGEMENT_GROUP">
 			<ITEMS DEFAULT="LARGEST">
 				<ITEM NAME="LARGEST" VALUE="LARGEST" />
 				<ITEM NAME="SMALLEST" VALUE="SMALLEST" />
 			</ITEMS>
 		</PARAMETER>
 
-		<PARAMETER NAME="KAFKA_OFFSET_STORAGE" FIELD="CLOSED_LIST"
-			NUM_ROW="25" REQUIRED="true" GROUP="KAFKA_GROUP">
+		<PARAMETER NAME="KAFKA_OFFSET_STORAGE" FIELD="CLOSED_LIST" NUM_ROW="80"
+			GROUP="OFFSET_MANAGEMENT_GROUP">
 			<ITEMS DEFAULT="ZOOKEEPER">
 				<ITEM NAME="ZOOKEEPER" VALUE="ZOOKEEPER" />
 				<ITEM NAME="KAFKA" VALUE="KAFKA" />
@@ -86,20 +109,55 @@
 		</PARAMETER>
 
 		<PARAMETER NAME="KAFKA_DUAL_COMMIT_CHECK" FIELD="CHECK"
-			NUM_ROW="25" REQUIRED_IF="(KAFKA_OFFSET_STORAGE == 'KAFKA')" SHOW_IF="(KAFKA_OFFSET_STORAGE == 'KAFKA')"
-			GROUP="KAFKA_GROUP">
+			NUM_ROW="80" SHOW_IF="(KAFKA_OFFSET_STORAGE == 'KAFKA')"
+			GROUP="OFFSET_MANAGEMENT_GROUP">
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="KAFKA_TOPIC" FIELD="TEXT" REQUIRED="true"
-			NUM_ROW="30" NB_LINES="3" GROUP="KAFKA_GROUP">
-			<DEFAULT>"mytopic"</DEFAULT>
+		<PARAMETER NAME="AUTO_COMMIT_OFFSET" FIELD="CHECK"
+			NUM_ROW="90" GROUP="OFFSET_MANAGEMENT_GROUP">
+			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER NAME="GROUP_ID" FIELD="TEXT" NUM_ROW="35"
-			GROUP="KAFKA_GROUP">
-			<DEFAULT>"mygroup"</DEFAULT>
+		<PARAMETER NAME="KAFKA_COMMIT_INTERVAL" FIELD="TEXT"
+			NUM_ROW="90" REQUIRED="true" SHOW_IF="(AUTO_COMMIT_OFFSET == 'true')"
+			GROUP="OFFSET_MANAGEMENT_GROUP">
+			<DEFAULT>5000</DEFAULT>
 		</PARAMETER>
+
+		<PARAMETER NAME="USE_BATCH_MAX_DURATION" FIELD="CHECK"
+			NUM_ROW="100" GROUP="BATCH_MANAGEMENT_GROUP">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="BATCH_MAX_DURATION" FIELD="TEXT"
+			NUM_ROW="100" REQUIRED="true" SHOW_IF="(USE_BATCH_MAX_DURATION == 'true')"
+			GROUP="BATCH_MANAGEMENT_GROUP">
+			<DEFAULT>600000</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="USE_BATCH_MAX_SIZE" FIELD="CHECK"
+			NUM_ROW="110" GROUP="BATCH_MANAGEMENT_GROUP">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="BATCH_MAX_SIZE" FIELD="TEXT"
+			NUM_ROW="110" REQUIRED="true" SHOW_IF="(USE_BATCH_MAX_SIZE == 'true')"
+			GROUP="BATCH_MANAGEMENT_GROUP">
+			<DEFAULT>5000</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="USE_BATCH_MESSAGE_TIMEOUT" FIELD="CHECK"
+			NUM_ROW="120" GROUP="BATCH_MANAGEMENT_GROUP">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="BATCH_MESSAGE_TIMEOUT" FIELD="TEXT"
+			NUM_ROW="120" REQUIRED="true" SHOW_IF="(USE_BATCH_MESSAGE_TIMEOUT == 'true')"
+			GROUP="BATCH_MANAGEMENT_GROUP">
+			<DEFAULT>10000</DEFAULT>
+		</PARAMETER>
+
 	</PARAMETERS>
 
 	<ADVANCED_PARAMETERS>
@@ -111,20 +169,16 @@
 			</ITEMS>
 		</PARAMETER>
 
+		<!--SHOW_IF="(USE_BATCH_MAX_DURATION == 'true')"-->
 		<PARAMETER NAME="KAFKA_CONSUMER_TIMEOUT" FIELD="TEXT"
-			NUM_ROW="41" REQUIRED="true">
-			<DEFAULT>"-1"</DEFAULT>
-		</PARAMETER>
-
-		<PARAMETER NAME="KAFKA_COMMIT_INTERVAL" FIELD="TEXT"
 			NUM_ROW="42" REQUIRED="true">
-			<DEFAULT>"5000"</DEFAULT>
+			<DEFAULT>-1</DEFAULT>
 		</PARAMETER>
 
-        <PARAMETER NAME="SAVE_OFFSET" FIELD="CHECK" NUM_ROW="45"
-            REQUIRED="true">
-            <DEFAULT>false</DEFAULT>
-        </PARAMETER>
+		<PARAMETER NAME="SAVE_OFFSET" FIELD="CHECK" NUM_ROW="45"
+			REQUIRED="true">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
 
 		<PARAMETER NAME="CUSTOM_ENCODING" FIELD="CHECK" NUM_ROW="50"
 			REQUIRED="true">
@@ -139,58 +193,10 @@
 
 	<CODEGENERATION>
 		<IMPORTS>
-			<!-- Kafka_2.10-0.8.2.0 -->
-			<IMPORT NAME="kafka_2.10-0.8.2.0.jar" MODULE="kafka_2.10-0.8.2.0.jar"
-				MVN="mvn:org.talend.libraries/kafka_2.10-0.8.2.0/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/kafka_2.10-0.8.2.0.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="scala-library-2.10.4.jar" MODULE="scala-library-2.10.4.jar"
-				MVN="mvn:org.talend.libraries/scala-library-2.10.4/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/scala-library-2.10.4.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="jopt-simple-3.2.jar" MODULE="jopt-simple-3.2.jar"
-				MVN="mvn:org.talend.libraries/jopt-simple-3.2/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/jopt-simple-3.2.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="kafka-clients-0.8.2.0.jar" MODULE="kafka-clients-0.8.2.0.jar"
-				MVN="mvn:org.talend.libraries/kafka-clients-0.8.2.0/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/kafka-clients-0.8.2.0.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="lz4-1.2.0.jar" MODULE="lz4-1.2.0.jar"
-				MVN="mvn:org.talend.libraries/lz4-1.2.0/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/lz4-1.2.0.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="metrics-core-2.2.0.jar" MODULE="metrics-core-2.2.0.jar"
-				MVN="mvn:org.talend.libraries/metrics-core-2.2.0/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/metrics-core-2.2.0.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="snappy-java-1.1.1.6.jar" MODULE="snappy-java-1.1.1.6.jar"
-				MVN="mvn:org.talend.libraries/snappy-java-1.1.1.6/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/snappy-java-1.1.1.6.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="zkclient-0.3.jar" MODULE="zkclient-0.3.jar"
-				MVN="mvn:org.talend.libraries/zkclient-0.3/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/zkclient-0.3.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="zookeeper-3.4.6.jar" MODULE="zookeeper-3.4.6.jar"
-				MVN="mvn:org.talend.libraries/zookeeper-3.4.6/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/zookeeper-3.4.6.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar"
-				MVN="mvn:org.talend.libraries/log4j-1.2.16/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/log4j-1.2.16.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="slf4j-api-1.7.6.jar" MODULE="slf4j-api-1.7.6.jar"
-				MVN="mvn:org.talend.libraries/slf4j-api-1.7.6/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-api-1.7.6.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar"
-				MVN="mvn:org.talend.libraries/slf4j-log4j12-1.6.1/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-log4j12-1.6.1.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<!-- Kafka libraries for 2.10-0.8.2.0 -->
+			<IMPORT MODULE_GROUP="KAFKA-LIB-2_10-0_8_2_0"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_0_8_2_0') AND (USE_EXISTING_CONNECTION=='false')" />
 		</IMPORTS>
 	</CODEGENERATION>
-
 	<RETURNS />
-
 </COMPONENT>

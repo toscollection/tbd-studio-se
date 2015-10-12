@@ -1,13 +1,13 @@
 <%@ jet
     imports="
-    org.talend.core.model.process.INode 
-    org.talend.core.model.process.ElementParameterParser 
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
     org.talend.designer.codegen.config.CodeGeneratorArgument
     java.util.List
     java.util.Map
     java.util.HashMap
     java.util.Map.Entry
-" 
+"
 %>
 
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaCreateTopic/tKafkaCreateTopic_util.javajet"%>
@@ -36,20 +36,20 @@ java.util.Properties <%=cid%>_topicProperties = new java.util.Properties();
 <%
 	}
 %>
-	
+
 org.I0Itec.zkclient.ZkClient <%=cid%>_zkClient = new org.I0Itec.zkclient.ZkClient(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, 10000, 10000, kafka.utils.ZKStringSerializer$.MODULE$);
 
-<% 
+<%
 	if(tKafkaCreateTopicUtil.isCreate()) {
 %>
 try{
 	kafka.admin.AdminUtils.createTopic(<%=cid%>_zkClient, <%=tKafkaCreateTopicUtil.getTopic()%>, Integer.valueOf(<%=tKafkaCreateTopicUtil.getNbPartitions()%>), Integer.valueOf(<%=tKafkaCreateTopicUtil.getReplicationFactor()%>), <%=cid%>_topicProperties);
 } catch (kafka.common.TopicExistsException e) {
-<% 
+<%
 		if (tKafkaCreateTopicUtil.isCreateIfNotExists()) {
 %>
 	// nothing to do even through the topic already exists, continue the job
-<% 
+<%
 		} else {
 %>
 	// topic already exists, stop the job
