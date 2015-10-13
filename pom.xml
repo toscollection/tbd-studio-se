@@ -78,7 +78,7 @@
 		<module>main/plugins/org.talend.libraries.hadoop.mapr.3.1.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.mapr.4.0.1</module>
 		<module>main/plugins/org.talend.libraries.hadoop.mapr.4.1.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.mapr.5.0.0</module>
+		<module>main/plugins/org.talend.libraries.hadoop.mapr.5.0.0.jars</module>
 		<module>main/plugins/org.talend.libraries.hadoop.mapr2</module>
 		<module>main/plugins/org.talend.libraries.hcatalog</module>
 		<module>main/plugins/org.talend.libraries.mongo</module>
