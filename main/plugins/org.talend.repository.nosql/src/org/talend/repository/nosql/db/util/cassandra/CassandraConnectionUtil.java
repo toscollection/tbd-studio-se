@@ -14,6 +14,7 @@ package org.talend.repository.nosql.db.util.cassandra;
 
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
+import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
 import org.talend.repository.nosql.db.handler.cassandra.CassandraMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.CassandraOldVersionMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.ICassandraMetadataHandler;
@@ -29,7 +30,13 @@ public class CassandraConnectionUtil {
         if (isOldVersion(connection)) {
             return CassandraOldVersionMetadataHandler.getInstance();
         } else {
-            return CassandraMetadataHandler.getInstance();
+            boolean isDatastaxApiType = ICassandraConstants.API_TYPE_DATASTAX.equals(connection.getAttributes().get(
+                    INoSQLCommonAttributes.API_TYPE));
+            if (isDatastaxApiType) {
+                return CassandraMetadataHandler.getInstanceForDataStax();
+            } else {
+                return CassandraMetadataHandler.getInstance();
+            }
         }
     }
 
