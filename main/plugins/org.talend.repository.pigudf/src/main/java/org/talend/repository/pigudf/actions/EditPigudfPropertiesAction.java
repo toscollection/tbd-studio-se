@@ -22,22 +22,17 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PlatformUI;
-import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.runtime.model.repository.ERepositoryStatus;
-import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.language.ECodeLanguage;
 import org.talend.core.language.LanguageManager;
-import org.talend.core.model.general.Project;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.PigudfItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.model.repository.RepositoryManager;
-import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.services.IUIRefresher;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.metadata.managment.ui.wizard.PropertiesWizard;
-import org.talend.repository.ProjectManager;
 import org.talend.repository.RepositoryPlugin;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.RepositoryNodeUtilities;
@@ -100,18 +95,9 @@ public class EditPigudfPropertiesAction extends EditPropertiesAction {
         RepositoryNode node = (RepositoryNode) obj;
 
         IRepositoryViewObject object = node.getObject();
-        if (getNeededVersion() != null && !object.getVersion().equals(getNeededVersion())) {
-            try {
-                object = ProxyRepositoryFactory.getInstance().getSpecificVersion(
-                        new Project(ProjectManager.getInstance().getProject(object.getProperty().getItem())),
-                        object.getProperty().getId(), getNeededVersion(), false);
-            } catch (PersistenceException e) {
-                ExceptionHandler.process(e);
-            }
-        }
         IPath path = RepositoryNodeUtilities.getPath(node);
         String originalName = object.getLabel();
-        PropertiesWizard wizard = new EditPigudfPropertiesWizard(object, path, getNeededVersion() == null);
+        PropertiesWizard wizard = new EditPigudfPropertiesWizard(object, path, true);
         WizardDialog dlg = new WizardDialog(Display.getCurrent().getActiveShell(), wizard);
         if (dlg.open() == Window.OK) {
             refresh(node);
