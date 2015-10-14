@@ -256,6 +256,15 @@
             name="ChangeMongoDBConnectionMinimalVersionMigrationTask"
             version="6.0.0">
        </projecttask>
+      <projecttask
+            beforeLogon="false"
+            breaks="6.0.1"
+            class="org.talend.repository.nosql.repository.migration.FixCassandraDataStaxDbtypesProblemMigrationTask"
+            description="Fix cassandra datastax api dbtype problem, please see TBD-2619"
+            id="org.talend.repository.nosql.repository.migration.FixCassandraDataStaxDbtypesProblemMigrationTask"
+            name="FixCassandraDataStaxDbtypesProblemMigrationTask"
+            version="6.0.2">
+      </projecttask>
    </extension>
    <extension
          point="org.talend.core.repository.repository_context">
