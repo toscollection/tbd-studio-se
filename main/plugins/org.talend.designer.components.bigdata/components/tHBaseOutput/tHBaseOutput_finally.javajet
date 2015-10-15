@@ -25,7 +25,7 @@ String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CO
 			e.printStackTrace();
 			return "";
 		}
-		boolean isCustom = hbaseDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+		boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 		%>
 		if(resourceMap.get("finish_<%=cid%>") == null){
 			if(resourceMap.get("conn_<%=cid%>")!=null){

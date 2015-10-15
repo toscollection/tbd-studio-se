@@ -31,7 +31,7 @@ class GetFileSystem{
             return;
         }
 
-        boolean isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+        boolean isCustom = hdfsDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
         
         %>
         org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration(); 

@@ -51,7 +51,7 @@ if(!"true".equals(useExistingConn)){
 		e.printStackTrace();
 		return "";
 	}
-	boolean isCustom = hbaseDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 %>
 	}finally{

@@ -10,7 +10,7 @@
 		return "";
 	}
 
-	boolean isCustom = sqoopDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = sqoopDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 	
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	

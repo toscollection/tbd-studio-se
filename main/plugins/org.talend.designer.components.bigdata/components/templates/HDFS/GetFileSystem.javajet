@@ -50,7 +50,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		e.printStackTrace();
 		return "";
 	}
-    isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+    isCustom = hdfsDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 	%>
@@ -121,7 +121,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 				e.printStackTrace();
 				return "";
 			}
-    		isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+    		isCustom = hdfsDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
     		String auth = ElementParameterParser.getValue(targetNode, "__AUTHENTICATION_MODE__");
 		

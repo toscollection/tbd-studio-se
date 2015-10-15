@@ -31,7 +31,7 @@
 		return "";
 	}
 
-	boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = pigDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));

@@ -88,7 +88,7 @@ imports="
 				e.printStackTrace();
 				return;
 			}
-			this.isCustom = this.hiveDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+			this.isCustom = this.hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || hiveDistrib.doSupportHive2())) {
 				hiveServer = hiveServer.toLowerCase();

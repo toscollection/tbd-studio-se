@@ -12,7 +12,7 @@
 		return "";
 	}
 
-	boolean isCustom = sqoopDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = sqoopDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	String processId = node.getProcess().getId();
 

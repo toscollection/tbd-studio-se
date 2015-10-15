@@ -132,7 +132,7 @@ imports="
             e.printStackTrace();
             return "";
         }
-        isCustom = hiveDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+        isCustom = hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
     }
 
     if(hiveDistrib.isExecutedThroughWebHCat()) {

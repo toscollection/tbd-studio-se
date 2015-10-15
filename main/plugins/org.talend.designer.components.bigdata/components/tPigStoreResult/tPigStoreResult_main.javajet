@@ -61,7 +61,7 @@
 		return "";
 	}
 
-	boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = pigDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 	
 	String resultFile = ElementParameterParser.getValue(node, "__OUTPUT_FILENAME__");
 	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION__"));

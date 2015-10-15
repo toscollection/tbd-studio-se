@@ -18,15 +18,15 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String hadoopVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
 
-	org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = null;
+	org.talend.hadoop.distribution.component.HDFSComponent hdfsDistrib = null;
 	try {
-		hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+		hdfsDistrib = (org.talend.hadoop.distribution.component.HDFSComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hadoopVersion);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";
 	}
 
-	boolean isCustom = hdfsDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = hdfsDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	String auth = ElementParameterParser.getValue(node, "__AUTHENTICATION_MODE__");
 	String fsDefalutName = "fs.default.name";

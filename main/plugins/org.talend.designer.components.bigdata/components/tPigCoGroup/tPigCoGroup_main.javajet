@@ -49,7 +49,7 @@
 		return "";
 	}
 
-	boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = pigDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	boolean isExecutedThroughWebHCat = !isLocal && !isCustom && pigDistrib.isExecutedThroughWebHCat();
 	

@@ -37,7 +37,7 @@ imports="
                 e.printStackTrace();
                 return "";
             }
-            isCustom = hbaseDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+            isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
             break;
 	    }
     }

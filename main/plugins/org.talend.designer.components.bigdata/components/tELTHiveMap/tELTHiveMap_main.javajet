@@ -50,7 +50,7 @@
 	    e.printStackTrace();
 	    return "";
 	}
-	boolean isCustom = hiveDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
