@@ -39,9 +39,9 @@ imports="
           String loadDistribution = ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__");
           String loadPigVersion = ElementParameterParser.getValue(loadNode, "__PIG_VERSION__");
 
-          org.talend.core.hadoop.api.components.PigComponent pigDistrib = null;
+          org.talend.hadoop.distribution.component.PigComponent pigDistrib = null;
           try {
-            pigDistrib = (org.talend.core.hadoop.api.components.PigComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(loadDistribution, loadPigVersion);
+            pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(loadDistribution, loadPigVersion);
           } catch (java.lang.Exception e) {
             e.printStackTrace();
             return "";

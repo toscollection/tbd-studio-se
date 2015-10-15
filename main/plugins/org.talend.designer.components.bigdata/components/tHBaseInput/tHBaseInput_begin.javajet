@@ -39,9 +39,9 @@ org.apache.hadoop.conf.Configuration conn_<%=cid %>=null;
 INode connNode = "true".equals(useExistingConn) ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node;
 String distribution = ElementParameterParser.getValue(connNode, "__DISTRIBUTION__");
 String hbaseVersion = ElementParameterParser.getValue(connNode, "__HBASE_VERSION__");
-org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
 try {
-	hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+	hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
 } catch (java.lang.Exception e) {
 	e.printStackTrace();
 	return "";

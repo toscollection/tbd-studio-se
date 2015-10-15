@@ -4,9 +4,9 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String version = ElementParameterParser.getValue(node, "__DB_VERSION__");
 
-	org.talend.core.hadoop.api.components.SqoopComponent sqoopDistrib = null;
+	org.talend.hadoop.distribution.component.SqoopComponent sqoopDistrib = null;
 	try {
-		sqoopDistrib = (org.talend.core.hadoop.api.components.SqoopComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, version);
+		sqoopDistrib = (org.talend.hadoop.distribution.component.SqoopComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, version);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";

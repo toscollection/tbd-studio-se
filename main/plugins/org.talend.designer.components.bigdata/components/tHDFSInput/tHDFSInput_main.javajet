@@ -78,9 +78,9 @@ if (conns!=null) {
 				}
 			}
 
-			org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = null;
+			org.talend.hadoop.distribution.component.HDFSComponent hdfsDistrib = null;
 			try {
-				hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+				hdfsDistrib = (org.talend.hadoop.distribution.component.HDFSComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hadoopVersion);
 			} catch (java.lang.Exception e) {
 				e.printStackTrace();
 				return "";

@@ -46,9 +46,9 @@ imports="
 	
 	log4jFileUtil.componentStartInfo(node);
 	
-	org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+	org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
 	try {
-		hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+		hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";
@@ -59,9 +59,9 @@ imports="
 
 		private boolean isCustom;
 		private boolean isHadoop2;
-		private org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib;
+		private org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib;
 
-		public GenerateCode(boolean isCustom, boolean isHadoop2, org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib) {
+		public GenerateCode(boolean isCustom, boolean isHadoop2, org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib) {
 			this.isCustom = isCustom;
 			this.isHadoop2 = isHadoop2;
 			this.hbaseDistrib = hbaseDistrib;

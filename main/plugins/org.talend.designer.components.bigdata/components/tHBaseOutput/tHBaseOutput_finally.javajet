@@ -18,9 +18,9 @@ String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CO
 		String distribution = ElementParameterParser.getValue(node,"__DISTRIBUTION__");
 		String hbaseVersion = ElementParameterParser.getValue(node,"__HBASE_VERSION__");
         boolean isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
-		org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+		org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
 		try {
-			hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+			hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
 		} catch (java.lang.Exception e) {
 			e.printStackTrace();
 			return "";

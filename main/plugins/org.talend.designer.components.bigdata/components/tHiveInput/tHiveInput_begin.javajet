@@ -20,7 +20,7 @@ imports="
 	class DBInputBeginUtil extends DefaultDBInputUtil{
 		private String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		private String hiveServer = "hive";
-		private org.talend.core.hadoop.api.components.HiveComponent hiveDistrib;
+		private org.talend.hadoop.distribution.component.HiveComponent hiveDistrib;
 		private boolean isCustom;
 
 
@@ -83,7 +83,7 @@ imports="
 		    }
 
 			try {
-				this.hiveDistrib = (org.talend.core.hadoop.api.components.HiveComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(theDistribution, theVersion);
+				this.hiveDistrib = (org.talend.hadoop.distribution.component.HiveComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(theDistribution, theVersion);
 			} catch (java.lang.Exception e) {
 				e.printStackTrace();
 				return;

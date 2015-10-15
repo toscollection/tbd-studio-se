@@ -23,7 +23,7 @@ String fsDefalutName = "fs.default.name";
 String distribution = null;
 String hadoopVersion = null;
 boolean isCustom = false;
-org.talend.core.hadoop.api.components.HDFSComponent hdfsDistrib = null;
+org.talend.hadoop.distribution.component.HDFSComponent hdfsDistrib = null;
 
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
@@ -45,7 +45,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
     boolean mrUseDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
 
 	try {
-		hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+		hdfsDistrib = (org.talend.hadoop.distribution.component.HDFSComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hadoopVersion);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";
@@ -116,7 +116,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
     		String kerberosPrincipal = ElementParameterParser.getValue(targetNode, "__NAMENODE_PRINCIPAL__");
 
 			try {
-				hdfsDistrib = (org.talend.core.hadoop.api.components.HDFSComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+				hdfsDistrib = (org.talend.hadoop.distribution.component.HDFSComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hadoopVersion);
 			} catch (java.lang.Exception e) {
 				e.printStackTrace();
 				return "";

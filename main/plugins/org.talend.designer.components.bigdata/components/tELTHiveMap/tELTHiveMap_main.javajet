@@ -43,9 +43,9 @@
 	    }
 	}
 
-	org.talend.core.hadoop.api.components.HiveComponent hiveDistrib = null;
+	org.talend.hadoop.distribution.component.HiveComponent hiveDistrib = null;
 	try {
-	    hiveDistrib = (org.talend.core.hadoop.api.components.HiveComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(theDistribution, theVersion);
+	    hiveDistrib = (org.talend.hadoop.distribution.component.HiveComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(theDistribution, theVersion);
 	} catch (java.lang.Exception e) {
 	    e.printStackTrace();
 	    return "";
