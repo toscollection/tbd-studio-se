@@ -253,7 +253,7 @@ imports="
             if(("hive".equals(hiveServer) && !hiveDistrib.doSupportHive1()) || ("hive2".equals(hiveServer) && !hiveDistrib.doSupportHive2())) {
 %>
                 if(true) {
-                    throw new java.lang.Exception("The distribution <%=hiveDistrib.getName()%> does not support this version of Hive . Please check your component configuration.");
+                    throw new java.lang.Exception("The distribution <%=hiveDistrib.getVersionName()%> does not support this version of Hive . Please check your component configuration.");
                 }
 <%
             }
@@ -261,7 +261,7 @@ imports="
             if(("STANDALONE".equals(connectionMode) && !hiveDistrib.doSupportStandaloneMode()) || ("EMBEDDED".equals(connectionMode) && !hiveDistrib.doSupportEmbeddedMode())) {
 %>
                 if(true) {
-                    throw new java.lang.Exception("The distribution <%=hiveDistrib.getName()%> does not support this connection mode . Please check your component configuration.");
+                    throw new java.lang.Exception("The distribution <%=hiveDistrib.getVersionName()%> does not support this connection mode . Please check your component configuration.");
                 }
 <%
             }
