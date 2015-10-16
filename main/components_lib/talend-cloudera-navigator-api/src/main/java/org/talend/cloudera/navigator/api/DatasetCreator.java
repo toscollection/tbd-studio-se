@@ -11,19 +11,23 @@ import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.entities.EntityType;
 import com.cloudera.nav.sdk.model.entities.FileFormat;
 import com.cloudera.nav.sdk.model.entities.HdfsEntity;
+import com.google.common.collect.ImmutableList;
 
-public class SchemaCreator {
+public class DatasetCreator {
 
     private Source fileSystem;
 
     private NavigatorPlugin plugin;
 
-    public SchemaCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password) {
-        this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, false);
+    private String jobName;
+
+    public DatasetCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
+            String jobName) {
+        this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, false);
     }
 
-    public SchemaCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
-            Boolean autoCommit) {
+    public DatasetCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
+            String jobName, Boolean autoCommit) {
         Map<String, Object> configurationMap = new HashMap<String, Object>();
         configurationMap.put(PluginConfigurationFactory.APP_URL, clientApplicationUrl);
         configurationMap.put(PluginConfigurationFactory.NAV_URL, navigatorUrl);
@@ -40,44 +44,47 @@ public class SchemaCreator {
 
         this.plugin = NavigatorPlugin.fromConfigMap(configurationMap);
         this.fileSystem = plugin.getClient().getOnlySource(SourceType.HDFS);
+        this.jobName = jobName;
     }
 
     /*
      * Constructor without required external dependency of the navigator SDK. Need a correctly instanciated map of
      * system configuration
      */
-    public SchemaCreator(Map<String, Object> configurationMap) {
+    public DatasetCreator(Map<String, Object> configurationMap) {
         this(NavigatorPlugin.fromConfigMap(configurationMap));
     }
 
     /*
      * Constructor without required external dependency of the navigator SDK.
      */
-    public SchemaCreator(String configurationFile) {
+    public DatasetCreator(String configurationFile) {
         this(NavigatorPlugin.fromConfigFile(configurationFile));
     }
 
-    public SchemaCreator(NavigatorPlugin plugin) {
+    public DatasetCreator(NavigatorPlugin plugin) {
         this(plugin, SourceType.HDFS);
     }
 
-    public SchemaCreator(NavigatorPlugin plugin, SourceType source) {
+    public DatasetCreator(NavigatorPlugin plugin, SourceType source) {
         this.plugin = plugin;
         this.fileSystem = plugin.getClient().getOnlySource(source);
     }
 
-    public void InstanciateSchema(Map<String, String> columns, String datasetName, String fileSystemPath) {
-        InstanciateSchema(columns, datasetName, fileSystemPath, FileFormat.CSV);
+    public void instanciateSchema(Map<String, String> columns, String datasetName, String fileSystemPath) {
+        instanciateSchema(columns, datasetName, fileSystemPath, FileFormat.CSV);
     }
 
-    public void InstanciateSchema(Map<String, String> columns, String datasetName, String fileSystemPath, FileFormat fileFormat) {
+    public void instanciateSchema(Map<String, String> columns, String datasetName, String fileSystemPath, FileFormat fileFormat) {
         TalendDataset dataset = new TalendDataset();
         dataset.setName(datasetName);
         HdfsEntity container = new HdfsEntity(fileSystemPath, EntityType.DIRECTORY, fileSystem.getIdentity());
         dataset.setDataContainer(container);
         dataset.setFileFormat(fileFormat);
 
-        dataset.setFields(ClouderaFieldConvertor.ConvertToTalendField(columns));
+        dataset.addTags(ImmutableList.of("Talend", jobName));
+
+        dataset.setFields(ClouderaFieldConvertor.convertToTalendField(columns));
 
         // Write metadata
         ResultSet results = plugin.write(dataset);

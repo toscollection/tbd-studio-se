@@ -23,7 +23,7 @@ import java.util.Map.Entry;
  */
 public class ClouderaFieldConvertor {
 
-    public static List<TalendField> ConvertToTalendField(Map<String, String> columns) {
+    public static List<TalendField> convertToTalendField(Map<String, String> columns) {
         List<TalendField> talendFields = new ArrayList<TalendField>();
         for (Entry<String, String> column : columns.entrySet()) {
             talendFields.add(new TalendField(column.getKey(), column.getValue()));
