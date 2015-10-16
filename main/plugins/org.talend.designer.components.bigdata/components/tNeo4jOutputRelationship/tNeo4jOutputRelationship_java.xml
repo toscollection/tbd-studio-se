@@ -69,7 +69,7 @@
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
 
-		<!-- username only on remove server, but mandatory for neo4j 2.2.x -->
+		<!-- username only on remote server, but mandatory for neo4j 2.2.x -->
 		<PARAMETER NAME="SET_USERNAME" FIELD="CHECK" NUM_ROW="7"
 			GROUP="CONNECTION_GROUP" SHOW_IF="(REMOTE_SERVER == 'true') AND (DB_VERSION != 'NEO4J_2_2_X')">
 			<DEFAULT>false</DEFAULT>
