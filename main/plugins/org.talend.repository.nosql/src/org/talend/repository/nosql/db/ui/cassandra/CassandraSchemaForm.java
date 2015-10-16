@@ -16,6 +16,7 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.widgets.Composite;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
 import org.talend.repository.nosql.db.util.cassandra.CassandraConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLGeneralException;
@@ -24,12 +25,40 @@ import org.talend.repository.nosql.ui.common.AbstractNoSQLSchemaForm;
 
 public class CassandraSchemaForm extends AbstractNoSQLSchemaForm {
 
+    private boolean readOnlyStatus = false;
+
+    private boolean isInitialized = false;
+
     public CassandraSchemaForm(Composite parent, ConnectionItem connectionItem, MetadataTable metadataTable, boolean creation,
             WizardPage parentWizardPage) {
         super(parent, connectionItem, metadataTable, creation, parentWizardPage);
         setShowDbTypeColumn(true);
         setDbmID(ICassandraConstants.DBM_ID);
-        setupForm();
+        // setupForm();
+    }
+
+    @Override
+    public void initializeForm() {
+        if (!isInitialized) {
+            boolean isDatastaxApiType = ICassandraConstants.API_TYPE_DATASTAX.equals(getConnection().getAttributes().get(
+                    INoSQLCommonAttributes.API_TYPE));
+            if (isDatastaxApiType) {
+                setDbmID(ICassandraConstants.DBM_DATASTAX_ID);
+            }
+            setupForm();
+            super.setReadOnly(readOnlyStatus);
+            isInitialized = true;
+            this.layout();
+        }
+        super.initializeForm();
+    }
+
+    @Override
+    public void setReadOnly(boolean readOnly) {
+        this.readOnlyStatus = readOnly;
+        if (isInitialized) {
+            super.setReadOnly(readOnly);
+        }
     }
 
     @Override

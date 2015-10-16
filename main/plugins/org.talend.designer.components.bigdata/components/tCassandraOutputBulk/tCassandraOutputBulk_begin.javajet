@@ -47,11 +47,7 @@ String sstablePath = ElementParameterParser.getValue(node,"__SSTABLE_STORE_PATH_
 String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
 String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
 String partitioner = ElementParameterParser.getValue(node,"__PARTITIONER__");
-String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
-String sub_comparator = ElementParameterParser.getValue(node,"__SUBCOMPARATOR__");
-
 String buffer_size = ElementParameterParser.getValue(node,"__BUFFER_SIZE__");
-
 %>
 int nb_line_<%=cid%> = 0;
 byte[] bTrue_<%=cid%> = new byte[1];
@@ -91,20 +87,39 @@ ObjectSerializer_<%=cid%> objectSerializer_<%=cid%> = new ObjectSerializer_<%=ci
 
 org.apache.cassandra.dht.IPartitioner partitioner_<%=cid%> = new org.apache.cassandra.dht.<%=partitioner%>();
 
-org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter writer_<%=cid%> = new org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter(file_<%=cid%>, partitioner_<%=cid%>, <%=keySpace%>, <%=columnFamily%>, 
-	org.apache.cassandra.db.marshal.<%=comparator%>.instance
-	,
-	<%
-	sub_comparator = "NONE";
-	if("NONE".equals(sub_comparator)){
+
+<%
+boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
+if(cqlTable){
+%>
+	org.apache.cassandra.io.sstable.CQLSSTableWriter writer_<%=cid%> = org.apache.cassandra.io.sstable.CQLSSTableWriter
+																			.builder()
+																			.inDirectory(file_<%=cid%>)
+																			.forTable(<%=ElementParameterParser.getValue(node, "__SCHEMA_STMT__")%>)
+																			.using(	<%=ElementParameterParser.getValue(node, "__INSERT_STMT__")%>)
+																			.withBufferSizeInMB(<%=buffer_size%>)
+																			.withPartitioner(partitioner_<%=cid%>)
+																			.build();
+<%
+}else{
+	String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
+	String sub_comparator = ElementParameterParser.getValue(node,"__SUBCOMPARATOR__");
 	%>
-	null
-	<%
-	}else if("ASCIITYPE".equals(comparator)){
-	%>
-	org.apache.cassandra.db.marshal.AsciiType.instance
-	<%
-	}
-	%>
-	,<%=buffer_size%>
-	);      
+	org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter writer_<%=cid%> = new org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter(file_<%=cid%>, partitioner_<%=cid%>, <%=keySpace%>, <%=columnFamily%>, 
+		org.apache.cassandra.db.marshal.<%=comparator%>.instance
+		,
+		<%
+		sub_comparator = "NONE";
+		if("NONE".equals(sub_comparator)){
+		%>
+		null
+		<%
+		}else if("ASCIITYPE".equals(sub_comparator)){
+		%>
+		org.apache.cassandra.db.marshal.AsciiType.instance
+		<%
+		}
+		%>
+		,<%=buffer_size%>
+		);
+<%}%>      
