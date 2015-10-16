@@ -620,10 +620,10 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             serviceTypeToProperties.put(EHadoopServiceType.JOBTRACKER, rmORjtProperties);
         }
         if (getConnection().isUseCustomVersion()) {
-            nnProperties.setUid(connectionItem.getProperty().getId());
+            nnProperties.setUid(connectionItem.getProperty().getId() + ":" + ECustomVersionGroup.COMMON.getName()); //$NON-NLS-1$
             nnProperties.setCustomJars(HCVersionUtil.getCustomVersionMap(getConnection()).get(
                     ECustomVersionGroup.COMMON.getName()));
-            rmORjtProperties.setUid(connectionItem.getProperty().getId());
+            rmORjtProperties.setUid(connectionItem.getProperty().getId() + ":" + ECustomVersionGroup.MAP_REDUCE.getName()); //$NON-NLS-1$
             rmORjtProperties.setCustomJars(HCVersionUtil.getCustomVersionMap(getConnection()).get(
                     ECustomVersionGroup.MAP_REDUCE.getName()));
         }
