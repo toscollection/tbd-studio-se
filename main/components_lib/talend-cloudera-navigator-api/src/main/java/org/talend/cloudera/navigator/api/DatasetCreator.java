@@ -75,6 +75,10 @@ public class DatasetCreator {
         instanciateSchema(columns, datasetName, fileSystemPath, FileFormat.CSV);
     }
 
+    public void instanciateSchema(Map<String, String> columns, String datasetName, String fileSystemPath, String fileFormat) {
+        instanciateSchema(columns, datasetName, fileSystemPath, FileFormat.valueOf(fileFormat));
+    }
+
     public void instanciateSchema(Map<String, String> columns, String datasetName, String fileSystemPath, FileFormat fileFormat) {
         TalendDataset dataset = new TalendDataset();
         dataset.setName(datasetName);
