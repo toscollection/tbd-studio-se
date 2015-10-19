@@ -5,47 +5,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.cloudera.nav.sdk.model.CustomIdGenerator;
 import com.cloudera.nav.sdk.model.entities.Entity;
 
 /*
  * Class to map studio components into cloudera navigator connected entities
- * The entities will be connected to input and output datatsets/HDFS folders
  */
 public class TalendEntityMapper {
 	
-	private static final String ENTITY_NAME_PREFIX = "TLD ";
 	private static final String ENTITY_DESCRIPTION = "Talend Component";
 	private static final String ENTITY_LINK = "http://www.talend.com/";
-	private static final String CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE="Talend";
+	private static final String CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE = "Talend";
 	
-	private Map<String, Map<String, String>> studioComponents;
-	private String flowInputId;
-	private String flowOutputId;
-	private String talendJobId;
+	private List<NavigatorNode> navigatorNodes;
+	// The mapper uses a jobId to create unique entities in Cloudera navigator 
+	private String jobId;
 	
-	public TalendEntityMapper(String flowInputId, String flowOutputId, Map<String, Map<String, String>> studioComponents){
-		this.studioComponents = studioComponents;
-		this.flowInputId = flowInputId;
-		this.flowOutputId = flowOutputId;
-		// Use timestamp in the entities names to create unique entities
-		this.talendJobId = "_" + System.currentTimeMillis();
+	public TalendEntityMapper(List<NavigatorNode> navigatorNodes, String jobId){
+		this.navigatorNodes = navigatorNodes;
+		this.jobId = jobId;
 	}
 	
 	/*
 	 * returns a list of Cloudera navigator entities ready to be written to Cloudera Navigator
 	 * Calls methods to create all of the entities and to connect them together
 	 * 
-	 * Order is very important here as we need to connect the entities in the same order 
-	 * used in Talend studio job.
-	 * 
 	 * Each Talend studio component is mapped into a {@link #TalendEntity}
 	 * Each Talend studio schema element (column name + type) of each component is mapped into a {@link #TalendEntityChild}
 	 * 
 	 * Each {@link #TalendEntity} can have multiple {@link #TalendEntityChild} to reflect the Talend studio component's schema
-	 * 
-	 * {@link #TalendEntity} are linked together to form the flow
-	 * 
-	 * Special attention to the first and the last {@link #TalendEntity} as these need to be connected to flow's input/output
+	 * Each {@link #TalendEntity} can have multiple input/output links to other {@link #TalendEntity}
 	 * 
 	 * Note : Due to limitations in the Cloudera navigator API/SDK we need to connect each {@link #TalendEntityChild} to 
 	 * the next {@link #TalendEntity} in the flow in order to make visible in the lineage navigator
@@ -53,44 +42,25 @@ public class TalendEntityMapper {
 	 */
 	public List<Entity> map(){
 		
-		if(this.studioComponents.keySet().size() > 0){
-			// output list to hold all of the entities
-			List<Entity> output = new ArrayList<Entity>();
-			
-			// list of parent entities (to preserve order)
-			List<TalendEntity> orderedParentEntities = new ArrayList<TalendEntity>();
-			
-			// list of children lists (to preserve order)
-			List<List<TalendEntityChild>> orderedChildrenLists = new ArrayList<List<TalendEntityChild>>();
-			
-			for(Entry<String, Map<String, String>> entry : studioComponents.entrySet()){
-				// Map each studio component into a parent entity
-				TalendEntity parentEntity = mapToParentEntity(entry.getKey());
-				// Map each studio component schema elements into children entities
-				List<TalendEntityChild> childrenEntities = mapToChildrenEntities(entry.getKey(), entry.getValue());
-				// Connect children entities to their parent entity
+		List<Entity> output = new ArrayList<Entity>();
+		
+		if(this.navigatorNodes.size() > 0){
+			for(NavigatorNode navigatorNode : this.navigatorNodes){
+				// Create the parent entity
+				TalendEntity parentEntity = mapToParentEntity(navigatorNode.getName());
+				// Connect the parent entity to its input/output entities
+				connectParentEntity(parentEntity, navigatorNode.getInputNodes(), navigatorNode.getOutputNodes());
+				// Create the children entities (schema elements)
+				List<TalendEntityChild> childrenEntities = mapToChildrenEntities(navigatorNode.getSchema(), parentEntity.getName());
+				// Connect the children entities to their parent
 				connectchildrenToParent(parentEntity, childrenEntities);
-				// Add parent to ordered list of parent entities for later processing
-				orderedParentEntities.add(parentEntity);
-				// Add the children list for for later processing
-				orderedChildrenLists.add(childrenEntities);
+				// Connect the children entities to their target output
+				connectChildrenTotaget(navigatorNode.getOutputNodes(), childrenEntities);
+				// Add parent entity to the output
+				output.add(parentEntity);
+				// Add children entities to output
+				output.addAll(childrenEntities);
 			}
-			
-			// Connect Parents to each other
-			connectParents(orderedParentEntities);
-			// Connect children to their target (next entity in the flow)
-			connectChildrenTotaget(orderedParentEntities, orderedChildrenLists);
-			
-			// Connect flow's input & output
-			setFlowInput(orderedParentEntities.get(0));
-			setFlowOutput(orderedParentEntities.get(orderedParentEntities.size() - 1 ), orderedChildrenLists.get(orderedChildrenLists.size() - 1));
-			
-			// Add all parents & children to the output list
-			output.addAll(orderedParentEntities);
-			for(List<TalendEntityChild> childrenList : orderedChildrenLists){
-				output.addAll(childrenList);
-			}
-			
 			return output;
 		} else{
 			//TODO
@@ -98,20 +68,25 @@ public class TalendEntityMapper {
 		}
 	}
 	
-	public TalendEntity mapToParentEntity(String studioComponentName){
-		TalendEntity talendEntity = new TalendEntity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, studioComponentName + this.talendJobId);
-		talendEntity.setName(ENTITY_NAME_PREFIX + studioComponentName + this.talendJobId);
+	public TalendEntity mapToParentEntity(String componentName){
+		
+		// Create the parent entity representing a navigator node
+		// Important : each Talend Entity is identified by NameSpace + ComponentName + TALEND_JOB_ID
+		TalendEntity talendEntity = new TalendEntity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE,
+				getJobId(), componentName);
 		talendEntity.setDescription(ENTITY_DESCRIPTION);
 		talendEntity.setLink(ENTITY_LINK);
+		
 		return talendEntity;
 	}
 	
-	public List<TalendEntityChild> mapToChildrenEntities(String parent, Map<String, String> studioComponentSchema){
+	public List<TalendEntityChild> mapToChildrenEntities(Map<String, String> schema, String ParentEntityName){
+		
 		List<TalendEntityChild> output = new ArrayList<TalendEntityChild>();
-		for(Entry<String, String> entry : studioComponentSchema.entrySet()){
-			TalendEntityChild talendChildEntity = new TalendEntityChild(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE,
-					entry.getKey() + "_" + parent  + this.talendJobId, entry.getValue());
-			output.add(talendChildEntity);
+		for(Entry<String, String> entry : schema.entrySet()){
+			TalendEntityChild talendEntityChild = new TalendEntityChild(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
+					ParentEntityName, entry.getKey(), entry.getValue());
+			output.add(talendEntityChild);
 		}
 		return output;
 	}
@@ -119,74 +94,42 @@ public class TalendEntityMapper {
 	/*
 	 * Connect schema entities to the parent entity using CHILD -> PARENT relation
 	 */
-	public void connectchildrenToParent(TalendEntity parent, List<TalendEntityChild> children){
+	public void connectchildrenToParent(TalendEntity parentEntity, List<TalendEntityChild> children){
 		for(TalendEntityChild child : children){
-			child.setParent(parent);
+			child.setParent(parentEntity);
 		}
 	}
 	
 	/*
-	 * Connects parents to each other using SOURCE -> TARGET & TARGET -> SOURCE relations
+	 * Connects a parent entity to its input/output using SOURCE -> TARGET & TARGET -> SOURCE relations
 	 */
-	public void connectParents(List<TalendEntity> parents){
-		// Connect 0 to 1 & n to n-1
-		if(parents.size() > 1){
-			parents.get(0).setnextTalendComponent(parents.get(1).generateId());
-			parents.get(parents.size() - 1).setPreviousTalendComponent(parents.get(parents.size() - 2).generateId());
+	public void connectParentEntity(TalendEntity parent, List<String> inputComponents, List<String> outputComponents){
+		for(String input : inputComponents){
+			// generate the id of the component to connect to
+			String id = CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(), input);
+			parent.addPreviousEntity(id);
 		}
-		// Connect i to j / 0 < i,j < n
-		for(int i=1; i < parents.size() - 1; i++){
-			parents.get(i).setPreviousTalendComponent(parents.get(i-1).generateId());
-			parents.get(i).setnextTalendComponent(parents.get(i+1).generateId());
+		for(String output : outputComponents){
+			// generate the id of the component to connect to
+			String id = CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(), output);
+			parent.addNextEntity(id);
 		}
 	}
 	
 	/*
 	 * Connect children to their target entity
 	 */
-	public void connectChildrenTotaget(List<TalendEntity> parents, List<List<TalendEntityChild>> childrenLists){
-		for(int i=0; i < parents.size() - 1; i++){
-			for(TalendEntityChild child : childrenLists.get(i)){
-				child.setTarget(parents.get(i+1).generateId());
+	public void connectChildrenTotaget(List<String> outputComponents, List<TalendEntityChild> children){
+		for(TalendEntityChild talendEntityChild : children){
+			for(String outputComponent : outputComponents){
+				String targetComponentId = CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(), outputComponent);
+				talendEntityChild.addTarget(targetComponentId);
 			}
 		}
 	}
-	
-	/*
-	 * Set the flow's input (Dataset/HDFS dir)
-	 */
-	public void setFlowInput(TalendEntity inputEntity){
-		inputEntity.setPreviousTalendComponent(getFlowInputId());
-	}
-	
-	/*
-	 * Set the flow's output (Dataset/HDFS dir)
-	 */
-	public void setFlowOutput(TalendEntity outputEntity, List<TalendEntityChild> outputChildren){
-		outputEntity.setnextTalendComponent(getFlowOutputId());
-		for(TalendEntityChild child : outputChildren){
-			child.setTarget(getFlowOutputId());
-		}
-	}
 
-	public String getFlowInputId() {
-		return flowInputId;
-	}
-
-	public void setFlowInputId(String flowInputId) {
-		this.flowInputId = flowInputId;
-	}
-
-	public String getFlowOutputId() {
-		return flowOutputId;
-	}
-
-	public void setFlowOutputId(String flowOutputId) {
-		this.flowOutputId = flowOutputId;
-	}
-
-	public Map<String, Map<String, String>> getStudioComponents() {
-		return studioComponents;
+	public String getJobId() {
+		return jobId;
 	}
 	
 }

@@ -1,5 +1,8 @@
 package org.talend.cloudera.navigator.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cloudera.nav.sdk.model.CustomIdGenerator;
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;
@@ -11,32 +14,37 @@ import com.cloudera.nav.sdk.model.entities.EntityType;
 import com.cloudera.nav.sdk.model.relations.RelationRole;
 
 /*
- * Represents Talend components as a Cloudera Navigator entity
+ * Represents Talend components as a Cloudera Navigator entities
  */
 @MClass(model = "talend")
 public class TalendEntity extends Entity {
 	
-
-	private String previousEntityId;
-	private String nextEntityId;
+	private List<String> previousEntitiesId;
+	private List<String> nextEntitiesId;
+	private String entityId;
 	
 	@MProperty
 	private String link;
 	
 	@MRelation(role = RelationRole.SOURCE)
-	private EndPointProxy sourceProxy;
+	private List<EndPointProxy> sourceProxies;
 	
 	@MRelation(role = RelationRole.TARGET)
-	private EndPointProxy targetProxy;
+	private List<EndPointProxy> targetProxies;
 	
-	public TalendEntity(String namespace, String componentName) {
+	public TalendEntity(String namespace, String jobId, String componentName) {
+		this.entityId = CustomIdGenerator.generateIdentity(namespace, jobId, componentName);
 		setName(componentName);
 	    setNamespace(namespace);
+	    sourceProxies = new ArrayList<EndPointProxy>();
+	    previousEntitiesId = new ArrayList<String>();
+	    targetProxies = new ArrayList<EndPointProxy>();
+	    nextEntitiesId = new ArrayList<String>();
 	  }
 	
 	@Override
 	public String generateId() {
-		return CustomIdGenerator.generateIdentity(getNamespace(), getName());
+		return getEntityId();
 	}
 	
 	@Override
@@ -57,52 +65,41 @@ public class TalendEntity extends Entity {
 		this.link = link;
 	}
 	
-	public void setPreviousTalendComponent(String previousComponentId){
-		setPreviousEntityId(previousComponentId);
-		this.sourceProxy = new EndPointProxy(previousComponentId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+	public void addNextEntity(String entityId){
+		this.nextEntitiesId.add(entityId);
+		EndPointProxy endpointProxy = new EndPointProxy(entityId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+		this.targetProxies.add(endpointProxy);
 	}
 	
-	public void setnextTalendComponent(String nextComponentId){
-		setNextEntityId(nextComponentId);
-		this.targetProxy = new EndPointProxy(nextComponentId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+	public void addPreviousEntity(String entityId){
+		this.previousEntitiesId.add(entityId);
+		EndPointProxy endpointProxy = new EndPointProxy(entityId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+		this.sourceProxies.add(endpointProxy);
 	}
-
-	public EndPointProxy getSourceProxy() {
-		return sourceProxy;
-	}
-
-	public void setSourceProxy(EndPointProxy sourceProxy) {
-		this.sourceProxy = sourceProxy;
-	}
-
-	public EndPointProxy getTargetProxy() {
-		return targetProxy;
-	}
-
-	public void setTargetProxy(EndPointProxy targetProxy) {
-		this.targetProxy = targetProxy;
-	}
-
-
-	public String getPreviousEntityId() {
-		return previousEntityId;
-	}
-
-	public void setPreviousEntityId(String previousEntityId) {
-		this.previousEntityId = previousEntityId;
-	}
-
-	public String getNextEntityId() {
-		return nextEntityId;
-	}
-
-	public void setNextEntityId(String nextEntityId) {
-		this.nextEntityId = nextEntityId;
-	}
-
+	
 	@Override
 	public String toString() {
-		return getPreviousEntityId() + "<->" + getName() + "<->" + getNextEntityId();
+		return this.previousEntitiesId + "<->" + getName() + "<->" + this.nextEntitiesId;
+	}
+
+	public String getEntityId() {
+		return entityId;
+	}
+
+	public List<EndPointProxy> getSourceProxies() {
+		return sourceProxies;
+	}
+
+	public void setSourceProxies(List<EndPointProxy> sourceProxies) {
+		this.sourceProxies = sourceProxies;
+	}
+
+	public List<EndPointProxy> getTargetProxies() {
+		return targetProxies;
+	}
+
+	public void setTargetProxies(List<EndPointProxy> targetProxies) {
+		this.targetProxies = targetProxies;
 	}
 
 }

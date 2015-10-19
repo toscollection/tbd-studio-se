@@ -1,5 +1,8 @@
 package org.talend.cloudera.navigator.api;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.cloudera.nav.sdk.model.CustomIdGenerator;
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;
@@ -17,8 +20,8 @@ import com.cloudera.nav.sdk.model.relations.RelationRole;
 public class TalendEntityChild extends DatasetField {
 	
 	private String parentEntityId;
-	
-	private String targetEntityId;
+	private List<String> targetEntitiesId;
+	private String entityId;
 	
 	@MProperty
 	private String link;
@@ -27,17 +30,20 @@ public class TalendEntityChild extends DatasetField {
 	private TalendEntity parent;
 	
 	@MRelation(role = RelationRole.TARGET)
-	private EndPointProxy target;
+	private List<EndPointProxy> targets;
 	
-	public TalendEntityChild(String namespace, String componentName, String type) {
-		setName(componentName);
+	public TalendEntityChild(String namespace, String jobId, String parent, String name, String type) {
+		this.entityId = CustomIdGenerator.generateIdentity(namespace, parent, name, jobId);
+		setName(name);
 	    setNamespace(namespace);
 	    setDataType(type);
+	    this.targetEntitiesId = new ArrayList<String>();
+	    this.targets = new ArrayList<EndPointProxy>();
 	  }
 	
 	@Override
 	public String generateId() {
-		return CustomIdGenerator.generateIdentity(getNamespace(), getName());
+		return getEntityId();
 	}
 	
 	@Override
@@ -67,18 +73,15 @@ public class TalendEntityChild extends DatasetField {
 		this.parent = parent;
 	}
 
-	public EndPointProxy getTarget() {
-		return target;
-	}
-
-	public void setTarget(String targetId) {
-		setTargetEntityId(targetId);
-		this.target = new EndPointProxy(targetId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+	public void addTarget(String targetId) {
+		this.targetEntitiesId.add(targetId);
+		EndPointProxy endpointProxy = new EndPointProxy(targetId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+		this.targets.add(endpointProxy);
 	}
 
 	@Override
 	public String toString() {
-		return getName() + "-ooo-" + getParentEntityId() + " -***-" + getTargetEntityId();
+		return getName() + "-ooo-" + getParentEntityId() + " -***-" + targetEntitiesId;
 	}
 
 	public String getParentEntityId() {
@@ -89,12 +92,19 @@ public class TalendEntityChild extends DatasetField {
 		this.parentEntityId = parentEntityId;
 	}
 
-	public String getTargetEntityId() {
-		return targetEntityId;
+	public String getEntityId() {
+		return entityId;
 	}
 
-	public void setTargetEntityId(String targetEntityId) {
-		this.targetEntityId = targetEntityId;
+	public List<String> getTargetEntitiesId() {
+		return targetEntitiesId;
 	}
-	
+
+	public void setTargetEntitiesId(List<String> targetEntitiesId) {
+		this.targetEntitiesId = targetEntitiesId;
+	}
+
+	public List<EndPointProxy> getTargets() {
+		return targets;
+	}	
 }
