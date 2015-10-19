@@ -1,32 +1,31 @@
 package org.talend.cloudera.navigator.api;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.cloudera.nav.sdk.client.NavigatorPlugin;
 import com.cloudera.nav.sdk.client.PluginConfigurationFactory;
 import com.cloudera.nav.sdk.client.writer.ResultSet;
-import com.cloudera.nav.sdk.model.Source;
-import com.cloudera.nav.sdk.model.SourceType;
-import com.cloudera.nav.sdk.model.entities.EntityType;
-import com.cloudera.nav.sdk.model.entities.FileFormat;
-import com.cloudera.nav.sdk.model.entities.HdfsEntity;
-import com.google.common.collect.ImmutableList;
+import com.cloudera.nav.sdk.model.entities.Entity;
 
-public class DatasetCreator {
-
-    private Source fileSystem;
-
-    private NavigatorPlugin plugin;
+public class LinageCreator {
 
     private String jobName;
 
-    public DatasetCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
+    private NavigatorPlugin plugin;
+
+    private List<NavigatorNode> inputNavigatorNodes = new ArrayList<NavigatorNode>();
+
+    private List<Entity> outputEntries = new ArrayList<Entity>();
+
+    public LinageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName) {
         this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, false);
     }
 
-    public DatasetCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
+    public LinageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, Boolean autoCommit) {
         Map<String, Object> configurationMap = new HashMap<String, Object>();
         configurationMap.put(PluginConfigurationFactory.APP_URL, clientApplicationUrl);
@@ -43,30 +42,19 @@ public class DatasetCreator {
         }
 
         this.plugin = NavigatorPlugin.fromConfigMap(configurationMap);
-        this.fileSystem = plugin.getClient().getOnlySource(SourceType.HDFS);
         this.jobName = jobName;
     }
 
-    public void instanciateSchema(Map<String, String> columns, String fileSystemPath, String fileFormat) {
-        instanciateSchema(columns, fileSystemPath, FileFormat.valueOf(fileFormat));
+    public void addNodeToLineage(String name, Map<String, String> schema, List<String> inputNodes, List<String> outputNodes) {
+        inputNavigatorNodes.add(new NavigatorNode(name, schema, inputNodes, outputNodes));
     }
 
-    public void instanciateSchema(Map<String, String> columns, String fileSystemPath, FileFormat fileFormat) {
-        TalendDataset dataset = new TalendDataset();
-        dataset.setName(ClouderaAPIUtil.getDatasetName(fileSystemPath));
-        HdfsEntity container = new HdfsEntity(fileSystemPath, EntityType.DIRECTORY, fileSystem.getIdentity());
-        dataset.setDataContainer(container);
-        dataset.setFileFormat(fileFormat);
-
-        dataset.addTags(ImmutableList.of("Talend", jobName)); //$NON-NLS-1$
-
-        dataset.setFields(ClouderaFieldConvertor.convertToTalendField(columns));
-
+    public void sendToNavigator() {
+        // TODO: outputEntries = dosomthing(inputNavigatorNodes);
         // Write metadata
-        ResultSet results = plugin.write(dataset);
+        ResultSet results = plugin.write(outputEntries);
         if (results.hasErrors()) {
             throw new RuntimeException(results.toString());
         }
     }
-
 }
