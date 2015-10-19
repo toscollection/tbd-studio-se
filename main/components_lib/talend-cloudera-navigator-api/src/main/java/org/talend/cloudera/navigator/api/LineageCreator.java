@@ -10,7 +10,7 @@ import com.cloudera.nav.sdk.client.PluginConfigurationFactory;
 import com.cloudera.nav.sdk.client.writer.ResultSet;
 import com.cloudera.nav.sdk.model.entities.Entity;
 
-public class LinageCreator {
+public class LineageCreator {
 
     private String jobName;
 
@@ -20,12 +20,12 @@ public class LinageCreator {
 
     private List<Entity> outputEntries = new ArrayList<Entity>();
 
-    public LinageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
+    public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName) {
         this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, false);
     }
 
-    public LinageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
+    public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, Boolean autoCommit) {
         Map<String, Object> configurationMap = new HashMap<String, Object>();
         configurationMap.put(PluginConfigurationFactory.APP_URL, clientApplicationUrl);
