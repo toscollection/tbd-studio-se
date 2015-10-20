@@ -47,14 +47,24 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
+            NAME="TABLE_TYPE"
+            FIELD="CLOSED_LIST"
+            NUM_ROW="3"
+        >
+            <ITEMS DEFAULT="NON_CQL">
+                <ITEM NAME="NON_CQL" VALUE="NON_CQL"/>
+                <ITEM NAME="CQL" VALUE="CQL"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER
             NAME="DB_VERSION"
             FIELD="CLOSED_LIST"
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="5"
-            >
+        >
             <ITEMS DEFAULT="CASSANDRA_1_1_2">
-                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
-                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2" NOT_SHOW_IF="TABLE_TYPE=='CQL'"/>
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2" NOT_SHOW_IF="TABLE_TYPE=='CQL'"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
             </ITEMS>
         </PARAMETER>
@@ -92,6 +102,7 @@
             FIELD="CLOSED_LIST"
             REQUIRED="true"
             NUM_ROW="20"
+            NOT_SHOW_IF="TABLE_TYPE=='CQL'"
         >
             <ITEMS DEFAULT="ASCIITYPE">
                 <ITEM NAME="ASCIITYPE" VALUE="AsciiType"/>
@@ -114,6 +125,24 @@
             </ITEMS>
         </PARAMETER-->
         <PARAMETER
+            NAME="SCHEMA_STMT"
+            FIELD="TEXT"
+            NUM_ROW="25"
+            REQUIRED="true"
+            SHOW_IF="TABLE_TYPE=='CQL'"
+        >
+          <DEFAULT>"create table ks.tb (id int, name text, birthday timestamp, primary key(id, birthday)) with clustering order by (birthday desc)"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="INSERT_STMT"
+            FIELD="TEXT"
+            NUM_ROW="26"
+            REQUIRED="true"
+            SHOW_IF="TABLE_TYPE=='CQL'"
+        >
+          <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
             NAME="SSTABLE_STORE_PATH"
             FIELD="DIRECTORY"
             REQUIRED="true"
@@ -127,7 +156,8 @@
             REQUIRED="true"
             NUM_ROW="40"
         >
-            <DEFAULT>64</DEFAULT>
+            <DEFAULT IF="TABLE_TYPE=='NON_CQL'">64</DEFAULT>
+            <DEFAULT IF="TABLE_TYPE=='CQL'">128</DEFAULT>
         </PARAMETER>
     </PARAMETERS>
     <ADVANCED_PARAMETERS/>

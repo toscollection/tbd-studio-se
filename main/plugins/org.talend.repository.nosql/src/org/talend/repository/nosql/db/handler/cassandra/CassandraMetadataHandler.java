@@ -43,16 +43,28 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
 
     private static ICassandraMetadataHandler instance = null;
 
+    private static ICassandraMetadataHandler instanceForDataStax = null;
+
     private static Object cluster;
 
-    private CassandraMetadataHandler() {
+    private String dbmsId = ICassandraConstants.DBM_ID;
+
+    private CassandraMetadataHandler(String _dbmsId) {
+        this.dbmsId = _dbmsId;
     }
 
     public static synchronized ICassandraMetadataHandler getInstance() {
         if (instance == null) {
-            instance = new CassandraMetadataHandler();
+            instance = new CassandraMetadataHandler(ICassandraConstants.DBM_ID);
         }
         return instance;
+    }
+
+    public static synchronized ICassandraMetadataHandler getInstanceForDataStax() {
+        if (instanceForDataStax == null) {
+            instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM_DATASTAX_ID);
+        }
+        return instanceForDataStax;
     }
 
     @Override
@@ -334,7 +346,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         String talendType = null;
         try {
             String dbType = getColumnDbType(column);
-            MappingTypeRetriever mappingTypeRetriever = MetadataTalendType.getMappingTypeRetriever(ICassandraConstants.DBM_ID);
+            MappingTypeRetriever mappingTypeRetriever = MetadataTalendType.getMappingTypeRetriever(dbmsId);
             talendType = mappingTypeRetriever.getDefaultSelectedTalendType(dbType);
             if (talendType == null) {
                 talendType = JavaTypesManager.STRING.getId();
@@ -352,7 +364,10 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
             Object type = NoSQLReflection.invokeMethod(column, "getType"); //$NON-NLS-1$
             if (type != null) {
                 Object typeName = NoSQLReflection.invokeMethod(type, "getName"); //$NON-NLS-1$
-                dbType = ((String) NoSQLReflection.invokeMethod(typeName, "toString")).toUpperCase(); //$NON-NLS-1$
+                dbType = ((String) NoSQLReflection.invokeMethod(typeName, "toString")); //$NON-NLS-1$
+                if (ICassandraConstants.DBM_ID.equals(dbmsId)) {
+                    dbType = dbType.toUpperCase();
+                }
             }
         } catch (Exception e) {
             throw new NoSQLServerException(e);

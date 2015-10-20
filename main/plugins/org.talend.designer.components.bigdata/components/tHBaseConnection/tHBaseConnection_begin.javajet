@@ -28,9 +28,9 @@
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
 
-	org.talend.core.hadoop.api.components.HBaseComponent hbaseDistrib = null;
+	org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
 	try {
-		hbaseDistrib = (org.talend.core.hadoop.api.components.HBaseComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+		hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";

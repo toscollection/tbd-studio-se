@@ -20,7 +20,7 @@ imports="
 	class DBInputBeginUtil extends DefaultDBInputUtil{
 		private String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		private String hiveServer = "hive";
-		private org.talend.core.hadoop.api.components.HiveComponent hiveDistrib;
+		private org.talend.hadoop.distribution.component.HiveComponent hiveDistrib;
 		private boolean isCustom;
 
 
@@ -83,12 +83,12 @@ imports="
 		    }
 
 			try {
-				this.hiveDistrib = (org.talend.core.hadoop.api.components.HiveComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(theDistribution, theVersion);
+				this.hiveDistrib = (org.talend.hadoop.distribution.component.HiveComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(theDistribution, theVersion);
 			} catch (java.lang.Exception e) {
 				e.printStackTrace();
 				return;
 			}
-			this.isCustom = this.hiveDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+			this.isCustom = this.hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 			if(hiveServer!=null && !"".equals(hiveServer.trim()) && (isCustom || hiveDistrib.doSupportHive2())) {
 				hiveServer = hiveServer.toLowerCase();
@@ -102,7 +102,7 @@ imports="
 			if(("hive".equals(this.hiveServer) && !hiveDistrib.doSupportHive1()) || ("hive2".equals(this.hiveServer) && !hiveDistrib.doSupportHive2())) {
 %>
 				if(true) {
-					throw new java.lang.Exception("The distribution <%=hiveDistrib.getName()%> does not support this version of Hive . Please check your component configuration.");
+					throw new java.lang.Exception("The distribution <%=hiveDistrib.getVersion()%> does not support this version of Hive . Please check your component configuration.");
 				}
 <%
 			}
@@ -110,7 +110,7 @@ imports="
 			if(("STANDALONE".equals(connectionMode) && !hiveDistrib.doSupportStandaloneMode()) || ("EMBEDDED".equals(connectionMode) && !hiveDistrib.doSupportEmbeddedMode())) {
 %>
 				if(true) {
-					throw new java.lang.Exception("The distribution <%=hiveDistrib.getName()%> does not support this connection mode . Please check your component configuration.");
+					throw new java.lang.Exception("The distribution <%=hiveDistrib.getVersion()%> does not support this connection mode . Please check your component configuration.");
 				}
 <%
 			}

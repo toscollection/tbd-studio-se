@@ -53,6 +53,7 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.EImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.runtime.swt.tableviewer.TableViewerCreatorNotModifiable.LAYOUT_MODE;
+import org.talend.commons.ui.swt.extended.table.ExtendedTableModel;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
@@ -435,9 +436,10 @@ public abstract class AbstractNoSQLSchemaForm extends AbstractNoSQLForm {
      * DOC PLV Comment method "synchronizedTalendType".
      */
     protected void synchronizedTalendType() {
-        if (showDbTypeColumn && dbmID != null) {
-            ExtendedTableResetDBTypesCommand command = new ExtendedTableResetDBTypesCommand(
-                    tableEditorView.getExtendedTableModel(), dbmID, tableEditorView.getExtendedTableViewer());
+        ExtendedTableModel extendedTable = tableEditorView.getExtendedTableModel();
+        if (showDbTypeColumn && dbmID != null && extendedTable != null) {
+            ExtendedTableResetDBTypesCommand command = new ExtendedTableResetDBTypesCommand(extendedTable, dbmID,
+                    tableEditorView.getExtendedTableViewer());
             command.execute();
         }
     }

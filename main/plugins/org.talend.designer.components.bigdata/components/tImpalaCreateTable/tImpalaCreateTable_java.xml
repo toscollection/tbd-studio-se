@@ -42,22 +42,9 @@
 			REQUIRED="true" FILTER="tImpalaConnection" NUM_ROW="4"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'true'" />
 
-		<PARAMETER NAME="DISTRIBUTION" FIELD="CLOSED_LIST" NUM_ROW="5"
-			REQUIRED="true" GROUP="VERSION" REPOSITORY_VALUE="DISTRIBUTION"
-			SHOW_IF="USE_EXISTING_CONNECTION=='false'">
-			<ITEMS DEFAULT="CLOUDERA">
-				<ITEM NAME="CLOUDERA" VALUE="CLOUDERA" />
-				<ITEM NAME="CUSTOM" VALUE="CUSTOM" />
-			</ITEMS>
-		</PARAMETER>
-		<PARAMETER NAME="IMPALA_VERSION" FIELD="CLOSED_LIST"
-			NUM_ROW="5" REQUIRED="true" GROUP="VERSION" REPOSITORY_VALUE="IMPALA_VERSION"
-			NOT_SHOW_IF="(DISTRIBUTION=='CUSTOM' OR USE_EXISTING_CONNECTION=='true')">
-			<ITEMS DEFAULT="Cloudera_CDH5_1">
-				<ITEM NAME="Cloudera_CDH5_1" VALUE="Cloudera_CDH5_1" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
-				<ITEM NAME="Cloudera_CDH5_4" VALUE="Cloudera_CDH5_4" SHOW_IF="DISTRIBUTION=='CLOUDERA'" />
-			</ITEMS>
-		</PARAMETER>
+		<PARAMETER NAME="IMPALA" FIELD="HADOOP_DISTRIBUTION"
+			NUM_ROW="5" SHOW_IF="USE_EXISTING_CONNECTION=='false'" GROUP="VERSION" />
+
 		<PARAMETER NAME="HADOOP_CUSTOM_JARS" GROUP="VERSION"
 			FIELD="HADOOP_JARS_DIALOG" NUM_ROW="5"
 			SHOW_IF="(DISTRIBUTION=='CUSTOM' AND USE_EXISTING_CONNECTION=='false')"
@@ -283,49 +270,62 @@
 
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="commons-logging-1.1.3.jar" MODULE="commons-logging-1.1.3.jar" MVN="mvn:org.talend.libraries/commons-logging-1.1.3/6.0.0" 
+			<IMPORT NAME="commons-logging-1.1.3.jar" MODULE="commons-logging-1.1.3.jar"
+				MVN="mvn:org.talend.libraries/commons-logging-1.1.3/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-logging-1.1.3.jar"
-				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" 
+				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')"
 				BundleID="" />
-			<IMPORT NAME="hive-common-0.12.0-cdh5.1.2.jar" MODULE="hive-common-0.12.0-cdh5.1.2.jar" MVN="mvn:org.talend.libraries/hive-common-0.12.0-cdh5.1.2/6.0.0" 
+			<IMPORT NAME="hive-common-0.12.0-cdh5.1.2.jar" MODULE="hive-common-0.12.0-cdh5.1.2.jar"
+				MVN="mvn:org.talend.libraries/hive-common-0.12.0-cdh5.1.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-common-0.12.0-cdh5.1.2.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="hadoop-common-2.3.0-cdh5.1.2.jar" MODULE="hadoop-common-2.3.0-cdh5.1.2.jar" MVN="mvn:org.talend.libraries/hadoop-common-2.3.0-cdh5.1.2/6.0.0" 
+			<IMPORT NAME="hadoop-common-2.3.0-cdh5.1.2.jar" MODULE="hadoop-common-2.3.0-cdh5.1.2.jar"
+				MVN="mvn:org.talend.libraries/hadoop-common-2.3.0-cdh5.1.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hadoop-common-2.3.0-cdh5.1.2.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="hive-jdbc-0.12.0-cdh5.1.2.jar" MODULE="hive-jdbc-0.12.0-cdh5.1.2.jar" MVN="mvn:org.talend.libraries/hive-jdbc-0.12.0-cdh5.1.2/6.0.0" 
+			<IMPORT NAME="hive-jdbc-0.12.0-cdh5.1.2.jar" MODULE="hive-jdbc-0.12.0-cdh5.1.2.jar"
+				MVN="mvn:org.talend.libraries/hive-jdbc-0.12.0-cdh5.1.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-jdbc-0.12.0-cdh5.1.2.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="hive-metastore-0.12.0-cdh5.1.2.jar" MODULE="hive-metastore-0.12.0-cdh5.1.2.jar" MVN="mvn:org.talend.libraries/hive-metastore-0.12.0-cdh5.1.2/6.0.0" 
+			<IMPORT NAME="hive-metastore-0.12.0-cdh5.1.2.jar" MODULE="hive-metastore-0.12.0-cdh5.1.2.jar"
+				MVN="mvn:org.talend.libraries/hive-metastore-0.12.0-cdh5.1.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-metastore-0.12.0-cdh5.1.2.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="hive-service-0.12.0-cdh5.1.2.jar" MODULE="hive-service-0.12.0-cdh5.1.2.jar" MVN="mvn:org.talend.libraries/hive-service-0.12.0-cdh5.1.2/6.0.0" 
+			<IMPORT NAME="hive-service-0.12.0-cdh5.1.2.jar" MODULE="hive-service-0.12.0-cdh5.1.2.jar"
+				MVN="mvn:org.talend.libraries/hive-service-0.12.0-cdh5.1.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/hive-service-0.12.0-cdh5.1.2.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="httpcore-4.1.3.jar" MODULE="httpcore-4.1.3.jar" MVN="mvn:org.talend.libraries/httpcore-4.1.3/6.0.0" 
+			<IMPORT NAME="httpcore-4.1.3.jar" MODULE="httpcore-4.1.3.jar"
+				MVN="mvn:org.talend.libraries/httpcore-4.1.3/6.0.0"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="httpclient-4.2.5.jar" MODULE="httpclient-4.2.5.jar" MVN="mvn:org.talend.libraries/httpclient-4.2.5/6.0.0" 
+			<IMPORT NAME="httpclient-4.2.5.jar" MODULE="httpclient-4.2.5.jar"
+				MVN="mvn:org.talend.libraries/httpclient-4.2.5/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.http/lib/httpclient-4.2.5.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar" MVN="mvn:org.talend.libraries/libfb303-0.9.0/6.0.0" 
+			<IMPORT NAME="libfb303-0.9.0.jar" MODULE="libfb303-0.9.0.jar"
+				MVN="mvn:org.talend.libraries/libfb303-0.9.0/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.1.2/lib/libfb303-0.9.0.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="libthrift-0.9.0.cloudera.2.jar" MODULE="libthrift-0.9.0.cloudera.2.jar" MVN="mvn:org.talend.libraries/libthrift-0.9.0.cloudera.2/6.0.0" 
+			<IMPORT NAME="libthrift-0.9.0.cloudera.2.jar" MODULE="libthrift-0.9.0.cloudera.2.jar"
+				MVN="mvn:org.talend.libraries/libthrift-0.9.0.cloudera.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5/lib/libthrift-0.9.0.cloudera.2.jar"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar" MVN="mvn:org.talend.libraries/log4j-1.2.17/6.0.0" 
+			<IMPORT NAME="log4j-1.2.17.jar" MODULE="log4j-1.2.17.jar"
+				MVN="mvn:org.talend.libraries/log4j-1.2.17/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.apache/lib/log4j-1.2.17.jar"
-				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" 
+				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')"
 				BundleID="" />
-			<IMPORT NAME="slf4j-api-1.7.5.jar" MODULE="slf4j-api-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.7.5/6.0.0" 
+			<IMPORT NAME="slf4j-api-1.7.5.jar" MODULE="slf4j-api-1.7.5.jar"
+				MVN="mvn:org.talend.libraries/slf4j-api-1.7.5/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
-				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" 
+				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')"
 				BundleID="" />
-			<IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0" 
+			<IMPORT NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar"
+				MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"
-				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" 
+				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_1' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')"
 				BundleID="" />
-				
+
 			<!-- Cloudera_CDH5_4 -->
 			<IMPORT MODULE_GROUP="IMPALA-LIB-CDH_5_4_LASTEST"
 				REQUIRED_IF="(IMPALA_VERSION=='Cloudera_CDH5_4' AND DISTRIBUTION!='CUSTOM' AND USE_EXISTING_CONNECTION=='false')" />

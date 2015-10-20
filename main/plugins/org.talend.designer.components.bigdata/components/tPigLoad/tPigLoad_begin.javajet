@@ -23,15 +23,15 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
 
-	org.talend.core.hadoop.api.components.PigComponent pigDistrib = null;
+	org.talend.hadoop.distribution.component.PigComponent pigDistrib = null;
 	try {
-		pigDistrib = (org.talend.core.hadoop.api.components.PigComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, pigVersion);
+		pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, pigVersion);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";
 	}
 
-	boolean isCustom = pigDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = pigDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
@@ -192,7 +192,7 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 
-	boolean useTez = "true".equals(ElementParameterParser.getValue(node, "__TEZ__"));
+	boolean useTez = !isLocal && pigDistrib.doSupportTezForPig() && "TEZ".equals(ElementParameterParser.getValue(node, "__ENGINE__"));
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
 <%

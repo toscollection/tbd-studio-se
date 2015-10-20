@@ -43,14 +43,14 @@
 	    }
 	}
 
-	org.talend.core.hadoop.api.components.HiveComponent hiveDistrib = null;
+	org.talend.hadoop.distribution.component.HiveComponent hiveDistrib = null;
 	try {
-	    hiveDistrib = (org.talend.core.hadoop.api.components.HiveComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(theDistribution, theVersion);
+	    hiveDistrib = (org.talend.hadoop.distribution.component.HiveComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(theDistribution, theVersion);
 	} catch (java.lang.Exception e) {
 	    e.printStackTrace();
 	    return "";
 	}
-	boolean isCustom = hiveDistrib instanceof org.talend.core.hadoop.api.distribution.CustomDistribution;
+	boolean isCustom = hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
 	String hiveServer = ElementParameterParser.getValue(node, "__HIVE_SERVER__");
 	String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");

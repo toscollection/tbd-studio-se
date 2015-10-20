@@ -13,9 +13,9 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
 
-	org.talend.core.hadoop.api.components.PigComponent pigDistrib = null;
+	org.talend.hadoop.distribution.component.PigComponent pigDistrib = null;
 	try {
-		pigDistrib = (org.talend.core.hadoop.api.components.PigComponent) org.talend.core.hadoop.api.DistributionFactory.buildDistribution(distribution, pigVersion);
+		pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, pigVersion);
 	} catch (java.lang.Exception e) {
 		e.printStackTrace();
 		return "";
