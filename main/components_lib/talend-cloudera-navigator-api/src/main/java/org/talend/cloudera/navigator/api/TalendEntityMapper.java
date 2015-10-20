@@ -17,7 +17,7 @@ public class TalendEntityMapper {
 	private static final String ENTITY_LINK = "http://www.talend.com/";
 	public static final String CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE = "Talend";
 	public static final String DATASET_MARKER="DATASET_";
-	public static final String[] FILE_INPUT_OUTPUT_COMPONENT_PREFIXS= {"tFile", "tHDFS", "tParquet", "tS3", "tAvro"};
+	public static final String[] FILE_INPUT_OUTPUT_COMPONENT_PREFIXS= {"tFile", "tHDFS", "tParquet", "tAvro"};
 	
 	private List<NavigatorNode> navigatorNodes;
 	// The mapper uses a jobId to create unique entities in Cloudera navigator
