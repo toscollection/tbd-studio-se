@@ -370,7 +370,7 @@
                 REQUIRED_IF="(DB_VERSION=='NEO4J_2_2_X') AND (USE_EXISTING_CONNECTION == 'false')" />
 
             <IMPORT NAME="lucene-core-3.6.2" MODULE="lucene-core-3.6.2.jar"
-                MVN="mvn:org.talend.libraries/lucene-core-3.6.2/6.1.0"
+                MVN="mvn:org.talend.libraries/lucene-core-3.6.2/6.0.0"
                 UrlPath="platform:/plugin/org.talend.libraries.apache.lucene/lib/lucene-core-3.6.2.jar"
                 REQUIRED_IF="(DB_VERSION=='NEO4J_2_2_X') AND (USE_EXISTING_CONNECTION == 'false')" />
             <IMPORT NAME="neo4j-cypher-compiler-1.9-2.0.4" MODULE="neo4j-cypher-compiler-1.9-2.0.4.jar"
