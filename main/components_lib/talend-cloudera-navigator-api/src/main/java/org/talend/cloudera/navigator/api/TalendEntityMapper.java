@@ -15,9 +15,9 @@ public class TalendEntityMapper {
 	
 	private static final String ENTITY_DESCRIPTION = "Talend Component";
 	private static final String ENTITY_LINK = "http://www.talend.com/";
-	private static final String CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE = "Talend";
-	private static final String DATASET_MARKER="DATASET_";
-	private static final String FILE_COMPONENT_PREFIX="tFile";
+	public static final String CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE = "Talend";
+	public static final String DATASET_MARKER="DATASET_";
+	public static final String[] FILE_INPUT_OUTPUT_COMPONENT_PREFIXS= {"tFile", "tHDFS", "tParquet", "tS3", "tAvro"};
 	
 	private List<NavigatorNode> navigatorNodes;
 	// The mapper uses a jobId to create unique entities in Cloudera navigator
@@ -54,8 +54,8 @@ public class TalendEntityMapper {
 		if(this.navigatorNodes.size() > 0){
 			for(NavigatorNode navigatorNode : this.navigatorNodes){
 				if((navigatorNode.getInputNodes().size()!=0 && navigatorNode.getOutputNodes().size()!=0) 
-						|| (navigatorNode.getInputNodes().size()==0 && navigatorNode.getName().startsWith(FILE_COMPONENT_PREFIX)) 
-						||(navigatorNode.getOutputNodes().size()==0 && navigatorNode.getName().startsWith(FILE_COMPONENT_PREFIX))){
+						|| (navigatorNode.getInputNodes().size()==0 && IsFileInputOutputComponent(navigatorNode.getName())) 
+						||(navigatorNode.getOutputNodes().size()==0 && IsFileInputOutputComponent(navigatorNode.getName()))){
 					// Processing || FileInput/Output Component 
 					TalendInputOutputEntity parentEntity = new TalendInputOutputEntity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE,
 							getJobId(), navigatorNode.getName());
@@ -157,13 +157,13 @@ public class TalendEntityMapper {
 	 */
 	public void connectParentEntity(TalendInputOutputEntity parent, NavigatorNode navigatorNode){
 		// File Input components should be linked with a dataset
-		if(navigatorNode.getInputNodes().size()==0 && navigatorNode.getName().startsWith(FILE_COMPONENT_PREFIX)){
+		if(navigatorNode.getInputNodes().size()==0 && IsFileInputOutputComponent(navigatorNode.getName())){
 			String id = CustomIdGenerator.generateIdentity(DATASET_MARKER, CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
 					navigatorNode.getName());
 			parent.addPreviousEntity(id);
 		}
 		// File Output components should be linked with a dataset
-		if(navigatorNode.getOutputNodes().size()==0 && navigatorNode.getName().startsWith(FILE_COMPONENT_PREFIX)){
+		if(navigatorNode.getOutputNodes().size()==0 && IsFileInputOutputComponent(navigatorNode.getName())){
 			String id = CustomIdGenerator.generateIdentity(DATASET_MARKER, CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
 					navigatorNode.getName());
 			parent.addNextEntity(id);
@@ -208,8 +208,13 @@ public class TalendEntityMapper {
 	public void connectChildrenTotaget(NavigatorNode navigatorNode, List<TalendEntityChild> children){
 		for(TalendEntityChild talendEntityChild : children){
 			// File Output children entities should be linked with a dataset
-			if(navigatorNode.getOutputNodes().size()==0 && navigatorNode.getName().startsWith(FILE_COMPONENT_PREFIX)){
+			if(navigatorNode.getOutputNodes().size()==0 && IsFileInputOutputComponent(navigatorNode.getName())){
 				String targetComponentId = CustomIdGenerator.generateIdentity(DATASET_MARKER, CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
+						navigatorNode.getName());
+				talendEntityChild.addTarget(targetComponentId);
+			// We connect the children to the component itself
+			} else if(navigatorNode.getOutputNodes().size()==0 && !IsFileInputOutputComponent(navigatorNode.getName())){
+				String targetComponentId = CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
 						navigatorNode.getName());
 				talendEntityChild.addTarget(targetComponentId);
 			}
@@ -225,6 +230,15 @@ public class TalendEntityMapper {
 		for(TalendEntityChild child : children){
 			this.debugStringBuilder.append("\t" + child.toString() + "\n");
 		}
+	}
+	
+	public boolean IsFileInputOutputComponent(String componentName){
+		for(String prefix : FILE_INPUT_OUTPUT_COMPONENT_PREFIXS){
+			if(componentName.toLowerCase().startsWith(prefix.toLowerCase())){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override
