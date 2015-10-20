@@ -81,7 +81,7 @@ public class TalendEntityChild extends DatasetField {
 
 	@Override
 	public String toString() {
-		return getName() + "-ooo-" + getParentEntityId() + " -***-" + targetEntitiesId;
+		return getParentEntityId() + "__" + getName() + " --->" + targetEntitiesId;
 	}
 
 	public String getParentEntityId() {
@@ -106,5 +106,5 @@ public class TalendEntityChild extends DatasetField {
 
 	public List<EndPointProxy> getTargets() {
 		return targets;
-	}	
+	}
 }
