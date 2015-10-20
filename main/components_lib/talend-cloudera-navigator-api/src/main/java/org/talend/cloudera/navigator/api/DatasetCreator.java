@@ -52,8 +52,7 @@ public class DatasetCreator {
     }
 
     public void instanciateSchema(Map<String, String> columns, String fileSystemPath, FileFormat fileFormat) {
-        TalendDataset dataset = new TalendDataset();
-        dataset.setName(ClouderaAPIUtil.getDatasetName(fileSystemPath));
+        TalendDataset dataset = new TalendDataset(ClouderaAPIUtil.getDatasetName(fileSystemPath), "componentName", "jobId");
         HdfsEntity container = new HdfsEntity(fileSystemPath, EntityType.DIRECTORY, fileSystem.getIdentity());
         dataset.setDataContainer(container);
         dataset.setFileFormat(fileFormat);

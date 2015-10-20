@@ -67,4 +67,9 @@ public class NavigatorNode {
     public void setSchema(Map<String, String> schema) {
         this.schema = schema;
     }
+
+    @Override
+    public String toString() {
+        return "[" + name + "|" + schema + "|" + inputNodes + "|" + outputNodes + "]";
+    }
 }
