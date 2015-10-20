@@ -227,7 +227,8 @@ public class TalendEntityMapper {
 		}
 	}
 	
-	public String toDebugString(){
+	@Override
+	public String toString(){
 		return this.debugStringBuilder.toString();
 	}
 
