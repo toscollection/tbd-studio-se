@@ -14,8 +14,14 @@ package org.talend.cloudera.navigator.api.util;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
-import org.talend.cloudera.navigator.api.util.ClouderaAPIUtil;
+import org.talend.cloudera.navigator.api.NavigatorNode;
 
 /**
  * created by pbailly on 16 Oct 2015 Detailled comment
@@ -39,12 +45,52 @@ public class ClouderaAPIUtilTest {
     }
 
     @Test
-    public void ClouderaAPIUtil() {
+    public void TestClouderaAPIUtil() {
         for (String myAllowedPrefix : ClouderaAPIUtil.FILE_INPUT_OUTPUT_COMPONENT_PREFIXS) {
             assertTrue(ClouderaAPIUtil.isFileInputOutputComponent(myAllowedPrefix));
             assertTrue(ClouderaAPIUtil.isFileInputOutputComponent(myAllowedPrefix + "_"));
             assertTrue(ClouderaAPIUtil.isFileInputOutputComponent(myAllowedPrefix.toUpperCase() + "_"));
             assertFalse(ClouderaAPIUtil.isFileInputOutputComponent("nope_" + myAllowedPrefix.toUpperCase() + "_"));
         }
+    }
+
+    @Test
+    public void TestRetrieveNavigatorNode() {
+        List<NavigatorNode> navigatorNodes = new ArrayList<NavigatorNode>();
+        Map<String, String> schema = new HashMap<String, String>();
+        schema.put("id", "int");
+        NavigatorNode nav1 = new NavigatorNode("comp1", schema, null, null);
+        navigatorNodes.add(nav1);
+        NavigatorNode nav2 = new NavigatorNode("comp2", schema, null, null);
+        navigatorNodes.add(nav2);
+        assertNotNull(ClouderaAPIUtil.retrieveNavigatorNode("comp1", navigatorNodes));
+        assertEquals("comp1", ClouderaAPIUtil.retrieveNavigatorNode("comp1", navigatorNodes).getName());
+        assertNotNull(ClouderaAPIUtil.retrieveNavigatorNode("comp2", navigatorNodes));
+        assertEquals("comp2", ClouderaAPIUtil.retrieveNavigatorNode("comp2", navigatorNodes).getName());
+        assertNull(ClouderaAPIUtil.retrieveNavigatorNode("comp3", navigatorNodes));
+
+    }
+
+    @Test
+    public void TestRetrieveNavigatorNodeTODO() {
+        List<NavigatorNode> navigatorNodes = new ArrayList<NavigatorNode>();
+        assertTrue(CollectionUtils.isEmpty(navigatorNodes));
+    }
+
+    @Test
+    public void TestIsThisComponentContainsThisField() {
+        List<NavigatorNode> navigatorNodes = new ArrayList<NavigatorNode>();
+        Map<String, String> schema = new HashMap<String, String>();
+        schema.put("id", "int");
+        NavigatorNode nav1 = new NavigatorNode("comp1", schema, null, null);
+        navigatorNodes.add(nav1);
+        NavigatorNode nav2 = new NavigatorNode("comp2", schema, null, null);
+        navigatorNodes.add(nav2);
+
+        assertTrue(ClouderaAPIUtil.isThisComponentContainsThisField("comp1", "id", navigatorNodes));
+        assertTrue(ClouderaAPIUtil.isThisComponentContainsThisField("comp2", "id", navigatorNodes));
+        assertFalse(ClouderaAPIUtil.isThisComponentContainsThisField("comp1", "nope", navigatorNodes));
+        assertFalse(ClouderaAPIUtil.isThisComponentContainsThisField("comp2", "nope", navigatorNodes));
+        assertFalse(ClouderaAPIUtil.isThisComponentContainsThisField("comp3", "id", navigatorNodes));
     }
 }

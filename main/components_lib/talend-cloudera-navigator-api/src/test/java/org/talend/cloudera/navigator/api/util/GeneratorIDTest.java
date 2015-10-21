@@ -15,7 +15,8 @@ package org.talend.cloudera.navigator.api.util;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.cloudera.navigator.api.util.GeneratorID;
+
+import com.cloudera.nav.sdk.model.CustomIdGenerator;
 
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment
@@ -25,7 +26,16 @@ public class GeneratorIDTest {
 
     @Test
     public void test() {
-        assertEquals("27cef6c51402deedbe850e73ef529a84", GeneratorID.generateDatasetID("job", "component"));
-        assertEquals("494b69782152d6685642976d2c25a54e", GeneratorID.generateNodeID("job", "component"));
+        assertEquals(CustomIdGenerator.generateIdentity(GeneratorID.DATASET_MARKER,
+                GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, "job", "component"), GeneratorID.generateDatasetID("job",
+                "component"));
+        assertEquals(
+                CustomIdGenerator.generateIdentity(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, "job", "component"),
+                GeneratorID.generateNodeID("job", "component"));
+        assertEquals(
+                CustomIdGenerator.generateIdentity(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, "job", "component"),
+                GeneratorID.generateEntityID("job", "component"));
+        assertEquals(CustomIdGenerator.generateIdentity(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, "job", "component",
+                "columnname"), GeneratorID.generateEntityChildID("job", "component", "columnname"));
     }
 }

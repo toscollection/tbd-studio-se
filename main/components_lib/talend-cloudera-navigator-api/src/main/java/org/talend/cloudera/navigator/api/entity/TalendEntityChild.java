@@ -35,8 +35,8 @@ public class TalendEntityChild extends DatasetField {
     @MRelation(role = RelationRole.TARGET)
     private List<EndPointProxy> targets;
 
-    public TalendEntityChild(String jobId, String parent, String name, String type) {
-        this.entityId = GeneratorID.generateEntityChildID(jobId, parent, name);
+    public TalendEntityChild(String jobId, String parentName, String name, String type) {
+        this.entityId = GeneratorID.generateEntityChildID(jobId, parentName, name);
         setName(name);
         setNamespace(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
         setDataType(type);
@@ -84,7 +84,7 @@ public class TalendEntityChild extends DatasetField {
 
     @Override
     public String toString() {
-        return getParentEntityId() + "__" + getName() + " --->" + targetEntitiesId;
+        return getParentEntityId() + "__" + getName() + "(" + entityId + ") --->" + targetEntitiesId;
     }
 
     public String getParentEntityId() {

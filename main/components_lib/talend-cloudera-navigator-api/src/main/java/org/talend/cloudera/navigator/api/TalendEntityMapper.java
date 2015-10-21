@@ -54,7 +54,7 @@ public class TalendEntityMapper {
                 TalendEntity parentEntity = mapToParentEntity(navigatorNode);
                 List<TalendEntityChild> childrenEntities = mapToChildrenEntities(navigatorNode.getSchema(),
                         parentEntity.getName());
-                connectchildrenToParent(parentEntity, childrenEntities);
+                connectChildrenToParent(parentEntity, childrenEntities);
                 connectChildrenToTarget(navigatorNode, childrenEntities);
                 output.addAll(childrenEntities);
                 parentEntity.connectToEntity(navigatorNode.getInputNodes(), navigatorNode.getOutputNodes());
@@ -76,7 +76,7 @@ public class TalendEntityMapper {
      */
     public TalendEntity mapToParentEntity(NavigatorNode navigatorNode) {
         List<String> inputNodes = navigatorNode.getInputNodes();
-        List<String> outputNodes = navigatorNode.getInputNodes();
+        List<String> outputNodes = navigatorNode.getOutputNodes();
         String componentName = navigatorNode.getName();
 
         TalendEntity talendEntity;
@@ -142,7 +142,7 @@ public class TalendEntityMapper {
     /**
      * Connect schema entities to their parent entity using CHILD -> PARENT relation
      */
-    public void connectchildrenToParent(TalendEntity parentEntity, List<TalendEntityChild> children) {
+    public void connectChildrenToParent(TalendEntity parentEntity, List<TalendEntityChild> children) {
         for (TalendEntityChild child : children) {
             child.setParent(parentEntity);
         }
@@ -165,12 +165,25 @@ public class TalendEntityMapper {
                 } else {
                     // For Output terminal components (tLogRow, ...)
                     // We connect the children to the component itself
+                    // TODO: as soon as the API allow us to do that, remove this link.
                     String targetComponentId = GeneratorID.generateNodeID(getJobId(), navigatorNode.getName());
                     talendEntityChild.addTarget(targetComponentId);
                 }
             } else {
+                Boolean childConnected = false;
                 for (String outputComponent : navigatorNode.getOutputNodes()) {
-                    String targetComponentId = GeneratorID.generateNodeID(getJobId(), outputComponent);
+                    if (ClouderaAPIUtil.isThisComponentContainsThisField(outputComponent, talendEntityChild.getName(),
+                            this.navigatorNodes)) {
+                        String targetComponentId = GeneratorID.generateEntityChildID(getJobId(), outputComponent,
+                                talendEntityChild.getName());
+                        talendEntityChild.addTarget(targetComponentId);
+                        childConnected = true;
+                    }
+                }
+                // TODO: as soon as the API allow us to do that, remove this link.
+                if (!childConnected) {
+                    // This child is never used after this component, we link it to its parent.
+                    String targetComponentId = GeneratorID.generateNodeID(getJobId(), navigatorNode.getName());
                     talendEntityChild.addTarget(targetComponentId);
                 }
             }

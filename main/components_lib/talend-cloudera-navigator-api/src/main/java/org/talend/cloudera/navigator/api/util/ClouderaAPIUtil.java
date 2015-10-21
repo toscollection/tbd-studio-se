@@ -12,7 +12,10 @@
 // ============================================================================
 package org.talend.cloudera.navigator.api.util;
 
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
+import org.talend.cloudera.navigator.api.NavigatorNode;
 
 /**
  * created by pbailly on 16 Oct 2015 Detailled comment
@@ -48,5 +51,21 @@ public class ClouderaAPIUtil {
             }
         }
         return "UnamedTalendDataset";
+    }
+
+    public static NavigatorNode retrieveNavigatorNode(String name, List<NavigatorNode> navigatorNodes) {
+        for (NavigatorNode navigatorNode : navigatorNodes) {
+            if (name.equals(navigatorNode.getName())) {
+                return navigatorNode;
+            }
+        }
+        return null;
+
+    }
+
+    public static Boolean isThisComponentContainsThisField(String componentName, String fieldName,
+            List<NavigatorNode> navigatorNodes) {
+        NavigatorNode outputNavigatorNode = ClouderaAPIUtil.retrieveNavigatorNode(componentName, navigatorNodes);
+        return (outputNavigatorNode != null) && (outputNavigatorNode.getSchema().containsKey(fieldName));
     }
 }
