@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import com.cloudera.nav.sdk.model.CustomIdGenerator;
 import com.cloudera.nav.sdk.model.entities.Entity;
 
-/*
+/**
  * Class to map studio components into cloudera navigator connected entities
  */
 public class TalendEntityMapper {
@@ -30,10 +30,13 @@ public class TalendEntityMapper {
 
     private StringBuilder debugStringBuilder;
 
+    private List<String> tags = new ArrayList<String>();
+
     public TalendEntityMapper(List<NavigatorNode> navigatorNodes, String jobId) {
         this.navigatorNodes = navigatorNodes;
         this.jobId = jobId;
         this.debugStringBuilder = new StringBuilder();
+        this.tags.add(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
     }
 
     /*
@@ -78,7 +81,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Map Navigator nodes to the equivalent Talend entities. Processing components are mapped to
      * TalendInputOutputEntity Input/output file components are mapped to TalendInputOutputEntity with a dataSet as
      * input/output Input/output components (LogRow, FixedFlow, ...) are mapped to TalendInputEntity/TalendOutputEntity
@@ -103,15 +106,25 @@ public class TalendEntityMapper {
         return talendEntity;
     }
 
-    /*
+    /**
      * Add metadata/tags to cloudera navigator parent entities
      */
     public void setEntityMetadata(TalendEntity talendEntity) {
         talendEntity.setDescription(ENTITY_DESCRIPTION);
         talendEntity.setLink(ENTITY_LINK);
+        talendEntity.setTags(this.tags);
     }
 
-    /*
+    /**
+     * Add generic tag to all the talend entities
+     *
+     * @param tag the tag to add
+     */
+    public void addTag(String tag) {
+        this.tags.add(tag);
+    }
+
+    /**
      * Map the schema of a navigator node to a TalendEntityChild. The TalendEntityChild will represent the output schema
      * of a Talend component.
      *
@@ -129,7 +142,7 @@ public class TalendEntityMapper {
         return output;
     }
 
-    /*
+    /**
      * Add metadata/tags to cloudera navigator children entities
      */
     public void setChildEntityMetadata(TalendEntityChild talendEntityChild) {
@@ -137,7 +150,7 @@ public class TalendEntityMapper {
         talendEntityChild.setLink(ENTITY_LINK);
     }
 
-    /*
+    /**
      * Connect schema entities to their parent entity using CHILD -> PARENT relation
      */
     public void connectchildrenToParent(TalendEntity parentEntity, List<TalendEntityChild> children) {
@@ -146,7 +159,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Connects a parent entity to its input/output using SOURCE -> TARGET & TARGET -> SOURCE relations
      */
     public void connectParentEntity(TalendInputOutputEntity parent, NavigatorNode navigatorNode) {
@@ -174,7 +187,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Connects a parent entity to its output using SOURCE -> TARGET relations
      */
     public void connectParentEntity(TalendInputEntity parent, NavigatorNode navigatorNode) {
@@ -185,7 +198,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Connects a parent entity to its input using TARGET -> SOURCE relations
      */
     public void connectParentEntity(TalendOutputEntity parent, NavigatorNode navigatorNode) {
@@ -196,7 +209,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Connect children to their target entity
      *
      * Note : Due to limitations in the Cloudera navigator API/SDK we need to connect each {@link #TalendEntityChild} to
@@ -224,7 +237,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Add to output debug string.
      */
     public void addToDebugString(TalendEntity parentEntity, List<TalendEntityChild> children) {
@@ -234,7 +247,7 @@ public class TalendEntityMapper {
         }
     }
 
-    /*
+    /**
      * Is the original Talend Studio component a FileInput/Output component ? These components need to be linked to
      * datasets
      */

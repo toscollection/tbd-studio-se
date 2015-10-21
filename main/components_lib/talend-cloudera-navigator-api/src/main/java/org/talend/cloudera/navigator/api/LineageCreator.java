@@ -122,6 +122,7 @@ public class LineageCreator {
 
             // Mapper
             TalendEntityMapper tem = new TalendEntityMapper(this.inputNavigatorNodes, this.jobName + this.projectName);
+            tem.addTag(this.jobName);
 
             if (LOG.isDebugEnabled()) {
                 for (NavigatorNode nn : this.inputNavigatorNodes) {
