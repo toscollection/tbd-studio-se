@@ -16,23 +16,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import com.cloudera.nav.sdk.model.SourceType;
-
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment
  *
  */
-public class TalendFieldTest {
+public class GeneratorIDTest {
 
     @Test
     public void test() {
-        TalendField field = new TalendField();
-        assertEquals("{\"name\":\"null\", \"dataType\":\"null\"}", field.toString());
-        assertEquals(SourceType.PLUGIN, field.getSourceType());
-        assertEquals(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, field.getNamespace());
-        field = new TalendField("id", "int");
-        assertEquals("{\"name\":\"id\", \"dataType\":\"int\"}", field.toString());
-        assertEquals(SourceType.PLUGIN, field.getSourceType());
-        assertEquals(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, field.getNamespace());
+        assertEquals("27cef6c51402deedbe850e73ef529a84", GeneratorID.generateDatasetID("job", "component"));
+        assertEquals("494b69782152d6685642976d2c25a54e", GeneratorID.generateNodeID("job", "component"));
     }
 }

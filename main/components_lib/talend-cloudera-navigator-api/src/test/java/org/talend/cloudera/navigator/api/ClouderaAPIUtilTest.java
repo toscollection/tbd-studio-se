@@ -32,7 +32,18 @@ public class ClouderaAPIUtilTest {
         assertEquals("path", ClouderaAPIUtil.getDatasetName("path/"));
         assertEquals("path", ClouderaAPIUtil.getDatasetName("path////"));
         assertEquals("UnamedTalendDataset", ClouderaAPIUtil.getDatasetName("/"));
+        assertEquals("UnamedTalendDataset", ClouderaAPIUtil.getDatasetName("////"));
         assertEquals("UnamedTalendDataset", ClouderaAPIUtil.getDatasetName(""));
         assertEquals("UnamedTalendDataset", ClouderaAPIUtil.getDatasetName(null));
+    }
+
+    @Test
+    public void ClouderaAPIUtil() {
+        for (String myAllowedPrefix : ClouderaAPIUtil.FILE_INPUT_OUTPUT_COMPONENT_PREFIXS) {
+            assertTrue(ClouderaAPIUtil.isFileInputOutputComponent(myAllowedPrefix));
+            assertTrue(ClouderaAPIUtil.isFileInputOutputComponent(myAllowedPrefix + "_"));
+            assertTrue(ClouderaAPIUtil.isFileInputOutputComponent(myAllowedPrefix.toUpperCase() + "_"));
+            assertFalse(ClouderaAPIUtil.isFileInputOutputComponent("nope_" + myAllowedPrefix.toUpperCase() + "_"));
+        }
     }
 }

@@ -10,7 +10,7 @@ public class TalendField extends DatasetField {
     public TalendField() {
         super();
         setSourceType(SourceType.PLUGIN);
-        setNamespace(TalendEntityMapper.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
+        setNamespace(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
     }
 
     public TalendField(String name, String type) {

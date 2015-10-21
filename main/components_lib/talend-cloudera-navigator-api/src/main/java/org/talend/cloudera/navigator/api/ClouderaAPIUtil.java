@@ -20,6 +20,24 @@ import org.apache.commons.lang.StringUtils;
  */
 public class ClouderaAPIUtil {
 
+    public static final String[] FILE_INPUT_OUTPUT_COMPONENT_PREFIXS = { "tFile", "tHDFS", "tParquet", "tAvro" };
+
+    /**
+     * Is the original Talend Studio component a FileInput/Output component ? These components need to be linked to
+     * datasets
+     */
+    public static boolean isFileInputOutputComponent(String componentName) {
+        for (String prefix : FILE_INPUT_OUTPUT_COMPONENT_PREFIXS) {
+            if (componentName.toLowerCase().startsWith(prefix.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retrieve the last chuck of a path, in order to define the datasetName
+     */
     public static String getDatasetName(String path) {
         if (StringUtils.isNotBlank(path)) {
             String[] separatedPath = path.split("/");
