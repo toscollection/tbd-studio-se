@@ -61,6 +61,9 @@ public class LineageCreator {
         this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, projectName, autoCommit, false);
     }
 
+    /**
+     * Initialize a Navigator plugin, which will be used to comminicate dataset and lieage to the cloudera navigator
+     */
     public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, String projectName, Boolean autoCommit, Boolean disableValidationSSL) {
         Map<String, Object> configurationMap = new HashMap<String, Object>();
@@ -88,31 +91,60 @@ public class LineageCreator {
         this.projectName = projectName;
     }
 
-    public void addNodeToLineage(String name, Map<String, String> schema, List<String> inputNodes, List<String> outputNodes) {
-        this.inputNavigatorNodes.add(new NavigatorNode(name, schema, inputNodes, outputNodes));
+    /**
+     * Instanciate a Navigator with the data retrieve from a graphical component. This function will be used for any
+     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets.
+     *
+     * @param componentName The component name
+     * @param schema An hashmap containing the union of any output column name and column type from the component.
+     * @param inputNodes The list of the nodes before the current node, defined by their unique name
+     * @param outputNodes The list of the nodes after the current node, defined by their unique name
+     */
+    public void addNodeToLineage(String componentName, Map<String, String> schema, List<String> inputNodes,
+            List<String> outputNodes) {
+        this.inputNavigatorNodes.add(new NavigatorNode(componentName, schema, inputNodes, outputNodes));
     }
 
-    public void instanciateSchema(Map<String, String> columns, String componentName, String fileSystemPath, String fileFormat) {
-        instanciateSchema(columns, componentName, fileSystemPath, FileFormat.valueOf(fileFormat));
+    /**
+     * Instanciate a TalendDataSet with the data retrieve from a component. This function will be used for any
+     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets.
+     *
+     * @param schema The hashmap of column name and column type of the component.
+     * @param componentName The component name
+     * @param fileSystemPath The HDFS patht to the file where the component read/write data
+     * @param fileFormat The file format as a String (ie: "CSV", "XML", "JSON", ...)
+     */
+    public void addDataset(Map<String, String> schema, String componentName, String fileSystemPath, String fileFormat) {
+        addDataset(schema, componentName, fileSystemPath, FileFormat.valueOf(fileFormat));
     }
 
-    public void instanciateSchema(Map<String, String> columns, String componentName, String fileSystemPath, FileFormat fileFormat) {
+    /**
+     * Instanciate a TalendDataSet with the data retrieve from a component. This function will be used for any
+     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets.
+     *
+     * @param schema The hashmap of column name and column type of the component.
+     * @param componentName The component name
+     * @param fileSystemPath The HDFS patht to the file where the component read/write data
+     * @param fileFormat The file format as a FileFormat
+     */
+    public void addDataset(Map<String, String> schema, String componentName, String fileSystemPath, FileFormat fileFormat) {
         HdfsEntity container = new HdfsEntity(fileSystemPath, EntityType.DIRECTORY, this.fileSystem.getIdentity());
 
         TalendDataset dataset = new TalendDataset(ClouderaAPIUtil.getDatasetName(fileSystemPath), componentName, this.jobName
                 + this.projectName);
         dataset.setDataContainer(container);
         dataset.setFileFormat(fileFormat);
-        dataset.setFields(ClouderaFieldConvertor.convertToTalendField(columns));
+        dataset.setFields(ClouderaFieldConvertor.convertToTalendField(schema));
         dataset.addTags(ImmutableList.of("Talend", this.jobName)); //$NON-NLS-1$
 
         this.datasets.add(dataset);
     }
 
-    public void sendToNavigator() {
-        sendToNavigator(false);
-    }
-
+    /**
+     * Send the current lineage into the cloudera navigator
+     *
+     * @param dieOnError throw or not a RuntimeException on error
+     */
     public void sendToNavigator(Boolean dieOnError) {
         try {
             ResultSet results = this.plugin.write(this.datasets);
