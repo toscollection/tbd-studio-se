@@ -52,10 +52,10 @@ public class TalendOutputEntity extends TalendEntity {
      * Connects a parent entity to its input using TARGET -> SOURCE relations
      */
     @Override
-    public void connectToEntity(String componentName, String jobId, List<String> inputs, List<String> outputs) {
+    public void connectToEntity(List<String> inputs, List<String> outputs) {
         for (String input : inputs) {
             // generate the id of the component to connect to
-            String id = GeneratorID.generateNodeID(jobId, input);
+            String id = GeneratorID.generateNodeID(this.getJobId(), input);
             this.addPreviousEntity(id);
         }
     }

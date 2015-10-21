@@ -57,8 +57,7 @@ public class TalendEntityMapper {
                 connectchildrenToParent(parentEntity, childrenEntities);
                 connectChildrenTotaget(navigatorNode, childrenEntities);
                 output.addAll(childrenEntities);
-                parentEntity.connectToEntity(navigatorNode.getName(), getJobId(), navigatorNode.getInputNodes(),
-                        navigatorNode.getOutputNodes());
+                parentEntity.connectToEntity(navigatorNode.getInputNodes(), navigatorNode.getOutputNodes());
                 output.add(parentEntity);
                 addToDebugString(parentEntity, childrenEntities);
             }

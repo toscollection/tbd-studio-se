@@ -17,6 +17,8 @@ public abstract class TalendEntity extends Entity {
 
     private String entityId;
 
+    private final String jobId;
+
     @MProperty
     private String link;
 
@@ -24,6 +26,7 @@ public abstract class TalendEntity extends Entity {
         this.entityId = CustomIdGenerator.generateIdentity(namespace, jobId, componentName);
         setName(componentName);
         setNamespace(namespace);
+        this.jobId = jobId;
     }
 
     @Override
@@ -53,8 +56,12 @@ public abstract class TalendEntity extends Entity {
         return entityId;
     }
 
+    public String getJobId() {
+        return this.jobId;
+    }
+
     /**
      * Connects a the talend entity to its input/output using relations
      */
-    public abstract void connectToEntity(String componentName, String jobId, List<String> inputs, List<String> outputs);
+    public abstract void connectToEntity(List<String> inputs, List<String> outputs);
 }

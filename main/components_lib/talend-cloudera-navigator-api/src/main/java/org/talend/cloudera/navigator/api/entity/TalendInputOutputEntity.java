@@ -66,31 +66,41 @@ public class TalendInputOutputEntity extends TalendEntity {
         this.targetProxies = targetProxies;
     }
 
+    public List<String> getPreviousEntitiesId() {
+        return this.previousEntitiesId;
+    };
+
+    public List<String> getNextEntitiesId() {
+        return this.nextEntitiesId;
+    }
+
     /**
      * Connects a parent entity to its input/output using SOURCE -> TARGET & TARGET -> SOURCE relations
      */
     @Override
-    public void connectToEntity(String componentName, String jobId, List<String> inputs, List<String> outputs) {
+    public void connectToEntity(List<String> inputs, List<String> outputs) {
 
         // File Input components should be linked with a dataset
-        if (CollectionUtils.isEmpty(inputs) && ClouderaAPIUtil.isFileInputOutputComponent(componentName)) {
-            String id = GeneratorID.generateDatasetID(componentName, componentName);
+        if (CollectionUtils.isEmpty(inputs) && ClouderaAPIUtil.isFileInputOutputComponent(this.getName())) {
+            String id = GeneratorID.generateDatasetID(this.getJobId(), this.getName());
+            this.addPreviousEntity(id);
+        }
+
+        for (String input : inputs) {
+            // generate the id of the component to connect to
+            String id = GeneratorID.generateNodeID(this.getJobId(), input);
             this.addPreviousEntity(id);
         }
 
         // File Output components should be linked with a dataset
-        if (CollectionUtils.isEmpty(outputs) && ClouderaAPIUtil.isFileInputOutputComponent(componentName)) {
-            String id = GeneratorID.generateDatasetID(componentName, componentName);
+        if (CollectionUtils.isEmpty(outputs) && ClouderaAPIUtil.isFileInputOutputComponent(this.getName())) {
+            String id = GeneratorID.generateDatasetID(this.getJobId(), this.getName());
             this.addNextEntity(id);
         }
-        for (String input : inputs) {
-            // generate the id of the component to connect to
-            String id = GeneratorID.generateNodeID(componentName, input);
-            this.addPreviousEntity(id);
-        }
+
         for (String output : outputs) {
             // generate the id of the component to connect to
-            String id = GeneratorID.generateNodeID(componentName, output);
+            String id = GeneratorID.generateNodeID(this.getJobId(), output);
             this.addNextEntity(id);
         }
 
