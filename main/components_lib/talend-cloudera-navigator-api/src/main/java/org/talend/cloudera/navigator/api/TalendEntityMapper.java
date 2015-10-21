@@ -112,12 +112,13 @@ public class TalendEntityMapper {
 					output.addAll(childrenEntities);
 					// Add to debugString
 					addToDebugString(parentEntity, childrenEntities);
+				} else {
+					throw new IllegalArgumentException("Unconnected Navigator Node : " + navigatorNode);
 				}
 			}
 			return output;
 		} else{
-			//TODO
-			return null;
+			throw new IllegalArgumentException("Empty Navigator Nodes list");
 		}
 	}
 	
