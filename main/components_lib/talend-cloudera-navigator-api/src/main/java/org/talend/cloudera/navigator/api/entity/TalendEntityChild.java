@@ -1,4 +1,4 @@
-package org.talend.cloudera.navigator.api;
+package org.talend.cloudera.navigator.api.entity;
 
 import java.util.ArrayList;
 import java.util.List;

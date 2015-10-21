@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
+import org.talend.cloudera.navigator.api.entity.TalendField;
 
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment

@@ -6,6 +6,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.talend.cloudera.navigator.api.entity.TalendEntity;
+import org.talend.cloudera.navigator.api.entity.TalendEntityChild;
+import org.talend.cloudera.navigator.api.entity.TalendInputEntity;
+import org.talend.cloudera.navigator.api.entity.TalendInputOutputEntity;
+import org.talend.cloudera.navigator.api.entity.TalendOutputEntity;
 
 import com.cloudera.nav.sdk.model.entities.Entity;
 

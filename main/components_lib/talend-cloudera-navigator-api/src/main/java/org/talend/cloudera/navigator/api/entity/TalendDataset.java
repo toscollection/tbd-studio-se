@@ -1,4 +1,6 @@
-package org.talend.cloudera.navigator.api;
+package org.talend.cloudera.navigator.api.entity;
+
+import org.talend.cloudera.navigator.api.GeneratorID;
 
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;
