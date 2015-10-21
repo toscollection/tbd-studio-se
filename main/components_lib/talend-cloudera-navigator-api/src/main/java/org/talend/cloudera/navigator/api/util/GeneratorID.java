@@ -31,4 +31,12 @@ public class GeneratorID {
     public static String generateNodeID(String jobId, String componentName) {
         return CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, jobId, componentName);
     }
+
+    public static String generateEntityID(String jobId, String componentName) {
+        return CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, jobId, componentName);
+    }
+
+    public static String generateEntityChildID(String jobId, String componentName, String columnName) {
+        return CustomIdGenerator.generateIdentity(CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, jobId, componentName, columnName);
+    }
 }

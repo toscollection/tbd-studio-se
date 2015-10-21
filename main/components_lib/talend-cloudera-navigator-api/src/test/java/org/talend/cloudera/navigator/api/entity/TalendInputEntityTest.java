@@ -19,8 +19,6 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.talend.cloudera.navigator.api.util.GeneratorID;
 
-import com.cloudera.nav.sdk.model.CustomIdGenerator;
-
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment
  *
@@ -29,7 +27,7 @@ public class TalendInputEntityTest {
 
     @Test
     public void testAddNextEntity() {
-        TalendInputEntity tie = new TalendInputEntity("Namespace", "job", "component1");
+        TalendInputEntity tie = new TalendInputEntity("job", "component1");
         assertEquals(0, tie.getNextEntitiesId().size());
         tie.addNextEntity("component4");
         assertEquals(1, tie.getNextEntitiesId().size());
@@ -42,20 +40,21 @@ public class TalendInputEntityTest {
         assertEquals("component5", tie.getNextEntitiesId().get(1));
         assertEquals(2, tie.getTargetProxies().size());
 
-        assertEquals("component1 (" + CustomIdGenerator.generateIdentity("Namespace", "job", "component1")
-                + ") --->[component4, component5]", tie.toString());
+        assertEquals("component1 (" + GeneratorID.generateEntityID("job", "component1") + ") --->[component4, component5]",
+                tie.toString());
     }
 
     @Test
     public void testConnectToEntity() {
-        TalendInputEntity tie = new TalendInputEntity("Namespace", "job", "component1");
+        TalendInputEntity tie = new TalendInputEntity("job", "component1");
         assertEquals(0, tie.getNextEntitiesId().size());
         tie.connectToEntity(Arrays.asList("component2", "component3"), Arrays.asList("component4", "component5"));
         assertEquals(2, tie.getNextEntitiesId().size());
         assertEquals(2, tie.getTargetProxies().size());
 
-        assertEquals("component1 (" + CustomIdGenerator.generateIdentity("Namespace", "job", "component1") + ") --->["
-                + GeneratorID.generateNodeID("job", "component4") + ", " + GeneratorID.generateNodeID("job", "component5") + "]",
-                tie.toString());
+        assertEquals(
+                "component1 (" + GeneratorID.generateEntityID("job", "component1") + ") --->["
+                        + GeneratorID.generateNodeID("job", "component4") + ", "
+                        + GeneratorID.generateNodeID("job", "component5") + "]", tie.toString());
     }
 }

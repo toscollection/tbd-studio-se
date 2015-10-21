@@ -19,8 +19,6 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.talend.cloudera.navigator.api.util.GeneratorID;
 
-import com.cloudera.nav.sdk.model.CustomIdGenerator;
-
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment
  *
@@ -29,7 +27,7 @@ public class TalendOutputEntityTest {
 
     @Test
     public void testAddNextEntity() {
-        TalendOutputEntity toe = new TalendOutputEntity("Namespace", "job", "component1");
+        TalendOutputEntity toe = new TalendOutputEntity("job", "component1");
         assertEquals(0, toe.getPreviousEntitiesId().size());
         toe.addPreviousEntity("component2");
         assertEquals(1, toe.getPreviousEntitiesId().size());
@@ -42,14 +40,13 @@ public class TalendOutputEntityTest {
         assertEquals("component3", toe.getPreviousEntitiesId().get(1));
         assertEquals(2, toe.getSourceProxies().size());
 
-        assertEquals(
-                "[component2, component3]---> component1 ("
-                        + CustomIdGenerator.generateIdentity("Namespace", "job", "component1") + ")", toe.toString());
+        assertEquals("[component2, component3]---> component1 (" + GeneratorID.generateEntityID("job", "component1") + ")",
+                toe.toString());
     }
 
     @Test
     public void testConnectToEntity() {
-        TalendOutputEntity toe = new TalendOutputEntity("Namespace", "job", "component1");
+        TalendOutputEntity toe = new TalendOutputEntity("job", "component1");
         assertEquals(0, toe.getPreviousEntitiesId().size());
         toe.connectToEntity(Arrays.asList("component2", "component3"), Arrays.asList("component4", "component5"));
         assertEquals(2, toe.getPreviousEntitiesId().size());
@@ -57,8 +54,7 @@ public class TalendOutputEntityTest {
 
         assertEquals(
                 "[" + GeneratorID.generateNodeID("job", "component2") + ", " + GeneratorID.generateNodeID("job", "component3")
-                        + "]---> component1 (" + CustomIdGenerator.generateIdentity("Namespace", "job", "component1") + ")",
-                toe.toString());
+                        + "]---> component1 (" + GeneratorID.generateEntityID("job", "component1") + ")", toe.toString());
 
     }
 }

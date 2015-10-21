@@ -3,7 +3,8 @@ package org.talend.cloudera.navigator.api.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cloudera.nav.sdk.model.CustomIdGenerator;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
+
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;
 import com.cloudera.nav.sdk.model.annotations.MProperty;
@@ -18,93 +19,95 @@ import com.cloudera.nav.sdk.model.relations.RelationRole;
  */
 @MClass(model = "talend")
 public class TalendEntityChild extends DatasetField {
-	
-	private String parentEntityId;
-	private List<String> targetEntitiesId;
-	private String entityId;
-	
-	@MProperty
-	private String link;
-	
-	@MRelation(role = RelationRole.PARENT)
-	private TalendEntity parent;
-	
-	@MRelation(role = RelationRole.TARGET)
-	private List<EndPointProxy> targets;
-	
-	public TalendEntityChild(String namespace, String jobId, String parent, String name, String type) {
-		this.entityId = CustomIdGenerator.generateIdentity(namespace, parent, name, jobId);
-		setName(name);
-	    setNamespace(namespace);
-	    setDataType(type);
-	    this.targetEntitiesId = new ArrayList<String>();
-	    this.targets = new ArrayList<EndPointProxy>();
-	  }
-	
-	@Override
-	public String generateId() {
-		return getEntityId();
-	}
-	
-	@Override
-	  public EntityType getEntityType() {
-	    return EntityType.FIELD;
-	  }
-	
-	@Override
-	  public SourceType getSourceType() {
-	    return SourceType.PLUGIN;
-	  }
-	
-	public String getLink() {
-		return link;
-	}
 
-	public void setLink(String link) {
-		this.link = link;
-	}
+    private String parentEntityId;
 
-	public TalendEntity getParent() {
-		return parent;
-	}
+    private List<String> targetEntitiesId;
 
-	public void setParent(TalendEntity parent) {
-		setParentEntityId(parent.generateId());
-		this.parent = parent;
-	}
+    private String entityId;
 
-	public void addTarget(String targetId) {
-		this.targetEntitiesId.add(targetId);
-		EndPointProxy endpointProxy = new EndPointProxy(targetId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
-		this.targets.add(endpointProxy);
-	}
+    @MProperty
+    private String link;
 
-	@Override
-	public String toString() {
-		return getParentEntityId() + "__" + getName() + " --->" + targetEntitiesId;
-	}
+    @MRelation(role = RelationRole.PARENT)
+    private TalendEntity parent;
 
-	public String getParentEntityId() {
-		return parentEntityId;
-	}
+    @MRelation(role = RelationRole.TARGET)
+    private List<EndPointProxy> targets;
 
-	public void setParentEntityId(String parentEntityId) {
-		this.parentEntityId = parentEntityId;
-	}
+    public TalendEntityChild(String jobId, String parent, String name, String type) {
+        this.entityId = GeneratorID.generateEntityChildID(jobId, parent, name);
+        setName(name);
+        setNamespace(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
+        setDataType(type);
+        this.targetEntitiesId = new ArrayList<String>();
+        this.targets = new ArrayList<EndPointProxy>();
+    }
 
-	public String getEntityId() {
-		return entityId;
-	}
+    @Override
+    public String generateId() {
+        return getEntityId();
+    }
 
-	public List<String> getTargetEntitiesId() {
-		return targetEntitiesId;
-	}
+    @Override
+    public EntityType getEntityType() {
+        return EntityType.FIELD;
+    }
 
-	public void setTargetEntitiesId(List<String> targetEntitiesId) {
-		this.targetEntitiesId = targetEntitiesId;
-	}
+    @Override
+    public SourceType getSourceType() {
+        return SourceType.PLUGIN;
+    }
 
-	public List<EndPointProxy> getTargets() {
-		return targets;
-	}
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public TalendEntity getParent() {
+        return parent;
+    }
+
+    public void setParent(TalendEntity parent) {
+        setParentEntityId(parent.generateId());
+        this.parent = parent;
+    }
+
+    public void addTarget(String targetId) {
+        this.targetEntitiesId.add(targetId);
+        EndPointProxy endpointProxy = new EndPointProxy(targetId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+        this.targets.add(endpointProxy);
+    }
+
+    @Override
+    public String toString() {
+        return getParentEntityId() + "__" + getName() + " --->" + targetEntitiesId;
+    }
+
+    public String getParentEntityId() {
+        return parentEntityId;
+    }
+
+    public void setParentEntityId(String parentEntityId) {
+        this.parentEntityId = parentEntityId;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public List<String> getTargetEntitiesId() {
+        return targetEntitiesId;
+    }
+
+    public void setTargetEntitiesId(List<String> targetEntitiesId) {
+        this.targetEntitiesId = targetEntitiesId;
+    }
+
+    public List<EndPointProxy> getTargets() {
+        return targets;
+    }
 }

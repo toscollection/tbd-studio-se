@@ -55,7 +55,7 @@ public class TalendEntityMapper {
                 List<TalendEntityChild> childrenEntities = mapToChildrenEntities(navigatorNode.getSchema(),
                         parentEntity.getName());
                 connectchildrenToParent(parentEntity, childrenEntities);
-                connectChildrenTotaget(navigatorNode, childrenEntities);
+                connectChildrenToTarget(navigatorNode, childrenEntities);
                 output.addAll(childrenEntities);
                 parentEntity.connectToEntity(navigatorNode.getInputNodes(), navigatorNode.getOutputNodes());
                 output.add(parentEntity);
@@ -83,14 +83,11 @@ public class TalendEntityMapper {
         if (((CollectionUtils.isNotEmpty(inputNodes)) && (CollectionUtils.isNotEmpty(outputNodes)))
                 || ((CollectionUtils.isEmpty(inputNodes)) && (ClouderaAPIUtil.isFileInputOutputComponent(componentName)))
                 || ((CollectionUtils.isEmpty(outputNodes)) && (ClouderaAPIUtil.isFileInputOutputComponent(componentName)))) {
-            talendEntity = new TalendInputOutputEntity(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
-                    navigatorNode.getName());
+            talendEntity = new TalendInputOutputEntity(getJobId(), navigatorNode.getName());
         } else if ((CollectionUtils.isEmpty(inputNodes)) && (CollectionUtils.isNotEmpty(outputNodes))) {
-            talendEntity = new TalendInputEntity(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
-                    navigatorNode.getName());
+            talendEntity = new TalendInputEntity(getJobId(), navigatorNode.getName());
         } else if ((CollectionUtils.isNotEmpty(inputNodes)) && (CollectionUtils.isEmpty(outputNodes))) {
-            talendEntity = new TalendOutputEntity(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, getJobId(),
-                    navigatorNode.getName());
+            talendEntity = new TalendOutputEntity(getJobId(), navigatorNode.getName());
         } else {
             throw new IllegalArgumentException("Unconnected Navigator Node : " + navigatorNode);
         }
@@ -126,8 +123,8 @@ public class TalendEntityMapper {
 
         List<TalendEntityChild> output = new ArrayList<TalendEntityChild>();
         for (Entry<String, String> entry : schema.entrySet()) {
-            TalendEntityChild talendEntityChild = new TalendEntityChild(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE,
-                    getJobId(), ParentEntityName, entry.getKey(), entry.getValue());
+            TalendEntityChild talendEntityChild = new TalendEntityChild(getJobId(), ParentEntityName, entry.getKey(),
+                    entry.getValue());
             setChildEntityMetadata(talendEntityChild);
             output.add(talendEntityChild);
         }
@@ -157,22 +154,25 @@ public class TalendEntityMapper {
      * Note : Due to limitations in the Cloudera navigator API/SDK we need to connect each {@link #TalendEntityChild} to
      * the next {@link #TalendEntity} in the flow in order to make visible in the navigator
      */
-    public void connectChildrenTotaget(NavigatorNode navigatorNode, List<TalendEntityChild> children) {
+    public void connectChildrenToTarget(NavigatorNode navigatorNode, List<TalendEntityChild> children) {
         for (TalendEntityChild talendEntityChild : children) {
-            // File Output children entities should be linked with a dataset
-            if (navigatorNode.getOutputNodes().size() == 0 && ClouderaAPIUtil.isFileInputOutputComponent(navigatorNode.getName())) {
-                String targetComponentId = GeneratorID.generateDatasetID(getJobId(), navigatorNode.getName());
-                talendEntityChild.addTarget(targetComponentId);
-                // For Output terminal components (tLogRow, ...)
-                // We connect the children to the component itself
-            } else if (navigatorNode.getOutputNodes().size() == 0
-                    && !ClouderaAPIUtil.isFileInputOutputComponent(navigatorNode.getName())) {
-                String targetComponentId = GeneratorID.generateNodeID(getJobId(), navigatorNode.getName());
-                talendEntityChild.addTarget(targetComponentId);
-            }
-            for (String outputComponent : navigatorNode.getOutputNodes()) {
-                String targetComponentId = GeneratorID.generateNodeID(getJobId(), outputComponent);
-                talendEntityChild.addTarget(targetComponentId);
+            if (CollectionUtils.isEmpty(navigatorNode.getOutputNodes())) {
+                // Output components
+                if (ClouderaAPIUtil.isFileInputOutputComponent(navigatorNode.getName())) {
+                    // File Output children entities should be linked with a dataset
+                    String targetComponentId = GeneratorID.generateDatasetID(getJobId(), navigatorNode.getName());
+                    talendEntityChild.addTarget(targetComponentId);
+                } else {
+                    // For Output terminal components (tLogRow, ...)
+                    // We connect the children to the component itself
+                    String targetComponentId = GeneratorID.generateNodeID(getJobId(), navigatorNode.getName());
+                    talendEntityChild.addTarget(targetComponentId);
+                }
+            } else {
+                for (String outputComponent : navigatorNode.getOutputNodes()) {
+                    String targetComponentId = GeneratorID.generateNodeID(getJobId(), outputComponent);
+                    talendEntityChild.addTarget(targetComponentId);
+                }
             }
         }
     }

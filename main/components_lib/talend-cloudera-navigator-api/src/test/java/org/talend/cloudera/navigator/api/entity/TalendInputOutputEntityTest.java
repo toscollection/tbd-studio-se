@@ -20,8 +20,6 @@ import java.util.Arrays;
 import org.junit.Test;
 import org.talend.cloudera.navigator.api.util.GeneratorID;
 
-import com.cloudera.nav.sdk.model.CustomIdGenerator;
-
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment
  *
@@ -30,7 +28,7 @@ public class TalendInputOutputEntityTest {
 
     @Test
     public void testAddNextEntity() {
-        TalendInputOutputEntity tioe = new TalendInputOutputEntity("Namespace", "job", "component1");
+        TalendInputOutputEntity tioe = new TalendInputOutputEntity("job", "component1");
         assertEquals(0, tioe.getPreviousEntitiesId().size());
         tioe.addPreviousEntity("component2");
         assertEquals(1, tioe.getPreviousEntitiesId().size());
@@ -55,15 +53,13 @@ public class TalendInputOutputEntityTest {
         assertEquals("component5", tioe.getNextEntitiesId().get(1));
         assertEquals(2, tioe.getTargetProxies().size());
 
-        assertEquals(
-                "[component2, component3]---> component1 ("
-                        + CustomIdGenerator.generateIdentity("Namespace", "job", "component1") + ") --->[component4, component5]",
-                tioe.toString());
+        assertEquals("[component2, component3]---> component1 (" + GeneratorID.generateEntityID("job", "component1")
+                + ") --->[component4, component5]", tioe.toString());
     }
 
     @Test
     public void testConnectToEntity() {
-        TalendInputOutputEntity tioe = new TalendInputOutputEntity("Namespace", "job", "component1");
+        TalendInputOutputEntity tioe = new TalendInputOutputEntity("job", "component1");
         assertEquals(0, tioe.getPreviousEntitiesId().size());
         tioe.connectToEntity(Arrays.asList("component2", "component3"), Arrays.asList("component4", "component5"));
         assertEquals(2, tioe.getPreviousEntitiesId().size());
@@ -73,7 +69,7 @@ public class TalendInputOutputEntityTest {
 
         assertEquals(
                 "[" + GeneratorID.generateNodeID("job", "component2") + ", " + GeneratorID.generateNodeID("job", "component3")
-                        + "]---> component1 (" + CustomIdGenerator.generateIdentity("Namespace", "job", "component1") + ") --->["
+                        + "]---> component1 (" + GeneratorID.generateEntityID("job", "component1") + ") --->["
                         + GeneratorID.generateNodeID("job", "component4") + ", "
                         + GeneratorID.generateNodeID("job", "component5") + "]", tioe.toString());
 
@@ -81,7 +77,7 @@ public class TalendInputOutputEntityTest {
 
     @Test
     public void testConnectToEntity_tFileNoInputNoOutput() {
-        TalendInputOutputEntity tioe = new TalendInputOutputEntity("Namespace", "job", "tfile_component1");
+        TalendInputOutputEntity tioe = new TalendInputOutputEntity("job", "tfile_component1");
         assertEquals(0, tioe.getPreviousEntitiesId().size());
         tioe.connectToEntity(new ArrayList<String>(), new ArrayList<String>());
         assertEquals(1, tioe.getPreviousEntitiesId().size());
@@ -91,14 +87,14 @@ public class TalendInputOutputEntityTest {
 
         assertEquals(
                 "[" + GeneratorID.generateDatasetID("job", "tfile_component1") + "]---> tfile_component1 ("
-                        + CustomIdGenerator.generateIdentity("Namespace", "job", "tfile_component1") + ") --->["
+                        + GeneratorID.generateEntityID("job", "tfile_component1") + ") --->["
                         + GeneratorID.generateDatasetID("job", "tfile_component1") + "]", tioe.toString());
 
     }
 
     @Test
     public void testConnectToEntity_NoInputNoOutputErrorcase() {
-        TalendInputOutputEntity tioe = new TalendInputOutputEntity("Namespace", "job", "component1");
+        TalendInputOutputEntity tioe = new TalendInputOutputEntity("job", "component1");
         assertEquals(0, tioe.getPreviousEntitiesId().size());
         tioe.connectToEntity(new ArrayList<String>(), new ArrayList<String>());
         assertEquals(0, tioe.getPreviousEntitiesId().size());
@@ -106,8 +102,7 @@ public class TalendInputOutputEntityTest {
         assertEquals(0, tioe.getNextEntitiesId().size());
         assertEquals(0, tioe.getTargetProxies().size());
 
-        assertEquals("[]---> component1 (" + CustomIdGenerator.generateIdentity("Namespace", "job", "component1") + ") --->[]",
-                tioe.toString());
+        assertEquals("[]---> component1 (" + GeneratorID.generateEntityID("job", "component1") + ") --->[]", tioe.toString());
 
     }
 }

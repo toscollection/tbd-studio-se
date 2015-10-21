@@ -30,8 +30,8 @@ public class TalendInputOutputEntity extends TalendEntity {
     @MRelation(role = RelationRole.TARGET)
     private List<EndPointProxy> targetProxies;
 
-    public TalendInputOutputEntity(String namespace, String jobId, String componentName) {
-        super(namespace, jobId, componentName);
+    public TalendInputOutputEntity(String jobId, String componentName) {
+        super(jobId, componentName);
         sourceProxies = new ArrayList<EndPointProxy>();
         previousEntitiesId = new ArrayList<String>();
         targetProxies = new ArrayList<EndPointProxy>();

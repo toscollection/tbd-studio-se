@@ -2,7 +2,8 @@ package org.talend.cloudera.navigator.api.entity;
 
 import java.util.List;
 
-import com.cloudera.nav.sdk.model.CustomIdGenerator;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
+
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;
 import com.cloudera.nav.sdk.model.annotations.MProperty;
@@ -22,10 +23,10 @@ public abstract class TalendEntity extends Entity {
     @MProperty
     private String link;
 
-    public TalendEntity(String namespace, String jobId, String componentName) {
-        this.entityId = CustomIdGenerator.generateIdentity(namespace, jobId, componentName);
+    public TalendEntity(String jobId, String componentName) {
+        this.entityId = GeneratorID.generateEntityID(jobId, componentName);
         setName(componentName);
-        setNamespace(namespace);
+        setNamespace(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
         this.jobId = jobId;
     }
 
