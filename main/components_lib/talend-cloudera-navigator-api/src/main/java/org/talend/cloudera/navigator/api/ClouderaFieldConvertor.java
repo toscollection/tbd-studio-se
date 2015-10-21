@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.collections.MapUtils;
+
 /**
  * created by pbailly on 14 Oct 2015 Detailled comment
  *
@@ -25,8 +27,10 @@ public class ClouderaFieldConvertor {
 
     public static List<TalendField> convertToTalendField(Map<String, String> columns) {
         List<TalendField> talendFields = new ArrayList<TalendField>();
-        for (Entry<String, String> column : columns.entrySet()) {
-            talendFields.add(new TalendField(column.getKey(), column.getValue()));
+        if (MapUtils.isNotEmpty(columns)) {
+            for (Entry<String, String> column : columns.entrySet()) {
+                talendFields.add(new TalendField(column.getKey(), column.getValue()));
+            }
         }
         return talendFields;
     }

@@ -18,4 +18,9 @@ public class TalendField extends DatasetField {
         setName(name);
         setDataType(type);
     }
+
+    @Override
+    public String toString() {
+        return "{\"name\":\"" + getName() + "\", \"dataType\":\"" + getDataType() + "\"}";
+    }
 }
