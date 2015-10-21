@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.talend.cloudera.navigator.api.ClouderaAPIUtil;
-import org.talend.cloudera.navigator.api.GeneratorID;
+import org.talend.cloudera.navigator.api.util.ClouderaAPIUtil;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
 
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;

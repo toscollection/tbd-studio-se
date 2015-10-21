@@ -15,8 +15,8 @@ package org.talend.cloudera.navigator.api.entity;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.cloudera.navigator.api.GeneratorID;
 import org.talend.cloudera.navigator.api.entity.TalendField;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
 
 import com.cloudera.nav.sdk.model.SourceType;
 

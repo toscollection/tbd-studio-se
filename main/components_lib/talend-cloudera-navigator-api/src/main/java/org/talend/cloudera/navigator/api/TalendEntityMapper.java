@@ -11,6 +11,8 @@ import org.talend.cloudera.navigator.api.entity.TalendEntityChild;
 import org.talend.cloudera.navigator.api.entity.TalendInputEntity;
 import org.talend.cloudera.navigator.api.entity.TalendInputOutputEntity;
 import org.talend.cloudera.navigator.api.entity.TalendOutputEntity;
+import org.talend.cloudera.navigator.api.util.ClouderaAPIUtil;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
 
 import com.cloudera.nav.sdk.model.entities.Entity;
 

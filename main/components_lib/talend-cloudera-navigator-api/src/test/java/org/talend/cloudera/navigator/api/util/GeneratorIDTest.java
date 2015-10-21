@@ -10,11 +10,12 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.cloudera.navigator.api;
+package org.talend.cloudera.navigator.api.util;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
 
 /**
  * created by pbailly on 21 Oct 2015 Detailled comment

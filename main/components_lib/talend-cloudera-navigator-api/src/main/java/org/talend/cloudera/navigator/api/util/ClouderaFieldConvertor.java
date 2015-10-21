@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.cloudera.navigator.api;
+package org.talend.cloudera.navigator.api.util;
 
 import java.util.ArrayList;
 import java.util.List;

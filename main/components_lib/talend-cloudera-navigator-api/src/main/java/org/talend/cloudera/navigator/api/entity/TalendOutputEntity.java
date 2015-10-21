@@ -3,7 +3,7 @@ package org.talend.cloudera.navigator.api.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.talend.cloudera.navigator.api.GeneratorID;
+import org.talend.cloudera.navigator.api.util.GeneratorID;
 
 import com.cloudera.nav.sdk.model.SourceType;
 import com.cloudera.nav.sdk.model.annotations.MClass;

@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.talend.cloudera.navigator.api.entity.TalendDataset;
+import org.talend.cloudera.navigator.api.util.ClouderaAPIUtil;
+import org.talend.cloudera.navigator.api.util.ClouderaFieldConvertor;
 
 import com.cloudera.nav.sdk.client.NavigatorPlugin;
 import com.cloudera.nav.sdk.client.writer.ResultSet;
