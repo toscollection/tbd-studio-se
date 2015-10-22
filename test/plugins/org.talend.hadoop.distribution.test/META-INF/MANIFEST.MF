@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Hadoop Distribution API Test
+Bundle-SymbolicName: org.talend.hadoop.distribution.test
+Bundle-Version: 6.1.0.qualifier
+Bundle-Vendor: .Talend SA.
+Fragment-Host: org.talend.hadoop.distribution
+Require-Bundle: org.junit;bundle-version="4.11.0",
+ org.talend.utils;bundle-version="6.0.0",
+ org.talend.testutils;bundle-version="6.0.0"
+Import-Package: org.apache.commons.io
