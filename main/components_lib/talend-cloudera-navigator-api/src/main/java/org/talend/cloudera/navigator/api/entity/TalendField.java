@@ -11,7 +11,7 @@ public class TalendField extends DatasetField {
 
     public TalendField() {
         super();
-        setSourceType(SourceType.PLUGIN);
+        setSourceType(SourceType.SDK);
         setNamespace(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
     }
 

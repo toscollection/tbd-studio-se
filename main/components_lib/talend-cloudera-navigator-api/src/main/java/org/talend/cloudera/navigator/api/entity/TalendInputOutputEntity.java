@@ -40,13 +40,13 @@ public class TalendInputOutputEntity extends TalendEntity {
 
     public void addNextEntity(String entityId) {
         this.nextEntitiesId.add(entityId);
-        EndPointProxy endpointProxy = new EndPointProxy(entityId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+        EndPointProxy endpointProxy = new EndPointProxy(entityId, SourceType.SDK, EntityType.OPERATION_EXECUTION);
         this.targetProxies.add(endpointProxy);
     }
 
     public void addPreviousEntity(String entityId) {
         this.previousEntitiesId.add(entityId);
-        EndPointProxy endpointProxy = new EndPointProxy(entityId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+        EndPointProxy endpointProxy = new EndPointProxy(entityId, SourceType.SDK, EntityType.OPERATION_EXECUTION);
         this.sourceProxies.add(endpointProxy);
     }
 

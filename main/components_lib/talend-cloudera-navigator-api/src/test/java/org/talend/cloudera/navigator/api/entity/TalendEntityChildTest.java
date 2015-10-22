@@ -31,7 +31,7 @@ public class TalendEntityChildTest {
         TalendEntityChild field = new TalendEntityChild("job", "parent", "id", "integer");
         assertEquals("null__id(" + GeneratorID.generateEntityChildID("job", "parent", "id") + ") --->[]", field.toString());
         assertEquals(GeneratorID.generateEntityChildID("job", "parent", "id"), field.generateId());
-        assertEquals(SourceType.PLUGIN, field.getSourceType());
+        assertEquals(SourceType.SDK, field.getSourceType());
         assertEquals(EntityType.FIELD, field.getEntityType());
         assertEquals(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, field.getNamespace());
 

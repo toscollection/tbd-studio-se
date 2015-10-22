@@ -15,7 +15,6 @@ package org.talend.cloudera.navigator.api.entity;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.cloudera.navigator.api.entity.TalendField;
 import org.talend.cloudera.navigator.api.util.GeneratorID;
 
 import com.cloudera.nav.sdk.model.SourceType;
@@ -30,11 +29,11 @@ public class TalendFieldTest {
     public void test() {
         TalendField field = new TalendField();
         assertEquals("{\"name\":\"null\", \"dataType\":\"null\"}", field.toString());
-        assertEquals(SourceType.PLUGIN, field.getSourceType());
+        assertEquals(SourceType.SDK, field.getSourceType());
         assertEquals(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, field.getNamespace());
         field = new TalendField("id", "int");
         assertEquals("{\"name\":\"id\", \"dataType\":\"int\"}", field.toString());
-        assertEquals(SourceType.PLUGIN, field.getSourceType());
+        assertEquals(SourceType.SDK, field.getSourceType());
         assertEquals(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, field.getNamespace());
     }
 }

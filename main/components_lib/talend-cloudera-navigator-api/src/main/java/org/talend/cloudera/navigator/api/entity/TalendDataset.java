@@ -26,7 +26,7 @@ public class TalendDataset extends Dataset {
 
     public TalendDataset(String name, String componentName, String jobId) {
         super();
-        setSourceType(SourceType.PLUGIN);
+        setSourceType(SourceType.SDK);
         setNamespace(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
         setName(name);
         this.componentName = componentName;

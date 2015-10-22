@@ -42,7 +42,7 @@ public abstract class TalendEntity extends Entity {
 
     @Override
     public SourceType getSourceType() {
-        return SourceType.PLUGIN;
+        return SourceType.SDK;
     }
 
     public String getLink() {

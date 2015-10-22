@@ -56,7 +56,7 @@ public class TalendEntityChild extends DatasetField {
 
     @Override
     public SourceType getSourceType() {
-        return SourceType.PLUGIN;
+        return SourceType.SDK;
     }
 
     public String getLink() {
@@ -78,7 +78,7 @@ public class TalendEntityChild extends DatasetField {
 
     public void addTarget(String targetId) {
         this.targetEntitiesId.add(targetId);
-        EndPointProxy endpointProxy = new EndPointProxy(targetId, SourceType.PLUGIN, EntityType.OPERATION_EXECUTION);
+        EndPointProxy endpointProxy = new EndPointProxy(targetId, SourceType.SDK, EntityType.OPERATION_EXECUTION);
         this.targets.add(endpointProxy);
     }
 
