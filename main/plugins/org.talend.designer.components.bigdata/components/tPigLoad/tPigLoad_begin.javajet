@@ -22,18 +22,21 @@
 
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
+	
+	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
+	boolean isCustom = false;
 
 	org.talend.hadoop.distribution.component.PigComponent pigDistrib = null;
-	try {
-		pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, pigVersion);
-	} catch (java.lang.Exception e) {
-		e.printStackTrace();
-		return "";
-	}
+	if(!isLocal) {
+    	try {
+    		pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, pigVersion);
+    	} catch (java.lang.Exception e) {
+    		e.printStackTrace();
+    		return "";
+    	}
+    	isCustom = pigDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
+    }
 
-	boolean isCustom = pigDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
-
-	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 	String inputFilename = ElementParameterParser.getValue(node, "__INPUT_FILENAME__");
 	boolean isS3Location = "true".equals(ElementParameterParser.getValue(node, "__S3_LOCATION_LOAD__"));
@@ -75,17 +78,17 @@
 	List<Map<String, String>> registerJar = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DRIVER_JAR__");
 	List<Map<String, String>> defineFunctions = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node, "__DEFINE_FUNCTION__");
 
-	boolean isExecutedThroughWebHCat = !isLocal && pigDistrib.isExecutedThroughWebHCat();
+	boolean isExecutedThroughWebHCat = !isLocal && (pigDistrib != null && pigDistrib.isExecutedThroughWebHCat());
 
-	String hcatPackage = (pigDistrib.pigVersionPriorTo_0_12() && !isCustom) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
+	String hcatPackage = (pigDistrib != null && pigDistrib.pigVersionPriorTo_0_12() && !isCustom) ? "org.apache.hcatalog.pig" : "org.apache.hive.hcatalog.pig";
 
-	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || pigDistrib.doSupportHCatalog()) && "HCatLoader".equals(function) && !defineJarsToRegister);
+	boolean generateRegisterJarCodeForHCatalog = (!isLocal && (isCustom || (pigDistrib != null && pigDistrib.doSupportHCatalog())) && "HCatLoader".equals(function) && !defineJarsToRegister);
 	boolean generateRegisterJarCode = registerJar.size() > 0;
 
 	java.util.List<String> jarsToRegister = null;
 	java.util.List<String> jars = null;
 
-	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function) && pigDistrib.doSupportHBase();
+	boolean generateRegisterJarCodeForHBase = !isLocal && "HBaseStorage".equals(function) && pigDistrib!= null && pigDistrib.doSupportHBase();
 
 	boolean generateRegisterJarCodeForSequenceFile = !isLocal && "SequenceFileStorage".equals(function);
 
@@ -192,7 +195,7 @@
 		outputConnectionName = outputConnections.get(0).getName();
 	}
 
-	boolean useTez = !isLocal && pigDistrib.doSupportTezForPig() && "TEZ".equals(ElementParameterParser.getValue(node, "__ENGINE__"));
+	boolean useTez = !isLocal && pigDistrib != null && pigDistrib.doSupportTezForPig() && "TEZ".equals(ElementParameterParser.getValue(node, "__ENGINE__"));
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/Pig/PigHeader.javajet"%>
 <%
@@ -268,7 +271,7 @@
 %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
 <%
-		} else if(!isLocal && !isExecutedThroughWebHCat) { // MAPREDUCE mode
+		} else if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null) { // MAPREDUCE mode
 			if(inMain) {
 				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
@@ -635,7 +638,7 @@
 			}
 		}
 
-		if(!isLocal && "HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
+		if(!isLocal && "HCatLoader".equals(function) && pigDistrib != null && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we don't need a filename anymore, but a database name and a table name.
 			if(!generateRegisterJarCodeForHCatalog) {
 				if(defineJarsToRegister && registerJarForHCatalog.size() > 0){
 					for(Map<String, String> item : registerJarForHCatalog){
@@ -867,7 +870,7 @@
 
 		helper_<%=cid%>.add("query",sb_<%=cid%>.toString());
 <%
-		if(!isLocal && "HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we will have to consider the partition filter
+		if(!isLocal && "HCatLoader".equals(function) && pigDistrib != null && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we will have to consider the partition filter
 			if(partitionFilter.size() > 0){
 				int i = 0;
 %>

@@ -35,18 +35,21 @@
 		start_node = loadNode.getUniqueName();
 		
 		boolean isLocal = "true".equals(ElementParameterParser.getValue(loadNode, "__LOCAL__"));
-		String loadDistribution = ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__");
-		String loadPigVersion = ElementParameterParser.getValue(loadNode, "__PIG_VERSION__");
-		
-		org.talend.hadoop.distribution.component.PigComponent loadPigDistrib = null;
-		try {
-			loadPigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(loadDistribution, loadPigVersion);
-		} catch (java.lang.Exception e) {
-			e.printStackTrace();
-			return "";
-		}
-
-		isExecutedThroughWebHCat = !isLocal && loadPigDistrib.isExecutedThroughWebHCat();
+		if(!isLocal) {
+    		String loadDistribution = ElementParameterParser.getValue(loadNode, "__DISTRIBUTION__");
+    		String loadPigVersion = ElementParameterParser.getValue(loadNode, "__PIG_VERSION__");
+    		
+    		org.talend.hadoop.distribution.component.PigComponent loadPigDistrib = null;
+    		try {
+    			loadPigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(loadDistribution, loadPigVersion);
+    		} catch (java.lang.Exception e) {
+    			e.printStackTrace();
+    			return "";
+    		}
+    
+    		isExecutedThroughWebHCat = loadPigDistrib != null && loadPigDistrib.isExecutedThroughWebHCat();
+    	}
+    	
 		previousOutputConnectionName = connection.getName();
 	}
 	

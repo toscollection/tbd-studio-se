@@ -81,8 +81,13 @@ public class DistributionFactory {
      */
     public static boolean executeBooleanMethod(String methodName, String distribution, String version) throws Exception {
         HadoopComponent distrib = DistributionFactory.buildDistribution(distribution, version);
-        java.lang.reflect.Method m = distrib.getClass().getMethod(methodName, new Class<?>[0]);
-        return (Boolean) m.invoke(distrib, new Object[0]);
+        try {
+            java.lang.reflect.Method m = distrib.getClass().getMethod(methodName, new Class<?>[0]);
+            return (Boolean) m.invoke(distrib, new Object[0]);
+        } catch (NoSuchMethodException e) {
+            throw new Exception("The distribution " + distribution + " with the version " + version //$NON-NLS-1$ //$NON-NLS-2$
+                    + " is not supported in this component. Please check your configuration."); //$NON-NLS-1$
+        }
     }
 
 }
