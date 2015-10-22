@@ -74,7 +74,7 @@ public class MapR500Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public boolean doSupportKerberos() {
-        return false;
+        return true;
     }
 
     @Override

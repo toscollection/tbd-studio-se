@@ -47,7 +47,7 @@ public class MapR500DistributionTest {
         assertEquals(EHadoopDistributions.MAPR.getName(), mapr500.getDistribution());
         assertEquals(EHadoopVersion4Drivers.MAPR500.getVersionValue(), mapr500.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, mapr500.getHadoopVersion());
-        assertFalse(mapr500.doSupportKerberos());
+        assertTrue(mapr500.doSupportKerberos());
         assertFalse(mapr500.doSupportUseDatanodeHostname());
         assertTrue(mapr500.doSupportGroup());
         assertTrue(((HDFSComponent) mapr500).doSupportSequenceFileShortType());
