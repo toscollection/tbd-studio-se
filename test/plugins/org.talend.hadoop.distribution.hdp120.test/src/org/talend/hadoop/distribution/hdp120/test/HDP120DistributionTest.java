@@ -73,6 +73,8 @@ public class HDP120DistributionTest {
         assertFalse(((HiveComponent) hdp120).doSupportORCFormat());
         assertTrue(((HiveComponent) hdp120).doSupportAvroFormat());
         assertTrue(((HiveComponent) hdp120).doSupportParquetFormat());
+        assertFalse(((HiveComponent) hdp120).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) hdp120).doSupportClouderaNavigator());
         assertFalse(hdp120 instanceof SparkBatchComponent);
         assertFalse(hdp120 instanceof SparkStreamingComponent);
         assertTrue(hdp120 instanceof HCatalogComponent);

@@ -73,6 +73,8 @@ public class MapR213DistributionTest {
         assertTrue(((HiveComponent) mapr213).doSupportORCFormat());
         assertTrue(((HiveComponent) mapr213).doSupportAvroFormat());
         assertTrue(((HiveComponent) mapr213).doSupportParquetFormat());
+        assertFalse(((HiveComponent) mapr213).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) mapr213).doSupportClouderaNavigator());
         assertFalse(mapr213 instanceof SparkBatchComponent);
         assertFalse(mapr213 instanceof SparkStreamingComponent);
         assertFalse(mapr213 instanceof HCatalogComponent);

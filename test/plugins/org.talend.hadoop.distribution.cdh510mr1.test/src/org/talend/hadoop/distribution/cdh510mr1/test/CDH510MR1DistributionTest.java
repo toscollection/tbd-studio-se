@@ -73,6 +73,9 @@ public class CDH510MR1DistributionTest {
         assertTrue(((HiveComponent) cdh510mr1).doSupportORCFormat());
         assertTrue(((HiveComponent) cdh510mr1).doSupportAvroFormat());
         assertTrue(((HiveComponent) cdh510mr1).doSupportParquetFormat());
+        assertFalse(((HiveComponent) cdh510mr1).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) cdh510mr1).doSupportClouderaNavigator());
+
         assertFalse(cdh510mr1 instanceof SparkBatchComponent);
         assertFalse(cdh510mr1 instanceof SparkStreamingComponent);
         assertTrue(cdh510mr1 instanceof HCatalogComponent);

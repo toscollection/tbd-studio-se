@@ -73,6 +73,8 @@ public class Pivotal200DistributionTest {
         assertTrue(((HiveComponent) piv200).doSupportORCFormat());
         assertTrue(((HiveComponent) piv200).doSupportAvroFormat());
         assertTrue(((HiveComponent) piv200).doSupportParquetFormat());
+        assertFalse(((HiveComponent) piv200).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) piv200).doSupportClouderaNavigator());
         assertFalse(piv200 instanceof SparkBatchComponent);
         assertFalse(piv200 instanceof SparkStreamingComponent);
         assertFalse(piv200 instanceof HCatalogComponent);

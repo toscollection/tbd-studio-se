@@ -73,6 +73,8 @@ public class Pivotal101DistributionTest {
         assertFalse(((HiveComponent) piv101).doSupportORCFormat());
         assertFalse(((HiveComponent) piv101).doSupportAvroFormat());
         assertFalse(((HiveComponent) piv101).doSupportParquetFormat());
+        assertFalse(((HiveComponent) piv101).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) piv101).doSupportClouderaNavigator());
         assertFalse(piv101 instanceof SparkBatchComponent);
         assertFalse(piv101 instanceof SparkStreamingComponent);
         assertFalse(piv101 instanceof HCatalogComponent);

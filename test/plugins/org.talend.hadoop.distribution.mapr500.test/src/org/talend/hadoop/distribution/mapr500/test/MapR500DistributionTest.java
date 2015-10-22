@@ -73,6 +73,8 @@ public class MapR500DistributionTest {
         assertTrue(((HiveComponent) mapr500).doSupportORCFormat());
         assertTrue(((HiveComponent) mapr500).doSupportAvroFormat());
         assertTrue(((HiveComponent) mapr500).doSupportParquetFormat());
+        assertFalse(((HiveComponent) mapr500).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) mapr500).doSupportClouderaNavigator());
         assertFalse(((SparkBatchComponent) mapr500).isSpark14());
         assertFalse(((SparkBatchComponent) mapr500).doSupportDynamicMemoryAllocation());
         assertFalse(((SparkBatchComponent) mapr500).isExecutedThroughSparkJobServer());

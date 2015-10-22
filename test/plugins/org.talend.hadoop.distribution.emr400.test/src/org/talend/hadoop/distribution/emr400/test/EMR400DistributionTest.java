@@ -82,6 +82,8 @@ public class EMR400DistributionTest {
         assertTrue(((SparkStreamingComponent) emr400).doSupportCheckpointing());
         assertFalse(((SparkStreamingComponent) emr400).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) emr400).doSupportSparkYarnClientMode());
+        assertFalse(((HiveComponent) emr400).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) emr400).doSupportClouderaNavigator());
         assertFalse(emr400 instanceof HCatalogComponent);
         assertFalse(emr400 instanceof ImpalaComponent);
     }

@@ -71,6 +71,8 @@ public class HDInsight32DistributionTest {
         assertTrue(((HiveComponent) hdinsight320).doSupportORCFormat());
         assertTrue(((HiveComponent) hdinsight320).doSupportAvroFormat());
         assertTrue(((HiveComponent) hdinsight320).doSupportParquetFormat());
+        assertFalse(((HiveComponent) hdinsight320).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) hdinsight320).doSupportClouderaNavigator());
         assertFalse(((SparkBatchComponent) hdinsight320).isSpark14());
         assertFalse(((SparkBatchComponent) hdinsight320).doSupportDynamicMemoryAllocation());
         assertTrue(((SparkBatchComponent) hdinsight320).isExecutedThroughSparkJobServer());

@@ -73,6 +73,8 @@ public class CDH540DistributionTest {
         assertTrue(((HiveComponent) cdh540).doSupportORCFormat());
         assertTrue(((HiveComponent) cdh540).doSupportAvroFormat());
         assertTrue(((HiveComponent) cdh540).doSupportParquetFormat());
+        assertFalse(((HiveComponent) cdh540).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) cdh540).doSupportClouderaNavigator());
         assertFalse(((SparkBatchComponent) cdh540).isSpark14());
         assertTrue(((SparkBatchComponent) cdh540).doSupportDynamicMemoryAllocation());
         assertFalse(((SparkBatchComponent) cdh540).isExecutedThroughSparkJobServer());
@@ -84,7 +86,10 @@ public class CDH540DistributionTest {
         assertTrue(((SparkStreamingComponent) cdh540).doSupportCheckpointing());
         assertTrue(((SparkStreamingComponent) cdh540).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) cdh540).doSupportSparkYarnClientMode());
+        assertTrue(((SparkStreamingComponent) cdh540).doSupportSparkYarnClientMode());
+
         assertTrue(cdh540 instanceof HCatalogComponent);
         assertTrue(cdh540 instanceof ImpalaComponent);
+
     }
 }

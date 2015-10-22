@@ -73,6 +73,9 @@ public class HDP220DistributionTest {
         assertTrue(((HiveComponent) hdp220).doSupportORCFormat());
         assertTrue(((HiveComponent) hdp220).doSupportAvroFormat());
         assertTrue(((HiveComponent) hdp220).doSupportParquetFormat());
+        assertFalse(((HiveComponent) hdp220).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) hdp220).doSupportClouderaNavigator());
+
         assertFalse(hdp220 instanceof SparkBatchComponent);
         assertFalse(hdp220 instanceof SparkStreamingComponent);
         assertTrue(hdp220 instanceof HCatalogComponent);

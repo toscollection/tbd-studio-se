@@ -78,6 +78,9 @@ public class MapR410DistributionTest {
         assertFalse(((SparkBatchComponent) mapr410).isExecutedThroughSparkJobServer());
         assertTrue(((SparkBatchComponent) mapr410).doSupportSparkStandaloneMode());
         assertTrue(((SparkBatchComponent) mapr410).doSupportSparkYarnClientMode());
+
+        assertFalse(((HiveComponent) mapr410).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) mapr410).doSupportClouderaNavigator());
         assertFalse(mapr410 instanceof SparkStreamingComponent);
         assertTrue(mapr410 instanceof HCatalogComponent);
         assertFalse(mapr410 instanceof ImpalaComponent);

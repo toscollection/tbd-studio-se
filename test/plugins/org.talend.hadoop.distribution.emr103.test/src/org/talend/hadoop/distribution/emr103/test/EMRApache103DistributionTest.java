@@ -71,6 +71,8 @@ public class EMRApache103DistributionTest {
         assertFalse(((HiveComponent) emr103).doSupportORCFormat());
         assertFalse(((HiveComponent) emr103).doSupportAvroFormat());
         assertTrue(((HiveComponent) emr103).doSupportParquetFormat());
+        assertFalse(((HiveComponent) emr103).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) emr103).doSupportClouderaNavigator());
         assertFalse(emr103 instanceof SparkBatchComponent);
         assertFalse(emr103 instanceof SparkStreamingComponent);
         assertFalse(emr103 instanceof HCatalogComponent);

@@ -71,6 +71,8 @@ public class Apache100DistributionTest {
         assertFalse(((HiveComponent) apache100).doSupportORCFormat());
         assertFalse(((HiveComponent) apache100).doSupportAvroFormat());
         assertFalse(((HiveComponent) apache100).doSupportParquetFormat());
+        assertFalse(((HiveComponent) apache100).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) apache100).doSupportClouderaNavigator());
         assertFalse(apache100 instanceof SparkBatchComponent);
         assertFalse(apache100 instanceof SparkStreamingComponent);
         assertFalse(apache100 instanceof HCatalogComponent);

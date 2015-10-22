@@ -73,6 +73,9 @@ public class MapR212DistributionTest {
         assertFalse(((HiveComponent) mapr212).doSupportORCFormat());
         assertTrue(((HiveComponent) mapr212).doSupportAvroFormat());
         assertTrue(((HiveComponent) mapr212).doSupportParquetFormat());
+
+        assertFalse(((HiveComponent) mapr212).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) mapr212).doSupportClouderaNavigator());
         assertFalse(mapr212 instanceof SparkBatchComponent);
         assertFalse(mapr212 instanceof SparkStreamingComponent);
         assertFalse(mapr212 instanceof HCatalogComponent);

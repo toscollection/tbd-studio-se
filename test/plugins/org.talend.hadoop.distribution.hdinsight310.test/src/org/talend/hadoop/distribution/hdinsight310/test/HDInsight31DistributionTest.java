@@ -71,6 +71,8 @@ public class HDInsight31DistributionTest {
         assertTrue(((HiveComponent) hdinsight310).doSupportORCFormat());
         assertTrue(((HiveComponent) hdinsight310).doSupportAvroFormat());
         assertTrue(((HiveComponent) hdinsight310).doSupportParquetFormat());
+        assertFalse(((HiveComponent) hdinsight310).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) hdinsight310).doSupportClouderaNavigator());
         assertFalse(hdinsight310 instanceof SparkBatchComponent);
         assertFalse(hdinsight310 instanceof SparkStreamingComponent);
         assertFalse(hdinsight310 instanceof HCatalogComponent);

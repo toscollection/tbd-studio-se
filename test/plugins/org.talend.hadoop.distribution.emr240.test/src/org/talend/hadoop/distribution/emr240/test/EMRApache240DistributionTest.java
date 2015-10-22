@@ -73,6 +73,8 @@ public class EMRApache240DistributionTest {
         assertFalse(((HiveComponent) emr240).doSupportORCFormat());
         assertFalse(((HiveComponent) emr240).doSupportAvroFormat());
         assertTrue(((HiveComponent) emr240).doSupportParquetFormat());
+        assertFalse(((HiveComponent) emr240).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) emr240).doSupportClouderaNavigator());
         assertFalse(emr240 instanceof SparkBatchComponent);
         assertFalse(emr240 instanceof SparkStreamingComponent);
         assertFalse(emr240 instanceof HCatalogComponent);

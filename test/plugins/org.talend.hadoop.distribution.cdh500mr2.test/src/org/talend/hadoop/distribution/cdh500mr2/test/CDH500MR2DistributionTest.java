@@ -73,6 +73,8 @@ public class CDH500MR2DistributionTest {
         assertTrue(((HiveComponent) cdh500).doSupportORCFormat());
         assertTrue(((HiveComponent) cdh500).doSupportAvroFormat());
         assertTrue(((HiveComponent) cdh500).doSupportParquetFormat());
+        assertFalse(((HiveComponent) cdh500).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) cdh500).doSupportClouderaNavigator());
         assertFalse(cdh500 instanceof SparkBatchComponent);
         assertFalse(cdh500 instanceof SparkStreamingComponent);
         assertTrue(cdh500 instanceof HCatalogComponent);

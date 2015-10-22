@@ -84,6 +84,8 @@ public class CDH510MR2DistributionTest {
         assertTrue(((SparkStreamingComponent) cdh510mr2).doSupportCheckpointing());
         assertTrue(((SparkStreamingComponent) cdh510mr2).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) cdh510mr2).doSupportSparkYarnClientMode());
+        assertFalse(((HiveComponent) cdh510mr2).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) cdh510mr2).doSupportClouderaNavigator());
         assertTrue(cdh510mr2 instanceof HCatalogComponent);
         assertTrue(cdh510mr2 instanceof ImpalaComponent);
     }
