@@ -221,11 +221,6 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
     }
 
     @Override
-    public boolean doSupportClouderaNavigator() {
-        return true;
-    }
-
-    @Override
     public boolean doSupportSparkStandaloneMode() {
         return true;
     }
