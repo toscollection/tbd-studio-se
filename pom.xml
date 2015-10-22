@@ -48,6 +48,38 @@
 		<module>main/features/org.talend.tos.bigdata.designer.feature</module>
 		<module>main/features/org.talend.tos.bigdata.libraries.feature</module>
 		<module>main/features/org.talend.tos.bigdata.repository.feature</module>
+		<module>main/features/org.talend.hadoop.distribution.feature</module>		
+		<module>main/plugins/org.talend.hadoop.distribution</module>
+		<module>main/plugins/org.talend.hadoop.distribution.apache100</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh4mr1</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh4mr2</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh500mr2</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh510mr1</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh510mr2</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh540</module>
+		<module>main/plugins/org.talend.hadoop.distribution.custom</module>
+		<module>main/plugins/org.talend.hadoop.distribution.emr103</module>
+		<module>main/plugins/org.talend.hadoop.distribution.emr240</module>
+		<module>main/plugins/org.talend.hadoop.distribution.emr240hive0131</module>
+		<module>main/plugins/org.talend.hadoop.distribution.emr400</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdinsight310</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdinsight320</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdp120</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdp130</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdp200</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdp210</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdp220</module>
+		<module>main/plugins/org.talend.hadoop.distribution.hdp230</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr200</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr212</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr213</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr301</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr310</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr401</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr410</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr500</module>
+		<module>main/plugins/org.talend.hadoop.distribution.piv101</module>
+		<module>main/plugins/org.talend.hadoop.distribution.piv200</module>
 		<module>main/plugins/org.talend.demo.bigdata.ce</module>
 		<module>main/plugins/org.talend.designer.components.bigdata</module>
 		<module>main/plugins/org.talend.designer.hdfsbrowse</module>

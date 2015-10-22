@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+        <!-- group of spark libraries -->
+        <libraryNeededGroup
+                description="Spark libraries for HDP 2.3"
+                id="SPARK-LIB-HDP_2_3"
+                name="SPARK-LIB-HDP_2_3">
+            <library id="commons-cli-1.2.jar"/>
+            <library id="commons-codec-1.4.jar"/>
+            <library id="commons-collections-3.2.1.jar"/>
+            <library id="commons-configuration-1.6.jar"/>
+            <library id="commons-lang-2.6.jar"/>
+            <library id="commons-logging-1.1.3.jar"/>
+            <library id="guava-11.0.2.jar"/>
+            <library id="hadoop-mapreduce-client-common-HDP_2_3"/>
+            <library id="hadoop-mapreduce-client-core-HDP_2_3"/>
+            <library id="hadoop-mapreduce-client-jobclient-HDP_2_3"/>
+            <library id="hadoop-yarn-api-HDP_2_3"/>
+            <library id="hadoop-yarn-client-HDP_2_3"/>
+            <library id="hadoop-yarn-common-HDP_2_3"/>
+            <library id="htrace-core-3.1.0-incubating.jar"/>
+            <library id="talend-spark-assembly-HDP_2_3"/>
+        </libraryNeededGroup>
+    </extension>
+</plugin>
