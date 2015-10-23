@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+        
+        <!-- group of hdfs libraries -->
+        <libraryNeededGroup
+                description="The lastest HDFS libraries of CDH 5.4"
+                id="HDFS-LIB-CDH_5_4_LASTEST"
+                name="HDFS-LIB-CDH_5_4_LASTEST"  >
+             <library
+                id="hadoop-common-cdh5.4-lastest">
+             </library>
+             <library
+                 id="hadoop-hdfs-cdh5.4-lastest">
+             </library>
+             <library
+                 id="hadoop-auth-cdh5.4-lastest">
+             </library>
+             <library
+                 id="avro-cdh5.4-lastest">
+             </library>
+             <library
+                 id="commons-configuration-1.6.jar">
+             </library>
+             <library
+                 id="commons-lang-2.6.jar">
+             </library>
+             <library
+                 id="commons-logging-1.1.3.jar">
+             </library>
+             <library
+                 id="commons-cli-1.2.jar">
+             </library>
+             <library
+                 id="commons-collections-3.2.1.jar">
+             </library>
+             <library
+                 id="guava-11.0.2.jar">
+             </library>
+             <library
+                 id="protobuf-java-2.5.0.jar">
+             </library>
+             <library
+                 id="slf4j-api-1.7.5.jar">
+             </library>
+             <library
+                 id="slf4j-log4j12-1.7.5.jar">
+             </library>
+             <library
+                 id="log4j-1.2.17.jar">
+             </library>
+             <library
+                 id="jersey-core-1.9.jar">
+             </library>
+             <library
+                 id="htrace-core-3.0.4.jar">
+             </library>
+        </libraryNeededGroup>
+        
+    </extension>
+</plugin>

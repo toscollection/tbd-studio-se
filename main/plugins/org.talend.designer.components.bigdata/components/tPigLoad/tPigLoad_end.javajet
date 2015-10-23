@@ -13,16 +13,19 @@
 	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 	String pigVersion = ElementParameterParser.getValue(node, "__PIG_VERSION__");
 
+    boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
+
 	org.talend.hadoop.distribution.component.PigComponent pigDistrib = null;
-	try {
-		pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, pigVersion);
-	} catch (java.lang.Exception e) {
-		e.printStackTrace();
-		return "";
-	}
+	if(!isLocal) {
+    	try {
+    		pigDistrib = (org.talend.hadoop.distribution.component.PigComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, pigVersion);
+    	} catch (java.lang.Exception e) {
+    		e.printStackTrace();
+    		return "";
+    	}
+    }
 	
-	boolean isLocal = "true".equals(ElementParameterParser.getValue(node, "__LOCAL__"));
-	boolean isExecutedThroughWebHCat = !isLocal && pigDistrib.isExecutedThroughWebHCat();
+	boolean isExecutedThroughWebHCat = !isLocal && pigDistrib != null && pigDistrib.isExecutedThroughWebHCat();
 
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
