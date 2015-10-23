@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.talend.libraries.hadoop.apache.1.0.0
-Bundle-Version: 6.1.0.qualifier
+Bundle-Version: 6.1.1.qualifier
 Bundle-Name: apache-1.0.0
 Bundle-ClassPath: .,
  lib/hadoop-core-1.0.0.jar
