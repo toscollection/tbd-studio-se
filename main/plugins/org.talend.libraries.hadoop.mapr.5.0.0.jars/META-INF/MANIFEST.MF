@@ -4,3 +4,4 @@ Bundle-Name: MapR 5.0.0 jars fragment
 Bundle-SymbolicName: org.talend.libraries.hadoop.mapr.5.0.0.jars
 Bundle-Version: 6.1.0.qualifier
 Fragment-Host: org.talend.libraries.hadoop.mapr.5.0.0
+Eclipse-BundleShape: dir
