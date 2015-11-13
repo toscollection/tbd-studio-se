@@ -27,9 +27,10 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.custom.CustomDistribution;
 
 /**
- * Test class for the {@link HDP230Distribution} distribution.
+ * Test class for the {@link CustomDistribution} distribution.
  *
  */
 public class CustomDistributionTest {
@@ -38,53 +39,54 @@ public class CustomDistributionTest {
 
     @Test
     public void testCustomDistribution() throws Exception {
-        HadoopComponent custom = new org.talend.hadoop.distribution.custom.CustomDistribution();
-        assertNotNull(custom.getDistributionName());
-        assertNull(custom.getVersionName(null));
-        assertEquals(EHadoopDistributions.CUSTOM.getName(), custom.getDistribution());
-        assertNull(custom.getVersion());
-        assertNull(custom.getHadoopVersion());
-        assertFalse(custom.doSupportKerberos());
-        assertTrue(custom.doSupportUseDatanodeHostname());
-        assertFalse(custom.doSupportGroup());
-        assertTrue(((HDFSComponent) custom).doSupportSequenceFileShortType());
-        assertFalse(((MRComponent) custom).isExecutedThroughWebHCat());
-        assertFalse(((MRComponent) custom).doSupportCrossPlatformSubmission());
-        assertTrue(((MRComponent) custom).doSupportImpersonation());
-        assertEquals(DEFAULT_YARN_APPLICATION_CLASSPATH, ((MRComponent) custom).getYarnApplicationClasspath());
-        assertFalse(((HBaseComponent) custom).doSupportNewHBaseAPI());
-        assertTrue(((SqoopComponent) custom).doJavaAPISupportStorePasswordInFile());
-        assertFalse(((SqoopComponent) custom).doJavaAPISqoopImportSupportDeleteTargetDir());
-        assertTrue(((SqoopComponent) custom).doJavaAPISqoopImportAllTablesSupportExcludeTable());
-        assertTrue(((PigComponent) custom).doSupportHCatalog());
-        assertFalse(((PigComponent) custom).pigVersionPriorTo_0_12());
-        assertTrue(((PigComponent) custom).doSupportHBase());
-        assertTrue(((PigComponent) custom).doSupportTezForPig());
-        assertTrue(((HiveComponent) custom).doSupportEmbeddedMode());
-        assertTrue(((HiveComponent) custom).doSupportStandaloneMode());
-        assertTrue(((HiveComponent) custom).doSupportHive1());
-        assertTrue(((HiveComponent) custom).doSupportHive2());
-        assertTrue(((HiveComponent) custom).doSupportTezForHive());
-        assertTrue(((HiveComponent) custom).doSupportHBaseForHive());
-        assertTrue(((HiveComponent) custom).doSupportSSL());
-        assertTrue(((HiveComponent) custom).doSupportORCFormat());
-        assertTrue(((HiveComponent) custom).doSupportAvroFormat());
-        assertTrue(((HiveComponent) custom).doSupportParquetFormat());
-        assertFalse(((SparkBatchComponent) custom).isSpark14());
-        assertTrue(((SparkBatchComponent) custom).doSupportDynamicMemoryAllocation());
-        assertFalse(((SparkBatchComponent) custom).isExecutedThroughSparkJobServer());
-        assertTrue(((SparkBatchComponent) custom).doSupportSparkStandaloneMode());
-        assertTrue(((SparkBatchComponent) custom).doSupportSparkYarnClientMode());
-        assertFalse(((SparkStreamingComponent) custom).isSpark14());
-        assertTrue(((SparkStreamingComponent) custom).doSupportDynamicMemoryAllocation());
-        assertFalse(((SparkStreamingComponent) custom).isExecutedThroughSparkJobServer());
-        assertTrue(((SparkStreamingComponent) custom).doSupportCheckpointing());
-        assertTrue(((SparkStreamingComponent) custom).doSupportSparkStandaloneMode());
-        assertTrue(((SparkStreamingComponent) custom).doSupportSparkYarnClientMode());
-        assertFalse(((HiveComponent) custom).doSupportStoreAsParquet());
-        assertFalse(((HiveComponent) custom).doSupportClouderaNavigator());
-        assertTrue(custom instanceof HCatalogComponent);
-        assertTrue(custom instanceof ImpalaComponent);
+        HadoopComponent distribution = new CustomDistribution();
+        assertNotNull(distribution.getDistributionName());
+        assertNull(distribution.getVersionName(null));
+        assertEquals(EHadoopDistributions.CUSTOM.getName(), distribution.getDistribution());
+        assertNull(distribution.getVersion());
+        assertNull(distribution.getHadoopVersion());
+        assertFalse(distribution.doSupportKerberos());
+        assertTrue(distribution.doSupportUseDatanodeHostname());
+        assertFalse(distribution.doSupportGroup());
+        assertTrue(distribution.doSupportOldImportMode());
+        assertTrue(((HDFSComponent) distribution).doSupportSequenceFileShortType());
+        assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
+        assertFalse(((MRComponent) distribution).doSupportCrossPlatformSubmission());
+        assertTrue(((MRComponent) distribution).doSupportImpersonation());
+        assertEquals(DEFAULT_YARN_APPLICATION_CLASSPATH, ((MRComponent) distribution).getYarnApplicationClasspath());
+        assertFalse(((HBaseComponent) distribution).doSupportNewHBaseAPI());
+        assertTrue(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
+        assertFalse(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
+        assertTrue(((SqoopComponent) distribution).doJavaAPISqoopImportAllTablesSupportExcludeTable());
+        assertTrue(((PigComponent) distribution).doSupportHCatalog());
+        assertFalse(((PigComponent) distribution).pigVersionPriorTo_0_12());
+        assertTrue(((PigComponent) distribution).doSupportHBase());
+        assertTrue(((PigComponent) distribution).doSupportTezForPig());
+        assertTrue(((HiveComponent) distribution).doSupportEmbeddedMode());
+        assertTrue(((HiveComponent) distribution).doSupportStandaloneMode());
+        assertTrue(((HiveComponent) distribution).doSupportHive1());
+        assertTrue(((HiveComponent) distribution).doSupportHive2());
+        assertTrue(((HiveComponent) distribution).doSupportTezForHive());
+        assertTrue(((HiveComponent) distribution).doSupportHBaseForHive());
+        assertTrue(((HiveComponent) distribution).doSupportSSL());
+        assertTrue(((HiveComponent) distribution).doSupportORCFormat());
+        assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
+        assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
+        assertFalse(((SparkBatchComponent) distribution).isSpark14());
+        assertTrue(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
+        assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
+        assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
+        assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
+        assertFalse(((SparkStreamingComponent) distribution).isSpark14());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportDynamicMemoryAllocation());
+        assertFalse(((SparkStreamingComponent) distribution).isExecutedThroughSparkJobServer());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
+        assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
+        assertTrue(distribution instanceof HCatalogComponent);
+        assertTrue(distribution instanceof ImpalaComponent);
     }
 
 }

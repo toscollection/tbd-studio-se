@@ -41,45 +41,46 @@ public class HDP220DistributionTest {
 
     @Test
     public void testHDP220Distribution() throws Exception {
-        HadoopComponent hdp220 = new HDP220Distribution();
-        assertNotNull(hdp220.getDistributionName());
-        assertNotNull(hdp220.getVersionName(null));
-        assertEquals(EHadoopDistributions.HORTONWORKS.getName(), hdp220.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.HDP_2_2.getVersionValue(), hdp220.getVersion());
-        assertEquals(EHadoopVersion.HADOOP_2, hdp220.getHadoopVersion());
-        assertTrue(hdp220.doSupportKerberos());
-        assertTrue(hdp220.doSupportUseDatanodeHostname());
-        assertFalse(hdp220.doSupportGroup());
-        assertTrue(((HDFSComponent) hdp220).doSupportSequenceFileShortType());
-        assertFalse(((MRComponent) hdp220).isExecutedThroughWebHCat());
-        assertTrue(((MRComponent) hdp220).doSupportCrossPlatformSubmission());
-        assertTrue(((MRComponent) hdp220).doSupportImpersonation());
-        assertEquals(((MRComponent) hdp220).getYarnApplicationClasspath(), YARN_APPLICATION_CLASSPATH);
-        assertTrue(((HBaseComponent) hdp220).doSupportNewHBaseAPI());
-        assertTrue(((SqoopComponent) hdp220).doJavaAPISupportStorePasswordInFile());
-        assertTrue(((SqoopComponent) hdp220).doJavaAPISqoopImportSupportDeleteTargetDir());
-        assertTrue(((SqoopComponent) hdp220).doJavaAPISqoopImportAllTablesSupportExcludeTable());
-        assertTrue(((PigComponent) hdp220).doSupportHCatalog());
-        assertFalse(((PigComponent) hdp220).pigVersionPriorTo_0_12());
-        assertTrue(((PigComponent) hdp220).doSupportHBase());
-        assertTrue(((PigComponent) hdp220).doSupportTezForPig());
-        assertTrue(((HiveComponent) hdp220).doSupportEmbeddedMode());
-        assertTrue(((HiveComponent) hdp220).doSupportStandaloneMode());
-        assertTrue(((HiveComponent) hdp220).doSupportHive1());
-        assertTrue(((HiveComponent) hdp220).doSupportHive2());
-        assertTrue(((HiveComponent) hdp220).doSupportTezForHive());
-        assertTrue(((HiveComponent) hdp220).doSupportHBaseForHive());
-        assertTrue(((HiveComponent) hdp220).doSupportSSL());
-        assertTrue(((HiveComponent) hdp220).doSupportORCFormat());
-        assertTrue(((HiveComponent) hdp220).doSupportAvroFormat());
-        assertTrue(((HiveComponent) hdp220).doSupportParquetFormat());
-        assertFalse(((HiveComponent) hdp220).doSupportStoreAsParquet());
-        assertFalse(((HiveComponent) hdp220).doSupportClouderaNavigator());
+        HadoopComponent distribution = new HDP220Distribution();
+        assertNotNull(distribution.getDistributionName());
+        assertNotNull(distribution.getVersionName(null));
+        assertEquals(EHadoopDistributions.HORTONWORKS.getName(), distribution.getDistribution());
+        assertEquals(EHadoopVersion4Drivers.HDP_2_2.getVersionValue(), distribution.getVersion());
+        assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
+        assertTrue(distribution.doSupportKerberos());
+        assertTrue(distribution.doSupportUseDatanodeHostname());
+        assertFalse(distribution.doSupportGroup());
+        assertTrue(distribution.doSupportOldImportMode());
+        assertTrue(((HDFSComponent) distribution).doSupportSequenceFileShortType());
+        assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
+        assertTrue(((MRComponent) distribution).doSupportCrossPlatformSubmission());
+        assertTrue(((MRComponent) distribution).doSupportImpersonation());
+        assertEquals(((MRComponent) distribution).getYarnApplicationClasspath(), YARN_APPLICATION_CLASSPATH);
+        assertTrue(((HBaseComponent) distribution).doSupportNewHBaseAPI());
+        assertTrue(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
+        assertTrue(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
+        assertTrue(((SqoopComponent) distribution).doJavaAPISqoopImportAllTablesSupportExcludeTable());
+        assertTrue(((PigComponent) distribution).doSupportHCatalog());
+        assertFalse(((PigComponent) distribution).pigVersionPriorTo_0_12());
+        assertTrue(((PigComponent) distribution).doSupportHBase());
+        assertTrue(((PigComponent) distribution).doSupportTezForPig());
+        assertTrue(((HiveComponent) distribution).doSupportEmbeddedMode());
+        assertTrue(((HiveComponent) distribution).doSupportStandaloneMode());
+        assertTrue(((HiveComponent) distribution).doSupportHive1());
+        assertTrue(((HiveComponent) distribution).doSupportHive2());
+        assertTrue(((HiveComponent) distribution).doSupportTezForHive());
+        assertTrue(((HiveComponent) distribution).doSupportHBaseForHive());
+        assertTrue(((HiveComponent) distribution).doSupportSSL());
+        assertTrue(((HiveComponent) distribution).doSupportORCFormat());
+        assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
+        assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
+        assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
 
-        assertFalse(hdp220 instanceof SparkBatchComponent);
-        assertFalse(hdp220 instanceof SparkStreamingComponent);
-        assertTrue(hdp220 instanceof HCatalogComponent);
-        assertFalse(hdp220 instanceof ImpalaComponent);
+        assertFalse(distribution instanceof SparkBatchComponent);
+        assertFalse(distribution instanceof SparkStreamingComponent);
+        assertTrue(distribution instanceof HCatalogComponent);
+        assertFalse(distribution instanceof ImpalaComponent);
     }
 
 }

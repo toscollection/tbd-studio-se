@@ -99,4 +99,14 @@ public interface HadoopComponent {
      */
 
     public ComponentCondition getDisplayCondition(ComponentType componentType);
+
+    /**
+     * Technical method that tags the new distribution that uses only the new import mode. The goal is to avoid the
+     * 'automatic' import for conditions that are true for not yet exisiting distributions. For example, there are some
+     * conditions that return 'true' if the distribution is 'CLOUDERA', which is true for the new CDH coming versions.
+     * We now want each single distribution to be totally autonomous and to be responsible for its own dependencies.
+     * 
+     * @return true if the distribution doesn't use the legacy imports in the java XML files.
+     */
+    public boolean doSupportOldImportMode();
 }

@@ -23,4 +23,8 @@ public final class HiveConstant {
     public static final String VERSION_PARAMETER = "HIVE_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "HIVE_VERSION";//$NON-NLS-1$
+
+    public static final String HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER = "STORE_BY_HBASE"; //$NON-NLS-1$
+
+    public static final String HIVE_CONFIGURATION_COMPONENT = "tHiveConnection"; //$NON-NLS-1$
 }

@@ -40,39 +40,40 @@ public class EMRApache240_Hive_0_13_1_DistributionTest {
 
     @Test
     public void testEMRApache240_Hive_0_13_1_Distribution() throws Exception {
-        HadoopComponent emr240hive0131 = new EMRApache240_Hive_0_13_1_Distribution();
-        assertNotNull(emr240hive0131.getDistributionName());
-        assertNotNull(emr240hive0131.getVersionName(null));
-        assertEquals(EHadoopDistributions.AMAZON_EMR.getName(), emr240hive0131.getDistribution());
-        assertEquals("APACHE_2_4_0_EMR_0_13_1", emr240hive0131.getVersion()); //$NON-NLS-1$
-        assertEquals(EHadoopVersion.HADOOP_2, emr240hive0131.getHadoopVersion());
-        assertFalse(emr240hive0131.doSupportKerberos());
-        assertTrue(emr240hive0131.doSupportUseDatanodeHostname());
-        assertFalse(emr240hive0131.doSupportGroup());
-        assertFalse(emr240hive0131 instanceof HDFSComponent);
-        assertFalse(((MRComponent) emr240hive0131).isExecutedThroughWebHCat());
-        assertTrue(((MRComponent) emr240hive0131).doSupportCrossPlatformSubmission());
-        assertTrue(((MRComponent) emr240hive0131).doSupportImpersonation());
-        assertEquals(((MRComponent) emr240hive0131).getYarnApplicationClasspath(), DEFAULT_YARN_APPLICATION_CLASSPATH);
-        assertFalse(emr240hive0131 instanceof HBaseComponent);
-        assertFalse(emr240hive0131 instanceof SqoopComponent);
-        assertFalse(emr240hive0131 instanceof PigComponent);
-        assertFalse(((HiveComponent) emr240hive0131).doSupportEmbeddedMode());
-        assertTrue(((HiveComponent) emr240hive0131).doSupportStandaloneMode());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportHive1());
-        assertTrue(((HiveComponent) emr240hive0131).doSupportHive2());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportTezForHive());
-        assertTrue(((HiveComponent) emr240hive0131).doSupportHBaseForHive());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportSSL());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportORCFormat());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportAvroFormat());
-        assertTrue(((HiveComponent) emr240hive0131).doSupportParquetFormat());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportStoreAsParquet());
-        assertFalse(((HiveComponent) emr240hive0131).doSupportClouderaNavigator());
-        assertFalse(emr240hive0131 instanceof SparkBatchComponent);
-        assertFalse(emr240hive0131 instanceof SparkStreamingComponent);
-        assertFalse(emr240hive0131 instanceof HCatalogComponent);
-        assertFalse(emr240hive0131 instanceof ImpalaComponent);
+        HadoopComponent distribution = new EMRApache240_Hive_0_13_1_Distribution();
+        assertNotNull(distribution.getDistributionName());
+        assertNotNull(distribution.getVersionName(null));
+        assertEquals(EHadoopDistributions.AMAZON_EMR.getName(), distribution.getDistribution());
+        assertEquals("APACHE_2_4_0_EMR_0_13_1", distribution.getVersion()); //$NON-NLS-1$
+        assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
+        assertFalse(distribution.doSupportKerberos());
+        assertTrue(distribution.doSupportUseDatanodeHostname());
+        assertFalse(distribution.doSupportGroup());
+        assertTrue(distribution.doSupportOldImportMode());
+        assertFalse(distribution instanceof HDFSComponent);
+        assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
+        assertTrue(((MRComponent) distribution).doSupportCrossPlatformSubmission());
+        assertTrue(((MRComponent) distribution).doSupportImpersonation());
+        assertEquals(((MRComponent) distribution).getYarnApplicationClasspath(), DEFAULT_YARN_APPLICATION_CLASSPATH);
+        assertFalse(distribution instanceof HBaseComponent);
+        assertFalse(distribution instanceof SqoopComponent);
+        assertFalse(distribution instanceof PigComponent);
+        assertFalse(((HiveComponent) distribution).doSupportEmbeddedMode());
+        assertTrue(((HiveComponent) distribution).doSupportStandaloneMode());
+        assertFalse(((HiveComponent) distribution).doSupportHive1());
+        assertTrue(((HiveComponent) distribution).doSupportHive2());
+        assertFalse(((HiveComponent) distribution).doSupportTezForHive());
+        assertTrue(((HiveComponent) distribution).doSupportHBaseForHive());
+        assertFalse(((HiveComponent) distribution).doSupportSSL());
+        assertFalse(((HiveComponent) distribution).doSupportORCFormat());
+        assertFalse(((HiveComponent) distribution).doSupportAvroFormat());
+        assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
+        assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
+        assertFalse(distribution instanceof SparkBatchComponent);
+        assertFalse(distribution instanceof SparkStreamingComponent);
+        assertFalse(distribution instanceof HCatalogComponent);
+        assertFalse(distribution instanceof ImpalaComponent);
     }
 
 }
