@@ -78,8 +78,10 @@ public class HDP230DistributionTest {
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertTrue(distribution instanceof SparkBatchComponent);
         assertTrue(distribution instanceof SparkStreamingComponent);
+        assertTrue(((SparkBatchComponent) distribution).isSpark13());
         assertFalse(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
+        assertTrue(((SparkStreamingComponent) distribution).isSpark13());
         assertFalse(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(distribution instanceof HCatalogComponent);
