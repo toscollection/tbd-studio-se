@@ -26,7 +26,15 @@ public final class SparkStreamingConstant {
 
     public static final String KAFKA_INPUT_COMPONENT = "tKafkaInput"; //$NON-NLS-1$
 
-    public static final String KAFKA_INPUT_COMPONENT_LINKEDPARAMETER = "STORAGE_CONFIGURATION"; //$NON-NLS-1$
+    public static final String PARQUET_INPUT_COMPONENT = "tFileInputParquet"; //$NON-NLS-1$
+
+    public static final String PARQUET_OUTPUT_COMPONENT = "tFileOutputParquet"; //$NON-NLS-1$
+
+    public static final String PARQUET_STREAM_INPUT_COMPONENT = "tFileStreamInputParquet"; //$NON-NLS-1$
+
+    public static final String KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER = "STORAGE_CONFIGURATION"; //$NON-NLS-1$
+
+    public static final String SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER = "SPARK_CONFIGURATION"; //$NON-NLS-1$
 
     public static final String SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER = "SPARK_LOCAL_MODE"; //$NON-NLS-1$
 
