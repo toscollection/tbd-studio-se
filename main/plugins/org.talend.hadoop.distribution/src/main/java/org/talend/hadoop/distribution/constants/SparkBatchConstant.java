@@ -25,4 +25,12 @@ public final class SparkBatchConstant {
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 
     public static final String SPARK_LOCAL_MODE_PARAMETER = "SPARK_LOCAL_MODE";//$NON-NLS-1$
+
+    public static final String SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER = "SPARK_CONFIGURATION";//$NON-NLS-1$
+
+    public static final String SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER = "SPARK_LOCAL_MODE"; //$NON-NLS-1$
+
+    public static final String PARQUET_INPUT_COMPONENT = "tFileInputParquet"; //$NON-NLS-1$
+
+    public static final String PARQUET_OUTPUT_COMPONENT = "tFileOutputParquet"; //$NON-NLS-1$
 }

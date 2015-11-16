@@ -23,4 +23,22 @@ public final class PigOutputConstant {
     public static final String VERSION_PARAMETER = "HBASE_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "PIG_VERSION";//$NON-NLS-1$
+
+    public static final String STORER_PARAMETER = "STORE";//$NON-NLS-1$
+
+    public static final String HCAT_STORER_VALUE = "HCATSTORER";//$NON-NLS-1$
+
+    public static final String HBASE_STORER_VALUE = "HBASESTORAGE";//$NON-NLS-1$
+
+    public static final String PARQUET_STORER_VALUE = "PARQUETSTORER"; //$NON-NLS-1$
+
+    public static final String AVRO_STORER_VALUE = "AVROSTORAGE"; //$NON-NLS-1$
+
+    public static final String RCFILE_STORER_VALUE = "RCFILEPIGSTORAGE"; //$NON-NLS-1$
+
+    public static final String SEQUENCEFILE_STORER_VALUE = "SEQUENCEFILESTORAGE"; //$NON-NLS-1$
+
+    public static final String PIGSTORE_COMPONENT = "tPigStoreResult"; //$NON-NLS-1$
+
+    public static final String PIGSTORE_COMPONENT_LINKEDPARAMETER = "ASSOCIATED_PIG_LOAD"; //$NON-NLS-1$
 }

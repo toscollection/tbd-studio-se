@@ -81,4 +81,8 @@ public abstract class AbstractDistribution {
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType, String componentName) {
         return new HashSet<>();
     }
+
+    public boolean doSupportOldImportMode() {
+        return true;
+    }
 }

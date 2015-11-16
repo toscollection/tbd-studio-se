@@ -23,4 +23,18 @@ public final class PigConstant {
     public static final String VERSION_PARAMETER = "PIG_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "PIG_VERSION";//$NON-NLS-1$
+
+    public static final String LOADER_PARAMETER = "LOAD";//$NON-NLS-1$
+
+    public static final String HCAT_LOADER_VALUE = "HCATLOADER";//$NON-NLS-1$
+
+    public static final String HBASE_LOADER_VALUE = "HBASESTORAGE";//$NON-NLS-1$
+
+    public static final String PARQUET_LOADER_VALUE = "PARQUETLOADER"; //$NON-NLS-1$
+
+    public static final String AVRO_LOADER_VALUE = "AVROSTORAGE"; //$NON-NLS-1$
+
+    public static final String RCFILE_LOADER_VALUE = "RCFILEPIGSTORAGE"; //$NON-NLS-1$
+
+    public static final String SEQUENCEFILE_LOADER_VALUE = "SEQUENCEFILELOADER"; //$NON-NLS-1$
 }

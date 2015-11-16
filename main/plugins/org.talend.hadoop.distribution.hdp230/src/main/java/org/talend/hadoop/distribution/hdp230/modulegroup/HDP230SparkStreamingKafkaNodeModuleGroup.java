@@ -32,13 +32,14 @@ public class HDP230SparkStreamingKafkaNodeModuleGroup {
     private static final String MODULE_GROUP_NAME = "SPARK-STREAMING-KAFKA-LIB-HDP_2_3"; //$NON-NLS-1$
 
     private static final ComponentCondition condition = new MultiComponentCondition(
-            new SimpleComponentCondition(new LinkedNodeExpression(SparkStreamingConstant.KAFKA_INPUT_COMPONENT_LINKEDPARAMETER,
+            new SimpleComponentCondition(new LinkedNodeExpression(
+                    SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
                     SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, "false", EqualityOperator.EQ)), new MultiComponentCondition( //$NON-NLS-1$
                     new SimpleComponentCondition(new LinkedNodeExpression(
-                            SparkStreamingConstant.KAFKA_INPUT_COMPONENT_LINKEDPARAMETER, ComponentType.SPARKSTREAMING
+                            SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER, ComponentType.SPARKSTREAMING
                                     .getDistributionParameter(), EHadoopDistributions.HORTONWORKS.getName(), EqualityOperator.EQ)),
                     new SimpleComponentCondition(
-                            new LinkedNodeExpression(SparkStreamingConstant.KAFKA_INPUT_COMPONENT_LINKEDPARAMETER,
+                            new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
                                     ComponentType.SPARKSTREAMING.getVersionParameter(), EHadoopVersion4Drivers.HDP_2_3
                                             .getVersionValue(), EqualityOperator.EQ)), BooleanOperator.AND), BooleanOperator.AND);
 

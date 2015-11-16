@@ -1731,7 +1731,7 @@
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM')" />
 
 			<IMPORT NAME="avro-mapred-1.5.4.jar" MODULE="avro-mapred-1.5.4.jar"
-				MVN="mvn:org.talend.libraries/avro-mapred-1.5.4/6.0.0" REQUIRED_IF="FILE_FORMAT=='avrofile'" />
+				MVN="mvn:org.talend.libraries/avro-mapred-1.5.4/6.0.0" REQUIRED_IF="(FILE_FORMAT=='avrofile' AND (USE_JAVAAPI == 'false' OR (USE_JAVAAPI == 'true' AND DISTRIB[DISTRIBUTION, DB_VERSION].doSupportOldImportMode[])))" />
 
 		</IMPORTS>
 	</CODEGENERATION>

@@ -41,45 +41,46 @@ public class MapR212DistributionTest {
 
     @Test
     public void testMapR212Distribution() throws Exception {
-        HadoopComponent mapr212 = new MapR212Distribution();
-        assertNotNull(mapr212.getDistributionName());
-        assertNotNull(mapr212.getVersionName(null));
-        assertEquals(EHadoopDistributions.MAPR.getName(), mapr212.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.MAPR212.getVersionValue(), mapr212.getVersion());
-        assertEquals(EHadoopVersion.HADOOP_1, mapr212.getHadoopVersion());
-        assertFalse(mapr212.doSupportKerberos());
-        assertFalse(mapr212.doSupportUseDatanodeHostname());
-        assertTrue(mapr212.doSupportGroup());
-        assertFalse(((HDFSComponent) mapr212).doSupportSequenceFileShortType());
-        assertFalse(((MRComponent) mapr212).isExecutedThroughWebHCat());
-        assertFalse(((MRComponent) mapr212).doSupportCrossPlatformSubmission());
-        assertFalse(((MRComponent) mapr212).doSupportImpersonation());
-        assertEquals(EMPTY, ((MRComponent) mapr212).getYarnApplicationClasspath());
-        assertFalse(((HBaseComponent) mapr212).doSupportNewHBaseAPI());
-        assertFalse(((SqoopComponent) mapr212).doJavaAPISupportStorePasswordInFile());
-        assertFalse(((SqoopComponent) mapr212).doJavaAPISqoopImportSupportDeleteTargetDir());
-        assertFalse(((SqoopComponent) mapr212).doJavaAPISqoopImportAllTablesSupportExcludeTable());
-        assertFalse(((PigComponent) mapr212).doSupportHCatalog());
-        assertFalse(((PigComponent) mapr212).pigVersionPriorTo_0_12());
-        assertTrue(((PigComponent) mapr212).doSupportHBase());
-        assertFalse(((PigComponent) mapr212).doSupportTezForPig());
-        assertTrue(((HiveComponent) mapr212).doSupportEmbeddedMode());
-        assertTrue(((HiveComponent) mapr212).doSupportStandaloneMode());
-        assertTrue(((HiveComponent) mapr212).doSupportHive1());
-        assertFalse(((HiveComponent) mapr212).doSupportHive2());
-        assertFalse(((HiveComponent) mapr212).doSupportTezForHive());
-        assertTrue(((HiveComponent) mapr212).doSupportHBaseForHive());
-        assertFalse(((HiveComponent) mapr212).doSupportSSL());
-        assertFalse(((HiveComponent) mapr212).doSupportORCFormat());
-        assertTrue(((HiveComponent) mapr212).doSupportAvroFormat());
-        assertTrue(((HiveComponent) mapr212).doSupportParquetFormat());
+        HadoopComponent distribution = new MapR212Distribution();
+        assertNotNull(distribution.getDistributionName());
+        assertNotNull(distribution.getVersionName(null));
+        assertEquals(EHadoopDistributions.MAPR.getName(), distribution.getDistribution());
+        assertEquals(EHadoopVersion4Drivers.MAPR212.getVersionValue(), distribution.getVersion());
+        assertEquals(EHadoopVersion.HADOOP_1, distribution.getHadoopVersion());
+        assertFalse(distribution.doSupportKerberos());
+        assertFalse(distribution.doSupportUseDatanodeHostname());
+        assertTrue(distribution.doSupportGroup());
+        assertTrue(distribution.doSupportOldImportMode());
+        assertFalse(((HDFSComponent) distribution).doSupportSequenceFileShortType());
+        assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
+        assertFalse(((MRComponent) distribution).doSupportCrossPlatformSubmission());
+        assertFalse(((MRComponent) distribution).doSupportImpersonation());
+        assertEquals(EMPTY, ((MRComponent) distribution).getYarnApplicationClasspath());
+        assertFalse(((HBaseComponent) distribution).doSupportNewHBaseAPI());
+        assertFalse(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
+        assertFalse(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
+        assertFalse(((SqoopComponent) distribution).doJavaAPISqoopImportAllTablesSupportExcludeTable());
+        assertFalse(((PigComponent) distribution).doSupportHCatalog());
+        assertFalse(((PigComponent) distribution).pigVersionPriorTo_0_12());
+        assertTrue(((PigComponent) distribution).doSupportHBase());
+        assertFalse(((PigComponent) distribution).doSupportTezForPig());
+        assertTrue(((HiveComponent) distribution).doSupportEmbeddedMode());
+        assertTrue(((HiveComponent) distribution).doSupportStandaloneMode());
+        assertTrue(((HiveComponent) distribution).doSupportHive1());
+        assertFalse(((HiveComponent) distribution).doSupportHive2());
+        assertFalse(((HiveComponent) distribution).doSupportTezForHive());
+        assertTrue(((HiveComponent) distribution).doSupportHBaseForHive());
+        assertFalse(((HiveComponent) distribution).doSupportSSL());
+        assertFalse(((HiveComponent) distribution).doSupportORCFormat());
+        assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
+        assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
 
-        assertFalse(((HiveComponent) mapr212).doSupportStoreAsParquet());
-        assertFalse(((HiveComponent) mapr212).doSupportClouderaNavigator());
-        assertFalse(mapr212 instanceof SparkBatchComponent);
-        assertFalse(mapr212 instanceof SparkStreamingComponent);
-        assertFalse(mapr212 instanceof HCatalogComponent);
-        assertFalse(mapr212 instanceof ImpalaComponent);
+        assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
+        assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
+        assertFalse(distribution instanceof SparkBatchComponent);
+        assertFalse(distribution instanceof SparkStreamingComponent);
+        assertFalse(distribution instanceof HCatalogComponent);
+        assertFalse(distribution instanceof ImpalaComponent);
     }
 
 }

@@ -50,6 +50,7 @@ public class Apache100DistributionTest {
         assertTrue(apache100.doSupportKerberos());
         assertFalse(apache100.doSupportUseDatanodeHostname());
         assertFalse(apache100.doSupportGroup());
+        assertTrue(apache100.doSupportOldImportMode());
         assertFalse(((HDFSComponent) apache100).doSupportSequenceFileShortType());
         assertFalse(((MRComponent) apache100).isExecutedThroughWebHCat());
         assertFalse(((MRComponent) apache100).doSupportCrossPlatformSubmission());
