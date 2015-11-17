@@ -66,7 +66,7 @@ public class NoSQLRetrieveSchemaWizardPage extends AbstractNoSQLWizardPage {
                     setPageComplete(false);
                     setErrorMessage(source.getStatus());
                 } else {
-                    setPageComplete(isRepositoryObjectEditable);
+                    setPageComplete(!isRepositoryObjectEditable);
                     setErrorMessage(null);
                     setMessage(source.getStatus(), source.getStatusLevel());
                 }
