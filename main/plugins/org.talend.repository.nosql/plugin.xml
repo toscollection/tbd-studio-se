@@ -293,7 +293,7 @@
         context="Needed for Neo4J Connection"
         id="spring-data-neo4j-3.4.0.RELEASE.jar"
         name="spring-data-neo4j-3.4.0.RELEASE.jar" 
-        mvn_uri="mvn:org.talend.libraries/spring-data-neo4j3.4.0.RELEASE/6.0.0">
+        mvn_uri="mvn:org.talend.libraries/spring-data-neo4j-3.4.0.RELEASE/6.0.0">
       </libraryNeeded>
       <libraryNeeded
         context="Needed for Neo4J Connection"
