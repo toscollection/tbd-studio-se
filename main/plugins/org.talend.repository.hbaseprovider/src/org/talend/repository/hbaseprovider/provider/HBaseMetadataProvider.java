@@ -100,7 +100,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                 connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
                 ExceptionHandler.process(e);
             }
-        } catch (Throwable e) {
+        } catch (Exception e) {
             ExceptionHandler.process(e);
             connectionStatus.setResult(false);
             connectionStatus.setMessageException(ExceptionUtils.getFullStackTrace(e));
@@ -127,7 +127,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             ReflectionUtils
                     .invokeMethod(
                             config,
-                            "set", new Object[] { "hbase.master.kerberos.principal", ConnectionContextHelper.getParamValueOffContext(metadataConnection, masterPrincipal) }); //$NON-NLS-1$ //$NON-NLS-2$ 
+                            "set", new Object[] { "hbase.master.kerberos.principal", ConnectionContextHelper.getParamValueOffContext(metadataConnection, masterPrincipal) }); //$NON-NLS-1$ //$NON-NLS-2$
             String regionServerPrincipal = (String) metadataConnection
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_REGIONSERVERPRINCIPAL);
             ReflectionUtils
