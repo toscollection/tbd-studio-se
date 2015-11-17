@@ -36,15 +36,6 @@
             FIELD="LABEL"
             NUM_ROW="2"
             COLOR="255;0;0"
-            SHOW_IF="DB_VERSION == 'CASSANDRA_2_0_0'"
-        >
-            <DEFAULT>This component requires a Java 1.7</DEFAULT>
-        </PARAMETER>
-        <PARAMETER
-            NAME="NOTE"
-            FIELD="LABEL"
-            NUM_ROW="2"
-            COLOR="255;0;0"
             SHOW_IF="DB_VERSION=='CASSANDRA_1_2_2'"
         >
             <DEFAULT>This component requires the server OS and the client OS to be similar.</DEFAULT>

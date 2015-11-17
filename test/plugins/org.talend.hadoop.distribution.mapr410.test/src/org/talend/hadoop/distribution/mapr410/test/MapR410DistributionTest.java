@@ -75,6 +75,7 @@ public class MapR410DistributionTest {
         assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
         assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
         assertFalse(((SparkBatchComponent) distribution).isSpark14());
+        assertTrue(((SparkBatchComponent) distribution).isSpark13());
         assertFalse(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
         assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
