@@ -57,6 +57,8 @@
 		<module>main/plugins/org.talend.hadoop.distribution.cdh510mr1</module>
 		<module>main/plugins/org.talend.hadoop.distribution.cdh510mr2</module>
 		<module>main/plugins/org.talend.hadoop.distribution.cdh540</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh550</module>
+		<module>main/plugins/org.talend.hadoop.distribution.cdh550.jars</module>
 		<module>main/plugins/org.talend.hadoop.distribution.custom</module>
 		<module>main/plugins/org.talend.hadoop.distribution.emr103</module>
 		<module>main/plugins/org.talend.hadoop.distribution.emr240</module>
