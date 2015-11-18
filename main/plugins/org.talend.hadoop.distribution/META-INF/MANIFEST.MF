@@ -8,6 +8,7 @@ Require-Bundle: org.talend.core.runtime
 Export-Package: org.talend.hadoop.distribution,
  org.talend.hadoop.distribution.component,
  org.talend.hadoop.distribution.condition,
+ org.talend.hadoop.distribution.condition.common,
  org.talend.hadoop.distribution.constants,
  org.talend.hadoop.distribution.utils
 Import-Package: org.osgi.framework

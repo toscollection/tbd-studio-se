@@ -86,7 +86,7 @@ public class Neo4jComponent extends AbstractExternalNode {
                 if (!display.readAndDispatch()) {
                     display.sleep();
                 }
-            } catch (Throwable e) {
+            } catch (Exception e) {
                 if (Neo4jMain.isStandAloneMode()) {
                     e.printStackTrace();
                 } else {
