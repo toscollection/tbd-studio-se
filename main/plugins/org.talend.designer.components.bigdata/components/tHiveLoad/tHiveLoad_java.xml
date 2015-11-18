@@ -2342,9 +2342,6 @@
 				REQUIRED_IF="(HIVE_VERSION=='MAPR401') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<!-- ############## -->
 
-			<!-- MAPR410 -->
-			<IMPORT MODULE_GROUP="HIVE-LIB-MAPR41X_LASTEST"
-				REQUIRED_IF="(HIVE_VERSION=='MAPR410') and (USE_EXISTING_CONNECTION == 'false') AND DISTRIBUTION!='CUSTOM'" />
 			<!-- ############## -->
             
             <!-- MAPR500 -->
@@ -3047,9 +3044,18 @@
 			<!-- MapR401 Tez additional -->
 			<IMPORT MODULE_GROUP="HIVE-TEZ-LIB-MapR401"
 				REQUIRED_IF="(USE_EXISTING_CONNECTION=='false') AND (HIVE_VERSION=='MAPR401') AND (DISTRIBUTION!='CUSTOM') AND (EXECUTION_ENGINE=='tez')" />
-			<!-- MapR410 Tez additional -->
-			<IMPORT MODULE_GROUP="HIVE-TEZ-LIB-MapR410"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION=='false') AND (HIVE_VERSION=='MAPR410') AND (DISTRIBUTION!='CUSTOM') AND (EXECUTION_ENGINE=='tez')" />
+			<!-- MAPR410 -->
+            <IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')">
+                <IMPORTS REQUIRED_IF="(HIVE_VERSION=='MAPR410')">
+                    <IMPORTS REQUIRED_IF="(EXECUTION_ENGINE!='tez')">
+                        <IMPORT MODULE_GROUP="HIVE-LIB-MAPR41X_LASTEST" />
+                    </IMPORTS>                 
+                    <IMPORTS REQUIRED_IF="(EXECUTION_ENGINE=='tez')">
+                        <IMPORT MODULE_GROUP="HIVE-TEZ-LIB-MapR410" />
+                        <IMPORT MODULE_GROUP="HIVE100-LIB-MAPR41X_LASTEST" />
+                    </IMPORTS>
+                </IMPORTS>
+            </IMPORTS>  
 			<!-- HDP_2_2 Tez additional -->
 			<IMPORT MODULE_GROUP="TEZ-LIB-HDP220"
 				REQUIRED_IF="(DISTRIBUTION == 'HORTONWORKS') AND (HIVE_VERSION == 'HDP_2_2') AND (EXECUTION_ENGINE == 'tez')" />
