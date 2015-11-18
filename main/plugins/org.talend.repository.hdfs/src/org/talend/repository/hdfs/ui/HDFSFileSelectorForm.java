@@ -431,7 +431,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.talend.repository.ui.swt.utils.AbstractForm#checkFieldsValue()
      */
     @Override
@@ -442,7 +442,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.talend.repository.ui.swt.utils.AbstractForm#addFieldsListeners()
      */
     @Override
@@ -505,7 +505,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
     /**
      * DOC cmeng Comment method "updateItems".
-     * 
+     *
      * @param treeItem
      * @param promptNeeded
      */
@@ -820,7 +820,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.util.concurrent.ThreadPoolExecutor#beforeExecute(java.lang.Thread, java.lang.Runnable)
          */
         @Override
@@ -832,7 +832,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         /*
          * (non-Javadoc)
-         * 
+         *
          * @see java.util.concurrent.ThreadPoolExecutor#afterExecute(java.lang.Runnable, java.lang.Throwable)
          */
         @Override
@@ -843,7 +843,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         /**
          * If an item is in the List runningThreads, it means that the item's related thread is running.
-         * 
+         *
          * @param item
          * @return
          */
@@ -855,7 +855,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         /**
          * Find the RetrieveColumnRunnable from map and waiting queue. Map stores running runnables
-         * 
+         *
          * @param key
          * @return
          */
@@ -932,7 +932,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         /**
          * Getter for tableItem.
-         * 
+         *
          * @return the tableItem
          */
         public TreeItem getTreeItem() {
@@ -952,7 +952,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
 
         /**
          * Getter for isCanceled.
-         * 
+         *
          * @return the isCanceled
          */
         public boolean isCanceled() {
@@ -1050,7 +1050,7 @@ public class HDFSFileSelectorForm extends AbstractHDFSForm {
                     try {
                         metadataColumns = ExtractHDFSSchemaManager.getInstance().extractColumns(getConnection(), classLoader,
                                 file);
-                    } catch (final Throwable e) {
+                    } catch (final Exception e) {
                         if (isCanceled()) {
                             return;
                         }
