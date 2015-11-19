@@ -38,45 +38,86 @@
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
     boolean mrUseDatanodeHostname = "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
+    boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 	
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	
 	log4jFileUtil.componentStartInfo(node);
-	%>
-
-	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
-	conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
-	<%
-	if(hadoopProps.size() > 0){
-		for(Map<String, String> item : hadoopProps){
-		%>
-			conf_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
-		<% 
-		} 
-	}
-	if (hdfsDistrib.doSupportUseDatanodeHostname() && mrUseDatanodeHostname) {
-        %>
-        conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
-        <%
-    }
-	if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
-		String group = ElementParameterParser.getValue(node, "__GROUP__");
-		%>
-		conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
-	<%
-	}
-	
-	if((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth))) {
+	// BEGIN IF01
+	if(configureFromClassPath){
 %>
-		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+		System.out.println("CONFIGURE FROM CLASSPATH");
+		// Add HADOOP_CONF_DIR to the classpath if it's present
+		String hadoopConfDir_<%=cid%> = System.getenv("HADOOP_CONF_DIR");
+		System.out.println("HADOOP_CONF_DIR : " + hadoopConfDir_<%=cid%>);
+		if(hadoopConfDir_<%=cid%> != null){
+			java.net.URLClassLoader sysloader = (java.net.URLClassLoader) ClassLoader.getSystemClassLoader();
+			java.lang.reflect.Method method = java.net.URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { java.net.URL.class });
+			method.setAccessible(true);
+			method.invoke(sysloader,new Object[] { new java.io.File(hadoopConfDir_<%=cid%>).toURI().toURL() });
+		}
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+		conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
+		// Adding any talend-site.xml files on the classpath
+		conf_<%=cid%>.addResource("talend-site.xml");
+		String tldKerberosAuth = conf_<%=cid%>.get("talend.kerberos.authentication", "");
+		String tldKerberosKtPrincipal = conf_<%=cid%>.get("talend.kerberos.keytab.principal", "");
+		String tldKerberosKtPath = conf_<%=cid%>.get("talend.kerberos.keytab.path", "");
 <%
-		if(useKeytab) {
+		if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
+			String group = ElementParameterParser.getValue(node, "__GROUP__");
 %>
-			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+			conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
 <%
 		}
+%>
+
+		if(org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()){
+			System.out.println("SECURITY ON");
+			// Keytab configurations
+			if(tldKerberosAuth.equalsIgnoreCase("keytab")){
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(tldKerberosKtPrincipal, tldKerberosKtPath);
+			}
+		}
+<%
+	}else{
+%>
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+		conf_<%=cid%>.set("<%=fsDefalutName%>", <%=fsDefaultName%>);
+<%
+
+		if (hdfsDistrib.doSupportUseDatanodeHostname() && mrUseDatanodeHostname) {
+%>
+			conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
+<%
+		}
+		if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
+			String group = ElementParameterParser.getValue(node, "__GROUP__");
+%>
+			conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
+<%
+		}
+		
+		if((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth))) {
+%>
+			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+<%
+			if(useKeytab) {
+%>
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+			}
+		}
+	%>
+<%
+	}
+	if(hadoopProps.size() > 0){
+			for(Map<String, String> item : hadoopProps){
+%>
+		conf_<%=cid%>.set(<%=item.get("PROPERTY") %> ,<%=item.get("VALUE") %>);
+<% 
+			} 
+	// END IF01
 	}
 %>
 	globalMap.put("conn_<%=cid%>",conf_<%=cid%>);
-	
-
