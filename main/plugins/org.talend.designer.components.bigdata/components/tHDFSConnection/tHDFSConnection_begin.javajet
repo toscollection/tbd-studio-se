@@ -46,10 +46,8 @@
 	// BEGIN IF01
 	if(configureFromClassPath){
 %>
-		System.out.println("CONFIGURE FROM CLASSPATH");
 		// Add HADOOP_CONF_DIR to the classpath if it's present
 		String hadoopConfDir_<%=cid%> = System.getenv("HADOOP_CONF_DIR");
-		System.out.println("HADOOP_CONF_DIR : " + hadoopConfDir_<%=cid%>);
 		if(hadoopConfDir_<%=cid%> != null){
 			java.net.URLClassLoader sysloader = (java.net.URLClassLoader) ClassLoader.getSystemClassLoader();
 			java.lang.reflect.Method method = java.net.URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { java.net.URL.class });
@@ -73,7 +71,6 @@
 %>
 
 		if(org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()){
-			System.out.println("SECURITY ON");
 			// Keytab configurations
 			if(tldKerberosAuth.equalsIgnoreCase("keytab")){
 				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(tldKerberosKtPrincipal, tldKerberosKtPath);
