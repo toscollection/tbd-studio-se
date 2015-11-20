@@ -401,6 +401,24 @@ public abstract class AbstractNoSQLRetrieveSchemaForm extends AbstractNoSQLForm 
 
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.nosql.ui.common.AbstractNoSQLForm#addUtilsButtonListeners()
+     */
+    @Override
+    protected void addUtilsButtonListeners() {
+        super.addUtilsButtonListeners();
+        schemaTree.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                super.widgetSelected(e);
+                parentWizardPage.setPageComplete(false);
+            }
+        });
+    }
+
     private TreeItem getExistItem(MetadataTable table) {
         if (!schemaTree.isDisposed() && table != null && table.eContainer() != null) {
             String parentName = ((orgomg.cwm.objectmodel.core.Package) table.eContainer()).getName();

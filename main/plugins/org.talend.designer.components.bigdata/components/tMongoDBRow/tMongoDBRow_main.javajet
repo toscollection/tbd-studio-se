@@ -21,6 +21,9 @@
   	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
   	
   	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+  	boolean isKeyValueCommand = ("true").equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXECUTE_KEYVALUECOMMAND__"));
+  	java.util.List<java.util.Map<String, String>> commandKeyValues = (java.util.List<java.util.Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COMMAND_KEYVALUES__");
+
   	if (isLog4jEnabled) {
 	%>
 		final StringBuffer log4jSb_<%=cid%> = new StringBuffer();
@@ -30,14 +33,27 @@
 	try{
 		<%
 		if(isExecuteCommand){
-			if(isLog4jEnabled){
-			%>	
-			log.info("<%=cid%> - Execute command: \"" + <%=command%> + "\" .");
-			<%
+			if(isKeyValueCommand){
+%>
+				com.mongodb.DBObject dbObjectCommand_<%=cid%> = new com.mongodb.BasicDBObject();
+<%
+				for(java.util.Map<String, String> keyValue : commandKeyValues){
+%>
+					dbObjectCommand_<%=cid%>.put(<%=keyValue.get("KEY")%>, <%=keyValue.get("VALUE")%>);
+<%
+				}
+%>
+				result_<%=cid%>=db_<%=cid%>.command(dbObjectCommand_<%=cid%>);
+<%
+			}else{
+				if(isLog4jEnabled){
+%>					log.info("<%=cid%> - Execute command: \"" + <%=command%> + "\" .");
+<%
+				}
+%>
+				result_<%=cid%>=db_<%=cid%>.command(<%=command%>);
+<%
 			}
-			%>
-			result_<%=cid%>=db_<%=cid%>.command(<%=command%>);
-		<%
 		}else{
 			if(isLog4jEnabled){
 			%>	
@@ -46,7 +62,7 @@
 				for(Map<String, String> parameter:parameters){
 				%>
 					log4jSb_<%=cid%>.append(<%=parameter.get("PARAMETER")%>);
-					log4jSb_<%=cid%>.append("|");								
+					log4jSb_<%=cid%>.append("|");
 				<%
 				}
 				%>
