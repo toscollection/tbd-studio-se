@@ -197,6 +197,13 @@
             mvn_uri="mvn:org.talend.libraries/parquet-pig-bundle-1.5.0-cdh5.5.0/6.1.0">
         </libraryNeeded>
         
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh550"
+            id="pig-cdh5.5.0"
+            name="pig-0.12.0-cdh5.5.0-withouthadoop.jar"
+            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.5.0-withouthadoop/6.1.0">
+        </libraryNeeded>
+        
         
         <!-- Spark libraries -->
         <libraryNeeded
@@ -219,7 +226,21 @@
             id="avro-mapred-cdh5.5.0"
             name="avro-mapred-1.7.6-cdh5.5.0-hadoop2.jar"
             mvn_uri="mvn:org.talend.libraries/avro-mapred-1.7.6-cdh5.5.0-hadoop2/6.0.0">
-        </libraryNeeded>                
+        </libraryNeeded>
+                        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh550"
+            id="parquet-avro-cdh5.5.0"
+            name="parquet-avro-1.5.0-cdh5.5.0.jar"
+            mvn_uri="mvn:org.talend.libraries/parquet-avro-1.5.0-cdh5.5.0/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh550"
+            id="sqoop-cdh5.5.0"
+            name="sqoop-1.4.6-cdh5.5.0.jar"
+            mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6-cdh5.5.0/6.1.0">
+        </libraryNeeded>                        
         
         <!-- Third parties libraries -->
         <libraryNeeded
@@ -371,9 +392,9 @@
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="spark-streaming-kinesis-asl_2.10-1.5.0.jar"
-            name="spark-streaming-kinesis-asl_2.10-1.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-streaming-kinesis-asl_2.10-1.5.0/6.0.0">
+            id="spark-streaming-kinesis-asl-assembly_2.10-1.5.0.jar"
+            name="spark-streaming-kinesis-asl-assembly_2.10-1.5.0.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kinesis-asl-assembly_2.10-1.5.0/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
@@ -413,9 +434,9 @@
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="spark-streaming-kafka-assembly_2.10-1.5.0.jar"
-            name="spark-streaming-kafka-assembly_2.10-1.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-assembly_2.10-1.5.0/6.0.0">
+            id="spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1.jar"
+            name="spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
@@ -522,7 +543,7 @@
                 description="Pig libraries for CDH 5.5"
                 id="PIG-LIB-CDH_5_5"
                 name="PIG-LIB-CDH_5_5">
-            <library id="pig-withouthadoop-cdh5.4-lastest"/>
+            <library id="pig-cdh5.5.0"/>
             <library id="antlr-runtime-3.4.jar"/>
             <library id="jline-2.11.jar"/>
             <library id="joda-time-2.5.jar"/>
@@ -600,7 +621,7 @@
                 description="Sqoop libraries for CDH 5.5"
                 id="SQOOP-LIB-CDH_5_5"
                 name="SQOOP-LIB-CDH_5_5">
-            <library id="sqoop-cdh5.4-lastest"/>
+            <library id="sqoop-cdh5.5.0"/>
             <library id="avro-mapred-cdh5.5.0"/>
         </libraryNeededGroup>
         
@@ -702,7 +723,7 @@
                 description="Spark Kinesis libraries for CDH 5.5 that are MRREQUIRED"
                 id="SPARK-KINESIS-LIB-MRREQUIRED-CDH_5_5"
                 name="SPARK-KINESIS-LIB-MRREQUIRED-CDH_5_5">
-            <library id="spark-streaming-kinesis-asl_2.10-1.5.0.jar"/>
+            <library id="spark-streaming-kinesis-asl-assembly_2.10-1.5.0.jar"/>
             <library id="amazon-kinesis-client-1.2.1.jar"/>
             <library id="aws-java-sdk-kinesis-1.9.16.jar"/>
             <library id="aws-java-sdk-core-1.9.16.jar"/>            
@@ -716,7 +737,7 @@
                 description="Spark Kafka assembly libraries for CDH 5.5 that are MRREQUIRED"
                 id="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-CDH_5_5"
                 name="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-CDH_5_5">
-            <library id="spark-streaming-kafka-assembly_2.10-1.5.0.jar"/>
+            <library id="spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Kafka Client group MRREQUIRED -->
