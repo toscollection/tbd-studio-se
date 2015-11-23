@@ -28,6 +28,7 @@
     String bulkWriteType = ElementParameterParser.getValue(node, "__BULK_WRITE_TYPE__");
     // BulkWrite is only supportted on Mongo 2.6+ drivers
     final boolean bulkWrite = setBulkWrite & (!"MONGODB_2_5_X".equalsIgnoreCase(dbversion));
+    boolean updateAll = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__UPDATE_ALL__"));
 
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
@@ -177,9 +178,15 @@
                                 }
                                 <%
                             }else{
-                                %>
-                                resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>));
-                                <%
+                            	if(updateAll){
+                            		%>
+                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>), false, true);
+                                	<%
+                            	}else{
+									%>
+                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>), false, false);
+                                	<%
+                            	}
                             }
                         // UPSERT
 						} else if("UPSERT".equalsIgnoreCase(dataAction)){
@@ -225,9 +232,15 @@
                                 }
                                 <%
                             }else{
-                                %>
-                                resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>),true,false);
-                                <%
+                            	if(updateAll){
+                            		%>
+                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>),true,true);
+                                	<%
+                            	}else{
+                            		%>
+                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>),true,false);
+                                	<%
+                            	}
                             }
                         // DELETE
                         } else if("DELETE".equalsIgnoreCase(dataAction)){
