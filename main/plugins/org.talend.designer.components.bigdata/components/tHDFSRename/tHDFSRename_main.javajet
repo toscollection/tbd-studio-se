@@ -1,6 +1,6 @@
-<%@ jet 
+<%@ jet
 	imports="
-		org.talend.core.model.process.INode 
+		org.talend.core.model.process.INode
 		org.talend.core.model.process.ElementParameterParser
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 	"
@@ -10,28 +10,28 @@
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
 	String cid = node.getUniqueName();
-	
+
 	String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 	boolean overwrite = ("true").equals(ElementParameterParser.getValue(node, "__OVERWRITE__"));
 	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
-	
+
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
-		globalMap.put("<%=cid %>_CURRENT_STATUS", "No file renamed.");	      				
+		globalMap.put("<%=cid %>_CURRENT_STATUS", "No file renamed.");
    		java.util.Set<String> keySet_<%=cid %> = map_<%=cid %>.keySet();
    		String tmp_<%=cid%> = pid + System.currentTimeMillis();
       	for (String key_<%=cid %> : keySet_<%=cid %>){
-			String fromFileMask_<%=cid %> = (<%=remotedir%> + "/" + key_<%=cid %>).replaceAll("\\\\","/"); 
+			String fromFileMask_<%=cid %> = (<%=remotedir%> + "/" + key_<%=cid %>).replaceAll("\\\\","/");
 			org.apache.hadoop.fs.Path fromPathMask_<%=cid%> = new org.apache.hadoop.fs.Path(fromFileMask_<%=cid%>);
 			org.apache.hadoop.fs.Path fromParent_<%=cid%> = fromPathMask_<%=cid%>.getParent();
 			String mask_<%=cid%> = fromPathMask_<%=cid%>.getName();
-			mask_<%=cid %> = mask_<%=cid %>.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*");			
+			mask_<%=cid %> = mask_<%=cid %>.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*");
 			java.util.regex.Pattern pattern_<%=cid%> = java.util.regex.Pattern.compile(mask_<%=cid %>);
-			
+
 			org.apache.hadoop.fs.FileStatus[] status_<%=cid%> = fs_<%=cid%>.listStatus(fromParent_<%=cid%>);
 			int count_<%=cid%> = 0;
 			String uniqueName_<%=cid%> = null;
-			
+
 			if(status_<%=cid%>!=null) {
 				for(org.apache.hadoop.fs.FileStatus statu_<%=cid%> : status_<%=cid%>) {
 					String filename_<%=cid%> =  statu_<%=cid%>.getPath().getName();
@@ -41,7 +41,7 @@
 					}
 				}
 			}
-			
+
 			if(count_<%=cid%>!=1) {
 				globalMap.put("<%=cid %>_CURRENT_STATUS", "File rename fail:file does not exist or no unique matching for current filemask");
 				System.err.println("Info : file does not exist or no unique matching for current filemask");
@@ -50,7 +50,7 @@
         		<%}%>
 				continue;
 			}
-			
+
 			String parent_<%=cid%> = fromParent_<%=cid%>.toString();
 			String fromFile_<%=cid %> = parent_<%=cid%> + (parent_<%=cid%>.endsWith("/") ? "" : "/") + uniqueName_<%=cid%>;
     		String toFile_<%=cid%> = (<%=remotedir%> + "/" + map_<%=cid %>.get(key_<%=cid %>)).replaceAll("\\\\","/");
@@ -80,15 +80,17 @@
 		    			String tempFile_<%=cid%> = toFile_<%=cid%> + "." + tmp_<%=cid%>;
 		    			org.apache.hadoop.fs.Path tempPath_<%=cid%> = new org.apache.hadoop.fs.Path(tempFile_<%=cid%>);
 		    			boolean success_<%=cid%> = true;
-	     		    	if(fs_<%=cid%>.exists(tempPath_<%=cid%>)){
+	     		    	if (fs_<%=cid%>.exists(tempPath_<%=cid%>)) {
 	     		    		fs_<%=cid%>.delete(tempPath_<%=cid%>);
 	     		    	}
-	     		    	
+
 		     			success_<%=cid%> = success_<%=cid%> && fs_<%=cid %>.rename(toPath_<%=cid%>, tempPath_<%=cid%>);
 		     			success_<%=cid%> = success_<%=cid%> && fs_<%=cid %>.rename(fromPath_<%=cid%>, toPath_<%=cid%>);
-		     			
-		     			fs_<%=cid%>.delete(tempPath_<%=cid%>);
-		     			
+
+                        if (fs_<%=cid%>.exists(tempPath_<%=cid%>)) {
+                            fs_<%=cid%>.delete(tempPath_<%=cid%>, true);
+                        }
+
 		     			if(success_<%=cid%>) {
 		     			    <%if(isLog4jEnabled) {%>
                    			log.info("<%=cid%> - " + fromPath_<%=cid%> + " is renamed as " + toPath_<%=cid%> + ".");
@@ -113,7 +115,7 @@
     					<%if(isLog4jEnabled) {%>
            			log.error("<%=cid%> - fail to rename file : " + e.getMessage());
             			<%}
-					}%>	    		
+					}%>
 	    		}
     		}
 	    }
