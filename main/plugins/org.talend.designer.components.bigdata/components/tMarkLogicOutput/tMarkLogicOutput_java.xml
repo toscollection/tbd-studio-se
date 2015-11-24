@@ -15,6 +15,7 @@
     </HEADER>
 
     <FAMILIES>
+        <FAMILY>Big Data/MarkLogic</FAMILY>
         <FAMILY>Databases/MarkLogic</FAMILY>
     </FAMILIES>
 
@@ -173,8 +174,8 @@
             NOT_SHOW_IF="ACTION_TYPE == 'DELETE'"
         >
             <ITEMS DEFAULT="GENERIC">
-                <ITEM NAME="GENERIC" VALUE="GENERIC" />
-                <ITEM NAME="TEXT" VALUE="TEXT" />
+                <ITEM NAME="GENERIC" VALUE="GENERIC" NOT_SHOW_IF="ACTION_TYPE == 'UPDATE'"/>
+                <ITEM NAME="TEXT" VALUE="TEXT" NOT_SHOW_IF="ACTION_TYPE == 'UPDATE'"/>
                 <ITEM NAME="JSON" VALUE="JSON" />
                 <ITEM NAME="XML" VALUE="XML" />
                 <ITEM NAME="BINARY" VALUE="BINARY" NOT_SHOW_IF="ACTION_TYPE == 'UPDATE'"/>

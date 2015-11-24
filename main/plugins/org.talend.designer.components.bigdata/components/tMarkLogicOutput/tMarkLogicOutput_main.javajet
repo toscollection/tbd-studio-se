@@ -125,6 +125,21 @@ imports="
                         docId_<%= cid %> = <%= connName %>.docId;
                         docContent_<%= cid %> = <%= connName %>.docContent;
                         com.marklogic.client.io.StringHandle strHandle_<%= cid %> = new com.marklogic.client.io.StringHandle((String)docContent_<%= cid %>);
+                        <%
+                        if("JSON".equals(docType)){
+                        %>
+                        strHandle_<%= cid %>.withFormat(com.marklogic.client.io.Format.JSON);
+                        <%
+                        }else if("XML".equals(docType)){
+                        %>
+                        strHandle_<%= cid %>.withFormat(com.marklogic.client.io.Format.XML);
+                        <%
+                        }else{
+                        %>
+                           Compile Err: Unsupported Doc Type "<%= docType %>" for Update.
+                        <%
+                        }
+                         %>
                         docMgr_<%= cid %>.patch(docId_<%= cid %>, strHandle_<%= cid %>);
                         nb_line_updated_<%= cid %> ++;
                     <%
@@ -156,6 +171,10 @@ imports="
                            <%= rejectConnName %>.docContent = docContent_<%= cid %>;
                            <%= rejectConnName %>.errMessage = e.getMessage();
                            nb_line_rejected_<%= cid %> ++;
+                        <%
+                        }else{
+                        %>
+                           e.printStackTrace();
                         <%
                         }
                          %>

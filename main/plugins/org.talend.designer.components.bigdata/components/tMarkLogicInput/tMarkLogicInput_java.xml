@@ -15,6 +15,7 @@
     </HEADER>
 
     <FAMILIES>
+        <FAMILY>Big Data/MarkLogic</FAMILY>
         <FAMILY>Databases/MarkLogic</FAMILY>
     </FAMILIES>
 
