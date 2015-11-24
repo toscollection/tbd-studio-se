@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.talend.libraries.hadoop.hdp.1.2
-Bundle-Version: 6.1.1.qualifier
-Bundle-Name: hdp-1.2
-Bundle-ActivationPolicy: lazy
-Eclipse-BundleShape: dir
