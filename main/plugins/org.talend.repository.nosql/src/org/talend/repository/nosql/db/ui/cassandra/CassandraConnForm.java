@@ -108,7 +108,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             apiTypeCombo.setText(repositoryTranslator.getLabel(apiType));
         } else {
             apiTypeCombo.select(0);
-            portText.setText(ICassandraConstants.DEFAULT_PORT);
+            portText.setText(ICassandraConstants.DATASTAX_PORT);
         }
         serverText.setText(server == null ? ICassandraConstants.DEFAULT_HOST : server);
         databaseText.setText(database == null ? "" : database); //$NON-NLS-1$
@@ -222,6 +222,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
             } else {
                 portText.setText(ICassandraConstants.DEFAULT_PORT);
             }
+        } else {
+            portText.setText(ICassandraConstants.DEFAULT_PORT);
         }
     }
 

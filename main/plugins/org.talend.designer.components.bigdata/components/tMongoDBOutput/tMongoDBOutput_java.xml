@@ -242,6 +242,13 @@
             </ITEMS>
         </PARAMETER>
         <PARAMETER
+            NAME="UPDATE_ALL"
+            FIELD="CHECK"
+            NUM_ROW="40"
+            SHOW_IF="(DATA_ACTION=='SET') OR (DATA_ACTION=='UPSERT_WITH_SET')">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
             NAME="SCHEMA_FLOW"
             FIELD="SCHEMA_TYPE"
             NUM_ROW="45"
