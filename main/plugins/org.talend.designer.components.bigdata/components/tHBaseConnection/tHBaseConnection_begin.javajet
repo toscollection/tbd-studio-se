@@ -27,6 +27,7 @@
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
 	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 
 	org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
@@ -49,25 +50,29 @@
 			method.setAccessible(true);
 			method.invoke(sysloader,new Object[] { new java.io.File(hadoopConfDir_<%=cid%>).toURI().toURL() });
 		}
-		org.apache.hadoop.conf.Configuration config<%=cid%> = new org.apache.hadoop.conf.Configuration();
-		config<%=cid%>.clear();
-		config<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
-		config<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
-		config<%=cid%>.set("hbase.cluster.distributed","true"); 
-		// Adding any hbase-site.xml files on the classpath
-		config<%=cid%>.addResource("hbase-site.xml");
+		org.apache.hadoop.conf.Configuration config<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
+
 		// Adding any talend-site.xml files on the classpath
 		config<%=cid%>.addResource("talend-site.xml");
 		String tldKerberosAuth = config<%=cid%>.get("talend.kerberos.authentication", "");
 		String tldKerberosKtPrincipal = config<%=cid%>.get("talend.kerberos.keytab.principal", "");
 		String tldKerberosKtPath = config<%=cid%>.get("talend.kerberos.keytab.path", "");
+
 <%
-		if(setZNodeParent) {
-%>
-			config<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
-<%
+		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
+		if(isLog4jEnabled){
+		%>
+			log.debug("CLASSPATH_CONFIGURATION Loaded " + config<%=cid%>);
+			log.debug("CLASSPATH_CONFIGURATION Configuration key value pairs : ");
+			java.util.Iterator<java.util.Map.Entry<String,String>> iterator = config<%=cid%>.iterator();
+			while(iterator.hasNext()){
+				java.util.Map.Entry<String,String> property = iterator.next();
+				log.debug("CLASSPATH_CONFIGURATION " + property.getKey() + " : " + property.getValue());
+			}
+		<%
 		}
 %>
+
 		if(org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()){
 			// Keytab configurations
 			if(tldKerberosAuth.equalsIgnoreCase("keytab")){
