@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.talend.libraries.hadoop.cloudera.cdh4
-Bundle-Version: 6.1.1.qualifier
-Bundle-Name: cloudera-cdh4
-Bundle-ActivationPolicy: lazy
-Eclipse-BundleShape: dir

@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-SymbolicName: org.talend.libraries.hadoop.apache.2.4.0
-Bundle-Version: 6.1.1.qualifier
-Bundle-Name: apache-2.4.0
-Bundle-ActivationPolicy: lazy
-Eclipse-BundleShape: dir
