@@ -100,6 +100,8 @@
 
 	boolean generateRegisterJarCodeForAll = true;
 
+	boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
+
 	if(generateRegisterJarCodeForAll) {
 		String[] commandLine = new String[] {"<command>"};
 		try {
@@ -211,9 +213,54 @@
 <%
 	}
 
-	if(inMain && !isExecutedThroughWebHCat) {
+	if(inMain && !isExecutedThroughWebHCat && !configureFromClassPath) {
 %>
 		props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
+<%
+	}
+
+	if(configureFromClassPath){
+%>
+		// Add HADOOP_CONF_DIR to the classpath if it's present
+		String hadoopConfDir_<%=cid%> = System.getenv("HADOOP_CONF_DIR");
+		if(hadoopConfDir_<%=cid%> != null){
+			java.net.URLClassLoader sysloader = (java.net.URLClassLoader) ClassLoader.getSystemClassLoader();
+			java.lang.reflect.Method method = java.net.URLClassLoader.class.getDeclaredMethod("addURL", new Class[] { java.net.URL.class });
+			method.setAccessible(true);
+			method.invoke(sysloader,new Object[] { new java.io.File(hadoopConfDir_<%=cid%>).toURI().toURL() });
+		}
+		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+
+		// Adding any hdfs-site.xml file on the classpath
+		conf_<%=cid%>.addResource("hdfs-site.xml");
+
+		// Adding any yarn-site.xml file on the classpath
+		conf_<%=cid%>.addResource("yarn-site.xml");
+
+		// Adding any mapred-site.xml file on the classpath
+		conf_<%=cid%>.addResource("mapred-site.xml");
+
+		// Adding any talend-site.xml file on the classpath
+		conf_<%=cid%>.addResource("talend-site.xml");
+		String tldKerberosAuth = conf_<%=cid%>.get("talend.kerberos.authentication", "");
+		String tldKerberosKtPrincipal = conf_<%=cid%>.get("talend.kerberos.keytab.principal", "");
+		String tldKerberosKtPath = conf_<%=cid%>.get("talend.kerberos.keytab.path", "");
+
+<%
+		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
+		if(isLog4jEnabled){
+		%>
+			log.debug("CLASSPATH_CONFIGURATION Loaded " + conf_<%=cid%>);
+			log.debug("CLASSPATH_CONFIGURATION Configuration key value pairs : ");
+			java.util.Iterator<java.util.Map.Entry<String,String>> iterator = conf_<%=cid%>.iterator();
+			while(iterator.hasNext()){
+				java.util.Map.Entry<String,String> property = iterator.next();
+				log.debug("CLASSPATH_CONFIGURATION " + property.getKey() + " : " + property.getValue());
+			}
+		<%
+		}
+%>
+		
 <%
 	}
 %>
@@ -271,7 +318,7 @@
 %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
 <%
-		} else if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null) { // MAPREDUCE mode
+		} else if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null && !configureFromClassPath) { // MAPREDUCE mode
 			if(inMain) {
 				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
@@ -445,16 +492,16 @@
                 props_<%=cid%>.put("dfs.client.use.datanode.hostname", "true");
                 <%
             }
+		}
 
-			if(useTez){
+		if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null && useTez){
 			%>
 				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(new org.apache.pig.backend.hadoop.executionengine.tez.TezExecType(), props_<%=cid%>);
 			<%
-			}else{
+		}else{
             %>
 				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
 			<%
-			}
 		}
 
         if (isS3Location) {
