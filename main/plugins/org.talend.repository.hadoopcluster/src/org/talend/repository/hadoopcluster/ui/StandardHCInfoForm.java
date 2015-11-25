@@ -751,6 +751,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 case CLOUDERA_CDH5_1:
                 case CLOUDERA_CDH5_4:
                 case MAPR401:
+                case MAPR500:
                 case APACHE_2_4_0_EMR:
                 case EMR_4_0_0:
                     isSupport = true;
@@ -901,11 +902,14 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         }
 
-        if (groupText.getEditable()) {
+        if (userNameText != null && userNameText.getEditable()) {
             if (!validText(userNameText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName")); //$NON-NLS-1$
                 return false;
             }
+        }
+
+        if (groupText.getEditable()) {
             if (!validText(groupText.getText())) {
                 updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group")); //$NON-NLS-1$
                 return false;

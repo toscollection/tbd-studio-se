@@ -90,30 +90,14 @@
 		<module>main/plugins/org.talend.libraries.couchbase</module>
 		<module>main/plugins/org.talend.libraries.couchdb</module>
 		<module>main/plugins/org.talend.libraries.hadoop</module>
-		<module>main/plugins/org.talend.libraries.hadoop.apache.0.20.2</module>
-		<module>main/plugins/org.talend.libraries.hadoop.apache.0.20.203</module>
-		<module>main/plugins/org.talend.libraries.hadoop.apache.0.20.204</module>
-		<module>main/plugins/org.talend.libraries.hadoop.apache.1.0.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.apache.2.4.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh4</module>
-		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5.1</module>
 		<module>main/plugins/org.talend.libraries.hadoop.cloudera.cdh5.4</module>
-		<module>main/plugins/org.talend.libraries.hadoop.emc.pivotal.1.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.emc.pivotal.2.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.hdp.1.2</module>
-		<module>main/plugins/org.talend.libraries.hadoop.hdp.1.3</module>
-		<module>main/plugins/org.talend.libraries.hadoop.hdp.2.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.hdp.2.1</module>
 		<module>main/plugins/org.talend.libraries.hadoop.hdp.2.2</module>
 		<module>main/plugins/org.talend.libraries.hadoop.emr.4.0.0</module>
-		<module>main/plugins/org.talend.libraries.hadoop.mapr</module>
-		<module>main/plugins/org.talend.libraries.hadoop.mapr.3.0.1</module>
-		<module>main/plugins/org.talend.libraries.hadoop.mapr.3.1.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.mapr.4.0.1</module>
 		<module>main/plugins/org.talend.libraries.hadoop.mapr.4.1.0</module>
 		<module>main/plugins/org.talend.libraries.hadoop.mapr.5.0.0.jars</module>
-		<module>main/plugins/org.talend.libraries.hadoop.mapr2</module>
 		<module>main/plugins/org.talend.libraries.hcatalog</module>
 		<module>main/plugins/org.talend.libraries.mongo</module>
 		<module>main/plugins/org.talend.libraries.neo4j</module>
