@@ -409,14 +409,16 @@ public abstract class AbstractNoSQLRetrieveSchemaForm extends AbstractNoSQLForm 
     @Override
     protected void addUtilsButtonListeners() {
         super.addUtilsButtonListeners();
-        schemaTree.addSelectionListener(new SelectionAdapter() {
+        if (schemaTree != null) {
+            schemaTree.addSelectionListener(new SelectionAdapter() {
 
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                super.widgetSelected(e);
-                parentWizardPage.setPageComplete(false);
-            }
-        });
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    super.widgetSelected(e);
+                    parentWizardPage.setPageComplete(false);
+                }
+            });
+        }
     }
 
     private TreeItem getExistItem(MetadataTable table) {
