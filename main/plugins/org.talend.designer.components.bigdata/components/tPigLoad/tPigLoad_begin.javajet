@@ -100,6 +100,8 @@
 
 	boolean generateRegisterJarCodeForAll = true;
 
+	boolean isHadoop2 = !isCustom && pigDistrib.isHadoop2();
+
 	boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 
 	if(generateRegisterJarCodeForAll) {
@@ -213,12 +215,13 @@
 <%
 	}
 
-	if(inMain && !isExecutedThroughWebHCat && !configureFromClassPath) {
+	if(inMain && !isExecutedThroughWebHCat) {
 %>
 		props_<%=cid%>.put(org.apache.pig.impl.PigContext.JOB_NAME, projectName + "_" + jobName + "_" + jobVersion + "_" + "<%=cid%>");
 <%
 	}
 
+	// BEGIN IF01
 	if(configureFromClassPath){
 %>
 		// Add HADOOP_CONF_DIR to the classpath if it's present
@@ -231,41 +234,66 @@
 		}
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 
-		// Adding any hdfs-site.xml file on the classpath
+		// Adding any hdfs-site.xml file
 		conf_<%=cid%>.addResource("hdfs-site.xml");
 
-		// Adding any yarn-site.xml file on the classpath
+		// Adding any yarn-site.xml file
 		conf_<%=cid%>.addResource("yarn-site.xml");
 
-		// Adding any mapred-site.xml file on the classpath
+		// Adding any mapred-site.xml
 		conf_<%=cid%>.addResource("mapred-site.xml");
 
-		// Adding any talend-site.xml file on the classpath
+		// Adding any core-site.xml
+		conf_<%=cid%>.addResource("core-site.xml");
+
+		// Adding any talend-site.xml
 		conf_<%=cid%>.addResource("talend-site.xml");
 		String tldKerberosAuth = conf_<%=cid%>.get("talend.kerberos.authentication", "");
 		String tldKerberosKtPrincipal = conf_<%=cid%>.get("talend.kerberos.keytab.principal", "");
 		String tldKerberosKtPath = conf_<%=cid%>.get("talend.kerberos.keytab.path", "");
 
 <%
+		if("HBaseStorage".equals(function) && pigDistrib.doSupportHBase()){
+%>
+			// Adding any hbase-site.xml
+			conf_<%=cid%>.addResource("hbase-site.xml");
+<%
+		}
+%>
+
+		// Add hadoop configurations to pig_context properties
+		java.util.Iterator<java.util.Map.Entry<String,String>> iterator_<%=cid%> = conf_<%=cid%>.iterator();
+		while(iterator_<%=cid%>.hasNext()){
+			java.util.Map.Entry<String,String> property = iterator_<%=cid%>.next();
+			props_<%=cid%>.put(property.getKey(), property.getValue());
+		}
+<%
 		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
 		if(isLog4jEnabled){
 		%>
-			log.debug("CLASSPATH_CONFIGURATION Loaded " + conf_<%=cid%>);
-			log.debug("CLASSPATH_CONFIGURATION Configuration key value pairs : ");
-			java.util.Iterator<java.util.Map.Entry<String,String>> iterator = conf_<%=cid%>.iterator();
-			while(iterator.hasNext()){
-				java.util.Map.Entry<String,String> property = iterator.next();
-				log.debug("CLASSPATH_CONFIGURATION " + property.getKey() + " : " + property.getValue());
+			log.debug("CLASSPATH_CONFIGURATION_<%=cid%>" + " Loaded : " + conf_<%=cid%>);
+			log.debug("CLASSPATH_CONFIGURATION_<%=cid%>" + " key value pairs : ");
+			java.util.Iterator<java.util.Map.Entry<String,String>> iterator_log_<%=cid%> = conf_<%=cid%>.iterator();
+			while(iterator_log_<%=cid%>.hasNext()){
+				java.util.Map.Entry<String,String> property = iterator_log_<%=cid%>.next();
+				log.debug("CLASSPATH_CONFIGURATION_<%=cid%> " + property.getKey() + " : " + property.getValue());
 			}
 		<%
 		}
 %>
-		
+
+		if(org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()){
+			// Keytab configurations
+			if(tldKerberosAuth.equalsIgnoreCase("keytab")){
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(tldKerberosKtPrincipal, tldKerberosKtPath);
+			}
+		}
 <%
-	}
+	} // END IF01
 %>
 	try {
 <%
+		// BEGIN IF02
 		if(inMain && isExecutedThroughWebHCat) {
 			String passwordFieldName = "__HDINSIGHT_PASSWORD__";
 			if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
@@ -312,13 +340,16 @@
 
 			String wasbPath_<%=cid%> = azureFs_<%=cid%>.getFileSystemPrefix() + "/"	+ instance_<%=cid%>.getRemoteFolder()	+ "/libjars/";
 <%
-		}
+		} // END IF02
 
+		// BEGIN IF03
 		if(isLocal) { // LOCAL mode
 %>
 			org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.LOCAL, props_<%=cid%>);
 <%
-		} else if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null && !configureFromClassPath) { // MAPREDUCE mode
+		// BEGIN ELSE03
+		} else if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null) { // MAPREDUCE mode
+			// BEGIn IF04
 			if(inMain) {
 				String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 %>
@@ -337,141 +368,137 @@
 <%
 				}
 
-				if(!isCustom && ("MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion))) {//set the default properties
+				// Do not set these configurations if we're using the classpath configuration
+				if(!configureFromClassPath && !isCustom && ("MAPR401".equals(pigVersion) || "MAPR410".equals(pigVersion))) {//set the default properties
 %>
 			        props_<%=cid%>.put("mapreduce.job.map.output.collector.class", "org.apache.hadoop.mapred.MapRFsOutputBuffer");
 			        props_<%=cid%>.put("mapreduce.job.reduce.shuffle.consumer.plugin.class", "org.apache.hadoop.mapreduce.task.reduce.DirectShuffle");
 <%
 				}
-			}
+			} // END IF04
 
-			if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
-                %>
-                props_<%=cid%>.put("fs.defaultFS", <%=fsDefaultName%>);
-                org.apache.hadoop.security.UserGroupInformation.setLoginUser(org.apache.hadoop.security.UserGroupInformation.createRemoteUser(username_<%=cid %>));
-                <%
-            } else {
-                %>
-                props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
-                <%
-            }
-			boolean isKerberosAvailableHadoop2 = !isCustom && pigDistrib.isHadoop2() && pigDistrib.doSupportKerberos();
-			boolean isHadoop2 = !isCustom && pigDistrib.isHadoop2();
-			boolean isKerberosAvailableHadoop1 = !isCustom && pigDistrib.isHadoop1() && pigDistrib.doSupportKerberos();
+			// BEGIN IF05
+			// All of these configurations are not set when we're using the classpath for configurations
+			if(!configureFromClassPath){
 
-			if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
-%>
-				props_<%=cid%>.put("mapreduce.framework.name", "yarn");
-				props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);
-<%
-				boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
-				if(setSchedulerAddress) {
-					String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
-%>
-					props_<%=cid%>.put("yarn.resourcemanager.scheduler.address", <%=schedulerAddress%>);
-<%
-				}
-				boolean setStagingDirectory = "true".equals(ElementParameterParser.getValue(node, "__SET_STAGING_DIRECTORY__"));
-				if(setStagingDirectory) {
-					String stagingDirectory = ElementParameterParser.getValue(node, "__STAGING_DIRECTORY__");
-%>
-					props_<%=cid%>.put("yarn.app.mapreduce.am.staging-dir", <%=stagingDirectory%>);
-<%
-				}
+				if(!isCustom && "APACHE_2_4_0_EMR".equals(pigVersion)) {
+	                %>
+	                props_<%=cid%>.put("fs.defaultFS", <%=fsDefaultName%>);
+	                org.apache.hadoop.security.UserGroupInformation.setLoginUser(org.apache.hadoop.security.UserGroupInformation.createRemoteUser(username_<%=cid %>));
+	                <%
+	            } else {
+	                %>
+	                props_<%=cid%>.put("fs.default.name", <%=fsDefaultName%>);
+	                <%
+	            }
 
-				boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
-				if((!isCustom && pigDistrib.doSupportCrossPlatformSubmission()) || (isCustom && useYarn && crossPlatformSubmission)) {
-%>
-					props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
-<%
-				}
+				boolean isKerberosAvailableHadoop2 = !isCustom && pigDistrib.isHadoop2() && pigDistrib.doSupportKerberos();
+				boolean isKerberosAvailableHadoop1 = !isCustom && pigDistrib.isHadoop1() && pigDistrib.doSupportKerberos();
 
-				if(!isCustom && ("HDP_2_2".equals(pigVersion) || "HDP_2_3".equals(pigVersion))) {
+				if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>
-					props_<%=cid%>.put("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
+					props_<%=cid%>.put("mapreduce.framework.name", "yarn");
+					props_<%=cid%>.put("yarn.resourcemanager.address", <%=resourceManager%>);
 <%
-				}
+					boolean setSchedulerAddress = "true".equals(ElementParameterParser.getValue(node, "__SET_SCHEDULER_ADDRESS__"));
+					if(setSchedulerAddress) {
+						String schedulerAddress = ElementParameterParser.getValue(node,"__RESOURCEMANAGER_SCHEDULER_ADDRESS__");
+%>
+						props_<%=cid%>.put("yarn.resourcemanager.scheduler.address", <%=schedulerAddress%>);
+<%
+					}
+					boolean setStagingDirectory = "true".equals(ElementParameterParser.getValue(node, "__SET_STAGING_DIRECTORY__"));
+					if(setStagingDirectory) {
+						String stagingDirectory = ElementParameterParser.getValue(node, "__STAGING_DIRECTORY__");
+%>
+						props_<%=cid%>.put("yarn.app.mapreduce.am.staging-dir", <%=stagingDirectory%>);
+<%
+					}
+
+					boolean crossPlatformSubmission = "true".equals(ElementParameterParser.getValue(node, "__CROSS_PLATFORM_SUBMISSION__"));
+					if((!isCustom && pigDistrib.doSupportCrossPlatformSubmission()) || (isCustom && useYarn && crossPlatformSubmission)) {
+%>
+						props_<%=cid%>.put("mapreduce.app-submission.cross-platform","true");
+<%
+					}
+
+					if(!isCustom && ("HDP_2_2".equals(pigVersion) || "HDP_2_3".equals(pigVersion))) {
+%>
+						props_<%=cid%>.put("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
+<%
+					}
 
 %>
-				props_<%=cid%>.put("yarn.application.classpath", "<%=pigDistrib.getYarnApplicationClasspath()%>");
+					props_<%=cid%>.put("yarn.application.classpath", "<%=pigDistrib.getYarnApplicationClasspath()%>");
 <%
-				boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
-				if(setMemory) {
-					String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
-					String reduceMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_REDUCE_MEMORY_MB__");
-					String amMemory = ElementParameterParser.getValue(node,"__YARN_APP_MAPREDUCE_AM_RESOURCE_MB__");
+					if(setJobHistoryAddress) {
+						String jobHistoryAddress = ElementParameterParser.getValue(node, "__JOBHISTORY_ADDRESS__");
 %>
-    				props_<%=cid%>.put("mapreduce.map.memory.mb", <%=mapMemory%>);
-    				props_<%=cid%>.put("mapreduce.reduce.memory.mb", <%=reduceMemory%>);
-    				props_<%=cid%>.put("yarn.app.mapreduce.am.resource.mb", <%=amMemory%>);
+						props_<%=cid%>.put("mapreduce.jobhistory.address", <%=jobHistoryAddress%>);
 <%
-				}
-
-				if(setJobHistoryAddress) {
-					String jobHistoryAddress = ElementParameterParser.getValue(node, "__JOBHISTORY_ADDRESS__");
+					}
+				} else {
 %>
-					props_<%=cid%>.put("mapreduce.jobhistory.address", <%=jobHistoryAddress%>);
-<%
-				}
-			} else {
-%>
-				props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);
-<%
-			}
-
-			if("HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
-%>
-				props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
-<%
-			}
-
-			if("HBaseStorage".equals(function) && pigDistrib.doSupportHBase()) {
-%>
-				props_<%=cid%>.put("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
-				props_<%=cid%>.put("hbase.zookeeper.property.clientPort", <%=zookeeper_client_port%>);
-<%
-				if(setZNodeParent) {
-%>
-				props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>);
-<%
-				}
-			}
-
-			if(useKrb) {
-				String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
-				boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
-				String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
-				String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
-				String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASEMASTER_PRINCIPAL__");
-				String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASEREIGONSERVER_PRINCIPAL__");
-%>
-				props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
-				props_<%=cid%>.put("hbase.security.authentication","kerberos");
-				props_<%=cid%>.put("hbase.regionserver.kerberos.principal",<%=hbaseReigonServerPrincipal%>);
-				props_<%=cid%>.put("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
-<%
-				if(isKerberosAvailableHadoop1 || (isCustom && !useYarn)) {
-					String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
-%>
-					props_<%=cid%>.put("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
-<%
-				}
-				if(isKerberosAvailableHadoop2 || (isCustom && useYarn)) {
-					String resourceManagerPrincipal = ElementParameterParser.getValue(node, "__RESOURCEMANAGER_PRINCIPAL__");
-					String jobHistoryPrincipal = ElementParameterParser.getValue(node, "__JOBHISTORY_PRINCIPAL__");
-%>
-					props_<%=cid%>.put("yarn.resourcemanager.principal", <%=resourceManagerPrincipal%>);
-					props_<%=cid%>.put("mapreduce.jobhistory.principal", <%=jobHistoryPrincipal%>);
+					props_<%=cid%>.put("mapred.job.tracker", <%=mapredJobTracker%>);
 <%
 				}
 
-				if(useKeytab) {
+				if("HCatLoader".equals(function) && pigDistrib.doSupportHCatalog()) { // If the HCatalog loader is used, we need to add the HCat metastore in the pig context
 %>
-					org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+					props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
 				}
-			}
 
+				if("HBaseStorage".equals(function) && pigDistrib.doSupportHBase()) {
+%>
+					props_<%=cid%>.put("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
+					props_<%=cid%>.put("hbase.zookeeper.property.clientPort", <%=zookeeper_client_port%>);
+<%
+					if(setZNodeParent) {
+%>
+					props_<%=cid%>.put("zookeeper.znode.parent",<%=zNodeParent%>);
+<%
+					}
+				}
+
+				if(useKrb) {
+					String namenodePrincipal = ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+					boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+					String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+					String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+					String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASEMASTER_PRINCIPAL__");
+					String hbaseReigonServerPrincipal = ElementParameterParser.getValue(node, "__HBASEREIGONSERVER_PRINCIPAL__");
+%>
+					props_<%=cid%>.put("dfs.namenode.kerberos.principal", <%=namenodePrincipal%>);
+					props_<%=cid%>.put("hbase.security.authentication","kerberos");
+					props_<%=cid%>.put("hbase.regionserver.kerberos.principal",<%=hbaseReigonServerPrincipal%>);
+					props_<%=cid%>.put("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
+<%
+					if(isKerberosAvailableHadoop1 || (isCustom && !useYarn)) {
+						String jobTrackerPrincipal = ElementParameterParser.getValue(node, "__JOBTRACKER_PRINCIPAL__");
+%>
+						props_<%=cid%>.put("mapreduce.jobtracker.kerberos.principal", <%=jobTrackerPrincipal%>);
+<%
+					}
+					if(isKerberosAvailableHadoop2 || (isCustom && useYarn)) {
+						String resourceManagerPrincipal = ElementParameterParser.getValue(node, "__RESOURCEMANAGER_PRINCIPAL__");
+						String jobHistoryPrincipal = ElementParameterParser.getValue(node, "__JOBHISTORY_PRINCIPAL__");
+%>
+						props_<%=cid%>.put("yarn.resourcemanager.principal", <%=resourceManagerPrincipal%>);
+						props_<%=cid%>.put("mapreduce.jobhistory.principal", <%=jobHistoryPrincipal%>);
+<%
+					}
+
+					if(useKeytab) {
+%>
+						org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+<%
+					}
+				}
+
+			} // END IF05
+
+			// set Memory regardless of configuration option (classpath of component)
 		    if(!isCustom && ("HDP_1_2".equals(pigVersion) || "HDP_1_3".equals(pigVersion))) {
 		        String mapMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_MAP_MEMORY_MB__");
 		        String reduceMemory = ElementParameterParser.getValue(node,"__MAPRED_JOB_REDUCE_MEMORY_MB__");
@@ -480,6 +507,8 @@
 		        props_<%=cid%>.put("mapred.job.reduce.memory.mb", <%=reduceMemory%>);
 <%
     		}
+
+    		// set adv hadoop properties regardless of configuration option (classpath of component)
 			if(hadoopProps.size() > 0){
 				for(Map<String, String> item : hadoopProps){
 %>
@@ -487,22 +516,38 @@
 <%
 				}
 			}
+
+			// set Memory regardless of configuration option (classpath of component)
+			boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
+			if(setMemory && (isCustom && useYarn) || (!isCustom && isHadoop2)) {
+				String mapMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_MAP_MEMORY_MB__");
+				String reduceMemory = ElementParameterParser.getValue(node,"__MAPREDUCE_REDUCE_MEMORY_MB__");
+				String amMemory = ElementParameterParser.getValue(node,"__YARN_APP_MAPREDUCE_AM_RESOURCE_MB__");
+%>
+	    		props_<%=cid%>.put("mapreduce.map.memory.mb", <%=mapMemory%>);
+	    		props_<%=cid%>.put("mapreduce.reduce.memory.mb", <%=reduceMemory%>);
+	    		props_<%=cid%>.put("yarn.app.mapreduce.am.resource.mb", <%=amMemory%>);
+<%
+			}
+
+			// set useDatanodeHostname regardless of configuration option (classpath of component)
             if (useDatanodeHostname) {
                 %>
                 props_<%=cid%>.put("dfs.client.use.datanode.hostname", "true");
                 <%
             }
-		}
 
-		if(!isLocal && !isExecutedThroughWebHCat && pigDistrib != null && useTez){
-			%>
+            // create PigContext with/out tez regardless of configuration option (classpath of component)
+            if(useTez){
+%>
 				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(new org.apache.pig.backend.hadoop.executionengine.tez.TezExecType(), props_<%=cid%>);
-			<%
-		}else{
-            %>
+<%
+            }else{
+%>
 				org.apache.pig.impl.PigContext context_<%=cid%> = new org.apache.pig.impl.PigContext(org.apache.pig.ExecType.MAPREDUCE, props_<%=cid%>);
-			<%
-		}
+<%
+			}
+		} // END ELSE03
 
         if (isS3Location) {
             String passwordFieldName = "__S3_PASSWORD_LOAD__";
