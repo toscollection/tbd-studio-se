@@ -57,10 +57,10 @@
 		}
 		org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 
-		// Adding any hdfs-site.xml file on the classpath
+		// Adding any hdfs-site.xml file
 		conf_<%=cid%>.addResource("hdfs-site.xml");
 
-		// Adding any talend-site.xml file on the classpath
+		// Adding any talend-site.xml
 		conf_<%=cid%>.addResource("talend-site.xml");
 		String tldKerberosAuth = conf_<%=cid%>.get("talend.kerberos.authentication", "");
 		String tldKerberosKtPrincipal = conf_<%=cid%>.get("talend.kerberos.keytab.principal", "");
@@ -69,12 +69,12 @@
 		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
 		if(isLog4jEnabled){
 		%>
-			log.debug("CLASSPATH_CONFIGURATION Loaded " + conf_<%=cid%>);
-			log.debug("CLASSPATH_CONFIGURATION Configuration key value pairs : ");
-			java.util.Iterator<java.util.Map.Entry<String,String>> iterator = conf_<%=cid%>.iterator();
-			while(iterator.hasNext()){
-				java.util.Map.Entry<String,String> property = iterator.next();
-				log.debug("CLASSPATH_CONFIGURATION " + property.getKey() + " : " + property.getValue());
+			log.debug("CLASSPATH_CONFIGURATION_<%=cid%>" + " Loaded : " + conf_<%=cid%>);
+			log.debug("CLASSPATH_CONFIGURATION_<%=cid%>" + " key value pairs : ");
+			java.util.Iterator<java.util.Map.Entry<String,String>> iterator_log_<%=cid%> = conf_<%=cid%>.iterator();
+			while(iterator_log_<%=cid%>.hasNext()){
+				java.util.Map.Entry<String,String> property = iterator_log_<%=cid%>.next();
+				log.debug("CLASSPATH_CONFIGURATION_<%=cid%> " + property.getKey() + " : " + property.getValue());
 			}
 		<%
 		}
