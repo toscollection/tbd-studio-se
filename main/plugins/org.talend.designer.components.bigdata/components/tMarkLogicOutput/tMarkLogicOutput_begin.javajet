@@ -80,17 +80,7 @@ imports="
     <%
     }else if("JSON".equals(docType)){
     %>
-       <%
-       if("UPDATE".equals(actionType)){
-       %>
-       docMgr_<%= cid %> = client_<%= cid %>.newXMLDocumentManager();
-       <%
-       }else{
-       %>
        docMgr_<%= cid %> = client_<%= cid %>.newJSONDocumentManager();
-       <%
-       }
-        %>
        docIdSuffix_<%= cid %> = "json";
     <%
     }else if("XML".equals(docType)){
