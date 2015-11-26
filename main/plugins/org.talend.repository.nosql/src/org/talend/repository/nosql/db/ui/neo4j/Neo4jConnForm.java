@@ -34,7 +34,9 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.metadata.managment.ui.utils.ExtendedNodeConnectionContextUtils.EHadoopParamName;
+import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
@@ -76,6 +78,12 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
 
     protected LabelledCombo dbVersionCombo;
 
+    protected Composite authArea;
+
+    protected LabelledText userText;
+
+    protected LabelledText pwdText;
+
     public Neo4jConnForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             WizardPage parentWizardPage) {
         super(parent, connectionItem, existingNames, creation, parentWizardPage);
@@ -98,12 +106,33 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         } else {
             dbVersionCombo.select(0);
         }
+        if (!isNeedUpdateUINeo4JVersion()) {
+            String user = getConnection().getAttributes().get(INoSQLCommonAttributes.USERNAME);
+            String passwd = getConnection().getValue(getConnection().getAttributes().get(INoSQLCommonAttributes.PASSWORD), false);
+            userText.setText(user == null ? "" : user); //$NON-NLS-1$
+            pwdText.setText(passwd == null ? "" : passwd); //$NON-NLS-1$
+            updateAuthArea();
+        }
         localDbBtn.setSelection(!isRemote);
         remoteDbBtn.setSelection(isRemote);
         udpateDBConnPart(isRemote);
         dbPathTxt.setText(dbPath);
         serverURLTxt.setText(serverURL == null ? INeo4jConstants.DEFAULT_SERVER_URL : serverURL);
         // updateAbsPathStatus();
+    }
+
+    private void updateAuthArea() {
+        if (!isContextMode()) {
+            userText.setEditable(true);
+            pwdText.setEditable(true);
+            pwdText.getTextControl().setEchoChar('*');
+        } else {
+            userText.setEditable(false);
+            pwdText.setEditable(false);
+            if (pwdText.getText().startsWith(ContextParameterUtils.JAVA_NEW_CONTEXT_PREFIX)) {
+                pwdText.getTextControl().setEchoChar('\0');
+            }
+        }
     }
 
     @Override
@@ -114,6 +143,12 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         browseDbPathBtn.setEnabled(editable);
         // dbPathTxt.setEditable(editable);
         serverURLTxt.setEditable(editable);
+
+        if (!isNeedUpdateUINeo4JVersion()) {
+            userText.setEditable(editable);
+            pwdText.setEditable(editable);
+        }
+
     }
 
     @Override
@@ -121,8 +156,10 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         addConnectionGroup(parent);
     }
 
+    Group connectionGroup = null;
+
     private void addConnectionGroup(Composite composite) {
-        Group connectionGroup = Form.createGroup(composite, 4, "Connection"); //$NON-NLS-1$
+        connectionGroup = Form.createGroup(composite, 4, "Connection"); //$NON-NLS-1$
         connectionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         GridLayout gpLayout = new GridLayout(2, true);
         gpLayout.marginWidth = 5;
@@ -143,13 +180,27 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         dbVersionCombo = new LabelledCombo(
                 versionComposite,
                 Messages.getString("MongoDBConnForm.dbVersion"), Messages.getString("MongoDBConnForm.dbVersionTip"), dbVersionLabels.toArray(new String[0]), 3, true); //$NON-NLS-1$ //$NON-NLS-2$
-
         localDbBtn = new Button(connectionGroup, SWT.RADIO);
         localDbBtn.setText(Messages.getString("Neo4jConnForm.button.localDB.label")); //$NON-NLS-1$
         localDbBtn.setSelection(true);
+        localDbBtn.setLayoutData(new GridData());
 
         remoteDbBtn = new Button(connectionGroup, SWT.RADIO);
         remoteDbBtn.setText(Messages.getString("Neo4jConnForm.button.remoteDB.label")); //$NON-NLS-1$
+        remoteDbBtn.setLayoutData(new GridData());
+
+        updateAuthAreaUI();
+        authArea = new Composite(connectionGroup, SWT.NONE);
+        GridData authParentGd = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        authArea.setLayoutData(authParentGd);
+        GridLayout authLayout = new GridLayout(4, false);
+        authLayout.marginWidth = 0;
+        authLayout.marginHeight = 0;
+        authArea.setLayout(authLayout);
+        userText = new LabelledText(authArea, Messages.getString("CassandraConnForm.username"), 1); //$NON-NLS-1$
+        pwdText = new LabelledText(authArea,
+                Messages.getString("CassandraConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        pwdText.getTextControl().setEchoChar('*');
 
         dbComposite = new Composite(connectionGroup, SWT.NONE);
         GridData dbCompGD = new GridData(GridData.FILL_BOTH);
@@ -184,6 +235,16 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
     private void udpateDBConnPart(boolean isRemote) {
         dbLayout.topControl = isRemote ? remoteDBComposite : localDBComposite;
         dbComposite.layout();
+        enableAuthorization(isRemote);
+    }
+
+    private void enableAuthorization(boolean enable) {
+        if (pwdText.isVisiable()) {
+            pwdText.setEnabled(enable);
+        }
+        if (userText.isVisiable()) {
+            userText.setEnabled(enable);
+        }
     }
 
     private void updateAbsPathStatus() {
@@ -195,6 +256,23 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         topComposite.layout();
     }
 
+    private boolean isNeedUpdateUINeo4JVersion() {
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        return !Neo4jConnectionUtil.isNeedAuthorization(dbVersion);
+    }
+
+    private void updateAuthAreaUI() {
+        if (authArea != null) {
+            boolean hide = isNeedUpdateUINeo4JVersion();
+            GridData gd = (GridData) authArea.getLayoutData();
+            gd.exclude = hide;
+            authArea.setLayoutData(gd);
+            authArea.setVisible(!hide);// Must also set exclude and visible can affect the
+            // layout!!!!!!
+            authArea.getParent().getParent().layout(true);
+        }
+    }
+
     @Override
     protected void addFieldsListeners() {
         dbVersionCombo.addModifyListener(new ModifyListener() {
@@ -204,6 +282,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
                 checkFieldsValue();
                 getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
                         repositoryTranslator.getValue(dbVersionCombo.getText()));
+                updateAuthAreaUI();
             }
         });
         localDbBtn.addSelectionListener(new SelectionAdapter() {
@@ -273,6 +352,25 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
                 }
             }
         });
+
+        userText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
+            }
+        });
+
+        pwdText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                NoSQLConnection conn = getConnection();
+                conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, conn.getValue(pwdText.getText(), true));
+            }
+        });
     }
 
     private void udpateConnectionConfig() {
@@ -297,6 +395,14 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
             collectValidateEntry(new NonemptyValidator(serverURLTxt.getText()),
                     Messages.getString("Neo4jConnForm.validate.invalidServerURL")); //$NON-NLS-1$
         }
+
+        // username/password are not required for neo4j remote mode, since the authorization can be closed in server
+        // if (!isNeedUpdateUINeo4JVersion()) {
+        // collectValidateEntry(new NonemptyValidator(userText.getText()),
+        //                    Messages.getString("AbstractNoSQLConnForm.InvalidUser")); //$NON-NLS-1$ 
+        //            collectValidateEntry(new NonemptyValidator(pwdText.getText()), Messages.getString("AbstractNoSQLConnForm.InvalidPwd")); //$NON-NLS-1$
+        // }
+
     }
 
     @Override
@@ -306,6 +412,10 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
             attributes.add(INeo4jAttributes.SERVER_URL);
         } else {
             attributes.add(INeo4jAttributes.DATABASE_PATH);
+        }
+        if (!isNeedUpdateUINeo4JVersion()) {
+            attributes.add(INeo4jAttributes.USERNAME);
+            attributes.add(INeo4jAttributes.PASSWORD);
         }
     }
 
@@ -317,6 +427,8 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         getConnection().getAttributes().put(INeo4jAttributes.SERVER_URL, serverURLTxt.getText());
         getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
                 repositoryTranslator.getValue(dbVersionCombo.getText()));
+        getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
+        getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, getConnection().getValue(pwdText.getText(), true));
     }
 
     @Override
@@ -333,6 +445,8 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
     protected void collectConParameters() {
         addContextParams(EHadoopParamName.Databasepath, localDbBtn.getSelection());
         addContextParams(EHadoopParamName.ServerUrl, remoteDbBtn.getSelection());
+        addContextParams(EHadoopParamName.UserName, !isNeedUpdateUINeo4JVersion());
+        addContextParams(EHadoopParamName.Password, !isNeedUpdateUINeo4JVersion());
     }
 
     /*
@@ -348,5 +462,11 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         if (remoteDbBtn.getSelection()) {
             getConnection().getAttributes().put(INeo4jAttributes.SERVER_URL, serverURLTxt.getText());
         }
+
+        if (!isNeedUpdateUINeo4JVersion()) {
+            getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
+            getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
+        }
+
     }
 }

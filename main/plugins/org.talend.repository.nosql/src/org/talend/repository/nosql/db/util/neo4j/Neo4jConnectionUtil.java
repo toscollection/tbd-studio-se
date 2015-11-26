@@ -22,6 +22,7 @@ import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
+import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
 import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
@@ -80,11 +81,16 @@ public class Neo4jConnectionUtil {
                 new Object[0]);
     }
 
-    public static synchronized Object getDB(NoSQLConnection connection) throws NoSQLServerException {
-        Object db = graphDb;
-        if (db != null) {
-            return db;
+    public static boolean isNeedAuthorization(String neo4jVersion) {
+        if (INeo4jConstants.NEO4J_2_2_X.equals(neo4jVersion)) {
+            return true;
+        } else {
+            return false;
         }
+    }
+
+    public static synchronized Object getDB(NoSQLConnection connection) throws NoSQLServerException {
+        Object db = null;
 
         ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
         try {
@@ -95,8 +101,24 @@ public class Neo4jConnectionUtil {
                     ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
                     serverUrl = ContextParameterUtils.getOriginalValue(contextType, serverUrl);
                 }
-                db = NoSQLReflection.newInstance("org.neo4j.rest.graphdb.RestGraphDatabase", new Object[] { serverUrl }, //$NON-NLS-1$
-                        classLoader);
+                if (isNeedAuthorization(connection.getAttributes().get(INeo4jAttributes.DB_VERSION))) {
+                    String usename = StringUtils.trimToEmpty(connection.getAttributes().get(INeo4jAttributes.USERNAME));
+                    String password = StringUtils.trimToEmpty(connection.getAttributes().get(INeo4jAttributes.PASSWORD));
+                    if (connection.isContextMode()) {
+                        ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
+                        usename = ContextParameterUtils.getOriginalValue(contextType, usename);
+                        password = ContextParameterUtils.getOriginalValue(contextType, password);
+                    } else {
+                        password = connection.getValue(password, false);
+                    }
+                    db = NoSQLReflection.newInstance(
+                            "org.neo4j.rest.graphdb.RestGraphDatabase", new Object[] { serverUrl, usename, password }, //$NON-NLS-1$
+                            classLoader);
+                } else {
+                    db = NoSQLReflection.newInstance("org.neo4j.rest.graphdb.RestGraphDatabase", new Object[] { serverUrl }, //$NON-NLS-1$
+                            classLoader);
+                }
+
             } else {
                 String dbPath = StringUtils.trimToEmpty(connection.getAttributes().get(INeo4jAttributes.DATABASE_PATH));
                 if (connection.isContextMode()) {
@@ -124,14 +146,18 @@ public class Neo4jConnectionUtil {
 
             @Override
             public void run() {
-                try {
-                    NoSQLReflection.invokeMethod(db, "shutdown", new Object[0]); //$NON-NLS-1$
-                } catch (NoSQLReflectionException e) {
-                    // Nothing we can do here.
-                    e.printStackTrace();
-                }
+                shutdownNeo4JDb(db);
             }
         });
+    }
+
+    private static void shutdownNeo4JDb(final Object db) {
+        try {
+            NoSQLReflection.invokeMethod(db, "shutdown", new Object[0]); //$NON-NLS-1$
+        } catch (NoSQLReflectionException e) {
+            // Nothing we can do here.
+            e.printStackTrace();
+        }
     }
 
     public static synchronized Iterator<Map<String, Object>> getResultIterator(NoSQLConnection connection, String cypher)

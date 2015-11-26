@@ -27,7 +27,7 @@
 		<dependency>
 			<groupId>com.cloudera.navigator</groupId>
 			<artifactId>navigator-sdk-client</artifactId>
-			<version>1.0-BETA20151022</version>
+			<version>1.0-BETA20151126</version>
 		</dependency>
 
 
