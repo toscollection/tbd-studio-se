@@ -750,6 +750,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 case CLOUDERA_CDH5:
                 case CLOUDERA_CDH5_1:
                 case CLOUDERA_CDH5_4:
+                case CLOUDERA_CDH5_5:
                 case MAPR401:
                 case MAPR500:
                 case APACHE_2_4_0_EMR:
