@@ -59,9 +59,12 @@ public class Neo4jRetrieveSchemaForm extends AbstractNoSQLRetrieveSchemaForm {
 
     private ColorStyledText colorText;
 
+    protected WizardPage parentWizardPage;
+
     public Neo4jRetrieveSchemaForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             WizardPage parentWizardPage) {
         super(parent, connectionItem, existingNames, creation, parentWizardPage);
+        this.parentWizardPage = parentWizardPage;
         setupForm();
     }
 
@@ -131,6 +134,7 @@ public class Neo4jRetrieveSchemaForm extends AbstractNoSQLRetrieveSchemaForm {
             public void modifyText(ModifyEvent e) {
                 checkFieldsValue();
                 addOrUpdateTable();
+                parentWizardPage.setPageComplete(true);
             }
 
         });

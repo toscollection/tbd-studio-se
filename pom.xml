@@ -151,6 +151,7 @@
 		<module>test/plugins/org.talend.hadoop.distribution.custom.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdp200.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr401.test</module>
+        	<module>test/plugins/org.talend.repository.hadoopcluster.configurator.test</module>
 
 
 	</modules>

@@ -42,9 +42,11 @@ imports="
                       returnIOClazz = "java.io.File";
                     }else if("id_Object".equalsIgnoreCase(javaTypeId)){
                       returnIOClazz = "java.io.InputStream";
+                    }else if("id_byte[]".equalsIgnoreCase(javaTypeId)){
+                      // Do Nothing
                     }else{
                     %>
-                       Compile Err: can not return <%= javaTypeId %>, try to set the type to String Document Object.
+                       Compile Err: can not return <%= javaTypeId %>, try to set the type to String Document Object byte[].
                     <%
                     }
                     if("id_Document".equalsIgnoreCase(javaTypeId)){
@@ -58,6 +60,10 @@ imports="
                                                                                       )
                                                      );
                       <%= outputConn.getName() %>.<%= columnName %> = docment_<%= cid %>;
+                    <%
+                    }else if("id_byte[]".equalsIgnoreCase(javaTypeId)){
+                    %>
+                        <%= outputConn.getName() %>.<%= columnName %> = ((com.marklogic.client.io.BytesHandle)docMgr_<%= cid %>.read(docId_<%= cid %>, new com.marklogic.client.io.BytesHandle())).get();
                     <%
                     }else{
                     %>
