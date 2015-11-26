@@ -33,7 +33,7 @@ public class ApiObjectMapper extends ObjectMapper {
         configure(SerializationFeature.INDENT_OUTPUT, true);
 
         // Allow JAX-B annotations.
-        setAnnotationIntrospector(new AnnotationIntrospector.Pair(getSerializationConfig().getAnnotationIntrospector(),
+        setAnnotationIntrospector(AnnotationIntrospector.pair(getSerializationConfig().getAnnotationIntrospector(),
                 new JaxbAnnotationIntrospector()));
 
         // Make Jackson respect @XmlElementWrapper.
