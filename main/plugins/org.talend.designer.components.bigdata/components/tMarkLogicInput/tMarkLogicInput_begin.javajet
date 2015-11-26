@@ -137,8 +137,11 @@ imports="
       }else{
         nb_line_<%= cid %> = matchedDocNumber_<%= cid %>;
       }
- qryMgr_<%= cid %>.setPageLength(nb_line_<%= cid %>);
- qryMgr_<%= cid %>.search(strQryDef_<%= cid %>, searchHdl_<%= cid %>);
- com.marklogic.client.query.MatchDocumentSummary[] matchDocSummary_<%= cid %> = searchHdl_<%= cid %>.getMatchResults();
-
+ final int DEFAULT_PAGE_SIZE_<%= cid %> = searchHdl_<%= cid %>.getPageLength();
+ final long page_number_<%= cid %> = (long)Math.ceil(nb_line_<%= cid %> / (DEFAULT_PAGE_SIZE_<%= cid %> * 1.0));
+ long start_<%= cid %> = 1;
+ long retrieved_doc_number_<%= cid %> = 0;
  com.marklogic.client.document.DocumentManager docMgr_<%= cid %> = client_<%= cid %>.newDocumentManager();
+ for(long i = 1; i < page_number_<%= cid %> + 1; i++){
+ qryMgr_<%= cid %>.search(strQryDef_<%= cid %>, searchHdl_<%= cid %>, start_<%= cid %>);
+ com.marklogic.client.query.MatchDocumentSummary[] matchDocSummary_<%= cid %> = searchHdl_<%= cid %>.getMatchResults();
