@@ -24,8 +24,8 @@
     </DOCUMENTATION>
 
     <CONNECTORS>
-      <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
-      <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="0"/>
+      <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
+      <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="1"/>
       <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
       <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
       <CONNECTOR CTYPE="COMPONENT_OK"/>
@@ -130,9 +130,9 @@
         <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="35"
             REQUIRED="true"
         >
-            <TABLE READONLY="true">
+            <TABLE>
                 <COLUMN KEY="false" LENGTH="255" NAME="docId"
-                    TYPE="id_String" NULLABLE="false"
+                    TYPE="id_String" NULLABLE="false" READONLY="true"
                 />
                 <COLUMN KEY="false" LENGTH="255" NAME="docContent"
                     TYPE="id_String" NULLABLE="false"
