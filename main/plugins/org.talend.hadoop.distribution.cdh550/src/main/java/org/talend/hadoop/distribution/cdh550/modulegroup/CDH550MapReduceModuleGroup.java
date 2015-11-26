@@ -17,6 +17,11 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
+import org.talend.hadoop.distribution.condition.BasicExpression;
+import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.condition.EqualityOperator;
+import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
+import org.talend.hadoop.distribution.constants.MRConstant;
 
 public class CDH550MapReduceModuleGroup {
 
@@ -25,7 +30,10 @@ public class CDH550MapReduceModuleGroup {
         hs.add(new DistributionModuleGroup(CDH550Constant.HDFS_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(CDH550Constant.MAPREDUCE_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(CDH550Constant.MAPREDUCE_PARQUET_MODULE_GROUP.getModuleName()));
+        ComponentCondition conditionUseNavigator = new SimpleComponentCondition(new BasicExpression(
+                MRConstant.USE_CLOUDERA_NAVIGATOR, "true", EqualityOperator.EQ)); //$NON-NLS-1$
+        hs.add(new DistributionModuleGroup(CDH550Constant.TALEND_CLOUDERA_CDH_5_5_NAVIGATOR.getModuleName(), true,
+                conditionUseNavigator));
         return hs;
     }
-
 }
