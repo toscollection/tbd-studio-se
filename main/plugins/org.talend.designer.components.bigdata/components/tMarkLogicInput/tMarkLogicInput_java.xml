@@ -158,7 +158,7 @@
             NUM_ROW="5"
             SHOW="false"
         >
-            <DEFAULT>"10"</DEFAULT>
+            <DEFAULT>10</DEFAULT>
         </PARAMETER>
 
         <PARAMETER
@@ -167,7 +167,16 @@
              NUM_ROW="5"
              REQUIRED="true"
         >
-            <DEFAULT>100</DEFAULT>
+            <DEFAULT>-1</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER
+             NAME="PAGE_SIZE"
+             FIELD="TEXT"
+             NUM_ROW="7"
+             REQUIRED="true"
+        >
+            <DEFAULT>10</DEFAULT>
         </PARAMETER>
 
         <PARAMETER

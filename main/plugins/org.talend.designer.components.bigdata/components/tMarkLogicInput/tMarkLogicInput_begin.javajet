@@ -21,6 +21,8 @@ imports="
     String userName = ElementParameterParser.getValue(node,"__USER_NAME__");
     String database = ElementParameterParser.getValue(node,"__DATABASE__");
     String authType = ElementParameterParser.getValue(node,"__AUTHENTICATION_TYPE__");
+    
+    String pageSize = ElementParameterParser.getValue(node,"__PAGE_SIZE__");
 
     final String MAXIMAL_RETRIEVE_NUMBER = ElementParameterParser.getValue(node, "__MAXIMAL_RETRIEVE_NUMBER__");
     boolean reuseConn = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
@@ -137,7 +139,11 @@ imports="
       }else{
         nb_line_<%= cid %> = matchedDocNumber_<%= cid %>;
       }
- final int DEFAULT_PAGE_SIZE_<%= cid %> = searchHdl_<%= cid %>.getPageLength();
+ int DEFAULT_PAGE_SIZE_<%= cid %> = Integer.valueOf(<%= pageSize %>);
+ if(DEFAULT_PAGE_SIZE_<%= cid %> <= 0){
+ 	DEFAULT_PAGE_SIZE_<%= cid %> = 10;
+ }
+ qryMgr_<%= cid %>.setPageLength(DEFAULT_PAGE_SIZE_<%= cid %> * 1L);
  final long page_number_<%= cid %> = (long)Math.ceil(nb_line_<%= cid %> / (DEFAULT_PAGE_SIZE_<%= cid %> * 1.0));
  long start_<%= cid %> = 1;
  long retrieved_doc_number_<%= cid %> = 0;
