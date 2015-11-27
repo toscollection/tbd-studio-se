@@ -146,7 +146,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 					// If the configuration is inspected from the classpath
 %>
 					if(!org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()) {
-						username_<%=cid%> = conf_<%=cid%>.get("talend.hadoop.user.name");
+						username_<%=cid%> = conf_<%=cid%>.get("talend.hadoop.user.name", "");
 					}
 <%				
 				}
