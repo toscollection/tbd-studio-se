@@ -23,4 +23,6 @@ public final class MRConstant {
     public static final String VERSION_PARAMETER = "MR_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
+
+    public static final String USE_CLOUDERA_NAVIGATOR = "USE_CLOUDERA_NAVIGATOR";//$NON-NLS-1$
 }

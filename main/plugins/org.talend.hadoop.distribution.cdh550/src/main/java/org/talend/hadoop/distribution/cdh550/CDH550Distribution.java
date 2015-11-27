@@ -334,4 +334,9 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
     public boolean doJavaAPISqoopImportAllTablesSupportExcludeTable() {
         return true;
     }
+
+    @Override
+    public boolean doSupportClouderaNavigator() {
+        return true;
+    }
 }

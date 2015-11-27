@@ -31,11 +31,11 @@ imports="
                     if(outputConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){//TagD
                     %>
                     retrieved_doc_number_<%= cid %> ++;
-                    if(retrieved_doc_number_<%= cid %> == nb_line_<%= cid %>){
+                    if(retrieved_doc_number_<%= cid %> >= nb_line_<%= cid %>){
                         break;
                     }
                     }
-                    start_<%= cid %> += i * DEFAULT_PAGE_SIZE_<%= cid %>;
+                    start_<%= cid %> = i * DEFAULT_PAGE_SIZE_<%= cid %> + 1;
                     }
                     <%
                     }//TagD
