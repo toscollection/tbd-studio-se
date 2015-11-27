@@ -60,9 +60,6 @@ public class CreateHDFSAction extends CreateHadoopNodeAction {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
             EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-            if (EHadoopVersion4Drivers.APACHE_0_20_203.equals(version4Drivers)) {
-                return true;
-            }
             if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
                 return true;
             }
