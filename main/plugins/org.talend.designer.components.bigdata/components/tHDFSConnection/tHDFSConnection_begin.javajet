@@ -80,9 +80,8 @@
 		}
 
 		if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
-			String group = ElementParameterParser.getValue(node, "__GROUP__");
 %>
-			conf_<%=cid%>.set("hadoop.job.ugi",<%=username%>+","+<%=group%>);
+			conf_<%=cid%>.set("hadoop.job.ugi",conf_<%=cid%>.get("talend.hadoop.user.name", "")+","+conf_<%=cid%>.get("talend.hadoop.group.name", ""));
 <%
 		}
 %>
