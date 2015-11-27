@@ -31,6 +31,7 @@ imports="
     String fsDefaultName = "";
     org.talend.hadoop.distribution.component.HiveComponent hiveDistrib = null;
     boolean isCustom = false;
+    INode connectionInformationNode = node;
 
     %>
     String select_query_<%=cid %> = null;
@@ -95,6 +96,7 @@ imports="
         dbport = ElementParameterParser.getValue(previousNode, "__PORT__");
         dbname = ElementParameterParser.getValue(previousNode, "__DBNAME__");
         dbuser = ElementParameterParser.getValue(previousNode, "__USER__");
+        connectionInformationNode = previousNode;
         hiveVersion = ElementParameterParser.getValue(previousNode, "__HIVE_VERSION__");
         distribution = ElementParameterParser.getValue(previousNode, "__DISTRIBUTION__");
 
@@ -122,6 +124,7 @@ imports="
                 if(connection!=null && connection.equals(pNode.getUniqueName())) {
                     theDistribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
                     theVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+                    connectionInformationNode = pNode;
                 }
             }
         }
@@ -179,6 +182,7 @@ imports="
         connectionMode = ElementParameterParser.getValue(previousNode, "__CONNECTION_MODE__");
         setFsDefaultName = "true".equals(ElementParameterParser.getValue(previousNode, "__SET_FS_DEFAULT_NAME__"));
         fsDefaultName = ElementParameterParser.getValue(previousNode, "__FS_DEFAULT_NAME__");
+        connectionInformationNode = previousNode;
 
         String yarnClasspathSeparator = ElementParameterParser.getValue(previousNode, "__CLASSPATH_SEPARATOR__");
 %>
@@ -202,6 +206,7 @@ imports="
                         dbuser = ElementParameterParser.getValue(pNode, "__USER__");
                         hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
                         distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
+                        connectionInformationNode = pNode;
                         break;
                     }
              }
