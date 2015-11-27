@@ -886,6 +886,9 @@ public class OozieSettingComposite extends ScrolledComposite {
             hideControl(useYarnButton, true);
             hideControl(customGroup, true);
             List<String> items = getDistributionVersions(distribution);
+            if (distribution == EHadoopDistributions.MAPR) {
+                items.remove(EHadoopVersion4Drivers.MAPR1.getVersionDisplay());
+            }
             if (distribution == EHadoopDistributions.PIVOTAL_HD) {
                 items.remove(EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.getVersionDisplay());
             }
