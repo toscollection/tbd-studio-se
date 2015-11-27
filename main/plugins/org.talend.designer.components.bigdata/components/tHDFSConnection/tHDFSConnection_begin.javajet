@@ -62,9 +62,9 @@
 
 		// Adding any talend-site.xml
 		conf_<%=cid%>.addResource("talend-site.xml");
-		String tldKerberosAuth = conf_<%=cid%>.get("talend.kerberos.authentication", "");
-		String tldKerberosKtPrincipal = conf_<%=cid%>.get("talend.kerberos.keytab.principal", "");
-		String tldKerberosKtPath = conf_<%=cid%>.get("talend.kerberos.keytab.path", "");
+		String tldKerberosAuth_<%=cid%> = conf_<%=cid%>.get("talend.kerberos.authentication", "");
+		String tldKerberosKtPrincipal_<%=cid%> = conf_<%=cid%>.get("talend.kerberos.keytab.principal", "");
+		String tldKerberosKtPath_<%=cid%> = conf_<%=cid%>.get("talend.kerberos.keytab.path", "");
 <%
 		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
 		if(isLog4jEnabled){
@@ -89,8 +89,8 @@
 
 		if(org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()){
 			// Keytab configurations
-			if(tldKerberosAuth.equalsIgnoreCase("keytab")){
-				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(tldKerberosKtPrincipal, tldKerberosKtPath);
+			if(tldKerberosAuth_<%=cid%>.equalsIgnoreCase("keytab")){
+				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(tldKerberosKtPrincipal_<%=cid%>, tldKerberosKtPath_<%=cid%>);
 			}
 		}
 <%

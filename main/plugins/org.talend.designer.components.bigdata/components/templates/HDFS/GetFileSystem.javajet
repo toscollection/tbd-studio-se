@@ -130,15 +130,27 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		    	fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 			<%
 		  	}else{
-				if(!((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth)))) {
-					user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
-				} else {
+		  		boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(targetNode, "__CONFIGURATIONS_FROM_CLASSPATH__"));
+		  		if(!configureFromClassPath) {
+					if(!((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth)))) {
+						user = ElementParameterParser.getValue(targetNode, "__USERNAME__");
+					} else {
 %>
-					conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
+						conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%
+					}
+%>					
+					username_<%=cid%> = <%=user%>;
+<%
+				} else {
+					// If the configuration is inspected from the classpath
+%>
+					if(!org.apache.hadoop.security.UserGroupInformation.isSecurityEnabled()) {
+						username_<%=cid%> = conf_<%=cid%>.get("talend.hadoop.user.name");
+					}
+<%				
 				}
 			  	%>
-				username_<%=cid%> = <%=user%>;
 				if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
 					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				}else{
