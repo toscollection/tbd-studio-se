@@ -24,7 +24,7 @@
     </DOCUMENTATION>
 
     <CONNECTORS>
-      <CONNECTOR CTYPE="FLOW" MAX_INPUT="0" MAX_OUTPUT="1"/>
+      <CONNECTOR CTYPE="FLOW" MAX_INPUT="1" MAX_OUTPUT="1"/>
       <CONNECTOR CTYPE="ITERATE" MAX_OUTPUT="0" MAX_INPUT="1"/>
       <CONNECTOR CTYPE="SUBJOB_OK" MAX_INPUT="1" />
       <CONNECTOR CTYPE="SUBJOB_ERROR" MAX_INPUT="1" />
@@ -126,6 +126,16 @@
                 <ITEM NAME="BASIC" VALUE="BASIC" />
             </ITEMS>
         </PARAMETER>
+        
+        <PARAMETER
+            NAME="AS_DOCID_COLUMN"
+            FIELD="PREV_COLUMN_LIST"
+            NUM_ROW="30"
+            REQUIRED="true"
+            SHOW_IF="(#LINK@CONNECTOR.IN.FLOW_MAIN == '1')"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
 
         <PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="35"
             REQUIRED="true"
@@ -145,6 +155,7 @@
             FIELD="TEXT"
             REQUIRED="true"
             NUM_ROW="45"
+            SHOW_IF="(#LINK@CONNECTOR.IN.FLOW_MAIN == '0')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -153,19 +164,11 @@
 
     <ADVANCED_PARAMETERS>
         <PARAMETER
-            NAME="PAGE_SIZE"
-            FIELD="TEXT"
-            NUM_ROW="5"
-            SHOW="false"
-        >
-            <DEFAULT>10</DEFAULT>
-        </PARAMETER>
-
-        <PARAMETER
              NAME="MAXIMAL_RETRIEVE_NUMBER"
              FIELD="TEXT"
              NUM_ROW="5"
              REQUIRED="true"
+             SHOW_IF="(#LINK@CONNECTOR.IN.FLOW_MAIN == '0')"
         >
             <DEFAULT>-1</DEFAULT>
         </PARAMETER>
@@ -175,6 +178,7 @@
              FIELD="TEXT"
              NUM_ROW="7"
              REQUIRED="true"
+             SHOW_IF="(#LINK@CONNECTOR.IN.FLOW_MAIN == '0')"
         >
             <DEFAULT>10</DEFAULT>
         </PARAMETER>
@@ -183,6 +187,7 @@
             NAME="USE_QUERY_OPTION"
             FIELD="CHECK"
             NUM_ROW="10"
+            SHOW_IF="(#LINK@CONNECTOR.IN.FLOW_MAIN == '0')"
             >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -191,7 +196,7 @@
             NAME="QUERY_OPTION_TYPE"
             FIELD="CLOSED_LIST"
             NUM_ROW="40"
-            SHOW_IF="USE_QUERY_OPTION == 'true'"
+            SHOW_IF="isShow[USE_QUERY_OPTION] AND (USE_QUERY_OPTION == 'true')"
             >
             <ITEMS DEFAULT="XML">
                 <ITEM NAME="XML" VALUE="XML" />
@@ -204,7 +209,7 @@
             FIELD="TEXT"
             REQUIRED="true"
             NUM_ROW="40"
-            SHOW_IF="USE_QUERY_OPTION == 'true'"
+            SHOW_IF="isShow[USE_QUERY_OPTION] AND (USE_QUERY_OPTION == 'true')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -214,7 +219,7 @@
             FIELD="MEMO"
             NB_LINES="4"
             NUM_ROW="50"
-            SHOW_IF="USE_QUERY_OPTION == 'true'"
+            SHOW_IF="isShow[USE_QUERY_OPTION] AND (USE_QUERY_OPTION == 'true')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
