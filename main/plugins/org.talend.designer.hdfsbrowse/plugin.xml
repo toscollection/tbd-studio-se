@@ -51,14 +51,6 @@
             libraries="hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;log4j-1.2.17.jar">
       </classloader>
       <classloader
-            index="HDFS:APACHE:APACHE_0_20_204"
-            libraries="hadoop-core-0.20.204.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;log4j-1.2.17.jar">
-      </classloader>
-      <classloader
-            index="HDFS:APACHE:APACHE_0_20_2"
-            libraries="hadoop-0.20.2-core.jar;commons-logging-1.0.4.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;log4j-1.2.17.jar">
-      </classloader>
-      <classloader
             index="HDFS:CLOUDERA:Cloudera_CDH4"
             libraries="hadoop-hdfs-2.0.0-cdh4.0.1.jar;hadoop-common-2.0.0-cdh4.0.1.jar;hadoop-auth-2.0.0-cdh4.0.1.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;guava-11.0.2.jar;log4j-1.2.16.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;commons-io-2.4.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar">
       </classloader>
@@ -85,10 +77,6 @@
       <classloader
             index="HDFS:CLOUDERA:Cloudera_CDH5_5"
             libraries="hadoop-common-2.6.0-cdh5.5.0.jar;hadoop-hdfs-2.6.0-cdh5.5.0.jar;hadoop-auth-2.6.0-cdh5.5.0.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;commons-cli-1.2.jar;commons-collections-3.2.1.jar;avro-1.7.6-cdh5.5.0.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-xc-1.8.8.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;log4j-1.2.17.jar;jersey-core-1.9.jar;htrace-core4-4.0.1-incubating.jar;servlet-api-2.5.jar;commons-io-2.4.jar;commons-codec-1.9.jar">
-      </classloader>
-      <classloader
-            index="HDFS:MAPR:MAPR1"
-            libraries="hadoop-0.20.2-dev-core.jar;commons-logging-1.0.4.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;log4j-1.2.17.jar">
       </classloader>
       <classloader
             index="HDFS:MAPR:MAPR2"
@@ -301,10 +289,6 @@
             libraries="hadoop-common-2.6.0-cdh5.5.0.jar;hadoop-hdfs-2.6.0-cdh5.5.0.jar;hadoop-auth-2.6.0-cdh5.5.0.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;commons-cli-1.2.jar;commons-collections-3.2.1.jar;avro-1.7.6-cdh5.5.0.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-xc-1.8.8.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;log4j-1.2.17.jar;jersey-core-1.9.jar;htrace-core4-4.0.1-incubating.jar;servlet-api-2.5.jar;commons-io-2.4.jar;commons-codec-1.9.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.5.0.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.5.0.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.5.0.jar;hadoop-yarn-api-2.6.0-cdh5.5.0.jar;hadoop-yarn-client-2.6.0-cdh5.5.0.jar;hadoop-yarn-common-2.6.0-cdh5.5.0.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.5.0.jar;htrace-core-3.2.0-incubating.jar;jersey-client-1.9.jar">
       </classloader>
       <classloader
-            index="MAP_REDUCE:MAPR:MAPR1"
-            libraries="hadoop-0.20.2-dev-core.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;commons-lang-2.5.jar;commons-codec-1.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;log4j-1.2.16.jar">
-      </classloader>
-      <classloader
             index="MAP_REDUCE:MAPR:MAPR2"
             libraries="hadoop-0.20.2-dev-core-mapr2.jar;maprfs-0.1.jar;zookeeper-3.3.2.jar;guava-r09.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;commons-lang-2.5.jar;commons-codec-1.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;log4j-1.2.16.jar">
       </classloader>
@@ -366,22 +350,6 @@
    </extension>
    <extension
          point="org.talend.core.runtime.librariesNeeded">
-      <libraryNeeded
-            context="HDFS wizard"
-            language="java"
-            message="Wizard use for HDFS"
-            name="hadoop-core-0.20.204.0.jar" mvn_uri="mvn:org.talend.libraries/hadoop-core-0.20.204.0/6.0.0" 
-            required="true"
-            uripath="platform:/plugin/org.talend.libraries.hadoop.apache.0.20.204/lib/hadoop-core-0.20.204.0.jar">
-      </libraryNeeded>
-            <libraryNeeded
-            context="HDFS wizard"
-            language="java"
-            message="Wizard use for HDFS"
-            name="hadoop-0.20.2-dev-core.jar" mvn_uri="mvn:org.talend.libraries/hadoop-0.20.2-dev-core/6.0.0" 
-            required="true"
-            uripath="platform:/plugin/org.talend.libraries.hadoop.mapr/lib/hadoop-0.20.2-dev-core.jar">
-      </libraryNeeded>     
             <libraryNeeded
             context="HDFS wizard"
             language="java"
