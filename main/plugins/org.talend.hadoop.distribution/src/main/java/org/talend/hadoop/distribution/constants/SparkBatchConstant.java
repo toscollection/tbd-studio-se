@@ -37,4 +37,6 @@ public final class SparkBatchConstant {
     public static final String PARQUET_OUTPUT_COMPONENT = "tFileOutputParquet"; //$NON-NLS-1$
 
     public static final String S3_CONFIGURATION_COMPONENT = "tS3Configuration"; //$NON-NLS-1$
+
+    public static final String USE_CLOUDERA_NAVIGATOR = "USE_CLOUDERA_NAVIGATOR";//$NON-NLS-1$
 }
