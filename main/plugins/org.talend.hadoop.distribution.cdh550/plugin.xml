@@ -763,7 +763,7 @@
                 description="Talend cloudera navigator API."
                 id="TALEND_CLOUDERA_CDH_5_5_NAVIGATOR"
                 name="TALEND_CLOUDERA_CDH_5_5_NAVIGATOR"  >
-             <library id="talend-cloudera-navigator-api-6.1.0-SNAPSHOT-20151126" />
+             <library id="talend-cloudera-navigator-api-6.1.0-SNAPSHOT-20151127" />
              <library id="navigator-sdk-client-1.0-BETA20151126" />
              <library id="navigator-sdk-model-1.0-BETA20151126" />
              <library id="spring-core-4.0.7.RELEASE"/>

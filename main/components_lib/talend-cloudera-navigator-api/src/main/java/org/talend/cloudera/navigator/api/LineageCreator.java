@@ -97,7 +97,8 @@ public class LineageCreator {
 
     /**
      * Instanciate a Navigator with the data retrieve from a graphical component. This function will be used for any
-     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets.
+     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets. This node
+     * must have a schema or it will not be added to the lineage.
      *
      * @param componentName The component name
      * @param schema An hashmap containing the union of any output column name and column type from the component.
@@ -106,7 +107,9 @@ public class LineageCreator {
      */
     public void addNodeToLineage(String componentName, Map<String, String> schema, List<String> inputNodes,
             List<String> outputNodes) {
-        this.inputNavigatorNodes.add(new NavigatorNode(componentName, schema, inputNodes, outputNodes));
+        if (schema.size() > 0) {
+            this.inputNavigatorNodes.add(new NavigatorNode(componentName, schema, inputNodes, outputNodes));
+        }
     }
 
     /**
