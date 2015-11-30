@@ -23,6 +23,7 @@ import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
+import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -86,6 +87,11 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public EHadoopVersion getHadoopVersion() {
         return EHadoopVersion.HADOOP_2;
+    }
+
+    @Override
+    public ESparkVersion getSparkVersion() {
+        return ESparkVersion.SPARK_1_4;
     }
 
     @Override
