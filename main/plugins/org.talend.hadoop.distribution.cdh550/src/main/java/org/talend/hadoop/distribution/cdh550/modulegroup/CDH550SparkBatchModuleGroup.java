@@ -34,6 +34,10 @@ public class CDH550SparkBatchModuleGroup {
         hs.add(new DistributionModuleGroup(CDH550Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
         hs.add(new DistributionModuleGroup(CDH550Constant.HDFS_MODULE_GROUP.getModuleName(), false, condition));
         hs.add(new DistributionModuleGroup(CDH550Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false, condition));
+        ComponentCondition conditionUseNavigator = new SimpleComponentCondition(new BasicExpression(
+                SparkBatchConstant.USE_CLOUDERA_NAVIGATOR, "true", EqualityOperator.EQ)); //$NON-NLS-1$
+        hs.add(new DistributionModuleGroup(CDH550Constant.TALEND_CLOUDERA_CDH_5_5_NAVIGATOR.getModuleName(), true,
+                conditionUseNavigator));
         return hs;
     }
 
