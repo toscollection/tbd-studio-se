@@ -45,7 +45,7 @@ public class HDP230SparkStreamingKafkaNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, false, condition);
+        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, true, condition);
         hs.add(dmg);
         return hs;
     }
