@@ -6,7 +6,6 @@ import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
 import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
@@ -48,11 +47,6 @@ public class CreateHiveAction extends CreateHadoopDBNodeAction {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
             EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
-            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-            if (EHadoopVersion4Drivers.APACHE_0_20_204.equals(version4Drivers)
-                    || EHadoopVersion4Drivers.APACHE_0_20_2.equals(version4Drivers)) {
-                return true;
-            }
             if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
                 return true;
             }
