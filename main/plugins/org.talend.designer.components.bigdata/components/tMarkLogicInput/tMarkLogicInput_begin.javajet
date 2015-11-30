@@ -88,6 +88,24 @@ imports="
      <%
     }
  %>
+ 
+ 	com.marklogic.client.document.DocumentManager docMgr_<%= cid %> = client_<%= cid %>.newDocumentManager();
+ 	
+<%
+	boolean inputMode = false;
+	List<? extends IConnection> incomingConns = node.getIncomingConnections();
+	if(incomingConns!=null) {
+		for(IConnection inputConnection : incomingConns) {
+			if(inputConnection!=null && inputConnection.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				inputMode = true;
+			}
+		}
+	}
+	
+	if(inputMode) {
+		return stringBuffer.toString();
+	}
+%>
 
  <%
  if(useQueryOption && isValidQueryOptionName){
@@ -147,7 +165,7 @@ imports="
  final long page_number_<%= cid %> = (long)Math.ceil(nb_line_<%= cid %> / (DEFAULT_PAGE_SIZE_<%= cid %> * 1.0));
  long start_<%= cid %> = 1;
  long retrieved_doc_number_<%= cid %> = 0;
- com.marklogic.client.document.DocumentManager docMgr_<%= cid %> = client_<%= cid %>.newDocumentManager();
- for(long i = 1; i < page_number_<%= cid %> + 1; i++){
+ 
+ for(long i = 1; i < page_number_<%= cid %> + 1; i++){//TagF2
  qryMgr_<%= cid %>.search(strQryDef_<%= cid %>, searchHdl_<%= cid %>, start_<%= cid %>);
  com.marklogic.client.query.MatchDocumentSummary[] matchDocSummary_<%= cid %> = searchHdl_<%= cid %>.getMatchResults();
