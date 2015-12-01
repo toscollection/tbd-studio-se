@@ -1705,7 +1705,7 @@
 
 			<IMPORT NAME="aws-java-sdk-1.8.6" MODULE="aws-java-sdk-1.8.6.jar"
 				MVN="mvn:org.talend.libraries/aws-java-sdk-1.8.6/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.apache.2.4.0/lib/aws-java-sdk-1.8.6.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/aws-java-sdk-1.8.6.jar"
 				REQUIRED_IF="(HIVE_VERSION=='APACHE_2_4_0_EMR') AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false') AND (CONNECTION_MODE=='EMBEDDED')" />
 			<IMPORT NAME="parquet-hive-bundle-current" MODULE="parquet-hive-bundle-current.jar"
 				MVN="mvn:org.talend.libraries/parquet-hive-bundle-current/6.0.0"

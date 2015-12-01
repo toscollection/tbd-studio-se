@@ -185,12 +185,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar" MVN="mvn:org.talend.libraries/jackson-core-asl-1.9.2/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar" MVN="mvn:org.talend.libraries/jackson-mapper-asl-1.9.2/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_1_2'" />
             <IMPORT
                 NAME="libthrift-0.7.0"
@@ -283,12 +283,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar" MVN="mvn:org.talend.libraries/jackson-core-asl-1.9.2/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar" MVN="mvn:org.talend.libraries/jackson-mapper-asl-1.9.2/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_1_2_2'" />
             <IMPORT
                 NAME="snakeyaml-1.6"
@@ -400,12 +400,12 @@
             <IMPORT
                 NAME="jackson-core-asl-1.9.2"
                 MODULE="jackson-core-asl-1.9.2.jar" MVN="mvn:org.talend.libraries/jackson-core-asl-1.9.2/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-core-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/jackson-core-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
             <IMPORT
                 NAME="jackson-mapper-asl-1.9.2"
                 MODULE="jackson-mapper-asl-1.9.2.jar" MVN="mvn:org.talend.libraries/jackson-mapper-asl-1.9.2/6.0.0" 
-                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jackson-mapper-asl-1.9.2.jar"
+                UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/jackson-mapper-asl-1.9.2.jar"
                 REQUIRED_IF="DB_VERSION == 'CASSANDRA_2_0_0'" />
             <IMPORT
                 NAME="super-csv-2.1.0"

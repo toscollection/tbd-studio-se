@@ -969,7 +969,7 @@
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="json-20080701.jar" MODULE="json-20080701.jar"
 				MVN="mvn:org.talend.libraries/json-20080701/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr.3.1.0/lib/json-20080701.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/json-20080701.jar"
 				REQUIRED_IF="(USE_JAVAAPI=='true' AND DB_VERSION=='MAPR310') AND (DISTRIBUTION!='CUSTOM')" />
 			<!-- -->
 
