@@ -9,4 +9,40 @@
             id="org.talend.designer.components.tishadoopprovider.TisHadoopComponentsProvider">
       </ComponentsProvider>
    </extension>
+   <extension
+         point="org.talend.core.runtime.librariesNeeded">
+      <libraryNeeded
+            context="org.talend.libraries.couchbase"
+            id="jettison-1.1.jar"
+            mvn_uri="mvn:org.talend.libraries/jettison-1.1/6.0.0"
+            name="jettison-1.1.jar"
+            uripath="platform:/plugin/org.talend.libraries.couchbase/lib/jettison-1.1.jar">
+      </libraryNeeded>
+      <libraryNeeded
+            context="plugin:"
+            id="logback-classic-1.1.2.jar"
+            mvn_uri="mvn:org.talend.libraries/logback-classic-1.1.2/6.1.0"
+            name="logback-classic-1.1.2.jar">
+      </libraryNeeded>
+      <libraryNeeded
+            context="plugin:"
+            id="logback-core-1.1.2.jar"
+            mvn_uri="mvn:org.talend.libraries/logback-core-1.1.2/6.1.0"
+            name="logback-core-1.1.2.jar">
+      </libraryNeeded>
+      <libraryNeeded
+            context="plugin:"
+            id="jersey-core-1.17.jar"
+            mvn_uri="mvn:org.talend.libraries/jersey-core-1.17/6.1.0"
+            name="jersey-core-1.17.jar"
+            required="true">
+      </libraryNeeded>
+      <libraryNeeded
+            context="plugin:"
+            id="jersey-core-1.8.jar"
+            mvn_uri="mvn:org.talend.libraries/jersey-core-1.8/6.0.0"
+            name="jersey-core-1.8.jar"
+            required="true">
+      </libraryNeeded>
+   </extension>
 </plugin>
