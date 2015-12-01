@@ -209,8 +209,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
             id="spark-assembly-cdh5.5.0"
-            name="spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0/6.1.0">
+            name="talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0.jar"
+            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0/6.1.0">
         </libraryNeeded>
         
         <libraryNeeded
@@ -434,9 +434,16 @@
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1.jar"
-            name="spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1/6.0.0">
+            id="spark-streaming-kafka-cdh5.5.0"
+            name="spark-streaming-kafka_2.10-1.5.0-cdh5.5.0.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-2.10-1.5.0-cdh5.5.0/6.0.0">
+        </libraryNeeded>
+                
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh550"
+            id="kafka_2.10-0.8.2.1.jar"
+            name="kafka_2.10-0.8.2.1.jar"
+            mvn_uri="mvn:org.talend.libraries/kafka_2.10-0.8.2.1/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
@@ -738,7 +745,9 @@
                 description="Spark Kafka assembly libraries for CDH 5.5 that are MRREQUIRED"
                 id="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-CDH_5_5"
                 name="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-CDH_5_5">
-            <library id="spark-streaming-kafka-assembly_2.10-1.5.0-cdh5.5.0-20150706.175854-1.jar"/>
+            <library id="spark-streaming-kafka-cdh5.5.0"/>
+            <library id="kafka_2.10-0.8.2.1.jar"/>
+            <library id="metrics-core-2.2.0.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Kafka Client group MRREQUIRED -->
