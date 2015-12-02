@@ -120,7 +120,7 @@ imports="
                             docMgr_<%= cid %>.write(docId_<%= cid %>, genericHandle_<%= cid %>);
                             nb_line_inserted_<%= cid %> ++;
                     <%
-                    }else if("UPDATE".equals(actionType)){
+                    }else if("PATCH".equals(actionType)){
                     %>
                         docId_<%= cid %> = <%= connName %>.docId;
                         docContent_<%= cid %> = <%= connName %>.docContent;

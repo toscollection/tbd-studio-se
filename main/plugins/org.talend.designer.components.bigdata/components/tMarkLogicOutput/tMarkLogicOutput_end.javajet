@@ -16,7 +16,7 @@ imports="
        globalMap.put("<%= cid %>_NB_LINE", nb_line_<%=cid%>);
        globalMap.put("<%= cid %>_NB_LINE_UPSERTED", nb_line_inserted_<%=cid%>);
        globalMap.put("<%= cid %>_NB_LINE_DELETED", nb_line_deleted_<%=cid%>);
-       globalMap.put("<%= cid %>_NB_LINE_UPDATED", nb_line_updated_<%=cid%>);
+       globalMap.put("<%= cid %>_NB_LINE_PATCHED", nb_line_updated_<%=cid%>);
        globalMap.put("<%= cid %>_NB_LINE_REJECTED", nb_line_rejected_<%=cid%>);
 
     <%

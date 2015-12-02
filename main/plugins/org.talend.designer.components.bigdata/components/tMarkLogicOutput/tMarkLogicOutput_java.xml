@@ -140,7 +140,7 @@
         >
             <ITEMS DEFAULT="INSERT">
                 <ITEM NAME="INSERT" VALUE="INSERT" />
-                <ITEM NAME="UPDATE" VALUE="UPDATE" />
+                <ITEM NAME="PATCH" VALUE="PATCH" />
                 <ITEM NAME="DELETE" VALUE="DELETE" />
             </ITEMS>
         </PARAMETER>
@@ -174,11 +174,11 @@
             NOT_SHOW_IF="ACTION_TYPE == 'DELETE'"
         >
             <ITEMS DEFAULT="GENERIC">
-                <ITEM NAME="GENERIC" VALUE="GENERIC" NOT_SHOW_IF="ACTION_TYPE == 'UPDATE'"/>
-                <ITEM NAME="TEXT" VALUE="TEXT" NOT_SHOW_IF="ACTION_TYPE == 'UPDATE'"/>
+                <ITEM NAME="GENERIC" VALUE="GENERIC" NOT_SHOW_IF="ACTION_TYPE == 'PATCH'"/>
+                <ITEM NAME="TEXT" VALUE="TEXT" NOT_SHOW_IF="ACTION_TYPE == 'PATCH'"/>
                 <ITEM NAME="JSON" VALUE="JSON" />
                 <ITEM NAME="XML" VALUE="XML" />
-                <ITEM NAME="BINARY" VALUE="BINARY" NOT_SHOW_IF="ACTION_TYPE == 'UPDATE'"/>
+                <ITEM NAME="BINARY" VALUE="BINARY" NOT_SHOW_IF="ACTION_TYPE == 'PATCH'"/>
             </ITEMS>
         </PARAMETER>
 
@@ -296,7 +296,7 @@
         <RETURN NAME="NB_LINE" TYPE="id_Integer" AVAILABILITY="AFTER"/>
         <RETURN NAME="NB_LINE_UPSERTED"  TYPE="id_Integer" AVAILABILITY="AFTER"/>
         <RETURN NAME="NB_LINE_DELETED"  TYPE="id_Integer" AVAILABILITY="AFTER"/>
-        <RETURN NAME="NB_LINE_UPDATED"  TYPE="id_Integer" AVAILABILITY="AFTER"/>
+        <RETURN NAME="NB_LINE_PATCHED"  TYPE="id_Integer" AVAILABILITY="AFTER"/>
         <RETURN NAME="NB_LINE_REJECTED" TYPE="id_Integer" AVAILABILITY="AFTER"/>
     </RETURNS>
 
