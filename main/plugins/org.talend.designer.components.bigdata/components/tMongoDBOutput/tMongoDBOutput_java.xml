@@ -245,7 +245,7 @@
             NAME="UPDATE_ALL"
             FIELD="CHECK"
             NUM_ROW="40"
-            SHOW_IF="(DATA_ACTION=='SET') OR (DATA_ACTION=='UPSERT_WITH_SET')">
+            SHOW_IF="((DATA_ACTION=='SET') OR (DATA_ACTION=='UPSERT_WITH_SET')) AND (IS_VIRTUAL_COMPONENT == 'false')">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER

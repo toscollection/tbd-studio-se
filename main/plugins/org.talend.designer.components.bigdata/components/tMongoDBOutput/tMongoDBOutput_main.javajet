@@ -178,15 +178,9 @@
                                 }
                                 <%
                             }else{
-                            	if(updateAll){
-                            		%>
-                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>), false, true);
-                                	<%
-                            	}else{
-									%>
-                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>), false, false);
-                                	<%
-                            	}
+                            	%>
+                                resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>), false, <%=updateAll%>);
+                                <%
                             }
                         // UPSERT
 						} else if("UPSERT".equalsIgnoreCase(dataAction)){
@@ -232,15 +226,9 @@
                                 }
                                 <%
                             }else{
-                            	if(updateAll){
-                            		%>
-                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>),true,true);
-                                	<%
-                            	}else{
-                            		%>
-                                	resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>),true,false);
-                                	<%
-                            	}
+                            	%>
+                                resultMessage_<%=cid%>=coll_<%=cid%>.update(queryObj_<%=cid%>,new com.mongodb.BasicDBObject("$set", updateObj_<%=cid%>),true,<%=updateAll%>);
+                                <%
                             }
                         // DELETE
                         } else if("DELETE".equalsIgnoreCase(dataAction)){
