@@ -74,7 +74,7 @@ public class CDH550DistributionTest {
         assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
         assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
         assertTrue(((HiveComponent) distribution).doSupportStoreAsParquet());
-        assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
+        assertTrue(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertFalse(((SparkBatchComponent) distribution).isSpark14());
         assertFalse(((SparkBatchComponent) distribution).isSpark13());
         assertTrue(((SparkBatchComponent) distribution).isSpark15());
