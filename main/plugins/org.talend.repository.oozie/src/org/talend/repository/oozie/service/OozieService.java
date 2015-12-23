@@ -48,6 +48,8 @@ public class OozieService implements IOozieService {
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH, hcConnection.getKeytab());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_AUTH_MODE, hcConnection.getAuthMode());
             oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_OOZIE_KERBEROS, oozieConnection.isEnableKerberos());
+            oozieParam.put(ITalendCorePrefConstants.OOZIE_SCHEDULER_RELATIVE_HADOOP_CLUSTER_ID,
+                    oozieConnection.getRelativeHadoopClusterId());
 
             return oozieParam;
         }
