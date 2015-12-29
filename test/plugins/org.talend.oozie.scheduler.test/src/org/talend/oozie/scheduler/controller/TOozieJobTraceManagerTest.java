@@ -14,6 +14,8 @@ package org.talend.oozie.scheduler.controller;
 
 import junit.framework.Assert;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -39,6 +41,13 @@ public class TOozieJobTraceManagerTest {
     @Test
     public void testGetInstance() {
 
+    }
+
+    @BeforeClass
+    @AfterClass
+    public static void cleanup() {
+        TOozieJobTraceManager traceManager = TOozieJobTraceManager.getInstance();
+        traceManager.clear();
     }
 
     /**

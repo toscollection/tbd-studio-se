@@ -46,4 +46,7 @@ public class TOozieJobTraceManager {
         traces.remove(jobId);
     }
 
+    void clear() {
+        traces.clear();
+    }
 }
