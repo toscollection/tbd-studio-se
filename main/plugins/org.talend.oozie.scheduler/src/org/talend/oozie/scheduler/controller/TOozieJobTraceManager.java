@@ -20,33 +20,33 @@ import java.util.Map;
  */
 public class TOozieJobTraceManager {
 
-    private Map<String, String> traces;
+	private Map<String, String> traces;
 
-    private static TOozieJobTraceManager instance;
+	private static TOozieJobTraceManager instance;
 
-    private TOozieJobTraceManager() {
-        traces = new HashMap<String, String>();
-    }
+	private TOozieJobTraceManager() {
+		traces = new HashMap<String, String>();
+	}
 
-    public static TOozieJobTraceManager getInstance() {
-        if (instance == null)
-            instance = new TOozieJobTraceManager();
-        return instance;
-    }
+	public static TOozieJobTraceManager getInstance() {
+		if (instance == null)
+			instance = new TOozieJobTraceManager();
+		return instance;
+	}
 
-    public void putTrace(String jobId, String trace) {
-        traces.put(jobId, trace);
-    }
+	public void putTrace(String jobId, String trace) {
+		traces.put(jobId, trace);
+	}
 
-    public String getTrace(String jobId) {
-        return traces.get(jobId);
-    }
+	public String getTrace(String jobId) {
+		return traces.get(jobId);
+	}
 
-    public void removeTrace(String jobId) {
-        traces.remove(jobId);
-    }
+	public void removeTrace(String jobId) {
+		traces.remove(jobId);
+	}
 
-    void clear() {
-        traces.clear();
-    }
+	void clear() {
+		traces.clear();
+	}
 }
