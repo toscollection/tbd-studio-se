@@ -67,6 +67,8 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnection> implements IHadoopClusterInfoForm {
 
     private Composite parentForm;
+    
+    private Composite hadoopPropertiesComposite;
 
     private LabelledCombo authenticationCombo;
 
@@ -217,6 +219,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         boolean isKeyTabEditable = keytabBtn.isEnabled() && keytabBtn.getSelection();
         keytabText.setEditable(isKeyTabEditable);
         keytabPrincipalText.setEditable(isKeyTabEditable);
+        hadoopPropertiesComposite.setEnabled(isEditable);
+        propertiesDialog.updateStatusLabel(getHadoopProperties());
     }
 
     @Override
@@ -312,15 +316,14 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private void addHadoopPropertiesFields() {
-        Composite hadoopPropertiesComposite = new Composite(this, SWT.NONE);
+        hadoopPropertiesComposite = new Composite(this, SWT.NONE);
         GridLayout hadoopPropertiesLayout = new GridLayout(1, false);
         hadoopPropertiesLayout.marginWidth = 0;
         hadoopPropertiesLayout.marginHeight = 0;
         hadoopPropertiesComposite.setLayout(hadoopPropertiesLayout);
         hadoopPropertiesComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        String hadoopProperties = getConnection().getHadoopProperties();
-        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        List<Map<String, Object>> hadoopPropertiesList = getHadoopProperties();
         propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
 
             @Override
@@ -330,6 +333,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
         };
         propertiesDialog.createPropertiesFields(hadoopPropertiesComposite);
+    }
+
+    private List<Map<String, Object>> getHadoopProperties() {
+        String hadoopProperties = getConnection().getHadoopProperties();
+        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        return hadoopPropertiesList;
     }
 
     private void addHadoopConfsFields() {
