@@ -500,6 +500,7 @@
              <library id="hadoop-yarn-server-web-proxy-cdh5.5.0"/>                          
              <library id="commons-io-2.4.jar"/>
              <library id="commons-codec-1.9.jar" />
+             <library id="commons-httpclient-3.0.1.jar"/>
              <library id="htrace-core-3.2.0-incubating.jar" />
              <library id="jackson-mapper-asl-1.8.8.jar" />
              <library id="jackson-core-asl-1.8.8.jar" />
