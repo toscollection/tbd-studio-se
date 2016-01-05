@@ -637,7 +637,7 @@
 				REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH5') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
 			<IMPORT NAME="netty-3.6.6.Final.jar" MODULE="netty-3.6.6.Final.jar"
 				MVN="mvn:org.talend.libraries/netty-3.6.6.Final/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/netty-3.6.6.Final.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/netty-3.6.6.Final.jar"
 				REQUIRED_IF="(HBASE_VERSION=='Cloudera_CDH5') AND (USE_EXISTING_CONNECTION == 'false') AND (DISTRIBUTION!='CUSTOM')" />
 
 			<!-- Cloudera_CDH5_1 -->
@@ -996,7 +996,7 @@
 				REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="netty-3.6.6.Final.jar" MODULE="netty-3.6.6.Final.jar"
 				MVN="mvn:org.talend.libraries/netty-3.6.6.Final/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/netty-3.6.6.Final.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/netty-3.6.6.Final.jar"
 				REQUIRED_IF="HBASE_VERSION=='PIVOTAL_HD_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<!-- HDP_2_0 -->
 			<IMPORT NAME="hbase-client-0.96.0.2.0.6.0-76-hadoop2.jar"
@@ -1076,7 +1076,7 @@
 				REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="netty-3.6.6.Final.jar" MODULE="netty-3.6.6.Final.jar"
 				MVN="mvn:org.talend.libraries/netty-3.6.6.Final/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/netty-3.6.6.Final.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/netty-3.6.6.Final.jar"
 				REQUIRED_IF="HBASE_VERSION=='HDP_2_0'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<!-- HDP_2_1 -->
 			<IMPORT NAME="hbase-client-0.98.0.2.1.1.0-385-hadoop2.jar"
@@ -1108,7 +1108,7 @@
 				REQUIRED_IF="HBASE_VERSION=='HDP_2_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="htrace-core-2.04.jar" MODULE="htrace-core-2.04.jar"
 				MVN="mvn:org.talend.libraries/htrace-core-2.04/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.1/lib/htrace-core-2.04.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/htrace-core-2.04.jar"
 				REQUIRED_IF="HBASE_VERSION=='HDP_2_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="commons-lang-2.6" MODULE="commons-lang-2.6.jar"
 				MVN="mvn:org.talend.libraries/commons-lang-2.6/6.0.0"
@@ -1160,7 +1160,7 @@
 				REQUIRED_IF="HBASE_VERSION=='HDP_2_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 			<IMPORT NAME="netty-3.6.6.Final.jar" MODULE="netty-3.6.6.Final.jar"
 				MVN="mvn:org.talend.libraries/netty-3.6.6.Final/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.0/lib/netty-3.6.6.Final.jar"
+				UrlPath="platform:/plugin/org.talend.libraries.hadoop.cloudera.cdh5.1/lib/netty-3.6.6.Final.jar"
 				REQUIRED_IF="HBASE_VERSION=='HDP_2_1'  AND (DISTRIBUTION!='CUSTOM') AND (USE_EXISTING_CONNECTION == 'false')" />
 
 			<!-- HDP_2_2 -->
