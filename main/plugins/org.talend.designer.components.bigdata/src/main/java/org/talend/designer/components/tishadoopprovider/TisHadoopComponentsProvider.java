@@ -20,21 +20,13 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.talend.core.model.components.AbstractComponentsProvider;
 
-/**
- * DOC mhirt class global comment. Detailled comment
- */
 public class TisHadoopComponentsProvider extends AbstractComponentsProvider {
 
     private static Logger logger = Logger.getLogger(TisHadoopComponentsProvider.class);
 
-    /**
-     * DOC mhirt TisMpComponentsProvider constructor comment.
-     */
-    public TisHadoopComponentsProvider() {
-    }
-
+    @Override
     protected File getExternalComponentsLocation() {
-        URL url = FileLocator.find(TisHadoopComponentProviderActivator.getDefault().getBundle(), new Path("components"), null); //$NON-NLS-1$
+        URL url = FileLocator.find(TisHadoopComponentProviderActivator.getDefault().getBundle(), new Path(getFolderName()), null);
         URL fileUrl;
         try {
             fileUrl = FileLocator.toFileURL(url);
@@ -45,14 +37,8 @@ public class TisHadoopComponentsProvider extends AbstractComponentsProvider {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.model.components.AbstractComponentsProvider#getFamilyTranslation(java.lang.String)
-     */
     @Override
     public String getFamilyTranslation(String text) {
-        // TODO to implement when TIS provider got translations
         return null;
     }
 }
