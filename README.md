@@ -27,7 +27,7 @@ All Talend Studio repositories follow the same file structure:
 
 ## Download
 
-You can download this product from the [Talend website](http://www.talend.com/download/big-data).
+You can download this product from the [Talend website](http://www.talend.com/download/talend-open-studio?qt-product_tos_download_new=0&utm_source=github&utm_campaign=tosbd).
 
 
 ## Usage and Documentation
