@@ -134,7 +134,6 @@ public class Neo4jRetrieveSchemaForm extends AbstractNoSQLRetrieveSchemaForm {
             public void modifyText(ModifyEvent e) {
                 checkFieldsValue();
                 addOrUpdateTable();
-                parentWizardPage.setPageComplete(true);
             }
 
         });
