@@ -5,7 +5,7 @@
          point="org.talend.core.components_provider">
       <ComponentsProvider
             class="org.talend.designer.components.tishadoopprovider.TisHadoopComponentsProvider"
-            folderName="tishadoop"
+            folderName="components"
             id="org.talend.designer.components.tishadoopprovider.TisHadoopComponentsProvider">
       </ComponentsProvider>
    </extension>
