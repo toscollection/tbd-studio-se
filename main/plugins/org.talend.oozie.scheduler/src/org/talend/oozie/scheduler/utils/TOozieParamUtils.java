@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -32,10 +32,13 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.core.model.components.EOozieParameterName;
+import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.oozie.scheduler.views.OozieJobTrackerListener;
 import org.talend.repository.model.IProxyRepositoryFactory;
 
@@ -46,19 +49,17 @@ public class TOozieParamUtils {
 
     private static boolean builtInForOozie;
 
-	public static void setBuiltInForOozie(boolean buildInForOozie) {
-		TOozieParamUtils.builtInForOozie = buildInForOozie;
-	}
+    public static void setBuiltInForOozie(boolean buildInForOozie) {
+        TOozieParamUtils.builtInForOozie = buildInForOozie;
+    }
 
-	/**
+    /**
      * DOC plv Comment method "getRepositoryOozieParam". Get oozie param from repository
      * 
      * @return OozieParam
      */
     public static Map<String, Object> getRepositoryOozieParam() {
-        IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName());
-        String id = (String) elementParameter.getValue();
+        String id = getOozieConnectionId();
         Connection repositoryConnection = getOozieConnectionById(id);
         if (repositoryConnection != null && GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopClusterService.class)) {
             IOozieService service = (IOozieService) GlobalServiceRegister.getDefault().getService(IOozieService.class);
@@ -66,6 +67,12 @@ public class TOozieParamUtils {
         } else {
             return new HashMap<String, Object>();
         }
+    }
+
+    private static String getOozieConnectionId() {
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName());
+        return (String) elementParameter.getValue();
     }
 
     public static Map<String, Object> getRepositoryOozieParam(String id) {
@@ -88,7 +95,7 @@ public class TOozieParamUtils {
         }
     }
 
-    public static Connection getOozieConnectionById(String id) {
+    private static Connection getConnectionById(String id) {
         Connection repositoryConnection = null;
         IProxyRepositoryFactory factory = ProxyRepositoryFactory.getInstance();
         Item item = null;
@@ -111,6 +118,10 @@ public class TOozieParamUtils {
         return repositoryConnection;
     }
 
+    public static Connection getOozieConnectionById(String id) {
+        return getConnectionById(id);
+    }
+
     public static boolean isFromRepository() {
         boolean isFromRepository = false;
         if (!GlobalServiceRegister.getDefault().isServiceRegistered(IOozieService.class)) {
@@ -118,8 +129,8 @@ public class TOozieParamUtils {
         }
         IProcess2 process = OozieJobTrackerListener.getProcess();
         if (process != null) {
-            IElementParameter oozieConnIdParameter = process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID
-                    .getName());
+            IElementParameter oozieConnIdParameter = process
+                    .getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName());
             if (oozieConnIdParameter != null) {
                 String oozieConnId = (String) oozieConnIdParameter.getValue();
                 if (StringUtils.isNotEmpty(oozieConnId)) {
@@ -149,11 +160,36 @@ public class TOozieParamUtils {
     }
 
     public static String getNameNode() {
+        return getNameNode(true);
+    }
+
+    public static String getNameNode(boolean keepContextValueIfNeeded) {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SHCEDULER_NAME_NODE_ENDPOINT);
         if (value instanceof String) {
-            return (String) value;
+            String nameNode = (String) value;
+            if (!keepContextValueIfNeeded) {
+                // namenode is stored in cluster connection
+                nameNode = getOriginalValueFromClusterConnection(nameNode);
+            }
+            return nameNode;
         }
         return "";
+    }
+
+    private static String getOriginalValueFromContextIfNeeded(String connectionId, String value) {
+        String originalValue = value;
+        if (connectionId != null) {
+            Connection clusterConn = getConnectionById(connectionId);
+            if (clusterConn != null) {
+                if (clusterConn.isContextMode()) {
+                    ContextType ct = ConnectionContextHelper.getContextTypeForContextMode(clusterConn);
+                    if (ct != null) {
+                        originalValue = ContextParameterUtils.getOriginalValue(ct, originalValue);
+                    }
+                }
+            }
+        }
+        return originalValue;
     }
 
     public static String getJobTracker() {
@@ -173,17 +209,38 @@ public class TOozieParamUtils {
     }
 
     public static String getUserNameForHadoop() {
+        return getUserNameForHadoop(true);
+    }
+
+    public static String getUserNameForHadoop(boolean keepContextValueIfNeeded) {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_USER_NAME);
         if (value instanceof String) {
-            return (String) value;
+            String userName = (String) value;
+
+            if (!keepContextValueIfNeeded) {
+                userName = getOriginalValueFromOozieConnection(userName);
+            }
+
+            return userName;
         }
         return "";
     }
 
     public static String getGroupForHadoop() {
+        return getGroupForHadoop(true);
+    }
+
+    public static String getGroupForHadoop(boolean keepContextValueIfNeeded) {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_GROUP);
         if (value instanceof String) {
-            return (String) value;
+            String group = (String) value;
+
+            if (!keepContextValueIfNeeded) {
+                // group is stored in cluster connection
+                group = getOriginalValueFromClusterConnection(group);
+            }
+
+            return group;
         }
         return "";
     }
@@ -229,9 +286,19 @@ public class TOozieParamUtils {
     }
 
     public static String getPrincipal() {
+        return getPrincipal(true);
+    }
+
+    public static String getPrincipal(boolean keepContextValueIfNeeded) {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_PRINCIPAL);
         if (value instanceof String) {
-            return (String) value;
+            String principal = (String) value;
+
+            if (!keepContextValueIfNeeded) {
+                principal = getOriginalValueFromClusterConnection(principal);
+            }
+
+            return principal;
         }
         return "";
     }
@@ -245,17 +312,37 @@ public class TOozieParamUtils {
     }
 
     public static String getKeytabPrincipal() {
+        return getKeytabPrincipal(true);
+    }
+
+    public static String getKeytabPrincipal(boolean keepContextValueIfNeeded) {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PRINCIPAL);
         if (value instanceof String) {
-            return (String) value;
+            String keytabPrincipal = (String) value;
+
+            if (!keepContextValueIfNeeded) {
+                keytabPrincipal = getOriginalValueFromClusterConnection(keytabPrincipal);
+            }
+
+            return keytabPrincipal;
         }
         return "";
     }
 
     public static String getKeytabPath() {
+        return getKeytabPath(true);
+    }
+
+    public static String getKeytabPath(boolean keepContextValueIfNeeded) {
         Object value = getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_HADOOP_KEYTAB_PATH);
         if (value instanceof String) {
-            return (String) value;
+            String keytabPath = (String) value;
+
+            if (!keepContextValueIfNeeded) {
+                keytabPath = getOriginalValueFromClusterConnection(keytabPath);
+            }
+
+            return keytabPath;
         }
         return "";
     }
@@ -264,14 +351,14 @@ public class TOozieParamUtils {
         HDFSConnectionBean connection = new HDFSConnectionBean();
         connection.setDistribution(getHadoopDistribution());
         connection.setDfVersion(getHadoopVersion());
-        connection.setNameNodeURI(getNameNode());
-        connection.setUserName(getUserNameForHadoop());
-        connection.setGroup(getGroupForHadoop());
+        connection.setNameNodeURI(getNameNode(false));
+        connection.setUserName(getUserNameForHadoop(false));
+        connection.setGroup(getGroupForHadoop(false));
         connection.setEnableKerberos(enableKerberos());
-        connection.setPrincipal(getPrincipal());
+        connection.setPrincipal(getPrincipal(false));
         connection.setUseKeytab(isUseKeytab());
-        connection.setKeytabPrincipal(getKeytabPrincipal());
-        connection.setKeytab(getKeytabPath());
+        connection.setKeytabPrincipal(getKeytabPrincipal(false));
+        connection.setKeytab(getKeytabPath(false));
         connection.setUseCustomVersion(EHadoopDistributions.CUSTOM.getName().equals(getHadoopDistribution()));
         connection.getAdditionalProperties().put(ECustomVersionGroup.COMMON.getName(), getHadoopCustomJars());
         IProcess2 process = OozieJobTrackerListener.getProcess();
@@ -282,15 +369,36 @@ public class TOozieParamUtils {
         return connection;
     }
 
-	public static String getPropertyType() {
-		IProcess2 process = OozieJobTrackerListener.getProcess();
-	    IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName());
-	    if(elementParameter!=null)	
-	    	return (String)elementParameter.getValue();
-	    return "";
-	}
-	//This method is getting whether it is from the built-in mode
-	public static boolean isBuiltInForOozie()	{
-		return builtInForOozie;
-	}
+    public static String getPropertyType() {
+        IProcess2 process = OozieJobTrackerListener.getProcess();
+        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName());
+        if (elementParameter != null) {
+            return (String) elementParameter.getValue();
+        }
+        return "";
+    }
+
+    // This method is getting whether it is from the built-in mode
+    public static boolean isBuiltInForOozie() {
+        return builtInForOozie;
+    }
+
+    private static String getOriginalValueFromClusterConnection(String value) {
+        String originalValue = value;
+        String clusterId = (String) getParamValue(ITalendCorePrefConstants.OOZIE_SCHEDULER_RELATIVE_HADOOP_CLUSTER_ID);
+        if (clusterId != null) {
+            // originalValue is stored in cluster connection
+            originalValue = getOriginalValueFromContextIfNeeded(clusterId, originalValue);
+        }
+        return originalValue;
+    }
+
+    private static String getOriginalValueFromOozieConnection(String value) {
+        String originalValue = value;
+        String oozieId = getOozieConnectionId();
+        if (oozieId != null) {
+            originalValue = getOriginalValueFromContextIfNeeded(oozieId, originalValue);
+        }
+        return originalValue;
+    }
 }

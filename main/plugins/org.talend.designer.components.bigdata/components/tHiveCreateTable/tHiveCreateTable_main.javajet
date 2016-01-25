@@ -98,6 +98,7 @@ imports="
     String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
     boolean setFsDefaultName = "true".equals(ElementParameterParser.getValue(node, "__SET_FS_DEFAULT_NAME__"));
     String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+    INode connectionInformationNode = node;
 
     if(useExistingConnection && !isExecutedThroughWebHCat) {
         distribution = "";
@@ -114,6 +115,7 @@ imports="
                 connectionMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
                 setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
                 fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
+                connectionInformationNode = pNode;
                 dbuser = ElementParameterParser.getValue(pNode, "__USER__");
                 break;
             }

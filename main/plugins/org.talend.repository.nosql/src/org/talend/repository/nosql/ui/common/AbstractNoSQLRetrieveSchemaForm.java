@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -399,6 +399,26 @@ public abstract class AbstractNoSQLRetrieveSchemaForm extends AbstractNoSQLForm 
             }
         });
 
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.talend.repository.nosql.ui.common.AbstractNoSQLForm#addUtilsButtonListeners()
+     */
+    @Override
+    protected void addUtilsButtonListeners() {
+        super.addUtilsButtonListeners();
+        if (schemaTree != null) {
+            schemaTree.addSelectionListener(new SelectionAdapter() {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    super.widgetSelected(e);
+                    parentWizardPage.setPageComplete(false);
+                }
+            });
+        }
     }
 
     private TreeItem getExistItem(MetadataTable table) {

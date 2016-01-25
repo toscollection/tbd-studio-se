@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -67,6 +67,8 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnection> implements IHadoopClusterInfoForm {
 
     private Composite parentForm;
+    
+    private Composite hadoopPropertiesComposite;
 
     private LabelledCombo authenticationCombo;
 
@@ -217,6 +219,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         boolean isKeyTabEditable = keytabBtn.isEnabled() && keytabBtn.getSelection();
         keytabText.setEditable(isKeyTabEditable);
         keytabPrincipalText.setEditable(isKeyTabEditable);
+        hadoopPropertiesComposite.setEnabled(isEditable);
+        propertiesDialog.updateStatusLabel(getHadoopProperties());
     }
 
     @Override
@@ -312,15 +316,14 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private void addHadoopPropertiesFields() {
-        Composite hadoopPropertiesComposite = new Composite(this, SWT.NONE);
+        hadoopPropertiesComposite = new Composite(this, SWT.NONE);
         GridLayout hadoopPropertiesLayout = new GridLayout(1, false);
         hadoopPropertiesLayout.marginWidth = 0;
         hadoopPropertiesLayout.marginHeight = 0;
         hadoopPropertiesComposite.setLayout(hadoopPropertiesLayout);
         hadoopPropertiesComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        String hadoopProperties = getConnection().getHadoopProperties();
-        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        List<Map<String, Object>> hadoopPropertiesList = getHadoopProperties();
         propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
 
             @Override
@@ -330,6 +333,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
         };
         propertiesDialog.createPropertiesFields(hadoopPropertiesComposite);
+    }
+
+    private List<Map<String, Object>> getHadoopProperties() {
+        String hadoopProperties = getConnection().getHadoopProperties();
+        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        return hadoopPropertiesList;
     }
 
     private void addHadoopConfsFields() {
@@ -620,10 +629,10 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             serviceTypeToProperties.put(EHadoopServiceType.JOBTRACKER, rmORjtProperties);
         }
         if (getConnection().isUseCustomVersion()) {
-            nnProperties.setUid(connectionItem.getProperty().getId());
+            nnProperties.setUid(connectionItem.getProperty().getId() + ":" + ECustomVersionGroup.COMMON.getName()); //$NON-NLS-1$
             nnProperties.setCustomJars(HCVersionUtil.getCustomVersionMap(getConnection()).get(
                     ECustomVersionGroup.COMMON.getName()));
-            rmORjtProperties.setUid(connectionItem.getProperty().getId());
+            rmORjtProperties.setUid(connectionItem.getProperty().getId() + ":" + ECustomVersionGroup.MAP_REDUCE.getName()); //$NON-NLS-1$
             rmORjtProperties.setCustomJars(HCVersionUtil.getCustomVersionMap(getConnection()).get(
                     ECustomVersionGroup.MAP_REDUCE.getName()));
         }

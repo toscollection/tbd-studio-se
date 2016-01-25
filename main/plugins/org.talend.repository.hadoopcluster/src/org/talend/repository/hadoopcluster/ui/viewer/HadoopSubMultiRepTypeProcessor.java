@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -17,6 +17,7 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jface.viewers.Viewer;
+import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.metadata.MetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.designerproperties.RepositoryToComponentProperty;
@@ -31,6 +32,7 @@ import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
 import org.talend.repository.model.RepositoryNode;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.ui.processor.MultiTypesProcessor;
 
 /**
@@ -43,6 +45,10 @@ import org.talend.repository.ui.processor.MultiTypesProcessor;
  * 
  */
 public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
+
+    private static final String ISSPARK = "ISSPARK"; //$NON-NLS-1$
+
+    private static final String USEYARN = "USEYARN"; //$NON-NLS-1$
 
     /**
      * DOC ycbai HadoopSubMultiRepTypeProcessor constructor comment.
@@ -90,7 +96,7 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
 
         if (HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(repObjType)
                 && ArrayUtils.contains(repositoryTypes, "HADOOPCLUSTER")) { //$NON-NLS-1$
-            return true;
+            return isValidAttributes(node);
         }
 
         if (node.getType() == ENodeType.SIMPLE_FOLDER || HCRepositoryUtil.isHadoopContainerNode(node)) {
@@ -109,6 +115,36 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
             return true;
         }
 
+        return true;
+    }
+
+    private boolean isValidAttributes(RepositoryNode node) {
+        if (node == null) {
+            return true;
+        }
+        if (attributesMap != null && !attributesMap.isEmpty()) {
+            HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(node.getId());
+            if (hcConnection != null) {
+                EHadoopVersion4Drivers hadoopVersion = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
+                if (hadoopVersion != null) {
+                    boolean validated = true;
+                    Object isSpark = attributesMap.get(ISSPARK);
+                    if (isSpark != null && Boolean.valueOf(isSpark.toString())) {
+                        validated = (validated && hadoopVersion.isSupportSpark());
+                        if (!validated) {
+                            return false;
+                        }
+                    }
+                    Object useYarn = attributesMap.get(USEYARN);
+                    if (useYarn != null && Boolean.valueOf(useYarn.toString())) {
+                        validated = (validated && hadoopVersion.isSupportYARN());
+                        if (!validated) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
         return true;
     }
 
@@ -141,9 +177,8 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * org.talend.repository.ui.processor.SingleTypeProcessor#isSelectionValid(org.talend.repository.model.RepositoryNode
-     * )
+     * @see org.talend.repository.ui.processor.SingleTypeProcessor#isSelectionValid(org.talend.repository.model.
+     * RepositoryNode )
      */
     @Override
     public boolean isSelectionValid(RepositoryNode node) {

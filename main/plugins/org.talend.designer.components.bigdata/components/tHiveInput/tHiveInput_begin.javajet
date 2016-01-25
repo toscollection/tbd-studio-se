@@ -523,6 +523,7 @@ imports="
 			String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
 			String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+			INode connectionInformationNode = node;
 
 			boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
 
@@ -540,6 +541,7 @@ imports="
 						setFsDefaultName = "true".equals(ElementParameterParser.getValue(pNode, "__SET_FS_DEFAULT_NAME__"));
 						fsDefaultName = ElementParameterParser.getValue(pNode, "__FS_DEFAULT_NAME__");
 						dbuser = ElementParameterParser.getValue(pNode, "__USER__");
+						connectionInformationNode = pNode;
 						distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
 						hiveVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
 						break;
