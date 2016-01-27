@@ -38,9 +38,14 @@ public interface SparkComponent extends MRComponent {
     public boolean isSpark14();
 
     /**
-     * @return true if the Spark version included in the distribution is 1.5 or more.
+     * @return true if the Spark version included in the distribution is 1.5.
      */
     public boolean isSpark15();
+
+    /**
+     * @return true if the Spark version included in the distribution is 1.6 or more.
+     */
+    public boolean isSpark16();
 
     /**
      * @return true if the distribution supports the Spark Standalone mode.

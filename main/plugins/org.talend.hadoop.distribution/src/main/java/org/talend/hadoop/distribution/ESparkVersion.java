@@ -18,5 +18,6 @@ package org.talend.hadoop.distribution;
 public enum ESparkVersion {
     SPARK_1_3,
     SPARK_1_4,
-    SPARK_1_5;
+    SPARK_1_5,
+    SPARK_1_6;
 }
