@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.talend.tos.bigdata.designer.feature.patch"
+      label="Patch"
+      version="6.1.1.qualifier"
+      license-feature="org.talend.tup.patch.feature"
+      license-feature-version="6.1.1.qualifier">
+
+   <license url="">
+      
+   </license>
+
+   <requires>
+      <import feature="org.talend.tos.bigdata.designer.feature" version="6.1.1.qualifier" patch="true"/>
+   </requires>
+
+   <plugin
+         id="org.talend.repository"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
