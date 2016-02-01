@@ -27,7 +27,11 @@ class CassandraOutputGenHelper{
 	    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 	        conn = conns.get(0);
 	    }
-		this.cqlManager = new CQLManager(node, columns);
+	    if (("SPARKSTREAMING".equals(node.getComponent().getType())) || ("SPARK".equals(node.getComponent().getType()))) {
+            this.cqlManager = new CQLManager(node, columns, true);
+	    } else { // MR or DI
+	        this.cqlManager = new CQLManager(node, columns);
+	    }
 	}
 	public String getCid(){
 		return cid;
