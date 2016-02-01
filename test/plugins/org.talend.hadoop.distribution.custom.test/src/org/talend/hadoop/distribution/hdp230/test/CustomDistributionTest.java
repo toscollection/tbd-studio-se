@@ -85,6 +85,7 @@ public class CustomDistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertTrue(distribution instanceof HCatalogComponent);

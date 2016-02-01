@@ -235,4 +235,9 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportSparkYarnClientMode() {
         return true;
     }
+
+    @Override
+    public boolean doSupportBackpressure() {
+        return false;
+    }
 }

@@ -84,6 +84,7 @@ public class HDP230DistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).isSpark14());
         assertFalse(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
+        assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertTrue(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
     }

@@ -238,4 +238,9 @@ public class CDH510MR2Distribution extends AbstractDistribution implements HDFSC
         return true;
     }
 
+    @Override
+    public boolean doSupportBackpressure() {
+        return false;
+    }
+
 }
