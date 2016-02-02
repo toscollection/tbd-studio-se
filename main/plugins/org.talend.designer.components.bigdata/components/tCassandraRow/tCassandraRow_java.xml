@@ -51,17 +51,12 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="3"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-            <ITEMS DEFAULT="CASSANDRA_3_0_0">
-                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2" />
-                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2" />
-                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0" />
-                <ITEM NAME="CASSANDRA_3_0_0" VALUE="CASSANDRA_3_0_0" />
+            <ITEMS DEFAULT="CASSANDRA_2_0_0">
+                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
+                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
             </ITEMS>
         </PARAMETER>
-        <!-- API_TYPE only for Cassandra_2_0_0, the version before 2.0 should use 
-            Hector API only, the version after 2.0 should use Datastax API only -->
-        <!-- There is a migration task for API_TYPE, old version will have HECTOR 
-            value as default not DATASTAX -->
         <PARAMETER
             NAME="API_TYPE"
             FIELD="CLOSED_LIST"
@@ -91,11 +86,9 @@
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
-            <DEFAULT
-                IF="((USE_EXISTING_CONNECTION == 'false') AND (API_TYPE == 'HECTOR')) OR ((USE_EXISTING_CONNECTION == 'true') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))">"9160"</DEFAULT>
-            <DEFAULT
-                IF="((USE_EXISTING_CONNECTION == 'false') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX'))">"9042"</DEFAULT>
-        </PARAMETER>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">"9160"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">"9042"</DEFAULT>
+		</PARAMETER>
 		<PARAMETER
 			NAME="REQUIRED_AUTHENTICATION"
 			FIELD="CHECK"
@@ -167,7 +160,7 @@
 	<CODEGENERATION>
 		<IMPORTS>
             <IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
-                <IMPORTS REQUIRED_IF="(API_TYPE == 'HECTOR')">
+                <IMPORTS REQUIRED_IF="((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))">
                     <!-- Cassandra 1.1.2 -->
                     <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_1_1_2')">
                         <IMPORT
@@ -295,70 +288,43 @@
                         MODULE="jackson-mapper-asl-1.9.7.jar" MVN="mvn:org.talend.libraries/jackson-mapper-asl-1.9.7/6.0.0" 
                         UrlPath="platform:/plugin/org.talend.designer.components.bigdata/components/tNeo4jConnection/jackson-mapper-asl-1.9.7.jar"/>
                 </IMPORTS>
-                <IMPORTS REQUIRED_IF="(API_TYPE == 'DATASTAX')">
+                <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))">
                     <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
-                        <IMPORT
-	                        MODULE="cassandra-driver-core-2.1.5.jar" MVN="mvn:org.talend.libraries/cassandra-driver-core-2.1.5/6.0.0" 
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-2.1.5.jar"
-	                        NAME="cassandra-driver-core-2.1.5.jar"/>
-	                    <IMPORT
-	                        MODULE="slf4j-api-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.7.5/6.0.0" 
-	                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"
-	                        NAME="slf4j-api-1.7.5.jar"/>    
-	                    <IMPORT
-	                        MODULE="guava-14.0.1.jar" MVN="mvn:org.talend.libraries/guava-14.0.1/6.0.0" 
-	                        UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-14.0.1.jar"
-	                        NAME="guava-14.0.1.jar"/>
-	                    <IMPORT
-	                        MODULE="metrics-core-3.0.2.jar" MVN="mvn:org.talend.libraries/metrics-core-3.0.2/6.0.0" 
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.0.2.jar"
-	                        NAME="metrics-core-3.0.2.jar"/>
-	                    <IMPORT
-	                        MODULE="netty-3.9.0.Final.jar" MVN="mvn:org.talend.libraries/netty-3.9.0.Final/6.0.0" 
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-3.9.0.Final.jar"
-	                        NAME="netty-3.9.0.Final.jar"/> 
-                        <IMPORT 
-                            NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" 
-                            MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0"  
-                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>      	                        
-                    </IMPORTS>
-                    <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0_0')">
-                        <IMPORT MODULE="guava-16.0.1.jar"
-                            MVN="mvn:org.talend.libraries/guava-16.0.1/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-16.0.1.jar"
-                            NAME="guava-16.0.1.jar" />
-                        <IMPORT MODULE="slf4j-api-1.7.7.jar"
-                            MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
-                            NAME="slf4j-api-1.7.7.jar" />
-                        <IMPORT MODULE="cassandra-driver-core-3.0.0.jar"
-                            MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0.jar"
-                            NAME="cassandra-driver-core-3.0.0.jar" />
-                        <IMPORT MODULE="metrics-core-3.1.2.jar"
-                            MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
-                            NAME="metrics-core-3.1.2.jar" />
-                        <IMPORT MODULE="netty-buffer-4.0.33.Final.jar"
-                            MVN="mvn:org.talend.libraries/netty-buffer-4.0.33.Final/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-buffer-4.0.33.Final.jar"
-                            NAME="netty-buffer-4.0.33.Final.jar" />
-                        <IMPORT MODULE="netty-codec-4.0.33.Final.jar"
-                            MVN="mvn:org.talend.libraries/netty-codec-4.0.33.Final/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-codec-4.0.33.Final.jar"
-                            NAME="netty-codec-4.0.33.Final.jar" />
-                        <IMPORT MODULE="netty-handler-4.0.33.Final.jar"
-                            MVN="mvn:org.talend.libraries/netty-handler-4.0.33.Final/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-handler-4.0.33.Final.jar"
-                            NAME="netty-handler-4.0.33.Final.jar" />
-                        <IMPORT MODULE="netty-transport-4.0.33.Final.jar"
-                            MVN="mvn:org.talend.libraries/netty-transport-4.0.33.Final/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-transport-4.0.33.Final.jar"
-                            NAME="netty-transport-4.0.33.Final.jar" />
-                        <IMPORT MODULE="netty-common-4.0.33.Final.jar"
+                        <IMPORT MODULE="guava-16.0.1.jar" MVN="mvn:org.talend.libraries/guava-16.0.1/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-16.0.1.jar"
+	                        NAME="guava-16.0.1.jar" />
+	                    <IMPORT MODULE="slf4j-api-1.7.7.jar"
+	                        MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
+	                        NAME="slf4j-api-1.7.7.jar" />
+	                    <IMPORT MODULE="cassandra-driver-core-3.0.0.jar"
+	                        MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0.jar"
+	                        NAME="cassandra-driver-core-3.0.0.jar" />
+	                    <IMPORT MODULE="metrics-core-3.1.2.jar"
+	                        MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
+	                        NAME="metrics-core-3.1.2.jar" />
+	                    <IMPORT MODULE="netty-buffer-4.0.33.Final.jar"
+	                        MVN="mvn:org.talend.libraries/netty-buffer-4.0.33.Final/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-buffer-4.0.33.Final.jar"
+	                        NAME="netty-buffer-4.0.33.Final.jar" />
+	                    <IMPORT MODULE="netty-codec-4.0.33.Final.jar"
+	                        MVN="mvn:org.talend.libraries/netty-codec-4.0.33.Final/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-codec-4.0.33.Final.jar"
+	                        NAME="netty-codec-4.0.33.Final.jar" />
+	                    <IMPORT MODULE="netty-handler-4.0.33.Final.jar"
+	                        MVN="mvn:org.talend.libraries/netty-handler-4.0.33.Final/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-handler-4.0.33.Final.jar"
+	                        NAME="netty-handler-4.0.33.Final.jar" />
+	                    <IMPORT MODULE="netty-transport-4.0.33.Final.jar"
+	                        MVN="mvn:org.talend.libraries/netty-transport-4.0.33.Final/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-transport-4.0.33.Final.jar"
+	                        NAME="netty-transport-4.0.33.Final.jar" />
+	                    <IMPORT MODULE="netty-common-4.0.33.Final.jar"
 	                        MVN="mvn:org.talend.libraries/netty-common-4.0.33.Final/6.0.0"
 	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-common-4.0.33.Final.jar"
-	                        NAME="netty-common-4.0.33.Final.jar" />
+	                        NAME="netty-common-4.0.33.Final.jar" /> 	                        
                     </IMPORTS>
                 </IMPORTS>
             </IMPORTS>

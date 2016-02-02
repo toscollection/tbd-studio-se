@@ -33,7 +33,6 @@
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/tCassandraConnection_datastax_connect.javajet"%>
 	<%
 	}
-	String dbVersion = ElementParameterParser.getValue(ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__") ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node, "__DB_VERSION__");
 	String query = ElementParameterParser.getValue(node, "__QUERY__").replaceAll("[\r\n]", " ");	
 	%>
 	com.datastax.driver.core.ResultSet rs_<%=cid%> = connection_<%=cid%>.execute(<%=query%>);
@@ -68,37 +67,18 @@
     				<%=connName%>.<%=columnName%> = row_<%=cid%>.getInet("<%=dbColumnName%>");
     			<%
     			}else if("map".equals(dbType)){
-    				if("CASSANDRA_2_0_0".equals(dbVersion)){ 
-    				%>
-    					<%=connName%>.<%=columnName%> = row_<%=cid%>.getMap("<%=dbColumnName%>", Object.class, Object.class);
-    				<%
-    				}else{
-    				//getObject is workaround, see https://datastax-oss.atlassian.net/browse/JAVA-887
-    				%>
-    					<%=connName%>.<%=columnName%> = row_<%=cid%>.getObject("<%=dbColumnName%>");
-    				<%
-    				}
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getObject("<%=dbColumnName%>");
+    			<%
     			}else if("set".equals(dbType)){
-    				if("CASSANDRA_2_0_0".equals(dbVersion)){
-    				%>
-    					<%=connName%>.<%=columnName%> = row_<%=cid%>.getSet("<%=dbColumnName%>", Object.class);
-    				<%
-    				}else{
-    				%>
-    					<%=connName%>.<%=columnName%> = row_<%=cid%>.getObject("<%=dbColumnName%>");
-    				<%
-    				}
+    			%>
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getObject("<%=dbColumnName%>");
+    			<%
     			}
     		}else if(javaType == JavaTypesManager.LIST){
-    			if("CASSANDRA_2_0_0".equals(dbVersion)){
-        		%>
-        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getList("<%=dbColumnName%>", Object.class);
-        		<%
-        		}else{
-        		%>
-        			<%=connName%>.<%=columnName%> = (java.util.List)row_<%=cid%>.getObject("<%=dbColumnName%>");	
-	        	<%
-	        	}
+        	%>
+        		<%=connName%>.<%=columnName%> = (java.util.List)row_<%=cid%>.getObject("<%=dbColumnName%>");	
+        	<%
         	}else if(javaType == JavaTypesManager.BOOLEAN){
         	%>
         		<%=connName%>.<%=columnName%> = row_<%=cid%>.getBool("<%=dbColumnName%>");	
@@ -111,15 +91,9 @@
         		<%=connName%>.<%=columnName%> = bytes_<%=columnName%>_<%=cid%>;	
         	<%	
     		}else if(javaType == JavaTypesManager.DATE){
-    			if("CASSANDRA_2_0_0".equals(dbVersion)){
-        		%>
-        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getDate("<%=dbColumnName%>");	
-        		<%
-        		}else{
-        		%>
-        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getTimestamp("<%=dbColumnName%>");
-        		<%
-        		}
+        	%>
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getTimestamp("<%=dbColumnName%>");	
+        	<%
     		}else if(javaType == JavaTypesManager.BIGDECIMAL){
         	%> 
         		<%=connName%>.<%=columnName%> = row_<%=cid%>.getDecimal("<%=dbColumnName%>");	
