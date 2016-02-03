@@ -229,4 +229,9 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportSparkYarnClientMode() {
         return true;
     }
+
+    @Override
+    public boolean doSupportBackpressure() {
+        return false;
+    }
 }

@@ -85,6 +85,7 @@ public class EMR400DistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
         assertFalse(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
+        assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertFalse(distribution instanceof HCatalogComponent);

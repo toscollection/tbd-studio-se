@@ -259,4 +259,9 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         return true;
     }
 
+    @Override
+    public boolean doSupportBackpressure() {
+        return false;
+    }
+
 }

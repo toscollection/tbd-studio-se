@@ -25,4 +25,11 @@ public interface SparkStreamingComponent extends SparkComponent {
      */
     public boolean doSupportCheckpointing();
 
+    /**
+     * This method defines if a distribution supports the backpressure feature in Spark Streaming
+     * 
+     * @return true if the distribution supports the backpressure feature
+     */
+    public boolean doSupportBackpressure();
+
 }

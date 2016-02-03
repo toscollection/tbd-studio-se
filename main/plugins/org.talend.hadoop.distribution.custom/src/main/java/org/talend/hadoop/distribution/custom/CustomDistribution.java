@@ -218,4 +218,11 @@ public class CustomDistribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportSparkYarnClientMode() {
         return true;
     }
+
+    @Override
+    public boolean doSupportBackpressure() {
+        // If the custom distribution actually does not support backpressure (Spark version prior to 1.5.0), it won't do
+        // any harm.
+        return true;
+    }
 }

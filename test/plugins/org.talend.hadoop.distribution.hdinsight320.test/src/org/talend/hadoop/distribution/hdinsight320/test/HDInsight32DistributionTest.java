@@ -87,6 +87,7 @@ public class HDInsight32DistributionTest {
         assertFalse(((SparkStreamingComponent) distribution).doSupportCheckpointing());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertFalse(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
+        assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertFalse(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
     }

@@ -90,6 +90,7 @@ public class CDH540DistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
+        assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
 
         assertTrue(distribution instanceof HCatalogComponent);
         assertTrue(distribution instanceof ImpalaComponent);
