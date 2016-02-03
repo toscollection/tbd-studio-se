@@ -37,6 +37,7 @@
                 <ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
                 <ITEM NAME="MONGODB_2_6_X" VALUE="MONGODB_2_6_X"/>
                 <ITEM NAME="MONGODB_3_0_X" VALUE="MONGODB_3_0_X"/>
+                <ITEM NAME="MONGODB_3_2_X" VALUE="MONGODB_3_2_X"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER FIELD="CHECK" NAME="USE_REPLICA_SET" REPOSITORY_VALUE="USE_REPLICA_SET" NUM_ROW="3" GROUP="CONNECTION">
@@ -72,7 +73,7 @@
             <ITEMS DEFAULT="NEGOTIATE_MEC">
                 <ITEM NAME="NEGOTIATE_MEC" VALUE="NEGOTIATE_MEC"  SHOW_IF="(DB_VERSION!='INVALID'"/>
                 <ITEM NAME="PLAIN_MEC" VALUE="PLAIN_MEC" SHOW_IF="(DB_VERSION!='MONGODB_2_5_X')"/>
-                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC" SHOW_IF="(DB_VERSION=='MONGODB_3_0_X')" />
+                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC" SHOW_IF="(DB_VERSION=='MONGODB_3_0_X') OR (DB_VERSION=='MONGODB_3_2_X')" />
                 <ITEM NAME="KERBEROS_MEC" VALUE="KERBEROS_MEC" SHOW_IF="(DB_VERSION!='INVALID')"/>
             </ITEMS>
         </PARAMETER>
@@ -106,11 +107,15 @@
     <ADVANCED_PARAMETERS />
     <CODEGENERATION>
         <IMPORTS>
-            <IMPORT MODULE="mongo-java-driver-2.11.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.11.2/6.0.0"  NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_5_X')" />
-            <!-- mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6 -->
+            <!-- <IMPORT MODULE="mongo-java-driver-2.11.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.11.2/6.0.0"  NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_5_X')" />
+
+            mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6
+
             <IMPORT MODULE="mongo-java-driver-2.12.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.12.2/6.0.0"  NAME="mongo-2.12.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.12.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_6_X')" />
 
-            <IMPORT MODULE="mongo-java-driver-2.13.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.13.2/6.0.0"  NAME="mongo-2.13.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.13.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_3_0_X')" />
+            <IMPORT MODULE="mongo-java-driver-2.13.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.13.2/6.0.0"  NAME="mongo-2.13.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.13.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_3_0_X')" /> -->
+
+            <IMPORT MODULE="mongo-java-driver-3.2.1.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-3.2.1.jar/6.0.0"  NAME="mongo-3.2.1" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-3.2.1.jar" REQUIRED_IF="true" />
 
         </IMPORTS>
     </CODEGENERATION>
