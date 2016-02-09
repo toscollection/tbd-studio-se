@@ -58,7 +58,6 @@
     }
     
 	class CQLManager{
-		private boolean oldVersion = false;//oldVersion is 2.x 
 		private String CASSANDRA = "cassandra_datastax_id";
         
         private String[] KeyWords = {"ADD","ALL","ALLOW","ALTER","AND","ANY","APPLY","AS","ASC","ASCII","AUTHORIZE","BATCH","BEGIN","BIGINT","BLOB","BOOLEAN","BY","CLUSTERING","COLUMNFAMILY","COMPACT","CONSISTENCY","COUNT","COUNTER","CREATE","CUSTOM","DECIMAL","DELETE","DESC","DISTINCT","DOUBLE","DROP","EACH_QUORUM","EXISTS","FILTERING","FLOAT","FROM","frozen","GRANT","IF","IN","INDEX","INET","INFINITY","INSERT","INT","INTO","KEY","KEYSPACE","KEYSPACES","LEVEL","LIMIT","LIST","LOCAL_ONE","LOCAL_QUORUM","MAP","MODIFY","NAN","NORECURSIVE","NOSUPERUSER","NOT","OF","ON","ONE","ORDER","PASSWORD","PERMISSION","PERMISSIONS","PRIMARY","QUORUM","RENAME","REVOKE","SCHEMA","SELECT","SET","STATIC","STORAGE","SUPERUSER","TABLE","TEXT","TIMESTAMP","TIMEUUID","THREE","TO","TOKEN","TRUNCATE","TTL","TWO","TYPE","UNLOGGED","UPDATE","USE","USER","USERS","USING","UUID","VALUES","VARCHAR","VARINT","WHERE","WITH","WRITETIME"};
@@ -77,8 +76,6 @@
             this.tableName = this.keyspace + " + \".\" + " + "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__COLUMN_FAMILY__") + ")";
             createColumnList(columnList);
             this.valueColumns = collectValueColumns();
-            String dbVersion = ElementParameterParser.getValue(ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__") ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node, "__DB_VERSION__");
-            oldVersion = "CASSANDRA_2_0_0".equals(dbVersion);
         }
         
         public CQLManager(INode node, List<IMetadataColumn> columnList, boolean useSpark){
@@ -605,11 +602,7 @@
                     setStmt.append(assignStmt +".setBytes(" + index + ", java.nio.ByteBuffer.wrap(" + columnValue + "));\r\n");
                 }
             }else if("timestamp".equals(dbType)){
-            	if(oldVersion){
-                	setStmt.append(assignStmt +".setDate(" + index + ", " + columnValue + ");\r\n");
-                }else{
-                	setStmt.append(assignStmt +".setTimestamp(" + index + ", " + columnValue + ");\r\n");
-                }
+                setStmt.append(assignStmt +".setTimestamp(" + index + ", " + columnValue + ");\r\n");
             }else if("decimal".equals(dbType)){
                 setStmt.append(assignStmt +".setDecimal(" + index + ", " + columnValue + ");\r\n");
             }else if("double".equals(dbType)){
