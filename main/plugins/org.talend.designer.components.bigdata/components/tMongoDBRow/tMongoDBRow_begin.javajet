@@ -140,5 +140,5 @@
 	<%
 	}
 	%>
-	com.mongodb.CommandResult  result_<%=cid%>=null;
+	com.mongodb.CommandResult result_<%=cid%>=null;
 		
