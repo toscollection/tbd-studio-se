@@ -55,7 +55,7 @@
             NUM_ROW="3"
             SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
             GROUP="CONNECTION">
-            <ITEMS DEFAULT="MONGODB_3_0_X">
+            <ITEMS DEFAULT="MONGODB_3_2_X">
                 <ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
                 <ITEM NAME="MONGODB_2_6_X" VALUE="MONGODB_2_6_X"/>
                 <ITEM NAME="MONGODB_3_0_X" VALUE="MONGODB_3_0_X"/>
@@ -211,9 +211,18 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+
+        <PARAMETER NAME="QUERY_TYPE" REPOSITORY_VALUE="QUERY_TYPE" FIELD="CLOSED_LIST" NUM_ROW="39" GROUP="QUERY_SPECS">
+            <ITEMS DEFAULT="FIND_QUERY">
+                <ITEM NAME="FIND_QUERY" VALUE="FIND_QUERY"/>
+                <ITEM NAME="AGGREGATION_QUERY" VALUE="AGGREGATION_QUERY"/>
+            </ITEMS>
+        </PARAMETER>
+
         <PARAMETER NAME="NOTE_ISOLATION" FIELD="LABEL"
-            NUM_ROW="40">
-            <DEFAULT>If you are running on a Sharded Cluster, please, be sure to use to include shard key on the query.</DEFAULT>
+            NUM_ROW="40" GROUP="QUERY_SPECS">
+            <DEFAULT>Note : Surround String values in your query with single quotes
+Note : If you are running on a Sharded Cluster, please make sure to include the shard key in the query.</DEFAULT>
         </PARAMETER>
 
         <PARAMETER
@@ -222,26 +231,44 @@
             REQUIRED="true"
             NUM_ROW="41"
             NB_LINES="5"
-        >
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'">
             <DEFAULT>"{}"</DEFAULT>
         </PARAMETER>
+
+        <PARAMETER
+            NAME="AGGREGATION_STAGES"
+            FIELD="TABLE"
+            REQUIRED="false"
+            NUM_ROW="45"
+            NB_LINES="5"
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='AGGREGATION_QUERY'">
+            <ITEMS>
+                <ITEM NAME="AGGREGATION_STAGE" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
         <PARAMETER
             NAME="MAPPING"
             FIELD="TABLE"
             REQUIRED="true"
-            NUM_ROW="45"
-            NB_LINES="5" >
+            NUM_ROW="48"
+            NB_LINES="5"
+            GROUP="QUERY_SPECS" >
             <ITEMS BASED_ON_SCHEMA="true">
                 <ITEM NAME="PARENT_NODE_PATH" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
+
         <PARAMETER
             NAME="SORT"
             FIELD="TABLE"
             REQUIRED="false"
             NUM_ROW="50"
             NB_LINES="5"
-        >
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'">
             <ITEMS>
                 <ITEM NAME="COLNAME" FIELD="TEXT" VALUE=""/>
                 <ITEM NAME="ORDER" FIELD="CLOSED_LIST">
@@ -252,10 +279,13 @@
                 </ITEM>
             </ITEMS>
         </PARAMETER>
+
         <PARAMETER
             FIELD="TEXT"
             NAME="LIMIT"
             NUM_ROW="55"
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
         />
     </PARAMETERS>
 
@@ -271,7 +301,8 @@
 
             <IMPORT MODULE="mongo-java-driver-2.13.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.13.2/6.0.0"  NAME="mongo-2.13.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.13.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_3_0_X')" /> -->
 
-            <IMPORT MODULE="mongo-java-driver-3.2.1.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-3.2.1.jar/6.0.0"  NAME="mongo-3.2.1" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-3.2.1.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
+            <IMPORT MODULE="mongo-java-driver-2.14.1.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.14.1/6.0.0"  NAME="mongo-java-driver-2.14.1" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.14.1.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
+            
         </IMPORTS>
     </CODEGENERATION>
     <RETURNS>
