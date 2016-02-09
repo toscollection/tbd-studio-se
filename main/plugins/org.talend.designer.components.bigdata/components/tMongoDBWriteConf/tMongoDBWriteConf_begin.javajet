@@ -41,7 +41,7 @@
     boolean setBulkWrite = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_BULK_WRITE__"));
     String bulkWriteOperationSize = ElementParameterParser.getValue(node, "__BULK_WRITE_SIZE__");
     String bulkWriteType = ElementParameterParser.getValue(node, "__BULK_WRITE_TYPE__");
-    // BulkWrite is only supportted on Mongo 2.6+ drivers
+    // BulkWrite is only supportted on Mongo 2.6+
     final boolean bulkWrite = setBulkWrite & (!"MONGODB_2_5_X".equalsIgnoreCase(dbversion));
 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
