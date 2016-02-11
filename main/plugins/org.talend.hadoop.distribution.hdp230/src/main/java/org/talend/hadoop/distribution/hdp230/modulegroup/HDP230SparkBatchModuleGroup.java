@@ -27,7 +27,7 @@ public class HDP230SparkBatchModuleGroup {
     private static final String MODULE_GROUP_NAME = "SPARK-LIB-HDP_2_3"; //$NON-NLS-1$
 
     private static final ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, "false", EqualityOperator.EQ)); //$NON-NLS-1$
+            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();

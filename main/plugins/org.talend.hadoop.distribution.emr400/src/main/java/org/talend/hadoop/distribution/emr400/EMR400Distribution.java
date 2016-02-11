@@ -55,9 +55,10 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
 
     static {
         ComponentCondition c1 = new NestedComponentCondition(new MultiComponentCondition(new SimpleComponentCondition(
-                new BasicExpression(Constant.PIG_STORE_PARAMETER, Constant.PIG_HCATSTORER_PARAMETER, EqualityOperator.NOT_EQ)),
-                new SimpleComponentCondition(new BasicExpression(Constant.PIG_STORE_PARAMETER,
-                        Constant.PIG_HBASESTORAGE_PARAMETER, EqualityOperator.NOT_EQ)), BooleanOperator.AND));
+                new BasicExpression(Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)), //
+                BooleanOperator.AND, //
+                new SimpleComponentCondition(new BasicExpression(Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ,
+                        Constant.PIG_HBASESTORAGE_PARAMETER))));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
         customVersionDisplayNames.put(ComponentType.PIG, Constant.PIG_EMR400_DISPLAY);

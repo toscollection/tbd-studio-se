@@ -44,7 +44,7 @@ public class ComponentConditionUtil {
                 }
                 ComponentCondition wrappedCondition = new NestedComponentCondition(cc);
                 if (previous != null) {
-                    wrappedCondition = new MultiComponentCondition(previous, wrappedCondition, BooleanOperator.OR);
+                    wrappedCondition = new MultiComponentCondition(previous, BooleanOperator.OR, wrappedCondition);
                 }
                 previous = wrappedCondition;
             }
