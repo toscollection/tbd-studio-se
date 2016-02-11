@@ -20,7 +20,6 @@ import org.talend.hadoop.distribution.cdh550.CDH550Constant;
 import org.talend.hadoop.distribution.condition.BasicExpression;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
-import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.ShowExpression;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
@@ -36,9 +35,10 @@ public class CDH550HiveModuleGroup {
 
         // The following condition instance stands for:
         // (isShow[STORE_BY_HBASE] AND STORE_BY_HBASE=='true')
-        ComponentCondition hbaseLoaderCondition = new MultiComponentCondition(
-                new SimpleComponentCondition(new BasicExpression(HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER,
-                        "true", EqualityOperator.EQ)), new SimpleComponentCondition(new ShowExpression(HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER)), BooleanOperator.AND); //$NON-NLS-1$
+        ComponentCondition hbaseLoaderCondition = new MultiComponentCondition(new SimpleComponentCondition(new BasicExpression(
+                HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER)), //
+                BooleanOperator.AND, //
+                new SimpleComponentCondition(new ShowExpression(HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER)));
         // The Hive components need to import some hbase libraries if the "Use HBase storage" is checked.
         hs.add(new DistributionModuleGroup(CDH550Constant.HIVE_HBASE_MODULE_GROUP.getModuleName(), false, hbaseLoaderCondition));
 

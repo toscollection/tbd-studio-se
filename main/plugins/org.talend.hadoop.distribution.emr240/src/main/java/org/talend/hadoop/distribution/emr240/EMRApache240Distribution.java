@@ -51,7 +51,7 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
         moduleGroups = new HashMap<>();
 
         ComponentCondition c1 = new NestedComponentCondition(new SimpleComponentCondition(new BasicExpression(
-                Constant.PIG_STORE_PARAMETER, Constant.PIG_HCATSTORER_PARAMETER, EqualityOperator.NOT_EQ)));
+                Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
         customVersionDisplayNames.put(ComponentType.PIG, Constant.PIG_APACHE240_DISPLAY);

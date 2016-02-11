@@ -51,9 +51,10 @@ public class CDH4MR2Distribution extends AbstractDistribution implements HDFSCom
         moduleGroups = new HashMap<>();
 
         ComponentCondition c1 = new NestedComponentCondition(new MultiComponentCondition(new SimpleComponentCondition(
-                new BasicExpression(Constant.PIG_STORE_PARAMETER, Constant.PIG_HCATSTORER_PARAMETER, EqualityOperator.NOT_EQ)),
-                new SimpleComponentCondition(new BasicExpression(Constant.PIG_STORE_PARAMETER,
-                        Constant.PIG_PARQUETSTORER_PARAMETER, EqualityOperator.NOT_EQ)), BooleanOperator.AND));
+                new BasicExpression(Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)),
+                BooleanOperator.AND, //
+                new SimpleComponentCondition(new BasicExpression(Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ,
+                        Constant.PIG_PARQUETSTORER_PARAMETER))));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
     }
 

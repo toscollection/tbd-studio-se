@@ -27,7 +27,7 @@ public class EMR400SparkBatchModuleGroup {
     private static final String MODULE_GROUP_NAME = "SPARK-LIB-EMR_4_0_0_LATEST"; //$NON-NLS-1$
 
     private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, "false", EqualityOperator.EQ)); //$NON-NLS-1$
+            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
