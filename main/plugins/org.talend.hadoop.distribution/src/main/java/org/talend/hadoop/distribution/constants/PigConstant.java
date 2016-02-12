@@ -37,4 +37,8 @@ public final class PigConstant {
     public static final String RCFILE_LOADER_VALUE = "RCFILEPIGSTORAGE"; //$NON-NLS-1$
 
     public static final String SEQUENCEFILE_LOADER_VALUE = "SEQUENCEFILELOADER"; //$NON-NLS-1$
+
+    public static final String PIGLOAD_COMPONENT = "tPigLoad"; //$NON-NLS-1$
+
+    public static final String PIGLOAD_S3_LOCATION_LOAD = "S3_LOCATION_LOAD"; //$NON-NLS-1$
 }

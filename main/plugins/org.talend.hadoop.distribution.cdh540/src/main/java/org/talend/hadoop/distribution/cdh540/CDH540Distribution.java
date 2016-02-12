@@ -24,7 +24,11 @@ import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
+import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.cdh540.modulegroup.CDH540HDFSModuleGroup;
+import org.talend.hadoop.distribution.cdh540.modulegroup.CDH540MRS3NodeModuleGroup;
+import org.talend.hadoop.distribution.cdh540.modulegroup.CDH540PigModuleGroup;
+import org.talend.hadoop.distribution.cdh540.modulegroup.CDH540PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
@@ -36,18 +40,32 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.MRConstant;
+import org.talend.hadoop.distribution.constants.PigOutputConstant;
 
 public class CDH540Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, ImpalaComponent, HCatalogComponent, SparkBatchComponent,
         SparkStreamingComponent, HiveOnSparkComponent {
 
+    public final static String VERSION = EHadoopVersion4Drivers.CLOUDERA_CDH5_4.getVersionValue();
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
+    private static Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
 
     static {
         moduleGroups = new HashMap<>();
         moduleGroups.put(ComponentType.HDFS, CDH540HDFSModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.PIG, CDH540PigModuleGroup.getModuleGroups());
+
+        nodeModuleGroups = new HashMap<>();
+
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
+                CDH540PigOutputNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
+                CDH540MRS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
+                CDH540MRS3NodeModuleGroup.getModuleGroups());
     }
 
     @Override
@@ -83,6 +101,12 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType) {
         return moduleGroups.get(componentType);
+    }
+
+    @Override
+    public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType, String componentName) {
+        System.out.println(componentType + ":" + componentName);
+        return nodeModuleGroups.get(new NodeComponentTypeBean(componentType, componentName));
     }
 
     @Override

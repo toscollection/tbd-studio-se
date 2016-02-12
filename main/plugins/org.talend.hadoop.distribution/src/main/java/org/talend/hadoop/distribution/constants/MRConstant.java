@@ -25,4 +25,10 @@ public final class MRConstant {
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 
     public static final String USE_CLOUDERA_NAVIGATOR = "USE_CLOUDERA_NAVIGATOR";//$NON-NLS-1$
+
+    public static final String MR_MRCONFIGURATION_LINKEDPARAMETER = "MR_CONFIGURATION";//$NON-NLS-1$
+
+    public static final String S3_INPUT_COMPONENT = "tS3Input"; //$NON-NLS-1$
+
+    public static final String S3_OUTPUT_COMPONENT = "tS3Output"; //$NON-NLS-1$
 }
