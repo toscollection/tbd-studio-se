@@ -39,6 +39,8 @@ public class CDH550PigModuleGroup {
         ComponentCondition sequencefileLoaderCondition = new SimpleComponentCondition(new BasicExpression(
                 PigConstant.LOADER_PARAMETER, EqualityOperator.EQ, PigConstant.SEQUENCEFILE_LOADER_VALUE));
 
+        ComponentCondition s3condition = new SimpleComponentCondition(new BasicExpression(PigConstant.PIGLOAD_S3_LOCATION_LOAD));
+
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(CDH550Constant.PIG_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(CDH550Constant.HDFS_MODULE_GROUP.getModuleName()));
@@ -51,6 +53,7 @@ public class CDH550PigModuleGroup {
         hs.add(new DistributionModuleGroup(CDH550Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), false, rcfileLoaderCondition));
         hs.add(new DistributionModuleGroup(CDH550Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), false,
                 sequencefileLoaderCondition));
+        hs.add(new DistributionModuleGroup(CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, s3condition));
 
         return hs;
     }

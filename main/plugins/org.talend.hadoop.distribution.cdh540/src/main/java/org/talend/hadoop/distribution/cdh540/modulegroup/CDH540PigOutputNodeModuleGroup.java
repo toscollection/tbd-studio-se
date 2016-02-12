@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.cdh550.modulegroup.node.pigoutput;
+package org.talend.hadoop.distribution.cdh540.modulegroup;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +18,8 @@ import java.util.Set;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.cdh550.CDH550Constant;
-import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
+import org.talend.hadoop.distribution.cdh540.CDH540Constant;
+import org.talend.hadoop.distribution.cdh540.CDH540Distribution;
 import org.talend.hadoop.distribution.condition.BasicExpression;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
@@ -28,7 +28,7 @@ import org.talend.hadoop.distribution.condition.LinkedNodeExpression;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
 
-public class CDH550PigOutputNodeModuleGroup {
+public class CDH540PigOutputNodeModuleGroup {
 
     // This condition stands for:
     // (#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.ASSOCIATED_PIG_LOAD=='Cloudera_CDH5_5')
@@ -37,7 +37,7 @@ public class CDH550PigOutputNodeModuleGroup {
                     ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, EHadoopDistributions.CLOUDERA.getName()), //
             BooleanOperator.AND, //
             new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
-                    ComponentType.PIG.getVersionParameter(), EqualityOperator.EQ, CDH550Distribution.VERSION));
+                    ComponentType.PIG.getVersionParameter(), EqualityOperator.EQ, CDH540Distribution.VERSION));
 
     private static final ComponentCondition s3condition = new MultiComponentCondition( //
             new MultiComponentCondition( //
@@ -52,8 +52,7 @@ public class CDH550PigOutputNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH550Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(), false, condition));
-        hs.add(new DistributionModuleGroup(CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), false, s3condition));
+        hs.add(new DistributionModuleGroup(CDH540Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), false, s3condition));
         return hs;
     }
 

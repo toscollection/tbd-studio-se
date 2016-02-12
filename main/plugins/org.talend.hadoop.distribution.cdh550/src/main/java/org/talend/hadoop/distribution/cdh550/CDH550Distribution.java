@@ -37,6 +37,7 @@ import org.talend.hadoop.distribution.cdh550.modulegroup.CDH550PigOutputModuleGr
 import org.talend.hadoop.distribution.cdh550.modulegroup.CDH550SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.CDH550SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.CDH550SqoopModuleGroup;
+import org.talend.hadoop.distribution.cdh550.modulegroup.node.mr.CDH550MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.pigoutput.CDH550PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchS3NodeModuleGroup;
@@ -58,6 +59,7 @@ import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
@@ -97,6 +99,10 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
         // Used to add a module group import for a specific node. The given node must have a HADOOP_LIBRARIES parameter.
         nodeModuleGroups = new HashMap<>();
 
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
+                CDH550MRS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
+                CDH550MRS3NodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
                 CDH550PigOutputNodeModuleGroup.getModuleGroups());
 
