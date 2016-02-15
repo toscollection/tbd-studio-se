@@ -43,6 +43,9 @@
     String bulkWriteType = ElementParameterParser.getValue(node, "__BULK_WRITE_TYPE__");
     // BulkWrite is only supportted on Mongo 2.6+
     final boolean bulkWrite = setBulkWrite & (!"MONGODB_2_5_X".equalsIgnoreCase(dbversion));
+    boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
+    String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
+    String usedAuthenticationDB = useAuthDB ? authDB : dbname;
 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	%>
@@ -107,11 +110,11 @@
                         if(authenticationMechanism.equals("NEGOTIATE_MEC")){
                 			if(dbversion.equals("MONGODB_3_0_X") || dbversion.equals("MONGODB_3_2_X")) {
 %>
-                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%                    
                 			} else {
 %>
-                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoCRCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoCRCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%
 			                }
                         } else if(authenticationMechanism.equals("PLAIN_MEC")){
@@ -120,7 +123,7 @@
                             <%
                         } else if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
                             %>
-                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
                             <%
                         }
                     } else { // GSSAPI SASL (KERBEROS)

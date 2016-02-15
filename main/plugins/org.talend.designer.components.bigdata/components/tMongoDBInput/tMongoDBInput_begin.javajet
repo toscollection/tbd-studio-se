@@ -45,6 +45,9 @@
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     List<Map<String, String>> aggregationStages = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__AGGREGATION_STAGES__");
     boolean isAggregationQuery = "AGGREGATION_QUERY".equals(ElementParameterParser.getValue(node,"__QUERY_TYPE__"));
+    boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
+    String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
+    String usedAuthenticationDB = useAuthDB ? authDB : dbname;
   	
   	List<IMetadataTable> metadatas = node.getMetadataList();
   	List<IMetadataColumn> columnList = null;
@@ -120,11 +123,11 @@
                         if(authenticationMechanism.equals("NEGOTIATE_MEC")){
                 			if(dbversion.equals("MONGODB_3_0_X") || dbversion.equals("MONGODB_3_2_X")) {
 %>
-                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%                    
                 			} else {
 %>
-                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoCRCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                    			mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoCRCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%
                 			}
                         } else if(authenticationMechanism.equals("PLAIN_MEC")){
@@ -133,7 +136,7 @@
                             <%
                         } else if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
                             %>
-                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                            mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
                             <%
                         }
                     } else { // GSSAPI SASL (KERBEROS)
@@ -263,7 +266,7 @@
 	                <%
 	                }
 	                %>
-	                com.mongodb.Cursor cursor_<%=cid%> = coll_<%=cid%>.aggregate(aggregationStages, com.mongodb.AggregationOptions.builder().build());
+	                com.mongodb.Cursor cursor_<%=cid%> = coll_<%=cid%>.aggregate(aggregationStages, com.mongodb.AggregationOptions.builder().outputMode(com.mongodb.AggregationOptions.OutputMode.CURSOR).build());
 	                <%
 	            // FIND QUERY
                 } else {
