@@ -30,6 +30,10 @@
     List<Map<String,String>> replicaAddrs= (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__REPLICA_SET__");
     boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));
     String readPreference = ElementParameterParser.getValue(node, "__READ_PREFERENCE__");
+    boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
+    String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
+    String usedAuthenticationDB = useAuthDB ? authDB : dbname;
+    List<Map<String, String>> advancedQueryOptions = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__ADVANCED_QUERY_OPTIONS__");
     
     String mongoDbDriver = "com.mongodb.MongoClient";
     
@@ -71,11 +75,11 @@
             if(authenticationMechanism.equals("NEGOTIATE_MEC")){
                 if(dbversion.equals("MONGODB_3_0_X") || dbversion.equals("MONGODB_3_2_X")) {
 %>
-                    mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                    mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%                    
                 } else {
 %>
-                    mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoCRCredential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                    mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoCRCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%
                 }
             } else if(authenticationMechanism.equals("PLAIN_MEC")){
@@ -84,7 +88,7 @@
 <%
             } else if(authenticationMechanism.equals("SCRAMSHA1_MEC")){
 %>
-                mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=dbname%>, new String(decryptedPassword_<%=cid%>).toCharArray());
+                mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%
             }
         } else { // GSSAPI SASL (KERBEROS)
@@ -99,8 +103,6 @@
         mongoCredentialList_<%=cid%>.add(mongoCredential_<%=cid%>);
         <%
     }
-
-
 
     // The client
     if(useReplicaSet){
@@ -131,6 +133,12 @@
     %>
         log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
     <%
+    }
+
+    for(Map<String,String> queryOption: advancedQueryOptions){
+        %>
+        mongo_<%=cid%>.addOption(com.mongodb.Bytes.<%=queryOption.get("QUERY_OPTION")%>);
+        <%
     }
 
     %>
