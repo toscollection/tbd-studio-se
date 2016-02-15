@@ -24,8 +24,18 @@ public class LinkedNodeExpression extends BasicExpression {
 
     private String mLinkedParameter;
 
+    /**
+     * @deprecated Please use the constructor LinkedNodeExpression(String linkedParameter, String parameter,
+     * EqualityOperator equalityOperator, String value)
+     */
+    @Deprecated
     public LinkedNodeExpression(String linkedParameter, String parameter, String value, EqualityOperator equalityOperator) {
         super(parameter, value, equalityOperator);
+        this.mLinkedParameter = linkedParameter != null ? linkedParameter.trim() : null;
+    }
+
+    public LinkedNodeExpression(String linkedParameter, String parameter, EqualityOperator equalityOperator, String value) {
+        super(parameter, equalityOperator, value);
         this.mLinkedParameter = linkedParameter != null ? linkedParameter.trim() : null;
     }
 

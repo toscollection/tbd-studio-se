@@ -41,4 +41,8 @@ public final class PigOutputConstant {
     public static final String PIGSTORE_COMPONENT = "tPigStoreResult"; //$NON-NLS-1$
 
     public static final String PIGSTORE_COMPONENT_LINKEDPARAMETER = "ASSOCIATED_PIG_LOAD"; //$NON-NLS-1$
+
+    public static final String PIGSTORE_S3_LOCATION = "S3_LOCATION"; //$NON-NLS-1$
+
+    public static final String PIGSTORE_STORE = "STORE"; //$NON-NLS-1$
 }

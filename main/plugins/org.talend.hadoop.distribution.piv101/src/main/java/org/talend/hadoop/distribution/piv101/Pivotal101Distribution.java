@@ -48,7 +48,7 @@ public class Pivotal101Distribution extends AbstractDistribution implements HDFS
         moduleGroups = new HashMap<>();
 
         ComponentCondition c1 = new SimpleComponentCondition(new BasicExpression(Constant.PIG_STORE_PARAMETER,
-                Constant.PIG_HCATSTORER_PARAMETER, EqualityOperator.NOT_EQ));
+                EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
     }
 

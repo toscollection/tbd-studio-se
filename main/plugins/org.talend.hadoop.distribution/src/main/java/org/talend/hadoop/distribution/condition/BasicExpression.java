@@ -24,10 +24,27 @@ public class BasicExpression implements Expression {
 
     protected EqualityOperator mEqualityOperator;
 
+    /**
+     * @deprecated Please use the constructor BasicExpression(String parameter, EqualityOperator equalityOperator,
+     * String value)
+     */
+    @Deprecated
     public BasicExpression(String parameter, String value, EqualityOperator equalityOperator) {
         this.mParameter = parameter != null ? parameter.trim() : null;
         this.mValue = value != null ? value.trim() : null;
         this.mEqualityOperator = equalityOperator;
+    }
+
+    public BasicExpression(String parameter, EqualityOperator equalityOperator, String value) {
+        this.mParameter = parameter != null ? parameter.trim() : null;
+        this.mValue = value != null ? value.trim() : null;
+        this.mEqualityOperator = equalityOperator;
+    }
+
+    public BasicExpression(String parameter) {
+        this.mParameter = parameter != null ? parameter.trim() : null;
+        this.mValue = "true";
+        this.mEqualityOperator = EqualityOperator.EQ;
     }
 
     @Override

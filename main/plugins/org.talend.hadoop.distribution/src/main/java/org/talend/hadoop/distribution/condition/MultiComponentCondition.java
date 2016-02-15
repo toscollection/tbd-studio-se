@@ -24,11 +24,35 @@ public class MultiComponentCondition implements ComponentCondition {
 
     private BooleanOperator mBooleanOperator;
 
+    /**
+     * @deprecaded Please use the constructor MultiComponentCondition(ComponentCondition leftCondition, BooleanOperator
+     * booleanOperator, ComponentCondition rightCondition)
+     */
+    @Deprecated
     public MultiComponentCondition(ComponentCondition leftCondition, ComponentCondition rightCondition,
             BooleanOperator booleanOperator) {
         this.mLeftCondition = leftCondition;
         this.mRightCondition = rightCondition;
         this.mBooleanOperator = booleanOperator;
+    }
+
+    public MultiComponentCondition(ComponentCondition leftCondition, BooleanOperator booleanOperator,
+            ComponentCondition rightCondition) {
+        this.mLeftCondition = leftCondition;
+        this.mRightCondition = rightCondition;
+        this.mBooleanOperator = booleanOperator;
+    }
+
+    public MultiComponentCondition(Expression leftExpression, BooleanOperator booleanOperator, ComponentCondition rightCondition) {
+        this(new SimpleComponentCondition(leftExpression), booleanOperator, rightCondition);
+    }
+
+    public MultiComponentCondition(ComponentCondition leftCondition, BooleanOperator booleanOperator, Expression rightExpression) {
+        this(leftCondition, booleanOperator, new SimpleComponentCondition(rightExpression));
+    }
+
+    public MultiComponentCondition(Expression leftExpression, BooleanOperator booleanOperator, Expression rightExpression) {
+        this(new SimpleComponentCondition(leftExpression), booleanOperator, new SimpleComponentCondition(rightExpression));
     }
 
     @Override

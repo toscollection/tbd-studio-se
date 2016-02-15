@@ -36,15 +36,22 @@ public class SparkBatchLinkedNodeCondition {
 
     public SparkBatchLinkedNodeCondition(String distribution, String version, String linkedParameter) {
         final ComponentCondition isCurrentDistribution = new NestedComponentCondition(new MultiComponentCondition(
+                new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter,//
+                        ComponentType.SPARKBATCH.getDistributionParameter(), //
+                        EqualityOperator.EQ,//
+                        distribution)), //
+                BooleanOperator.AND, //
                 new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter,
-                        ComponentType.SPARKBATCH.getDistributionParameter(), distribution, EqualityOperator.EQ)),
-                new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter, ComponentType.SPARKBATCH
-                        .getVersionParameter(), version, EqualityOperator.EQ)), BooleanOperator.AND));
+                        ComponentType.SPARKBATCH.getVersionParameter(),//
+                        EqualityOperator.EQ,//
+                        version))));
 
         final ComponentCondition isNotLocal = new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter,
-                SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, "false", EqualityOperator.EQ)); //$NON-NLS-1$
+                SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, //
+                EqualityOperator.EQ,//
+                "false")); //$NON-NLS-1$
 
-        this.mCondition = new MultiComponentCondition(isCurrentDistribution, isNotLocal, BooleanOperator.AND);
+        this.mCondition = new MultiComponentCondition(isCurrentDistribution, BooleanOperator.AND, isNotLocal);
     }
 
     public MultiComponentCondition getCondition() {

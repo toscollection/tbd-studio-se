@@ -24,24 +24,26 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.LinkedNodeExpression;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
-import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 
 public class HDP230SparkStreamingKafkaNodeModuleGroup {
 
     private static final String MODULE_GROUP_NAME = "SPARK-STREAMING-KAFKA-LIB-HDP_2_3"; //$NON-NLS-1$
 
-    private static final ComponentCondition condition = new MultiComponentCondition(
-            new SimpleComponentCondition(new LinkedNodeExpression(
-                    SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
-                    SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, "false", EqualityOperator.EQ)), new MultiComponentCondition( //$NON-NLS-1$
-                    new SimpleComponentCondition(new LinkedNodeExpression(
-                            SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER, ComponentType.SPARKSTREAMING
-                                    .getDistributionParameter(), EHadoopDistributions.HORTONWORKS.getName(), EqualityOperator.EQ)),
-                    new SimpleComponentCondition(
-                            new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                    ComponentType.SPARKSTREAMING.getVersionParameter(), EHadoopVersion4Drivers.HDP_2_3
-                                            .getVersionValue(), EqualityOperator.EQ)), BooleanOperator.AND), BooleanOperator.AND);
+    private static final ComponentCondition condition = new MultiComponentCondition( //
+            new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
+                    SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //
+            BooleanOperator.AND,//
+            new MultiComponentCondition( //
+                    new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
+                            ComponentType.SPARKSTREAMING.getDistributionParameter(), //
+                            EqualityOperator.EQ, //
+                            EHadoopDistributions.HORTONWORKS.getName()), //
+                    BooleanOperator.AND,//
+                    new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
+                            ComponentType.SPARKSTREAMING.getVersionParameter(), //
+                            EqualityOperator.EQ, //
+                            EHadoopVersion4Drivers.HDP_2_3.getVersionValue())));
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();

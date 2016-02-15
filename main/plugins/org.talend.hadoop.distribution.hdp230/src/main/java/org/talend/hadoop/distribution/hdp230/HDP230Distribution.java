@@ -35,9 +35,16 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.MRConstant;
+import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230HDFSModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230MRS3NodeModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230PigModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkBatchModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkStreamingKafkaNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkStreamingModuleGroup;
 
@@ -45,6 +52,7 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
         HiveOnSparkComponent {
 
+    public final static String VERSION = EHadoopVersion4Drivers.HDP_2_3.getVersionValue();
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -57,11 +65,24 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         moduleGroups.put(ComponentType.HDFS, HDP230HDFSModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKBATCH, HDP230SparkBatchModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, HDP230SparkStreamingModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.PIG, HDP230PigModuleGroup.getModuleGroups());
 
         nodeModuleGroups = new HashMap<>();
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 HDP230SparkStreamingKafkaNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
+                HDP230PigOutputNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
+                HDP230MRS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
+                HDP230MRS3NodeModuleGroup.getModuleGroups());
+
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                HDP230SparkBatchS3NodeModuleGroup.getModuleGroups());
+
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkBatchConstant.S3_CONFIGURATION_COMPONENT), HDP230SparkBatchS3NodeModuleGroup.getModuleGroups());
     }
 
     @Override

@@ -26,7 +26,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 public class CDH550SparkBatchModuleGroup {
 
     private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, "false", EqualityOperator.EQ)); //$NON-NLS-1$
+            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
@@ -35,7 +35,7 @@ public class CDH550SparkBatchModuleGroup {
         hs.add(new DistributionModuleGroup(CDH550Constant.HDFS_MODULE_GROUP.getModuleName(), false, condition));
         hs.add(new DistributionModuleGroup(CDH550Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false, condition));
         ComponentCondition conditionUseNavigator = new SimpleComponentCondition(new BasicExpression(
-                SparkBatchConstant.USE_CLOUDERA_NAVIGATOR, "true", EqualityOperator.EQ)); //$NON-NLS-1$
+                SparkBatchConstant.USE_CLOUDERA_NAVIGATOR));
         hs.add(new DistributionModuleGroup(CDH550Constant.TALEND_CLOUDERA_CDH_5_5_NAVIGATOR.getModuleName(), true,
                 conditionUseNavigator));
         return hs;

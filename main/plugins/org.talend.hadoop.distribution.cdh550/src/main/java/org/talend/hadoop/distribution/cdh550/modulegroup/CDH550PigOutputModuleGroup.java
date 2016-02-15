@@ -27,15 +27,15 @@ public class CDH550PigOutputModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         ComponentCondition hbaseStorerCondition = new SimpleComponentCondition(new BasicExpression(
-                PigOutputConstant.STORER_PARAMETER, PigOutputConstant.HBASE_STORER_VALUE, EqualityOperator.EQ));
+                PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.HBASE_STORER_VALUE));
         ComponentCondition hcatStorerCondition = new SimpleComponentCondition(new BasicExpression(
-                PigOutputConstant.STORER_PARAMETER, PigOutputConstant.HCAT_STORER_VALUE, EqualityOperator.EQ));
+                PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.HCAT_STORER_VALUE));
         ComponentCondition avroStorerCondition = new SimpleComponentCondition(new BasicExpression(
-                PigOutputConstant.STORER_PARAMETER, PigOutputConstant.AVRO_STORER_VALUE, EqualityOperator.EQ));
+                PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.AVRO_STORER_VALUE));
         ComponentCondition rcfileStorerCondition = new SimpleComponentCondition(new BasicExpression(
-                PigOutputConstant.STORER_PARAMETER, PigOutputConstant.RCFILE_STORER_VALUE, EqualityOperator.EQ));
+                PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.RCFILE_STORER_VALUE));
         ComponentCondition sequencefileStorerCondition = new SimpleComponentCondition(new BasicExpression(
-                PigOutputConstant.STORER_PARAMETER, PigOutputConstant.SEQUENCEFILE_STORER_VALUE, EqualityOperator.EQ));
+                PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.SEQUENCEFILE_STORER_VALUE));
 
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(CDH550Constant.PIG_HCATALOG_MODULE_GROUP.getModuleName(), false, hcatStorerCondition));

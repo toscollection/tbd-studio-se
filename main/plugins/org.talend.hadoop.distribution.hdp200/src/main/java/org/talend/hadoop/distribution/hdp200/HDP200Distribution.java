@@ -49,7 +49,7 @@ public class HDP200Distribution extends AbstractDistribution implements HDFSComp
         moduleGroups = new HashMap<>();
 
         ComponentCondition c1 = new SimpleComponentCondition(new BasicExpression(Constant.PIG_STORE_PARAMETER,
-                Constant.PIG_HBASESTORAGE_PARAMETER, EqualityOperator.NOT_EQ));
+                EqualityOperator.NOT_EQ, Constant.PIG_HBASESTORAGE_PARAMETER));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
     }
 
