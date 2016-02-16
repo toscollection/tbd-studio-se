@@ -16,6 +16,7 @@
 	boolean overwrite = ("true").equals(ElementParameterParser.getValue(node, "__OVERWRITE__"));
 	String remotedir = ElementParameterParser.getValue(node, "__REMOTEDIR__");
 	boolean append = ("true").equals(ElementParameterParser.getValue(node, "__APPEND__"));
+	boolean useGlob = ("true").equals(ElementParameterParser.getValue(node, "__PERL5_REGEX__"));
 	
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>	      				
@@ -24,14 +25,21 @@
 			String tempdir_<%=cid %> =  localdir_<%=cid %>;
 			String filemask_<%=cid %> = key_<%=cid %>; 
 			String dir_<%=cid %> = null;	
-			String mask_<%=cid %> = filemask_<%=cid %>.replaceAll("\\\\", "/") ;	
+            <%if(!useGlob) { //perl5 mode does not support windows (\) path separator in the mask string
+            %>
+                String mask_<%=cid %> = filemask_<%=cid %>.replaceAll("\\\\", "/") ;
+            <%} else {%>
+                String mask_<%=cid %> = filemask_<%=cid %>;
+            <%}%>   
 			int i_<%=cid %> = mask_<%=cid %>.lastIndexOf('/');
   			if (i_<%=cid %>!=-1){
 				dir_<%=cid %> = mask_<%=cid %>.substring(0, i_<%=cid %>); 
 				mask_<%=cid %> = mask_<%=cid %>.substring(i_<%=cid %>+1);	 
     		}
     		if (dir_<%=cid %>!=null && !"".equals(dir_<%=cid %>)) tempdir_<%=cid %> = tempdir_<%=cid %> + "/" + dir_<%=cid %>;  
-    		mask_<%=cid %> = mask_<%=cid %>.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*");
+            <%if(!useGlob) {%>
+                mask_<%=cid %> = mask_<%=cid %>.replaceAll("\\.", "\\\\.").replaceAll("\\*", ".*");
+            <%}%> 
     		final String finalMask_<%=cid %> = mask_<%=cid %>;
     		java.io.File[] listings_<%=cid %> = null;       
         	java.io.File file_<%=cid %> = new java.io.File(tempdir_<%=cid %>);
