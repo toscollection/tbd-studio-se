@@ -28,7 +28,7 @@ import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 
 public class HDP230SparkStreamingKafkaNodeModuleGroup {
 
-    private static final String MODULE_GROUP_NAME = "SPARK-STREAMING-KAFKA-LIB-HDP_2_3"; //$NON-NLS-1$
+    public static final String MODULE_GROUP_NAME = "SPARK-STREAMING-KAFKA-LIB-HDP_2_3"; //$NON-NLS-1$
 
     private static final ComponentCondition condition = new MultiComponentCondition( //
             new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
