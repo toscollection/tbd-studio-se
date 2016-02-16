@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.cdh550.test.modulegroup.node.sparkbatch;
+package org.talend.hadoop.distribution.hdp230.test.modulegroup;
 
 import static org.junit.Assert.*;
 
@@ -20,24 +20,23 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.cdh550.CDH550Constant;
-import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchS3NodeModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkStreamingKafkaNodeModuleGroup;
 
 /**
  * created by pbailly on 16 Feb 2016 Detailled comment
  *
  */
-public class CopyOfCDH550SparkBatchS3NodeModuleGroupTest {
+public class HDP230SparkStreamingKafkaAssemblyNodeModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<String, String>();
 
         results.put(
-                CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='Cloudera_CDH5_5')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')");
+                HDP230SparkStreamingKafkaNodeModuleGroup.MODULE_GROUP_NAME,
+                "(#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false') AND (#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='HORTONWORKS') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='HDP_2_3')");
 
-        Set<DistributionModuleGroup> moduleGroups = CDH550SparkBatchS3NodeModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> moduleGroups = HDP230SparkStreamingKafkaNodeModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
