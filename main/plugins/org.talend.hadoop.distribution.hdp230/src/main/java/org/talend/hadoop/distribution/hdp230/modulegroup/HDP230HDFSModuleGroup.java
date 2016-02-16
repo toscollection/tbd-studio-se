@@ -19,7 +19,7 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 
 public class HDP230HDFSModuleGroup {
 
-    private static final String MODULE_GROUP_NAME = "HDFS-LIB-HDP_2_3"; //$NON-NLS-1$
+    public static final String MODULE_GROUP_NAME = "HDFS-LIB-HDP_2_3"; //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();

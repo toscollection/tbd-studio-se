@@ -19,7 +19,7 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 
 public class CDH540HDFSModuleGroup {
 
-    private static final String MODULE_GROUP_NAME = "HDFS-LIB-CDH_5_4_LASTEST"; //$NON-NLS-1$
+    public static final String MODULE_GROUP_NAME = "HDFS-LIB-CDH_5_4_LASTEST"; //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();

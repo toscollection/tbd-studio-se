@@ -24,7 +24,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 
 public class HDP230SparkBatchModuleGroup {
 
-    private static final String MODULE_GROUP_NAME = "SPARK-LIB-HDP_2_3"; //$NON-NLS-1$
+    public static final String MODULE_GROUP_NAME = "SPARK-LIB-HDP_2_3"; //$NON-NLS-1$
 
     private static final ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
             SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
