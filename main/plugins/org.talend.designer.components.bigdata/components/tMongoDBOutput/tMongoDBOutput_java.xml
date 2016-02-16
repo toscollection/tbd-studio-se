@@ -473,13 +473,6 @@
 
         </TEMPLATES>
         <IMPORTS>
-            <!-- <IMPORT MODULE="mongo-java-driver-2.11.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.11.2/6.0.0"  NAME="mongo-2.11.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.11.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_5_X')" />
-
-            mongo java driver 2.12.0 give the compatibility with the new features of mongoDB 2.6
-
-            <IMPORT MODULE="mongo-java-driver-2.12.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.12.2/6.0.0"  NAME="mongo-2.12.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.12.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_2_6_X')" />
-
-            <IMPORT MODULE="mongo-java-driver-2.13.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.13.2/6.0.0"  NAME="mongo-2.13.2" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.13.2.jar" REQUIRED_IF="(DB_VERSION=='MONGODB_3_0_X')" /> -->
 
             <IMPORT MODULE="mongo-java-driver-2.14.1.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.14.1/6.0.0"  NAME="mongo-java-driver-2.14.1" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.14.1.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
 
