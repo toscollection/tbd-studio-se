@@ -48,6 +48,7 @@
     boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
+    boolean useExternalSort = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXTERNAL_SORT_AGGREGATION__"));
   	
   	List<IMetadataTable> metadatas = node.getMetadataList();
   	List<IMetadataColumn> columnList = null;
@@ -266,7 +267,7 @@
 	                <%
 	                }
 	                %>
-	                com.mongodb.Cursor cursor_<%=cid%> = coll_<%=cid%>.aggregate(aggregationStages, com.mongodb.AggregationOptions.builder().outputMode(com.mongodb.AggregationOptions.OutputMode.CURSOR).build());
+	                com.mongodb.Cursor cursor_<%=cid%> = coll_<%=cid%>.aggregate(aggregationStages, com.mongodb.AggregationOptions.builder().outputMode(com.mongodb.AggregationOptions.OutputMode.CURSOR).allowDiskUse(<%=useExternalSort%>).build());
 	                <%
 	            // FIND QUERY
                 } else {
