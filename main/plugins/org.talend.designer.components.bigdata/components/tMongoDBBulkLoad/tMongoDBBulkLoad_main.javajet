@@ -39,6 +39,9 @@
   	boolean dropCreateColl="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DROP_COLLECTION_CREATE__"));
     boolean ignoreBlanks="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IGNORE_BLANKS__"));
     boolean jsonArray = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__JSON_ARRAY__"));
+    boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
+    String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
+    String usedAuthenticationDB = useAuthDB ? authDB : dbname;
   	
   	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
   	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
@@ -185,17 +188,23 @@
                 %>
                 args_<%=cid%>.add("--authenticationMechanism");
                 args_<%=cid%>.add("SCRAM-SHA-1");
+                args_<%=cid%>.add("--authenticationDatabase");
+                args_<%=cid%>.add(<%=usedAuthenticationDB%>);
                 <%
                 // X509 can't work today without adding a property to locate the x509 certificate
             } else if(authenticationMechanism.equals("MONGODBX509_MEC")){
                 %>
                 args_<%=cid%>.add("--authenticationMechanism");
                 args_<%=cid%>.add("MONGODB-X509");
+                args_<%=cid%>.add("--authenticationDatabase");
+                args_<%=cid%>.add(<%=usedAuthenticationDB%>);
                 <%
             } else if(authenticationMechanism.equals("MONGODBCR_MEC")){
                 %>
                 args_<%=cid%>.add("--authenticationMechanism");
                 args_<%=cid%>.add("MONGODB-CR");
+                args_<%=cid%>.add("--authenticationDatabase");
+                args_<%=cid%>.add(<%=usedAuthenticationDB%>);
                 <%
             } else if(authenticationMechanism.equals("PLAIN_MEC")){
                 %>
@@ -332,7 +341,7 @@
 		    <%
 		} else {
 		    %>
-	        log.info("<%=cid%> - Start to import the data into ["+<%=dbhost%>+":"+<%=dbport%>+"/"+<%=dbname%>+"]");
+	        log.info("<%=cid%> - Start to import the data into ["+<%=dbhost%>+":"+"<%=dbport%>"+"/"+<%=dbname%>+"]");
 		    <%
 		}
 	}
