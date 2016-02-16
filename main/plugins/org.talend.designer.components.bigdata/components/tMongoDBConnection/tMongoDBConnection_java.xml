@@ -116,16 +116,9 @@
     </PARAMETERS>
     <ADVANCED_PARAMETERS>
 
-        <PARAMETER
-            NAME="ADVANCED_QUERY_OPTIONS"
-            FIELD="TABLE"
-            REQUIRED="false"
-            NUM_ROW="50"
-            NB_LINES="5"
-            >
-            <ITEMS>
-                <ITEM NAME="QUERY_OPTION" FIELD="TEXT" />
-            </ITEMS>
+        <PARAMETER FIELD="CHECK" NAME="QUERYOPTION_NOTIMEOUT" REPOSITORY_VALUE="QUERYOPTION_NOTIMEOUT"
+            NUM_ROW="50" GROUP="ADVANCED_QUERY_OPTIONS">
+            <DEFAULT>false</DEFAULT>
         </PARAMETER>
 
     </ADVANCED_PARAMETERS>

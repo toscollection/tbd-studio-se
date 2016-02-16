@@ -33,7 +33,7 @@
     boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
-    List<Map<String, String>> advancedQueryOptions = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__ADVANCED_QUERY_OPTIONS__");
+    boolean queryOptionNoTimeOut = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERYOPTION_NOTIMEOUT__"));
     
     String mongoDbDriver = "com.mongodb.MongoClient";
     
@@ -135,9 +135,9 @@
     <%
     }
 
-    for(Map<String,String> queryOption: advancedQueryOptions){
+    if(queryOptionNoTimeOut){
         %>
-        mongo_<%=cid%>.addOption(com.mongodb.Bytes.<%=queryOption.get("QUERY_OPTION")%>);
+            mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
         <%
     }
 
