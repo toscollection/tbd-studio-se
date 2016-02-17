@@ -23,6 +23,7 @@ import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
+import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
@@ -35,13 +36,22 @@ import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.MRConstant;
+import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.emr240.modulegroup.EMRApache240MRS3NodeModuleGroup;
+import org.talend.hadoop.distribution.emr240.modulegroup.EMRApache240PigModuleGroup;
+import org.talend.hadoop.distribution.emr240.modulegroup.EMRApache240PigOutputNodeModuleGroup;
 
 public class EMRApache240Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent {
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*"; //$NON-NLS-1$
 
+    public final static String VERSION = EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionValue();
+
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
+
+    private static Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
 
     private static Map<ComponentType, ComponentCondition> displayConditions = new HashMap<>();
 
@@ -49,6 +59,7 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
 
     static {
         moduleGroups = new HashMap<>();
+        moduleGroups.put(ComponentType.PIG, EMRApache240PigModuleGroup.getModuleGroups());
 
         ComponentCondition c1 = new NestedComponentCondition(new SimpleComponentCondition(new BasicExpression(
                 Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)));
@@ -58,6 +69,14 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
         customVersionDisplayNames.put(ComponentType.PIGOUTPUT, Constant.PIG_APACHE240_DISPLAY);
         customVersionDisplayNames.put(ComponentType.HBASE, Constant.HBASE_APACHE240_DISPLAY);
         customVersionDisplayNames.put(ComponentType.HIVE, Constant.HIVE_APACHE240_DISPLAY);
+
+        nodeModuleGroups = new HashMap<>();
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
+                EMRApache240PigOutputNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
+                EMRApache240MRS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
+                EMRApache240MRS3NodeModuleGroup.getModuleGroups());
     }
 
     @Override
@@ -94,6 +113,11 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
     @Override
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType) {
         return moduleGroups.get(componentType);
+    }
+
+    @Override
+    public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType, String componentName) {
+        return nodeModuleGroups.get(new NodeComponentTypeBean(componentType, componentName));
     }
 
     @Override
