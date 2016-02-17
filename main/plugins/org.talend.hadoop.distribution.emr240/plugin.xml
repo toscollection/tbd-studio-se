@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+
+        <!-- group of spark libraries -->
+        <libraryNeededGroup
+                description="S3 libraries for EMR apache 240"
+                id="S3-LIB-EMR_2_4_0_LATEST"
+                name="S3-LIB-EMR_2_4_0_LATEST">
+            <library id="aws-java-sdk-1.8.6" />
+            <library id="httpclient-4.2" />
+            <library id="httpcore-4.2" />
+        </libraryNeededGroup>
+
+    </extension>
+</plugin>
