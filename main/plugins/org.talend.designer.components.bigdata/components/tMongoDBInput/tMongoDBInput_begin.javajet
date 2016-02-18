@@ -49,7 +49,8 @@
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
     boolean useExternalSort = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXTERNAL_SORT_AGGREGATION__"));
-  	
+    boolean queryOptionNoTimeOut = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERYOPTION_NOTIMEOUT__"));
+
   	List<IMetadataTable> metadatas = node.getMetadataList();
   	List<IMetadataColumn> columnList = null;
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
@@ -205,6 +206,12 @@
 			            <%
 			        }
 			}
+
+			if(queryOptionNoTimeOut){
+		        %>
+		            mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
+		        <%
+    		}
 
 			if(isLog4jEnabled){
 			    %>	

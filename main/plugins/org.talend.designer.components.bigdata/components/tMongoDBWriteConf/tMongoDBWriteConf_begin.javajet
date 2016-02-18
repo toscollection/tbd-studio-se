@@ -46,6 +46,7 @@
     boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
+    boolean queryOptionNoTimeOut = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERYOPTION_NOTIMEOUT__"));
 
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	%>
@@ -163,6 +164,12 @@
 				db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
 				<%
 			}
+
+			if(queryOptionNoTimeOut){
+		        %>
+		        mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
+		        <%
+    		}
 
 			if(setWriteConcern){
 				%>
