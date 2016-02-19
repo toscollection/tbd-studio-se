@@ -23,6 +23,7 @@ import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
+import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
@@ -30,16 +31,34 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.MRConstant;
+import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220MRS3NodeModuleGroup;
+import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220PigModuleGroup;
+import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220PigOutputNodeModuleGroup;
 
 public class HDP220Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+
+    public final static String VERSION = EHadoopVersion4Drivers.HDP_2_2.getVersionValue();
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
+    private static Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
+
     static {
         moduleGroups = new HashMap<>();
+        moduleGroups.put(ComponentType.PIG, HDP220PigModuleGroup.getModuleGroups());
+
+        nodeModuleGroups = new HashMap<>();
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
+                HDP220PigOutputNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
+                HDP220MRS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
+                HDP220MRS3NodeModuleGroup.getModuleGroups());
     }
 
     @Override
@@ -75,6 +94,11 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType) {
         return moduleGroups.get(componentType);
+    }
+
+    @Override
+    public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType, String componentName) {
+        return nodeModuleGroups.get(new NodeComponentTypeBean(componentType, componentName));
     }
 
     @Override

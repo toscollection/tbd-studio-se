@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+    
+       <libraryNeeded
+            context="plugin:org.talend.libraries.s3"
+            id="hadoop-aws-2.6.0.2.2.4.2-2"
+            name="hadoop-aws-2.6.0.2.2.4.2-2.jar"
+            mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.6.0.2.2.4.2-2/6.1.0"
+            uripath="platform:/plugin/org.talend.libraries.s3/lib/hadoop-aws-2.6.0.2.2.4.2-2.jar">
+        </libraryNeeded>
+
+        <!-- group of spark libraries -->
+        <libraryNeededGroup
+                description="S2 libraries for HDP 2.2"
+                id="S3-LIB-HDP_2_2_0_LATEST"
+                name="S3-LIB-HDP_2_2_0_LATEST">
+            <library id="aws-java-sdk-1.7.4" />
+            <library id="hadoop-aws-2.6.0.2.2.4.2-2" />
+            <library id="jets3t-0.9.0" />
+            <library id="httpclient-4.2.5.jar" />
+            <library id="httpcore-4.2.5.jar" />
+            <library id="commons-httpclient-3.1.jar" />
+        </libraryNeededGroup>
+    </extension>
+</plugin>
