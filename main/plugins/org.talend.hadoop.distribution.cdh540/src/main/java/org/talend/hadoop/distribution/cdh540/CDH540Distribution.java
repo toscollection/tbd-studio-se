@@ -105,7 +105,6 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType, String componentName) {
-        System.out.println(componentType + ":" + componentName);
         return nodeModuleGroups.get(new NodeComponentTypeBean(componentType, componentName));
     }
 
