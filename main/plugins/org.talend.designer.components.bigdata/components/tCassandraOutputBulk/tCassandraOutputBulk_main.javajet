@@ -100,8 +100,29 @@ ConvertTypeUtil convertUtil = new ConvertTypeUtil();
 convertUtil.setCID(cid);
 convertUtil.setVersion(version);
 
+String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3".equals(dbVersion);
 boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
-if(cqlTable){
+if(newCqlTable){
+%>
+	writer_<%=cid%>.addRow(	
+		<%
+		for(int i = 0; i < sizeColumns; i++){
+			IMetadataColumn column = columns.get(i);
+			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+			String columnName = column.getLabel();
+			String cType = column.getType();
+			%>
+			<%=inConnName%>.<%=columnName%>
+			<%if(i + 1 < sizeColumns){%>
+				,
+			<%}%>
+		<%
+		} 
+		%>
+	);		
+<%
+}else if(cqlTable){
 %>
 	writer_<%=cid%>.rawAddRow(	
 		<%

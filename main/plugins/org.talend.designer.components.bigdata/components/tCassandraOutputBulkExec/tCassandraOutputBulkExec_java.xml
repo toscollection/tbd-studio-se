@@ -61,12 +61,15 @@
             NUM_ROW="3"
             SHOW="false"
         >
-            <DEFAULT>cassandra_id</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2') OR (DB_VERSION == 'CASSANDRA_2_0_0')">cassandra_id</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'CASSANDRA_2_1') OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3')">cassandra_datastax_id</DEFAULT>
         </PARAMETER>
+        <!-- AFTER 2.1 only keep CQL type -->
         <PARAMETER
             NAME="TABLE_TYPE"
             FIELD="CLOSED_LIST"
             NUM_ROW="4"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_2_0_0')"
         >
             <ITEMS DEFAULT="NON_CQL">
                 <ITEM NAME="NON_CQL" VALUE="NON_CQL"/>
@@ -79,10 +82,13 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="5"
             >
-            <ITEMS DEFAULT="CASSANDRA_1_1_2">
-                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2" NOT_SHOW_IF="TABLE_TYPE=='CQL'"/>
-                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2" NOT_SHOW_IF="TABLE_TYPE=='CQL'"/>
+            <ITEMS DEFAULT="CASSANDRA_3">
+                <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
+                <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
+                <ITEM NAME="CASSANDRA_2_1" VALUE="CASSANDRA_2_1"/>
+                <ITEM NAME="CASSANDRA_2_2" VALUE="CASSANDRA_2_2"/>
+                <ITEM NAME="CASSANDRA_3" VALUE="CASSANDRA_3"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER
@@ -101,14 +107,15 @@
             REQUIRED="true"
             NUM_ROW="10"
         >
-            <DEFAULT>9160</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2') OR (DB_VERSION == 'CASSANDRA_2_0_0') OR (DB_VERSION == 'CASSANDRA_2_1')">9160</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3')">9042</DEFAULT>
         </PARAMETER>
         <PARAMETER
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
             REPOSITORY_VALUE="REQUIRED_AUTHENTICATION"
             NUM_ROW="15"
-            SHOW_IF="DB_VERSION == 'CASSANDRA_1_2_2'"
+            SHOW_IF="DB_VERSION != 'CASSANDRA_1_1_2'"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -118,7 +125,7 @@
             REPOSITORY_VALUE="USERNAME"
             REQUIRED="true"
             NUM_ROW="20"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (DB_VERSION == 'CASSANDRA_1_2_2')"
+            SHOW_IF="(isShow[REQUIRED_AUTHENTICATION]) AND (REQUIRED_AUTHENTICATION == 'true')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -128,7 +135,7 @@
             REPOSITORY_VALUE="PASSWORD"
             REQUIRED="true"
             NUM_ROW="20"
-            SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (DB_VERSION == 'CASSANDRA_1_2_2')"
+            SHOW_IF="(isShow[REQUIRED_AUTHENTICATION]) AND (REQUIRED_AUTHENTICATION == 'true')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
@@ -166,7 +173,7 @@
             FIELD="CLOSED_LIST"
             REQUIRED="true"
             NUM_ROW="30"
-            NOT_SHOW_IF="TABLE_TYPE=='CQL'"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2') OR ((DB_VERSION == 'CASSANDRA_2_0_0') AND (TABLE_TYPE=='NON_CQL'))"
         >
             <ITEMS DEFAULT="ASCIITYPE">
                 <ITEM NAME="ASCIITYPE" VALUE="AsciiType"/>
@@ -193,7 +200,7 @@
             FIELD="TEXT"
             NUM_ROW="26"
             REQUIRED="true"
-            SHOW_IF="TABLE_TYPE=='CQL'"
+            NOT_SHOW_IF="(DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2') OR ((DB_VERSION == 'CASSANDRA_2_0_0') AND (TABLE_TYPE=='NON_CQL'))"
         >
           <DEFAULT>"create table ks.tb (id int, name text, birthday timestamp, primary key(id, birthday)) with clustering order by (birthday desc)"</DEFAULT>
         </PARAMETER>
@@ -202,7 +209,7 @@
             FIELD="TEXT"
             NUM_ROW="27"
             REQUIRED="true"
-            SHOW_IF="TABLE_TYPE=='CQL'"
+            NOT_SHOW_IF="(DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2') OR ((DB_VERSION == 'CASSANDRA_2_0_0') AND (TABLE_TYPE=='NON_CQL'))"
         >
           <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
         </PARAMETER>
@@ -220,8 +227,8 @@
             REQUIRED="true"
             NUM_ROW="45"
         >
-            <DEFAULT IF="TABLE_TYPE=='NON_CQL'">64</DEFAULT>
-            <DEFAULT IF="TABLE_TYPE=='CQL'">128</DEFAULT>
+            <DEFAULT IF="(DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2') OR ((DB_VERSION == 'CASSANDRA_2_0_0') AND (TABLE_TYPE=='NON_CQL'))">64</DEFAULT>
+            <DEFAULT IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (TABLE_TYPE=='CQL')) OR (DB_VERSION == 'CASSANDRA_2_1') OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3')">128</DEFAULT>
         </PARAMETER>
     </PARAMETERS>
     <ADVANCED_PARAMETERS/>
