@@ -89,8 +89,10 @@ org.apache.cassandra.dht.IPartitioner partitioner_<%=cid%> = new org.apache.cass
 
 
 <%
+String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3".equals(dbVersion);
 boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
-if(cqlTable){
+if(newCqlTable || cqlTable){
 %>
 	org.apache.cassandra.io.sstable.CQLSSTableWriter writer_<%=cid%> = org.apache.cassandra.io.sstable.CQLSSTableWriter
 																			.builder()
