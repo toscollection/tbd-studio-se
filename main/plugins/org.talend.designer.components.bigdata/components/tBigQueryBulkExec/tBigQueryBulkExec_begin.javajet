@@ -114,8 +114,9 @@
 			log.info("<%=cid%> - The refresh token does not exist.");
 		<%
 		}
-		if(authorizationCode==null || "".equals(authorizationCode) || "\"\"".equals(authorizationCode)) {
 		%>
+		String authorizationCode_<%=cid%> = <%=authorizationCode%>;
+		if(authorizationCode_<%=cid%> == null || "".equals(authorizationCode_<%=cid%>) || "\"\"".equals(authorizationCode_<%=cid%>)) {
 			String authorizeUrl_<%=cid%> = new com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl(
 					clientSecrets_<%=cid%>, REDIRECT_URI_<%=cid%>, SCOPES_<%=cid%>).setState("").build();
 			<%
@@ -130,10 +131,7 @@
 					.println("Paste this URL into a web browser to authorize BigQuery Access:\n"
 							+ authorizeUrl_<%=cid%>);
 			throw new java.lang.Exception("Authorization Code error");
-		<%
 		} else {
-		%>
-			String authorizationCode_<%=cid%> = <%=authorizationCode%>;
 			<%
 			if(isLog4jEnabled){
 			%>
@@ -167,9 +165,7 @@
 			}
 
 			bigqueryclient_<%=cid%> = new com.google.api.services.bigquery.Bigquery.Builder(new com.google.api.client.http.javanet.NetHttpTransport(),new com.google.api.client.json.jackson2.JacksonFactory(),credential_<%=cid%>).build();
-		<%
 		}
-		%>
 	}
 
 

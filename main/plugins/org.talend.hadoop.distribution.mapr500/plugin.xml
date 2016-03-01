@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+    
+       <libraryNeeded
+            context="plugin:org.talend.libraries.s3"
+            id="aws-java-sdk-1.7.4"
+            name="aws-java-sdk-1.7.4.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.7.4/6.1.0"
+            uripath="platform:/plugin/org.talend.libraries.s3/lib/aws-java-sdk-1.7.4.jar">
+        </libraryNeeded>
+            
+       <libraryNeeded
+            context="plugin:org.talend.libraries.s3"
+            id="hadoop-aws-2.7.0-mapr-1506"
+            name="hadoop-aws-2.7.0-mapr-1506.jar"
+            mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.7.0-mapr-1506/6.1.0"
+            uripath="platform:/plugin/org.talend.libraries.s3/lib/hadoop-aws-2.7.0-mapr-1506.jar">
+        </libraryNeeded>
+
+        <!-- group of spark libraries -->
+        <libraryNeededGroup
+                description="S3 libraries for MapR 5.0.0"
+                id="S3-LIB-MAPR500_LATEST"
+                name="S3-LIB-MAPR500_LATEST">
+            <library id="aws-java-sdk-1.7.4" />
+            <library id="hadoop-aws-2.7.0-mapr-1506" />
+            <library id="jets3t-0.9.0" />
+            <library id="httpclient-4.2.5.jar" />
+            <library id="httpcore-4.2.5.jar" />
+        </libraryNeededGroup>
+    </extension>
+</plugin>
