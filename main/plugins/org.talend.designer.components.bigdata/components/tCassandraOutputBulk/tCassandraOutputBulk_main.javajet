@@ -112,8 +112,26 @@ if(newCqlTable){
 			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 			String columnName = column.getLabel();
 			String cType = column.getType();
+			List<String> stringList = java.util.Arrays.asList(new String[]{"ascii", "text", "varchar"});
+			List<String> uuidList = java.util.Arrays.asList(new String[]{"timeuuid", "uuid"});
+			if(stringList.contains(cType)){
 			%>
-			<%=inConnName%>.<%=columnName%>
+				<%=inConnName%>.<%=columnName%> == null ? null : String.valueOf(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else if("int".equals(cType)){
+			%>
+				<%=inConnName%>.<%=columnName%> == null ? null : (int)<%=inConnName%>.<%=columnName%>
+			<%
+			}else if(uuidList.contains(cType)){
+			%>
+				<%=inConnName%>.<%=columnName%> == null ? null : java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else{
+			%>
+				<%=inConnName%>.<%=columnName%>
+			<%
+			}
+			%>
 			<%if(i + 1 < sizeColumns){%>
 				,
 			<%}%>

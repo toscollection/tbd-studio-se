@@ -492,13 +492,13 @@
                     NAME="antlr-runtime-3.5.2"
                     MODULE="antlr-runtime-3.5.2.jar" MVN="mvn:org.talend.libraries/antlr-runtime-3.5.2/6.0.0" />
                 <IMPORT
-                    NAME="cassandra-all-2.1.12"
-                    MODULE="cassandra-all-2.1.12.jar" MVN="mvn:org.talend.libraries/cassandra-all-2.1.12/6.0.0" 
-                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-2.1.12.jar" />
+                    NAME="cassandra-all-2.1.13"
+                    MODULE="cassandra-all-2.1.13.jar" MVN="mvn:org.talend.libraries/cassandra-all-2.1.13/6.0.0" 
+                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-2.1.13.jar" />
                 <IMPORT
-                    NAME="cassandra-thrift-2.1.12"
-                    MODULE="cassandra-thrift-2.1.12.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-2.1.12/6.0.0" 
-                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.1.12.jar" />
+                    NAME="cassandra-thrift-2.1.13"
+                    MODULE="cassandra-thrift-2.1.13.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-2.1.13/6.0.0" 
+                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.1.13.jar" />
                 <IMPORT
                     NAME="commons-cli-1.1"
                     MODULE="commons-cli-1.1.jar" MVN="mvn:org.talend.libraries/commons-cli-1.1/6.0.0" 
@@ -569,23 +569,23 @@
             <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3'))">
                 <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_2')">
                     <IMPORT
-                        NAME="cassandra-all-2.2.4"
-                        MODULE="cassandra-all-2.2.4.jar" MVN="mvn:org.talend.libraries/cassandra-all-2.2.4/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-2.2.4.jar" />
+                        NAME="cassandra-all-2.2.5"
+                        MODULE="cassandra-all-2.2.5.jar" MVN="mvn:org.talend.libraries/cassandra-all-2.2.5/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-2.2.5.jar" />
                     <IMPORT
-                        NAME="cassandra-thrift-2.2.4"
-                        MODULE="cassandra-thrift-2.2.4.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-2.2.4/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.2.4.jar" />
+                        NAME="cassandra-thrift-2.2.5"
+                        MODULE="cassandra-thrift-2.2.5.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-2.2.5/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.2.5.jar" />
                 </IMPORTS>
                 <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3')">
                     <IMPORT
-                        NAME="cassandra-all-3.2.1"
-                        MODULE="cassandra-all-3.2.1.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.2.1/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.2.1.jar" />
+                        NAME="cassandra-all-3.3"
+                        MODULE="cassandra-all-3.3.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.3/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.3.jar" />
                     <IMPORT
-                        NAME="cassandra-thrift-3.2.1"
-                        MODULE="cassandra-thrift-3.2.1.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-3.2.1/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-3.2.1.jar" />
+                        NAME="cassandra-thrift-3.3"
+                        MODULE="cassandra-thrift-3.3.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-3.3/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-3.3.jar" />
                 </IMPORTS>
                 <IMPORT
                     NAME="antlr-3.5.2"
@@ -688,6 +688,10 @@
                     NAME="super-csv-2.1.0"
                     MODULE="super-csv-2.1.0.jar" MVN="mvn:org.talend.libraries/super-csv-2.1.0/6.0.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/super-csv-2.1.0.jar" />
+                <IMPORT
+                    NAME="sigar-1.6.4"
+                    MODULE="sigar-1.6.4.jar" MVN="mvn:org.talend.libraries/sigar-1.6.4/6.0.0" 
+                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/sigar-1.6.4.jar" />
             </IMPORTS>
         </IMPORTS>
     </CODEGENERATION>
