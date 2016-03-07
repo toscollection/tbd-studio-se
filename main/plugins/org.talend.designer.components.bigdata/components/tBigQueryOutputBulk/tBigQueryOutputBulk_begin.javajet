@@ -79,7 +79,7 @@ imports="
 	        csvWriter_<%=cid %>.setLineEnd(rowSeparator_<%=cid %>);              	
 	        csvWriter_<%=cid %>.setEscapeChar(escapeChar_<%=cid %>);      		
 	      	csvWriter_<%=cid %>.setQuoteChar(textEnclosure_<%=cid %>); 
-	      	csvWriter_<%=cid %>.setQuoteStatus(com.talend.csv.CSVWriter.QuoteStatus.FORCE);        
+	      	csvWriter_<%=cid %>.setQuoteStatus(com.talend.csv.CSVWriter.QuoteStatus.AUTO);        
 			<%
 			if(checkDiskSpace){
 			%>
