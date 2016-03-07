@@ -43,18 +43,25 @@
                 			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
                 			String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
                 			if(JavaTypesManager.isJavaPrimitiveType( column.getTalendType(), column.isNullable())){
-                			
-                				if(javaType == JavaTypesManager.BOOLEAN ){
-                				%>
-                					row_<%=cid%>[<%=i%>] = String.valueOf(
-                							true == <%=conn.getName() %>.<%=column.getLabel() %> ?"1":"0"
-                							);
-                				<%
-                				} else {
-                			    %>
-                			    	row_<%=cid%>[<%=i%>] = String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>);
-                			    <%
-                			    }
+                            %>
+                                if(<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+                            <%                			
+                    				if(javaType == JavaTypesManager.BOOLEAN ){
+                    				%>
+                                        row_<%=cid%>[<%=i%>] = String.valueOf(
+                    							true == <%=conn.getName() %>.<%=column.getLabel() %> ?"1":"0"
+                    							);
+                    				<%
+                    				} else {
+                    			    %>
+                    			    	row_<%=cid%>[<%=i%>] = String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>);
+                    			    <%
+                    			    }
+                            %>
+                                } else {
+                                    row_<%=cid%>[<%=i%>] = null;
+                                }
+                            <%
                 			}else {
                 			    %>
                 			    if(<%=conn.getName() %>.<%=column.getLabel() %> != null){
@@ -84,7 +91,9 @@
                 			            <%
                 			        }
                 			        %>                			    
-                			    }
+                			    } else {
+                                    row_<%=cid%>[<%=i%>] = null;
+                                }
                 		 	<% 
                 			}
             			} 
