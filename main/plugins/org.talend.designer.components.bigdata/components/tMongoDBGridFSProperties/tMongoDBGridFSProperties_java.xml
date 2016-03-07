@@ -219,7 +219,7 @@
             REQUIRED="true"
             NUM_ROW="31"
             GROUP="GRIDFS">
-            <DEFAULT>"fs"</DEFAULT>
+            <DEFAULT>"chunks"</DEFAULT>
         </PARAMETER>
 
         <PARAMETER
@@ -228,14 +228,21 @@
             REQUIRED="true"
             NUM_ROW="32"
             GROUP="GRIDFS">
-            <DEFAULT>"fs"</DEFAULT>
+            <DEFAULT>"files"</DEFAULT>
         </PARAMETER>
 
         <PARAMETER
             NAME="SCHEMA_FLOW"
             FIELD="SCHEMA_TYPE"
             NUM_ROW="35">
-            <DEFAULT>""</DEFAULT>
+            <TABLE READONLY="false">
+                <COLUMN NAME="_id" TYPE="id_String"/>
+                <COLUMN NAME="filename" TYPE="id_String"/>
+                <COLUMN NAME="chunkSize" TYPE="id_Long"/>
+                <COLUMN NAME="uploadDate" TYPE="id_Date" PATTERN='"yyyy-MM-dd HH:mm:ss"'/>
+                <COLUMN NAME="length" TYPE="id_Long"/>
+                <COLUMN NAME="md5" TYPE="id_String"/>
+            </TABLE>
         </PARAMETER>
 
         <PARAMETER NAME="QUERY_TYPE" REPOSITORY_VALUE="QUERY_TYPE" FIELD="CLOSED_LIST" NUM_ROW="39" GROUP="QUERY_SPECS">
@@ -250,6 +257,7 @@
             NAME="FILENAME"
             REQUIRED="true"
             NUM_ROW="40"
+            GROUP="QUERY_SPECS"
             SHOW_IF="QUERY_TYPE=='STRING_FILENAME'">
             <DEFAULT>"fs"</DEFAULT>
         </PARAMETER>
@@ -269,6 +277,8 @@
             SHOW_IF="QUERY_TYPE=='MONGO_QUERY'">
             <DEFAULT>"{}"</DEFAULT>
         </PARAMETER>
+
+    </PARAMETERS>
 
     <ADVANCED_PARAMETERS>
         <PARAMETER FIELD="CHECK" NAME="QUERYOPTION_NOTIMEOUT" REPOSITORY_VALUE="QUERYOPTION_NOTIMEOUT"
