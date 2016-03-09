@@ -276,6 +276,10 @@ public class HadoopClusterService implements IHadoopClusterService {
         return true;
     }
 
+    public Connection getHadoopClusterConnectionBySubConnection(Connection hadoopSubConnection) {
+        return HCRepositoryUtil.getRelativeHadoopClusterConnection(hadoopSubConnection);
+    }
+
     @Override
     public String getHadoopClusterProperties(Connection hadoopSubConnection) {
         HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
