@@ -207,7 +207,7 @@
 			        }
 			}
 
-			if(queryOptionNoTimeOut){
+			if(queryOptionNoTimeOut && !useExistingConnection){
 		        %>
 		            mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
 		        <%
