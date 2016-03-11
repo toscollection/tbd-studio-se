@@ -143,4 +143,14 @@
          </importItemsHandler>
       </importItemsProvider>
    </extension>
+   <extension
+         point="org.talend.repository.view.repositorySorter">
+      <sorter
+            class="org.talend.repository.pigudf.sorter.PigUDFRepositoryNodeSorter"
+            description="on bottom (4)"
+            id="org.talend.repository.pigudf.sorter"
+            name="PigUDF Sorter"
+            order="40">
+      </sorter>
+   </extension>
 </plugin>
