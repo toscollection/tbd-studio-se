@@ -3,8 +3,12 @@
 		org.talend.designer.codegen.config.CodeGeneratorArgument
 		org.talend.core.model.process.INode
 		org.talend.core.model.process.ElementParameterParser
-		org.talend.core.model.metadata.IMetadataTable
-		java.util.List
+        org.talend.core.model.metadata.IMetadataTable
+        org.talend.core.model.metadata.IMetadataColumn
+        java.util.List
+        java.util.Map
+	    org.talend.core.model.metadata.types.JavaTypesManager
+	    org.talend.core.model.metadata.types.JavaType
 "
 %>
 <%
@@ -22,6 +26,15 @@
     boolean setBulkWrite = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_BULK_WRITE__"));
     String bulkWriteOperationSize = ElementParameterParser.getValue(node, "__BULK_WRITE_SIZE__");
     String bulkWriteType = ElementParameterParser.getValue(node, "__BULK_WRITE_TYPE__");
+
+    boolean removeRoot = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOVE_ROOT__"));
+    List<Map<String, String>> rootTable = 
+        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ROOT__");
+    List<Map<String, String>> groupTable = 
+        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__GROUP__");
+    List<Map<String, String>> loopTable = 
+        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__LOOP__");
+
     // BulkWrite is only supportted on Mongo 2.6+ drivers
     final boolean bulkWrite = setBulkWrite & (!"MONGODB_2_5_X".equalsIgnoreCase(dbversion));
     
@@ -47,6 +60,116 @@
 			<%
 			}
 			%>
+
+			// Replace Date and Bytes by true mongoDB types.
+            com.mongodb.BasicDBObject <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+			<%
+            for (IMetadataColumn column: metadata.getListColumns()) {
+                JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+                if ((javaType == JavaTypesManager.DATE) || (javaType == JavaTypesManager.BYTE_ARRAY)) {
+                    for (Map<String, String> root: rootTable) {
+                        if (root.get("COLUMN").equals(column.getLabel())) {
+                            %>
+                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            <%
+                            String pathString = root.get("PATH");
+                            if (removeRoot) {
+                                pathString = pathString.substring(pathString.indexOf("/") + 1);
+                            }
+                            String[] path = pathString.split("/");
+
+                            // Start index at 1, in order to remove the first unwanted or empty string.
+                            // end index at length -2 , in order to stay on a BasicDBObject, leaf will be strings.
+                            for (int index = 1; index < path.length - 1; index++) {
+                                %>
+                                <%=cid%>_dbobject = (com.mongodb.BasicDBObject) <%=cid%>_dbobject.get("<%=path[index]%>");
+                                <%
+                            }
+                            if (javaType == JavaTypesManager.DATE) {
+                                %>
+                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
+                                        BigDataParserUtils.parseTo_Date((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>"),
+                                                <%=column.getPattern()%>));
+                                <%
+                            } else { // Byte Array
+                                %>
+                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
+                                        ((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>")).getBytes());
+                                <%
+                            }
+                            // note: we cannot break here, they may be multiple values
+                        }
+                    }
+                    for (Map<String, String> group: groupTable) {
+                        if (group.get("COLUMN").equals(column.getLabel())) {
+                            %>
+                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            <%
+                            String pathString = group.get("PATH");
+                            if (removeRoot) {
+                                pathString = pathString.substring(pathString.indexOf("/") + 1);
+                            }
+                            String[] path = pathString.split("/");
+
+                            // Start index at 1, in order to remove the first unwanted or empty string.
+                            // end index at length -2 , in order to stay on a BasicDBObject, leaf will be strings.
+                            for (int index = 1; index < path.length - 1; index++) {
+                                %>
+                                <%=cid%>_dbobject = (com.mongodb.BasicDBObject) <%=cid%>_dbobject.get("<%=path[index]%>");
+                                <%
+                            }
+                            if (javaType == JavaTypesManager.DATE) {
+                                %>
+                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
+                                        BigDataParserUtils.parseTo_Date((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>"),
+                                                <%=column.getPattern()%>));
+                                <%
+                            } else { // Byte Array
+                                %>
+                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
+                                        ((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>")).getBytes());
+                                <%
+                            }
+                            // note: we cannot break here, they may be multiple values
+                        }
+                    }
+                    for (Map<String, String> loop: loopTable) {
+                        if (loop.get("COLUMN").equals(column.getLabel())) {
+                            %>
+                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            <%
+                            String pathString = loop.get("PATH");
+                            if (removeRoot) {
+                                pathString = pathString.substring(pathString.indexOf("/") + 1);
+                            }
+                            String[] path = pathString.split("/");
+
+                            // Start index at 1, in order to remove the first unwanted or empty string.
+                            // end index at length -2 , in order to stay on a BasicDBObject, leaf will be strings.
+                            for (int index = 1; index < path.length - 1; index++) {
+                                %>
+                                <%=cid%>_dbobject = (com.mongodb.BasicDBObject) <%=cid%>_dbobject.get("<%=path[index]%>");
+                                <%
+                            }
+                            if (javaType == JavaTypesManager.DATE) {
+                                %>
+                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
+                                        BigDataParserUtils.parseTo_Date((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>"),
+                                                <%=column.getPattern()%>));
+                                <%
+                            } else { // Byte Array
+                                %>
+                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
+                                        ((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>")).getBytes());
+                                <%
+                            }
+                            // note: we cannot break here, they may be multiple values
+                        }
+                    }
+                }
+            }
+			%>
+			
 			Object queryObj_<%=cid%>=null;
 			if(data_<%=cid%>!=null){
 				<%
