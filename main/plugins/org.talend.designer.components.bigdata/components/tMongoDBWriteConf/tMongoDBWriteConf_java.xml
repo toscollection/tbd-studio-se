@@ -269,6 +269,43 @@
             NUM_ROW="41">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
+        <PARAMETER FIELD="CHECK" NAME="QUERYOPTION_NOTIMEOUT" REPOSITORY_VALUE="QUERYOPTION_NOTIMEOUT"
+            NUM_ROW="50" GROUP="ADVANCED_QUERY_OPTIONS">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER NAME="ROOT" FIELD="TABLE" REQUIRED="true"
+            NUM_ROW="70" NB_LINES="3" SHOW="false">
+            <ITEMS>
+                <ITEM NAME="PATH" FIELD="TEXT" />
+                <ITEM NAME="COLUMN" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+                <ITEM NAME="ATTRIBUTE" FIELD="TEXT" />
+                <ITEM NAME="ORDER" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER NAME="GROUP" FIELD="TABLE" REQUIRED="false"
+            NUM_ROW="80" NB_LINES="5" SHOW="false">
+            <ITEMS>
+                <ITEM NAME="PATH" FIELD="TEXT" />
+                <ITEM NAME="COLUMN" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+                <ITEM NAME="ATTRIBUTE" FIELD="TEXT" />
+                <ITEM NAME="ORDER" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+
+        <PARAMETER NAME="LOOP" FIELD="TABLE" REQUIRED="true"
+            NUM_ROW="90" SHOW="false">
+            <ITEMS>
+                <ITEM NAME="PATH" FIELD="TEXT" />
+                <ITEM NAME="COLUMN" FIELD="TEXT" />
+                <ITEM NAME="VALUE" FIELD="TEXT" />
+                <ITEM NAME="ATTRIBUTE" FIELD="TEXT" />
+                <ITEM NAME="ORDER" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
 	</PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
