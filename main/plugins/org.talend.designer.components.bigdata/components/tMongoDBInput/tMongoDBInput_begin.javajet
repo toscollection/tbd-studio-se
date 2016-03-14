@@ -388,7 +388,11 @@
 <%
 						if(javaType == JavaTypesManager.DATE) {
 %>
-					<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date((java.util.Date)valueObj_<%=cid%>, <%= patternValue %>);
+                            if (valueObj_<%=cid%> instanceof java.util.Date) {
+																																<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date((java.util.Date)valueObj_<%=cid%>, <%= patternValue %>);
+                            } else {
+                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date((String)valueObj_<%=cid%>, <%= patternValue %>);
+                            }
 <%
 						}else if(javaType == JavaTypesManager.BYTE_ARRAY) {
 %>
