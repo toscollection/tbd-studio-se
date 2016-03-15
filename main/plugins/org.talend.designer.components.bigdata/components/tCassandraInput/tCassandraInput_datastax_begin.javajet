@@ -54,7 +54,7 @@
     			<%
     			}else if("timeuuid".equals(dbType) || "uuid".equals(dbType)){
     			%>
-    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getUUID("<%=dbColumnName%>").toString();
+    				<%=connName%>.<%=columnName%> = row_<%=cid%>.getUUID("<%=dbColumnName%>") == null ? null : row_<%=cid%>.getUUID("<%=dbColumnName%>").toString();
     			<%
     			}
         	}else if(javaType == JavaTypesManager.OBJECT){
@@ -77,7 +77,7 @@
     			}
     		}else if(javaType == JavaTypesManager.LIST){
         	%>
-        		<%=connName%>.<%=columnName%> = (java.util.List)row_<%=cid%>.getObject("<%=dbColumnName%>");	
+        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getObject("<%=dbColumnName%>") == null ? null : (java.util.List)row_<%=cid%>.getObject("<%=dbColumnName%>");	
         	<%
         	}else if(javaType == JavaTypesManager.BOOLEAN){
         	%>
@@ -85,15 +85,33 @@
         	<%
     		}else if(javaType == JavaTypesManager.BYTE_ARRAY){
         	%>
-        		java.nio.ByteBuffer bytebuffer_<%=columnName%>_<%=cid%> = row_<%=cid%>.getBytes("<%=dbColumnName%>");
-        		byte[] bytes_<%=columnName%>_<%=cid%> = new byte[bytebuffer_<%=columnName%>_<%=cid%>.remaining()];
-        		bytebuffer_<%=columnName%>_<%=cid%>.get(bytes_<%=columnName%>_<%=cid%>, 0, bytes_<%=columnName%>_<%=cid%>.length);
-        		<%=connName%>.<%=columnName%> = bytes_<%=columnName%>_<%=cid%>;	
+        		if(row_<%=cid%>.getBytes("<%=dbColumnName%>") != null){
+	        		java.nio.ByteBuffer bytebuffer_<%=columnName%>_<%=cid%> = row_<%=cid%>.getBytes("<%=dbColumnName%>");
+	        		byte[] bytes_<%=columnName%>_<%=cid%> = new byte[bytebuffer_<%=columnName%>_<%=cid%>.remaining()];
+	        		bytebuffer_<%=columnName%>_<%=cid%>.get(bytes_<%=columnName%>_<%=cid%>, 0, bytes_<%=columnName%>_<%=cid%>.length);
+	        		<%=connName%>.<%=columnName%> = bytes_<%=columnName%>_<%=cid%>;	
+        		}else{
+        			<%=connName%>.<%=columnName%> = null;
+        		}
         	<%	
+        	}else if(javaType == JavaTypesManager.BYTE){
+			%>
+				<%=connName%>.<%=columnName%> = row_<%=cid%>.getByte("<%=dbColumnName%>");	
+			<%        	
     		}else if(javaType == JavaTypesManager.DATE){
-        	%>
-        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getTimestamp("<%=dbColumnName%>");	
-        	<%
+    			if("timestamp".equals(dbType)){
+        		%>
+        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getTimestamp("<%=dbColumnName%>");	
+        		<%
+        		}else if("date".equals(dbType)){
+        		%>
+        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getDate("<%=dbColumnName%>") == null ? null : new java.util.Date(row_<%=cid%>.getDate("<%=dbColumnName%>").getMillisSinceEpoch());	
+        		<%
+        		}else if("time".equals(dbType)){
+        		%>
+        			<%=connName%>.<%=columnName%> = new java.util.Date(row_<%=cid%>.getTime("<%=dbColumnName%>"));	
+        		<%
+        		}
     		}else if(javaType == JavaTypesManager.BIGDECIMAL){
         	%> 
         		<%=connName%>.<%=columnName%> = row_<%=cid%>.getDecimal("<%=dbColumnName%>");	
@@ -114,6 +132,10 @@
         	%> 
         		<%=connName%>.<%=columnName%> = row_<%=cid%>.getLong("<%=dbColumnName%>");	
         	<%
+    		}else if(javaType == JavaTypesManager.SHORT){
+    		%>
+    			<%=connName%>.<%=columnName%> = row_<%=cid%>.getShort("<%=dbColumnName%>");	
+    		<%
     		}
     	}
         %>
