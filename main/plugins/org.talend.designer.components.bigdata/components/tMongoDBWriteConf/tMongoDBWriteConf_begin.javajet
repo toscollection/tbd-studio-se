@@ -268,6 +268,111 @@
 			<%
 			}
 			%>
+	         /**
+             * Convert Date and Byte array in mongo DB format
+             *
+             */
+            class MongoDBTreeConverter_<%=cid%> {
+
+                /**
+                 * header method to ease javajet implementation.
+                 **/
+                public void processTree(Object currentElement, String[] path, String pattern) {
+                    if (currentElement instanceof com.mongodb.BasicDBObject) {
+                        // Start index at 1, in order to remove the first unwanted or empty string.
+                        processTree((com.mongodb.BasicDBObject)currentElement, path, 1, pattern);
+                   } else if (currentElement instanceof com.mongodb.BasicDBList) {
+                       // Start index at 1, in order to remove the first unwanted or empty string.
+                       processTree((com.mongodb.BasicDBList) currentElement, path, 1, pattern);
+                   }
+                }
+
+                public void processTree(com.mongodb.BasicDBObject currentElement, String[] path, int index, String pattern) {
+                    if (index  < path.length - 1) {
+                        Object nextElement = currentElement.get(path[index]);
+                        if (nextElement instanceof com.mongodb.BasicDBObject) {
+                             processTree((com.mongodb.BasicDBObject)nextElement, path, index + 1, pattern);
+                        } else if (nextElement instanceof com.mongodb.BasicDBList) {
+                            processTree((com.mongodb.BasicDBList) nextElement, path, index + 1, pattern);
+                        }
+                    } else {
+                        // process leaf
+                        if (currentElement.get(path[path.length - 1]) instanceof com.mongodb.BasicDBList) {
+                            // if the leaf is a list
+                            com.mongodb.BasicDBList finalObjects = (com.mongodb.BasicDBList) currentElement.get(path[path.length - 1]);
+                            com.mongodb.BasicDBList convertedElements = new com.mongodb.BasicDBList();
+                            for (Object finalObject: finalObjects) {
+                                if (pattern == null) {
+                                    // no pattern, we want to parse to a byte array.
+                                    convertedElements.add(
+                                            ((String)finalObject).getBytes());
+                                } else {
+                                    convertedElements.add(
+                                            BigDataParserUtils.parseTo_Date((String)finalObject,
+                                                    pattern));
+                                }
+                            }
+                            finalObjects.clear();
+                            finalObjects.addAll(convertedElements);
+                        } else {
+                            if (pattern == null) {
+                                // no pattern, we want to parse to a byte array.
+                                currentElement.put(path[path.length - 1],
+                                        ((String)currentElement.get(path[path.length - 1])).getBytes());
+                            } else {
+                                currentElement.put(path[path.length - 1],
+                                        BigDataParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
+                                                pattern));
+                            }
+                        }
+                    }
+                }
+
+                public void processTree(com.mongodb.BasicDBList currentElements, String[] path, int index, String pattern) {
+                    if (index  < path.length - 1) {
+                        for (Object currentElement: currentElements) {
+                            if (currentElement instanceof com.mongodb.BasicDBObject) {
+                                processTree((com.mongodb.BasicDBObject)currentElement, path, index + 1, pattern);
+                            } else if (currentElement instanceof com.mongodb.BasicDBList) {
+                                processTree((com.mongodb.BasicDBList) currentElement, path, index + 1, pattern);
+                            }
+                        }
+                    } else {
+                        // process leaf
+                        com.mongodb.BasicDBList convertedElements = new com.mongodb.BasicDBList();
+                        for (Object finalObject: currentElements) {
+                            if (finalObject instanceof com.mongodb.BasicDBObject) {
+                                com.mongodb.BasicDBObject currentElement = (com.mongodb.BasicDBObject) finalObject;
+                                if (pattern == null) {
+                                    // no pattern, we want to parse to a byte array.
+                                    currentElement.put(path[path.length - 1],
+                                            ((String)currentElement.get(path[path.length - 1])).getBytes());
+                                } else {
+                                    currentElement.put(path[path.length - 1],
+                                            BigDataParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
+                                                    pattern));
+                                }
+                            } else { // loop with raw types
+                                if (pattern == null) {
+                                    // no pattern, we want to parse to a byte array.
+                                    convertedElements.add(
+                                            ((String)finalObject).getBytes());
+                                } else {
+                                    convertedElements.add(
+                                            BigDataParserUtils.parseTo_Date((String)finalObject,
+                                                    pattern));
+                                }
+                            }
+                        }
+                        if (convertedElements.size() > 0) {
+                            currentElements.clear();
+                            currentElements.addAll(convertedElements);
+                        }
+                    }
+
+                }
+            }
+            MongoDBTreeConverter_<%=cid%> mongoDBTreeConverter_<%=cid%> = new MongoDBTreeConverter_<%=cid%>();
 			while(!globalMap.containsKey(readFinishMarkWithPipeId_<%=cid%>) || !queue_<%=cid%>.isEmpty()) {
 				if (!queue_<%=cid%>.isEmpty()) {
 					str_<%=cid %> = queue_<%=cid %>.poll();
