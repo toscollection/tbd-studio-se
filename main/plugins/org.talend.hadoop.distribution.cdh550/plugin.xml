@@ -209,8 +209,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
             id="spark-assembly-cdh5.5.0"
-            name="talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0/6.1.0">
+            name="talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0-with-hive.jar"
+            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0-with-hive/6.1.0">
         </libraryNeeded>
         
         <libraryNeeded
