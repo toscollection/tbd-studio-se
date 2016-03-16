@@ -630,7 +630,7 @@
             	}else if("tinyint".equals(dbType)){
             		setStmt.append(assignStmt +".setByte(" + index + ", " + columnValue + ");\r\n");
             	}else if("time".equals(dbType)){
-            		setStmt.append(assignStmt +".setTime(" + index + ", " + columnValue + ".getTime());\r\n");
+            		setStmt.append(assignStmt +".setTime(" + index + ", " + columnValue + ");\r\n");
             	}else if("date".equals(dbType)){
             		setStmt.append(assignStmt +".setDate(" + index + ", com.datastax.driver.core.LocalDate.fromMillisSinceEpoch(" + columnValue + ".getTime()));\r\n");
             	}

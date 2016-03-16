@@ -107,10 +107,6 @@
         		%>
         			<%=connName%>.<%=columnName%> = row_<%=cid%>.getDate("<%=dbColumnName%>") == null ? null : new java.util.Date(row_<%=cid%>.getDate("<%=dbColumnName%>").getMillisSinceEpoch());	
         		<%
-        		}else if("time".equals(dbType)){
-        		%>
-        			<%=connName%>.<%=columnName%> = new java.util.Date(row_<%=cid%>.getTime("<%=dbColumnName%>"));	
-        		<%
         		}
     		}else if(javaType == JavaTypesManager.BIGDECIMAL){
         	%> 
@@ -129,9 +125,15 @@
         		<%=connName%>.<%=columnName%> = row_<%=cid%>.getInt("<%=dbColumnName%>");	
         	<%
     		}else if(javaType == JavaTypesManager.LONG){
-        	%> 
-        		<%=connName%>.<%=columnName%> = row_<%=cid%>.getLong("<%=dbColumnName%>");	
-        	<%
+	    		if("time".equals(dbType)){
+	        	%>
+        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getTime("<%=dbColumnName%>");	
+        		<%
+        		}else{
+        		%> 
+        			<%=connName%>.<%=columnName%> = row_<%=cid%>.getLong("<%=dbColumnName%>");	
+	        	<%
+	        	}
     		}else if(javaType == JavaTypesManager.SHORT){
     		%>
     			<%=connName%>.<%=columnName%> = row_<%=cid%>.getShort("<%=dbColumnName%>");	
