@@ -33,6 +33,7 @@ import org.talend.core.model.general.ILibrariesService;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.repository.ResourceModelUtils;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
@@ -117,11 +118,10 @@ public class HadoopConfsUtils {
         return HadoopParameterUtil.getConfsJarDefaultName(itemId);
     }
 
-    public static HadoopConfigurationManager getConfigurationManager(String distribution) {
-        EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
-        if (EHadoopDistributions.HORTONWORKS.equals(dist)) {
+    public static HadoopConfigurationManager getConfigurationManager(DistributionBean distribution) {
+        if (EHadoopDistributions.HORTONWORKS.getName().equals(distribution.name)) {
             return HadoopConfigurationManager.AMBARI;
-        } else if (EHadoopDistributions.CLOUDERA.equals(dist)) {
+        } else if (EHadoopDistributions.CLOUDERA.getName().equals(distribution.name)) {
             return HadoopConfigurationManager.CLOUDERA_MANAGER;
         }
         return null;
@@ -140,13 +140,12 @@ public class HadoopConfsUtils {
         return configurator;
     }
 
-    public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, String distribution, String version,
-            IRetrieveConfsService confsService) throws Exception {
+    public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, DistributionBean distribution,
+            String version, IRetrieveConfsService confsService) throws Exception {
         HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
         connection.setUseCustomConfs(confsService != null);
-        EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
         EHadoopVersion4Drivers ver = EHadoopVersion4Drivers.indexOfByVersionDisplay(version);
-        connection.setDistribution(dist.getName());
+        connection.setDistribution(distribution.name);
         connection.setDfVersion(ver.getVersionValue());
         boolean supportYARN = ver.isSupportYARN();
         boolean supportMR1 = ver.isSupportMR1();

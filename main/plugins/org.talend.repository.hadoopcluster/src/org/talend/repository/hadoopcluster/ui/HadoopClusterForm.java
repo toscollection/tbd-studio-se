@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.window.Window;
@@ -32,10 +29,11 @@ import org.talend.commons.ui.runtime.image.EImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.HadoopCustomVersionDefineDialog;
 import org.talend.core.model.properties.ConnectionItem;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
+import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.ui.common.IHadoopClusterInfoForm;
@@ -80,9 +78,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     public void init() {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(getConnection().getDistribution(), false);
+        final DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(getConnection().getDistribution());
         if (distribution != null) {
-            distributionCombo.setText(distribution.getDisplayName());
+            distributionCombo.setText(distribution.displayName);
         } else {
             distributionCombo.select(0);
         }
@@ -124,8 +122,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
         distributionCombo = new LabelledCombo(distributionGroup,
                 Messages.getString("HadoopClusterForm.distribution"), //$NON-NLS-1$
-                Messages.getString("HadoopClusterForm.distribution.tooltip"), EHadoopDistributions.getAllDistributionDisplayNames() //$NON-NLS-1$
-                        .toArray(new String[0]), 1, true);
+                Messages.getString("HadoopClusterForm.distribution.tooltip"), HadoopDistributionsHelper.getHadoopDistributionsDisplay(true), //$NON-NLS-1$
+                1, true);
         distributionCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
         versionCombo = new LabelledCombo(distributionGroup, Messages.getString("HadoopClusterForm.version"), //$NON-NLS-1$
                 Messages.getString("HadoopClusterForm.version.tooltip"), new String[0], 1, true); //$NON-NLS-1$
@@ -138,15 +136,6 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         useYarnButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
     }
 
-    private List<String> getDistributionVersions(EHadoopDistributions distribution) {
-        List<String> result = new ArrayList<String>();
-        List<EHadoopVersion4Drivers> v4dList = EHadoopVersion4Drivers.indexOfByDistribution(distribution);
-        for (EHadoopVersion4Drivers v4d : v4dList) {
-            result.add(v4d.getVersionDisplay());
-        }
-        return result;
-    }
-
     @Override
     protected void addFieldsListeners() {
         distributionCombo.addModifyListener(new ModifyListener() {
@@ -154,12 +143,12 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             @Override
             public void modifyText(final ModifyEvent e) {
                 String newDistributionDisplayName = distributionCombo.getText();
-                EHadoopDistributions newDistribution = EHadoopDistributions
-                        .getDistributionByDisplayName(newDistributionDisplayName);
-                String newDistributionName = newDistribution.getName();
+                DistributionBean newDistribution = HadoopDistributionsHelper
+                        .getHadoopDistributionByDisplayName(newDistributionDisplayName);
+                String newDistributionName = newDistribution.name;
                 String originalDistributionName = getConnection().getDistribution();
-                getConnection().setDistribution(newDistribution.getName());
-                getConnection().setUseCustomVersion(newDistribution == EHadoopDistributions.CUSTOM);
+                getConnection().setDistribution(newDistribution.name);
+                getConnection().setUseCustomVersion(newDistribution.useCustom());
                 boolean distrChanged = !StringUtils.equals(newDistributionName, originalDistributionName);
                 if (distrChanged) {
                     getConnection().setDfVersion(null);
@@ -180,9 +169,12 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 if (StringUtils.isEmpty(newVersionDisplayName)) {
                     return;
                 }
-                EHadoopVersion4Drivers newVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(newVersionDisplayName);
-                getConnection().setDfVersion(newVersion4Drivers.getVersionValue());
-                if (newVersion4Drivers.isSupportYARN() && !newVersion4Drivers.isSupportMR1()) {
+                DistributionBean hadoopDistribution = HadoopDistributionsHelper
+                        .getHadoopDistributionByDisplayName(distributionCombo.getText());
+                DistributionVersion hadoopVersion = hadoopDistribution.findVersionByDisplay(newVersionDisplayName);
+
+                getConnection().setDfVersion(hadoopVersion.version);
+                if (hadoopVersion.hadoopComponent.isHadoop2()) {
                     getConnection().setUseYarn(true);
                 } else {
                     getConnection().setUseYarn(false);
@@ -231,9 +223,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         if (HCVersionUtil.isHDI(getConnection())) {
             hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
         } else {
-            EHadoopDistributions hadoopDistribution = EHadoopDistributions.getDistributionByDisplayName(distributionCombo
+            DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName(distributionCombo
                     .getText());
-            EHadoopVersion4Drivers hadoopVersion = EHadoopVersion4Drivers.indexOfByVersionDisplay(versionCombo.getText());
+            DistributionVersion hadoopVersion = hadoopDistribution.findVersionByDisplay(versionCombo.getText());
             hcInfoForm = new StandardHCInfoForm(this, connectionItem, existingNamesArray, creation, hadoopDistribution,
                     hadoopVersion);
         }
@@ -245,18 +237,15 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     private void updateVersionPart() {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(distributionCombo.getText());
-        List<String> items = getDistributionVersions(distribution);
-        String[] versions = new String[items.size()];
-        items.toArray(versions);
-        versionCombo.getCombo().setItems(versions);
-        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
-        if (version4Drivers != null) {
-            versionCombo.setText(version4Drivers.getVersionDisplay());
+        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName(distributionCombo.getText());
+        versionCombo.getCombo().setItems(distribution.getVersionsDisplay());
+        DistributionVersion hadoopVersion = distribution.findVersionByDisplay(getConnection().getDfVersion());
+        if (hadoopVersion != null) {
+            versionCombo.setText(hadoopVersion.displayVersion);
         } else {
             versionCombo.getCombo().select(0);
         }
-        if (distribution == EHadoopDistributions.CUSTOM) {
+        if (distribution.useCustom()) {
             versionCombo.setHideWidgets(true);
             hideControl(useYarnButton, false);
             hideControl(customButton, false);

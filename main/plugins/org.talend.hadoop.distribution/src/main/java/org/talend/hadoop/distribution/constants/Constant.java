@@ -12,7 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
-public final class Constant {
+public interface Constant {
+
+    static final String DISTRIBUTION_CUSTOM = "CUSTOM";
 
     public static final String PIG_STORE_PARAMETER = "STORE"; //$NON-NLS-1$
 
