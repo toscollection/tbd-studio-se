@@ -30,8 +30,6 @@
     boolean removeRoot = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOVE_ROOT__"));
     List<Map<String, String>> rootTable = 
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ROOT__");
-    List<Map<String, String>> groupTable = 
-        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__GROUP__");
     List<Map<String, String>> loopTable = 
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__LOOP__");
 
@@ -69,12 +67,10 @@
             for (IMetadataColumn column: metadata.getListColumns()) {
                 JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
                 if ((javaType == JavaTypesManager.DATE) || (javaType == JavaTypesManager.BYTE_ARRAY)) {
-                    %>
-                    // root
-                    <%
                     for (Map<String, String> root: rootTable) {
                         if (root.get("COLUMN").equals(column.getLabel())) {
                             %>
+                            // root
                             <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
                             pathString_<%=cid%> = "<%=root.get("PATH")%>";
                             <%
@@ -98,41 +94,11 @@
                             // note: we cannot break here, they may be multiple values
                         }
                     }
-                    %>
-                    // group
-                    <%
-                    for (Map<String, String> group: groupTable) {
-                        if (group.get("COLUMN").equals(column.getLabel())) {
-                            %>
-                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
-                            pathString_<%=cid%> = "<%=group.get("PATH")%>";
-                            <%
-                            if (removeRoot) {
-                                %>
-                                pathString_<%=cid%> = pathString_<%=cid%>.substring(pathString_<%=cid%>.indexOf("/") + 1);
-                                <%
-                            }
-                            %>
-                            path_<%=cid%> = pathString_<%=cid%>.split("/");
-                            <%
-                            if (javaType == JavaTypesManager.DATE) {
-                                %>
-                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, <%=column.getPattern()%>);
-                                <%
-                            } else { // Byte Array
-                                %>
-                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, null);
-                                <%
-                            }
-                            // note: we cannot break here, they may be multiple values
-                        }
-                    }
-                    %>
-                    // loop
-                    <%
+
                     for (Map<String, String> loop: loopTable) {
                         if (loop.get("COLUMN").equals(column.getLabel())) {
                             %>
+                            // loop
                             <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
                             pathString_<%=cid%> = "<%=loop.get("PATH")%>";
                             <%
