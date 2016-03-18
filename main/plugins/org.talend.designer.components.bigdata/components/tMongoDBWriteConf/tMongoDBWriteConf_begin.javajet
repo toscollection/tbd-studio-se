@@ -304,11 +304,13 @@
                             for (Object finalObject: finalObjects) {
                                 if (pattern == null) {
                                     // no pattern, we want to parse to a byte array.
-                                    convertedElements.add(
-                                            ((String)finalObject).getBytes());
+                                    if (finalObject != null) {
+								                                convertedElements.add(
+								                                        ((String)finalObject).getBytes());
+                                    }
                                 } else {
                                     convertedElements.add(
-                                            BigDataParserUtils.parseTo_Date((String)finalObject,
+                                            ParserUtils.parseTo_Date((String)finalObject,
                                                     pattern));
                                 }
                             }
@@ -317,11 +319,13 @@
                         } else {
                             if (pattern == null) {
                                 // no pattern, we want to parse to a byte array.
-                                currentElement.put(path[path.length - 1],
-                                        ((String)currentElement.get(path[path.length - 1])).getBytes());
+                                if (currentElement.get(path[path.length - 1]) != null) {
+								                            currentElement.put(path[path.length - 1],
+								                                    ((String)currentElement.get(path[path.length - 1])).getBytes());
+                                }
                             } else {
                                 currentElement.put(path[path.length - 1],
-                                        BigDataParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
+                                        ParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
                                                 pattern));
                             }
                         }
@@ -345,21 +349,25 @@
                                 com.mongodb.BasicDBObject currentElement = (com.mongodb.BasicDBObject) finalObject;
                                 if (pattern == null) {
                                     // no pattern, we want to parse to a byte array.
-                                    currentElement.put(path[path.length - 1],
-                                            ((String)currentElement.get(path[path.length - 1])).getBytes());
+                                    if (currentElement.get(path[path.length - 1]) != null) {
+								                                currentElement.put(path[path.length - 1],
+								                                        ((String)currentElement.get(path[path.length - 1])).getBytes());
+                                    }
                                 } else {
                                     currentElement.put(path[path.length - 1],
-                                            BigDataParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
+                                            ParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
                                                     pattern));
                                 }
                             } else { // loop with raw types
                                 if (pattern == null) {
                                     // no pattern, we want to parse to a byte array.
-                                    convertedElements.add(
-                                            ((String)finalObject).getBytes());
+                                    if (finalObject != null) {
+								                                convertedElements.add(
+								                                        ((String)finalObject).getBytes());
+                                    }
                                 } else {
                                     convertedElements.add(
-                                            BigDataParserUtils.parseTo_Date((String)finalObject,
+                                            ParserUtils.parseTo_Date((String)finalObject,
                                                     pattern));
                                 }
                             }
