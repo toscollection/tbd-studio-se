@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.apache100.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.apache100.Apache100Distribution;
 import org.talend.hadoop.distribution.component.HBaseComponent;
@@ -44,8 +45,8 @@ public class Apache100DistributionTest {
         HadoopComponent apache100 = new Apache100Distribution();
         assertNotNull(apache100.getDistributionName());
         assertNotNull(apache100.getVersionName(null));
-        assertEquals(EHadoopDistributions.APACHE.getName(), apache100.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.APACHE_1_0_0.getVersionValue(), apache100.getVersion());
+        assertEquals(Apache100Distribution.DISTRIBUTION_NAME, apache100.getDistribution());
+        assertEquals(Apache100Distribution.VERSION_100, apache100.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, apache100.getHadoopVersion());
         assertTrue(apache100.doSupportKerberos());
         assertFalse(apache100.doSupportUseDatanodeHostname());

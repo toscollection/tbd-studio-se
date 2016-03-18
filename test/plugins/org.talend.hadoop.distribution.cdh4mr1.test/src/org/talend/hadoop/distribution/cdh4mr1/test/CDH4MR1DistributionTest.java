@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh4mr1.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.cdh4mr1.CDH4MR1Distribution;
 import org.talend.hadoop.distribution.component.HBaseComponent;
@@ -30,6 +31,7 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 /**
  * Test class for the {@link CDH510MR1Distribution} distribution.
@@ -44,8 +46,8 @@ public class CDH4MR1DistributionTest {
         HadoopComponent distribution = new CDH4MR1Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.CLOUDERA.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.CLOUDERA_CDH4.getVersionValue(), distribution.getVersion());
+        assertEquals(IClouderaDistribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(IClouderaDistribution.VERSION_CDH4, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.mapr410.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -44,8 +45,8 @@ public class MapR410DistributionTest {
         HadoopComponent distribution = new MapR410Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.MAPR.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.MAPR410.getVersionValue(), distribution.getVersion());
+        assertEquals(MapR410Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(MapR410Distribution.VERSION_410, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

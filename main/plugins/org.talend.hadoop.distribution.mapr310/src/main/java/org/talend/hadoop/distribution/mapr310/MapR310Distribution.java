@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractMapRDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -30,9 +28,10 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
 
 public class MapR310Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IMapRDistribution {
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -42,22 +41,22 @@ public class MapR310Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.MAPR.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.MAPR.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.MAPR310.getVersionValue();
+        return VERSION_310;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.MAPR310.getVersionDisplay();
+        return VERSION_310_DISPLAY;
     }
 
     @Override

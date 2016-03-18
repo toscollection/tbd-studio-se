@@ -12,10 +12,13 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hdp230.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
@@ -42,7 +45,7 @@ public class CustomDistributionTest {
         HadoopComponent distribution = new CustomDistribution();
         assertNotNull(distribution.getDistributionName());
         assertNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.CUSTOM.getName(), distribution.getDistribution());
+        assertEquals(CustomDistribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertNull(distribution.getVersion());
         assertNull(distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());

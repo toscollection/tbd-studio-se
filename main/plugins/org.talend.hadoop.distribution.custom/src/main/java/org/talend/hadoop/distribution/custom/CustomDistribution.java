@@ -17,7 +17,6 @@ package org.talend.hadoop.distribution.custom;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -32,21 +31,22 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
 
 public class CustomDistribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, SparkBatchComponent, SparkStreamingComponent, ImpalaComponent,
-        HCatalogComponent {
+        HCatalogComponent, ICustomDistribution {
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.CUSTOM.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.CUSTOM.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override

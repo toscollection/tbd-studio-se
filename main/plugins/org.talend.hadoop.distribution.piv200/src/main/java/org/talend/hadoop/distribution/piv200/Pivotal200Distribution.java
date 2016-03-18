@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -37,9 +35,10 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.piv.IPivotalHDDistribution;
 
 public class Pivotal200Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent {
+        SqoopComponent, PigComponent, HiveComponent, IPivotalHDDistribution {
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -60,22 +59,22 @@ public class Pivotal200Distribution extends AbstractDistribution implements HDFS
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.PIVOTAL_HD.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.PIVOTAL_HD.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.PIVOTAL_HD_2_0.getVersionValue();
+        return VERSION_20;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.PIVOTAL_HD_2_0.getVersionDisplay();
+        return VERSION_20_DISPLAY;
     }
 
     @Override

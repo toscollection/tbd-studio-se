@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -36,9 +34,10 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
 
 public class HDInsight32Distribution extends AbstractDistribution implements MRComponent, PigComponent, HiveComponent,
-        SparkBatchComponent, SparkStreamingComponent {
+        SparkBatchComponent, SparkStreamingComponent, IMicrosoftHDInsightDistribution {
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -58,22 +57,22 @@ public class HDInsight32Distribution extends AbstractDistribution implements MRC
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.MICROSOFT_HD_INSIGHT.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.MICROSOFT_HD_INSIGHT.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2.getVersionValue();
+        return VERSION_32;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2.getVersionDisplay();
+        return VERSION_32_DISPLAY;
     }
 
     @Override

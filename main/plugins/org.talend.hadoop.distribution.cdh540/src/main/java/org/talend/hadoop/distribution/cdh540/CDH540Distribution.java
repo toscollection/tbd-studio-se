@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -42,15 +40,18 @@ import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 public class CDH540Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, ImpalaComponent, HCatalogComponent, SparkBatchComponent,
-        SparkStreamingComponent, HiveOnSparkComponent {
+        SparkStreamingComponent, HiveOnSparkComponent, IClouderaDistribution {
 
-    public final static String VERSION = EHadoopVersion4Drivers.CLOUDERA_CDH5_4.getVersionValue();
+    public final static String VERSION = VERSION_CDH5_4;
+
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
+
     private static Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
 
     static {
@@ -70,22 +71,22 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.CLOUDERA.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.CLOUDERA.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.CLOUDERA_CDH5_4.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.CLOUDERA_CDH5_4.getVersionDisplay();
+        return VERSION_CDH5_4_DISPLAY;
     }
 
     @Override

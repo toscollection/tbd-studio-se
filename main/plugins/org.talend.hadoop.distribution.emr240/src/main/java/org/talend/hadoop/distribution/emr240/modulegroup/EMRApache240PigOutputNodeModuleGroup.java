@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.emr240.modulegroup;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.BasicExpression;
@@ -33,7 +32,7 @@ public class EMRApache240PigOutputNodeModuleGroup {
     private static final ComponentCondition condition = new MultiComponentCondition(
             //
             new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
-                    ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, EHadoopDistributions.AMAZON_EMR.getName()), //
+                    ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, EMRApache240Distribution.DISTRIBUTION_NAME), //
             BooleanOperator.AND, //
             new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER, ComponentType.PIG
                     .getVersionParameter(), EqualityOperator.EQ, EMRApache240Distribution.VERSION));

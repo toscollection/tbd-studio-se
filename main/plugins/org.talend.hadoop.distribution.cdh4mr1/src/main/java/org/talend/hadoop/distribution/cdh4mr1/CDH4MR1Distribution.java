@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -37,9 +35,10 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 public class CDH4MR1Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent {
+        SqoopComponent, PigComponent, HiveComponent, IClouderaDistribution {
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -58,22 +57,22 @@ public class CDH4MR1Distribution extends AbstractDistribution implements HDFSCom
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.CLOUDERA.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.CLOUDERA.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.CLOUDERA_CDH4.getVersionValue();
+        return VERSION_CDH4;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.CLOUDERA_CDH4.getVersionDisplay();
+        return VERSION_CDH4_DISPLAY;
     }
 
     @Override

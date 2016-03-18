@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -30,9 +28,10 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 
 public class HDP130Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -42,22 +41,22 @@ public class HDP130Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.HORTONWORKS.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.HORTONWORKS.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.HDP_1_3.getVersionValue();
+        return VERSION_13;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.HDP_1_3.getVersionDisplay();
+        return VERSION_13_DISPLAY;
     }
 
     @Override

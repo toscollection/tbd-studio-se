@@ -12,10 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.emr240hive0131.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -43,8 +45,8 @@ public class EMRApache240_Hive_0_13_1_DistributionTest {
         HadoopComponent distribution = new EMRApache240_Hive_0_13_1_Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.AMAZON_EMR.getName(), distribution.getDistribution());
-        assertEquals("APACHE_2_4_0_EMR_0_13_1", distribution.getVersion()); //$NON-NLS-1$
+        assertEquals(EMRApache240_Hive_0_13_1_Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(EMRApache240_Hive_0_13_1_Distribution.VERSION_APACHE_240_HIVE_0131, distribution.getVersion()); //$NON-NLS-1$
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

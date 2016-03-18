@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -39,6 +37,7 @@ import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230HDFSModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230PigModuleGroup;
@@ -50,9 +49,10 @@ import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkStreamingMod
 
 public class HDP230Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
-        HiveOnSparkComponent {
+        HiveOnSparkComponent, IHortonworksDistribution {
 
-    public final static String VERSION = EHadoopVersion4Drivers.HDP_2_3.getVersionValue();
+    public final static String VERSION = VERSION_23;
+
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -87,22 +87,22 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.HORTONWORKS.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.HORTONWORKS.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.HDP_2_3.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.HDP_2_3.getVersionDisplay();
+        return VERSION_23_DISPLAY;
     }
 
     @Override

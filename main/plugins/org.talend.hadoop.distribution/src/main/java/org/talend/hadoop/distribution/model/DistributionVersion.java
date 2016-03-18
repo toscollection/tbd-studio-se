@@ -19,9 +19,11 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.condition.BasicExpression;
+import org.talend.hadoop.distribution.condition.BooleanExpression;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
+import org.talend.hadoop.distribution.condition.Expression;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
@@ -80,12 +82,16 @@ public class DistributionVersion {
     public ComponentCondition displayCondition;
 
     public String getDisplayShowIf() {
+        final Expression trueExp = new BooleanExpression(true);
+        final Expression falseExp = new BooleanExpression(false);
+
         ComponentCondition additionalCondition = displayCondition;
         if (additionalCondition != null
-                && ("(true)".equals(additionalCondition.getConditionString()) || "(false)".equals(additionalCondition //$NON-NLS-1$ //$NON-NLS-2$
-                        .getConditionString()))) {
+                && (trueExp.getExpressionString().equals(additionalCondition.getConditionString()) || falseExp
+                        .getExpressionString().equals(additionalCondition.getConditionString()))) {
             // Don't show a version if it's display condition is a BooleanCondition.
-            return "(true)".equals(additionalCondition.getConditionString()) ? "true" : "false"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            return trueExp.getExpressionString().equals(additionalCondition.getConditionString()) ? Boolean.TRUE.toString()
+                    : Boolean.FALSE.toString();
         } else {
             // Compose the ComponentCondition to display a version.
             ComponentCondition condition;
