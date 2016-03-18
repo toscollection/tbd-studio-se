@@ -23,19 +23,60 @@ import org.talend.hadoop.distribution.model.DistributionVersion;
 public class HadoopDistributionsHelperTest {
 
     @Test
-    public void testGetHadoopDistributionsDisplay() {
-
+    public void testGetHadoopDistributionsDisplay_Sorted() {
+        String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.getHadoopDistributionsDisplay(false);
+        Assert.assertArrayEquals(new String[] { "Amazon EMR", "Apache", "Cloudera", "HortonWorks", "MapR",
+                "Microsoft HD Insight", "Pivotal HD" }, hadoopDistributionsDisplay);
     }
 
     @Test
-    public void testHortonWorksDistribution() {
-        testDistributionOnly("HORTONWORKS", "HortonWorks", new String[][] {
-                { "HDP_2_3", "Hortonworks Data Platform V2.3.0", "HADOOP_2" },
-                { "HDP_2_2", "Hortonworks Data Platform V2.2.0", "HADOOP_2" },
-                { "HDP_2_1", "Hortonworks Data Platform V2.1.0(Baikal)", "HADOOP_2" },
-                { "HDP_2_0", "Hortonworks Data Platform V2.0.0(BigWheel)", "HADOOP_2" },
-                { "HDP_1_3", "Hortonworks Data Platform V1.3.0(Condor)", "HADOOP_1" },
-                { "HDP_1_2", "Hortonworks Data Platform V1.2.0(Bimota)", "HADOOP_1" } });
+    public void testGetHadoopDistributionsDisplay_withCustom__Sorted() {
+        String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.getHadoopDistributionsDisplay(true);
+        Assert.assertArrayEquals(new String[] { "Amazon EMR", "Apache", "Cloudera", "HortonWorks", "MapR",
+                "Microsoft HD Insight", "Pivotal HD", "Custom - Unsupported" }, hadoopDistributionsDisplay);
+    }
+
+    @Test
+    public void testGetHadoopDistributionByDisplayName() {
+        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName(null);
+        Assert.assertNull(hadoopDistribution);
+
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName("ABC");
+        Assert.assertNull(hadoopDistribution);
+
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName("Apache");
+        Assert.assertNotNull(hadoopDistribution);
+        Assert.assertEquals("Apache", hadoopDistribution.displayName);
+        Assert.assertEquals("APACHE", hadoopDistribution.name);
+    }
+
+    @Test
+    public void testGetHadoopDistribution() {
+        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(null);
+        Assert.assertNull(hadoopDistribution);
+
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("ABC");
+        Assert.assertNull(hadoopDistribution);
+
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("Apache");
+        Assert.assertNull(hadoopDistribution);
+
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("APACHE");
+        Assert.assertNotNull(hadoopDistribution);
+        Assert.assertEquals("Apache", hadoopDistribution.displayName);
+        Assert.assertEquals("APACHE", hadoopDistribution.name);
+    }
+
+    @Test
+    public void testAmazonEMRDistribution() {
+        testDistributionOnly("AMAZON_EMR", "Amazon EMR", new String[][] {
+                { "EMR_4_0_0", "EMR 4.0.0 (Apache 2.6.0)", "HADOOP_2" }, { "APACHE_2_4_0_EMR", "Apache 2.4.0", "HADOOP_2" },
+                { "APACHE_1_0_3_EMR", "Apache 1.0.3", "HADOOP_1" } });
+    }
+
+    @Test
+    public void testApacheDistribution() {
+        testDistributionOnly("APACHE", "Apache", new String[][] { { "APACHE_1_0_0", "Apache 1.0.0", "HADOOP_1" } });
     }
 
     @Test
@@ -51,6 +92,17 @@ public class HadoopDistributionsHelperTest {
     }
 
     @Test
+    public void testHortonWorksDistribution() {
+        testDistributionOnly("HORTONWORKS", "HortonWorks", new String[][] {
+                { "HDP_2_3", "Hortonworks Data Platform V2.3.0", "HADOOP_2" },
+                { "HDP_2_2", "Hortonworks Data Platform V2.2.0", "HADOOP_2" },
+                { "HDP_2_1", "Hortonworks Data Platform V2.1.0(Baikal)", "HADOOP_2" },
+                { "HDP_2_0", "Hortonworks Data Platform V2.0.0(BigWheel)", "HADOOP_2" },
+                { "HDP_1_3", "Hortonworks Data Platform V1.3.0(Condor)", "HADOOP_1" },
+                { "HDP_1_2", "Hortonworks Data Platform V1.2.0(Bimota)", "HADOOP_1" } });
+    }
+
+    @Test
     public void testMapRDistribution() {
         testDistributionOnly("MAPR", "MapR", new String[][] { { "MAPR500", "MapR 5.0.0(YARN mode)", "HADOOP_2" },
                 { "MAPR410", "MapR 4.1.0(YARN mode)", "HADOOP_2" }, { "MAPR401", "MapR 4.0.1(YARN mode)", "HADOOP_2" },
@@ -60,28 +112,16 @@ public class HadoopDistributionsHelperTest {
     }
 
     @Test
-    public void testApacheDistribution() {
-        testDistributionOnly("APACHE", "Apache", new String[][] { { "APACHE_1_0_0", "Apache 1.0.0", "HADOOP_1" } });
-    }
-
-    @Test
-    public void testAmazonEMRDistribution() {
-        testDistributionOnly("AMAZON_EMR", "Amazon EMR", new String[][] {
-                { "EMR_4_0_0", "EMR 4.0.0 (Apache 2.6.0)", "HADOOP_2" }, { "APACHE_2_4_0_EMR", "Apache 2.4.0", "HADOOP_2" },
-                { "APACHE_1_0_3_EMR", "Apache 1.0.3", "HADOOP_1" } });
+    public void testMicrosoftHDInsightDistribution() {
+        testDistributionOnly("MICROSOFT_HD_INSIGHT", "Microsoft HD Insight", new String[][] {
+                { "MICROSOFT_HD_INSIGHT_3_1", "Microsoft HD Insight 3.1", "HADOOP_2" },
+                { "MICROSOFT_HD_INSIGHT_3_2", "Microsoft HD Insight 3.2", "HADOOP_2" } });
     }
 
     @Test
     public void testPivotalHDDistribution() {
         testDistributionOnly("PIVOTAL_HD", "Pivotal HD", new String[][] { { "PIVOTAL_HD_2_0", "Pivotal HD 2.0", "HADOOP_2" },
                 { "PIVOTAL_HD_1_0_1", "Pivotal HD 1.0.1", "HADOOP_2" } });
-    }
-
-    @Test
-    public void testMicrosoftHDInsightDistribution() {
-        testDistributionOnly("MICROSOFT_HD_INSIGHT", "Microsoft HD Insight", new String[][] {
-                { "MICROSOFT_HD_INSIGHT_3_1", "Microsoft HD Insight 3.1", "HADOOP_2" },
-                { "MICROSOFT_HD_INSIGHT_3_2", "Microsoft HD Insight 3.2", "HADOOP_2" } });
     }
 
     @Test

@@ -55,6 +55,9 @@ public class HadoopDistributionsHelper {
     }
 
     public static DistributionBean getHadoopDistributionByDisplayName(String displayName) {
+        if (displayName == null) {
+            return null;
+        }
         DistributionBean distribution = null;
         for (DistributionBean bean : getHadoopDistributions()) {
             if (bean.displayName.equals(displayName)) {
@@ -66,6 +69,9 @@ public class HadoopDistributionsHelper {
     }
 
     public static DistributionBean getHadoopDistribution(String name) {
+        if (name == null) {
+            return null;
+        }
         DistributionBean distribution = null;
         for (DistributionBean bean : getHadoopDistributions()) {
             if (bean.name.equals(name)) {
