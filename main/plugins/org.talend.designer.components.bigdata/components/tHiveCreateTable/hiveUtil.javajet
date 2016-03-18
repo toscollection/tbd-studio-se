@@ -21,6 +21,9 @@
 					hiveType = metadataColumn.getType();
 				}
         		createTableSQL.append(hiveType);
+        		if(metadataColumn.getLength() != null && metadataColumn.getPrecision() != null && "DECIMAL".equals(hiveType)) {
+        			createTableSQL.append("(" + metadataColumn.getLength() + ", " + metadataColumn.getPrecision() + ")");
+        		}
         	
 	        	String comment = metadataColumn.getComment();
 	        	if(comment!=null && !"".equals(comment) && !"\"\"".equals(comment)) {
