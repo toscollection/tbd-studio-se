@@ -32,6 +32,8 @@
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ROOT__");
     List<Map<String, String>> loopTable = 
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__LOOP__");
+    List<Map<String, String>> groupTable = 
+            (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__GROUP__");
 
     // BulkWrite is only supportted on Mongo 2.6+ drivers
     final boolean bulkWrite = setBulkWrite & (!"MONGODB_2_5_X".equalsIgnoreCase(dbversion));
@@ -101,6 +103,34 @@
                             // loop
                             <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
                             pathString_<%=cid%> = "<%=loop.get("PATH")%>";
+                            <%
+                            if (removeRoot) {
+                                %>
+                                pathString_<%=cid%> = pathString_<%=cid%>.substring(pathString_<%=cid%>.indexOf("/") + 1);
+                                <%
+                            }
+                            %>
+                            path_<%=cid%> = pathString_<%=cid%>.split("/");
+                            <%
+                            if (javaType == JavaTypesManager.DATE) {
+                                %>
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, <%=column.getPattern()%>);
+                                <%
+                            } else { // Byte Array
+                                %>
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, null);
+                                <%
+                            }
+                            // note: we cannot break here, they may be multiple values
+                        }
+                    }
+
+                    for (Map<String, String> group: groupTable) {
+                        if (group.get("COLUMN").equals(column.getLabel())) {
+                            %>
+                            // group
+                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            pathString_<%=cid%> = "<%=group.get("PATH")%>";
                             <%
                             if (removeRoot) {
                                 %>
