@@ -309,9 +309,11 @@
 								                                        ((String)finalObject).getBytes());
                                     }
                                 } else {
-                                    convertedElements.add(
-                                            ParserUtils.parseTo_Date((String)finalObject,
-                                                    pattern));
+                                    if (finalObject != null) {
+                                        convertedElements.add(
+                                                ParserUtils.parseTo_Date((String)finalObject,
+                                                        pattern));
+                                    }
                                 }
                             }
                             finalObjects.clear();
@@ -324,9 +326,11 @@
 								                                    ((String)currentElement.get(path[path.length - 1])).getBytes());
                                 }
                             } else {
-                                currentElement.put(path[path.length - 1],
-                                        ParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
-                                                pattern));
+                                if (currentElement.get(path[path.length - 1]) != null) {
+                                    currentElement.put(path[path.length - 1],
+                                            ParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
+                                                    pattern));
+                                }
                             }
                         }
                     }
@@ -354,9 +358,11 @@
 								                                        ((String)currentElement.get(path[path.length - 1])).getBytes());
                                     }
                                 } else {
-                                    currentElement.put(path[path.length - 1],
-                                            ParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
-                                                    pattern));
+                                    if (currentElement.get(path[path.length - 1]) != null) {
+                                        currentElement.put(path[path.length - 1],
+                                                ParserUtils.parseTo_Date((String)(currentElement).get(path[path.length - 1]),
+                                                        pattern));
+                                    }
                                 }
                             } else { // loop with raw types
                                 if (pattern == null) {
@@ -366,9 +372,11 @@
 								                                        ((String)finalObject).getBytes());
                                     }
                                 } else {
-                                    convertedElements.add(
-                                            ParserUtils.parseTo_Date((String)finalObject,
-                                                    pattern));
+                                    if (finalObject != null) {
+                                        convertedElements.add(
+                                                ParserUtils.parseTo_Date((String)finalObject,
+                                                        pattern));
+                                    }
                                 }
                             }
                         }
