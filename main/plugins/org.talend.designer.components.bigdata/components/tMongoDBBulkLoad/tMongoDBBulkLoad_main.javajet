@@ -337,6 +337,9 @@
 		}
 	}
 	%>
+	// Redirect stderr to stdout
+	runtime_<%=cid%>.redirectErrorStream(true);
+
 	final Process process_<%=cid%> = runtime_<%=cid%>.start();
 
 	Thread normal_<%=cid %> = new Thread() {
@@ -355,8 +358,11 @@
 						%>				
 						int im=line.indexOf("imported");
 						int obj=line.indexOf("objects");
+						int doc=line.indexOf("documents");
 						if(im > 0 && obj > 0){
 							line = line.substring(im+8, obj).trim();
+						} else if(im > 0 && doc > 0){
+							line = line.substring(im+8, doc).trim();
 						}
 						if(line.matches("^[\\d]+$")){
 							globalMap.put("<%=cid %>_NB_LINE", Integer.parseInt(line));
