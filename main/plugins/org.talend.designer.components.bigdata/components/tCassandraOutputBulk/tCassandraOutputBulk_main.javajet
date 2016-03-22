@@ -101,7 +101,7 @@ convertUtil.setCID(cid);
 convertUtil.setVersion(version);
 
 String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
-boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3".equals(dbVersion);
+boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion);
 boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
 if(newCqlTable){
 %>
@@ -112,8 +112,26 @@ if(newCqlTable){
 			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
 			String columnName = column.getLabel();
 			String cType = column.getType();
+			List<String> stringList = java.util.Arrays.asList(new String[]{"ascii", "text", "varchar"});
+			List<String> uuidList = java.util.Arrays.asList(new String[]{"timeuuid", "uuid"});
+			if(stringList.contains(cType)){
 			%>
-			<%=inConnName%>.<%=columnName%>
+				<%=inConnName%>.<%=columnName%> == null ? null : String.valueOf(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else if("int".equals(cType)){
+			%>
+				<%=inConnName%>.<%=columnName%> == null ? null : (int)<%=inConnName%>.<%=columnName%>
+			<%
+			}else if(uuidList.contains(cType)){
+			%>
+				<%=inConnName%>.<%=columnName%> == null ? null : java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else{
+			%>
+				<%=inConnName%>.<%=columnName%>
+			<%
+			}
+			%>
 			<%if(i + 1 < sizeColumns){%>
 				,
 			<%}%>
