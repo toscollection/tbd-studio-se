@@ -23,6 +23,10 @@
   	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
   	boolean isKeyValueCommand = ("true").equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXECUTE_KEYVALUECOMMAND__"));
   	java.util.List<java.util.Map<String, String>> commandKeyValues = (java.util.List<java.util.Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COMMAND_KEYVALUES__");
+  	boolean isJsonCommand = ("true").equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXECUTE_JSONCOMMAND__"));
+  	String jsonCommand = ElementParameterParser.getValue(node,"__JSON_COMMAND__");
+  	jsonCommand = jsonCommand.replaceAll("\n"," ");
+	jsonCommand = jsonCommand.replaceAll("\r"," ");
 
   	if (isLog4jEnabled) {
 	%>
@@ -45,7 +49,11 @@
 %>
 				result_<%=cid%>=db_<%=cid%>.command(dbObjectCommand_<%=cid%>);
 <%
-			}else{
+			}else if (isJsonCommand){
+				%>
+				result_<%=cid%> = db_<%=cid%>.command((com.mongodb.BasicDBObject) com.mongodb.util.JSON.parse(<%=jsonCommand%>));
+				<%
+			} else {
 				if(isLog4jEnabled){
 %>					log.info("<%=cid%> - Execute command: \"" + <%=command%> + "\" .");
 <%

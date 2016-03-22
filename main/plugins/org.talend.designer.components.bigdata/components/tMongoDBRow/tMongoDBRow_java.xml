@@ -196,7 +196,15 @@
 			NAME="EXECUTE_KEYVALUECOMMAND"
 			FIELD="CHECK"
 			NUM_ROW="36"
-			SHOW_IF="(EXECUTE_COMMAND == 'true')"
+			SHOW_IF="(EXECUTE_COMMAND == 'true') AND (EXECUTE_JSONCOMMAND == 'false')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="EXECUTE_JSONCOMMAND"
+			FIELD="CHECK"
+			NUM_ROW="37"
+			SHOW_IF="(EXECUTE_COMMAND == 'true') AND (EXECUTE_KEYVALUECOMMAND == 'false')"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -205,7 +213,7 @@
 			NAME="COMMAND"
 			REQUIRED="true"
 			NUM_ROW="40"
-			SHOW_IF="(EXECUTE_COMMAND == 'true') AND (EXECUTE_KEYVALUECOMMAND == 'false')"
+			SHOW_IF="(EXECUTE_COMMAND == 'true') AND (EXECUTE_KEYVALUECOMMAND == 'false') AND (EXECUTE_JSONCOMMAND == 'false')"
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
@@ -222,7 +230,26 @@
 				<ITEM NAME="VALUE" />
 			</ITEMS>
 		</PARAMETER>
+		<PARAMETER
+			FIELD="LABEL"
+			NAME="JSON_COMMAND_NOTE"
+			REQUIRED="false"
+			NUM_ROW="42"
+			SHOW_IF="(EXECUTE_COMMAND =='true') AND (EXECUTE_JSONCOMMAND == 'true')"
+		>
+			<DEFAULT>Note : Surround String values with single quotes</DEFAULT>
+		</PARAMETER>
 
+		<PARAMETER
+			FIELD="MEMO"
+			NAME="JSON_COMMAND"
+			REQUIRED="false"
+			NUM_ROW="43"
+			NB_LINES="5"
+			SHOW_IF="(EXECUTE_COMMAND =='true') AND (EXECUTE_JSONCOMMAND == 'true')"
+		>
+			<DEFAULT>"{createIndexes: 'restaurants', indexes : [{key : {restaurant_id: 1}, name: 'id_index_2', unique: true}]}"</DEFAULT>
+		</PARAMETER>
 		<PARAMETER
 			FIELD="MEMO"
 			NAME="FUNCTION"
