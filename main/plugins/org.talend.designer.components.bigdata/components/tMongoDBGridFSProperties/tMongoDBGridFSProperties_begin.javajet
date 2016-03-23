@@ -232,7 +232,9 @@
 				%>
 				gridfsFiles_<%=cid%> = gridfs_<%=cid%>.find(<%=stringFileName%>);
 				<%
-			} else {
+			}
+			// FIND files from a given Mongo Query 
+			else {
 				%>
 				com.mongodb.DBObject gridFSQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
 				gridfsFiles_<%=cid%> = gridfs_<%=cid%>.find(gridFSQuery_<%=cid%>);

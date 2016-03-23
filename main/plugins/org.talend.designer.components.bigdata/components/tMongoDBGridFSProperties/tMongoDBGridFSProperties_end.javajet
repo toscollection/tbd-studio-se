@@ -19,7 +19,8 @@ List<IMetadataTable> metadatas = node.getMetadataList();
 if ((metadatas!=null) && (metadatas.size() > 0)) {
 	IMetadataTable metadata = metadatas.get(0);
 	if (metadata != null) {
-	%>
+		// Closing the begin loop
+		%>
 		}
 		<%
 		log4jFileUtil.retrievedDataNumberInfo(node);
