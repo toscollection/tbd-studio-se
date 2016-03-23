@@ -253,16 +253,6 @@
 		</PARAMETER>
 
 		<PARAMETER
-			FIELD="LABEL"
-			NAME="JSON_COMMAND_NOTE"
-			REQUIRED="false"
-			NUM_ROW="42"
-			SHOW_IF="(EXECUTE_COMMAND =='true') AND (EXECUTE_JSONCOMMAND == 'true')"
-		>
-			<DEFAULT>Note : Surround String values with single quotes</DEFAULT>
-		</PARAMETER>
-
-		<PARAMETER
 			FIELD="MEMO"
 			NAME="JSON_COMMAND"
 			REQUIRED="false"
@@ -273,16 +263,6 @@
 			<DEFAULT>"{createIndexes: 'restaurants', indexes : [{key : {restaurant_id: 1}, name: 'id_index_2', unique: true}]}"</DEFAULT>
 		</PARAMETER>
 
-		<PARAMETER
-			FIELD="MEMO"
-			NAME="JSON_COMMAND"
-			REQUIRED="false"
-			NUM_ROW="43"
-			NB_LINES="5"
-			SHOW_IF="(EXECUTE_COMMAND =='true') AND (EXECUTE_JSONCOMMAND == 'true')"
-		>
-			<DEFAULT>"{createIndexes: 'restaurants', indexes : [{key : {restaurant_id: 1}, name: 'id_index_2', unique: true}]}"</DEFAULT>
-		</PARAMETER>
 		<PARAMETER
 			FIELD="MEMO"
 			NAME="FUNCTION"
