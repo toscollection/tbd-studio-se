@@ -39,7 +39,6 @@ import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.properties.ConnectionItem;
@@ -48,6 +47,7 @@ import org.talend.designer.hdfsbrowse.hadoop.service.EHadoopServiceType;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
 import org.talend.designer.hdfsbrowse.hadoop.service.check.CheckHadoopServicesDialog;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.metadata.managment.ui.dialog.HadoopPropertiesDialog;
@@ -668,9 +668,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     @Override
     public void updateForm() {
         HadoopClusterConnection connection = getConnection();
-        String distribution = connection.getDistribution();
-        boolean isCustomDistribution = EHadoopDistributions.CUSTOM.getName().equals(distribution);
-        if (isCustomDistribution) {
+        final DistributionVersion distributionVersion = getDistributionVersion();
+        if (distributionVersion.distribution.useCustom()) {
             hideControl(customGroup, false);
             String authModeName = connection.getAuthMode();
             if (authModeName != null) {
@@ -713,8 +712,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         } else {
             hideControl(customGroup, true);
-            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(connection.getDfVersion());
-            kerberosBtn.setEnabled(version4Drivers.isSupportSecurity());
+
+            kerberosBtn.setEnabled(isCurrentHadoopVersionSupportSecurity());
             namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
             jobHistoryPrincipalText.setEditable(namenodePrincipalText.getEditable()
@@ -722,7 +721,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
-            groupText.setEditable(version4Drivers.isSupportGroup());
+            groupText.setEditable(isCurrentHadoopVersionSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
 
         }
@@ -744,8 +743,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         boolean isSupport = false;
         // this strategy is based on tMRConfiguration_java.xml, Parameter: JOBHISTORY_PRINCIPAL
-        if (hadoopVersison.version.equals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_1.getVersionValue())
-                || hadoopVersison.version.equals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2.getVersionValue())) {
+        if (hadoopVersison.version != null
+                && (hadoopVersison.version.equals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_1.getVersionValue()) || hadoopVersison.version
+                        .equals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2.getVersionValue()))) {
             return false;
         } else {
             if (hadoopDistribution.useCustom()) {
@@ -775,11 +775,23 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         return isSupport;
     }
 
+    private DistributionBean getDistribution() {
+        return HadoopDistributionsHelper.getHadoopDistribution(getConnection().getDistribution(), false);
+    }
+
+    private DistributionVersion getDistributionVersion() {
+        final DistributionBean distribution = getDistribution();
+        if (distribution != null) {
+            return distribution.getVersion(getConnection().getDfVersion(), false);
+        }
+        return null;
+    }
+
     private boolean isCurrentHadoopVersionSupportGroup() {
         boolean supportGroup = false;
-        EHadoopVersion4Drivers driver = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
-        if (driver != null) {
-            supportGroup = driver.isSupportGroup();
+        final DistributionVersion distributionVersion = getDistributionVersion();
+        if (distributionVersion != null && distributionVersion.hadoopComponent != null) {
+            supportGroup = distributionVersion.hadoopComponent.doSupportGroup();
         }
         return supportGroup;
     }
@@ -796,18 +808,19 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private boolean isCurrentHadoopVersionSupportSecurity() {
         boolean supportSecurity = false;
-        EHadoopVersion4Drivers driver = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
-        if (driver != null) {
-            supportSecurity = driver.isSupportSecurity();
+        final DistributionVersion distributionVersion = getDistributionVersion();
+        if (distributionVersion != null && distributionVersion.hadoopComponent != null) {
+            supportSecurity = distributionVersion.hadoopComponent.doSupportKerberos();
         }
         return supportSecurity;
     }
 
     private boolean isCurrentHadoopVersionSupportYarn() {
+
         boolean supportYarn = false;
-        EHadoopVersion4Drivers driver = EHadoopVersion4Drivers.indexOfByVersion(getConnection().getDfVersion());
-        if (driver != null) {
-            supportYarn = driver.isSupportYARN();
+        final DistributionVersion distributionVersion = getDistributionVersion();
+        if (distributionVersion != null && distributionVersion.hadoopComponent != null) {
+            supportYarn = distributionVersion.hadoopComponent.isHadoop2();
         }
         return supportYarn;
     }

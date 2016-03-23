@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.jface.viewers.Viewer;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.metadata.MetadataTable;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.designerproperties.RepositoryToComponentProperty;
@@ -26,6 +25,10 @@ import org.talend.core.model.properties.FolderItem;
 import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.hadoop.distribution.component.SparkComponent;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
+import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IRepositoryNode;
@@ -125,24 +128,29 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
         if (attributesMap != null && !attributesMap.isEmpty()) {
             HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(node.getId());
             if (hcConnection != null) {
-                EHadoopVersion4Drivers hadoopVersion = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-                if (hadoopVersion != null) {
-                    boolean validated = true;
-                    Object isSpark = attributesMap.get(ISSPARK);
-                    if (isSpark != null && Boolean.valueOf(isSpark.toString())) {
-                        validated = (validated && hadoopVersion.isSupportSpark());
-                        if (!validated) {
-                            return false;
+                DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(
+                        hcConnection.getDistribution(), false);
+                if (hadoopDistribution != null) {
+                    DistributionVersion distributionVersion = hadoopDistribution.getVersion(hcConnection.getDfVersion(), false);
+                    if (distributionVersion != null && distributionVersion.hadoopComponent != null) {
+                        boolean validated = true;
+                        Object isSpark = attributesMap.get(ISSPARK);
+                        if (isSpark != null && Boolean.valueOf(isSpark.toString())) {
+                            validated = (validated && distributionVersion.hadoopComponent instanceof SparkComponent);
+                            if (!validated) {
+                                return false;
+                            }
                         }
-                    }
-                    Object useYarn = attributesMap.get(USEYARN);
-                    if (useYarn != null && Boolean.valueOf(useYarn.toString())) {
-                        validated = (validated && hadoopVersion.isSupportYARN());
-                        if (!validated) {
-                            return false;
+                        Object useYarn = attributesMap.get(USEYARN);
+                        if (useYarn != null && Boolean.valueOf(useYarn.toString())) {
+                            validated = (validated && distributionVersion.hadoopComponent.isHadoop2());
+                            if (!validated) {
+                                return false;
+                            }
                         }
                     }
                 }
+
             }
         }
         return true;

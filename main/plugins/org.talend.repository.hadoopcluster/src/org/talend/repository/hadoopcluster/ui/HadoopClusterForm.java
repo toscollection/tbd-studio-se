@@ -78,7 +78,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     public void init() {
-        final DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(getConnection().getDistribution());
+        final DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(getConnection().getDistribution(),
+                false);
         if (distribution != null) {
             distributionCombo.setText(distribution.displayName);
         } else {
@@ -143,11 +144,11 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             @Override
             public void modifyText(final ModifyEvent e) {
                 String newDistributionDisplayName = distributionCombo.getText();
-                DistributionBean newDistribution = HadoopDistributionsHelper
-                        .getHadoopDistributionByDisplayName(newDistributionDisplayName);
+                DistributionBean newDistribution = HadoopDistributionsHelper.getHadoopDistribution(newDistributionDisplayName,
+                        true);
                 String newDistributionName = newDistribution.name;
                 String originalDistributionName = getConnection().getDistribution();
-                getConnection().setDistribution(newDistribution.name);
+                getConnection().setDistribution(newDistributionName);
                 getConnection().setUseCustomVersion(newDistribution.useCustom());
                 boolean distrChanged = !StringUtils.equals(newDistributionName, originalDistributionName);
                 if (distrChanged) {
@@ -169,9 +170,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 if (StringUtils.isEmpty(newVersionDisplayName)) {
                     return;
                 }
-                DistributionBean hadoopDistribution = HadoopDistributionsHelper
-                        .getHadoopDistributionByDisplayName(distributionCombo.getText());
-                DistributionVersion hadoopVersion = hadoopDistribution.findVersionByDisplay(newVersionDisplayName);
+                DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(
+                        distributionCombo.getText(), true);
+                DistributionVersion hadoopVersion = hadoopDistribution.getVersion(newVersionDisplayName, true);
 
                 getConnection().setDfVersion(hadoopVersion.version);
                 if (hadoopVersion.hadoopComponent.isHadoop2()) {
@@ -223,9 +224,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         if (HCVersionUtil.isHDI(getConnection())) {
             hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
         } else {
-            DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName(distributionCombo
-                    .getText());
-            DistributionVersion hadoopVersion = hadoopDistribution.findVersionByDisplay(versionCombo.getText());
+            DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(distributionCombo.getText(),
+                    true);
+            DistributionVersion hadoopVersion = hadoopDistribution.getVersion(versionCombo.getText(), true);
             hcInfoForm = new StandardHCInfoForm(this, connectionItem, existingNamesArray, creation, hadoopDistribution,
                     hadoopVersion);
         }
@@ -237,11 +238,14 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     private void updateVersionPart() {
-        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName(distributionCombo.getText());
+        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(distributionCombo.getText(), true);
         versionCombo.getCombo().setItems(distribution.getVersionsDisplay());
-        DistributionVersion hadoopVersion = distribution.findVersionByDisplay(getConnection().getDfVersion());
-        if (hadoopVersion != null) {
+        final DistributionVersion defaultVersion = distribution.getDefaultVersion();
+        DistributionVersion hadoopVersion = distribution.getVersion(getConnection().getDfVersion(), false);
+        if (hadoopVersion != null && hadoopVersion.displayVersion != null) {
             versionCombo.setText(hadoopVersion.displayVersion);
+        } else if (defaultVersion != null) {
+            versionCombo.setText(defaultVersion.displayVersion);
         } else {
             versionCombo.getCombo().select(0);
         }

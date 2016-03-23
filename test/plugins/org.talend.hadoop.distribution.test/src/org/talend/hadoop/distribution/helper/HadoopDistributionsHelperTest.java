@@ -38,13 +38,13 @@ public class HadoopDistributionsHelperTest {
 
     @Test
     public void testGetHadoopDistributionByDisplayName() {
-        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName(null);
+        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(null, true);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName("ABC");
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("ABC", true);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistributionByDisplayName("Apache");
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("Apache", true);
         Assert.assertNotNull(hadoopDistribution);
         Assert.assertEquals("Apache", hadoopDistribution.displayName);
         Assert.assertEquals("APACHE", hadoopDistribution.name);
@@ -52,16 +52,16 @@ public class HadoopDistributionsHelperTest {
 
     @Test
     public void testGetHadoopDistribution() {
-        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(null);
+        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(null, false);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("ABC");
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("ABC", false);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("Apache");
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("Apache", false);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("APACHE");
+        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("APACHE", false);
         Assert.assertNotNull(hadoopDistribution);
         Assert.assertEquals("Apache", hadoopDistribution.displayName);
         Assert.assertEquals("APACHE", hadoopDistribution.name);
@@ -130,7 +130,7 @@ public class HadoopDistributionsHelperTest {
     }
 
     private void testDistributionOnly(String distributionName, String distributionDisplay, String[][] supportVersions) {
-        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(distributionName);
+        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(distributionName, false);
         Assert.assertNotNull("Can't find the Distribution: " + distributionName, distribution);
         Assert.assertEquals(distributionName, distribution.name);
         Assert.assertEquals(distributionDisplay, distribution.displayName);
@@ -143,7 +143,7 @@ public class HadoopDistributionsHelperTest {
                 String versionName = supportVersions[i][0];
                 String versionDisplay = supportVersions[i][1];
                 String hadoopVersion = supportVersions[i][2];
-                DistributionVersion version = distribution.findVersionByDisplay(versionDisplay);
+                DistributionVersion version = distribution.getVersion(versionDisplay, true);
                 Assert.assertNotNull("Now, Don't support the version : " + versionName, version);
 
                 Assert.assertEquals(versionName, version.version);

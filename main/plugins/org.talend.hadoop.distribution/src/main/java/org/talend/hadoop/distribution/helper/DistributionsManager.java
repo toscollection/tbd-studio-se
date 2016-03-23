@@ -36,7 +36,7 @@ import org.talend.hadoop.distribution.model.DistributionVersion;
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public final class DistributionsHelper {
+public final class DistributionsManager {
 
     private final String serviceName;
 
@@ -45,17 +45,17 @@ public final class DistributionsHelper {
     /**
      * service can't be null. if the service is HadoopComponent directly, the componentType will be null.
      */
-    public DistributionsHelper(String serviceName, ComponentType componentType) {
+    public DistributionsManager(String serviceName, ComponentType componentType) {
         super();
         this.serviceName = serviceName;
         this.componentType = componentType;
     }
 
-    public DistributionsHelper(String serviceName) {
+    public DistributionsManager(String serviceName) {
         this(serviceName, null);
     }
 
-    public DistributionsHelper(ComponentType componentType) {
+    public DistributionsManager(ComponentType componentType) {
         this(componentType.getService(), componentType);
     }
 
@@ -112,17 +112,17 @@ public final class DistributionsHelper {
             }
 
             final String version = hc.getVersion();
-            if (version != null) {
-                DistributionVersion versionBean = new DistributionVersion(hc, disctributionBean, version, hc.getVersionName(type));
-                versionBean.addModuleGroups(hc.getModuleGroups(type));
-                // special condition for current version
-                versionBean.displayCondition = hc.getDisplayCondition(type);
-                disctributionBean.addVersion(versionBean);
+            // if (version!=null){ //sometimes, will be null, like Custom. but still need add the null version.
+            DistributionVersion versionBean = new DistributionVersion(hc, disctributionBean, version, hc.getVersionName(type));
+            versionBean.addModuleGroups(hc.getModuleGroups(type));
+            // special condition for current version
+            versionBean.displayCondition = hc.getDisplayCondition(type);
+            disctributionBean.addVersion(versionBean);
 
-                // FIXME, the default version is last one via service order?
-                disctributionBean.setDefaultVersion(versionBean);
+            // FIXME, the default version is last one via service order?
+            disctributionBean.setDefaultVersion(versionBean);
+            // }
 
-            }
             // add all version conditions ?
             disctributionBean.addCondition(hc.getDisplayCondition(type));
         }
@@ -132,10 +132,10 @@ public final class DistributionsHelper {
 
             @Override
             public int compare(DistributionBean b1, DistributionBean b2) {
-                if (Constant.DISTRIBUTION_CUSTOM.equals(b1.name)) { //$NON-NLS-1$
+                if (Constant.DISTRIBUTION_CUSTOM.equals(b1.name)) {
                     return 1;
                 }
-                if (Constant.DISTRIBUTION_CUSTOM.equals(b2.name)) { //$NON-NLS-1$
+                if (Constant.DISTRIBUTION_CUSTOM.equals(b2.name)) {
                     return -1;
                 }
                 return b1.name.compareTo(b2.name);

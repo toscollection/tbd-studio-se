@@ -16,6 +16,8 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.talend.core.runtime.hd.IHDistribution;
+import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.condition.BasicExpression;
@@ -31,7 +33,7 @@ import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class DistributionVersion {
+public class DistributionVersion implements IHDistributionVersion {
 
     public final DistributionBean distribution;
 
@@ -49,6 +51,21 @@ public class DistributionVersion {
         this.distribution = distribution;
         this.version = version;
         this.displayVersion = displayVersion;
+    }
+
+    @Override
+    public IHDistribution getDistribution() {
+        return distribution;
+    }
+
+    @Override
+    public String getVersion() {
+        return version;
+    }
+
+    @Override
+    public String getDisplayVersion() {
+        return displayVersion;
     }
 
     /**

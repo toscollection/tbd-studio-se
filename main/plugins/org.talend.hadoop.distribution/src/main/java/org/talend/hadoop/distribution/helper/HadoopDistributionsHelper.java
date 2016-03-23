@@ -22,10 +22,11 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.talend.commons.exception.CommonExceptionHandler;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 
 /**
  * DOC ggu class global comment. Detailled comment
@@ -37,7 +38,7 @@ public class HadoopDistributionsHelper {
      * 
      * @link HadoopComponent
      */
-    private static final DistributionsHelper HELPER = new DistributionsHelper(HadoopComponent.class.getName());
+    private static final DistributionsManager HELPER = new DistributionsManager(HadoopComponent.class.getName());
 
     public static DistributionBean[] getHadoopDistributions() {
         return HELPER.getDistributions();
@@ -54,32 +55,29 @@ public class HadoopDistributionsHelper {
         return distributionsDisplay.toArray(new String[0]);
     }
 
-    public static DistributionBean getHadoopDistributionByDisplayName(String displayName) {
-        if (displayName == null) {
-            return null;
-        }
-        DistributionBean distribution = null;
-        for (DistributionBean bean : getHadoopDistributions()) {
-            if (bean.displayName.equals(displayName)) {
-                distribution = bean;
-                break;
+    public static DistributionBean getHadoopDistribution(String name, boolean byDisplay) {
+        if (name != null) {
+            for (DistributionBean bean : getHadoopDistributions()) {
+                if (byDisplay) {
+                    if (name.equals(bean.displayName)) {
+                        return bean;
+                    }
+                } else if (name.equals(bean.name)) {
+                    return bean;
+                }
             }
         }
-        return distribution;
+        return null;
     }
 
-    public static DistributionBean getHadoopDistribution(String name) {
-        if (name == null) {
-            return null;
-        }
-        DistributionBean distribution = null;
+    public static DistributionVersion getDistributionVersion(String version, boolean byDisplay) {
         for (DistributionBean bean : getHadoopDistributions()) {
-            if (bean.name.equals(name)) {
-                distribution = bean;
-                break;
+            DistributionVersion v = bean.getVersion(version, byDisplay);
+            if (v != null) {
+                return v;
             }
         }
-        return distribution;
+        return null;
     }
 
     /**
@@ -94,7 +92,7 @@ public class HadoopDistributionsHelper {
     public static HadoopComponent buildDistribution(String pDistribution, String pVersion) throws Exception {
 
         BundleContext bc = FrameworkUtil.getBundle(DistributionFactory.class).getBundleContext();
-        Collection<ServiceReference<HadoopComponent>> distributions = Collections.EMPTY_LIST;
+        Collection<ServiceReference<HadoopComponent>> distributions = Collections.emptyList();
         try {
             distributions = bc.getServiceReferences(HadoopComponent.class, null);
         } catch (InvalidSyntaxException e) {
@@ -104,7 +102,7 @@ public class HadoopDistributionsHelper {
         for (ServiceReference<HadoopComponent> sr : distributions) {
             HadoopComponent np = bc.getService(sr);
             String thatDistribution = np.getDistribution();
-            if (EHadoopDistributions.CUSTOM.getName().equals(thatDistribution) && thatDistribution.equals(pDistribution)) {
+            if (Constant.DISTRIBUTION_CUSTOM.equals(thatDistribution) && thatDistribution.equals(pDistribution)) {
                 return np;
             }
             if (thatDistribution != null && thatDistribution.equals(pDistribution)) {

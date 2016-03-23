@@ -19,15 +19,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.core.runtime.hd.IHDistribution;
+import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.hadoop.distribution.ComponentType;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.utils.ComponentConditionUtil;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class DistributionBean {
+public class DistributionBean implements IHDistribution {
 
     public final ComponentType componentType;
 
@@ -41,6 +44,16 @@ public class DistributionBean {
         this.componentType = componentType;
         this.name = name;
         this.displayName = displayName;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getDisplayName() {
+        return displayName;
     }
 
     /**
@@ -59,9 +72,10 @@ public class DistributionBean {
 
             @Override
             public int compare(DistributionVersion b1, DistributionVersion b2) {
-                int cmp = b1.displayVersion.compareTo(b2.displayVersion);
+                int cmp = b1.displayVersion != null && b2.displayVersion != null ? b1.displayVersion.compareTo(b2.displayVersion)
+                        : 0;
                 if (cmp == 0) {
-                    cmp = b1.version.compareTo(b2.version);
+                    cmp = b1.version != null && b2.version != null ? b1.version.compareTo(b2.version) : 0;
                 }
                 return cmp;
             }
@@ -69,23 +83,41 @@ public class DistributionBean {
         return versions.toArray(new DistributionVersion[versions.size()]);
     }
 
+    @Override
+    public IHDistributionVersion[] getHDVersions() {
+        return getVersions();
+    }
+
     public String[] getVersionsDisplay() {
         List<String> versionsDisplay = new ArrayList<String>();
         for (DistributionVersion v : versions) {
-            versionsDisplay.add(v.displayVersion);
+            if (v.displayVersion != null) {
+                versionsDisplay.add(v.displayVersion);
+            }
         }
         return versionsDisplay.toArray(new String[0]);
     }
 
-    public DistributionVersion findVersionByDisplay(String display) {
-        if (display != null) {
-            for (DistributionVersion v : versions) {
-                if (display.equals(v.displayVersion)) {
-                    return v;
+    /**
+     * 
+     * The version can be null, especially for the Custom without any versions, but still need null one to keep the
+     * {@link HadoopComponent} object.
+     */
+    public DistributionVersion getVersion(String v, boolean byDisplay) {
+        for (DistributionVersion dv : versions) {
+            if (byDisplay) {
+                if (v == null && dv.displayVersion == null || v != null && v.equals(dv.displayVersion)) {
+                    return dv;
                 }
+            } else if (v == null && dv.version == null || v != null && v.equals(dv.version)) {
+                return dv;
             }
         }
         return null;
+    }
+
+    public IHDistributionVersion getHDVersion(String v, boolean byDisplay) {
+        return getVersion(v, byDisplay);
     }
 
     /**
@@ -133,7 +165,7 @@ public class DistributionBean {
     }
 
     public boolean useCustom() {
-        return name.equals(EHadoopDistributions.CUSTOM.getName());
+        return Constant.DISTRIBUTION_CUSTOM.equals(name);
     }
 
     @Override

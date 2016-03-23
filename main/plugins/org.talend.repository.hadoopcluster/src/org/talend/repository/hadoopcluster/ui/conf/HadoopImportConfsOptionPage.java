@@ -13,7 +13,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
-import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -85,7 +86,7 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
     }
 
     public DistributionBean getDistribution() {
-        return HadoopDistributionsHelper.getHadoopDistributionByDisplayName(distributionCombo.getText());
+        return HadoopDistributionsHelper.getHadoopDistribution(distributionCombo.getText(), true);
     }
 
     private void updateDistributionPart() {
@@ -98,7 +99,7 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
         DistributionBean distribution = getDistribution();
         versionCombo.getCombo().setItems(distribution.getVersionsDisplay());
         DistributionVersion defaultVersion = distribution.getDefaultVersion();
-        if (defaultVersion != null) {
+        if (defaultVersion != null && defaultVersion.displayVersion != null) {
             versionCombo.getCombo().setText(defaultVersion.displayVersion);
         } else {
             versionCombo.getCombo().select(0);
@@ -108,8 +109,8 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
     private void updateOptionPart() {
         DistributionBean distribution = getDistribution();
         boolean supportRemote = distribution != null
-                && (EHadoopDistributions.HORTONWORKS.getName().equals(distribution.name) || EHadoopDistributions.CLOUDERA
-                        .getName().equals(distribution.name));
+                && (IHortonworksDistribution.DISTRIBUTION_NAME.equals(distribution.name) || IClouderaDistribution.DISTRIBUTION_NAME
+                        .equals(distribution.name));
         remoteBtn.setEnabled(supportRemote);
     }
 
