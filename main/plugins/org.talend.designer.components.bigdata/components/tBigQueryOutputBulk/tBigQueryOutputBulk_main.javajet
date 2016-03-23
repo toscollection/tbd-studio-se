@@ -106,7 +106,7 @@
                         <%
                         }
                         %>
-                        csvWriter_<%=cid%>.writeNext(row_<%=cid%>);    
+                        csvWriter_<%=cid%>.writeNextEnhance(row_<%=cid%>, "");    
                         <%
                         if(checkDiskSpace){
                         %>

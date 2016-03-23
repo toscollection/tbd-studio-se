@@ -25,6 +25,8 @@
   	java.util.List<java.util.Map<String, String>> commandKeyValues = (java.util.List<java.util.Map<String, String>>)ElementParameterParser.getObjectValue(node, "__COMMAND_KEYVALUES__");
   	boolean isJsonCommand = ("true").equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXECUTE_JSONCOMMAND__"));
   	String jsonCommand = ElementParameterParser.getValue(node,"__JSON_COMMAND__");
+  	jsonCommand = jsonCommand.replaceAll("\n"," ");
+  	jsonCommand = jsonCommand.replaceAll("\r"," ");
 
   	if (isLog4jEnabled) {
 	%>

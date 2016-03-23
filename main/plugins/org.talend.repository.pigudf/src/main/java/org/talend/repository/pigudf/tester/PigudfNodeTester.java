@@ -45,4 +45,8 @@ public class PigudfNodeTester extends AbstractNodeTester {
         return isTypeNode(repositoryNode, ERepositoryObjectType.PIG_UDF);
     }
 
+    public boolean isPigudfTopNode(RepositoryNode repositoryNode) {
+        return isTypeTopNode(repositoryNode, ERepositoryObjectType.PIG_UDF);
+    }
+
 }

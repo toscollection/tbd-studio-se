@@ -33,7 +33,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.repository.view.di,
  org.talend.libraries.hadoop,
  org.talend.repository.hadoopcluster.configurator,
- org.talend.hadoop.distribution
+ org.talend.hadoop.distribution,
+ org.talend.components.api
 Bundle-ActivationPolicy: lazy
 Export-Package: org.talend.repository.hadoopcluster.action,
  org.talend.repository.hadoopcluster.action.common,
