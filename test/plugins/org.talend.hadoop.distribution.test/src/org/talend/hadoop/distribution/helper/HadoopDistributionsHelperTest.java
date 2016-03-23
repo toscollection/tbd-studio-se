@@ -24,27 +24,27 @@ public class HadoopDistributionsHelperTest {
 
     @Test
     public void testGetHadoopDistributionsDisplay_Sorted() {
-        String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.getHadoopDistributionsDisplay(false);
+        String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(false);
         Assert.assertArrayEquals(new String[] { "Amazon EMR", "Apache", "Cloudera", "HortonWorks", "MapR",
                 "Microsoft HD Insight", "Pivotal HD" }, hadoopDistributionsDisplay);
     }
 
     @Test
     public void testGetHadoopDistributionsDisplay_withCustom__Sorted() {
-        String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.getHadoopDistributionsDisplay(true);
+        String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(true);
         Assert.assertArrayEquals(new String[] { "Amazon EMR", "Apache", "Cloudera", "HortonWorks", "MapR",
                 "Microsoft HD Insight", "Pivotal HD", "Custom - Unsupported" }, hadoopDistributionsDisplay);
     }
 
     @Test
     public void testGetHadoopDistributionByDisplayName() {
-        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(null, true);
+        DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(null, true);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("ABC", true);
+        hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution("ABC", true);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("Apache", true);
+        hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution("Apache", true);
         Assert.assertNotNull(hadoopDistribution);
         Assert.assertEquals("Apache", hadoopDistribution.displayName);
         Assert.assertEquals("APACHE", hadoopDistribution.name);
@@ -52,16 +52,16 @@ public class HadoopDistributionsHelperTest {
 
     @Test
     public void testGetHadoopDistribution() {
-        DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(null, false);
+        DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(null, false);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("ABC", false);
+        hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution("ABC", false);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("Apache", false);
+        hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution("Apache", false);
         Assert.assertNull(hadoopDistribution);
 
-        hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution("APACHE", false);
+        hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution("APACHE", false);
         Assert.assertNotNull(hadoopDistribution);
         Assert.assertEquals("Apache", hadoopDistribution.displayName);
         Assert.assertEquals("APACHE", hadoopDistribution.name);
@@ -130,7 +130,7 @@ public class HadoopDistributionsHelperTest {
     }
 
     private void testDistributionOnly(String distributionName, String distributionDisplay, String[][] supportVersions) {
-        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(distributionName, false);
+        DistributionBean distribution = HadoopDistributionsHelper.HADOOP.getDistribution(distributionName, false);
         Assert.assertNotNull("Can't find the Distribution: " + distributionName, distribution);
         Assert.assertEquals(distributionName, distribution.name);
         Assert.assertEquals(distributionDisplay, distribution.displayName);

@@ -5,9 +5,10 @@ import java.util.Map;
 import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
+import org.talend.core.runtime.hd.IHDistributionVersion;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
+import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.RepositoryNode;
@@ -47,17 +48,17 @@ public class CreateHBaseAction extends CreateHadoopDBNodeAction {
         HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
-            EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
-            EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hcConnection.getDfVersion());
-            if (EHadoopVersion4Drivers.EMR_4_0_0.equals(version4Drivers)) {
-                return true;
-            }
-            if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
-                return true;
+            DistributionBean hbaseDistribution = HadoopDistributionsHelper.HBASE.getDistribution(hcConnection.getDistribution(),
+                    false);
+            if (hbaseDistribution != null) {
+                IHDistributionVersion hdVersion = hbaseDistribution.getHDVersion(hcConnection.getDfVersion(), false);
+                if (hdVersion != null) { // found, don't hide
+                    return false;
+                }
             }
         }
 
-        return false;
+        return true;
     }
 
 }

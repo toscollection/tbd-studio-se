@@ -1352,6 +1352,7 @@ public class ExecuteJobCompositeController {
         Button runBtn = executeJobComposite.getRunBtn();
         Button scheduleBtn = executeJobComposite.getScheduleBtn();
         Button killBtn = executeJobComposite.getKillBtn();
+        Button settingBtn = executeJobComposite.getSettingBtn();
         boolean isRunBtnEnabled = false;
         boolean isScheduleBtnEnabled = false;
         boolean isKillBtnEnabled = false;
@@ -1393,6 +1394,7 @@ public class ExecuteJobCompositeController {
         updateBtn(runBtn, isRunBtnEnabled);
         updateBtn(scheduleBtn, isScheduleBtnEnabled);
         updateBtn(killBtn, isKillBtnEnabled);
+        updateBtn(settingBtn, true); // only check for process
         updatePathEnabledOrNot();
         updateOutputTxtEnabledOrNot();
     }

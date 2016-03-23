@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.talend.core.hadoop.IHadoopDistributionService;
+import org.talend.core.runtime.hd.IDistributionsManager;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
@@ -23,7 +24,6 @@ import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 import org.talend.hadoop.distribution.helper.DistributionHelper;
 import org.talend.hadoop.distribution.helper.DistributionsManager;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
-import org.talend.hadoop.distribution.model.DistributionBean;
 
 /**
  * created by cmeng on Jan 15, 2016 Detailled comment
@@ -41,10 +41,11 @@ public class HadoopDistributionService implements IHadoopDistributionService {
 
     @Override
     public IHDistribution[] getOozieDistributions() {
-        DistributionBean[] hadoopDistributions = HadoopDistributionsHelper.getHadoopDistributions();
+        IHDistribution[] hadoopDistributions = HadoopDistributionsHelper.HADOOP.getDistributions();
         List<IHDistribution> oozieDistributions = new ArrayList<IHDistribution>();
-        for (DistributionBean d : hadoopDistributions) {
-            if (IApacheDistribution.DISTRIBUTION_NAME.equals(d.name) || IAmazonEMRDistribution.DISTRIBUTION_NAME.equals(d.name)) {
+        for (IHDistribution d : hadoopDistributions) {
+            if (IApacheDistribution.DISTRIBUTION_NAME.equals(d.getName())
+                    || IAmazonEMRDistribution.DISTRIBUTION_NAME.equals(d.getName())) {
                 continue;
             }
             oozieDistributions.add(d);
@@ -53,16 +54,31 @@ public class HadoopDistributionService implements IHadoopDistributionService {
     }
 
     @Override
+    public IDistributionsManager getHadoopDistributionManager() {
+        return HadoopDistributionsHelper.HADOOP;
+    }
+
+    @Override
+    public IDistributionsManager getHBaseDistributionManager() {
+        return HadoopDistributionsHelper.HBASE;
+    }
+
+    @Override
+    public IDistributionsManager getSparkDistributionManager() {
+        return HadoopDistributionsHelper.SPARK;
+    }
+
+    @Override
     public boolean doSupportService(IHDistributionVersion distributionVersion, String service) {
         return DistributionHelper.doSupportService(distributionVersion, service);
     }
 
     public IHDistribution getHadoopDistribution(String name, boolean byDisplay) {
-        return HadoopDistributionsHelper.getHadoopDistribution(name, byDisplay);
+        return HadoopDistributionsHelper.HADOOP.getDistribution(name, byDisplay);
     }
 
     public IHDistributionVersion getHadoopDistributionVersion(String version, boolean byDisplay) {
-        return HadoopDistributionsHelper.getDistributionVersion(version, byDisplay);
+        return HadoopDistributionsHelper.HADOOP.getDistributionVersion(version, byDisplay);
     }
 
 }

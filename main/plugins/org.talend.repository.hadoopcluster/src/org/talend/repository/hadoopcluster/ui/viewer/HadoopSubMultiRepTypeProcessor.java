@@ -128,7 +128,7 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
         if (attributesMap != null && !attributesMap.isEmpty()) {
             HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(node.getId());
             if (hcConnection != null) {
-                DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(
+                DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(
                         hcConnection.getDistribution(), false);
                 if (hadoopDistribution != null) {
                     DistributionVersion distributionVersion = hadoopDistribution.getVersion(hcConnection.getDfVersion(), false);

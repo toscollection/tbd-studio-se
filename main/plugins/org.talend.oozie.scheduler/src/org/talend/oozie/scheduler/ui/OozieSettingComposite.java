@@ -164,8 +164,6 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     private TOozieSettingDialog tOozieSettingDialog;
 
-    private IHadoopDistributionService hadoopDistributionService;
-
     /**
      * DOC ycbai OozieSettingComposite constructor comment.
      * 
@@ -183,10 +181,13 @@ public class OozieSettingComposite extends ScrolledComposite {
         createContents(this);
         this.tOozieSettingDialog = tOozieSettingDialog;
 
+    }
+
+    private IHadoopDistributionService getHadoopDistributionService() {
         if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopDistributionService.class)) {
-            hadoopDistributionService = (IHadoopDistributionService) GlobalServiceRegister.getDefault().getService(
-                    IHadoopDistributionService.class);
+            return (IHadoopDistributionService) GlobalServiceRegister.getDefault().getService(IHadoopDistributionService.class);
         }
+        return null;
     }
 
     public LabelledCombo getHadoopDistributionCombo() {
@@ -317,6 +318,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         versionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         List<String> filterDistributionDisplayNames = new ArrayList<String>();
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
         if (hadoopDistributionService != null) {
             IHDistribution[] distributions = hadoopDistributionService.getOozieDistributions();
             for (IHDistribution d : distributions) {
@@ -963,6 +965,7 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     public IHDistribution getHadoopDistribution() {
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
         if (hadoopDistributionService != null) {
             String newDistributionDisplayName = hadoopDistributionCombo.getText();
             final IHDistribution hadoopDistribution = hadoopDistributionService.getHadoopDistribution(newDistributionDisplayName,
@@ -981,6 +984,7 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     public void setHadoopDistributionValue(String hadoopDistributionValue) {
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
         if (hadoopDistributionService == null) {
             return;
         }
@@ -1009,6 +1013,7 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     public void setHadoopVersionValue(String hadoopVersionValue) {
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
         if (hadoopDistributionService == null) {
             return;
         }

@@ -26,6 +26,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.talend.commons.exception.CommonExceptionHandler;
+import org.talend.core.runtime.hd.IDistributionsManager;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.HadoopComponent;
@@ -36,7 +37,7 @@ import org.talend.hadoop.distribution.model.DistributionVersion;
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public final class DistributionsManager {
+public final class DistributionsManager implements IDistributionsManager {
 
     private final String serviceName;
 
@@ -144,4 +145,39 @@ public final class DistributionsManager {
         return distributionsList.toArray(new DistributionBean[0]);
     }
 
+    public String[] getDistributionsDisplay(boolean withCustom) {
+        List<String> distributionsDisplay = new ArrayList<String>();
+        for (DistributionBean bean : getDistributions()) {
+            if (!withCustom && bean.useCustom()) {
+                continue;
+            }
+            distributionsDisplay.add(bean.displayName);
+        }
+        return distributionsDisplay.toArray(new String[0]);
+    }
+
+    public DistributionBean getDistribution(String name, boolean byDisplay) {
+        if (name != null) {
+            for (DistributionBean bean : getDistributions()) {
+                if (byDisplay) {
+                    if (name.equals(bean.displayName)) {
+                        return bean;
+                    }
+                } else if (name.equals(bean.name)) {
+                    return bean;
+                }
+            }
+        }
+        return null;
+    }
+
+    public DistributionVersion getDistributionVersion(String version, boolean byDisplay) {
+        for (DistributionBean bean : getDistributions()) {
+            DistributionVersion v = bean.getVersion(version, byDisplay);
+            if (v != null) {
+                return v;
+            }
+        }
+        return null;
+    }
 }

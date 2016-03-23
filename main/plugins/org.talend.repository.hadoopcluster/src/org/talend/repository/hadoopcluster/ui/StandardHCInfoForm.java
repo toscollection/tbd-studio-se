@@ -776,7 +776,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private DistributionBean getDistribution() {
-        return HadoopDistributionsHelper.getHadoopDistribution(getConnection().getDistribution(), false);
+        return HadoopDistributionsHelper.HADOOP.getDistribution(getConnection().getDistribution(), false);
     }
 
     private DistributionVersion getDistributionVersion() {

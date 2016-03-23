@@ -373,9 +373,12 @@ public class TOozieParamUtils {
 
     public static String getPropertyType() {
         IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName());
-        if (elementParameter != null) {
-            return (String) elementParameter.getValue();
+        if (process != null) {
+            IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME
+                    .getName());
+            if (elementParameter != null) {
+                return (String) elementParameter.getValue();
+            }
         }
         return "";
     }

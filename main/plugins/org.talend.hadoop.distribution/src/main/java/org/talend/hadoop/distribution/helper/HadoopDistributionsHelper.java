@@ -12,10 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.helper;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -23,10 +21,10 @@ import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.hadoop.distribution.DistributionFactory;
+import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.component.SparkComponent;
 import org.talend.hadoop.distribution.constants.Constant;
-import org.talend.hadoop.distribution.model.DistributionBean;
-import org.talend.hadoop.distribution.model.DistributionVersion;
 
 /**
  * DOC ggu class global comment. Detailled comment
@@ -38,47 +36,21 @@ public class HadoopDistributionsHelper {
      * 
      * @link HadoopComponent
      */
-    private static final DistributionsManager HELPER = new DistributionsManager(HadoopComponent.class.getName());
+    public static final DistributionsManager HADOOP = new DistributionsManager(HadoopComponent.class.getName());
 
-    public static DistributionBean[] getHadoopDistributions() {
-        return HELPER.getDistributions();
-    }
+    /**
+     * for HBase Distributions.
+     * 
+     * @link HBaseComponent
+     */
+    public static final DistributionsManager HBASE = new DistributionsManager(HBaseComponent.class.getName());
 
-    public static String[] getHadoopDistributionsDisplay(boolean withCustom) {
-        List<String> distributionsDisplay = new ArrayList<String>();
-        for (DistributionBean bean : getHadoopDistributions()) {
-            if (!withCustom && bean.useCustom()) {
-                continue;
-            }
-            distributionsDisplay.add(bean.displayName);
-        }
-        return distributionsDisplay.toArray(new String[0]);
-    }
-
-    public static DistributionBean getHadoopDistribution(String name, boolean byDisplay) {
-        if (name != null) {
-            for (DistributionBean bean : getHadoopDistributions()) {
-                if (byDisplay) {
-                    if (name.equals(bean.displayName)) {
-                        return bean;
-                    }
-                } else if (name.equals(bean.name)) {
-                    return bean;
-                }
-            }
-        }
-        return null;
-    }
-
-    public static DistributionVersion getDistributionVersion(String version, boolean byDisplay) {
-        for (DistributionBean bean : getHadoopDistributions()) {
-            DistributionVersion v = bean.getVersion(version, byDisplay);
-            if (v != null) {
-                return v;
-            }
-        }
-        return null;
-    }
+    /**
+     * for Spark Distributions.
+     * 
+     * @link SparkComponent
+     */
+    public static final DistributionsManager SPARK = new DistributionsManager(SparkComponent.class.getName());
 
     /**
      *

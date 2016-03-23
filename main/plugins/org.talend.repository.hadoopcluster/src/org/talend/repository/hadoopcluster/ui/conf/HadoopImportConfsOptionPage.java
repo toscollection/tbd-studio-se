@@ -86,11 +86,11 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
     }
 
     public DistributionBean getDistribution() {
-        return HadoopDistributionsHelper.getHadoopDistribution(distributionCombo.getText(), true);
+        return HadoopDistributionsHelper.HADOOP.getDistribution(distributionCombo.getText(), true);
     }
 
     private void updateDistributionPart() {
-        final String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.getHadoopDistributionsDisplay(false);
+        final String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(false);
         distributionCombo.getCombo().setItems(hadoopDistributionsDisplay);
         distributionCombo.select(0);
     }

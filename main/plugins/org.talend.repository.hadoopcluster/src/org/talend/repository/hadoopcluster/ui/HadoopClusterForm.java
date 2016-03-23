@@ -78,8 +78,8 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     public void init() {
-        final DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(getConnection().getDistribution(),
-                false);
+        final DistributionBean distribution = HadoopDistributionsHelper.HADOOP.getDistribution(getConnection()
+                .getDistribution(), false);
         if (distribution != null) {
             distributionCombo.setText(distribution.displayName);
         } else {
@@ -123,7 +123,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
 
         distributionCombo = new LabelledCombo(distributionGroup,
                 Messages.getString("HadoopClusterForm.distribution"), //$NON-NLS-1$
-                Messages.getString("HadoopClusterForm.distribution.tooltip"), HadoopDistributionsHelper.getHadoopDistributionsDisplay(true), //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.distribution.tooltip"), HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(true), //$NON-NLS-1$
                 1, true);
         distributionCombo.setVisibleItemCount(VISIBLE_DISTRIBUTION_COUNT);
         versionCombo = new LabelledCombo(distributionGroup, Messages.getString("HadoopClusterForm.version"), //$NON-NLS-1$
@@ -144,7 +144,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             @Override
             public void modifyText(final ModifyEvent e) {
                 String newDistributionDisplayName = distributionCombo.getText();
-                DistributionBean newDistribution = HadoopDistributionsHelper.getHadoopDistribution(newDistributionDisplayName,
+                DistributionBean newDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(newDistributionDisplayName,
                         true);
                 String newDistributionName = newDistribution.name;
                 String originalDistributionName = getConnection().getDistribution();
@@ -170,7 +170,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 if (StringUtils.isEmpty(newVersionDisplayName)) {
                     return;
                 }
-                DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(
+                DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(
                         distributionCombo.getText(), true);
                 DistributionVersion hadoopVersion = hadoopDistribution.getVersion(newVersionDisplayName, true);
 
@@ -224,7 +224,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         if (HCVersionUtil.isHDI(getConnection())) {
             hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
         } else {
-            DistributionBean hadoopDistribution = HadoopDistributionsHelper.getHadoopDistribution(distributionCombo.getText(),
+            DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(distributionCombo.getText(),
                     true);
             DistributionVersion hadoopVersion = hadoopDistribution.getVersion(versionCombo.getText(), true);
             hcInfoForm = new StandardHCInfoForm(this, connectionItem, existingNamesArray, creation, hadoopDistribution,
@@ -238,7 +238,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
 
     private void updateVersionPart() {
-        DistributionBean distribution = HadoopDistributionsHelper.getHadoopDistribution(distributionCombo.getText(), true);
+        DistributionBean distribution = HadoopDistributionsHelper.HADOOP.getDistribution(distributionCombo.getText(), true);
         versionCombo.getCombo().setItems(distribution.getVersionsDisplay());
         final DistributionVersion defaultVersion = distribution.getDefaultVersion();
         DistributionVersion hadoopVersion = distribution.getVersion(getConnection().getDfVersion(), false);
