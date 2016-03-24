@@ -88,7 +88,7 @@
 				String localFilePath_<%=cid%> = "";
 				String gridfsFilename_<%=cid%> = map_<%=cid %>.get(key_<%=cid %>);
 				for (int m_<%=cid %> = 0; m_<%=cid %> < listings_<%=cid %>.length; m_<%=cid %>++){
-					if(("").equals(gridfsFilename_<%=cid%>)){
+					if(("").equals(map_<%=cid %>.get(key_<%=cid %>))){
 						gridfsFilename_<%=cid%> = listings_<%=cid %>[m_<%=cid %>].getName();
 					}
 					com.mongodb.gridfs.GridFSInputFile gridfsFile_<%=cid%> = gridfs_<%=cid%>.createFile(listings_<%=cid %>[m_<%=cid %>]);
@@ -97,8 +97,7 @@
 					nb_line_<%=cid %>++;
 <%					if(isLog4jEnabled) {
 %>
-						log.info("<%=cid%> " + "file: " + listings_<%=cid %>[m_<%=cid %>].getAbsolutePath() + ", size: "
-		                    	+ listings_<%=cid %>[m_<%=cid %>].length() + " bytes upload successfully");
+						log.info("<%=cid%> " + "file: " + listings_<%=cid %>[m_<%=cid %>].getAbsolutePath() + ", size: " + listings_<%=cid %>[m_<%=cid %>].length() + " bytes upload successfully");
 <%
 					}
 %>
