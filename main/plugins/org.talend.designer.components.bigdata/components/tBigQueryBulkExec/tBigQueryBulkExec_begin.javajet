@@ -194,14 +194,12 @@
         <%}%>
 
 
-		org.jets3t.service.security.GSCredentials gsCredentials = new org.jets3t.service.security.GSCredentials(<%=accessKey%>, decryptedPwd_<%=cid%>);
+		org.jets3t.service.security.GSCredentials gsCredentials_<%=cid%> = new org.jets3t.service.security.GSCredentials(<%=accessKey%>, decryptedPwd_<%=cid%>);
 		
-		org.jets3t.service.impl.rest.httpclient.GoogleStorageService gsService = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(gsCredentials);
-		//org.jets3t.service.model.GSBucket[] myBuckets = gsService.listAllBuckets();
-		//System.out.println("How many buckets to I have in GS? " + myBuckets.length);
+		org.jets3t.service.impl.rest.httpclient.GoogleStorageService gsService_<%=cid%> = new org.jets3t.service.impl.rest.httpclient.GoogleStorageService(gsCredentials_<%=cid%>);
 
-		java.io.File fileData = new java.io.File(<%=localFilename%>);
-		org.jets3t.service.model.GSObject fileObject = new org.jets3t.service.model.GSObject(fileData);
+		java.io.File fileData_<%=cid%> = new java.io.File(<%=localFilename%>);
+		org.jets3t.service.model.GSObject fileObject_<%=cid%> = new org.jets3t.service.model.GSObject(fileData_<%=cid%>);
 		<%
 		if(isLog4jEnabled){
 		%>
@@ -209,7 +207,7 @@
 		<%
 		}
 		%>
-		gsService.putObject(<%=bucketName%>, fileObject);
+		gsService_<%=cid%>.putObject(<%=bucketName%>, fileObject_<%=cid%>);
 		<%
 		if(isLog4jEnabled){
 		%>
@@ -264,10 +262,10 @@
 					typeToGenerate = "timestamp";
 				}
 				%>
-				com.google.api.services.bigquery.model.TableFieldSchema <%=columnName%> = new com.google.api.services.bigquery.model.TableFieldSchema();
-				<%=columnName%>.setName("<%=columnName%>");
-				<%=columnName%>.setType("<%=typeToGenerate%>");
-				fields_<%=cid%>.add(<%=columnName%>);		
+				com.google.api.services.bigquery.model.TableFieldSchema <%=columnName%>_<%=cid%> = new com.google.api.services.bigquery.model.TableFieldSchema();
+				<%=columnName%>_<%=cid%>.setName("<%=columnName%>");
+				<%=columnName%>_<%=cid%>.setType("<%=typeToGenerate%>");
+				fields_<%=cid%>.add(<%=columnName%>_<%=cid%>);		
 				<%
 				if(isLog4jEnabled){
 				%>
