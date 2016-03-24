@@ -210,25 +210,7 @@
             REQUIRED="true"
             NUM_ROW="30"
             GROUP="GRIDFS">
-            <DEFAULT>"fs"</DEFAULT>
-        </PARAMETER>
-
-        <PARAMETER
-            FIELD="TEXT"
-            NAME="CHUNKS_COLLECTION"
-            REQUIRED="true"
-            NUM_ROW="31"
-            GROUP="GRIDFS">
-            <DEFAULT>"chunks"</DEFAULT>
-        </PARAMETER>
-
-        <PARAMETER
-            FIELD="TEXT"
-            NAME="FILES_COLLECTION"
-            REQUIRED="true"
-            NUM_ROW="32"
-            GROUP="GRIDFS">
-            <DEFAULT>"files"</DEFAULT>
+            <DEFAULT>"bucket"</DEFAULT>
         </PARAMETER>
 
         <PARAMETER NAME="QUERY_TYPE" REPOSITORY_VALUE="QUERY_TYPE" FIELD="CLOSED_LIST" NUM_ROW="39" GROUP="QUERY_SPECS">
@@ -245,7 +227,7 @@
             NUM_ROW="40"
             GROUP="QUERY_SPECS"
             SHOW_IF="QUERY_TYPE=='STRING_FILENAME'">
-            <DEFAULT>"fs"</DEFAULT>
+            <DEFAULT>"filename"</DEFAULT>
         </PARAMETER>
 
         <PARAMETER NAME="NOTE_ISOLATION" FIELD="LABEL"

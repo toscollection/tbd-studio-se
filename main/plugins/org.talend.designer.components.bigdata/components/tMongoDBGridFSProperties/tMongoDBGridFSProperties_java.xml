@@ -210,25 +210,7 @@
             REQUIRED="true"
             NUM_ROW="30"
             GROUP="GRIDFS">
-            <DEFAULT>"fs"</DEFAULT>
-        </PARAMETER>
-
-        <PARAMETER
-            FIELD="TEXT"
-            NAME="CHUNKS_COLLECTION"
-            REQUIRED="true"
-            NUM_ROW="31"
-            GROUP="GRIDFS">
-            <DEFAULT>"chunks"</DEFAULT>
-        </PARAMETER>
-
-        <PARAMETER
-            FIELD="TEXT"
-            NAME="FILES_COLLECTION"
-            REQUIRED="true"
-            NUM_ROW="32"
-            GROUP="GRIDFS">
-            <DEFAULT>"files"</DEFAULT>
+            <DEFAULT>"bucket"</DEFAULT>
         </PARAMETER>
 
         <PARAMETER
