@@ -55,23 +55,8 @@
     boolean overWriteLocalFiles = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__OVERWRITE_LOCAL_FILES__"));
     boolean idAsFilename = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__ID_AS_FILENAME__"));
 
-  	List<IMetadataTable> metadatas = node.getMetadataList();
-  	List<IMetadataColumn> columnList = null;
-  	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
-  	String firstConnName = "";
-  	if (outputs.size() > 0){
-		IConnection out = outputs.get(0);
-		if(out!=null && out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
-			firstConnName = out.getName();
-		}
-    }
 	%>
-	int nb_line_<%=cid %> = 0;
-	<%
-  	if(metadatas != null && metadatas.size() > 0){
-      	IMetadataTable metadata = metadatas.get(0);
-      	if(metadata != null){
-		%>
+			int nb_line_<%=cid %> = 0;
 			com.mongodb.Mongo mongo_<%=cid%>=null;
 			com.mongodb.DB db_<%=cid%>=null;
 			<%
@@ -256,7 +241,5 @@
 
 			for(com.mongodb.gridfs.GridFSDBFile gridFSfile : gridfsFiles_<%=cid%>){
 <%
-		}
-	}
 %>
 

@@ -54,24 +54,8 @@
     String localdir = ElementParameterParser.getValue(node, "__LOCALDIR__");
 
     List<Map<String, String>> files = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FILES__");
-
-  	List<IMetadataTable> metadatas = node.getMetadataList();
-  	List<IMetadataColumn> columnList = null;
-  	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
-  	String firstConnName = "";
-  	if (outputs.size() > 0){
-		IConnection out = outputs.get(0);
-		if(out!=null && out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
-			firstConnName = out.getName();
-		}
-    }
 	%>
-	int nb_line_<%=cid %> = 0;
-	<%
-  	if(metadatas != null && metadatas.size() > 0){
-      	IMetadataTable metadata = metadatas.get(0);
-      	if(metadata != null){
-		%>
+            int nb_line_<%=cid %> = 0;
 			com.mongodb.Mongo mongo_<%=cid%>=null;
 			com.mongodb.DB db_<%=cid%>=null;
 			<%
@@ -244,7 +228,5 @@
 			String localdir_<%=cid %>  = <%=localdir%>;	
 			for (java.util.Map<String, String> map_<%=cid %> : list_<%=cid %>) {
 			<%
-		}
-	}
 %>
 
