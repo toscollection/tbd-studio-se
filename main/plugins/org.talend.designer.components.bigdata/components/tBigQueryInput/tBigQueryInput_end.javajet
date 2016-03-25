@@ -11,8 +11,8 @@ imports="
     String cid = node.getUniqueName();
 	%>
 	}
-	pageToken = dataList_<%=cid %>.getPageToken();
-	if (null == pageToken) {
+	pageToken_<%=cid%> = dataList_<%=cid %>.getPageToken();
+	if (null == pageToken_<%=cid%>) {
 		break;
 	}
   }
