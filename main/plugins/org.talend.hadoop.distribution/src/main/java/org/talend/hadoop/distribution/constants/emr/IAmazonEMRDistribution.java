@@ -12,13 +12,15 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.emr;
 
+import org.talend.core.runtime.hd.IHDConstants;
+
 /**
  * DOC ggu class global comment. Detailled comment
  */
 @SuppressWarnings("nls")
 public interface IAmazonEMRDistribution {
 
-    static final String DISTRIBUTION_NAME = "AMAZON_EMR";
+    static final String DISTRIBUTION_NAME = IHDConstants.DISTRIBUTION_AMAZON_EMR;
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Amazon EMR";
 

@@ -14,6 +14,7 @@ package org.talend.repository.hadoopcluster.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.talend.core.hadoop.IHadoopDistributionService;
 import org.talend.core.runtime.hd.IDistributionsManager;
@@ -69,8 +70,18 @@ public class HadoopDistributionService implements IHadoopDistributionService {
     }
 
     @Override
+    public IDistributionsManager getHiveDistributionManager() {
+        return HadoopDistributionsHelper.HIVE;
+    }
+
+    @Override
     public boolean doSupportService(IHDistributionVersion distributionVersion, String service) {
         return DistributionHelper.doSupportService(distributionVersion, service);
+    }
+
+    @Override
+    public Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods) {
+        return DistributionHelper.doSupportMethods(distributionVersion, methods);
     }
 
     public IHDistribution getHadoopDistribution(String name, boolean byDisplay) {

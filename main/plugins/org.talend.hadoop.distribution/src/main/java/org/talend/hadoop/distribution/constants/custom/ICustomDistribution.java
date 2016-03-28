@@ -12,13 +12,15 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.custom;
 
+import org.talend.core.runtime.hd.IHDConstants;
+
 /**
  * DOC ggu class global comment. Detailled comment
  */
 @SuppressWarnings("nls")
 public interface ICustomDistribution {
 
-    static final String DISTRIBUTION_NAME = "CUSTOM";
+    static final String DISTRIBUTION_NAME = IHDConstants.DISTRIBUTION_CUSTOM;
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Custom - Unsupported";
 

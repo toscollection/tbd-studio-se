@@ -188,4 +188,9 @@ public class HDP130Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportStoreAsParquet() {
         return false;
     }
+
+    @Override
+    public boolean doSupportSecurity() {
+        return true;
+    }
 }

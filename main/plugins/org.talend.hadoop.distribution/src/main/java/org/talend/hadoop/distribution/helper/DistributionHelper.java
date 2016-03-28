@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.helper;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -34,5 +38,28 @@ public final class DistributionHelper {
             }
         }
         return false;
+    }
+
+    public static Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods) {
+        Map<String, Boolean> resultsMap = new HashMap<String, Boolean>();
+        if (distributionVersion instanceof DistributionVersion && methods != null && methods.length > 0) {
+            HadoopComponent dadoopComponent = ((DistributionVersion) distributionVersion).hadoopComponent;
+            if (dadoopComponent != null) {
+                for (String m : methods) {
+                    try {
+                        Method declaredMethod = dadoopComponent.getClass().getDeclaredMethod(m);
+                        declaredMethod.setAccessible(true);
+                        Object is = declaredMethod.invoke(dadoopComponent);
+                        if (is instanceof Boolean) {
+                            resultsMap.put(m, ((Boolean) is));
+                        }
+
+                    } catch (Exception e) {
+                        // ignore
+                    }
+                }
+            }
+        }
+        return resultsMap;
     }
 }

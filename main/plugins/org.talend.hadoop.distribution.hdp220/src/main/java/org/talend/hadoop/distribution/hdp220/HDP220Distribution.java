@@ -225,4 +225,8 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
         return false;
     }
 
+    @Override
+    public boolean doSupportSecurity() {
+        return true;
+    }
 }

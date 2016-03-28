@@ -84,4 +84,9 @@ public interface HiveComponent extends MRComponent {
      */
     public boolean doSupportStoreAsParquet();
 
+    /**
+     * @return true if the distribution does support the security, seems main for HortonWorks.
+     */
+    public boolean doSupportSecurity();
+
 }

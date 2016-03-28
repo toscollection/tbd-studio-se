@@ -12,13 +12,15 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.hdp;
 
+import org.talend.core.runtime.hd.IHDConstants;
+
 /**
  * DOC ggu class global comment. Detailled comment
  */
 @SuppressWarnings("nls")
 public interface IHortonworksDistribution {
 
-    static final String DISTRIBUTION_NAME = "HORTONWORKS";
+    static final String DISTRIBUTION_NAME = IHDConstants.DISTRIBUTION_HORTONWORKS;
 
     static final String DISTRIBUTION_DISPLAY_NAME = "HortonWorks";
 

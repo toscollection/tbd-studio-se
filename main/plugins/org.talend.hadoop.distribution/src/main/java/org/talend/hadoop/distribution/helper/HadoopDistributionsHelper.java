@@ -23,6 +23,7 @@ import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.SparkComponent;
 import org.talend.hadoop.distribution.constants.Constant;
 
@@ -51,6 +52,13 @@ public class HadoopDistributionsHelper {
      * @link SparkComponent
      */
     public static final DistributionsManager SPARK = new DistributionsManager(SparkComponent.class.getName());
+
+    /**
+     * for Hive Distributions.
+     * 
+     * @link HiveComponent
+     */
+    public static final DistributionsManager HIVE = new DistributionsManager(HiveComponent.class.getName());
 
     /**
      *

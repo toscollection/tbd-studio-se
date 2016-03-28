@@ -90,9 +90,9 @@ public class DistributionBean implements IHDistribution {
 
     public String[] getVersionsDisplay() {
         List<String> versionsDisplay = new ArrayList<String>();
-        for (DistributionVersion v : versions) {
-            if (v.displayVersion != null) {
-                versionsDisplay.add(v.displayVersion);
+        for (IHDistributionVersion v : getHDVersions()) {
+            if (v.getDisplayVersion() != null) {
+                versionsDisplay.add(v.getDisplayVersion());
             }
         }
         return versionsDisplay.toArray(new String[0]);
@@ -133,8 +133,9 @@ public class DistributionBean implements IHDistribution {
 
     public DistributionVersion getDefaultVersion() {
         if (defaultVersion == null) {
-            if (!versions.isEmpty()) {
-                return versions.get(versions.size() - 1);// last one by default?
+            DistributionVersion[] versions = getVersions();
+            if (versions.length > 0) {
+                return versions[versions.length - 1];// last one by default?
             }
             return null;
         } else {
