@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="maprfs-5.1.X-lastest"
+            name="maprfs-5.1.0-mapr.jar" mvn_uri="mvn:org.talend.libraries/maprfs-5.1.0-mapr/6.2.0" >
+        </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="guava-14.0.1.jar"
+            name="guava-14.0.1.jar" mvn_uri="mvn:org.talend.libraries/guava-14.0.1/6.2.0" >
+        </libraryNeeded>
+        
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="mapr-hbase-5.1.0-mapr.jar"
+            name="mapr-hbase-5.1.0-mapr.jar"
+            mvn_uri="mvn:org.talend.libraries/mapr-hbase-5.1.0-mapr/6.2.0" >
+        </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-client-1.1.1-mapr-1602.jar"
+            name="hbase-client-1.1.1-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-client-1.1.1-mapr-1602/6.2.0" >
+        </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-common-1.1.1-mapr-1602.jar"
+            name="hbase-common-1.1.1-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-common-1.1.1-mapr-1602/6.2.0" >
+        </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-protocol-1.1.1-mapr-1602.jar"
+            name="hbase-protocol-1.1.1-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-protocol-1.1.1-mapr-1602/6.2.0" >
+        </libraryNeeded>
+
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-exec-1.2.0-mapr.jar"
+            name="hive-exec-1.2.0-mapr.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-exec-1.2.0-mapr/6.2.0" >
+       </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-common-1.2.0-mapr-1601.jar"
+            name="hive-common-1.2.0-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-common-1.2.0-mapr-1601/6.2.0" >
+       </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-serde-1.2.0-mapr-1601.jar"
+            name="hive-serde-1.2.0-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-serde-1.2.0-mapr-1601/6.2.0" >
+       </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-metastore-1.2.0-mapr.jar"
+            name="hive-metastore-1.2.0-mapr.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-metastore-1.2.0-mapr/6.2.0" >
+        </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-jdbc-1.2.0-mapr.jar"
+            name="hive-jdbc-1.2.0-mapr.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-jdbc-1.2.0-mapr/6.2.0" >
+        </libraryNeeded>
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-service-1.2.0-mapr.jar"
+            name="hive-service-1.2.0-mapr.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-service-1.2.0-mapr/6.2.0" >
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop"
+            id="parquet-hadoop-bundle-1.6.0.jar"
+            name="parquet-hadoop-bundle-1.6.0.jar" mvn_uri="mvn:org.talend.libraries/parquet-hadoop-bundle-1.6.0/6.1.0"
+            uripath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-hadoop-bundle-1.6.0.jar">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="spark-assembly-1.5.2-mapr-1602-hadoop2.7.0-mapr-1602.jar"       
+            name="spark-assembly-1.5.2-mapr-1602-hadoop2.7.0-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-assembly-1.5.2-mapr-1602-hadoop2.7.0-mapr-1602/6.2.0">
+        </libraryNeeded>
+
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="jsr305-3.0.0.jar"
+            name="jsr305-3.0.0.jar"
+            mvn_uri="mvn:org.talend.libraries/jsr305-3.0.0/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="javax.ws.rs-api-2.0.1.jar"
+            name="javax.ws.rs-api-2.0.1.jar"
+            mvn_uri="mvn:org.talend.libraries/javax.ws.rs-api-2.0.1/6.2.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="sqoop-1.4.6-mapr-1601.jar"
+            name="sqoop-1.4.6-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6-mapr-1601/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="avro-mapred-1.7.5.jar"
+            name="avro-mapred-1.7.5.jar"
+            mvn_uri="mvn:org.talend.libraries/avro-mapred-1.7.5/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-server-0.98.12-hadoop1.jar"
+            name="hbase-server-0.98.12-hadoop1.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-server-0.98.12-hadoop1/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-client-0.98.12-hadoop1.jar"
+            name="hbase-client-0.98.12-hadoop1.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-client-0.98.12-hadoop1/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-hcatalog-core-1.2.0-mapr-1601.jar"
+            name="hive-hcatalog-core-1.2.0-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-hcatalog-core-1.2.0-mapr-1601/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-hcatalog-pig-adapter-1.2.0-mapr-1601.jar"
+            name="hive-hcatalog-pig-adapter-1.2.0-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-hcatalog-pig-adapter-1.2.0-mapr-1601/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-hcatalog-server-extensions-1.2.0-mapr-1601.jar"
+            name="hive-hcatalog-server-extensions-1.2.0-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-hcatalog-server-extensions-1.2.0-mapr-1601/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="piggybank-MAPR510.jar"
+            name="piggybank-MAPR510.jar"
+            mvn_uri="mvn:org.talend.libraries/piggybank-MAPR510/6.2.0">
+        </libraryNeeded>
+        
+        <!-- yes, this is a snapshot, and this is in the final build -->
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="pig-0.15.0-mapr-1602-SNAPSHOT.jar"
+            name="pig-0.15.0-mapr-1602-SNAPSHOT.jar"
+            mvn_uri="mvn:org.talend.libraries/pig-0.15.0-mapr-1602-SNAPSHOT/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="parquet-pig-bundle-1.6.0.jar"
+            name="parquet-pig-bundle-1.6.0.jar"
+            mvn_uri="mvn:org.talend.libraries/parquet-pig-bundle-1.6.0/6.2.0">
+        </libraryNeeded>
+            
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="pig-core-h2.jar"
+            name="pig-core-h2.jar"
+            mvn_uri="mvn:org.talend.libraries/pig-core-h2/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="automaton-1.11-8.jar"
+            name="automaton-1.11-8.jar"
+            mvn_uri="mvn:org.talend.libraries/automaton-1.11-8/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hadoop-aws-2.7.0-mapr-1602.jar"
+            name="hadoop-aws-2.7.0-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.7.0-mapr-1602/6.2.0">
+        </libraryNeeded>
+                       
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="aws-java-sdk-1.7.4.jar"
+            name="aws-java-sdk-1.7.4.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.7.4/6.0.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="spark-streaming-kinesis-asl-assembly_2.10-1.5.2.jar"
+            name="spark-streaming-kinesis-asl-assembly_2.10-1.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.7.4/6.2.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="spark-streaming-kafka_2.10-1.5.2.jar"
+            name="spark-streaming-kafka_2.10-1.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka_2.10-1.5.2/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.hdp.2.3"
+            id="netty-all-4.0.23.Final.jar"
+            name="netty-all-4.0.23.Final.jar" mvn_uri="mvn:org.talend.libraries/netty-all-4.0.23.Final/6.1.0"
+            uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.3/lib/netty-all-4.0.23.Final.jar">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-server-1.1.1-mapr-1602.jar"
+            name="hbase-server-1.1.1-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-server-1.1.1-mapr-1602/6.2.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hbase-hadoop2-compat-1.1.1-mapr-1602.jar"
+            name="hbase-hadoop2-compat-1.1.1-mapr-1602.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-hadoop2-compat-1.1.1-mapr-1602/6.2.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="hive-hbase-handler-1.2.0-mapr-1601.jar"
+            name="hive-hbase-handler-1.2.0-mapr-1601.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-hbase-handler-1.2.0-mapr-1601/6.2.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.hdp.2.2"
+            id="high-scale-lib-1.1.1.jar"
+            name="high-scale-lib-1.1.1.jar" mvn_uri="mvn:org.talend.libraries/high-scale-lib-1.1.1/6.0.0"
+            uripath="platform:/plugin/org.talend.libraries.hadoop.hdp.2.2/lib/high-scale-lib-1.1.1.jar">
+        </libraryNeeded>
+
+        <libraryNeededGroup
+                description="S3 libraries for MapR 5.1.0"
+                id="S3-LIB-MAPR510"
+                name="S3-LIB-MAPR510">
+            <library id="aws-java-sdk-1.7.4.jar" />
+            <library id="hadoop-aws-2.7.0-mapr-1602.jar" />
+            <library id="jets3t-0.9.0" />
+            <library id="httpclient-4.2.5.jar" />
+            <library id="httpcore-4.2.5.jar" />
+        </libraryNeededGroup>
+        
+ 
+         <libraryNeededGroup
+              description="The lastest HDFS libraries of MapR 5.1.0"
+              id="HDFS-LIB-MAPR510"
+              name="HDFS-LIB-MAPR510">
+           <library id="maprfs-5.1.X-lastest"/>
+           <library id="hadoop-hdfs-mapr-5.0.X-lastest" />
+           <library id="hadoop-auth-mapr-5.0.X-lastest"/>
+           <library id="hadoop-common-mapr-5.0.X-lastest"/>
+           <library id="zookeeper-mapr-4.1.X-lastest"/> <!--zookeeper-3.4.5-mapr-1503 -->
+           <library id="json-20080701.jar"/>
+           <library id="guava-14.0.1.jar"/>
+           <library id="protobuf-java-2.5.0.jar"/>
+           <library id="log4j-1.2.17.jar"/>
+           <library id="slf4j-api-1.7.5.jar"/>
+           <library id="slf4j-log4j12-1.7.5.jar"/>
+           <library id="commons-logging-1.1.3.jar"/>
+           <library id="commons-collections-3.2.1.jar"/>
+           <library id="commons-configuration-1.6.jar"/>
+           <library id="commons-lang-2.6.jar"/>
+           <library id="commons-io-2.4.jar"/>
+        </libraryNeededGroup>
+        
+        <libraryNeededGroup
+                description="The lastest talend mapreduce hbase storage libraries of MapR 5.1.0"
+                id="HBASE-LIB-MAPR510"
+                name="HBASE-LIB-MAPR510" >
+           <library id="maprfs-5.1.X-lastest"/>
+           <library id="mapr-hbase-5.1.0-mapr.jar" />
+           <library id="hbase-client-1.1.1-mapr-1602.jar" />
+           <library id="hbase-common-1.1.1-mapr-1602.jar" />
+           <library id="hbase-protocol-1.1.1-mapr-1602.jar" />
+           <library id="htrace-core-3.1.0-incubating.jar" />
+           <library id="commons-codec-1.9.jar" />
+           <library id="protobuf-java-2.5.0.jar"/>
+           <library id="hadoop-hdfs-mapr-5.0.X-lastest" />
+           <library id="hadoop-auth-mapr-5.0.X-lastest"/>
+           <library id="hadoop-common-mapr-5.0.X-lastest"/>
+           <library id="commons-logging-1.1.3.jar"/>
+           <library id="commons-collections-3.2.1.jar"/>
+           <library id="commons-configuration-1.6.jar"/>
+           <library id="commons-lang-2.6.jar"/>
+           <library id="commons-io-2.4.jar"/>
+           <library id="zookeeper-mapr-4.1.X-lastest"/> <!--zookeeper-3.4.5-mapr-1503 -->
+           <library id="guava-14.0.1.jar"/>
+           <library id="log4j-1.2.17.jar"/>
+           <library id="slf4j-api-1.7.5.jar"/>
+           <library id="slf4j-log4j12-1.7.5.jar"/>
+            <library id="json-20080701.jar"/>
+            <library id="netty-all-4.0.23.Final.jar"/>
+        </libraryNeededGroup>
+        
+        <libraryNeededGroup
+              description="The lastest Hive libraries of MapR 5.1.0"
+              id="HIVE-LIB-MAPR510"
+              name="HIVE-LIB-MAPR510">
+           <library id="hive-exec-1.2.0-mapr.jar" />
+           <library id="hive-metastore-1.2.0-mapr.jar" />
+           <library id="hive-jdbc-1.2.0-mapr.jar" />
+           <library id="hive-service-1.2.0-mapr.jar" />
+           <library id="curator-client-2.6.0.jar" />
+           <library id="curator-framework-2.6.0.jar" />
+           <library id="httpclient-4.4.jar" />
+           <library id="httpcore-4.4.jar" />
+           <library id="libfb303-0.9.2.jar" />
+           <library id="libthrift-0.9.2.jar" />
+           <library id="antlr-runtime-3.4.jar" />
+           <library id="jdo-api-3.0.1.jar" />
+        </libraryNeededGroup>
+
+        
+        <!-- Hive HBase group -->
+        <libraryNeededGroup
+                description="Hive HBase libraries for MapR 5.1.0"
+                id="HIVE-HBASE-LIB-MAPR510"
+                name="HIVE-HBASE-LIB-MAPR510">
+            <library id="hbase-client-1.1.1-mapr-1602.jar" />
+            <library id="hbase-common-1.1.1-mapr-1602.jar" />
+            <library id="hbase-protocol-1.1.1-mapr-1602.jar" />
+            <library id="hbase-server-1.1.1-mapr-1602.jar"/>
+            <library id="hbase-hadoop2-compat-1.1.1-mapr-1602.jar" />
+            <library id="high-scale-lib-1.1.1.jar"/>
+            <library id="hive-hbase-handler-1.2.0-mapr-1601.jar"/>
+            <library id="netty-all-4.0.23.Final.jar"/>
+        </libraryNeededGroup>
+        
+
+        <libraryNeededGroup
+           description="The lastest Map Reduce libraries of MapR 5.1.0"
+           id="MAPREDUCE-LIB-MAPR510"
+           name="MAPREDUCE-LIB-MAPR510">
+            <group id="HDFS-LIB-MAPR510" />
+            <!-- We currently use the same jars as MAPREDUCE-LIB-MAPR50X_LASTEST 
+            But as soon as there is an official release, we may want to move to true Mapr 5.1.0 jars.
+            At the time where I wrote these line, the only one available on the distribution are
+            named "hadoop-yarn-common-2.7.0-mapr-1506-20160203.011248-124.jar" for example.
+            Even with the taf "1506", the md5 differs from the one on MapR 5.0.0.
+            But There is an High probability that the MapR true release change these jar again,
+            so I wait for them.-->
+            <library id="hadoop-hdfs-mapr-5.0.X-lastest" />
+            <library id="hadoop-yarn-server-web-proxy-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-app-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-common-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-contrib-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-core-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-hs-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-hs-plugins-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-jobclient-mapr-5.0.X-lastest" />
+            <library id="hadoop-mapreduce-client-shuffle-mapr-5.0.X-lastest" />
+            <library id="hadoop-yarn-api-mapr-5.0.X-lastest" />
+            <library id="hadoop-yarn-client-mapr-5.0.X-lastest" />
+            <library id="hadoop-yarn-common-mapr-5.0.X-lastest" />
+            <library id="commons-cli-1.2.jar" />
+            <library id="commons-codec-1.5.jar" />
+            <library id="commons-io-2.4.jar" />
+            <library id="jackson-core-asl-1.9.13.jar" />
+            <library id="jackson-mapper-asl-1.9.13.jar" />
+            <library id="htrace-core-3.1.0-incubating.jar" />
+            <library id="avro-1.7.4.jar" />
+         </libraryNeededGroup>
+
+         <libraryNeededGroup
+           description="The lastest Spark libraries of MapR 5.1.0"
+           id="SPARK-LIB-MAPR510"
+           name="SPARK-LIB-MAPR510">
+            <library id="spark-assembly-1.5.2-mapr-1602-hadoop2.7.0-mapr-1602.jar" />
+            <library id="jsr305-3.0.0.jar" />
+            <library id="javax.ws.rs-api-2.0.1.jar" />
+            <library id="jersey-server-1.9.jar" />
+            <library id="snappy-java-1.0.4.1.jar" />
+         </libraryNeededGroup>
+
+        <libraryNeededGroup
+                description="MapReduce parquet libraries for MapR 5.1.0"
+                id="MAPREDUCE-PARQUET-LIB-MAPR510"
+                name="MAPREDUCE-PARQUET-LIB-MAPR510" >
+            <library id="parquet-hadoop-bundle-1.6.0.jar" />
+            <library id="snappy-java-1.0.4.1.jar" />
+        </libraryNeededGroup>
+        
+        <libraryNeededGroup
+                description="Spark parquet libraries for MapR 5.1.0"
+                id="SPARK-PARQUET-LIB-MRREQUIRED-MAPR510"
+                name="SPARK-PARQUET-LIB-MRREQUIRED-MAPR510" >
+            <library id="parquet-hadoop-bundle-1.6.0.jar" />
+            <library id="snappy-java-1.0.4.1.jar" />
+        </libraryNeededGroup>
+        
+        <libraryNeededGroup
+                description="Sqoop libraries for MapR 5.1.0"
+                id="SQOOP-LIB-MAPR510"
+                name="SQOOP-LIB-MAPR510">
+            <library id="sqoop-1.4.6-mapr-1601.jar"/>
+            <library id="avro-mapred-1.7.5.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Pig group -->
+        <libraryNeededGroup
+                description="Pig libraries for MapR 5.1.0"
+                id="PIG-LIB-MAPR510"
+                name="PIG-LIB-MAPR510">
+            <library id="pig-0.15.0-mapr-1602-SNAPSHOT.jar"/>
+            <library id="antlr-runtime-3.4.jar"/>
+            <library id="jline-1.0.jar"/>
+            <library id="joda-time-2.5.jar"/>
+            <library id="snappy-java-1.0.4.1.jar" />
+            <library id="hive-exec-1.2.0-mapr.jar"/>
+            <library id="hive-metastore-1.2.0-mapr.jar"/>
+            <library id="pig-core-h2.jar"/>
+            <library id="automaton-1.11-8.jar"/>
+        </libraryNeededGroup>
+        
+       <!-- Pig HCatalog group -->
+        <libraryNeededGroup
+                description="Pig HCatalog libraries for MapR 5.1.0"
+                id="PIG-HCATALOG-LIB-MAPR510"
+                name="PIG-HCATALOG-LIB-MAPR510">
+            <library id="hive-hcatalog-core-1.2.0-mapr-1601.jar"/>
+            <library id="hive-hcatalog-pig-adapter-1.2.0-mapr-1601.jar"/>
+            <library id="hive-hcatalog-server-extensions-1.2.0-mapr-1601.jar"/>
+            <library id="jdo-api-3.0.1.jar" />
+            <library id="libfb303-0.9.2.jar" />
+            <library id="libthrift-0.9.2.jar" />
+            <library id="curator-client-2.6.0.jar" />
+            <library id="curator-framework-2.6.0.jar" />
+            <library id="httpclient-4.4.jar" />
+            <library id="httpcore-4.4.jar" />
+            <library id="antlr-runtime-3.4.jar" />
+        </libraryNeededGroup>
+        
+        <!-- Pig HBase group -->
+        <libraryNeededGroup
+                description="Pig HBase libraries for MapR 5.1.0"
+                id="PIG-HBASE-LIB-MAPR510"
+                name="PIG-HBASE-LIB-MAPR510">
+           <library id="hbase-server-1.1.1-mapr-1602.jar"/>
+           <library id="hbase-client-1.1.1-mapr-1602.jar" />
+           <library id="hbase-common-1.1.1-mapr-1602.jar" />
+           <library id="hbase-protocol-1.1.1-mapr-1602.jar" />
+           <library id="hbase-hadoop2-compat-1.1.1-mapr-1602.jar" />
+           <library id="high-scale-lib-1.1.1.jar"/>
+           <library id="hive-hbase-handler-1.2.0-mapr-1601.jar"/>
+           <library id="netty-all-4.0.23.Final.jar"/>
+           <library id="hadoop-hdfs-mapr-5.0.X-lastest" />
+           <library id="hadoop-auth-mapr-5.0.X-lastest"/>
+           <library id="hadoop-common-mapr-5.0.X-lastest"/>
+        </libraryNeededGroup>
+        
+        <!-- Pig parquet group -->
+        <libraryNeededGroup
+                description="Pig Parquet libraries for MapR 5.1.0"
+                id="PIG-PARQUET-LIB-MAPR510"
+                name="PIG-PARQUET-LIB-MAPR510">
+            <library id="parquet-pig-bundle-1.6.0.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Pig avro group -->
+        <libraryNeededGroup
+                description="Pig Avro libraries for MapR 5.1.0"
+                id="PIG-AVRO-LIB-MAPR510"
+                name="PIG-AVRO-LIB-MAPR510">
+            <library id="avro1.7.5.jar" />
+            <library id="commons-io-2.3.jar"/>
+            <library id="piggybank-MAPR510.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Pig RCFile group -->
+        <libraryNeededGroup
+                description="Pig RCFile libraries for MapR 5.1.0"
+                id="PIG-RCFILE-LIB-MAPR510"
+                name="PIG-RCFILE-LIB-MAPR510">
+            <library id="hive-common-1.2.0-mapr-1601.jar"/>
+            <library id="hive-exec-1.2.0-mapr.jar"/>
+            <library id="hive-serde-1.2.0-mapr-1601.jar"/>
+            <library id="elephant-bird-core-4.9.jar"/>
+            <library id="elephant-bird-hadoop-compat-4.9.jar"/>
+            <library id="elephant-bird-rcfile-4.9-patched-hive-1.x.jar"/>
+            <library id="elephant-bird-pig-4.9.jar"/>
+            <library id="elephant-bird-hive-4.9.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Pig SequenceFile group -->
+        <libraryNeededGroup
+                description="Pig SequenceFile libraries for MapR 5.1.0"
+                id="PIG-SEQUENCEFILE-LIB-MAPR510"
+                name="PIG-SEQUENCEFILE-LIB-MAPR510">
+            <library id="elephant-bird-core-4.9.jar"/>
+            <library id="elephant-bird-hadoop-compat-4.9.jar"/>
+            <library id="elephant-bird-pig-4.9.jar"/>
+            <library id="pigutil.jar"/>
+        </libraryNeededGroup>        
+
+
+        <!-- Spark Hive group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Hive libraries for MapR 5.1.0 that are MRREQUIRED"
+                id="SPARK-HIVE-LIB-MRREQUIRED-MAPR510"
+                name="SPARK-HIVE-LIB-MRREQUIRED-MAPR510">
+           <library id="hive-exec-1.2.0-mapr.jar" />
+           <library id="hive-metastore-1.2.0-mapr.jar" />
+           <library id="libfb303-0.9.2.jar" />
+           <library id="hive-exec-1.2.0-mapr.jar" />
+           <library id="hive-metastore-1.2.0-mapr.jar" />
+           <library id="hive-jdbc-1.2.0-mapr.jar" />
+           <library id="hive-service-1.2.0-mapr.jar" />
+           <library id="curator-client-2.6.0.jar" />
+           <library id="curator-framework-2.6.0.jar" />
+           <library id="httpclient-4.4.jar" />
+           <library id="httpcore-4.4.jar" />
+           <library id="libfb303-0.9.2.jar" />
+           <library id="libthrift-0.9.2.jar" />
+           <library id="antlr-runtime-3.4.jar" />
+           <library id="jdo-api-3.0.1.jar" />
+        </libraryNeededGroup>
+
+
+
+        <!-- Spark Kafka group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kafka assembly libraries for MapR 5.1.0 that are MRREQUIRED"
+                id="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-MAPR510"
+                name="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-MAPR510">
+            <library id="spark-streaming-kinesis-asl-assembly_2.10-1.5.2.jar"/>
+            <library id="kafka_2.10-0.8.2.1.jar"/>
+            <library id="metrics-core-2.2.0.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Spark Kafka Client group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kafka client libraries for MapR 5.1.0 that are MRREQUIRED"
+                id="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-MAPR510"
+                name="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-MAPR510">
+            <library id="kafka-clients-0.9.0.0-mapr-1602.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Spark Kafka Avro group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kafka Avro libraries for MapR 5.1.0 that are MRREQUIRED"
+                id="SPARK-KAFKA-AVRO-LIB-MRREQUIRED-MAPR510"
+                name="SPARK-KAFKA-AVRO-LIB-MRREQUIRED-MAPR510">
+            <library id="jackson-core-asl-1.9.13.jar" />
+            <library id="jackson-mapper-asl-1.9.13.jar" />
+            <library id="avro-1.7.4.jar" />
+        </libraryNeededGroup>
+        
+    </extension>
+</plugin>
