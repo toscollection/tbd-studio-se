@@ -68,14 +68,15 @@ public class DistributionBean implements IHDistribution {
     }
 
     public DistributionVersion[] getVersions() {
+        // DESC
         Collections.sort(versions, new Comparator<DistributionVersion>() {
 
             @Override
             public int compare(DistributionVersion b1, DistributionVersion b2) {
-                int cmp = b1.displayVersion != null && b2.displayVersion != null ? b1.displayVersion.compareTo(b2.displayVersion)
+                int cmp = b1.displayVersion != null && b2.displayVersion != null ? b2.displayVersion.compareTo(b1.displayVersion)
                         : 0;
                 if (cmp == 0) {
-                    cmp = b1.version != null && b2.version != null ? b1.version.compareTo(b2.version) : 0;
+                    cmp = b1.version != null && b2.version != null ? b2.version.compareTo(b1.version) : 0;
                 }
                 return cmp;
             }

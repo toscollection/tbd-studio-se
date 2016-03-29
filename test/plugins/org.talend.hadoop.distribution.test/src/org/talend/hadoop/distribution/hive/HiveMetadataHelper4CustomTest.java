@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hive;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
@@ -31,15 +32,26 @@ public class HiveMetadataHelper4CustomTest extends AbstractTest4HiveMetadataHelp
         return ICustomDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return null;
+    }
+
+    @Override
+    @Ignore
+    public void testGetDistributionVersionsDisplay() {
+        //
+    }
+
     @Test
     public void testHiveMode_Custom() {
-        doTestGetHiveModesDisplay(null, HIVE_MODE_DISPLAY_EMBEDDED_ONLY);
+        doTestGetHiveModesDisplay(null, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
     public void testHiveServer_Custom() {
-        doTestGetHiveServersDisplay(null, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(null, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+        doTestGetHiveServersDisplay(null, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
+        doTestGetHiveServersDisplay(null, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
     }
 
 }

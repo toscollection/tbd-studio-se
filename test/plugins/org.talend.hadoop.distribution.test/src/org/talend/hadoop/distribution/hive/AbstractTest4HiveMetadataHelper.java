@@ -19,8 +19,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
+
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
+import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.IHDistribution;
@@ -44,12 +47,17 @@ public abstract class AbstractTest4HiveMetadataHelper {
     protected final static String[] HIVE_SERVER_DISPLAY_SERVER2_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_2
             .getDisplayName() };
 
+    protected final static String[] HIVE_SERVER_DISPLAY_SERVER1_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_1
+            .getDisplayName() };
+
     protected abstract String getDistribution();
 
     protected abstract String getDistributionDisplay();
 
+    protected abstract String[] getDistributionVersionsDisplay();
+
     @Test
-    public void testGetDistributionsDisplay() {
+    public void testGetDistributionsDisplay_FindCurrentOne() {
         String[] distributionsDisplay = HiveMetadataHelper.getDistributionsDisplay();
         assertFalse("Can't find hive distributions", distributionsDisplay == null || distributionsDisplay.length <= 0);
         assertTrue("Should support " + getDistributionDisplay(),
@@ -57,7 +65,7 @@ public abstract class AbstractTest4HiveMetadataHelper {
     }
 
     @Test
-    public void testGetDistribution() {
+    public void testGetDistribution_Name() {
         IHDistribution distribution = HiveMetadataHelper.getDistribution(null, false);
         assertNull(distribution);
 
@@ -72,12 +80,14 @@ public abstract class AbstractTest4HiveMetadataHelper {
         assertEquals(getDistribution(), distribution.getName());
         assertEquals(getDistributionDisplay(), distribution.getDisplayName());
 
-        String[] versionsDisplay = distribution.getVersionsDisplay();
-        assertTrue("Must have version for " + getDistributionDisplay(), versionsDisplay != null && versionsDisplay.length > 0);
+        if (!distribution.useCustom()) {
+            String[] versionsDisplay = distribution.getVersionsDisplay();
+            assertTrue("Must have version for " + getDistributionDisplay(), versionsDisplay != null && versionsDisplay.length > 0);
+        }
     }
 
     @Test
-    public void testGetDistributionByDisplay() {
+    public void testGetDistribution_Display() {
         IHDistribution distribution = HiveMetadataHelper.getDistribution("Abc", true);
         assertNull(distribution);
 
@@ -86,12 +96,15 @@ public abstract class AbstractTest4HiveMetadataHelper {
         assertEquals(getDistribution(), distribution.getName());
         assertEquals(getDistributionDisplay(), distribution.getDisplayName());
 
-        String[] versionsDisplay = distribution.getVersionsDisplay();
-        assertTrue("Must have version for " + getDistributionDisplay(), versionsDisplay != null && versionsDisplay.length > 0);
+        if (!distribution.useCustom()) {
+            String[] versionsDisplay = distribution.getVersionsDisplay();
+            assertTrue("Must have version for " + getDistributionDisplay(), versionsDisplay != null && versionsDisplay.length > 0);
+
+        }
     }
 
     @Test
-    public void testGetDistributionWithDefault() {
+    public void testGetDistribution_Default() {
         IHDistribution distribution = HiveMetadataHelper.getDistribution("Abc", true, false);
         assertNull(distribution);
 
@@ -111,19 +124,33 @@ public abstract class AbstractTest4HiveMetadataHelper {
         assertEquals(distribution2.getDisplayName(), distribution.getDisplayName());
     }
 
+    @Test
+    public void testGetDistributionVersionsDisplay() {
+        String[] distributionVersionsDisplay = HiveMetadataHelper.getDistributionVersionsDisplay(getDistribution(), false);
+        doTestArray("Versions are different", getDistributionVersionsDisplay(), distributionVersionsDisplay);
+    }
+
     protected void doTestGetHiveModesDisplay(String hiveVersion, String[] modeArr) {
+        if (PluginChecker.isOnlyTopLoaded() && ArrayUtils.contains(modeArr, HiveModeInfo.EMBEDDED.getDisplayName())) {
+            modeArr = ArrayUtils.removeElement(modeArr, HiveModeInfo.EMBEDDED.getDisplayName());
+        }
         String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), hiveVersion, false);
-        assertNotNull(hiveModesDisplay);
-        assertNotNull(modeArr);
-        assertArrayEquals(modeArr, hiveModesDisplay);
-        assertEquals(modeArr.length, hiveModesDisplay.length);
+        doTestArray("Modes are different", modeArr, hiveModesDisplay);
     }
 
     protected void doTestGetHiveServersDisplay(String hiveVersion, String hiveMode, String[] serverArr) {
         String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(), hiveVersion, hiveMode, false);
-        assertNotNull(hiveServersDisplay);
-        assertNotNull(serverArr);
-        assertArrayEquals(serverArr, hiveServersDisplay);
-        assertEquals(serverArr.length, hiveServersDisplay.length);
+        doTestArray("Server Versions are different", serverArr, hiveServersDisplay);
+    }
+
+    protected void doTestArray(String baseMessages, String[] expecteds, String[] actuals) {
+        assertNotNull(expecteds);
+        assertNotNull(actuals);
+        if (expecteds.length == actuals.length) {
+            assertArrayEquals(baseMessages, expecteds, actuals);
+        } else {
+            assertEquals(baseMessages + " , " + Arrays.asList(expecteds) + "<==>" + Arrays.asList(actuals), expecteds.length,
+                    actuals.length);
+        }
     }
 }

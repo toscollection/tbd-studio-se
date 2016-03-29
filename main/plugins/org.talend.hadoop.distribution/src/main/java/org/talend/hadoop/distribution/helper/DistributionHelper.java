@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.helper;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,20 +47,39 @@ public final class DistributionHelper {
             HadoopComponent dadoopComponent = ((DistributionVersion) distributionVersion).hadoopComponent;
             if (dadoopComponent != null) {
                 for (String m : methods) {
-                    try {
-                        Method declaredMethod = dadoopComponent.getClass().getDeclaredMethod(m);
-                        declaredMethod.setAccessible(true);
-                        Object is = declaredMethod.invoke(dadoopComponent);
-                        if (is instanceof Boolean) {
-                            resultsMap.put(m, ((Boolean) is));
+                    Method method = findMethod(dadoopComponent.getClass(), m);
+                    if (method != null) {
+                        try {
+                            method.setAccessible(true);
+                            Object is = method.invoke(dadoopComponent);
+                            if (is instanceof Boolean) {
+                                resultsMap.put(m, ((Boolean) is));
+                            }
+                        } catch (SecurityException | IllegalAccessException | IllegalArgumentException
+                                | InvocationTargetException e) {
+                            // ignore
                         }
-
-                    } catch (Exception e) {
-                        // ignore
                     }
+
                 }
             }
         }
         return resultsMap;
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    private static Method findMethod(Class baseClazz, String methodName) {
+        Method method = null;
+        if (baseClazz != null) {
+            try {
+                method = baseClazz.getDeclaredMethod(methodName);
+            } catch (NoSuchMethodException | SecurityException e) {
+                // ignore
+            }
+            if (method == null) { // can't find in current base class, try parent class.
+                method = findMethod(baseClazz.getSuperclass(), methodName);
+            }
+        }
+        return method;
     }
 }

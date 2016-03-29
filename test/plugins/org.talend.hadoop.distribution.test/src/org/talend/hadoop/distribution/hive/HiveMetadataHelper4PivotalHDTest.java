@@ -31,6 +31,11 @@ public class HiveMetadataHelper4PivotalHDTest extends AbstractTest4HiveMetadataH
         return IPivotalHDDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return new String[] { IPivotalHDDistribution.VERSION_20_DISPLAY, IPivotalHDDistribution.VERSION_101_DISPLAY };
+    }
+
     @Test
     public void testHiveMode_Pivotal101() {
         doTestGetHiveModesDisplay(IPivotalHDDistribution.VERSION_101, HIVE_MODE_DISPLAY_ALL);

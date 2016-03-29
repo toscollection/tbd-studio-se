@@ -31,6 +31,13 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractTest4HiveMetadataH
         return IAmazonEMRDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return new String[] { IAmazonEMRDistribution.VERSION_400_HIVE_DISPLAY,
+                IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131_DISPLAY,
+                IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_DISPLAY, IAmazonEMRDistribution.VERSION_APACHE_103_HIVE_DISPLAY };
+    }
+
     @Test
     public void testHiveMode_EMR400() {
         doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_400, HIVE_MODE_DISPLAY_STANDALONE_ONLY);

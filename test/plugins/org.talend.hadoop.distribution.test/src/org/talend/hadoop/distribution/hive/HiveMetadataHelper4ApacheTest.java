@@ -32,17 +32,22 @@ public class HiveMetadataHelper4ApacheTest extends AbstractTest4HiveMetadataHelp
         return IApacheDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return new String[] { IApacheDistribution.VERSION_100_HIVE_DISPLAY };
+    }
+
     @Test
     public void testHiveMode_Apache100() {
-        doTestGetHiveModesDisplay(IApacheDistribution.VERSION_100, HIVE_MODE_DISPLAY_EMBEDDED_ONLY);
+        doTestGetHiveModesDisplay(IApacheDistribution.VERSION_100, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
     public void testHiveServer_Apache100() {
         doTestGetHiveServersDisplay(IHortonworksDistribution.VERSION_12, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
         doTestGetHiveServersDisplay(IHortonworksDistribution.VERSION_12, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
 }

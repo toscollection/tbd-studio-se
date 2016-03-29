@@ -31,6 +31,14 @@ public class HiveMetadataHelper4MapRTest extends AbstractTest4HiveMetadataHelper
         return IMapRDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return new String[] { IMapRDistribution.VERSION_500_DISPLAY, IMapRDistribution.VERSION_410_DISPLAY,
+                IMapRDistribution.VERSION_401_DISPLAY, IMapRDistribution.VERSION_310_DISPLAY,
+                IMapRDistribution.VERSION_301_DISPLAY, IMapRDistribution.VERSION_213_DISPLAY,
+                IMapRDistribution.VERSION_212_DISPLAY, IMapRDistribution.VERSION_200_DISPLAY };
+    }
+
     @Test
     public void testHiveMode_MapR200() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_200, HIVE_MODE_DISPLAY_ALL);

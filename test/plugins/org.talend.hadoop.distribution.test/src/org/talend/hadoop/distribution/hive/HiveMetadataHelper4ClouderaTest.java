@@ -31,6 +31,14 @@ public class HiveMetadataHelper4ClouderaTest extends AbstractTest4HiveMetadataHe
         return IClouderaDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return new String[] { IClouderaDistribution.VERSION_CDH5_5_DISPLAY, IClouderaDistribution.VERSION_CDH5_4_DISPLAY,
+                IClouderaDistribution.VERSION_CDH5_1_DISPLAY, IClouderaDistribution.VERSION_CDH5_1_MR1_DISPLAY,
+                IClouderaDistribution.VERSION_CDH5_DISPLAY, IClouderaDistribution.VERSION_CDH4_DISPLAY,
+                IClouderaDistribution.VERSION_CDH4_YARN_DISPLAY };
+    }
+
     @Test
     public void testHiveMode_CDH4MR1() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH4, HIVE_MODE_DISPLAY_ALL);
