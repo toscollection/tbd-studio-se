@@ -46,10 +46,10 @@ public class HiveMetadataHelper4MapRTest extends AbstractTest4HiveMetadataHelper
 
     @Test
     public void testHiveServer_MapR200() {
-        // TODO not sure.
-        String[] serverArr = new String[] { "Not sure" };
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HiveModeInfo.EMBEDDED.getName(), serverArr);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HiveModeInfo.STANDALONE.getName(), serverArr);
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HiveModeInfo.EMBEDDED.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HiveModeInfo.STANDALONE.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
@@ -59,10 +59,10 @@ public class HiveMetadataHelper4MapRTest extends AbstractTest4HiveMetadataHelper
 
     @Test
     public void testHiveServer_MapR212() {
-        // TODO not sure.
-        String[] serverArr = new String[] { "Not sure" };
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HiveModeInfo.EMBEDDED.getName(), serverArr);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HiveModeInfo.STANDALONE.getName(), serverArr);
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HiveModeInfo.EMBEDDED.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HiveModeInfo.STANDALONE.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
@@ -116,8 +116,10 @@ public class HiveMetadataHelper4MapRTest extends AbstractTest4HiveMetadataHelper
 
     @Test
     public void testHiveServer_MapR410() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HiveModeInfo.EMBEDDED.getName(),
+                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HiveModeInfo.STANDALONE.getName(),
+                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
     @Test

@@ -56,7 +56,7 @@ public class HiveMetadataHelper4HortonworksTest extends AbstractTest4HiveMetadat
                     IHortonworksDistribution.VERSION_12, false);
             assertTrue(NOT_SUPPORT_TOP_MESSAGE, hiveModesDisplay == null || hiveModesDisplay.length == 0);
         } else {
-            doTestGetHiveModesDisplay(IHortonworksDistribution.VERSION_12, HIVE_MODE_DISPLAY_EMBEDDED_ONLY);
+            doTestGetHiveModesDisplay(IHortonworksDistribution.VERSION_12, HIVE_MODE_DISPLAY_ALL);
         }
     }
 
@@ -85,7 +85,7 @@ public class HiveMetadataHelper4HortonworksTest extends AbstractTest4HiveMetadat
                     IHortonworksDistribution.VERSION_13, false);
             assertTrue(NOT_SUPPORT_TOP_MESSAGE, hiveModesDisplay == null || hiveModesDisplay.length == 0);
         } else {
-            doTestGetHiveModesDisplay(IHortonworksDistribution.VERSION_13, HIVE_MODE_DISPLAY_EMBEDDED_ONLY);
+            doTestGetHiveModesDisplay(IHortonworksDistribution.VERSION_13, HIVE_MODE_DISPLAY_ALL);
         }
     }
 
@@ -114,7 +114,7 @@ public class HiveMetadataHelper4HortonworksTest extends AbstractTest4HiveMetadat
                     IHortonworksDistribution.VERSION_20, false);
             assertTrue(NOT_SUPPORT_TOP_MESSAGE, hiveModesDisplay == null || hiveModesDisplay.length == 0);
         } else {
-            doTestGetHiveModesDisplay(IHortonworksDistribution.VERSION_20, HIVE_MODE_DISPLAY_EMBEDDED_ONLY);
+            doTestGetHiveModesDisplay(IHortonworksDistribution.VERSION_20, HIVE_MODE_DISPLAY_ALL);
         }
     }
 

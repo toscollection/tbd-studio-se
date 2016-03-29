@@ -43,10 +43,10 @@ public class HiveMetadataHelper4PivotalHDTest extends AbstractTest4HiveMetadataH
 
     @Test
     public void testHiveServer_Pivotal101() {
-        // TODO not sure.
-        String[] serverArr = new String[] { "Not sure" };
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HiveModeInfo.EMBEDDED.getName(), serverArr);
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HiveModeInfo.STANDALONE.getName(), serverArr);
+        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HiveModeInfo.EMBEDDED.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HiveModeInfo.STANDALONE.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test

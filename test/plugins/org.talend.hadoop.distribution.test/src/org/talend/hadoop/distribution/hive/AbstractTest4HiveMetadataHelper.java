@@ -44,10 +44,10 @@ public abstract class AbstractTest4HiveMetadataHelper {
     protected final static String[] HIVE_SERVER_DISPLAY_ALL = new String[] {
             HiveServerVersionInfo.HIVE_SERVER_1.getDisplayName(), HiveServerVersionInfo.HIVE_SERVER_2.getDisplayName() };
 
-    protected final static String[] HIVE_SERVER_DISPLAY_SERVER2_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_2
+    protected final static String[] HIVE_SERVER_DISPLAY_SERVER1_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_1
             .getDisplayName() };
 
-    protected final static String[] HIVE_SERVER_DISPLAY_SERVER1_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_1
+    protected final static String[] HIVE_SERVER_DISPLAY_SERVER2_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_2
             .getDisplayName() };
 
     protected abstract String getDistribution();

@@ -58,10 +58,10 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractTest4HiveMetadataH
 
     @Test
     public void testHiveServer_EMRApache103() {
-        // TODO not sure.
-        String[] serverArr = new String[] { "Not sure" };
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HiveModeInfo.EMBEDDED.getName(), serverArr);
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HiveModeInfo.STANDALONE.getName(), serverArr);
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HiveModeInfo.EMBEDDED.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HiveModeInfo.STANDALONE.getName(),
+                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
@@ -71,25 +71,23 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractTest4HiveMetadataH
 
     @Test
     public void testHiveServer_EMRApache240Hive0131() {
-        // TODO not sure.
-        String[] serverArr = new String[] { "Not sure" };
         doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HiveModeInfo.EMBEDDED.getName(),
-                serverArr);
+                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
         doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HiveModeInfo.STANDALONE.getName(),
-                serverArr);
+                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
     @Test
     public void testHiveMode_EMRApache240() {
-        doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HIVE_MODE_DISPLAY_ALL);
+        doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
     public void testHiveServer_EMRApache240() {
-        // TODO not sure.
-        String[] serverArr = new String[] { "Not sure" };
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HiveModeInfo.EMBEDDED.getName(), serverArr);
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HiveModeInfo.STANDALONE.getName(), serverArr);
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HiveModeInfo.EMBEDDED.getName(),
+                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HiveModeInfo.STANDALONE.getName(),
+                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
 }

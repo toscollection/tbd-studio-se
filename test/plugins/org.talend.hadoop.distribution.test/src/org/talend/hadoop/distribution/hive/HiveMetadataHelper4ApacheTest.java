@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.hive;
 import org.junit.Test;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
-import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 
 /**
  * DOC ggu class global comment. Detailled comment
@@ -44,9 +43,9 @@ public class HiveMetadataHelper4ApacheTest extends AbstractTest4HiveMetadataHelp
 
     @Test
     public void testHiveServer_Apache100() {
-        doTestGetHiveServersDisplay(IHortonworksDistribution.VERSION_12, HiveModeInfo.EMBEDDED.getName(),
+        doTestGetHiveServersDisplay(IApacheDistribution.VERSION_100, HiveModeInfo.EMBEDDED.getName(),
                 HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-        doTestGetHiveServersDisplay(IHortonworksDistribution.VERSION_12, HiveModeInfo.STANDALONE.getName(),
+        doTestGetHiveServersDisplay(IApacheDistribution.VERSION_100, HiveModeInfo.STANDALONE.getName(),
                 HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
