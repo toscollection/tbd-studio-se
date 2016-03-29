@@ -15,10 +15,6 @@ String cid = node.getUniqueName();
 String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
 boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
-List<IMetadataTable> metadatas = node.getMetadataList();
-if ((metadatas!=null) && (metadatas.size() > 0)) {
-	IMetadataTable metadata = metadatas.get(0);
-	if (metadata != null) {
 		%>
 		}
 		<%
@@ -47,7 +43,5 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 			}
 		<%
 		}
-	}
-}
 %>
 globalMap.put("<%=cid %>_NB_LINE", nb_line_<%=cid%>);
