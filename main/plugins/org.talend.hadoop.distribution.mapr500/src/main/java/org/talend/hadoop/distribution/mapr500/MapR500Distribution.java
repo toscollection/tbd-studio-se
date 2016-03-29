@@ -165,7 +165,7 @@ public class MapR500Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        return super.doSupportStandaloneMode();
     }
 
     @Override

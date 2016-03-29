@@ -154,16 +154,6 @@ public class CDH4MR2Distribution extends AbstractDistribution implements HDFSCom
     }
 
     @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return true;
     }

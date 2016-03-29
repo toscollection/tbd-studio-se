@@ -242,7 +242,7 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        return super.doSupportStandaloneMode();
     }
 
     @Override

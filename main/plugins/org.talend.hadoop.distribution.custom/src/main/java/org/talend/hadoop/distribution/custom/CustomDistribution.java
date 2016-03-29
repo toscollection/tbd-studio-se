@@ -140,16 +140,6 @@ public class CustomDistribution extends AbstractDistribution implements HDFSComp
     }
 
     @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return true;
     }

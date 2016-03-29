@@ -131,16 +131,6 @@ public class MapR212Distribution extends AbstractMapRDistribution implements HDF
     }
 
     @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return true;
     }

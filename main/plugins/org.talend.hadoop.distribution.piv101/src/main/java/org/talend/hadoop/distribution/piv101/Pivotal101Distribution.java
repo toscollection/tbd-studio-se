@@ -148,16 +148,6 @@ public class Pivotal101Distribution extends AbstractDistribution implements HDFS
     }
 
     @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return true;
     }

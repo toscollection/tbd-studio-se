@@ -96,7 +96,7 @@ public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution 
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        return super.doSupportStandaloneMode();
     }
 
     @Override
