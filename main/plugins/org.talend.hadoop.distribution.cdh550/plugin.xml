@@ -80,6 +80,13 @@
             id="parquet-hadoop-bundle-cdh5.5.0"
             name="parquet-hadoop-bundle-1.5.0-cdh5.5.0.jar"
             mvn_uri="mvn:org.talend.libraries/parquet-hadoop-bundle-1.5.0-cdh5.5.0/6.0.0">
+        </libraryNeeded>
+                        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh550"
+            id="jodd-core-3.5.2.jar"
+            name="jodd-core-3.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/jodd-core-3.5.2/6.0.0">
         </libraryNeeded>                
         
         <!-- HBase libraries -->
@@ -209,8 +216,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
             id="spark-assembly-cdh5.5.0"
-            name="talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0/6.1.0">
+            name="talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0-with-hive.jar"
+            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.5.0-cdh5.5.0-hadoop2.6.0-cdh5.5.0-with-hive/6.1.0">
         </libraryNeeded>
         
         <libraryNeeded
@@ -519,6 +526,14 @@
              <library id="snappy-java-1.0.4.1.jar" />
         </libraryNeededGroup>
         
+        <!-- Map/Reduce parquet group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Map/Reduce parquet libraries for CDH 5.5 that are MRREQUIRED"
+                id="MAPREDUCE-PARQUET-LIB-MRREQUIRED-CDH_5_5"
+                name="MAPREDUCE-PARQUET-LIB-MRREQUIRED-CDH_5_5"  >
+             <library id="jodd-core-3.5.2.jar" />
+        </libraryNeededGroup>
+        
         <!-- HBase group -->
         <libraryNeededGroup
                 description="HBase libraries for CDH 5.5"
@@ -704,6 +719,7 @@
                 name="SPARK-PARQUET-LIB-MRREQUIRED-CDH_5_5">
              <library id="parquet-avro-cdh5.5.0"/>
              <library id="parquet-hadoop-bundle-cdh5.5.0"/>
+             <library id="jodd-core-3.5.2.jar" />             
         </libraryNeededGroup>
         
         <!-- Spark S3 group MRREQUIRED -->

@@ -1,0 +1,127 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<%
+
+%>
+    <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnectionWithMainFlow.javajet"%>
+
+<%
+	boolean givenStringFileName = "STRING_FILENAME".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERY_TYPE__"));
+    String stringFileName = ElementParameterParser.getValue(node, "__FILENAME__");
+    String query = ElementParameterParser.getValue(node,"__QUERY__");
+    query = query.replaceAll("\n","");
+    query = query.replaceAll("\r","");
+    String bucketName = ElementParameterParser.getValue(node, "__BUCKET__");
+%>
+			com.mongodb.gridfs.GridFS gridfs_<%=cid%> = new com.mongodb.gridfs.GridFS(db_<%=cid%>, <%=bucketName%>);
+			java.util.List<com.mongodb.gridfs.GridFSDBFile> gridfsFiles_<%=cid%>;
+
+			<%
+			// FIND files with given filename
+			if(givenStringFileName){
+				%>
+				gridfsFiles_<%=cid%> = gridfs_<%=cid%>.find(<%=stringFileName%>);
+				<%
+			}
+			// FIND files from a given Mongo Query 
+			else {
+				%>
+				com.mongodb.DBObject gridFSQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
+				gridfsFiles_<%=cid%> = gridfs_<%=cid%>.find(gridFSQuery_<%=cid%>);
+				<%
+			}
+			%>
+
+			for(com.mongodb.gridfs.GridFSDBFile file : gridfsFiles_<%=cid%>){
+				nb_line_<%=cid %>++;
+				Object valueObj_<%=cid%>=null;
+				<%
+				if(firstConnName.length()>0){
+					columnList = metadata.getListColumns();
+					int sizeColumns = columnList.size();
+					for (int i = 0; i < sizeColumns; i++) {
+						IMetadataColumn column = columnList.get(i);
+						String typeToGenerate = JavaTypesManager.getTypeToGenerate(column.getTalendType(), column.isNullable());
+						JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+						String patternValue = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+						%>
+						valueObj_<%=cid%> = file.get("<%=column.getOriginalDbColumnName()%>");
+						<%
+
+						if(javaType == JavaTypesManager.OBJECT) {
+							%>
+							<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>;
+							<%
+						} else {
+							%>
+							if(valueObj_<%=cid%>!=null && valueObj_<%=cid%>.toString().length() > 0) {
+								<%
+								if(javaType == JavaTypesManager.DATE) {
+									%>
+									<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Date((java.util.Date)valueObj_<%=cid%>, <%= patternValue %>);
+									<%
+								} else if(javaType == JavaTypesManager.BYTE_ARRAY) {
+									%>
+									<%=firstConnName %>.<%=column.getLabel() %> = java.nio.charset.Charset.defaultCharset().decode(java.nio.ByteBuffer.wrap((byte[])valueObj_<%=cid%>)).toString().getBytes(utf8Charset);
+									<%
+								} else if(javaType == JavaTypesManager.STRING){
+									%>
+									<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>.toString();
+									<%
+								} else if(javaType == JavaTypesManager.INTEGER){
+									%>
+									if (valueObj_<%=cid%>.getClass().equals(Double.class)) {
+		                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Double(valueObj_<%=cid%>.toString()).intValue();
+		                            } else {
+		                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+		                            }
+									<%
+								} else if(javaType == JavaTypesManager.LONG){
+									%>
+									if (valueObj_<%=cid%>.getClass().equals(Double.class)) {
+		                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Double(valueObj_<%=cid%>.toString()).longValue();
+		                            } else {
+		                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+		                            }
+									<%
+								} else if(javaType == JavaTypesManager.SHORT){
+									%>
+									if (valueObj_<%=cid%>.getClass().equals(Double.class)) {
+		                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_Double(valueObj_<%=cid%>.toString()).shortValue();
+		                            } else {
+		                                <%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+		                            }
+									<%
+								} else {
+									%>
+									<%=firstConnName %>.<%=column.getLabel() %> = ParserUtils.parseTo_<%=typeToGenerate %>(valueObj_<%=cid%>.toString());
+									<%
+								}
+								%>
+							}
+							<%
+						}
+
+
+					}
+				}
+				%>
+
+<%
+		} // Close first { from GetMongoDBConnectionWithMainFlow.javajet
+	} // Close second { from GetMongoDBConnectionWithMainFlow.javajet
+%>
+

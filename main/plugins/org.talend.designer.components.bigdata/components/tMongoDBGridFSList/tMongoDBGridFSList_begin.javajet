@@ -1,0 +1,55 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection.javajet"%>
+<%
+    boolean givenStringFileName = "STRING_FILENAME".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERY_TYPE__"));
+    String stringFileName = ElementParameterParser.getValue(node, "__FILENAME__");
+    String query = ElementParameterParser.getValue(node,"__QUERY__");
+    query = query.replaceAll("\n","");
+    query = query.replaceAll("\r","");
+    String bucketName = ElementParameterParser.getValue(node, "__BUCKET__");
+    String sortBy = ElementParameterParser.getValue(node, "__SORTBY__");
+    String sortOrder = ElementParameterParser.getValue(node, "__SORTORDER__");
+%>
+			com.mongodb.gridfs.GridFS gridfs_<%=cid%> = new com.mongodb.gridfs.GridFS(db_<%=cid%>, <%=bucketName%>);
+			com.mongodb.DBObject gridFSQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
+			com.mongodb.DBCursor filesCursor_<%=cid%> = gridfs_<%=cid%>.getFileList(gridFSQuery_<%=cid%>);
+
+			<%
+			// SORT CURSOR
+			%>
+			com.mongodb.DBObject sortField_<%=cid%> = new com.mongodb.BasicDBObject();
+			sortField_<%=cid%>.put("<%=sortBy%>", <%=sortOrder%>);
+			filesCursor_<%=cid%> = filesCursor_<%=cid%>.sort(sortField_<%=cid%>);
+
+			while(filesCursor_<%=cid%>.hasNext()){
+				com.mongodb.DBObject file_<%=cid%> = filesCursor_<%=cid%>.next();
+				nb_line_<%=cid %>++;
+<%
+				if(isLog4jEnabled){
+%>
+					log.info("<%=cid%> - Current file " + file_<%=cid%>.get("filename"));
+<%
+				}
+%>
+				globalMap.put("<%=cid%>_CURRENT_FILEID", (String) file_<%=cid%>.get("_id").toString() );
+				globalMap.put("<%=cid%>_CURRENT_FILENAME", (String) file_<%=cid%>.get("filename"));
+				globalMap.put("<%=cid%>_CURRENT_FILEUPLOADDATE", (java.util.Date) file_<%=cid%>.get("uploadDate"));
+				globalMap.put("<%=cid%>_CURRENT_FILELENGTH", (Long) file_<%=cid%>.get("length"));
+				globalMap.put("<%=cid%>_CURRENT_FILEMD5", (String) file_<%=cid%>.get("md5"));
+<%
+%>
+

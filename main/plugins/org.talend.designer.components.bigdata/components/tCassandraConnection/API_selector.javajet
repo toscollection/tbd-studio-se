@@ -6,7 +6,7 @@ class API_selector{
 	public boolean useDatastax(INode node){
 		String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
         String apiType = ElementParameterParser.getValue(node, "__API_TYPE__");
-        return "CASSANDRA_2_0_0".equals(dbVersion) && "DATASTAX".equals(apiType); 
+        return "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3_0".equals(dbVersion) || ("CASSANDRA_2_0_0".equals(dbVersion) && "DATASTAX".equals(apiType)); 
 	}
 }	
 %>

@@ -250,7 +250,7 @@
 	<%
 	}
 	%>
-	String pageToken = null;
+	String pageToken_<%=cid%> = null;
 	while (true) {
 		// Fetch Results
 		com.google.api.services.bigquery.model.TableDataList dataList_<%=cid %> = bigqueryclient_<%=cid%>.tabledata()
@@ -259,7 +259,7 @@
 									.getDestinationTable().getDatasetId(),
 							insert_<%=cid %>.getConfiguration().getQuery()
 									.getDestinationTable().getTableId())
-					.setPageToken(pageToken).execute();
+					.setPageToken(pageToken_<%=cid%>).execute();
 		
 		List<com.google.api.services.bigquery.model.TableRow> rows_<%=cid %> = dataList_<%=cid %>.getRows();
 

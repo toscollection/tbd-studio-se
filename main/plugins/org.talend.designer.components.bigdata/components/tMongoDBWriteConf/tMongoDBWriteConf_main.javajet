@@ -30,10 +30,10 @@
     boolean removeRoot = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REMOVE_ROOT__"));
     List<Map<String, String>> rootTable = 
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ROOT__");
-    List<Map<String, String>> groupTable = 
-        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__GROUP__");
     List<Map<String, String>> loopTable = 
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__LOOP__");
+    List<Map<String, String>> groupTable = 
+            (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__GROUP__");
 
     // BulkWrite is only supportted on Mongo 2.6+ drivers
     final boolean bulkWrite = setBulkWrite & (!"MONGODB_2_5_X".equalsIgnoreCase(dbversion));
@@ -62,7 +62,9 @@
 			%>
 
 			// Replace Date and Bytes by true mongoDB types.
-            com.mongodb.BasicDBObject <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+            Object <%=cid%>_dbobject = data_<%=cid%>;
+            String pathString_<%=cid%> = "";
+            String[] path_<%=cid%>;
 			<%
             for (IMetadataColumn column: metadata.getListColumns()) {
                 JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
@@ -70,97 +72,81 @@
                     for (Map<String, String> root: rootTable) {
                         if (root.get("COLUMN").equals(column.getLabel())) {
                             %>
+                            // root
                             <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            pathString_<%=cid%> = "<%=root.get("PATH")%>";
                             <%
-                            String pathString = root.get("PATH");
                             if (removeRoot) {
-                                pathString = pathString.substring(pathString.indexOf("/") + 1);
-                            }
-                            String[] path = pathString.split("/");
-
-                            // Start index at 1, in order to remove the first unwanted or empty string.
-                            // end index at length -2 , in order to stay on a BasicDBObject, leaf will be strings.
-                            for (int index = 1; index < path.length - 1; index++) {
                                 %>
-                                <%=cid%>_dbobject = (com.mongodb.BasicDBObject) <%=cid%>_dbobject.get("<%=path[index]%>");
+                                pathString_<%=cid%> = pathString_<%=cid%>.substring(pathString_<%=cid%>.indexOf("/") + 1);
                                 <%
                             }
-                            if (javaType == JavaTypesManager.DATE) {
-                                %>
-                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
-                                        BigDataParserUtils.parseTo_Date((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>"),
-                                                <%=column.getPattern()%>));
-                                <%
-                            } else { // Byte Array
-                                %>
-                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
-                                        ((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>")).getBytes());
-                                <%
-                            }
-                            // note: we cannot break here, they may be multiple values
-                        }
-                    }
-                    for (Map<String, String> group: groupTable) {
-                        if (group.get("COLUMN").equals(column.getLabel())) {
                             %>
-                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            path_<%=cid%> = pathString_<%=cid%>.split("/");
                             <%
-                            String pathString = group.get("PATH");
-                            if (removeRoot) {
-                                pathString = pathString.substring(pathString.indexOf("/") + 1);
-                            }
-                            String[] path = pathString.split("/");
-
-                            // Start index at 1, in order to remove the first unwanted or empty string.
-                            // end index at length -2 , in order to stay on a BasicDBObject, leaf will be strings.
-                            for (int index = 1; index < path.length - 1; index++) {
-                                %>
-                                <%=cid%>_dbobject = (com.mongodb.BasicDBObject) <%=cid%>_dbobject.get("<%=path[index]%>");
-                                <%
-                            }
                             if (javaType == JavaTypesManager.DATE) {
                                 %>
-                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
-                                        BigDataParserUtils.parseTo_Date((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>"),
-                                                <%=column.getPattern()%>));
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, <%=column.getPattern()%>);
                                 <%
                             } else { // Byte Array
                                 %>
-                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
-                                        ((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>")).getBytes());
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, null);
                                 <%
                             }
                             // note: we cannot break here, they may be multiple values
                         }
                     }
+
                     for (Map<String, String> loop: loopTable) {
                         if (loop.get("COLUMN").equals(column.getLabel())) {
                             %>
+                            // loop
                             <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            pathString_<%=cid%> = "<%=loop.get("PATH")%>";
                             <%
-                            String pathString = loop.get("PATH");
                             if (removeRoot) {
-                                pathString = pathString.substring(pathString.indexOf("/") + 1);
-                            }
-                            String[] path = pathString.split("/");
-
-                            // Start index at 1, in order to remove the first unwanted or empty string.
-                            // end index at length -2 , in order to stay on a BasicDBObject, leaf will be strings.
-                            for (int index = 1; index < path.length - 1; index++) {
                                 %>
-                                <%=cid%>_dbobject = (com.mongodb.BasicDBObject) <%=cid%>_dbobject.get("<%=path[index]%>");
+                                pathString_<%=cid%> = pathString_<%=cid%>.substring(pathString_<%=cid%>.indexOf("/") + 1);
                                 <%
                             }
+                            %>
+                            path_<%=cid%> = pathString_<%=cid%>.split("/");
+                            <%
                             if (javaType == JavaTypesManager.DATE) {
                                 %>
-                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
-                                        BigDataParserUtils.parseTo_Date((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>"),
-                                                <%=column.getPattern()%>));
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, <%=column.getPattern()%>);
                                 <%
                             } else { // Byte Array
                                 %>
-                                <%=cid%>_dbobject.put("<%=path[path.length - 1]%>",
-                                        ((String)<%=cid%>_dbobject.get("<%=path[path.length - 1]%>")).getBytes());
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, null);
+                                <%
+                            }
+                            // note: we cannot break here, they may be multiple values
+                        }
+                    }
+
+                    for (Map<String, String> group: groupTable) {
+                        if (group.get("COLUMN").equals(column.getLabel())) {
+                            %>
+                            // group
+                            <%=cid%>_dbobject = (com.mongodb.BasicDBObject) data_<%=cid%>;
+                            pathString_<%=cid%> = "<%=group.get("PATH")%>";
+                            <%
+                            if (removeRoot) {
+                                %>
+                                pathString_<%=cid%> = pathString_<%=cid%>.substring(pathString_<%=cid%>.indexOf("/") + 1);
+                                <%
+                            }
+                            %>
+                            path_<%=cid%> = pathString_<%=cid%>.split("/");
+                            <%
+                            if (javaType == JavaTypesManager.DATE) {
+                                %>
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, <%=column.getPattern()%>);
+                                <%
+                            } else { // Byte Array
+                                %>
+                                mongoDBTreeConverter_<%=cid%>.processTree(<%=cid%>_dbobject, path_<%=cid%>, null);
                                 <%
                             }
                             // note: we cannot break here, they may be multiple values

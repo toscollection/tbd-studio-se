@@ -101,7 +101,7 @@ convertUtil.setCID(cid);
 convertUtil.setVersion(version);
 
 String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
-boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3".equals(dbVersion);
+boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3_0".equals(dbVersion);
 boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
 if(newCqlTable){
 %>

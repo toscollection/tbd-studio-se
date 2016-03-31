@@ -242,7 +242,6 @@
 				<ITEM NAME="VALUE" />
 			</ITEMS>
 		</PARAMETER>
-
 		<PARAMETER
 			FIELD="LABEL"
 			NAME="JSON_COMMAND_NOTE"
@@ -250,7 +249,7 @@
 			NUM_ROW="42"
 			SHOW_IF="(EXECUTE_COMMAND =='true') AND (EXECUTE_JSONCOMMAND == 'true')"
 		>
-			<DEFAULT>Note : Surround String values with single quotes</DEFAULT>
+			<DEFAULT>Note : Surround String values with single quotes or escaped double quotes</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER

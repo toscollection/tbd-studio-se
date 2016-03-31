@@ -28,9 +28,9 @@ class CassandraOutputGenHelper{
 	        conn = conns.get(0);
 	    }
 	    if (("SPARKSTREAMING".equals(node.getComponent().getType())) || ("SPARK".equals(node.getComponent().getType()))) {
-            this.cqlManager = new CQLManager(node, columns, true);
+            this.cqlManager = new CQLManager(node, columns, true, true);
 	    } else { // MR or DI
-	        this.cqlManager = new CQLManager(node, columns);
+	        this.cqlManager = new CQLManager(node, columns, true);
 	    }
 	}
 	public String getCid(){

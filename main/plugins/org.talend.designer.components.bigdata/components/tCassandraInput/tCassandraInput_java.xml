@@ -36,8 +36,9 @@
             NUM_ROW="2"
             SHOW="false"
         >
-            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">cassandra_id</DEFAULT>
-            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">cassandra_datastax_id</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))">cassandra_id</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">cassandra_datastax_id</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0')))">cassandra22_datastax_id</DEFAULT>
         </PARAMETER>
 		<PARAMETER
 			NAME="USE_EXISTING_CONNECTION"
@@ -59,10 +60,12 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="4"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-            <ITEMS DEFAULT="CASSANDRA_2_0_0">
+            <ITEMS DEFAULT="CASSANDRA_3_0">
                 <ITEM NAME="CASSANDRA_1_1_2" VALUE="CASSANDRA_1_1_2"/>
                 <ITEM NAME="CASSANDRA_1_2_2" VALUE="CASSANDRA_1_2_2"/>
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
+                <ITEM NAME="CASSANDRA_2_2" VALUE="CASSANDRA_2_2"/>
+                <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>               
             </ITEMS>
         </PARAMETER>
         <PARAMETER
@@ -94,8 +97,8 @@
 			NUM_ROW="6"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
-            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">"9160"</DEFAULT>
-            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">"9042"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))">"9160"</DEFAULT>
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0')))">"9042"</DEFAULT>		     
 		</PARAMETER>
 		<PARAMETER
 			NAME="REQUIRED_AUTHENTICATION"
@@ -149,7 +152,7 @@
             NAME="COLUMN_FAMILY_TYPE"
             FIELD="CLOSED_LIST"
             NUM_ROW="17"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))"
             GROUP="COLUMN_FAMILY_CONFIGURATION"
         >
             <ITEMS DEFAULT="STANDARD">
@@ -161,7 +164,7 @@
 			NAME="INC_KEY"
 			FIELD="CHECK"
 			NUM_ROW="21"
-			SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))"
+			SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))"
             >
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -169,7 +172,7 @@
 			NAME="KEY_COLUMN"
 			FIELD="COLUMN_LIST"
 			NUM_ROW="21"
-			SHOW_IF="(INC_KEY == 'true') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+			SHOW_IF="(isShow[INC_KEY]) AND (INC_KEY == 'true')"
 		/>
         <PARAMETER
             NAME="ROW_KEY_TYPE"
@@ -177,7 +180,7 @@
             RAW="true"
             NUM_ROW="22"
             REQUIRED="true"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))"
             >
             <ITEMS DEFAULT="STRING">
                 <ITEM NAME="INTEGER" VALUE="Integer" />
@@ -199,7 +202,7 @@
             FIELD="CLOSED_LIST"
             NUM_ROW="22"
             REQUIRED="true"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))"
             >
             <ITEMS DEFAULT="DEFAULT">
                 <ITEM NAME="DEFAULT" VALUE="Default" />
@@ -223,7 +226,7 @@
             NAME="INC_SUPER_KEY"
             FIELD="CHECK"
             NUM_ROW="23"
-            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[COLUMN_FAMILY_TYPE]) AND (COLUMN_FAMILY_TYPE == 'SUPER')"
         >
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
@@ -231,7 +234,7 @@
             NAME="SUPER_KEY_COLUMN"
             FIELD="COLUMN_LIST"
             NUM_ROW="23"
-            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[COLUMN_FAMILY_TYPE]) AND (COLUMN_FAMILY_TYPE == 'SUPER') AND (INC_SUPER_KEY == 'true')"
         />
     	<PARAMETER
         	NAME="SUPER_COLUMN_TYPE"
@@ -239,7 +242,7 @@
         	RAW="true"
         	NUM_ROW="24"
         	REQUIRED="true"
-        	SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))">
+        	SHOW_IF="(isShow[COLUMN_FAMILY_TYPE]) AND (COLUMN_FAMILY_TYPE == 'SUPER')">
     		<ITEMS DEFAULT="STRING">
     			<ITEM NAME="INTEGER" VALUE="Integer" />
                 <ITEM NAME="LONG" VALUE="Long" />
@@ -260,7 +263,7 @@
             FIELD="CLOSED_LIST"
             NUM_ROW="24"
             REQUIRED="true"
-            SHOW_IF="(COLUMN_FAMILY_TYPE == 'SUPER') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))">
+            SHOW_IF="(isShow[COLUMN_FAMILY_TYPE]) AND (COLUMN_FAMILY_TYPE == 'SUPER')">
             <ITEMS DEFAULT="DEFAULT">
                 <ITEM NAME="DEFAULT" VALUE="Default" />
                 <!--ITEM NAME="BOOLEANTYPE" VALUE="BooleanType" SHOW_IF="SUPER_COLUMN_TYPE == 'BOOLEAN'" /-->
@@ -283,7 +286,7 @@
             NAME="SPECIFY_KEYS"
             FIELD="CHECK"
             NUM_ROW="25"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT>false</DEFAULT>
@@ -293,7 +296,7 @@
             FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="26"
-            SHOW_IF="(SPECIFY_KEYS == 'true') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[SPECIFY_KEYS]) AND (SPECIFY_KEYS == 'true')"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT></DEFAULT>
@@ -303,7 +306,7 @@
             FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="26"
-            SHOW_IF="(SPECIFY_KEYS == 'false') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[SPECIFY_KEYS]) AND (SPECIFY_KEYS == 'false')"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT></DEFAULT>
@@ -313,7 +316,7 @@
             FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="26"
-            SHOW_IF="(SPECIFY_KEYS == 'false') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[SPECIFY_KEYS]) AND (SPECIFY_KEYS == 'false')"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT></DEFAULT>
@@ -324,7 +327,7 @@
             REQUIRED="true"
             NUM_ROW="27"
             GROUP="QUERY_CONFIGURATION"
-            SHOW_IF="(SPECIFY_KEYS == 'false') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[SPECIFY_KEYS]) AND (SPECIFY_KEYS == 'false')"
         >
             <DEFAULT>1000</DEFAULT>
         </PARAMETER>
@@ -332,7 +335,7 @@
             NAME="SPECIFY_COLUMNS"
             FIELD="CHECK"
             NUM_ROW="29"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT>false</DEFAULT>
@@ -342,7 +345,7 @@
             FIELD="TEXT"
             REQUIRED="false"
             NUM_ROW="30"
-            SHOW_IF="(SPECIFY_COLUMNS == 'true') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+            SHOW_IF="(isShow[SPECIFY_COLUMNS]) AND (SPECIFY_COLUMNS == 'true')"
             GROUP="QUERY_CONFIGURATION"
         >
             <DEFAULT></DEFAULT>
@@ -352,7 +355,7 @@
 			FIELD="TEXT"
 			REQUIRED="false"
 			NUM_ROW="31"
-			SHOW_IF="(SPECIFY_COLUMNS == 'false') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+			SHOW_IF="(isShow[SPECIFY_COLUMNS]) AND (SPECIFY_COLUMNS == 'false')"
 		    GROUP="QUERY_CONFIGURATION"
 		>
 			<DEFAULT></DEFAULT>
@@ -362,7 +365,7 @@
 			FIELD="TEXT"
 			REQUIRED="false"
 			NUM_ROW="31"
-			SHOW_IF="(SPECIFY_COLUMNS == 'false') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+			SHOW_IF="(isShow[SPECIFY_COLUMNS]) AND (SPECIFY_COLUMNS == 'false')"
             GROUP="QUERY_CONFIGURATION"
 		>
 			<DEFAULT></DEFAULT>
@@ -372,7 +375,7 @@
 			FIELD="TEXT"
 			REQUIRED="true"
 			NUM_ROW="33"
-			SHOW_IF="(SPECIFY_COLUMNS == 'false') AND (((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR'))))"
+			SHOW_IF="(isShow[SPECIFY_COLUMNS]) AND (SPECIFY_COLUMNS == 'false')"
             GROUP="QUERY_CONFIGURATION"
 		>
 			<DEFAULT>1000</DEFAULT>
@@ -389,7 +392,7 @@
 			FIELD="MEMO"
 			NUM_ROW="40"
             REQUIRED="true"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0')))"
 	    >
 	      <DEFAULT>"select id, name from employee"</DEFAULT>
 	    </PARAMETER>
@@ -398,7 +401,7 @@
 	<CODEGENERATION>
 		<IMPORTS>
             <IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
-	            <IMPORTS REQUIRED_IF="((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))">
+	            <IMPORTS REQUIRED_IF="(((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))">
 	                <!-- Cassandra 1.1.2 -->
 	                <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_1_1_2')">
 	                    <IMPORT
@@ -518,44 +521,42 @@
 	                    NAME="uuid-3.4"
 	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"/>
 	            </IMPORTS>
-	            <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))">
-	                <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
-	                    <IMPORT MODULE="guava-16.0.1.jar" MVN="mvn:org.talend.libraries/guava-16.0.1/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-16.0.1.jar"
-	                        NAME="guava-16.0.1.jar" />
-	                    <IMPORT MODULE="slf4j-api-1.7.7.jar"
-	                        MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
-	                        NAME="slf4j-api-1.7.7.jar" />
-	                    <IMPORT MODULE="cassandra-driver-core-3.0.0.jar"
-	                        MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0.jar"
-	                        NAME="cassandra-driver-core-3.0.0.jar" />
-	                    <IMPORT MODULE="metrics-core-3.1.2.jar"
-	                        MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
-	                        NAME="metrics-core-3.1.2.jar" />
-	                    <IMPORT MODULE="netty-buffer-4.0.33.Final.jar"
-	                        MVN="mvn:org.talend.libraries/netty-buffer-4.0.33.Final/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-buffer-4.0.33.Final.jar"
-	                        NAME="netty-buffer-4.0.33.Final.jar" />
-	                    <IMPORT MODULE="netty-codec-4.0.33.Final.jar"
-	                        MVN="mvn:org.talend.libraries/netty-codec-4.0.33.Final/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-codec-4.0.33.Final.jar"
-	                        NAME="netty-codec-4.0.33.Final.jar" />
-	                    <IMPORT MODULE="netty-handler-4.0.33.Final.jar"
-	                        MVN="mvn:org.talend.libraries/netty-handler-4.0.33.Final/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-handler-4.0.33.Final.jar"
-	                        NAME="netty-handler-4.0.33.Final.jar" />
-	                    <IMPORT MODULE="netty-transport-4.0.33.Final.jar"
-	                        MVN="mvn:org.talend.libraries/netty-transport-4.0.33.Final/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-transport-4.0.33.Final.jar"
-	                        NAME="netty-transport-4.0.33.Final.jar" />
-	                    <IMPORT MODULE="netty-common-4.0.33.Final.jar"
-	                        MVN="mvn:org.talend.libraries/netty-common-4.0.33.Final/6.0.0"
-	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-common-4.0.33.Final.jar"
-	                        NAME="netty-common-4.0.33.Final.jar" />
-	                </IMPORTS>
+	            <IMPORTS REQUIRED_IF="(((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))">
+                    <IMPORT MODULE="guava-16.0.1.jar" MVN="mvn:org.talend.libraries/guava-16.0.1/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.guava/lib/guava-16.0.1.jar"
+                        NAME="guava-16.0.1.jar" />
+                    <IMPORT MODULE="slf4j-api-1.7.7.jar"
+                        MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
+                        NAME="slf4j-api-1.7.7.jar" />
+                    <IMPORT MODULE="cassandra-driver-core-3.0.0.jar"
+                        MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0.jar"
+                        NAME="cassandra-driver-core-3.0.0.jar" />
+                    <IMPORT MODULE="metrics-core-3.1.2.jar"
+                        MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
+                        NAME="metrics-core-3.1.2.jar" />
+                    <IMPORT MODULE="netty-buffer-4.0.33.Final.jar"
+                        MVN="mvn:org.talend.libraries/netty-buffer-4.0.33.Final/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-buffer-4.0.33.Final.jar"
+                        NAME="netty-buffer-4.0.33.Final.jar" />
+                    <IMPORT MODULE="netty-codec-4.0.33.Final.jar"
+                        MVN="mvn:org.talend.libraries/netty-codec-4.0.33.Final/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-codec-4.0.33.Final.jar"
+                        NAME="netty-codec-4.0.33.Final.jar" />
+                    <IMPORT MODULE="netty-handler-4.0.33.Final.jar"
+                        MVN="mvn:org.talend.libraries/netty-handler-4.0.33.Final/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-handler-4.0.33.Final.jar"
+                        NAME="netty-handler-4.0.33.Final.jar" />
+                    <IMPORT MODULE="netty-transport-4.0.33.Final.jar"
+                        MVN="mvn:org.talend.libraries/netty-transport-4.0.33.Final/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-transport-4.0.33.Final.jar"
+                        NAME="netty-transport-4.0.33.Final.jar" />
+                    <IMPORT MODULE="netty-common-4.0.33.Final.jar"
+                        MVN="mvn:org.talend.libraries/netty-common-4.0.33.Final/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/netty-common-4.0.33.Final.jar"
+                        NAME="netty-common-4.0.33.Final.jar" />
 	            </IMPORTS>
             </IMPORTS>
         </IMPORTS>

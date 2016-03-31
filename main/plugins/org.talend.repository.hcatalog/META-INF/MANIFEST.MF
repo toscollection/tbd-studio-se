@@ -32,6 +32,7 @@ Require-Bundle: org.eclipse.ui,
  org.talend.designer.hdfsbrowse,
  org.talend.repository.hadoopcluster;visibility:=reexport,
  org.eclipse.gmf.runtime.notation;visibility:=reexport,
- org.talend.repository.items.importexport
+ org.talend.repository.items.importexport,
+ org.talend.components.api
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.talend.repository.hcatalog.Activator
