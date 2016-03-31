@@ -30,6 +30,7 @@ import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
+import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
@@ -44,6 +45,7 @@ import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HCatalogModuleG
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HDFSModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HiveModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HiveOnSparkModuleGroup;
+import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510ImpalaModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510MapReduceModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510PigModuleGroup;
@@ -61,7 +63,7 @@ import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510SqoopModuleGrou
 
 public class MapR510Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
-        HiveOnSparkComponent {
+        HiveOnSparkComponent, ImpalaComponent {
 
     public final static String VERSION = EHadoopVersion4Drivers.MAPR510.getVersionValue();
 
@@ -81,7 +83,7 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
 
         moduleGroups.put(ComponentType.HCATALOG, MapR510HCatalogModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SQOOP, MapR510SqoopModuleGroup.getModuleGroups());
-        // moduleGroups.put(ComponentType.IMPALA, MapR510ImpalaModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.IMPALA, MapR510ImpalaModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKBATCH, MapR510SparkBatchModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, MapR510SparkStreamingModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.HIVEONSPARK, MapR510HiveOnSparkModuleGroup.getModuleGroups());
