@@ -24,6 +24,8 @@ public final class Constant {
 
     public static final String PIG_EMR400_DISPLAY = "EMR 4.0.0 (Pig 0.14.0)";//$NON-NLS-1$
 
+    public static final String PIG_EMR440_DISPLAY = "EMR 4.4.0 (Pig 0.14.0)";//$NON-NLS-1$
+
     public static final String PIG_APACHE240_DISPLAY = "Apache 2.4.0 (Pig 0.12.0)";//$NON-NLS-1$
 
     public static final String PIG_APACHE103_DISPLAY = "Apache 1.0.3 (Pig 0.9.2)";//$NON-NLS-1$
@@ -38,6 +40,8 @@ public final class Constant {
 
     public static final String HIVE_EMR400_DISPLAY = "EMR 4.0.0 (Hive 1.0.0)"; //$NON-NLS-1$
 
+    public static final String HIVE_EMR440_DISPLAY = "EMR 4.4.0 (Hive 1.0.0)"; //$NON-NLS-1$
+
     public static final String HIVE_APACHE103_DISPLAY = "Apache 1.0.3 (Hive 0.8.1)"; //$NON-NLS-1$
 
     public static final String HIVE_APACHE240_DISPLAY = "Apache 2.4.0 (Hive 0.11.0)"; //$NON-NLS-1$
@@ -49,5 +53,7 @@ public final class Constant {
     public static final String SQOOP_MAPR213_DISPLAY = "MapR 2.1.3 (Sqoop 1.4.2)"; //$NON-NLS-1$
 
     public static final String SQOOP_MAPR301_DISPLAY = "MapR 3.0.1 (Sqoop 1.4.2)"; //$NON-NLS-1$
+
+    public static final String SQOOP_EMR440_DISPLAY = "EMR 4.4.0 (Sqoop 1.4.6)"; //$NON-NLS-1$
 
 }
