@@ -14,6 +14,7 @@ package org.talend.hadoop.distribution.helper;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,27 +42,48 @@ public final class DistributionHelper {
         return false;
     }
 
-    public static Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods) {
-        Map<String, Boolean> resultsMap = new HashMap<String, Boolean>();
-        if (distributionVersion instanceof DistributionVersion && methods != null && methods.length > 0) {
-            HadoopComponent dadoopComponent = ((DistributionVersion) distributionVersion).hadoopComponent;
-            if (dadoopComponent != null) {
-                for (String m : methods) {
-                    Method method = findMethod(dadoopComponent.getClass(), m);
-                    if (method != null) {
-                        try {
-                            method.setAccessible(true);
-                            Object is = method.invoke(dadoopComponent);
-                            if (is instanceof Boolean) {
-                                resultsMap.put(m, ((Boolean) is));
-                            }
-                        } catch (SecurityException | IllegalAccessException | IllegalArgumentException
-                                | InvocationTargetException e) {
-                            // ignore
-                        }
-                    }
+    public static boolean doSupportMethod(IHDistributionVersion distributionVersion, String method) throws Exception {
+        Map<String, Boolean> doSupportMethods = doSupportMethods(distributionVersion, method);
+        Boolean support = doSupportMethods.get(method);
+        return support != null && support;
+    }
 
+    public static Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods)
+            throws Exception {
+        if (distributionVersion instanceof DistributionVersion && methods != null && methods.length > 0) {
+            HadoopComponent hadoopComponent = ((DistributionVersion) distributionVersion).hadoopComponent;
+            return doSupportMethods(hadoopComponent, methods);
+        }
+        return Collections.emptyMap();
+    }
+
+    public static boolean doSupportMethod(HadoopComponent hadoopComponent, String method) throws Exception {
+        Map<String, Boolean> doSupportMethods = doSupportMethods(hadoopComponent, method);
+        Boolean support = doSupportMethods.get(method);
+        return support != null && support;
+    }
+
+    public static Map<String, Boolean> doSupportMethods(HadoopComponent hadoopComponent, String... methods) throws Exception {
+        Map<String, Boolean> resultsMap = new HashMap<String, Boolean>();
+        if (hadoopComponent != null) {
+            for (String m : methods) {
+                Method method = findMethod(hadoopComponent.getClass(), m);
+                if (method != null) {
+                    try {
+                        method.setAccessible(true);
+                        Object is = method.invoke(hadoopComponent);
+                        if (is instanceof Boolean) {
+                            resultsMap.put(m, ((Boolean) is));
+                        }
+                    } catch (SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                        // ignore
+                    }
+                } else {
+                    throw new NoSuchMethodException(
+                            "The distribution " + hadoopComponent.getDistributionName() + " with the version " + hadoopComponent.getVersion() //$NON-NLS-1$ //$NON-NLS-2$
+                                    + " is not supported in this component. Please check your configuration."); //$NON-NLS-1$
                 }
+
             }
         }
         return resultsMap;

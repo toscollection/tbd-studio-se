@@ -13,7 +13,6 @@
 package org.talend.hadoop.distribution.hive;
 
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.piv.IPivotalHDDistribution;
 
 /**
@@ -37,26 +36,22 @@ public class HiveMetadataHelper4PivotalHDTest extends AbstractTest4HiveMetadataH
     }
 
     @Test
-    public void testHiveMode_Pivotal101() {
+    public void testHiveMode_Pivotal101_WithAll() {
         doTestGetHiveModesDisplay(IPivotalHDDistribution.VERSION_101, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_Pivotal101() {
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+    public void testHiveServer_Pivotal101_Server1_Only() {
+        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
-    public void testHiveMode_Pivotal200() {
+    public void testHiveMode_Pivotal200_WithAll() {
         doTestGetHiveModesDisplay(IPivotalHDDistribution.VERSION_20, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_Pivotal200() {
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_20, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_20, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_Pivotal200_WithAll() {
+        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_20, HIVE_SERVER_DISPLAY_ALL);
     }
 }

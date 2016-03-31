@@ -13,7 +13,6 @@
 package org.talend.hadoop.distribution.hive;
 
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 
 /**
@@ -39,55 +38,43 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractTest4HiveMetadataH
     }
 
     @Test
-    public void testHiveMode_EMR400() {
+    public void testHiveMode_EMR400_Standalone_Only() {
         doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_400, HIVE_MODE_DISPLAY_STANDALONE_ONLY);
     }
 
     @Test
-    public void testHiveServer_EMR400() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_400, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_400, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_EMR400_Server2_Only() {
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_400, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
     @Test
-    public void testHiveMode_EMRApache103() {
+    public void testHiveMode_EMRApache103_WithAll() {
         doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_EMRApache103() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+    public void testHiveServer_EMRApache103_Server1_Only() {
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
-    public void testHiveMode_EMRApache240Hive0131() {
+    public void testHiveMode_EMRApache240Hive0131_Standalone_Only() {
         doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HIVE_MODE_DISPLAY_STANDALONE_ONLY);
     }
 
     @Test
-    public void testHiveServer_EMRApache240Hive0131() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_EMRApache240Hive0131_Server2_Only() {
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
     @Test
-    public void testHiveMode_EMRApache240() {
+    public void testHiveMode_EMRApache240_WithAll() {
         doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_EMRApache240() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_EMRApache240_Server2_Only() {
+        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
 }

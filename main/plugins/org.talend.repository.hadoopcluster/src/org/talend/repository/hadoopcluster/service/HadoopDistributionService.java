@@ -80,8 +80,13 @@ public class HadoopDistributionService implements IHadoopDistributionService {
     }
 
     @Override
-    public Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods) {
+    public Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods) throws Exception {
         return DistributionHelper.doSupportMethods(distributionVersion, methods);
+    }
+
+    @Override
+    public boolean doSupportMethod(IHDistributionVersion distributionVersion, String method) throws Exception {
+        return DistributionHelper.doSupportMethod(distributionVersion, method);
     }
 
     public IHDistribution getHadoopDistribution(String name, boolean byDisplay) {

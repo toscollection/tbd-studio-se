@@ -13,7 +13,6 @@
 package org.talend.hadoop.distribution.hive;
 
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
 
 /**
@@ -37,16 +36,13 @@ public class HiveMetadataHelper4ApacheTest extends AbstractTest4HiveMetadataHelp
     }
 
     @Test
-    public void testHiveMode_Apache100() {
+    public void testHiveMode_Apache100_WithAll() {
         doTestGetHiveModesDisplay(IApacheDistribution.VERSION_100, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_Apache100() {
-        doTestGetHiveServersDisplay(IApacheDistribution.VERSION_100, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-        doTestGetHiveServersDisplay(IApacheDistribution.VERSION_100, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+    public void testHiveServer_Apache100_Server1_Only() {
+        doTestGetHiveServersDisplay(IApacheDistribution.VERSION_100, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
 }

@@ -14,7 +14,6 @@ package org.talend.hadoop.distribution.hive;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
 
 /**
@@ -44,14 +43,13 @@ public class HiveMetadataHelper4CustomTest extends AbstractTest4HiveMetadataHelp
     }
 
     @Test
-    public void testHiveMode_Custom() {
+    public void testHiveMode_Custom_All() {
         doTestGetHiveModesDisplay(null, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_Custom() {
-        doTestGetHiveServersDisplay(null, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(null, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_Custom_All() {
+        doTestGetHiveServersDisplay(null, HIVE_SERVER_DISPLAY_ALL);
     }
 
 }

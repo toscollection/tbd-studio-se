@@ -13,7 +13,6 @@
 package org.talend.hadoop.distribution.hive;
 
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 /**
@@ -40,91 +39,72 @@ public class HiveMetadataHelper4ClouderaTest extends AbstractTest4HiveMetadataHe
     }
 
     @Test
-    public void testHiveMode_CDH4MR1() {
+    public void testHiveMode_CDH4MR1_WithAll() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH4, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_CDH4MR1() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH4, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH4, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_CDH4MR1_WithAll() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH4, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_CDH4MR2() {
+    public void testHiveMode_CDH4MR2_WithAll() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH4_YARN, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_CDH4MR2() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH4_YARN, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH4_YARN, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_CDH4MR2_WithAll() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH4_YARN, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_CDH500() {
+    public void testHiveMode_CDH500_WithAll() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH5, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_CDH500() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_CDH500_WithAll() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_CDH510MR1() {
+    public void testHiveMode_CDH510MR1_WithAll() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH5_1_MR1, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_CDH510MR1() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_1_MR1, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_1_MR1, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_CDH510MR1_WithAll() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_1_MR1, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_CDH510MR2() {
+    public void testHiveMode_CDH510MR2_WithAll() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH5_1, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_CDH510MR2() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_1, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_1, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_CDH510MR2_WithAll() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_1, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_CDH540() {
+    public void testHiveMode_CDH540_WithAll() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH5_4, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_CDH540() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_4, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_4, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_CDH540_Server2_Only() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_4, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
     @Test
-    public void testHiveMode_CDH550() {
+    public void testHiveMode_CDH550_Standalone_Only() {
         doTestGetHiveModesDisplay(IClouderaDistribution.VERSION_CDH5_5, HIVE_MODE_DISPLAY_STANDALONE_ONLY);
     }
 
     @Test
-    public void testHiveServer_CDH550() {
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_5, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_5, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_CDH550_Server2_Only() {
+        doTestGetHiveServersDisplay(IClouderaDistribution.VERSION_CDH5_5, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 }

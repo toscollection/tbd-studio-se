@@ -104,42 +104,26 @@ public abstract class AbstractTest4HiveMetadataHelper {
     }
 
     @Test
-    public void testGetDistribution_Default() {
-        IHDistribution distribution = HiveMetadataHelper.getDistribution("Abc", true, false);
-        assertNull(distribution);
-
-        distribution = HiveMetadataHelper.getDistribution("Abc", true, true);
-        assertNotNull("Should support one distribution at least", distribution);
-
-        assertNotNull(distribution.getName());
-        assertNotNull(distribution.getDisplayName());
-
-        String[] distributionsDisplay = HiveMetadataHelper.getDistributionsDisplay();
-        assertNotNull(distributionsDisplay);
-        assertTrue(distributionsDisplay.length > 0);
-        IHDistribution distribution2 = HiveMetadataHelper.getDistribution(distributionsDisplay[0], true);
-        assertNotNull(distribution2);
-
-        assertEquals(distribution2.getName(), distribution.getName());
-        assertEquals(distribution2.getDisplayName(), distribution.getDisplayName());
-    }
-
-    @Test
     public void testGetDistributionVersionsDisplay() {
         String[] distributionVersionsDisplay = HiveMetadataHelper.getDistributionVersionsDisplay(getDistribution(), false);
         doTestArray("Versions are different", getDistributionVersionsDisplay(), distributionVersionsDisplay);
     }
 
     protected void doTestGetHiveModesDisplay(String hiveVersion, String[] modeArr) {
+        doTestGetHiveModesDisplay(hiveVersion, HiveServerVersionInfo.HIVE_SERVER_1.getKey(), modeArr);
+        doTestGetHiveModesDisplay(hiveVersion, HiveServerVersionInfo.HIVE_SERVER_2.getKey(), modeArr);
+    }
+
+    protected void doTestGetHiveModesDisplay(String hiveVersion, String hiveServer, String[] modeArr) {
         if (PluginChecker.isOnlyTopLoaded() && ArrayUtils.contains(modeArr, HiveModeInfo.EMBEDDED.getDisplayName())) {
             modeArr = ArrayUtils.removeElement(modeArr, HiveModeInfo.EMBEDDED.getDisplayName());
         }
-        String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), hiveVersion, false);
+        String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), hiveVersion, hiveServer, false);
         doTestArray("Modes are different", modeArr, hiveModesDisplay);
     }
 
-    protected void doTestGetHiveServersDisplay(String hiveVersion, String hiveMode, String[] serverArr) {
-        String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(), hiveVersion, hiveMode, false);
+    protected void doTestGetHiveServersDisplay(String hiveVersion, String[] serverArr) {
+        String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(), hiveVersion, false);
         doTestArray("Server Versions are different", serverArr, hiveServersDisplay);
     }
 

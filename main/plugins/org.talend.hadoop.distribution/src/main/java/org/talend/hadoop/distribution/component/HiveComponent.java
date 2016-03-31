@@ -34,7 +34,7 @@ public interface HiveComponent extends MRComponent {
     public boolean doSupportHive1();
 
     /**
-     * @return true if the distribution does support the Hive1 version in Stadalone mode. This method is made for
+     * @return true if the distribution does support the Hive1 version in standalone mode. This method is made for
      * Hortonworks distribution that doesn't support it.
      */
     public boolean doSupportHive1Standalone();

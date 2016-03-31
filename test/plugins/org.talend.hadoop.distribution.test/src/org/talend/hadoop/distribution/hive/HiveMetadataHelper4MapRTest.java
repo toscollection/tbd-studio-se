@@ -13,7 +13,6 @@
 package org.talend.hadoop.distribution.hive;
 
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
 
 /**
@@ -40,98 +39,82 @@ public class HiveMetadataHelper4MapRTest extends AbstractTest4HiveMetadataHelper
     }
 
     @Test
-    public void testHiveMode_MapR200() {
+    public void testHiveMode_MapR200_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_200, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR200() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+    public void testHiveServer_MapR200_Server1_Only() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_200, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
-    public void testHiveMode_MapR212() {
+    public void testHiveMode_MapR212_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_212, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR212() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+    public void testHiveServer_MapR212_Server1_Only() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_212, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
     @Test
-    public void testHiveMode_MapR213() {
+    public void testHiveMode_MapR213_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_213, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR213() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_213, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_213, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_MapR213_WithAll() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_213, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_MapR301() {
+    public void testHiveMode_MapR301_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_301, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR301() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_301, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_301, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_MapR301_WithAll() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_301, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_MapR310() {
+    public void testHiveMode_MapR310_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_310, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR310() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_310, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_310, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_MapR310_WithAll() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_310, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_MapR401() {
+    public void testHiveMode_MapR401_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_401, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR401() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_401, HiveModeInfo.EMBEDDED.getName(), HIVE_SERVER_DISPLAY_ALL);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_401, HiveModeInfo.STANDALONE.getName(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_MapR401_WithAll() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_401, HIVE_SERVER_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveMode_MapR410() {
+    public void testHiveMode_MapR410_WitAll() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_410, HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_MapR410() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_MapR410_Server2_Only() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_410, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 
     @Test
-    public void testHiveMode_MapR500() {
+    public void testHiveMode_MapR500_Standalone_Only() {
         doTestGetHiveModesDisplay(IMapRDistribution.VERSION_500, HIVE_MODE_DISPLAY_STANDALONE_ONLY);
     }
 
     @Test
-    public void testHiveServer_MapR500() {
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_500, HiveModeInfo.EMBEDDED.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_500, HiveModeInfo.STANDALONE.getName(),
-                HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+    public void testHiveServer_MapR500_Server2_Only() {
+        doTestGetHiveServersDisplay(IMapRDistribution.VERSION_500, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 }

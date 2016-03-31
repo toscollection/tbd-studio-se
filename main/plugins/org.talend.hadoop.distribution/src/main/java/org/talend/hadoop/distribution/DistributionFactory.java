@@ -17,6 +17,7 @@ package org.talend.hadoop.distribution;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.helper.DistributionHelper;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 
 /**
@@ -51,14 +52,8 @@ public class DistributionFactory {
      * @throws Exception
      */
     public static boolean executeBooleanMethod(String methodName, String distribution, String version) throws Exception {
-        HadoopComponent distrib = DistributionFactory.buildDistribution(distribution, version);
-        try {
-            java.lang.reflect.Method m = distrib.getClass().getMethod(methodName, new Class<?>[0]);
-            return (Boolean) m.invoke(distrib, new Object[0]);
-        } catch (NoSuchMethodException e) {
-            throw new Exception("The distribution " + distribution + " with the version " + version //$NON-NLS-1$ //$NON-NLS-2$
-                    + " is not supported in this component. Please check your configuration."); //$NON-NLS-1$
-        }
+        HadoopComponent hadoopComponent = DistributionFactory.buildDistribution(distribution, version);
+        return DistributionHelper.doSupportMethod(hadoopComponent, methodName);
     }
 
 }
