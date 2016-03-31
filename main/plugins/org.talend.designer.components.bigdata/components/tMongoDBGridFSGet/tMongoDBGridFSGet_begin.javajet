@@ -1,0 +1,63 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection.javajet"%>
+<%
+    boolean givenStringFileName = "STRING_FILENAME".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERY_TYPE__"));
+    String stringFileName = ElementParameterParser.getValue(node, "__FILENAME__");
+    String query = ElementParameterParser.getValue(node,"__QUERY__");
+    query = query.replaceAll("\n","");
+    query = query.replaceAll("\r","");
+    String bucketName = ElementParameterParser.getValue(node, "__BUCKET__");
+    String outputLocalPath = ElementParameterParser.getValue(node, "__OUTPUT_LOCAL_PATH__");
+    boolean overWriteLocalFiles = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__OVERWRITE_LOCAL_FILES__"));
+    boolean idAsFilename = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__ID_AS_FILENAME__"));
+
+	%>
+	<%
+			// Create local dir if it doesn't exist
+			%>
+			String outputLocalPath_<%=cid%> = <%=outputLocalPath%>;
+			if(outputLocalPath_<%=cid%> != null && !"".equals(outputLocalPath_<%=cid%>)){
+				java.io.File outputLocalDir_<%=cid%> = new java.io.File(outputLocalPath_<%=cid%>);
+				outputLocalDir_<%=cid%>.mkdirs();
+			} else {
+				throw new RuntimeException("The Output Folder cannot be left empty");
+			}
+			<%
+
+			%>
+
+			com.mongodb.gridfs.GridFS gridfs_<%=cid%> = new com.mongodb.gridfs.GridFS(db_<%=cid%>, <%=bucketName%>);
+			java.util.List<com.mongodb.gridfs.GridFSDBFile> gridfsFiles_<%=cid%>;
+
+			<%
+			// FIND files with given filename
+			if(givenStringFileName){
+				%>
+				gridfsFiles_<%=cid%> = gridfs_<%=cid%>.find(<%=stringFileName%>);
+				<%
+			} else {
+				%>
+				com.mongodb.DBObject gridFSQuery_<%=cid%> = (com.mongodb.DBObject) com.mongodb.util.JSON.parse(<%=query%>);
+				gridfsFiles_<%=cid%> = gridfs_<%=cid%>.find(gridFSQuery_<%=cid%>);
+				<%
+			}
+			%>
+
+			for(com.mongodb.gridfs.GridFSDBFile gridFSfile : gridfsFiles_<%=cid%>){
+<%
+%>
+
