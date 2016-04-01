@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.metadata.MappingTypeRetriever;
 import org.talend.core.model.metadata.MetadataTalendType;
 import org.talend.core.model.metadata.types.JavaTypesManager;
@@ -30,6 +31,7 @@ import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
+import org.talend.repository.nosql.db.util.cassandra.CassandraConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
@@ -63,6 +65,13 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
     public static synchronized ICassandraMetadataHandler getInstanceForDataStax() {
         if (instanceForDataStax == null) {
             instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM_DATASTAX_ID);
+        }
+        return instanceForDataStax;
+    }
+    
+    public static synchronized ICassandraMetadataHandler getInstanceForUpgradeDataStax() {
+        if (instanceForDataStax == null) {
+            instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM22_DATASTAX_ID);
         }
         return instanceForDataStax;
     }
@@ -262,6 +271,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         Set<String> scfNames = new HashSet<String>();
         Object session = null;
         ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
+        
         try {
             if (ksName == null) {
                 List<String> ksNames = getKeySpaceNames(connection);
@@ -293,7 +303,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
                 }
             }
         } catch (Exception e) {
-            throw new NoSQLServerException(e);
+             throw new NoSQLServerException(e);
         } finally {
             try {
                 if (session != null) {
