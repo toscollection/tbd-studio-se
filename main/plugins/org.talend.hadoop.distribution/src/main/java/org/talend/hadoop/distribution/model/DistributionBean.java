@@ -105,6 +105,9 @@ public class DistributionBean implements IHDistribution {
      * {@link HadoopComponent} object.
      */
     public DistributionVersion getVersion(String v, boolean byDisplay) {
+        if (useCustom()) { // because custom, only existed one fake version with null version name
+            return getDefaultVersion();
+        }
         for (DistributionVersion dv : versions) {
             if (byDisplay) {
                 if (v == null && dv.displayVersion == null || v != null && v.equals(dv.displayVersion)) {

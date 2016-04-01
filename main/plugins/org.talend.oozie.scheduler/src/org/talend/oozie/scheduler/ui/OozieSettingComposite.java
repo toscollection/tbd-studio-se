@@ -13,6 +13,7 @@
 package org.talend.oozie.scheduler.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -941,12 +942,7 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     private List<String> getDistributionVersions(IHDistribution distribution) {
-        List<String> result = new ArrayList<String>();
-        final IHDistributionVersion[] hdVersions = distribution.getHDVersions();
-        for (IHDistributionVersion hdv : hdVersions) {
-            result.add(hdv.getDisplayVersion());
-        }
-        return result;
+        return Arrays.asList(distribution.getVersionsDisplay());
     }
 
     protected void hideControl(Control control, boolean hide) {
@@ -1021,8 +1017,12 @@ public class OozieSettingComposite extends ScrolledComposite {
                 hadoopVersionValue, false);
         String originalVersionValue = getHadoopVersionValue();
 
-        if (hadoopDistributionVersion != null && !hadoopDistributionVersion.getVersion().equals(originalVersionValue)) {
+        if (hadoopDistributionVersion != null && hadoopDistributionVersion.getVersion() != null
+                && !hadoopDistributionVersion.getVersion().equals(originalVersionValue)
+                && hadoopDistributionVersion.getDisplayVersion() != null) {
             hadoopVersionCombo.setText(hadoopDistributionVersion.getDisplayVersion());
+        } else {
+            hadoopVersionCombo.select(0);
         }
     }
 
