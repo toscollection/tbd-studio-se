@@ -24,6 +24,7 @@ import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
+import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
@@ -38,6 +39,8 @@ import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.emr440.modulegroup.EMR440HDFSModuleGroup;
+import org.talend.hadoop.distribution.emr440.modulegroup.EMR440HiveModuleGroup;
 import org.talend.hadoop.distribution.emr440.modulegroup.EMR440MapReduceModuleGroup;
 import org.talend.hadoop.distribution.emr440.modulegroup.EMR440SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.emr440.modulegroup.EMR440SparkStreamingModuleGroup;
@@ -47,7 +50,9 @@ public class EMR440Distribution extends AbstractDistribution implements HDFSComp
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,/usr/lib/hadoop-lzo/lib/*,/usr/share/aws/emr/emrfs/conf, /usr/share/aws/emr/emrfs/lib/*,/usr/share/aws/emr/emrfs/auxlib/*,/usr/share/aws/emr/lib/*,/usr/share/aws/emr/ddb/lib/emr-ddb-hadoop.jar, /usr/share/aws/emr/goodies/lib/emr-hadoop-goodies.jar,/usr/share/aws/emr/kinesis/lib/emr-kinesis-hadoop.jar,/usr/lib/spark/yarn/lib/datanucleus-api-jdo.jar,/usr/lib/spark/yarn/lib/datanucleus-core.jar,/usr/lib/spark/yarn/lib/datanucleus-rdbms.jar,/usr/share/aws/emr/cloudwatch-sink/lib/*"; //$NON-NLS-1$
 
-    private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
+    private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups = new HashMap<>();
+
+    private static Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups = new HashMap<>();
 
     private static Map<ComponentType, ComponentCondition> displayConditions = new HashMap<>();
 
@@ -59,7 +64,8 @@ public class EMR440Distribution extends AbstractDistribution implements HDFSComp
         customVersionDisplayNames.put(ComponentType.PIG, Constant.PIG_EMR440_DISPLAY);
         customVersionDisplayNames.put(ComponentType.HIVE, Constant.HIVE_EMR440_DISPLAY);
 
-        moduleGroups = new HashMap<>();
+        moduleGroups.put(ComponentType.HDFS, EMR440HDFSModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.HIVE, EMR440HiveModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.MAPREDUCE, EMR440MapReduceModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKBATCH, EMR440SparkBatchModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, EMR440SparkStreamingModuleGroup.getModuleGroups());
@@ -107,6 +113,11 @@ public class EMR440Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType) {
         return moduleGroups.get(componentType);
+    }
+
+    @Override
+    public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType, String componentName) {
+        return nodeModuleGroups.get(new NodeComponentTypeBean(componentType, componentName));
     }
 
     @Override
@@ -202,7 +213,7 @@ public class EMR440Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportStoreAsParquet() {
-        return false;
+        return true;
     }
 
     @Override
@@ -243,5 +254,10 @@ public class EMR440Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public boolean doSupportBackpressure() {
         return true;
+    }
+
+    @Override
+    public boolean doSupportOldImportMode() {
+        return false;
     }
 }

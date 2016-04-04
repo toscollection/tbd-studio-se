@@ -79,6 +79,12 @@
             context="plugin:org.talend.hadoop.distribution.emr440"
             id="hive-service-emr440-latest"
             name="hive-service-1.0.0-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hive-service-1.0.0-amzn-3/6.2.0"/>
+            
+        <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop"
+            id="parquet-hive-bundle-emr440-latest"
+            name="parquet-hive-bundle-1.6.0.jar" mvn_uri="mvn:org.talend.libraries/parquet-hive-bundle-1.6.0/6.2.0"
+            uripath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-hive-bundle-1.6.0.jar"/>
         
         <!-- Pig libraries -->
         <libraryNeeded
@@ -148,7 +154,7 @@
             context="plugin:org.talend.libraries.zookeeper"
             id="zookeeper-emr440-latest"
             name="zookeeper-3.4.5.jar" mvn_uri="mvn:org.talend.libraries/zookeeper-3.4.5/6.2.0"/>
-
+            
        
         <!-- Groups -->
         
@@ -170,13 +176,15 @@
              <library id="httpclient-4.3.4.jar"/>
              <library id="guava-11.0.2.jar"/>
              <library id="protobuf-java-2.5.0.jar"/>
-             <library id="slf4j-api-1.7.5.jar"/>
-             <library id="slf4j-log4j12-1.7.5.jar"/>
+             <library id="slf4j-api-1.7.10.jar"/>
+             <library id="slf4j-log4j12-1.7.10.jar"/>
              <library id="log4j-1.2.17.jar"/>
              <library id="jersey-core-1.9.jar"/>
              <library id="jetty-util-emr440-latest"/>
              <library id="emr-metrics-client-emr440-latest"/>
              <library id="htrace-core-emr440-latest"/>
+             <library id="servlet-api-2.5.jar"/>
+             <library id="avro-emr440-latest"/>
         </libraryNeededGroup>
         
         <!-- S3 group -->
@@ -229,6 +237,16 @@
              <library id="htrace-core-emr440-latest"/>
         </libraryNeededGroup>
         
+        <!-- Map/Reduce parquet group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Map/Reduce parquet libraries for EMR 4.4.0 that are MRREQUIRED"
+                id="MAPREDUCE-PARQUET-LIB-MRREQUIRED-EMR_4_4_0"
+                name="MAPREDUCE-PARQUET-LIB-MRREQUIRED-EMR_4_4_0">
+             <library id="parquet-hadoop-bundle-1.6.0.jar" />
+             <library id="snappy-java-1.0.5.jar" />
+             <library id="jodd-core-3.5.2.jar" />
+        </libraryNeededGroup>
+        
         <!-- Pig group -->
         <libraryNeededGroup
                 description="The lastest Pig libraries for EMR 4.4.0"
@@ -254,8 +272,8 @@
              <library id="commons-collections-3.2.1.jar"/>
              <library id="commons-io-2.4.jar"/>
              <library id="protobuf-java-2.5.0.jar"/>
-             <library id="slf4j-api-1.7.5.jar"/>
-             <library id="slf4j-log4j12-1.7.5.jar"/>
+             <library id="slf4j-api-1.7.10.jar"/>
+             <library id="slf4j-log4j12-1.7.10.jar"/>
              <library id="jackson-mapper-asl-1.9.13.jar"/>
              <library id="jackson-core-asl-1.9.13.jar"/>
              <library id="jackson-jaxrs-1.9.13.jar"/>
@@ -343,6 +361,7 @@
              <library id="curator-client-2.6.0.jar"/>
              <library id="emr-metrics-client-emr440-latest"/>
              <library id="htrace-core-emr440-latest"/>
+             <!--library id="parquet-hive-bundle-emr440-latest"/-->
         </libraryNeededGroup>
                 
         <!-- Spark group -->

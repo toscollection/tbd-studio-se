@@ -23,10 +23,13 @@ public class EMR440MapReduceModuleGroup {
 
     public static final String MAPREDUCE_GROUP_NAME = "MAPREDUCE-LIB-EMR_4_4_0_LATEST"; //$NON-NLS-1$
 
+    public static final String MAPREDUCE_PARQUET_MRREQUIRED_GROUP_NAME = "MAPREDUCE-PARQUET-LIB-MRREQUIRED-EMR_4_4_0"; //$NON-NLS-1$
+
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(HDFS_GROUP_NAME));
         hs.add(new DistributionModuleGroup(MAPREDUCE_GROUP_NAME));
+        hs.add(new DistributionModuleGroup(MAPREDUCE_PARQUET_MRREQUIRED_GROUP_NAME, true, null));
         return hs;
     }
 }
