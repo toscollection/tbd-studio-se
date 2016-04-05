@@ -21,16 +21,4 @@ public interface IPivotalHDDistribution {
     static final String DISTRIBUTION_NAME = "PIVOTAL_HD";
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Pivotal HD";
-
-    /**
-     * Version strings if need.
-     */
-    static final String VERSION_20 = "PIVOTAL_HD_2_0";
-
-    static final String VERSION_20_DISPLAY = "Pivotal HD 2.0";
-
-    static final String VERSION_101 = "PIVOTAL_HD_1_0_1";
-
-    static final String VERSION_101_DISPLAY = "Pivotal HD 1.0.1";
-
 }

@@ -32,8 +32,17 @@ import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
 
+@SuppressWarnings("nls")
 public class Apache100Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         PigComponent, HiveComponent, IApacheDistribution {
+
+    public static final String VERSION = "APACHE_1_0_0";
+
+    public static final String VERSION_DISPLAY = "Apache 1.0.0";
+
+    public static final String VERSION_PIG_DISPLAY = "Apache 1.0.0 (Pig 0.9.2)";
+
+    public static final String VERSION_HIVE_DISPLAY = "Apache 1.0.0 (Hive 0.9.0)";
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -48,8 +57,8 @@ public class Apache100Distribution extends AbstractDistribution implements HDFSC
                 EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_100_PIG_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_100_HIVE_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
     }
 
     @Override
@@ -64,13 +73,13 @@ public class Apache100Distribution extends AbstractDistribution implements HDFSC
 
     @Override
     public String getVersion() {
-        return VERSION_100;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : VERSION_100_DISPLAY;
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override

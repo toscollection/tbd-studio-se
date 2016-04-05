@@ -34,6 +34,10 @@ import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 public class HDP130Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
 
+    public static final String VERSION = "HDP_1_3";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V1.3.0(Condor)";
+
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
     static {
@@ -52,12 +56,12 @@ public class HDP130Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersion() {
-        return VERSION_13;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_13_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

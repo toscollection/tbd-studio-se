@@ -120,6 +120,8 @@
 
 		<module>test/plugins/org.talend.oozie.scheduler.test</module>
 		<module>test/plugins/org.talend.repository.nosql.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.test.base</module>
 		<module>test/plugins/org.talend.hadoop.distribution.apache100.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.emr103.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdp210.test</module>
@@ -139,7 +141,6 @@
 		<module>test/plugins/org.talend.hadoop.distribution.cdh510mr1.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdinsight310.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr212.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh510mr2.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdinsight320.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr213.test</module>

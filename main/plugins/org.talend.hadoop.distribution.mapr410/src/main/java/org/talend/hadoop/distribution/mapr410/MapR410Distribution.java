@@ -45,7 +45,9 @@ public class MapR410Distribution extends AbstractMapRDistribution implements HDF
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, HiveOnSparkComponent,
         IMapRDistribution {
 
-    public final static String VERSION = VERSION_410;
+    public static final String VERSION = "MAPR410";
+
+    public static final String VERSION_DISPLAY = "MapR 4.1.0(YARN mode)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -90,7 +92,7 @@ public class MapR410Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_410_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

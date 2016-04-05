@@ -37,6 +37,16 @@ import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 public class EMRApache103Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         PigComponent, HiveComponent, IAmazonEMRDistribution {
 
+    public static final String VERSION = "APACHE_1_0_3_EMR";
+
+    public static final String VERSION_DISPLAY = "Apache 1.0.3";
+
+    public static final String VERSION_PIG_DISPLAY = "Apache 1.0.3 (Pig 0.9.2)";
+
+    public static final String VERSION_HBASE_DISPLAY = "Apache 1.0.3 (HBase 0.92.0)";
+
+    public static final String VERSION_HIVE_DISPLAY = "Apache 1.0.3 (Hive 0.8.1)";
+
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
     private static Map<ComponentType, ComponentCondition> displayConditions = new HashMap<>();
@@ -50,10 +60,10 @@ public class EMRApache103Distribution extends AbstractDistribution implements HD
                 Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIG, VERSION_APACHE_103_PIG_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_APACHE_103_PIG_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HBASE, VERSION_APACHE_103_HBASE_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_APACHE_103_HIVE_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIG, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HBASE, VERSION_HBASE_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
     }
 
     @Override
@@ -68,13 +78,13 @@ public class EMRApache103Distribution extends AbstractDistribution implements HD
 
     @Override
     public String getVersion() {
-        return VERSION_APACHE_103;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : VERSION_APACHE_103_DISPLAY;
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override

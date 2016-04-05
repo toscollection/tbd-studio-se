@@ -30,8 +30,13 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
+@SuppressWarnings("nls")
 public class CDH510MR1Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IClouderaDistribution {
+
+    public static final String VERSION = "Cloudera_CDH5_1_MR1";
+
+    public static final String VERSION_DISPLAY = "Cloudera CDH5.1(MR 1 mode)";
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -51,12 +56,12 @@ public class CDH510MR1Distribution extends AbstractDistribution implements HDFSC
 
     @Override
     public String getVersion() {
-        return VERSION_CDH5_1_MR1;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_CDH5_1_MR1_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

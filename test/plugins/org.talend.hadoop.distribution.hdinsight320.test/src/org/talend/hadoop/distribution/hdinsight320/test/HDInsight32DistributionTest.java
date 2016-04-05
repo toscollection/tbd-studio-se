@@ -46,7 +46,7 @@ public class HDInsight32DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(HDInsight32Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(HDInsight32Distribution.VERSION_32, distribution.getVersion());
+        assertEquals(HDInsight32Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

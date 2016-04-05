@@ -46,7 +46,7 @@ public class CDH540DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(CDH540Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(CDH540Distribution.VERSION_CDH5_4, distribution.getVersion());
+        assertEquals(CDH540Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

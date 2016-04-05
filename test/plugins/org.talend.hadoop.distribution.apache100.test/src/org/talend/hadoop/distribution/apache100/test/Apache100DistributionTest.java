@@ -46,7 +46,7 @@ public class Apache100DistributionTest {
         assertNotNull(apache100.getDistributionName());
         assertNotNull(apache100.getVersionName(null));
         assertEquals(Apache100Distribution.DISTRIBUTION_NAME, apache100.getDistribution());
-        assertEquals(Apache100Distribution.VERSION_100, apache100.getVersion());
+        assertEquals(Apache100Distribution.VERSION, apache100.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, apache100.getHadoopVersion());
         assertTrue(apache100.doSupportKerberos());
         assertFalse(apache100.doSupportUseDatanodeHostname());

@@ -21,15 +21,4 @@ public interface IMicrosoftHDInsightDistribution {
     static final String DISTRIBUTION_NAME = "MICROSOFT_HD_INSIGHT";
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Microsoft HD Insight";
-
-    /**
-     * Version strings if need.
-     */
-    static final String VERSION_31 = "MICROSOFT_HD_INSIGHT_3_1";
-
-    static final String VERSION_31_DISPLAY = "Microsoft HD Insight 3.1";
-
-    static final String VERSION_32 = "MICROSOFT_HD_INSIGHT_3_2";
-
-    static final String VERSION_32_DISPLAY = "Microsoft HD Insight 3.2";
 }

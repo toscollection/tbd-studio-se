@@ -46,7 +46,7 @@ public class Pivotal200DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(Pivotal200Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(Pivotal200Distribution.VERSION_20, distribution.getVersion());
+        assertEquals(Pivotal200Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

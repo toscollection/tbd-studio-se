@@ -46,7 +46,7 @@ public class EMR400DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(EMR400Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(EMR400Distribution.VERSION_400, distribution.getVersion());
+        assertEquals(EMR400Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

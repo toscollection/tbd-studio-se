@@ -52,7 +52,9 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
         HiveOnSparkComponent, IHortonworksDistribution {
 
-    public final static String VERSION = VERSION_23;
+    public static final String VERSION = "HDP_2_3";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.3.0";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
@@ -103,7 +105,7 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_23_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

@@ -36,9 +36,14 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
+@SuppressWarnings("nls")
 public class CDH510MR2Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, ImpalaComponent, HCatalogComponent, SparkBatchComponent,
         SparkStreamingComponent, IClouderaDistribution {
+
+    public static final String VERSION = "Cloudera_CDH5_1";
+
+    public static final String VERSION_DISPLAY = "Cloudera CDH5.1(YARN mode)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -69,12 +74,12 @@ public class CDH510MR2Distribution extends AbstractDistribution implements HDFSC
 
     @Override
     public String getVersion() {
-        return VERSION_CDH5_1;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_CDH5_1_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

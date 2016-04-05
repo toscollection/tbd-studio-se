@@ -40,7 +40,9 @@ import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220PigOutputNodeModu
 public class HDP220Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
 
-    public final static String VERSION = VERSION_22;
+    public static final String VERSION = "HDP_2_2";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.2.0";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
@@ -78,7 +80,7 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_22_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

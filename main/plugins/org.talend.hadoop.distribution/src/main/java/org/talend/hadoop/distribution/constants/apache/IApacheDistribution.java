@@ -21,15 +21,4 @@ public interface IApacheDistribution {
     static final String DISTRIBUTION_NAME = "APACHE";
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Apache";
-
-    /**
-     * Version strings if need.
-     */
-    static final String VERSION_100 = "APACHE_1_0_0";
-
-    static final String VERSION_100_DISPLAY = "Apache 1.0.0";
-
-    static final String VERSION_100_PIG_DISPLAY = "Apache 1.0.0 (Pig 0.9.2)";
-
-    static final String VERSION_100_HIVE_DISPLAY = "Apache 1.0.0 (Hive 0.9.0)";
 }

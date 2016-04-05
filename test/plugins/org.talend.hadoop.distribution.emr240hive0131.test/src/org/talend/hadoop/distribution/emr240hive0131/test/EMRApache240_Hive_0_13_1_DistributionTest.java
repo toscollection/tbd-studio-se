@@ -46,7 +46,7 @@ public class EMRApache240_Hive_0_13_1_DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(EMRApache240_Hive_0_13_1_Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(EMRApache240_Hive_0_13_1_Distribution.VERSION_APACHE_240_HIVE_0131, distribution.getVersion()); //$NON-NLS-1$
+        assertEquals(EMRApache240_Hive_0_13_1_Distribution.VERSION, distribution.getVersion()); //$NON-NLS-1$
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

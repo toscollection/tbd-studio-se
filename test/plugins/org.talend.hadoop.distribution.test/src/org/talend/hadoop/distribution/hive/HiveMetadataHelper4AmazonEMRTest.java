@@ -12,13 +12,13 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hive;
 
-import org.junit.Test;
 import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
+import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4AmazonEMRTest extends AbstractTest4HiveMetadataHelper {
+public class HiveMetadataHelper4AmazonEMRTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
@@ -32,49 +32,8 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractTest4HiveMetadataH
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { IAmazonEMRDistribution.VERSION_400_HIVE_DISPLAY,
-                IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131_DISPLAY,
-                IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_DISPLAY, IAmazonEMRDistribution.VERSION_APACHE_103_HIVE_DISPLAY };
-    }
-
-    @Test
-    public void testHiveMode_EMR400_Standalone_Only() {
-        doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_400, HIVE_MODE_DISPLAY_STANDALONE_ONLY);
-    }
-
-    @Test
-    public void testHiveServer_EMR400_Server2_Only() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_400, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-    }
-
-    @Test
-    public void testHiveMode_EMRApache103_WithAll() {
-        doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HIVE_MODE_DISPLAY_ALL);
-    }
-
-    @Test
-    public void testHiveServer_EMRApache103_Server1_Only() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_103, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-    }
-
-    @Test
-    public void testHiveMode_EMRApache240Hive0131_Standalone_Only() {
-        doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HIVE_MODE_DISPLAY_STANDALONE_ONLY);
-    }
-
-    @Test
-    public void testHiveServer_EMRApache240Hive0131_Server2_Only() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240_HIVE_0131, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
-    }
-
-    @Test
-    public void testHiveMode_EMRApache240_WithAll() {
-        doTestGetHiveModesDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HIVE_MODE_DISPLAY_ALL);
-    }
-
-    @Test
-    public void testHiveServer_EMRApache240_Server2_Only() {
-        doTestGetHiveServersDisplay(IAmazonEMRDistribution.VERSION_APACHE_240, HIVE_SERVER_DISPLAY_SERVER2_ONLY);
+        return new String[] { "EMR 4.0.0 (Hive 1.0.0)", "Apache 2.4.0 (Hive 0.13.1)", "Apache 2.4.0 (Hive 0.11.0)",
+                "Apache 1.0.3 (Hive 0.8.1)" };
     }
 
 }

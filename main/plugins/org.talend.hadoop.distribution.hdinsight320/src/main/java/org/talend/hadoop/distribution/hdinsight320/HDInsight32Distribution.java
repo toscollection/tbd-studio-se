@@ -39,6 +39,10 @@ import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDis
 public class HDInsight32Distribution extends AbstractDistribution implements MRComponent, PigComponent, HiveComponent,
         SparkBatchComponent, SparkStreamingComponent, IMicrosoftHDInsightDistribution {
 
+    public static final String VERSION = "MICROSOFT_HD_INSIGHT_3_2";
+
+    public static final String VERSION_DISPLAY = "Microsoft HD Insight 3.2";
+
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -67,12 +71,12 @@ public class HDInsight32Distribution extends AbstractDistribution implements MRC
 
     @Override
     public String getVersion() {
-        return VERSION_32;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_32_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

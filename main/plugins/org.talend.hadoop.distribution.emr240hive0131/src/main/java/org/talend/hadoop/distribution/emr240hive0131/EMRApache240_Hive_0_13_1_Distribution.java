@@ -26,6 +26,10 @@ import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 
 public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution implements HiveComponent, IAmazonEMRDistribution {
 
+    public static final String VERSION = "APACHE_2_4_0_EMR_0_13_1";
+
+    public static final String VERSION_DISPLAY = "Apache 2.4.0 (Hive 0.13.1)";
+
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*"; //$NON-NLS-1$ {
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -46,12 +50,12 @@ public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution 
 
     @Override
     public String getVersion() {
-        return VERSION_APACHE_240_HIVE_0131;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_APACHE_240_HIVE_0131_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

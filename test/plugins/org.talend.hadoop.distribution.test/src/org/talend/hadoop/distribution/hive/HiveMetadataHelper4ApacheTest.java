@@ -12,13 +12,13 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hive;
 
-import org.junit.Test;
 import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
+import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4ApacheTest extends AbstractTest4HiveMetadataHelper {
+public class HiveMetadataHelper4ApacheTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
@@ -32,17 +32,7 @@ public class HiveMetadataHelper4ApacheTest extends AbstractTest4HiveMetadataHelp
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { IApacheDistribution.VERSION_100_HIVE_DISPLAY };
-    }
-
-    @Test
-    public void testHiveMode_Apache100_WithAll() {
-        doTestGetHiveModesDisplay(IApacheDistribution.VERSION_100, HIVE_MODE_DISPLAY_ALL);
-    }
-
-    @Test
-    public void testHiveServer_Apache100_Server1_Only() {
-        doTestGetHiveServersDisplay(IApacheDistribution.VERSION_100, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
+        return new String[] { "Apache 1.0.0 (Hive 0.9.0)"/* Apache100Distribution.VERSION_100_HIVE_DISPLAY */};
     }
 
 }

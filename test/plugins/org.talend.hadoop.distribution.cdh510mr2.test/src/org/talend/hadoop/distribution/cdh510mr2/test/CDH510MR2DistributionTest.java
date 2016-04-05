@@ -31,7 +31,6 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
-import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 /**
  * Test class for the {@link CDH540Distribution} distribution.
@@ -46,8 +45,8 @@ public class CDH510MR2DistributionTest {
         HadoopComponent distribution = new CDH510MR2Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(IClouderaDistribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(IClouderaDistribution.VERSION_CDH5_1, distribution.getVersion());
+        assertEquals(CDH510MR2Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(CDH510MR2Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

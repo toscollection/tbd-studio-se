@@ -46,7 +46,7 @@ public class HDP200DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(HDP200Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(HDP200Distribution.VERSION_20, distribution.getVersion());
+        assertEquals(HDP200Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

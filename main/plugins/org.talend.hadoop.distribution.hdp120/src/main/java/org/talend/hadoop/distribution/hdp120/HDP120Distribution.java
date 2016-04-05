@@ -34,6 +34,10 @@ import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 public class HDP120Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
 
+    public static final String VERSION = "HDP_1_2";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V1.2.0(Bimota)";
+
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
     static {
@@ -52,12 +56,12 @@ public class HDP120Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersion() {
-        return VERSION_12;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_12_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

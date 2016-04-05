@@ -37,6 +37,12 @@ import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
 public class MapR212Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, IMapRDistribution {
 
+    public static final String VERSION = "MAPR212";
+
+    public static final String VERSION_DISPLAY = "MapR 2.1.2";
+
+    public static final String VERSION_SQOOP_DISPLAY = "MapR 2.1.2 (Sqoop 1.4.2)";
+
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
     private static Map<ComponentType, ComponentCondition> displayConditions = new HashMap<>();
@@ -50,7 +56,7 @@ public class MapR212Distribution extends AbstractMapRDistribution implements HDF
                 EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.SQOOP, VERSION_212_SQOOP_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.SQOOP, VERSION_SQOOP_DISPLAY);
     }
 
     @Override
@@ -65,13 +71,13 @@ public class MapR212Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public String getVersion() {
-        return VERSION_212;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : VERSION_212_DISPLAY;
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override

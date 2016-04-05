@@ -46,7 +46,7 @@ public class MapR401DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(MapR401Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(MapR401Distribution.VERSION_401, distribution.getVersion());
+        assertEquals(MapR401Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

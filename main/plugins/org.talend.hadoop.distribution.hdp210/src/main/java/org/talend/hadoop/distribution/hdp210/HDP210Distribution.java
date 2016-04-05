@@ -34,6 +34,10 @@ import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 public class HDP210Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
 
+    public static final String VERSION = "HDP_2_1";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.1.0(Baikal)";
+
     private final static String YARN_APPLICATION_CLASSPATH = "/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -54,12 +58,12 @@ public class HDP210Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersion() {
-        return VERSION_21;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_21_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

@@ -46,7 +46,7 @@ public class MapR500DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(MapR500Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(MapR500Distribution.VERSION_500, distribution.getVersion());
+        assertEquals(MapR500Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

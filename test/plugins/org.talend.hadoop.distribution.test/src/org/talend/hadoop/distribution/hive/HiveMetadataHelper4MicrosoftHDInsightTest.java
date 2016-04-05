@@ -14,11 +14,9 @@ package org.talend.hadoop.distribution.hive;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Test;
-import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
 import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
@@ -83,40 +81,4 @@ public class HiveMetadataHelper4MicrosoftHDInsightTest /* extends AbstractTest4H
                 ArrayUtils.contains(distributionsDisplay, getDistributionDisplay()));
     }
 
-    @Test
-    public void testHiveMode_HDInsight31_NotSupport() {
-        String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(),
-                IMicrosoftHDInsightDistribution.VERSION_31, HiveServerVersionInfo.HIVE_SERVER_1.getKey(), false);
-        assertTrue("Don't support for Hive", hiveModesDisplay == null || hiveModesDisplay.length == 0);
-
-        hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), IMicrosoftHDInsightDistribution.VERSION_31,
-                HiveServerVersionInfo.HIVE_SERVER_2.getKey(), false);
-        assertTrue("Don't support for Hive", hiveModesDisplay == null || hiveModesDisplay.length == 0);
-    }
-
-    @Test
-    public void testHiveServer_HDInsight31_NotSupport() {
-        String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(),
-                IMicrosoftHDInsightDistribution.VERSION_31, false);
-        assertTrue("Don't support for Hive", hiveServersDisplay == null || hiveServersDisplay.length == 0);
-    }
-
-    @Test
-    public void testHiveMode_HDInsight32_NotSupport() {
-        String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(),
-                IMicrosoftHDInsightDistribution.VERSION_32, HiveServerVersionInfo.HIVE_SERVER_1.getKey(), false);
-        assertTrue("Don't support for Hive", hiveModesDisplay == null || hiveModesDisplay.length == 0);
-
-        hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), IMicrosoftHDInsightDistribution.VERSION_32,
-                HiveServerVersionInfo.HIVE_SERVER_2.getKey(), false);
-        assertTrue("Don't support for Hive", hiveModesDisplay == null || hiveModesDisplay.length == 0);
-    }
-
-    @Test
-    public void testHiveServer_HDInsight32_NotSupport() {
-        String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(),
-                IMicrosoftHDInsightDistribution.VERSION_32, false);
-        assertTrue("Don't support for Hive", hiveServersDisplay == null || hiveServersDisplay.length == 0);
-
-    }
 }

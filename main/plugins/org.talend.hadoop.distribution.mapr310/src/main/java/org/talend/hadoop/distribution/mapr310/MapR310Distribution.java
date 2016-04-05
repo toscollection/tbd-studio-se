@@ -33,6 +33,10 @@ import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
 public class MapR310Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IMapRDistribution {
 
+    public static final String VERSION = "MAPR310";
+
+    public static final String VERSION_DISPLAY = "MapR 3.1.0";
+
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
     static {
@@ -51,12 +55,12 @@ public class MapR310Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public String getVersion() {
-        return VERSION_310;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_310_DISPLAY;
+        return VERSION_DISPLAY;
     }
 
     @Override

@@ -44,6 +44,14 @@ import org.talend.hadoop.distribution.emr400.modulegroup.EMR400SparkStreamingMod
 public class EMR400Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, PigComponent, HiveComponent,
         SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, IAmazonEMRDistribution {
 
+    public static final String VERSION = "EMR_4_0_0";
+
+    public static final String VERSION_DISPLAY = "EMR 4.0.0 (Apache 2.6.0)";
+
+    public static final String VERSION_PIG_DISPLAY = "EMR 4.0.0 (Pig 0.14.0)";
+
+    public static final String VERSION_HIVE_DISPLAY = "EMR 4.0.0 (Hive 1.0.0)";
+
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,/usr/lib/hadoop-lzo/lib/*,/usr/share/aws/emr/emrfs/conf, /usr/share/aws/emr/emrfs/lib/*,/usr/share/aws/emr/emrfs/auxlib/*,/usr/share/aws/emr/lib/*,/usr/share/aws/emr/ddb/lib/emr-ddb-hadoop.jar, /usr/share/aws/emr/goodies/lib/emr-hadoop-goodies.jar,/usr/share/aws/emr/kinesis/lib/emr-kinesis-hadoop.jar,/usr/lib/spark/yarn/lib/datanucleus-api-jdo.jar,/usr/lib/spark/yarn/lib/datanucleus-core.jar,/usr/lib/spark/yarn/lib/datanucleus-rdbms.jar,/usr/share/aws/emr/cloudwatch-sink/lib/*"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -60,8 +68,8 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
                         Constant.PIG_HBASESTORAGE_PARAMETER))));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIG, VERSION_400_PIG_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_400_HIVE_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIG, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
 
         moduleGroups = new HashMap<>();
 
@@ -81,13 +89,13 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersion() {
-        return VERSION_400;
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : VERSION_400_DISPLAY;
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override

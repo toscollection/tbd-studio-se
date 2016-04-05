@@ -13,13 +13,13 @@
 package org.talend.hadoop.distribution.hive;
 
 import org.junit.Ignore;
-import org.junit.Test;
 import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
+import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4CustomTest extends AbstractTest4HiveMetadataHelper {
+public class HiveMetadataHelper4CustomTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
@@ -40,16 +40,6 @@ public class HiveMetadataHelper4CustomTest extends AbstractTest4HiveMetadataHelp
     @Ignore
     public void testGetDistributionVersionsDisplay() {
         //
-    }
-
-    @Test
-    public void testHiveMode_Custom_All() {
-        doTestGetHiveModesDisplay(null, HIVE_MODE_DISPLAY_ALL);
-    }
-
-    @Test
-    public void testHiveServer_Custom_All() {
-        doTestGetHiveServersDisplay(null, HIVE_SERVER_DISPLAY_ALL);
     }
 
 }

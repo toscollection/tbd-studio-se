@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HD Test Base
+Bundle-SymbolicName: org.talend.hadoop.distribution.test.base
+Bundle-Version: 6.2.0.qualifier
+Bundle-Vendor: .Talend SA.
+Require-Bundle: org.talend.testutils,
+ org.talend.hadoop.distribution,
+ org.talend.core.runtime
+Export-Package: org.talend.hadoop.distribution.test.hive

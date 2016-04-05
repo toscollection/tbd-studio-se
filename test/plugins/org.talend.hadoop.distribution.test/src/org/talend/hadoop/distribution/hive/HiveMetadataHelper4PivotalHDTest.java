@@ -12,13 +12,13 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hive;
 
-import org.junit.Test;
 import org.talend.hadoop.distribution.constants.piv.IPivotalHDDistribution;
+import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4PivotalHDTest extends AbstractTest4HiveMetadataHelper {
+public class HiveMetadataHelper4PivotalHDTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
@@ -32,26 +32,7 @@ public class HiveMetadataHelper4PivotalHDTest extends AbstractTest4HiveMetadataH
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { IPivotalHDDistribution.VERSION_20_DISPLAY, IPivotalHDDistribution.VERSION_101_DISPLAY };
+        return new String[] { "Pivotal HD 2.0", "Pivotal HD 1.0.1" };
     }
 
-    @Test
-    public void testHiveMode_Pivotal101_WithAll() {
-        doTestGetHiveModesDisplay(IPivotalHDDistribution.VERSION_101, HIVE_MODE_DISPLAY_ALL);
-    }
-
-    @Test
-    public void testHiveServer_Pivotal101_Server1_Only() {
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_101, HIVE_SERVER_DISPLAY_SERVER1_ONLY);
-    }
-
-    @Test
-    public void testHiveMode_Pivotal200_WithAll() {
-        doTestGetHiveModesDisplay(IPivotalHDDistribution.VERSION_20, HIVE_MODE_DISPLAY_ALL);
-    }
-
-    @Test
-    public void testHiveServer_Pivotal200_WithAll() {
-        doTestGetHiveServersDisplay(IPivotalHDDistribution.VERSION_20, HIVE_SERVER_DISPLAY_ALL);
-    }
 }

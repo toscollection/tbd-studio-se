@@ -46,7 +46,7 @@ public class EMRApache103DistributionTest {
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertEquals(EMRApache103Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(EMRApache103Distribution.VERSION_APACHE_103, distribution.getVersion());
+        assertEquals(EMRApache103Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());
