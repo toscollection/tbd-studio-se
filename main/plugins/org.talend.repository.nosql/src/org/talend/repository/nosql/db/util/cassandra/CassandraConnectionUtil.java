@@ -12,7 +12,12 @@
 // ============================================================================
 package org.talend.repository.nosql.db.util.cassandra;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.oro.text.regex.MalformedPatternException;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.utils.KeywordsValidator;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
@@ -51,23 +56,25 @@ public class CassandraConnectionUtil {
     public static boolean isUpgradeVersion(NoSQLConnection connection) {
         String dbVersion = connection.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
         try{
-            if(dbVersion.startsWith("CASSANDRA_")&&dbVersion.length()>=11){//$NON-NLS-1$
-                String vf =dbVersion.substring(10,11);
-                Integer vi = Integer.parseInt(vf);
-                if(vi>2){
-                    return true;
-                }else if(vi<2){
-                    return false;
-                }else if(dbVersion.startsWith("CASSANDRA_2_")&&dbVersion.length()>=13){//$NON-NLS-1$
-                    String vs = dbVersion.substring(12,13);
-                    vi = Integer.parseInt(vs);
-                    if(vi<2){
-                        return false;
-                    }else{
-                        return true;
-                    }
-                }
-            }
+             Pattern pattern = Pattern.compile("CASSANDRA_(\\d+)_(\\d+)_(\\d+)");//$NON-NLS-1$
+             Matcher matcher = pattern.matcher(dbVersion);
+             while (matcher.find()) {
+                 String firstStr = matcher.group(1);
+                 Integer firstInt = Integer.parseInt(firstStr);
+                 if(firstInt>2){
+                     return true; 
+                 }else if(firstInt<2){
+                     return false;
+                 }else{
+                     String secondStr= matcher.group(2);
+                     Integer secondInt = Integer.parseInt(secondStr);
+                     if(secondInt<2){
+                         return false;
+                     }else{
+                         return true;
+                     }
+                 }
+             }
         } catch (Exception ex) {
             //do nothing
         }
