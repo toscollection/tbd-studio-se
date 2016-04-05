@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.talend.commons.utils.system.EnvironmentUtils;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -250,5 +251,13 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public boolean doSupportBackpressure() {
         return false;
+    }
+
+    @Override
+    public boolean doSupportEmbeddedMode() {
+        if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
+            return false;
+        }
+        return super.doSupportEmbeddedMode();
     }
 }
