@@ -1,10 +1,33 @@
 <%@ jet %>
+	<%@ include file="@{org.talend.designer.components.localprovider}/components/tSetKeystore/SSL_Helper.javajet"%>
 	<%
     String host = ElementParameterParser.getValue(node,"__HOST__");
     String port = ElementParameterParser.getValue(node,"__PORT__");
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
     String passWord = ElementParameterParser.getPasswordValue(node, "__PASSWORD__");
-	boolean authentication= ElementParameterParser.getBooleanValue(node, "__REQUIRED_AUTHENTICATION__");
+	boolean authentication = ElementParameterParser.getBooleanValue(node, "__REQUIRED_AUTHENTICATION__");
+	boolean useSSL = ElementParameterParser.getBooleanValue(node, "__USE_SSL__");
+	INode sslNode = ElementParameterParser.getLinkedNodeValue(node, "__SSL_SETTING__");
+	SSL_HELPER sslHelper = new SSL_HELPER(sslNode);
+	if(useSSL){
+	%>
+		javax.net.ssl.KeyManagerFactory kmf_<%=cid%> = null;
+		<%if(sslHelper.needKS()){%>
+			java.security.KeyStore ks_<%=cid%> = java.security.KeyStore.getInstance("<%=sslHelper.getKSType()%>");
+			ks_<%=cid%>.load(new java.io.FileInputStream(<%=sslHelper.getKSPath()%>), <%=sslHelper.getKSPwd()%>.toCharArray());
+			kmf_<%=cid%> = javax.net.ssl.KeyManagerFactory.getInstance(javax.net.ssl.KeyManagerFactory.getDefaultAlgorithm());
+			kmf_<%=cid%>.init(ks_<%=cid%>, <%=sslHelper.getKSPwd()%>.toCharArray());
+		<%}%>
+		
+		java.security.KeyStore ts_<%=cid%> = java.security.KeyStore.getInstance("<%=sslHelper.getTSType()%>");
+		ts_<%=cid%>.load(new java.io.FileInputStream(<%=sslHelper.getTSPath()%>), <%=sslHelper.getTSPwd()%>.toCharArray());
+		javax.net.ssl.TrustManagerFactory tmf_<%=cid%> = javax.net.ssl.TrustManagerFactory.getInstance(javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm());
+    	tmf_<%=cid%>.init(ts_<%=cid%>);
+		
+		javax.net.ssl.SSLContext sslContext_<%=cid%> = javax.net.ssl.SSLContext.getInstance("TLS");
+		sslContext_<%=cid%>.init(kmf_<%=cid%> == null ? null : kmf_<%=cid%>.getKeyManagers(), tmf_<%=cid%>.getTrustManagers(), new java.security.SecureRandom());
+	<%
+	}
     %>
     com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
     															.addContactPoints(<%=host%>.split(","))
@@ -13,6 +36,12 @@
                                                             	if(authentication){
                                                             	%>
                                                                 	.withCredentials(<%=userName%>, <%=passWord%>)
+                                                            	<%
+                                                            	}
+                                                            	if(useSSL){
+                                                            	%>
+                                                            		.withSSL(com.datastax.driver.core.JdkSSLOptions.builder()
+                                                            					.withSSLContext(sslContext_<%=cid%>).build())
                                                             	<%
                                                             	}
                                                             	%>
