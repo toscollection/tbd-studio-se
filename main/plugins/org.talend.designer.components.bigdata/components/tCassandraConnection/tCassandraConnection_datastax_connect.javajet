@@ -6,8 +6,8 @@
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
     String passWord = ElementParameterParser.getPasswordValue(node, "__PASSWORD__");
 	boolean authentication = ElementParameterParser.getBooleanValue(node, "__REQUIRED_AUTHENTICATION__");
-	boolean useSSL = ElementParameterParser.getBooleanValue(node, "__USE_SSL__");
-	INode sslNode = ElementParameterParser.getLinkedNodeValue(node, "__SSL_SETTING__");
+	boolean useSSL = ElementParameterParser.getBooleanValue(node, "__USE_HTTPS__");
+	INode sslNode = ElementParameterParser.getLinkedNodeValue(node, "__HTTPS_SETTING__");
 	SSL_HELPER sslHelper = new SSL_HELPER(sslNode);
 	if(useSSL){
 	%>
