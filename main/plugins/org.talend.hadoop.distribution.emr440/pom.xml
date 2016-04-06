@@ -7,6 +7,6 @@
     <version>6.2.0-SNAPSHOT</version>
     <relativePath>../../../</relativePath>
   </parent>
-  <artifactId>org.talend.hadoop.distribution.emr440</artifactId>
+  <artifactId>org.talend.hadoop.distribution.emr450</artifactId>
   <packaging>eclipse-plugin</packaging>
 </project>
