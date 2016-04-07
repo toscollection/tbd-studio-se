@@ -21,15 +21,36 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+		<cloudera.navigator.version>1.1-SNAPSHOT</cloudera.navigator.version>
+		<atlas.version>0.7-incubating-SNAPSHOT</atlas.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>apache.snapshots</id>
+			<name>Apache Development Snapshot Repository</name>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.cloudera.navigator</groupId>
 			<artifactId>navigator-sdk-client</artifactId>
-			<version>1.0-BETA20151126</version>
+			<version>${cloudera.navigator.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.apache.atlas</groupId>
+			<artifactId>atlas-client</artifactId>
+			<version>${atlas.version}</version>
+		</dependency>
 
 		<!-- Testing only. -->
 		<dependency>
