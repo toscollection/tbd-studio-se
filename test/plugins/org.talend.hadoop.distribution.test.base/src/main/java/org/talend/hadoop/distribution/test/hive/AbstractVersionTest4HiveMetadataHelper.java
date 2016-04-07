@@ -45,8 +45,6 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
     protected final static String[] HIVE_SERVER_DISPLAY_SERVER2_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_2
             .getDisplayName() };
 
-    protected abstract String getDistribution();
-
     protected abstract String getDistributionVersion();
 
     protected void doTestGetHiveModesDisplay(String hiveVersion, String[] modeArr) {
