@@ -106,7 +106,7 @@
             NAME="REQUIRED_AUTHENTICATION"
             FIELD="CHECK"
             REPOSITORY_VALUE="REQUIRED_AUTHENTICATION"
-            NUM_ROW="10"
+            NUM_ROW="6"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
         >
             <DEFAULT>false</DEFAULT>
@@ -116,7 +116,7 @@
             FIELD="TEXT"
             REPOSITORY_VALUE="USERNAME"
             REQUIRED="true"
-            NUM_ROW="11"
+            NUM_ROW="7"
             SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
         >
             <DEFAULT>""</DEFAULT>
@@ -126,11 +126,17 @@
             FIELD="PASSWORD"
             REPOSITORY_VALUE="PASSWORD"
             REQUIRED="true"
-            NUM_ROW="11"
+            NUM_ROW="7"
             SHOW_IF="(REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+        <PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="8" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
+            NUM_ROW="8" SHOW_IF="(isShow[USE_HTTPS]) AND (USE_HTTPS == 'true')"
+            DYNAMIC_SETTINGS="true" />
 		<PARAMETER
 			NAME="KEY_SPACE"
 			FIELD="TEXT"

@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.commons.utils.platform.PluginChecker;
+import org.talend.commons.utils.system.EnvironmentUtils;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -30,9 +30,14 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 
 public class HDP210Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
+
+    public static final String VERSION = "HDP_2_1";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.1.0(Baikal)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "/etc/hadoop/conf,/usr/lib/hadoop/*,/usr/lib/hadoop/lib/*,/usr/lib/hadoop-hdfs/*,/usr/lib/hadoop-hdfs/lib/*,/usr/lib/hadoop-yarn/*,/usr/lib/hadoop-yarn/lib/*,/usr/lib/hadoop-mapreduce/*,/usr/lib/hadoop-mapreduce/lib/*"; //$NON-NLS-1$
 
@@ -44,22 +49,22 @@ public class HDP210Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.HORTONWORKS.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.HORTONWORKS.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.HDP_2_1.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.HDP_2_1.getVersionDisplay();
+        return VERSION_DISPLAY;
     }
 
     @Override
@@ -139,12 +144,21 @@ public class HDP210Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportEmbeddedMode() {
-        return true;
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
+            return false;
+        }
+        return super.doSupportEmbeddedMode();
     }
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        return super.doSupportStandaloneMode();
     }
 
     @Override
@@ -197,4 +211,8 @@ public class HDP210Distribution extends AbstractDistribution implements HDFSComp
         return false;
     }
 
+    @Override
+    public boolean doSupportSecurity() {
+        return true;
+    }
 }

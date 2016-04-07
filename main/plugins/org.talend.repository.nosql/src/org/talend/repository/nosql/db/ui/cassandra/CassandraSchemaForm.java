@@ -42,7 +42,9 @@ public class CassandraSchemaForm extends AbstractNoSQLSchemaForm {
         if (!isInitialized) {
             boolean isDatastaxApiType = ICassandraConstants.API_TYPE_DATASTAX.equals(getConnection().getAttributes().get(
                     INoSQLCommonAttributes.API_TYPE));
-            if (isDatastaxApiType) {
+            if(CassandraConnectionUtil.isUpgradeVersion(getConnection())){
+                setDbmID(ICassandraConstants.DBM22_DATASTAX_ID);
+            }else if (isDatastaxApiType) {
                 setDbmID(ICassandraConstants.DBM_DATASTAX_ID);
             }
             setupForm();

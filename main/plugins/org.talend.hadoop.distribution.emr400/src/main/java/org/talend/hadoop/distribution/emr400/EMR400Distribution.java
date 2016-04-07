@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -39,11 +37,20 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 import org.talend.hadoop.distribution.emr400.modulegroup.EMR400SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.emr400.modulegroup.EMR400SparkStreamingModuleGroup;
 
 public class EMR400Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, PigComponent, HiveComponent,
-        SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
+        SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, IAmazonEMRDistribution {
+
+    public static final String VERSION = "EMR_4_0_0";
+
+    public static final String VERSION_DISPLAY = "EMR 4.0.0 (Apache 2.6.0)";
+
+    public static final String VERSION_PIG_DISPLAY = "EMR 4.0.0 (Pig 0.14.0)";
+
+    public static final String VERSION_HIVE_DISPLAY = "EMR 4.0.0 (Hive 1.0.0)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,/usr/lib/hadoop-lzo/lib/*,/usr/share/aws/emr/emrfs/conf, /usr/share/aws/emr/emrfs/lib/*,/usr/share/aws/emr/emrfs/auxlib/*,/usr/share/aws/emr/lib/*,/usr/share/aws/emr/ddb/lib/emr-ddb-hadoop.jar, /usr/share/aws/emr/goodies/lib/emr-hadoop-goodies.jar,/usr/share/aws/emr/kinesis/lib/emr-kinesis-hadoop.jar,/usr/lib/spark/yarn/lib/datanucleus-api-jdo.jar,/usr/lib/spark/yarn/lib/datanucleus-core.jar,/usr/lib/spark/yarn/lib/datanucleus-rdbms.jar,/usr/share/aws/emr/cloudwatch-sink/lib/*"; //$NON-NLS-1$
 
@@ -61,8 +68,8 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
                         Constant.PIG_HBASESTORAGE_PARAMETER))));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIG, Constant.PIG_EMR400_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, Constant.HIVE_EMR400_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIG, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
 
         moduleGroups = new HashMap<>();
 
@@ -72,23 +79,23 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.AMAZON_EMR.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.AMAZON_EMR.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.EMR_4_0_0.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : EHadoopVersion4Drivers.EMR_4_0_0.getVersionDisplay();
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override
@@ -154,7 +161,7 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        return super.doSupportStandaloneMode();
     }
 
     @Override

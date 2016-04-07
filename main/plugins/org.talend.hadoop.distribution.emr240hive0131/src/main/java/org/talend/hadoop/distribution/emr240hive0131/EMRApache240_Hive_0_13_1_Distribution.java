@@ -17,14 +17,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HiveComponent;
+import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 
-public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution implements HiveComponent {
+public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution implements HiveComponent, IAmazonEMRDistribution {
+
+    public static final String VERSION = "APACHE_2_4_0_EMR_0_13_1";
+
+    public static final String VERSION_DISPLAY = "Apache 2.4.0 (Hive 0.13.1)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*"; //$NON-NLS-1$ {
 
@@ -36,22 +40,22 @@ public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution 
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.AMAZON_EMR.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.AMAZON_EMR.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return "APACHE_2_4_0_EMR_0_13_1"; //$NON-NLS-1$
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return "Apache 2.4.0 (Hive 0.13.1)"; //$NON-NLS-1$
+        return VERSION_DISPLAY;
     }
 
     @Override
@@ -96,7 +100,7 @@ public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution 
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        return super.doSupportStandaloneMode();
     }
 
     @Override

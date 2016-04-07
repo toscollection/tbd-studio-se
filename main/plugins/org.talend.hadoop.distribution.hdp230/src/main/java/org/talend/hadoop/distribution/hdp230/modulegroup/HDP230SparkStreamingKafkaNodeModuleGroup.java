@@ -15,8 +15,6 @@ package org.talend.hadoop.distribution.hdp230.modulegroup;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
@@ -25,6 +23,7 @@ import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.LinkedNodeExpression;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.hdp230.HDP230Distribution;
 
 public class HDP230SparkStreamingKafkaNodeModuleGroup {
 
@@ -38,12 +37,12 @@ public class HDP230SparkStreamingKafkaNodeModuleGroup {
                     new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
                             ComponentType.SPARKSTREAMING.getDistributionParameter(), //
                             EqualityOperator.EQ, //
-                            EHadoopDistributions.HORTONWORKS.getName()), //
+                            HDP230Distribution.DISTRIBUTION_NAME), //
                     BooleanOperator.AND,//
                     new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
                             ComponentType.SPARKSTREAMING.getVersionParameter(), //
                             EqualityOperator.EQ, //
-                            EHadoopVersion4Drivers.HDP_2_3.getVersionValue())));
+                            HDP230Distribution.VERSION)));
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();

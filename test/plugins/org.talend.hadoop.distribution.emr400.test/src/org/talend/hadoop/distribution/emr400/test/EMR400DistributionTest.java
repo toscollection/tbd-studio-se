@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.emr400.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -44,8 +45,8 @@ public class EMR400DistributionTest {
         HadoopComponent distribution = new EMR400Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.AMAZON_EMR.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.EMR_4_0_0.getVersionValue(), distribution.getVersion());
+        assertEquals(EMR400Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(EMR400Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());
