@@ -17,8 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -30,9 +29,14 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 
 public class HDP120Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
+
+    public static final String VERSION = "HDP_1_2";
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V1.2.0(Bimota)";
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -42,22 +46,22 @@ public class HDP120Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.HORTONWORKS.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.HORTONWORKS.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.HDP_1_2.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.HDP_1_2.getVersionDisplay();
+        return VERSION_DISPLAY;
     }
 
     @Override
@@ -132,12 +136,18 @@ public class HDP120Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportEmbeddedMode() {
-        return true;
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        return super.doSupportEmbeddedMode();
     }
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        return super.doSupportStandaloneMode();
     }
 
     @Override
@@ -190,4 +200,8 @@ public class HDP120Distribution extends AbstractDistribution implements HDFSComp
         return false;
     }
 
+    @Override
+    public boolean doSupportSecurity() {
+        return true;
+    }
 }

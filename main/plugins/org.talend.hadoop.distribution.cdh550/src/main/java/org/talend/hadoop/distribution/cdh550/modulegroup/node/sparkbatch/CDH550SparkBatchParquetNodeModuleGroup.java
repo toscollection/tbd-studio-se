@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
 import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
@@ -27,7 +26,7 @@ public class CDH550SparkBatchParquetNodeModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 CDH550Constant.SPARK_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), true, new SparkBatchLinkedNodeCondition(
-                        EHadoopDistributions.CLOUDERA.getName(), CDH550Distribution.VERSION).getCondition());
+                        CDH550Distribution.DISTRIBUTION_NAME, CDH550Distribution.VERSION).getCondition());
         hs.add(dmg);
         return hs;
     }

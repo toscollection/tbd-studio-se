@@ -48,7 +48,10 @@ public class ComponentConditionUtil {
                 }
                 previous = wrappedCondition;
             }
-            return new NestedComponentCondition(previous);
+            //
+            if (previous != null) {
+                return new NestedComponentCondition(previous);
+            }
         }
         return null;
     }

@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.mapr410.modulegroup;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.common.MRLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.MRConstant;
@@ -28,7 +27,7 @@ public class MapR410MRS3NodeModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 MapR410Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, //
-                new MRLinkedNodeCondition(EHadoopDistributions.MAPR.getName(), MapR410Distribution.VERSION,
+                new MRLinkedNodeCondition(MapR410Distribution.DISTRIBUTION_NAME, MapR410Distribution.VERSION,
                         MRConstant.MR_MRCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;

@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.emr240.modulegroup;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.common.MRLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.MRConstant;
@@ -28,7 +27,7 @@ public class EMRApache240MRS3NodeModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 EMRApache240Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, //
-                new MRLinkedNodeCondition(EHadoopDistributions.AMAZON_EMR.getName(), EMRApache240Distribution.VERSION,
+                new MRLinkedNodeCondition(EMRApache240Distribution.DISTRIBUTION_NAME, EMRApache240Distribution.VERSION,
                         MRConstant.MR_MRCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;

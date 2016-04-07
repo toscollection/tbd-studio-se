@@ -1,0 +1,39 @@
+// ============================================================================
+//
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+//
+// This source code is available under agreement available at
+// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
+//
+// You should have received a copy of the agreement
+// along with this program; if not, write to Talend SA
+// 9 rue Pages 92150 Suresnes, France
+//
+// ============================================================================
+package org.talend.hadoop.distribution.hive;
+
+import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
+import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
+
+/**
+ * DOC ggu class global comment. Detailled comment
+ */
+public class HiveMetadataHelper4AmazonEMRTest extends AbstractDistributionTest4HiveMetadataHelper {
+
+    @Override
+    protected String getDistribution() {
+        return IAmazonEMRDistribution.DISTRIBUTION_NAME;
+    }
+
+    @Override
+    protected String getDistributionDisplay() {
+        return IAmazonEMRDistribution.DISTRIBUTION_DISPLAY_NAME;
+    }
+
+    @Override
+    protected String[] getDistributionVersionsDisplay() {
+        return new String[] { "EMR 4.0.0 (Hive 1.0.0)", "Apache 2.4.0 (Hive 0.13.1)", "Apache 2.4.0 (Hive 0.11.0)",
+                "Apache 1.0.3 (Hive 0.8.1)" };
+    }
+
+}

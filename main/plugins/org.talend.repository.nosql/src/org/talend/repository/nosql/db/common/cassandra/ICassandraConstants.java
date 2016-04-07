@@ -29,10 +29,14 @@ public interface ICassandraConstants {
     public final static String DBM_ID = "cassandra_id"; //$NON-NLS-1$
 
     public final static String DBM_DATASTAX_ID = "cassandra_datastax_id"; //$NON-NLS-1$
+    
+    public final static String DBM22_DATASTAX_ID = "cassandra22_datastax_id"; //$NON-NLS-1$
 
     public final static String API_TYPE_DATASTAX = "DATASTAX"; //$NON-NLS-1$
 
     public final static String[] API_TYPES = { API_TYPE_DATASTAX, "HECTOR" };//$NON-NLS-1$
+    
+    public final static String CASSANDRA200 = "CASSANDRA_2_0_0"; //$NON-NLS-1$
 
-    public final static String[] DBVERSIONS = { "CASSANDRA_2_0_0", "CASSANDRA_1_2_2", "CASSANDRA_1_1_2" };//$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+    public final static String[] DBVERSIONS = { "CASSANDRA_3_0_0", "CASSANDRA_2_2_0","CASSANDRA_2_0_0", "CASSANDRA_1_2_2", "CASSANDRA_1_1_2" };//$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 }
