@@ -14,9 +14,9 @@ package org.talend.repository.hbaseprovider.util;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.database.conn.ConnParameterKeys;
-import org.talend.core.database.hbase.conn.version.EHBaseDistributions;
 import org.talend.core.hadoop.HadoopClassLoaderFactory2;
 import org.talend.core.model.metadata.IMetadataConnection;
+import org.talend.core.runtime.hd.IHDConstants;
 
 /**
  * created by ycbai on 2013-3-26 Detailled comment
@@ -29,7 +29,7 @@ public class HBaseClassLoaderFactory {
         if (metadataConnection != null) {
             String clusterId = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID);
             String distribution = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION);
-            if (EHBaseDistributions.CUSTOM.getName().equals(distribution)) {
+            if (IHDConstants.DISTRIBUTION_CUSTOM.equals(distribution)) {
                 return getCustomClassLoader(metadataConnection);
             }
             String version = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION);

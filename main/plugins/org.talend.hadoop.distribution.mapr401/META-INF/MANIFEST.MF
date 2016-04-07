@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: MapR 4.0.1 distribution
-Bundle-SymbolicName: org.talend.hadoop.distribution.mapr401
+Bundle-SymbolicName: org.talend.hadoop.distribution.mapr401;singleton:=true
 Bundle-Version: 6.2.0.qualifier
 Bundle-Vendor: .Talend SA.
 Service-Component: OSGI-INF/mapr401.xml

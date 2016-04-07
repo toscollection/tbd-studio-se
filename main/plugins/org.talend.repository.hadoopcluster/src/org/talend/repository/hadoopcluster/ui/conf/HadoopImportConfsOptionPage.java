@@ -1,8 +1,5 @@
 package org.talend.repository.hadoopcluster.ui.conf;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
@@ -16,8 +13,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
+import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 
 /**
@@ -85,44 +85,42 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
         updateVersionPart();
     }
 
+    public DistributionBean getDistribution() {
+        return HadoopDistributionsHelper.HADOOP.getDistribution(distributionCombo.getText(), true);
+    }
+
     private void updateDistributionPart() {
-        List<String> distributions = EHadoopDistributions.getAllDistributionDisplayNames();
-        distributions.remove(EHadoopDistributions.CUSTOM.getDisplayName());
-        distributionCombo.getCombo().setItems(distributions.toArray(new String[0]));
+        final String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(false);
+        distributionCombo.getCombo().setItems(hadoopDistributionsDisplay);
         distributionCombo.select(0);
     }
 
     private void updateVersionPart() {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(distributionCombo.getText());
-        List<String> items = getDistributionVersions(distribution);
-        versionCombo.getCombo().setItems(items.toArray(new String[0]));
-        versionCombo.getCombo().select(0);
+        DistributionBean distribution = getDistribution();
+        versionCombo.getCombo().setItems(distribution.getVersionsDisplay());
+        DistributionVersion defaultVersion = distribution.getDefaultVersion();
+        if (defaultVersion != null && defaultVersion.displayVersion != null) {
+            versionCombo.getCombo().setText(defaultVersion.displayVersion);
+        } else {
+            versionCombo.getCombo().select(0);
+        }
     }
 
     private void updateOptionPart() {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(distributionCombo.getText());
-        boolean supportRemote = EHadoopDistributions.HORTONWORKS.equals(distribution)
-                || EHadoopDistributions.CLOUDERA.equals(distribution);
+        DistributionBean distribution = getDistribution();
+        boolean supportRemote = distribution != null
+                && (IHortonworksDistribution.DISTRIBUTION_NAME.equals(distribution.name) || IClouderaDistribution.DISTRIBUTION_NAME
+                        .equals(distribution.name));
         remoteBtn.setEnabled(supportRemote);
-    }
-
-    private List<String> getDistributionVersions(EHadoopDistributions distribution) {
-        List<String> result = new ArrayList<>();
-        List<EHadoopVersion4Drivers> v4dList = EHadoopVersion4Drivers.indexOfByDistribution(distribution);
-        for (EHadoopVersion4Drivers v4d : v4dList) {
-            result.add(v4d.getVersionDisplay());
-        }
-        return result;
     }
 
     private void addDistributionFields(Composite parent) {
         Group distributionGroup = Form.createGroup(parent, 4,
                 Messages.getString("HadoopImportConfsOptionPage.group.distribution")); //$NON-NLS-1$
         distributionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        distributionCombo = new LabelledCombo(distributionGroup,
-                Messages.getString("HadoopClusterForm.distribution"), //$NON-NLS-1$
-                Messages.getString("HadoopClusterForm.distribution.tooltip"), EHadoopDistributions.getAllDistributionDisplayNames() //$NON-NLS-1$
-                        .toArray(new String[0]), 1, true);
+        distributionCombo = new LabelledCombo(distributionGroup, Messages.getString("HadoopClusterForm.distribution"), //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.distribution.tooltip"), new String[0], //$NON-NLS-1$
+                1, true);
         versionCombo = new LabelledCombo(distributionGroup, Messages.getString("HadoopClusterForm.version"), //$NON-NLS-1$
                 Messages.getString("HadoopClusterForm.version.tooltip"), new String[0], 1, true); //$NON-NLS-1$
     }
@@ -169,10 +167,6 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
     @Override
     public boolean isLastPage() {
         return manualBtn.getSelection();
-    }
-
-    public String getDistribution() {
-        return distributionCombo.getText();
     }
 
     public String getVersion() {

@@ -12,66 +12,89 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.service;
 
-import org.talend.commons.exception.ExceptionHandler;
-import org.talend.core.hadoop.IHadoopDistributionService;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
-import org.talend.hadoop.distribution.DistributionFactory;
-import org.talend.hadoop.distribution.component.HadoopComponent;
-import org.talend.hadoop.distribution.component.SparkComponent;
-import org.talend.hadoop.distribution.component.SparkStreamingComponent;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import org.talend.core.hadoop.IHadoopDistributionService;
+import org.talend.core.runtime.hd.IDistributionsManager;
+import org.talend.core.runtime.hd.IHDistribution;
+import org.talend.core.runtime.hd.IHDistributionVersion;
+import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
+import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
+import org.talend.hadoop.distribution.helper.DistributionHelper;
+import org.talend.hadoop.distribution.helper.DistributionsManager;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 
 /**
- * created by cmeng on Jan 15, 2016
- * Detailled comment
+ * created by cmeng on Jan 15, 2016 Detailled comment
  *
  */
 public class HadoopDistributionService implements IHadoopDistributionService {
 
-    /* (non-Javadoc)
-     * @see org.talend.core.hadoop.IHadoopDistributionService#isSupportSpark(org.talend.core.hadoop.version.EHadoopVersion4Drivers)
-     */
-    @Override
-    public boolean isSupportSpark(EHadoopVersion4Drivers version) {
-        if (version == null) {
-            return false;
+    public IHDistribution[] getDistributions(String service) {
+        if (service != null) {
+            DistributionsManager helper = new DistributionsManager(service);
+            return helper.getDistributions();
         }
-
-        try {
-            HadoopComponent hc = DistributionFactory.buildDistribution(version.getDistribution().getName(),
-                    version.getVersionValue());
-            if (hc instanceof SparkComponent) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            ExceptionHandler.process(e);
-        }
-        return false;
+        return new IHDistribution[0];
     }
 
-    /* (non-Javadoc)
-     * @see org.talend.core.hadoop.IHadoopDistributionService#isSupportSparkStreaming(org.talend.core.hadoop.version.EHadoopVersion4Drivers)
-     */
     @Override
-    public boolean isSupportSparkStreaming(EHadoopVersion4Drivers version) {
-        if (version == null) {
-            return false;
-        }
-
-        try {
-            HadoopComponent hc = DistributionFactory.buildDistribution(version.getDistribution().getName(),
-                    version.getVersionValue());
-            if (hc instanceof SparkStreamingComponent) {
-                return true;
-            } else {
-                return false;
+    public IHDistribution[] getOozieDistributions() {
+        IHDistribution[] hadoopDistributions = HadoopDistributionsHelper.HADOOP.getDistributions();
+        List<IHDistribution> oozieDistributions = new ArrayList<IHDistribution>();
+        for (IHDistribution d : hadoopDistributions) {
+            if (IApacheDistribution.DISTRIBUTION_NAME.equals(d.getName())
+                    || IAmazonEMRDistribution.DISTRIBUTION_NAME.equals(d.getName())) {
+                continue;
             }
-        } catch (Exception e) {
-            ExceptionHandler.process(e);
+            oozieDistributions.add(d);
         }
-        return false;
+        return oozieDistributions.toArray(new IHDistribution[0]);
+    }
+
+    @Override
+    public IDistributionsManager getHadoopDistributionManager() {
+        return HadoopDistributionsHelper.HADOOP;
+    }
+
+    @Override
+    public IDistributionsManager getHBaseDistributionManager() {
+        return HadoopDistributionsHelper.HBASE;
+    }
+
+    @Override
+    public IDistributionsManager getSparkDistributionManager() {
+        return HadoopDistributionsHelper.SPARK;
+    }
+
+    @Override
+    public IDistributionsManager getHiveDistributionManager() {
+        return HadoopDistributionsHelper.HIVE;
+    }
+
+    @Override
+    public boolean doSupportService(IHDistributionVersion distributionVersion, String service) {
+        return DistributionHelper.doSupportService(distributionVersion, service);
+    }
+
+    @Override
+    public Map<String, Boolean> doSupportMethods(IHDistributionVersion distributionVersion, String... methods) throws Exception {
+        return DistributionHelper.doSupportMethods(distributionVersion, methods);
+    }
+
+    @Override
+    public boolean doSupportMethod(IHDistributionVersion distributionVersion, String method) throws Exception {
+        return DistributionHelper.doSupportMethod(distributionVersion, method);
+    }
+
+    public IHDistribution getHadoopDistribution(String name, boolean byDisplay) {
+        return HadoopDistributionsHelper.HADOOP.getDistribution(name, byDisplay);
+    }
+
+    public IHDistributionVersion getHadoopDistributionVersion(String version, boolean byDisplay) {
+        return HadoopDistributionsHelper.HADOOP.getDistributionVersion(version, byDisplay);
     }
 
 }

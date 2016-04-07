@@ -13,6 +13,7 @@
 package org.talend.oozie.scheduler.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -48,9 +49,9 @@ import org.talend.commons.ui.swt.tableviewer.ModifiedBeanEvent;
 import org.talend.commons.utils.data.list.IListenableListListener;
 import org.talend.commons.utils.data.list.ListenableListEvent;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.hadoop.IHadoopDistributionService;
 import org.talend.core.hadoop.IOozieService;
 import org.talend.core.hadoop.version.EAuthenticationMode;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.hadoop.version.custom.ECustomVersionType;
@@ -59,6 +60,8 @@ import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.process.IProcess2;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.prefs.ITalendCorePrefConstants;
+import org.talend.core.runtime.hd.IHDistribution;
+import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.oozie.scheduler.constants.TOozieUIConstants;
 import org.talend.oozie.scheduler.controller.ExecuteJobCompositeController;
@@ -73,6 +76,10 @@ import org.talend.repository.ui.dialog.RepositoryReviewDialog;
  * 
  */
 public class OozieSettingComposite extends ScrolledComposite {
+
+    private static final String REPOSITORY = TOozieSettingDialog.REPOSITORY;
+
+    private static final String BUILT_IN = TOozieSettingDialog.BUILT_IN;
 
     private LabelledCombo hadoopDistributionCombo;
 
@@ -174,6 +181,14 @@ public class OozieSettingComposite extends ScrolledComposite {
         setExpandVertical(true);
         createContents(this);
         this.tOozieSettingDialog = tOozieSettingDialog;
+
+    }
+
+    private IHadoopDistributionService getHadoopDistributionService() {
+        if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopDistributionService.class)) {
+            return (IHadoopDistributionService) GlobalServiceRegister.getDefault().getService(IHadoopDistributionService.class);
+        }
+        return null;
     }
 
     public LabelledCombo getHadoopDistributionCombo() {
@@ -252,8 +267,8 @@ public class OozieSettingComposite extends ScrolledComposite {
         propertyTypeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         List<String> propertyTypes = new ArrayList<String>();
-        propertyTypes.add("Repository");
-        propertyTypes.add("Built-in");
+        propertyTypes.add(REPOSITORY);
+        propertyTypes.add(BUILT_IN);
 
         propertyTypeCombo = new LabelledCombo(propertyTypeGroup, TOozieUIConstants.OOZIE_LBL_PROPERTY_TYPE, "",
                 propertyTypes.toArray(new String[0]), 2, true);
@@ -303,9 +318,14 @@ public class OozieSettingComposite extends ScrolledComposite {
         Group versionGroup = Form.createGroup(parent, 3, TOozieUIConstants.OOZIE_LBL_VERSION_GROUP);
         versionGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        List<String> filterDistributionDisplayNames = EHadoopDistributions.getAllDistributionDisplayNames();
-        filterDistributionDisplayNames.remove(EHadoopDistributions.APACHE.getDisplayName());
-        filterDistributionDisplayNames.remove(EHadoopDistributions.AMAZON_EMR.getDisplayName());
+        List<String> filterDistributionDisplayNames = new ArrayList<String>();
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
+        if (hadoopDistributionService != null) {
+            IHDistribution[] distributions = hadoopDistributionService.getOozieDistributions();
+            for (IHDistribution d : distributions) {
+                filterDistributionDisplayNames.add(d.getDisplayName());
+            }
+        }
 
         hadoopDistributionCombo = new LabelledCombo(versionGroup, TOozieUIConstants.OOZIE_LBL_HADOOP_DISTRIBUTION,
                 "", filterDistributionDisplayNames //$NON-NLS-1$
@@ -348,7 +368,7 @@ public class OozieSettingComposite extends ScrolledComposite {
         kerbBtn.setText("Enable kerberos security");
         kerbBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
         nnPrincipalText = new LabelledText(authGroup, "Namenode Principal", 3, true);
-        if (TOozieParamUtils.isFromRepository() && repositoryId != null && !"Built-in".equals(propertyTypeCombo.getText())) {
+        if (TOozieParamUtils.isFromRepository() && repositoryId != null && !BUILT_IN.equals(propertyTypeCombo.getText())) {
             enableKerberos = enableKerberosFromRepository(repositoryId);
             useKeytab = isUseKeytabFromRepository(repositoryId);
         }
@@ -390,19 +410,21 @@ public class OozieSettingComposite extends ScrolledComposite {
         ooKerbBtn.setText("Enable kerberos security");
         ooKerbBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-        if (TOozieParamUtils.isFromRepository() && repositoryId != null && !"Built-in".equals(propertyTypeCombo.getText())) {
+        if (TOozieParamUtils.isFromRepository() && repositoryId != null && !BUILT_IN.equals(propertyTypeCombo.getText())) {
             enableOoKerberos = enableOoKerberosFromRepository(repositoryId);
         }
     }
 
     protected void initUI() {
         EHadoopVersion4Drivers version4Drivers;
-        if (EHadoopDistributions.CUSTOM.equals(getHadoopDistribution())) {
-            version4Drivers = EHadoopVersion4Drivers.CUSTOM;
-        } else {
-            version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(this.getHadoopVersionValue());
+        final IHDistribution hadoopDistribution = getHadoopDistribution();
+        if (hadoopDistribution != null) {
+            IHDistributionVersion hdVersion = hadoopDistribution.getHDVersion(hadoopVersionCombo.getText(), true);
+            if (hdVersion != null) {
+                updateSetting(hdVersion);
+            }
         }
-        updateSetting(version4Drivers);
+
     }
 
     /**
@@ -410,15 +432,15 @@ public class OozieSettingComposite extends ScrolledComposite {
      * 
      * @param isSupportSecurity
      */
-    private void updateSetting(EHadoopVersion4Drivers version4Drivers) {
-        if (version4Drivers == null) {
+    private void updateSetting(IHDistributionVersion hdVersion) {
+        if (hdVersion == null) {
             return;
         }
-        if ("Built-in".equals(propertyTypeCombo.getText())) {
-            updateSettingFromBuiltIn(version4Drivers);
+        if (BUILT_IN.equals(propertyTypeCombo.getText())) {
+            updateSettingFromBuiltIn(hdVersion);
         } else {
             // from repository
-            updateSettingFromRep(version4Drivers);
+            updateSettingFromRep(hdVersion);
         }
         nameNodeEndPointTxt.setText(nameNodeEndPointValue == null ? "" : nameNodeEndPointValue); //$NON-NLS-1$
         jobTrackerEndPointTxt.setText(jobTrackerEndPointValue == null ? "" : jobTrackerEndPointValue); //$NON-NLS-1$
@@ -426,8 +448,8 @@ public class OozieSettingComposite extends ScrolledComposite {
         updateValues();
     }
 
-    private void updateSettingFromRep(EHadoopVersion4Drivers version4Drivers) {
-        if (EHadoopDistributions.CUSTOM.equals(version4Drivers.getDistribution())) {
+    private void updateSettingFromRep(IHDistributionVersion hdVersion) {
+        if (hdVersion.getDistribution().useCustom()) {
             updateCustomSetting();
         }
         hadoopDistributionCombo.setReadOnly(true);
@@ -461,8 +483,8 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     // add this method for built-in
-    private void updateSettingFromBuiltIn(EHadoopVersion4Drivers version4Drivers) {
-        if (EHadoopDistributions.CUSTOM.equals(version4Drivers.getDistribution())) {
+    private void updateSettingFromBuiltIn(IHDistributionVersion hdVersion) {
+        if (hdVersion.getDistribution().useCustom()) {
             updateCustomSetting();
         }
         hadoopDistributionCombo.setReadOnly(false);
@@ -569,16 +591,16 @@ public class OozieSettingComposite extends ScrolledComposite {
 
             @Override
             public void modifyText(ModifyEvent e) {
-                if ("Built-in".equals(propertyTypeCombo.getText())) {
+                if (BUILT_IN.equals(propertyTypeCombo.getText())) {
                     oozieSelectBtn.setEnabled(false);
                     oozieRepositoryText.setText("");
                     TOozieParamUtils.setBuiltInForOozie(true);
-                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyTypeValue("Built-in");
-                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyType("Built-in");
+                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyTypeValue(BUILT_IN);
+                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyType(BUILT_IN);
                 } else {
-                    propertyType = "Repository";
-                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyTypeValue("Repository");
-                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyType("Repository");
+                    propertyType = REPOSITORY;
+                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyTypeValue(REPOSITORY);
+                    OozieSettingComposite.this.tOozieSettingDialog.setPropertyType(REPOSITORY);
                     initPropertyCombo();
                     oozieSelectBtn.setEnabled(true);
                     TOozieParamUtils.setBuiltInForOozie(false);
@@ -681,7 +703,7 @@ public class OozieSettingComposite extends ScrolledComposite {
                         IProcess2 process = OozieJobTrackerListener.getProcess();
                         process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName())
                                 .setValue(repositoryId);
-                        if (repositoryId != null && !"Built-in".equals(propertyType)) {
+                        if (repositoryId != null && !BUILT_IN.equals(propertyType)) {
                             enableKerberos = enableKerberosFromRepository(repositoryId);
                             useKeytab = isUseKeytabFromRepository(repositoryId);
                             enableOoKerberos = enableOoKerberosFromRepository(repositoryId);
@@ -700,12 +722,7 @@ public class OozieSettingComposite extends ScrolledComposite {
 
             @Override
             public void modifyText(final ModifyEvent e) {
-                String newDistributionDisplayName = hadoopDistributionCombo.getText();
-                EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(newDistributionDisplayName);
-                if (distribution != null) {
-                    updateVersionPart(distribution);
-                    // initUI();
-                }
+                updateVersionPart(getHadoopDistribution());
             }
         });
         hadoopVersionCombo.addModifyListener(new ModifyListener() {
@@ -798,7 +815,7 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     protected void updateProperty() {
-        if (repositoryId != null && repositoryId.length() != 0 && "Repository".equals(propertyTypeCombo.getText())) {
+        if (repositoryId != null && repositoryId.length() != 0 && REPOSITORY.equals(propertyTypeCombo.getText())) {
             setHadoopDistributionValue((String) TOozieParamUtils.getParamValueFromRepositoryById(
                     ITalendCorePrefConstants.OOZIE_SHCEDULER_HADOOP_DISTRIBUTION, repositoryId));
             setHadoopVersionValue((String) TOozieParamUtils.getParamValueFromRepositoryById(
@@ -871,9 +888,12 @@ public class OozieSettingComposite extends ScrolledComposite {
         }
     }
 
-    private void updateVersionPart(EHadoopDistributions distribution) {
+    private void updateVersionPart(IHDistribution distribution) {
+        if (distribution == null) {
+            return;
+        }
         GridData distriData = (GridData) hadoopDistributionCombo.getCombo().getLayoutData();
-        if (distribution == EHadoopDistributions.CUSTOM) {
+        if (distribution.useCustom()) {
             hadoopVersionCombo.setHideWidgets(true);
             distriData.horizontalSpan = 1;
             hideControl(customButton, false);
@@ -886,8 +906,8 @@ public class OozieSettingComposite extends ScrolledComposite {
             hideControl(useYarnButton, true);
             hideControl(customGroup, true);
             List<String> items = getDistributionVersions(distribution);
-            if (distribution == EHadoopDistributions.PIVOTAL_HD) {
-                items.remove(EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.getVersionDisplay());
+            if (distribution.getName().equals("PIVOTAL_HD")) { //$NON-NLS-1$
+                items.remove("Pivotal HD 1.0.1"); //$NON-NLS-1$
             }
             String[] versions = new String[items.size()];
             items.toArray(versions);
@@ -921,13 +941,8 @@ public class OozieSettingComposite extends ScrolledComposite {
         return map;
     }
 
-    private List<String> getDistributionVersions(EHadoopDistributions distribution) {
-        List<String> result = new ArrayList<String>();
-        List<EHadoopVersion4Drivers> v4dList = EHadoopVersion4Drivers.indexOfByDistribution(distribution);
-        for (EHadoopVersion4Drivers v4d : v4dList) {
-            result.add(v4d.getVersionDisplay());
-        }
-        return result;
+    private List<String> getDistributionVersions(IHDistribution distribution) {
+        return Arrays.asList(distribution.getVersionsDisplay());
     }
 
     protected void hideControl(Control control, boolean hide) {
@@ -945,14 +960,19 @@ public class OozieSettingComposite extends ScrolledComposite {
         }
     }
 
-    public EHadoopDistributions getHadoopDistribution() {
-        String newDistributionDisplayName = hadoopDistributionCombo.getText();
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByDisplayName(newDistributionDisplayName);
-        return distribution;
+    public IHDistribution getHadoopDistribution() {
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
+        if (hadoopDistributionService != null) {
+            String newDistributionDisplayName = hadoopDistributionCombo.getText();
+            final IHDistribution hadoopDistribution = hadoopDistributionService.getHadoopDistribution(newDistributionDisplayName,
+                    true);
+            return hadoopDistribution;
+        }
+        return null;
     }
 
     public String getHadoopDistributionValue() {
-        EHadoopDistributions distribution = getHadoopDistribution();
+        IHDistribution distribution = getHadoopDistribution();
         if (distribution != null) {
             return distribution.getName();
         }
@@ -960,14 +980,17 @@ public class OozieSettingComposite extends ScrolledComposite {
     }
 
     public void setHadoopDistributionValue(String hadoopDistributionValue) {
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistributionValue, false);
-        EHadoopDistributions originalDistribution = EHadoopDistributions.getDistributionByDisplayName(hadoopDistributionCombo
-                .getText());
-        if (distribution != null && !distribution.equals(originalDistribution)) {
-            String distributionDisplayName = distribution.getDisplayName();
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
+        if (hadoopDistributionService == null) {
+            return;
+        }
+        IHDistribution hadoopDistribution = hadoopDistributionService.getHadoopDistribution(hadoopDistributionValue, false);
+        String originalDistributionValue = getHadoopDistributionValue();
+        if (hadoopDistribution != null && !hadoopDistribution.getName().equals(originalDistributionValue)) {
+            String distributionDisplayName = hadoopDistribution.getDisplayName();
             hadoopDistributionCombo.setText(distributionDisplayName);
             if (getHadoopVersionValue() == null) {
-                updateVersionPart(distribution);
+                updateVersionPart(hadoopDistribution);
             }
         }
 
@@ -975,21 +998,31 @@ public class OozieSettingComposite extends ScrolledComposite {
 
     public String getHadoopVersionValue() {
         String newVersionDisplayName = hadoopVersionCombo.getText();
-        EHadoopVersion4Drivers newVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(newVersionDisplayName);
-        if (newVersion4Drivers != null) {
-            if (newVersion4Drivers.getVersionValue().length() > 0) {
-                return newVersion4Drivers.getVersionValue();
+        IHDistribution originalDistribution = getHadoopDistribution();
+        if (originalDistribution != null) {
+            IHDistributionVersion hdVersion = originalDistribution.getHDVersion(newVersionDisplayName, true);
+            if (hdVersion != null) {
+                return hdVersion.getVersion();
             }
         }
         return null;
     }
 
     public void setHadoopVersionValue(String hadoopVersionValue) {
-        EHadoopVersion4Drivers version4Drivers = EHadoopVersion4Drivers.indexOfByVersion(hadoopVersionValue);
-        EHadoopVersion4Drivers originalVersion4Drivers = EHadoopVersion4Drivers.indexOfByVersionDisplay(hadoopVersionCombo
-                .getText());
-        if (version4Drivers != null && !version4Drivers.equals(originalVersion4Drivers)) {
-            hadoopVersionCombo.setText(version4Drivers.getVersionDisplay());
+        IHadoopDistributionService hadoopDistributionService = getHadoopDistributionService();
+        if (hadoopDistributionService == null) {
+            return;
+        }
+        IHDistributionVersion hadoopDistributionVersion = hadoopDistributionService.getHadoopDistributionVersion(
+                hadoopVersionValue, false);
+        String originalVersionValue = getHadoopVersionValue();
+
+        if (hadoopDistributionVersion != null && hadoopDistributionVersion.getVersion() != null
+                && !hadoopDistributionVersion.getVersion().equals(originalVersionValue)
+                && hadoopDistributionVersion.getDisplayVersion() != null) {
+            hadoopVersionCombo.setText(hadoopDistributionVersion.getDisplayVersion());
+        } else {
+            hadoopVersionCombo.select(0);
         }
     }
 

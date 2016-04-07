@@ -21,7 +21,6 @@ import org.apache.oozie.client.AuthOozieClient.AuthType;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.runtime.process.TalendProcessArgumentConstant;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.hdfsbrowse.manager.HadoopServerUtil;
@@ -136,14 +135,7 @@ public abstract class AbstractOozieJobSubmission implements JobSubmission {
     protected Coordinator createCoordinator(JobContext jobContext) {
         Utils.assertTrue(jobContext.getFrequency() > 0, "Frequency has to be greater than 0.");
 
-        String cooAppPath = jobContext.getJobPathOnHDFS();
-        String hadoopDistribution = TOozieParamUtils.getHadoopDistribution();
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistribution, false);
-        if (distribution == EHadoopDistributions.MAPR) {
-            cooAppPath = "maprfs:".concat(cooAppPath);//$NON-NLS-1$
-        } else {
-            cooAppPath = jobContext.getNameNodeEndPoint().concat(cooAppPath);
-        }
+        String cooAppPath = TOozieParamUtils.getAppPath(jobContext.getNameNodeEndPoint(), jobContext.getJobPathOnHDFS());
         return new Coordinator(jobContext.getJobName(), cooAppPath, jobContext.getStartTime(), jobContext.getEndTime(),
                 jobContext.getFrequency(), jobContext.getTimeUnit());
     }

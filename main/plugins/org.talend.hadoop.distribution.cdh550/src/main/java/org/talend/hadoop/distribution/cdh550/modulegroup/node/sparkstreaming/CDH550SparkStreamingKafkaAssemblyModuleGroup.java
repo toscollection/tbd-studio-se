@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
 import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
@@ -28,7 +27,7 @@ public class CDH550SparkStreamingKafkaAssemblyModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 CDH550Constant.SPARK_KAFKA_ASSEMBLY_MRREQUIRED_MODULE_GROUP.getModuleName(), true,
-                new SparkStreamingLinkedNodeCondition(EHadoopDistributions.CLOUDERA.getName(), CDH550Distribution.VERSION,
+                new SparkStreamingLinkedNodeCondition(CDH550Distribution.DISTRIBUTION_NAME, CDH550Distribution.VERSION,
                         SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;

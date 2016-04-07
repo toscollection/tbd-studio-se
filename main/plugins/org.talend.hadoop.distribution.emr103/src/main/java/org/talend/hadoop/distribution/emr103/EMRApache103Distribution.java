@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -34,9 +32,20 @@ import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 
 public class EMRApache103Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        PigComponent, HiveComponent {
+        PigComponent, HiveComponent, IAmazonEMRDistribution {
+
+    public static final String VERSION = "APACHE_1_0_3_EMR";
+
+    public static final String VERSION_DISPLAY = "Apache 1.0.3";
+
+    public static final String VERSION_PIG_DISPLAY = "Apache 1.0.3 (Pig 0.9.2)";
+
+    public static final String VERSION_HBASE_DISPLAY = "Apache 1.0.3 (HBase 0.92.0)";
+
+    public static final String VERSION_HIVE_DISPLAY = "Apache 1.0.3 (Hive 0.8.1)";
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -51,31 +60,31 @@ public class EMRApache103Distribution extends AbstractDistribution implements HD
                 Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIG, Constant.PIG_APACHE103_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, Constant.PIG_APACHE103_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HBASE, Constant.HBASE_APACHE103_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, Constant.HIVE_APACHE103_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIG, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HBASE, VERSION_HBASE_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
     }
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.AMAZON_EMR.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.AMAZON_EMR.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionDisplay();
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override
@@ -132,16 +141,6 @@ public class EMRApache103Distribution extends AbstractDistribution implements HD
     @Override
     public boolean doSupportImpersonation() {
         return false;
-    }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
     }
 
     @Override
