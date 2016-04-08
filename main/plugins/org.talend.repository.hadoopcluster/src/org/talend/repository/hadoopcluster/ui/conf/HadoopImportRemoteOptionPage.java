@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.conf.IPropertyConstants;
 import org.talend.repository.hadoopcluster.conf.RetrieveRemoteConfsService;
@@ -29,7 +30,7 @@ import org.talend.repository.hadoopcluster.i18n.Messages;
  */
 public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage implements PropertyChangeListener {
 
-    private String distribution;
+    private DistributionBean distribution;
 
     private Combo clustersCombo;
 
@@ -39,7 +40,7 @@ public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage 
 
     private HadoopConfigurator configurator;
 
-    public HadoopImportRemoteOptionPage(String distribution) {
+    public HadoopImportRemoteOptionPage(DistributionBean distribution) {
         super("HadoopImportRemoteOptionPage"); //$NON-NLS-1$
         setTitle(Messages.getString("HadoopImportRemoteOptionPage.title")); //$NON-NLS-1$
         this.distribution = distribution;

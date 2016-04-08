@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh510mr1.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.cdh510mr1.CDH510MR1Distribution;
 import org.talend.hadoop.distribution.component.HBaseComponent;
@@ -44,8 +45,8 @@ public class CDH510MR1DistributionTest {
         HadoopComponent distribution = new CDH510MR1Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.CLOUDERA.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.CLOUDERA_CDH5_1_MR1.getVersionValue(), distribution.getVersion());
+        assertEquals(CDH510MR1Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(CDH510MR1Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

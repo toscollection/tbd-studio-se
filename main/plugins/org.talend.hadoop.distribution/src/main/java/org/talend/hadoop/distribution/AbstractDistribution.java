@@ -15,6 +15,7 @@ package org.talend.hadoop.distribution;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 
 /**
@@ -99,6 +100,30 @@ public abstract class AbstractDistribution {
     }
 
     public boolean doSupportOldImportMode() {
+        return true;
+    }
+
+    public boolean doSupportSecurity() {
+        return false;
+    }
+
+    /**
+     * 
+     * for Hive
+     */
+    public boolean doSupportEmbeddedMode() {
+        // the embedded mode is not working for TOP
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 
+     * for Hive
+     */
+    public boolean doSupportStandaloneMode() {
         return true;
     }
 }

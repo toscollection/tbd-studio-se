@@ -263,7 +263,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
     private void updateAPITypeComboField() {
         String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
-        boolean hide = ICassandraConstants.DBVERSIONS[0].equals(dbVersion);
+        boolean hide = ICassandraConstants.CASSANDRA200.equals(dbVersion);
         apiTypeCombo.setHideWidgets(!hide);
     }
 
