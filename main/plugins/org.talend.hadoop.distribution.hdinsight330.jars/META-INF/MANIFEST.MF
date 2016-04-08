@@ -1,7 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: Microsoft HD Insight 3.3.0 distribution jars fragment
-Bundle-SymbolicName: org.talend.hadoop.distribution.hdinsight330.jars
-Bundle-Version: 6.2.0.qualifier
-Fragment-Host: org.talend.hadoop.distribution.hdinsight330
-Eclipse-BundleShape: dir

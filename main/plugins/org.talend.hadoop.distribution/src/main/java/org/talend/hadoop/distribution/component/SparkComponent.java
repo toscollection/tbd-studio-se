@@ -58,14 +58,24 @@ public interface SparkComponent extends MRComponent {
     public boolean doSupportSparkYarnClientMode();
 
     /**
+     * @return true if the distribution supports the Spark Yarn Cluster mode.
+     */
+    public boolean doSupportSparkYarnClusterMode();
+
+    /**
      * @return true if the distribution supports the Dynamic Allocation feature.
      * @see http://spark.apache.org/docs/latest/configuration.html#dynamic-allocation
      */
     public boolean doSupportDynamicMemoryAllocation();
 
     /**
-     * @return true if the distribution executes its M/R job through Spark JobServer.
+     * @return true if the distribution executes its Spark job through Spark JobServer.
      */
     public boolean isExecutedThroughSparkJobServer();
+
+    /**
+     * @return true if the distribution executes its Spark job through Livy.
+     */
+    public boolean isExecutedThroughLivy();
 
 }
