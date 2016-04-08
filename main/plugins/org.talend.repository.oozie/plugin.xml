@@ -10,7 +10,6 @@
             isResouce="true"
             label="%OOZIE"
             ordinal="52"
-            parentNodeType="HADOOPCLUSTER"
             products="DI"
             type="OOZIE">
       </repositoryNode>
