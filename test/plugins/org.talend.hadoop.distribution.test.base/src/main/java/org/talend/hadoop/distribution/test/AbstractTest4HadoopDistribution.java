@@ -32,7 +32,7 @@ public abstract class AbstractTest4HadoopDistribution {
 
     private Object synObj = new Object();
 
-    private static HadoopComponent hadoopComponent;
+    private HadoopComponent hadoopComponent;
 
     protected abstract Class<? extends HadoopComponent> getHadoopComponentClass();
 

@@ -18,7 +18,6 @@
             key="HDFS"
             label="%HDFS"
             ordinal="50"
-            parentNodeType="HADOOPCLUSTER"
             products="DI"
             type="HDFS">
       </repositoryNode>

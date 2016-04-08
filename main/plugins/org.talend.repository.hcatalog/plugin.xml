@@ -25,7 +25,6 @@
             key="HCatalog"
             label="%hcatalog"
             ordinal="51"
-            parentNodeType="HADOOPCLUSTER"
             products="DI"
             type="HCATALOG">
       </repositoryNode>

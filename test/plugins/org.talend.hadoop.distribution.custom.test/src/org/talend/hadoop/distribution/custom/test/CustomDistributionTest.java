@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hdp230.test;
+package org.talend.hadoop.distribution.custom.test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
