@@ -97,6 +97,9 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
 
     private void updateVersionPart() {
         DistributionBean distribution = getDistribution();
+        if (distribution == null) {
+            return;
+        }
         versionCombo.getCombo().setItems(distribution.getVersionsDisplay());
         DistributionVersion defaultVersion = distribution.getDefaultVersion();
         if (defaultVersion != null && defaultVersion.displayVersion != null) {
