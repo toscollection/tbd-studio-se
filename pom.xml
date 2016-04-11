@@ -85,6 +85,7 @@
 		<module>main/plugins/org.talend.hadoop.distribution.mapr401</module>
 		<module>main/plugins/org.talend.hadoop.distribution.mapr410</module>
 		<module>main/plugins/org.talend.hadoop.distribution.mapr500</module>
+		<module>main/plugins/org.talend.hadoop.distribution.mapr510</module>
 		<module>main/plugins/org.talend.hadoop.distribution.piv101</module>
 		<module>main/plugins/org.talend.hadoop.distribution.piv200</module>
 		<module>main/plugins/org.talend.demo.bigdata.ce</module>
@@ -123,30 +124,23 @@
 		<module>main/plugins/org.talend.repository.pigudf</module>
 
 		<module>test/features/org.talend.bigdata.se.test.feature</module>
-		<module>test/plugins/org.talend.oozie.scheduler.test</module>
-		<module>test/plugins/org.talend.repository.nosql.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.test.base</module>
-        	<module>test/plugins/org.talend.repository.hadoopcluster.configurator.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.apache100.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh4mr1.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh4mr2.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh500mr2.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh510mr1.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh510mr2.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.hdinsight320.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.hdinsight340.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.mapr213.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh540.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.cdh550.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.custom.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.emr103.test</module>
-		<module>test/plugins/org.talend.hadoop.distribution.emr240hive0131.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.emr240.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.emr240hive0131.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.emr400.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.emr450.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdinsight310.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdinsight320.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.hdinsight340.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdp120.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdp130.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.hdp200.test</module>
@@ -156,13 +150,20 @@
 		<module>test/plugins/org.talend.hadoop.distribution.mapr200.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr212.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr213.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.mapr213.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr301.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr310.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr401.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr410.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.mapr500.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.mapr510.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.piv101.test</module>
 		<module>test/plugins/org.talend.hadoop.distribution.piv200.test</module>
+		<module>test/plugins/org.talend.hadoop.distribution.test.base</module>
+		<module>test/plugins/org.talend.hadoop.distribution.test</module>
+		<module>test/plugins/org.talend.oozie.scheduler.test</module>
+		<module>test/plugins/org.talend.repository.nosql.test</module>
+        	<module>test/plugins/org.talend.repository.hadoopcluster.configurator.test</module>
 
 	</modules>
 	<build>
