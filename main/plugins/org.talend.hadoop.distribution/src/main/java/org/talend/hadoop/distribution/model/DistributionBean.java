@@ -153,9 +153,15 @@ public class DistributionBean implements IHDistribution {
     private Set<ComponentCondition> conditions = new HashSet<ComponentCondition>();
 
     public void addCondition(ComponentCondition c) {
-        if (c != null) {
-            conditions.add(c);
-        }
+        /*
+         * TBD-3338, do it like before,add condition always, even it's null. Because when build condition, will ignore
+         * all with the null
+         * 
+         * @see the method getDisplayShowIf with api ComponentConditionUtil.buildDistributionShowIf
+         */
+        // if (c != null) {
+        conditions.add(c);
+        // }
     }
 
     public ComponentCondition[] getConditions() {
