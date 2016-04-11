@@ -15,8 +15,6 @@ package org.talend.hadoop.distribution.emr450.test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -44,8 +42,8 @@ public class EMR450DistributionTest {
         HadoopComponent distribution = new EMR450Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.AMAZON_EMR.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.EMR_4_5_0.getVersionValue(), distribution.getVersion());
+        assertEquals(EMR450Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(EMR450Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());
