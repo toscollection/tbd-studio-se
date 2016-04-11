@@ -178,12 +178,4 @@ public class CDH510MR1Distribution extends AbstractDistribution implements HDFSC
     public boolean doSupportStoreAsParquet() {
         return false;
     }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        // if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
-        // return false;
-        // }
-        return super.doSupportEmbeddedMode();
-    }
 }

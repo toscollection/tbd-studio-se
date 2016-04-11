@@ -251,12 +251,4 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportBackpressure() {
         return false;
     }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        // if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
-        // return false;
-        // }
-        return super.doSupportEmbeddedMode();
-    }
 }

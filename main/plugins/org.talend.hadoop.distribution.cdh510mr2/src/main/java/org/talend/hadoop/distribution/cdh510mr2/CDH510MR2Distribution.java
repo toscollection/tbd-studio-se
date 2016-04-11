@@ -236,12 +236,4 @@ public class CDH510MR2Distribution extends AbstractDistribution implements HDFSC
     public boolean doSupportBackpressure() {
         return false;
     }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        // if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
-        // return false;
-        // }
-        return super.doSupportEmbeddedMode();
-    }
 }

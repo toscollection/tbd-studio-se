@@ -173,9 +173,6 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
         if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
             return false;
         }
-        // if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
-        // return false;
-        // }
         return super.doSupportEmbeddedMode();
     }
 
