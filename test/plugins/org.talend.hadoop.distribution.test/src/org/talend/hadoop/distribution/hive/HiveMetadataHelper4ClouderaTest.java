@@ -33,8 +33,8 @@ public class HiveMetadataHelper4ClouderaTest extends AbstractDistributionTest4Hi
     @Override
     protected String[] getDistributionVersionsDisplay() {
         return new String[] { "Cloudera CDH5.5(YARN mode)", "Cloudera CDH5.4(YARN mode)", "Cloudera CDH5.1(YARN mode)",
-                "Cloudera CDH5.1(MR 1 mode)", "Cloudera CDH5.0(YARN mode)", "Cloudera CDH4.3+(YARN mode)",
-                "Cloudera CDH4.X(MR1 mode)" };
+                "Cloudera CDH5.1(MR 1 mode)", "Cloudera CDH5.0(YARN mode)", "Cloudera CDH4.X(MR1 mode)",
+                "Cloudera CDH4.3+(YARN mode)" };
     }
 
 }
