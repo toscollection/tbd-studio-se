@@ -19,7 +19,6 @@ import java.util.Properties;
 import org.apache.oozie.client.OozieClient;
 import org.apache.oozie.client.OozieClientException;
 import org.talend.commons.exception.ExceptionHandler;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.oozie.scheduler.jobsubmission.model.JobContext;
 import org.talend.oozie.scheduler.jobsubmission.model.JobSubmissionException;
 import org.talend.oozie.scheduler.utils.TOozieParamUtils;
@@ -57,15 +56,8 @@ public class ScheduledJobSubmission extends AbstractOozieJobSubmission {
             // jobContext.getJobPathOnHDFS());
         }
 
-        String cooAppPath = jobContext.getJobPathOnHDFS();
-        String hadoopDistribution = TOozieParamUtils.getHadoopDistribution();
-        EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hadoopDistribution, false);
-        if (distribution == EHadoopDistributions.MAPR) {
-            cooAppPath = "maprfs:".concat(cooAppPath);//$NON-NLS-1$
-        } else {
-            cooAppPath = jobContext.getNameNodeEndPoint().concat(cooAppPath);
-        }
-        configuration.setProperty(OozieClient.COORDINATOR_APP_PATH, cooAppPath);
+        String appPath = TOozieParamUtils.getAppPath(jobContext.getNameNodeEndPoint(), jobContext.getJobPathOnHDFS());
+        configuration.setProperty(OozieClient.COORDINATOR_APP_PATH, appPath);
 
         // start the coordinator job
         return oozieClient.run(configuration);

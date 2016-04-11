@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.hdp230.modulegroup;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.common.MRLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.MRConstant;
@@ -28,7 +27,7 @@ public class HDP230MRS3NodeModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 HDP230Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, //
-                new MRLinkedNodeCondition(EHadoopDistributions.HORTONWORKS.getName(), HDP230Distribution.VERSION,
+                new MRLinkedNodeCondition(HDP230Distribution.DISTRIBUTION_NAME, HDP230Distribution.VERSION,
                         MRConstant.MR_MRCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;

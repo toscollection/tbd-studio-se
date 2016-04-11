@@ -27,12 +27,14 @@ import org.talend.core.GlobalServiceRegister;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.conf.EHadoopConfProperties;
 import org.talend.core.hadoop.conf.EHadoopConfs;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.general.ILibrariesService;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.repository.ResourceModelUtils;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
+import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.conf.model.HadoopConfsConnection;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfigurationManager;
@@ -117,11 +119,10 @@ public class HadoopConfsUtils {
         return HadoopParameterUtil.getConfsJarDefaultName(itemId);
     }
 
-    public static HadoopConfigurationManager getConfigurationManager(String distribution) {
-        EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
-        if (EHadoopDistributions.HORTONWORKS.equals(dist)) {
+    public static HadoopConfigurationManager getConfigurationManager(DistributionBean distribution) {
+        if (IHortonworksDistribution.DISTRIBUTION_NAME.equals(distribution.name)) {
             return HadoopConfigurationManager.AMBARI;
-        } else if (EHadoopDistributions.CLOUDERA.equals(dist)) {
+        } else if (IClouderaDistribution.DISTRIBUTION_NAME.equals(distribution.name)) {
             return HadoopConfigurationManager.CLOUDERA_MANAGER;
         }
         return null;
@@ -140,16 +141,15 @@ public class HadoopConfsUtils {
         return configurator;
     }
 
-    public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, String distribution, String version,
-            IRetrieveConfsService confsService) throws Exception {
+    public static void setConnectionParameters(HadoopClusterConnectionItem connectionItem, DistributionBean distribution,
+            String version, IRetrieveConfsService confsService) throws Exception {
         HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
         connection.setUseCustomConfs(confsService != null);
-        EHadoopDistributions dist = EHadoopDistributions.getDistributionByDisplayName(distribution);
-        EHadoopVersion4Drivers ver = EHadoopVersion4Drivers.indexOfByVersionDisplay(version);
-        connection.setDistribution(dist.getName());
-        connection.setDfVersion(ver.getVersionValue());
-        boolean supportYARN = ver.isSupportYARN();
-        boolean supportMR1 = ver.isSupportMR1();
+        final DistributionVersion distributionVersion = distribution.getVersion(version, true);
+        connection.setDistribution(distribution.name);
+        connection.setDfVersion(distributionVersion.version);
+        boolean supportYARN = distributionVersion.hadoopComponent != null && distributionVersion.hadoopComponent.isHadoop2();
+        boolean supportMR1 = distributionVersion.hadoopComponent != null && distributionVersion.hadoopComponent.isHadoop1();
         connection.setUseYarn(supportYARN && !supportMR1);
         HCRepositoryUtil.fillDefaultValuesOfHadoopCluster(connection);
         if (confsService == null) {

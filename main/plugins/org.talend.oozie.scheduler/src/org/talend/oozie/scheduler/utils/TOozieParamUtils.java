@@ -22,6 +22,7 @@ import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.ui.runtime.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.hadoop.IHadoopClusterService;
+import org.talend.core.hadoop.IHadoopDistributionService;
 import org.talend.core.hadoop.IOozieService;
 import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
@@ -35,6 +36,7 @@ import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.prefs.ITalendCorePrefConstants;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.designer.core.model.components.EOozieParameterName;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.designer.hdfsbrowse.model.HDFSConnectionBean;
@@ -129,8 +131,8 @@ public class TOozieParamUtils {
         }
         IProcess2 process = OozieJobTrackerListener.getProcess();
         if (process != null) {
-            IElementParameter oozieConnIdParameter = process
-                    .getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID.getName());
+            IElementParameter oozieConnIdParameter = process.getElementParameter(EOozieParameterName.REPOSITORY_CONNECTION_ID
+                    .getName());
             if (oozieConnIdParameter != null) {
                 String oozieConnId = (String) oozieConnIdParameter.getValue();
                 if (StringUtils.isNotEmpty(oozieConnId)) {
@@ -371,9 +373,12 @@ public class TOozieParamUtils {
 
     public static String getPropertyType() {
         IProcess2 process = OozieJobTrackerListener.getProcess();
-        IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME.getName());
-        if (elementParameter != null) {
-            return (String) elementParameter.getValue();
+        if (process != null) {
+            IElementParameter elementParameter = process.getElementParameter(EOozieParameterName.OOZIE_PROPERTY_TYPENAME
+                    .getName());
+            if (elementParameter != null) {
+                return (String) elementParameter.getValue();
+            }
         }
         return "";
     }
@@ -400,5 +405,19 @@ public class TOozieParamUtils {
             originalValue = getOriginalValueFromContextIfNeeded(oozieId, originalValue);
         }
         return originalValue;
+    }
+
+    public static String getAppPath(String endPoint, String appPath) {
+        String cooAppPath = endPoint.concat(appPath);
+        String hadoopDistribution = TOozieParamUtils.getHadoopDistribution();
+        if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopDistributionService.class)) {
+            IHadoopDistributionService hadoopDistributionService = (IHadoopDistributionService) GlobalServiceRegister
+                    .getDefault().getService(IHadoopDistributionService.class);
+            IHDistribution distribution = hadoopDistributionService.getHadoopDistribution(hadoopDistribution, false);
+            if (distribution != null && distribution.getName().equals("MAPR")) { //$NON-NLS-1$
+                return "maprfs:".concat(cooAppPath);//$NON-NLS-1$
+            }
+        }
+        return cooAppPath;
     }
 }

@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hdinsight320.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -44,8 +45,8 @@ public class HDInsight32DistributionTest {
         HadoopComponent distribution = new HDInsight32Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.MICROSOFT_HD_INSIGHT.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2.getVersionValue(), distribution.getVersion());
+        assertEquals(HDInsight32Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(HDInsight32Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());

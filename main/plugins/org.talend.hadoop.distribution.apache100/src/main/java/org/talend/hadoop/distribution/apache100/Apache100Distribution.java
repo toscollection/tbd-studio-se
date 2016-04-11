@@ -16,8 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -32,9 +30,19 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
 
+@SuppressWarnings("nls")
 public class Apache100Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        PigComponent, HiveComponent {
+        PigComponent, HiveComponent, IApacheDistribution {
+
+    public static final String VERSION = "APACHE_1_0_0";
+
+    public static final String VERSION_DISPLAY = "Apache 1.0.0";
+
+    public static final String VERSION_PIG_DISPLAY = "Apache 1.0.0 (Pig 0.9.2)";
+
+    public static final String VERSION_HIVE_DISPLAY = "Apache 1.0.0 (Hive 0.9.0)";
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -49,29 +57,29 @@ public class Apache100Distribution extends AbstractDistribution implements HDFSC
                 EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, Constant.PIG_APACHE100_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, Constant.HIVE_APACHE100_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
     }
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.APACHE.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.APACHE.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.APACHE_1_0_0.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : EHadoopVersion4Drivers.APACHE_1_0_0.getVersionDisplay();
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override
@@ -128,16 +136,6 @@ public class Apache100Distribution extends AbstractDistribution implements HDFSC
     @Override
     public boolean doSupportImpersonation() {
         return false;
-    }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
     }
 
     @Override

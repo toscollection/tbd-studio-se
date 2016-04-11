@@ -12,11 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.piv101.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -44,8 +45,8 @@ public class Pivotal101DistributionTest {
         HadoopComponent distribution = new Pivotal101Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.PIVOTAL_HD.getName(), distribution.getDistribution());
-        assertEquals(EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.getVersionValue(), distribution.getVersion());
+        assertEquals(Pivotal101Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(Pivotal101Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());
