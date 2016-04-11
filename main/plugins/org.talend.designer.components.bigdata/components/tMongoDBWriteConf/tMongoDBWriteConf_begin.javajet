@@ -294,6 +294,16 @@
                              processTree((com.mongodb.BasicDBObject)nextElement, path, index + 1, pattern);
                         } else if (nextElement instanceof com.mongodb.BasicDBList) {
                             processTree((com.mongodb.BasicDBList) nextElement, path, index + 1, pattern);
+                        } else if (nextElement == null && index > 0) {
+                            // some loop are not reported by the XML tree
+                            nextElement = currentElement.get(path[index - 1]);
+                            if (nextElement != null) {
+                                if (nextElement instanceof com.mongodb.BasicDBObject) {
+                                    processTree((com.mongodb.BasicDBObject)nextElement, path, index, pattern);
+                               } else if (nextElement instanceof com.mongodb.BasicDBList) {
+                                   processTree((com.mongodb.BasicDBList) nextElement, path, index, pattern);
+                               }
+                            }
                         }
                     } else {
                         // process leaf
