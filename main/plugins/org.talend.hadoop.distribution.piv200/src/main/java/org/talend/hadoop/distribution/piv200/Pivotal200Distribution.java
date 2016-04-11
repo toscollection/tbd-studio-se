@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.commons.utils.system.EnvironmentUtils;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -207,13 +206,4 @@ public class Pivotal200Distribution extends AbstractDistribution implements HDFS
     public ComponentCondition getDisplayCondition(ComponentType componentType) {
         return displayConditions.get(componentType);
     }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        if (EnvironmentUtils.isWindowsSystem()) { // don't support on windows
-            return false;
-        }
-        return super.doSupportEmbeddedMode();
-    }
-
 }
