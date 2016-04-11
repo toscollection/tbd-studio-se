@@ -41,4 +41,12 @@ public final class PigConstant {
     public static final String PIGLOAD_COMPONENT = "tPigLoad"; //$NON-NLS-1$
 
     public static final String PIGLOAD_S3_LOCATION_LOAD = "S3_LOCATION_LOAD"; //$NON-NLS-1$
+
+    public static final String PIGLOAD_ENGINE = "ENGINE"; //$NON-NLS-1$
+
+    public static final String TEZ_ENGINE = "TEZ"; //$NON-NLS-1$
+
+    public static final String TEZ_LIB = "TEZ_LIB"; //$NON-NLS-1$
+
+    public static final String TEZ_LIB_INSTALL = "INSTALL"; //$NON-NLS-1$
 }

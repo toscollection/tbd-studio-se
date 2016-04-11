@@ -17,8 +17,10 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.BasicExpression;
+import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
+import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.PigConstant;
 import org.talend.hadoop.distribution.hdp240.HDP240Constant;
@@ -41,6 +43,16 @@ public class HDP240PigModuleGroup {
 
         ComponentCondition s3condition = new SimpleComponentCondition(new BasicExpression(PigConstant.PIGLOAD_S3_LOCATION_LOAD));
 
+        ComponentCondition tezCondition = new SimpleComponentCondition(new BasicExpression(PigConstant.PIGLOAD_ENGINE,
+                EqualityOperator.EQ, PigConstant.TEZ_ENGINE));
+
+        ComponentCondition tezLibCondition = new SimpleComponentCondition(new BasicExpression(PigConstant.TEZ_LIB,
+                EqualityOperator.EQ, PigConstant.TEZ_LIB_INSTALL));
+
+        ComponentCondition tezServerCondition = new MultiComponentCondition(tezCondition, BooleanOperator.AND, tezLibCondition);
+
+        new SimpleComponentCondition(new BasicExpression(PigConstant.PIGLOAD_ENGINE, EqualityOperator.EQ, PigConstant.TEZ_ENGINE));
+
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(HDP240Constant.PIG_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(HDP240Constant.HDFS_MODULE_GROUP.getModuleName()));
@@ -54,8 +66,9 @@ public class HDP240PigModuleGroup {
         hs.add(new DistributionModuleGroup(HDP240Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), false,
                 sequencefileLoaderCondition));
         hs.add(new DistributionModuleGroup(HDP240Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, s3condition));
+        hs.add(new DistributionModuleGroup(HDP240Constant.TEZ_MODULE_GROUP.getModuleName(), true, tezCondition));
+        hs.add(new DistributionModuleGroup(HDP240Constant.TEZ_SERVER_MODULE_GROUP.getModuleName(), true, tezServerCondition));
 
         return hs;
     }
-
 }
