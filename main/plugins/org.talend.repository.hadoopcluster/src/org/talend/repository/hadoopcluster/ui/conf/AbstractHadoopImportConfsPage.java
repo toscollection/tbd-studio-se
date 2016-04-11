@@ -26,8 +26,8 @@ import org.talend.repository.hadoopcluster.ui.ICheckListener;
  * created by ycbai on 2015年5月29日 Detailled comment
  *
  */
-public abstract class AbstractHadoopImportConfsPage extends WizardPage implements IImportConfsWizardPage {
 
+public abstract class AbstractHadoopImportConfsPage extends WizardPage implements IImportConfsWizardPage {
     protected IRetrieveConfsService confsService;
 
     protected AbstractHadoopImportConfsPage(String pageName) {

@@ -677,13 +677,94 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS = ConnectionPackage.CONNECTION_FEATURE_COUNT + 24;
 
     /**
+     * The feature id for the '<em><b>Use Cloudera Navi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI = ConnectionPackage.CONNECTION_FEATURE_COUNT + 25;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Navi User Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 26;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Navi Password</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD = ConnectionPackage.CONNECTION_FEATURE_COUNT + 27;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Navi Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 28;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Navi Metadata Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 29;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Navi Client Url</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 30;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Disable SSL</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL = ConnectionPackage.CONNECTION_FEATURE_COUNT + 31;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Auto Commit</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 32;
+
+    /**
+     * The feature id for the '<em><b>Cloudera Die No Error</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 33;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 25;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 34;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1588,6 +1669,105 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopClusterConnection_UseCustomConfs();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseClouderaNavi <em>Use Cloudera Navi</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Use Cloudera Navi</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseClouderaNavi()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_UseClouderaNavi();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUserName <em>Cloudera Navi User Name</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Navi User Name</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUserName()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaNaviUserName();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviPassword <em>Cloudera Navi Password</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Navi Password</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviPassword()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaNaviPassword();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUrl <em>Cloudera Navi Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Navi Url</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUrl()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaNaviUrl();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviMetadataUrl <em>Cloudera Navi Metadata Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Navi Metadata Url</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviMetadataUrl()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaNaviMetadataUrl();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviClientUrl <em>Cloudera Navi Client Url</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Navi Client Url</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviClientUrl()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaNaviClientUrl();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDisableSSL <em>Cloudera Disable SSL</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Disable SSL</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDisableSSL()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaDisableSSL();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Auto Commit</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaAutoCommit()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaAutoCommit();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDieNoError <em>Cloudera Die No Error</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Cloudera Die No Error</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDieNoError()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_ClouderaDieNoError();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1904,6 +2084,78 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS = eINSTANCE.getHadoopClusterConnection_UseCustomConfs();
+
+        /**
+         * The meta object literal for the '<em><b>Use Cloudera Navi</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI = eINSTANCE.getHadoopClusterConnection_UseClouderaNavi();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Navi User Name</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME = eINSTANCE.getHadoopClusterConnection_ClouderaNaviUserName();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Navi Password</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD = eINSTANCE.getHadoopClusterConnection_ClouderaNaviPassword();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Navi Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL = eINSTANCE.getHadoopClusterConnection_ClouderaNaviUrl();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Navi Metadata Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL = eINSTANCE.getHadoopClusterConnection_ClouderaNaviMetadataUrl();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Navi Client Url</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL = eINSTANCE.getHadoopClusterConnection_ClouderaNaviClientUrl();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Disable SSL</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL = eINSTANCE.getHadoopClusterConnection_ClouderaDisableSSL();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Auto Commit</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT = eINSTANCE.getHadoopClusterConnection_ClouderaAutoCommit();
+
+        /**
+         * The meta object literal for the '<em><b>Cloudera Die No Error</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR = eINSTANCE.getHadoopClusterConnection_ClouderaDieNoError();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
