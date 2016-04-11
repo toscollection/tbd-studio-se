@@ -601,6 +601,32 @@ public class HCRepositoryUtil {
         if (defaultSD != null) {
             connection.setStagingDirectory(defaultSD);
         }
+        
+        String defaultClouderaUserName = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.CLOUDERA_NAVIGATOR_USERNAME.getName());
+        if (defaultClouderaUserName != null) {
+            connection.setClouderaNaviUserName(defaultClouderaUserName);
+        }
+        String defaultClouderaPassword = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.CLOUDERA_NAVIGATOR_PASSWORD.getName());
+        if (defaultClouderaPassword != null) {
+            connection.setClouderaNaviPassword(defaultClouderaPassword);
+        }
+        String defaultClouderaUrl = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.CLOUDERA_NAVIGATOR_URL.getName());
+        if (defaultClouderaUrl != null) {
+            connection.setClouderaNaviUrl(defaultClouderaUrl);
+        }
+        String defaultClouderaMetUrl = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.CLOUDERA_NAVIGATOR_METADATA_URL.getName());
+        if (defaultClouderaMetUrl != null) {
+            connection.setClouderaNaviMetadataUrl(defaultClouderaMetUrl);
+        }
+        String defaultClouderaClientUrl = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+                EHadoopProperties.CLOUDERA_NAVIGATOR_CLIENT_URL.getName());
+        if (defaultClouderaClientUrl != null) {
+            connection.setClouderaNaviClientUrl(defaultClouderaClientUrl);
+        }
     }
 
 }

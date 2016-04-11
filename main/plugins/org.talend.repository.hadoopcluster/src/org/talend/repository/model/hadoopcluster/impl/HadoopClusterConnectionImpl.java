@@ -62,6 +62,15 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getStagingDirectory <em>Staging Directory</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseDNHost <em>Use DN Host</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseCustomConfs <em>Use Custom Confs</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isUseClouderaNavi <em>Use Cloudera Navi</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getClouderaNaviUserName <em>Cloudera Navi User Name</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getClouderaNaviPassword <em>Cloudera Navi Password</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getClouderaNaviUrl <em>Cloudera Navi Url</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getClouderaNaviMetadataUrl <em>Cloudera Navi Metadata Url</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getClouderaNaviClientUrl <em>Cloudera Navi Client Url</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaDisableSSL <em>Cloudera Disable SSL</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaDieNoError <em>Cloudera Die No Error</em>}</li>
  * </ul>
  * </p>
  *
@@ -547,6 +556,186 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected boolean useCustomConfs = USE_CUSTOM_CONFS_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isUseClouderaNavi() <em>Use Cloudera Navi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseClouderaNavi()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean USE_CLOUDERA_NAVI_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isUseClouderaNavi() <em>Use Cloudera Navi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isUseClouderaNavi()
+     * @generated
+     * @ordered
+     */
+    protected boolean useClouderaNavi = USE_CLOUDERA_NAVI_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getClouderaNaviUserName() <em>Cloudera Navi User Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviUserName()
+     * @generated
+     * @ordered
+     */
+    protected static final String CLOUDERA_NAVI_USER_NAME_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getClouderaNaviUserName() <em>Cloudera Navi User Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviUserName()
+     * @generated
+     * @ordered
+     */
+    protected String clouderaNaviUserName = CLOUDERA_NAVI_USER_NAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getClouderaNaviPassword() <em>Cloudera Navi Password</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviPassword()
+     * @generated
+     * @ordered
+     */
+    protected static final String CLOUDERA_NAVI_PASSWORD_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getClouderaNaviPassword() <em>Cloudera Navi Password</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviPassword()
+     * @generated
+     * @ordered
+     */
+    protected String clouderaNaviPassword = CLOUDERA_NAVI_PASSWORD_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getClouderaNaviUrl() <em>Cloudera Navi Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviUrl()
+     * @generated
+     * @ordered
+     */
+    protected static final String CLOUDERA_NAVI_URL_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getClouderaNaviUrl() <em>Cloudera Navi Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviUrl()
+     * @generated
+     * @ordered
+     */
+    protected String clouderaNaviUrl = CLOUDERA_NAVI_URL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getClouderaNaviMetadataUrl() <em>Cloudera Navi Metadata Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviMetadataUrl()
+     * @generated
+     * @ordered
+     */
+    protected static final String CLOUDERA_NAVI_METADATA_URL_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getClouderaNaviMetadataUrl() <em>Cloudera Navi Metadata Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviMetadataUrl()
+     * @generated
+     * @ordered
+     */
+    protected String clouderaNaviMetadataUrl = CLOUDERA_NAVI_METADATA_URL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getClouderaNaviClientUrl() <em>Cloudera Navi Client Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviClientUrl()
+     * @generated
+     * @ordered
+     */
+    protected static final String CLOUDERA_NAVI_CLIENT_URL_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getClouderaNaviClientUrl() <em>Cloudera Navi Client Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getClouderaNaviClientUrl()
+     * @generated
+     * @ordered
+     */
+    protected String clouderaNaviClientUrl = CLOUDERA_NAVI_CLIENT_URL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isClouderaDisableSSL() <em>Cloudera Disable SSL</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isClouderaDisableSSL()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CLOUDERA_DISABLE_SSL_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isClouderaDisableSSL() <em>Cloudera Disable SSL</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isClouderaDisableSSL()
+     * @generated
+     * @ordered
+     */
+    protected boolean clouderaDisableSSL = CLOUDERA_DISABLE_SSL_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isClouderaAutoCommit() <em>Cloudera Auto Commit</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isClouderaAutoCommit()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CLOUDERA_AUTO_COMMIT_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isClouderaAutoCommit() <em>Cloudera Auto Commit</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isClouderaAutoCommit()
+     * @generated
+     * @ordered
+     */
+    protected boolean clouderaAutoCommit = CLOUDERA_AUTO_COMMIT_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isClouderaDieNoError() <em>Cloudera Die No Error</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isClouderaDieNoError()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean CLOUDERA_DIE_NO_ERROR_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isClouderaDieNoError() <em>Cloudera Die No Error</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isClouderaDieNoError()
+     * @generated
+     * @ordered
+     */
+    protected boolean clouderaDieNoError = CLOUDERA_DIE_NO_ERROR_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -1079,6 +1268,195 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isUseClouderaNavi() {
+        return useClouderaNavi;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setUseClouderaNavi(boolean newUseClouderaNavi) {
+        boolean oldUseClouderaNavi = useClouderaNavi;
+        useClouderaNavi = newUseClouderaNavi;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI, oldUseClouderaNavi, useClouderaNavi));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getClouderaNaviUserName() {
+        return clouderaNaviUserName;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaNaviUserName(String newClouderaNaviUserName) {
+        String oldClouderaNaviUserName = clouderaNaviUserName;
+        clouderaNaviUserName = newClouderaNaviUserName;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME, oldClouderaNaviUserName, clouderaNaviUserName));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getClouderaNaviPassword() {
+        return clouderaNaviPassword;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaNaviPassword(String newClouderaNaviPassword) {
+        String oldClouderaNaviPassword = clouderaNaviPassword;
+        clouderaNaviPassword = newClouderaNaviPassword;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD, oldClouderaNaviPassword, clouderaNaviPassword));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getClouderaNaviUrl() {
+        return clouderaNaviUrl;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaNaviUrl(String newClouderaNaviUrl) {
+        String oldClouderaNaviUrl = clouderaNaviUrl;
+        clouderaNaviUrl = newClouderaNaviUrl;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL, oldClouderaNaviUrl, clouderaNaviUrl));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getClouderaNaviMetadataUrl() {
+        return clouderaNaviMetadataUrl;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaNaviMetadataUrl(String newClouderaNaviMetadataUrl) {
+        String oldClouderaNaviMetadataUrl = clouderaNaviMetadataUrl;
+        clouderaNaviMetadataUrl = newClouderaNaviMetadataUrl;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL, oldClouderaNaviMetadataUrl, clouderaNaviMetadataUrl));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getClouderaNaviClientUrl() {
+        return clouderaNaviClientUrl;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaNaviClientUrl(String newClouderaNaviClientUrl) {
+        String oldClouderaNaviClientUrl = clouderaNaviClientUrl;
+        clouderaNaviClientUrl = newClouderaNaviClientUrl;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL, oldClouderaNaviClientUrl, clouderaNaviClientUrl));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isClouderaDisableSSL() {
+        return clouderaDisableSSL;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaDisableSSL(boolean newClouderaDisableSSL) {
+        boolean oldClouderaDisableSSL = clouderaDisableSSL;
+        clouderaDisableSSL = newClouderaDisableSSL;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL, oldClouderaDisableSSL, clouderaDisableSSL));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isClouderaAutoCommit() {
+        return clouderaAutoCommit;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaAutoCommit(boolean newClouderaAutoCommit) {
+        boolean oldClouderaAutoCommit = clouderaAutoCommit;
+        clouderaAutoCommit = newClouderaAutoCommit;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT, oldClouderaAutoCommit, clouderaAutoCommit));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isClouderaDieNoError() {
+        return clouderaDieNoError;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setClouderaDieNoError(boolean newClouderaDieNoError) {
+        boolean oldClouderaDieNoError = clouderaDieNoError;
+        clouderaDieNoError = newClouderaDieNoError;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR, oldClouderaDieNoError, clouderaDieNoError));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -1147,6 +1525,24 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return isUseDNHost();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
                 return isUseCustomConfs();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI:
+                return isUseClouderaNavi();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME:
+                return getClouderaNaviUserName();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD:
+                return getClouderaNaviPassword();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL:
+                return getClouderaNaviUrl();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL:
+                return getClouderaNaviMetadataUrl();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL:
+                return getClouderaNaviClientUrl();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL:
+                return isClouderaDisableSSL();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT:
+                return isClouderaAutoCommit();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
+                return isClouderaDieNoError();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1236,6 +1632,33 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
                 setUseCustomConfs((Boolean)newValue);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI:
+                setUseClouderaNavi((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME:
+                setClouderaNaviUserName((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD:
+                setClouderaNaviPassword((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL:
+                setClouderaNaviUrl((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL:
+                setClouderaNaviMetadataUrl((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL:
+                setClouderaNaviClientUrl((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL:
+                setClouderaDisableSSL((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT:
+                setClouderaAutoCommit((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
+                setClouderaDieNoError((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1323,6 +1746,33 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
                 setUseCustomConfs(USE_CUSTOM_CONFS_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI:
+                setUseClouderaNavi(USE_CLOUDERA_NAVI_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME:
+                setClouderaNaviUserName(CLOUDERA_NAVI_USER_NAME_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD:
+                setClouderaNaviPassword(CLOUDERA_NAVI_PASSWORD_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL:
+                setClouderaNaviUrl(CLOUDERA_NAVI_URL_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL:
+                setClouderaNaviMetadataUrl(CLOUDERA_NAVI_METADATA_URL_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL:
+                setClouderaNaviClientUrl(CLOUDERA_NAVI_CLIENT_URL_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL:
+                setClouderaDisableSSL(CLOUDERA_DISABLE_SSL_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT:
+                setClouderaAutoCommit(CLOUDERA_AUTO_COMMIT_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
+                setClouderaDieNoError(CLOUDERA_DIE_NO_ERROR_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -1385,6 +1835,24 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return useDNHost != USE_DN_HOST_EDEFAULT;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CUSTOM_CONFS:
                 return useCustomConfs != USE_CUSTOM_CONFS_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__USE_CLOUDERA_NAVI:
+                return useClouderaNavi != USE_CLOUDERA_NAVI_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_USER_NAME:
+                return CLOUDERA_NAVI_USER_NAME_EDEFAULT == null ? clouderaNaviUserName != null : !CLOUDERA_NAVI_USER_NAME_EDEFAULT.equals(clouderaNaviUserName);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_PASSWORD:
+                return CLOUDERA_NAVI_PASSWORD_EDEFAULT == null ? clouderaNaviPassword != null : !CLOUDERA_NAVI_PASSWORD_EDEFAULT.equals(clouderaNaviPassword);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_URL:
+                return CLOUDERA_NAVI_URL_EDEFAULT == null ? clouderaNaviUrl != null : !CLOUDERA_NAVI_URL_EDEFAULT.equals(clouderaNaviUrl);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_METADATA_URL:
+                return CLOUDERA_NAVI_METADATA_URL_EDEFAULT == null ? clouderaNaviMetadataUrl != null : !CLOUDERA_NAVI_METADATA_URL_EDEFAULT.equals(clouderaNaviMetadataUrl);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_NAVI_CLIENT_URL:
+                return CLOUDERA_NAVI_CLIENT_URL_EDEFAULT == null ? clouderaNaviClientUrl != null : !CLOUDERA_NAVI_CLIENT_URL_EDEFAULT.equals(clouderaNaviClientUrl);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL:
+                return clouderaDisableSSL != CLOUDERA_DISABLE_SSL_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT:
+                return clouderaAutoCommit != CLOUDERA_AUTO_COMMIT_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
+                return clouderaDieNoError != CLOUDERA_DIE_NO_ERROR_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -1447,6 +1915,24 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(useDNHost);
         result.append(", useCustomConfs: ");
         result.append(useCustomConfs);
+        result.append(", useClouderaNavi: ");
+        result.append(useClouderaNavi);
+        result.append(", clouderaNaviUserName: ");
+        result.append(clouderaNaviUserName);
+        result.append(", clouderaNaviPassword: ");
+        result.append(clouderaNaviPassword);
+        result.append(", clouderaNaviUrl: ");
+        result.append(clouderaNaviUrl);
+        result.append(", clouderaNaviMetadataUrl: ");
+        result.append(clouderaNaviMetadataUrl);
+        result.append(", clouderaNaviClientUrl: ");
+        result.append(clouderaNaviClientUrl);
+        result.append(", clouderaDisableSSL: ");
+        result.append(clouderaDisableSSL);
+        result.append(", clouderaAutoCommit: ");
+        result.append(clouderaAutoCommit);
+        result.append(", clouderaDieNoError: ");
+        result.append(clouderaDieNoError);
         result.append(')');
         return result.toString();
     }

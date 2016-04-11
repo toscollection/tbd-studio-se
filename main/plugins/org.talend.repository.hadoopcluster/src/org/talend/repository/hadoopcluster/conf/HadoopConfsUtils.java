@@ -42,6 +42,7 @@ import org.talend.repository.hadoopcluster.configurator.HadoopConfigurator;
 import org.talend.repository.hadoopcluster.configurator.HadoopConfiguratorBuilder;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
+import org.talend.repository.hadoopcluster.ui.conf.ClouderNavigatorWizard;
 import org.talend.repository.hadoopcluster.ui.conf.HadoopImportConfsWizard;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -63,6 +64,14 @@ public class HadoopConfsUtils {
     public static void openHadoopConfsWizard(AbstractHadoopForm parentForm, HadoopClusterConnectionItem connectionItem,
             boolean creation) {
         IWizard wizard = new HadoopImportConfsWizard(parentForm, connectionItem, creation);
+        WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
+        wizardDialog.create();
+        wizardDialog.open();
+    }
+    
+    public static void openClouderaNaviWizard(AbstractHadoopForm parentForm, HadoopClusterConnectionItem connectionItem,
+            boolean creation) {
+        IWizard wizard = new ClouderNavigatorWizard(parentForm, connectionItem, creation);
         WizardDialog wizardDialog = new WizardDialog(PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell(), wizard);
         wizardDialog.create();
         wizardDialog.open();
