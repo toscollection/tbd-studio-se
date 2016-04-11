@@ -70,7 +70,20 @@ public class HadoopClusterMetadataNodeTester extends AbstractNodeTester {
         if (repositoryNode == null) {
             return false;
         }
-        return HadoopClusterRepositoryNodeType.HADOOPCLUSTER.isParentTypeOf(getNodeContentType(repositoryNode));
+        ERepositoryObjectType nodeType = getNodeContentType(repositoryNode);
+        if (HadoopClusterRepositoryNodeType.HADOOPCLUSTER.isParentTypeOf(nodeType)) {
+            return true;
+        }
+        ERepositoryObjectType hcatlogType = ERepositoryObjectType.valueOf("HCATALOG"); //$NON-NLS-1$
+        ERepositoryObjectType hdfsType = ERepositoryObjectType.valueOf("HDFS"); //$NON-NLS-1$
+        ERepositoryObjectType oozieType = ERepositoryObjectType.valueOf("OOZIE"); //$NON-NLS-1$
+        if (nodeType != null) {
+            if (nodeType.equals(hcatlogType) || nodeType.equals(hdfsType) || nodeType.equals(oozieType)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean isHadoopSubNodeSchema(RepositoryNode repositoryNode) {

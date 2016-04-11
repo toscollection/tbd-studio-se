@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractMapRDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -37,15 +35,19 @@ import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
 import org.talend.hadoop.distribution.mapr410.modulegroup.MapR410MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.mapr410.modulegroup.MapR410PigModuleGroup;
 import org.talend.hadoop.distribution.mapr410.modulegroup.MapR410PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.mapr410.modulegroup.MapR410SparkBatchS3NodeModuleGroup;
 
 public class MapR410Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, HiveOnSparkComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, HiveOnSparkComponent,
+        IMapRDistribution {
 
-    public final static String VERSION = EHadoopVersion4Drivers.MAPR410.getVersionValue();
+    public static final String VERSION = "MAPR410";
+
+    public static final String VERSION_DISPLAY = "MapR 4.1.0(YARN mode)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -75,22 +77,22 @@ public class MapR410Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.MAPR.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.MAPR.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.MAPR410.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.MAPR410.getVersionDisplay();
+        return VERSION_DISPLAY;
     }
 
     @Override
@@ -160,16 +162,6 @@ public class MapR410Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public boolean doSupportTezForPig() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
         return true;
     }
 

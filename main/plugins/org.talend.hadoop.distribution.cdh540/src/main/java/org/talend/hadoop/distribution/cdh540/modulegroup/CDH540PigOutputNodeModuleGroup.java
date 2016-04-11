@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.cdh540.modulegroup;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh540.CDH540Constant;
@@ -34,7 +33,7 @@ public class CDH540PigOutputNodeModuleGroup {
     // (#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA' AND #LINK@NODE.ASSOCIATED_PIG_LOAD=='Cloudera_CDH5_5')
     private static final ComponentCondition condition = new MultiComponentCondition( //
             new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
-                    ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, EHadoopDistributions.CLOUDERA.getName()), //
+                    ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, CDH540Distribution.DISTRIBUTION_NAME), //
             BooleanOperator.AND, //
             new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
                     ComponentType.PIG.getVersionParameter(), EqualityOperator.EQ, CDH540Distribution.VERSION));

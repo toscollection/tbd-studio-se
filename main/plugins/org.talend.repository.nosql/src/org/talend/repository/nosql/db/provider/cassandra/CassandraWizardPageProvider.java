@@ -13,6 +13,7 @@
 package org.talend.repository.nosql.db.provider.cassandra;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -132,10 +133,20 @@ public class CassandraWizardPageProvider extends AbstractWizardPageProvider {
         ICassandraMetadataHandler metadataHandler = CassandraConnectionUtil.getMetadataHandler(connection);
         if (ksName != null) {
             cfNames = metadataHandler.getColumnFamilyNames(connection, ksName);
-            scfNames = metadataHandler.getSuperColumnFamilyNames(connection, ksName);
+            if(!CassandraConnectionUtil.isUpgradeVersion(connection)){
+                scfNames = metadataHandler.getSuperColumnFamilyNames(connection, ksName);
+            }else{
+                scfNames = new HashSet<String>();
+                metadataHandler.closeConnections();            
+            }
         } else {
             cfNames = metadataHandler.getColumnFamilyNames(connection);
-            scfNames = metadataHandler.getSuperColumnFamilyNames(connection);
+            if(!CassandraConnectionUtil.isUpgradeVersion(connection)){
+                scfNames = metadataHandler.getSuperColumnFamilyNames(connection);
+            }else{
+                scfNames = new HashSet<String>();
+                metadataHandler.closeConnections();
+            }
         }
         if (CassandraConnectionUtil.isOldVersion(connection)) {
             collectNodesForOldVersion(schemaNodes, parentNode, cfNames, scfNames);

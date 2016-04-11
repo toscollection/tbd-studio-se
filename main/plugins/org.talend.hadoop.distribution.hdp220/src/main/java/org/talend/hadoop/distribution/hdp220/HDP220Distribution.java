@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
+import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
@@ -33,14 +33,17 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220PigModuleGroup;
 import org.talend.hadoop.distribution.hdp220.modulegroup.HDP220PigOutputNodeModuleGroup;
 
 public class HDP220Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IHortonworksDistribution {
 
-    public final static String VERSION = EHadoopVersion4Drivers.HDP_2_2.getVersionValue();
+    public static final String VERSION = EHadoopVersion4Drivers.HDP_2_2.getVersionValue();
+
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.2.0";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
@@ -65,22 +68,22 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.HORTONWORKS.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.HORTONWORKS.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.HDP_2_2.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.HDP_2_2.getVersionDisplay();
+        return VERSION_DISPLAY;
     }
 
     @Override
@@ -170,12 +173,18 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportEmbeddedMode() {
-        return true;
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        return super.doSupportEmbeddedMode();
     }
 
     @Override
     public boolean doSupportStandaloneMode() {
-        return true;
+        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
+            return false;
+        }
+        return super.doSupportStandaloneMode();
     }
 
     @Override
@@ -238,4 +247,8 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
         return CUSTOM_MR_APPLICATION_CLASSPATH;
     }
 
+    @Override
+    public boolean doSupportSecurity() {
+        return true;
+    }
 }

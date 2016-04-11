@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -38,16 +36,25 @@ import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 import org.talend.hadoop.distribution.emr240.modulegroup.EMRApache240MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr240.modulegroup.EMRApache240PigModuleGroup;
 import org.talend.hadoop.distribution.emr240.modulegroup.EMRApache240PigOutputNodeModuleGroup;
 
 public class EMRApache240Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent {
+        SqoopComponent, PigComponent, HiveComponent, IAmazonEMRDistribution {
+
+    public static final String VERSION = "APACHE_2_4_0_EMR";
+
+    public static final String VERSION_DISPLAY = "Apache 2.4.0";
+
+    public static final String VERSION_PIG_DISPLAY = "Apache 2.4.0 (Pig 0.12.0)";
+
+    public static final String VERSION_HBASE_DISPLAY = "Apache 2.4.0 (HBase 0.94.18)";
+
+    public static final String VERSION_HIVE_DISPLAY = "Apache 2.4.0 (Hive 0.11.0)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,/usr/share/aws/emr/emr-fs/lib/*,/usr/share/aws/emr/lib/*"; //$NON-NLS-1$
-
-    public final static String VERSION = EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionValue();
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -65,10 +72,10 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
                 Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HCATSTORER_PARAMETER)));
         displayConditions.put(ComponentType.PIGOUTPUT, c1);
 
-        customVersionDisplayNames.put(ComponentType.PIG, Constant.PIG_APACHE240_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, Constant.PIG_APACHE240_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HBASE, Constant.HBASE_APACHE240_DISPLAY);
-        customVersionDisplayNames.put(ComponentType.HIVE, Constant.HIVE_APACHE240_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIG, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.PIGOUTPUT, VERSION_PIG_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HBASE, VERSION_HBASE_DISPLAY);
+        customVersionDisplayNames.put(ComponentType.HIVE, VERSION_HIVE_DISPLAY);
 
         nodeModuleGroups = new HashMap<>();
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
@@ -81,23 +88,23 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.AMAZON_EMR.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.AMAZON_EMR.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
         String customVersionName = customVersionDisplayNames.get(componentType);
-        return customVersionName != null ? customVersionName : EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionDisplay();
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override
@@ -182,16 +189,6 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
     }
 
     @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        return true;
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return false;
     }
@@ -240,5 +237,4 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
     public ComponentCondition getDisplayCondition(ComponentType componentType) {
         return displayConditions.get(componentType);
     }
-
 }

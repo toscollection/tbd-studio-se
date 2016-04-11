@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -30,9 +28,15 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
+@SuppressWarnings("nls")
 public class CDH500MR2Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
-        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent {
+        SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, IClouderaDistribution {
+
+    public static final String VERSION = "Cloudera_CDH5";
+
+    public static final String VERSION_DISPLAY = "Cloudera CDH5.0(YARN mode)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -44,22 +48,22 @@ public class CDH500MR2Distribution extends AbstractDistribution implements HDFSC
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.CLOUDERA.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.CLOUDERA.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     public String getVersion() {
-        return EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue();
+        return VERSION;
     }
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionDisplay();
+        return VERSION_DISPLAY;
     }
 
     @Override
@@ -134,16 +138,6 @@ public class CDH500MR2Distribution extends AbstractDistribution implements HDFSC
 
     @Override
     public boolean doSupportImpersonation() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportEmbeddedMode() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
         return true;
     }
 

@@ -100,7 +100,7 @@
 
 	boolean generateRegisterJarCodeForAll = true;
 
-	boolean isHadoop2 = !isCustom && pigDistrib.isHadoop2();
+	boolean isHadoop2 = !isCustom && pigDistrib!=null && pigDistrib.isHadoop2();
 
 	boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 

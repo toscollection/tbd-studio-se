@@ -35,18 +35,18 @@ public class CDH550MapReduceModuleGroupTest {
         results.put(CDH550Constant.HDFS_MODULE_GROUP.getModuleName(), null);
         results.put(CDH550Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
         results.put(CDH550Constant.MAPREDUCE_PARQUET_MODULE_GROUP.getModuleName(), null);
-        results.put(CDH550Constant.TALEND_CLOUDERA_CDH_5_5_NAVIGATOR.getModuleName(), "(USE_CLOUDERA_NAVIGATOR=='true')");
+        results.put(CDH550Constant.MAPREDUCE_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
+        results.put(CDH550Constant.TALEND_CLOUDERA_CDH_5_5_NAVIGATOR.getModuleName(), "(USE_CLOUDERA_NAVIGATOR=='true')"); //$NON-NLS-1$
         Set<DistributionModuleGroup> moduleGroups = CDH550MapReduceModuleGroup.getModuleGroups();
-        assertEquals(4, moduleGroups.size());
+        assertEquals(5, moduleGroups.size());
         for (DistributionModuleGroup module : moduleGroups) {
-            assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName()));
+            assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {
-                assertTrue("The condition of the module " + module.getModuleName() + " is not null.",
+                assertTrue("The condition of the module " + module.getModuleName() + " is not null.", //$NON-NLS-1$ //$NON-NLS-2$
                         results.get(module.getModuleName()) == null);
             } else {
-                assertTrue(
-                        "The condition of the module " + module.getModuleName() + " is null, but it should be "
-                                + results.get(module.getModuleName()) + ".", results.get(module.getModuleName()) != null);
+                assertTrue("The condition of the module " + module.getModuleName() + " is null, but it should be " //$NON-NLS-1$ //$NON-NLS-2$
+                        + results.get(module.getModuleName()) + ".", results.get(module.getModuleName()) != null); //$NON-NLS-1$
                 assertEquals(results.get(module.getModuleName()), module.getRequiredIf().getConditionString());
             }
         }
