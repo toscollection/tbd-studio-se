@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -40,6 +38,7 @@ import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 import org.talend.hadoop.distribution.hdp240.modulegroup.HDP240HBaseModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.HDP240HCatalogModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.HDP240HDFSModuleGroup;
@@ -63,9 +62,12 @@ import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkstreaming.HDP
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkstreaming.HDP240SparkStreamingS3NodeModuleGroup;
 
 public class HDP240Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent, PigComponent,
-        HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, SqoopComponent {
+        HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, SqoopComponent,
+        IHortonworksDistribution {
 
-    public final static String VERSION = EHadoopVersion4Drivers.HDP_2_4.getVersionValue();
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.4.0"; //$NON-NLS-1$
+
+    public final static String VERSION = "HDP_2_4"; //$NON-NLS-1$
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
@@ -146,12 +148,12 @@ public class HDP240Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getDistribution() {
-        return EHadoopDistributions.HORTONWORKS.getName();
+        return DISTRIBUTION_NAME;
     }
 
     @Override
     public String getDistributionName() {
-        return EHadoopDistributions.HORTONWORKS.getDisplayName();
+        return DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
@@ -161,7 +163,7 @@ public class HDP240Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return EHadoopVersion4Drivers.HDP_2_4.getVersionDisplay();
+        return VERSION_DISPLAY;
     }
 
     @Override
