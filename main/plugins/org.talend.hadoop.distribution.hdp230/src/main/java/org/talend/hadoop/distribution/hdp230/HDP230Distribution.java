@@ -53,7 +53,10 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         HiveOnSparkComponent {
 
     public final static String VERSION = EHadoopVersion4Drivers.HDP_2_3.getVersionValue();
+
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
+
+    private final static String CUSTOM_MR_APPLICATION_CLASSPATH = "$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -285,4 +288,13 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         return false;
     }
 
+    @Override
+    public boolean doSupportCustomMRApplicationCP() {
+        return true;
+    }
+
+    @Override
+    public String getCustomMRApplicationCP() {
+        return CUSTOM_MR_APPLICATION_CLASSPATH;
+    }
 }

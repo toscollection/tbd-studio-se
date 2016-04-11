@@ -101,4 +101,12 @@ public abstract class AbstractDistribution {
     public boolean doSupportOldImportMode() {
         return true;
     }
+
+    public boolean doSupportCustomMRApplicationCP() {
+        return false;
+    }
+
+    public String getCustomMRApplicationCP() {
+        return ""; //$NON-NLS-1$
+    }
 }

@@ -72,11 +72,12 @@
 <%
 		}
 
-		if(!isCustom && ("HDP_2_2".equals(version) || "HDP_2_3".equals(version))) {
+		if(sqoopDistrib.doSupportCustomMRApplicationCP()){
 %>
-			configuration_<%=cid%>.set("mapreduce.application.classpath","$PWD/mr-framework/hadoop/share/hadoop/mapreduce/*:$PWD/mr-framework/hadoop/share/hadoop/mapreduce/lib/*:$PWD/mr-framework/hadoop/share/hadoop/common/*:$PWD/mr-framework/hadoop/share/hadoop/common/lib/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/*:$PWD/mr-framework/hadoop/share/hadoop/yarn/lib/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/*:$PWD/mr-framework/hadoop/share/hadoop/hdfs/lib/*:/etc/hadoop/conf/secure");
+			configuration_<%=cid%>.set("mapreduce.application.classpath", "<%=sqoopDistrib.getCustomMRApplicationCP()%>");
 <%
 		}
+
 %>
 		configuration_<%=cid%>.set("yarn.application.classpath", "<%=sqoopDistrib.getYarnApplicationClasspath()%>");
 <%

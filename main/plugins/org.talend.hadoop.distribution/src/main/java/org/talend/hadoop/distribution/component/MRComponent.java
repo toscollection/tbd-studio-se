@@ -45,4 +45,14 @@ public interface MRComponent extends HadoopComponent {
      */
     public String getYarnApplicationClasspath();
 
+    /**
+     * @return true if the distribution supports a custom MapReduce Application ClassPath
+     */
+    public boolean doSupportCustomMRApplicationCP();
+
+    /**
+     * @return The custom MapReduce Application ClassPath
+     */
+    public String getCustomMRApplicationCP();
+
 }
