@@ -62,10 +62,10 @@ public class CassandraConnectionUtilTest {
         connection.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, ICassandraConstants.DBM_DATASTAX_ID);
         Assert.assertFalse(CassandraConnectionUtil.isUpgradeVersion(connection));
         
-        connection.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, "CASSANDRA_2_2_0");
+        connection.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, "CASSANDRA_2_2");
         Assert.assertTrue(CassandraConnectionUtil.isUpgradeVersion(connection));
         
-        connection.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, "CASSANDRA_3_0_0");
+        connection.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, "CASSANDRA_3_0");
         Assert.assertTrue(CassandraConnectionUtil.isUpgradeVersion(connection));
     }
 

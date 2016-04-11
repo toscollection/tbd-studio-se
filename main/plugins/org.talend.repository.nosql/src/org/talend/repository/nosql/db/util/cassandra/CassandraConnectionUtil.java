@@ -56,7 +56,7 @@ public class CassandraConnectionUtil {
     public static boolean isUpgradeVersion(NoSQLConnection connection) {
         String dbVersion = connection.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
         try{
-             Pattern pattern = Pattern.compile("CASSANDRA_(\\d+)_(\\d+)_(\\d+)");//$NON-NLS-1$
+             Pattern pattern = Pattern.compile("CASSANDRA_(\\d+)_(\\d+)");//$NON-NLS-1$
              Matcher matcher = pattern.matcher(dbVersion);
              while (matcher.find()) {
                  String firstStr = matcher.group(1);

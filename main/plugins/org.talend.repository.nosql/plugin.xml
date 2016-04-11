@@ -155,7 +155,7 @@
             dbDNDProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraDNDProvider"
             dbMetadataProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraMetadataProvider"
             dbType="CASSANDRA"
-            dbVersions="CASSANDRA_3_0_0;CASSANDRA_2_2_0;CASSANDRA_2_0_0;CASSANDRA_1_2_2;CASSANDRA_1_1_2"
+            dbVersions="CASSANDRA_3_0;CASSANDRA_2_2;CASSANDRA_2_0_0;CASSANDRA_1_2_2;CASSANDRA_1_1_2"
             dbWizPageProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraWizardPageProvider"
             description="Cassandra">
       </factory>
@@ -211,11 +211,11 @@
             libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
       </classloader>
       <classloader
-            index="NOSQL:CASSANDRA:CASSANDRA_2_2_0"
+            index="NOSQL:CASSANDRA:CASSANDRA_2_2"
             libraries="netty-common-4.0.33.Final.jar;netty-transport-4.0.33.Final.jar;cassandra-driver-core-3.0.0.jar;guava-16.0.1.jar;slf4j-api-1.7.7.jar;metrics-core-3.1.2.jar;netty-buffer-4.0.33.Final.jar;netty-codec-4.0.33.Final.jar;netty-handler-4.0.33.Final.jar;">
       </classloader>
       <classloader
-            index="NOSQL:CASSANDRA:CASSANDRA_3_0_0"
+            index="NOSQL:CASSANDRA:CASSANDRA_3_0"
             libraries="netty-common-4.0.33.Final.jar;netty-transport-4.0.33.Final.jar;cassandra-driver-core-3.0.0.jar;guava-16.0.1.jar;slf4j-api-1.7.7.jar;metrics-core-3.1.2.jar;netty-buffer-4.0.33.Final.jar;netty-codec-4.0.33.Final.jar;netty-handler-4.0.33.Final.jar;">
       </classloader>
       <classloader
