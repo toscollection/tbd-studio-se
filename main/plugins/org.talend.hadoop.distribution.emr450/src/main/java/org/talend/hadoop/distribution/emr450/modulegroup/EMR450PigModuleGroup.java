@@ -21,6 +21,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.PigConstant;
+import org.talend.hadoop.distribution.emr450.modulegroup.node.mr.EMR450MRS3NodeModuleGroup;
 
 public class EMR450PigModuleGroup {
 
@@ -36,7 +37,7 @@ public class EMR450PigModuleGroup {
 
     public static final String PIG_HCATALOG_GROUP_NAME = "PIG-HCATALOG-LIB-EMR_4_5_0_LATEST"; //$NON-NLS-1$
 
-    public static final String PIG_S3_GROUP_NAME = "S3-LIB-EMR_4_5_0_LATEST"; //$NON-NLS-1$
+    public static final String PIG_S3_GROUP_NAME = EMR450MRS3NodeModuleGroup.S3_GROUP_NAME;
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         ComponentCondition parquetLoaderCondition = new SimpleComponentCondition(new BasicExpression(

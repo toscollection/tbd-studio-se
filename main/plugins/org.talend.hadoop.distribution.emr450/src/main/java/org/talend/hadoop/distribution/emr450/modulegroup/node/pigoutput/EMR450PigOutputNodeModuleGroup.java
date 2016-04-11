@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.emr450.modulegroup.node.pigoutput;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.BasicExpression;
@@ -35,12 +34,12 @@ public class EMR450PigOutputNodeModuleGroup {
     // This condition stands for:
     // (#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='AMAZON_EMR' AND #LINK@NODE.ASSOCIATED_PIG_LOAD=='EMR_4_5_0')
     private static final ComponentCondition condition = new MultiComponentCondition(
-            //
+    //
             new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
-                    ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, EHadoopDistributions.AMAZON_EMR.getName()), //
+                    ComponentType.PIG.getDistributionParameter(), EqualityOperator.EQ, EMR450Distribution.DISTRIBUTION_NAME), //
             BooleanOperator.AND, //
-            new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER, ComponentType.PIG
-                    .getVersionParameter(), EqualityOperator.EQ, EMR450Distribution.VERSION));
+            new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
+                    ComponentType.PIG.getVersionParameter(), EqualityOperator.EQ, EMR450Distribution.VERSION));
 
     private static final ComponentCondition s3condition = new MultiComponentCondition( //
             new MultiComponentCondition( //

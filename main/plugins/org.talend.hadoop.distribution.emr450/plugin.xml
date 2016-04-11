@@ -196,14 +196,55 @@
             context="plugin:org.talend.libraries.s3"
             id="jets3t-0.9.0"
             name="jets3t-0.9.0.jar"/>
+            
+        <!-- Sqoop libraries -->
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="sqoop-emr450-latest"
+            name="sqoop-1.4.6.jar"
+            mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6/6.2.0">
+        </libraryNeeded>    
         
         <!-- Spark libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
             id="talend-spark-assembly-emr450-latest"
-            name="talend-spark-assembly-1.6.0-hadoop2.7.2-amzn-0-without-parquet.jar" 
-            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.6.0-hadoop2.7.2-amzn-0-without-parquet/6.2.0"/>
-                
+            name="talend-spark-assembly-1.6.1-hadoop2.7.2-amzn-0.jar" 
+            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.6.1-hadoop2.7.2-amzn-0/6.2.0"/>
+        
+        <!-- Kafka libraries -->    
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="spark-streaming-kafka-emr450-latest"
+            name="spark-streaming-kafka-assembly_2.10-1.6.1.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-assembly_2.10-1.6.1/6.2.0">
+        </libraryNeeded>
+        
+        <!-- Kinesis libraries -->
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="spark-streaming-kinesis-asl-assembly-emr450-latest"
+            name="spark-streaming-kinesis-asl-assembly_2.10-1.6.1.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kinesis-asl-assembly_2.10-1.6.1/6.2.0"/>
+            
+        <libraryNeeded 
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="aws-java-sdk-kinesis-emr450-latest"
+            name="aws-java-sdk-kinesis-1.10.60.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-kinesis-1.10.60/6.2.0"/>
+            
+        <libraryNeeded 
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="aws-java-sdk-dynamodb-emr450-latest"
+            name="aws-java-sdk-dynamodb-1.9.16.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-dynamodb-1.9.16/6.2.0"/>
+            
+        <libraryNeeded 
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="aws-java-sdk-cloudwatch-emr450-latest"
+            name="aws-java-sdk-cloudwatch-1.10.56.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-cloudwatch-1.10.56/6.2.0"/>
+            
         <!-- Third parties libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
@@ -216,6 +257,13 @@
             id="avro-mapred-emr450-latest"
             name="avro-mapred-1.7.5-hadoop2.jar" 
             mvn_uri="mvn:org.talend.libraries/avro-mapred-1.7.5-hadoop2/6.2.0"/>
+            
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="parquet-avro-emr450-latest"
+            name="parquet-avro-1.4.1.jar"
+            mvn_uri="mvn:org.talend.libraries/parquet-avro-1.4.1/6.2.0">
+        </libraryNeeded>
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
@@ -259,6 +307,7 @@
              <library id="commons-cli-1.2.jar"/>
              <library id="commons-collections-3.2.2.jar"/>
              <library id="commons-io-2.4.jar"/>
+             <library id="gson-2.2.4.jar"/>
              <library id="httpcore-4.3.2.jar"/>
              <library id="httpclient-4.3.4.jar"/>
              <library id="guava-11.0.2.jar"/>
@@ -306,6 +355,7 @@
              <library id="commons-cli-1.2.jar"/>
              <library id="commons-codec-1.4.jar"/>
              <library id="commons-collections-3.2.2.jar"/>
+             <library id="gson-2.2.4.jar"/>
              <library id="httpcore-4.3.2.jar"/>
              <library id="httpclient-4.3.4.jar"/>
              <library id="guava-11.0.2.jar"/>
@@ -368,6 +418,7 @@
              <library id="jersey-client-1.9.jar"/>
              <library id="jersey-core-1.9.jar"/>
              <library id="log4j-1.2.17.jar"/>
+             <library id="gson-2.2.4.jar"/>
              <library id="httpcore-4.3.2.jar"/>
              <library id="httpclient-4.3.4.jar"/>
              <library id="jetty-util-emr450-latest"/>
@@ -464,8 +515,11 @@
              <library id="avro-emr450-latest"/>
              <library id="commons-configuration-1.6.jar"/>
              <library id="commons-httpclient-3.0.1.jar"/>
-             <library id="httpcore-4.2.5.jar"/>
-             <library id="httpclient-4.2.5.jar"/>
+             <!--library id="httpcore-4.2.5.jar"/>
+             <library id="httpclient-4.2.5.jar"/-->
+             <library id="gson-2.2.4.jar"/>
+             <library id="httpcore-4.3.2.jar"/>
+             <library id="httpclient-4.3.4.jar"/>
              <library id="commons-lang-2.6.jar"/>
              <library id="commons-logging-1.1.3.jar"/>
              <library id="commons-cli-1.2.jar"/>
@@ -485,6 +539,15 @@
              <library id="curator-client-2.6.0.jar"/>
              <library id="emr-metrics-client-emr450-latest"/>
              <library id="htrace-core-emr450-latest"/>
+        </libraryNeededGroup>
+        
+        <!-- Sqoop group -->
+        <libraryNeededGroup
+                description="Sqoop libraries for EMR 4.5.0"
+                id="SQOOP-LIB-EMR_4_5_0_LATEST"
+                name="SQOOP-LIB-EMR_4_5_0_LATEST">
+            <library id="sqoop-emr450-latest"/>
+            <library id="avro-mapred-emr450-latest"/>
         </libraryNeededGroup>
                 
         <!-- Spark group -->
@@ -515,6 +578,87 @@
              <library id="log4j-1.2.17.jar"/>
              <library id="emr-metrics-client-emr450-latest"/>
              <library id="htrace-core-emr450-latest"/>
+        </libraryNeededGroup>
+        
+        <!-- Spark group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+             <library id="snappy-java-1.0.5.jar"/>
+        </libraryNeededGroup>
+                
+        <!-- Spark Parquet group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-PARQUET-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-PARQUET-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+             <library id="parquet-avro-emr450-latest"/>
+             <library id="parquet-hadoop-bundle-1.6.0.jar" />
+             <library id="jodd-core-3.5.2.jar" />          
+        </libraryNeededGroup>
+        
+        <!-- Spark Hive group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Hive libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-HIVE-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-HIVE-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+            <library id="hive-exec-emr450-latest"/>
+            <library id="hive-metastore-emr450-latest"/>
+            <library id="libfb303-0.9.0.jar"/>            
+        </libraryNeededGroup>
+        
+        <!-- Spark Hive group -->
+        <libraryNeededGroup
+                description="Spark Hive libraries for EMR 4.5.0"
+                id="SPARK-HIVE-LIB-EMR_4_5_0_LATEST"
+                name="SPARK-HIVE-LIB-EMR_4_5_0_LATEST">
+             <library id="jdo-api-3.0.1.jar"/>
+             <library id="datanucleus-api-jdo-3.2.6.jar"/>
+             <library id="datanucleus-core-3.2.10.jar"/>
+             <library id="datanucleus-rdbms-3.2.9.jar"/>    
+        </libraryNeededGroup>
+        
+        <!-- Spark Kinesis group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kinesis libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-KINESIS-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-KINESIS-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+            <library id="spark-streaming-kinesis-asl-assembly-emr450-latest"/>
+            <library id="amazon-kinesis-client-1.2.1.jar"/>
+            <library id="aws-java-sdk-kinesis-emr450-latest"/>
+            <library id="aws-java-sdk-core-emr450-latest"/>            
+            <library id="aws-java-sdk-dynamodb-emr450-latest"/>            
+            <library id="aws-java-sdk-cloudwatch-emr450-latest"/>            
+            <library id="joda-time-2.7.jar"/>            
+        </libraryNeededGroup>
+
+        <!-- Spark Kafka group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kafka assembly libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+            <library id="spark-streaming-kafka-emr450-latest"/>
+            <library id="kafka_2.10-0.8.2.1.jar"/>
+            <library id="metrics-core-2.2.0.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Spark Kafka Avro group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kafka Avro libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-KAFKA-AVRO-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-KAFKA-AVRO-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+            <library id="avro-emr450-latest"/>
+            <library id="jackson-mapper-asl-1.9.13.jar" />
+            <library id="jackson-core-asl-1.9.13.jar" />
+        </libraryNeededGroup>
+        
+        <!-- Spark Kafka Client group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Kafka client libraries for EMR 4.5.0 that are MRREQUIRED"
+                id="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+            <library id="kafka-clients-0.8.2.1.jar"/>
         </libraryNeededGroup>
     </extension>
 </plugin>
