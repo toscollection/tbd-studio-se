@@ -46,6 +46,15 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getStagingDirectory <em>Staging Directory</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseDNHost <em>Use DN Host</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseCustomConfs <em>Use Custom Confs</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseClouderaNavi <em>Use Cloudera Navi</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUserName <em>Cloudera Navi User Name</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviPassword <em>Cloudera Navi Password</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUrl <em>Cloudera Navi Url</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviMetadataUrl <em>Cloudera Navi Metadata Url</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviClientUrl <em>Cloudera Navi Client Url</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDisableSSL <em>Cloudera Disable SSL</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDieNoError <em>Cloudera Die No Error</em>}</li>
  * </ul>
  * </p>
  *
@@ -696,5 +705,244 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setUseCustomConfs(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Use Cloudera Navi</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Use Cloudera Navi</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Use Cloudera Navi</em>' attribute.
+     * @see #setUseClouderaNavi(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_UseClouderaNavi()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isUseClouderaNavi();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isUseClouderaNavi <em>Use Cloudera Navi</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Use Cloudera Navi</em>' attribute.
+     * @see #isUseClouderaNavi()
+     * @generated
+     */
+    void setUseClouderaNavi(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Navi User Name</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Navi User Name</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Navi User Name</em>' attribute.
+     * @see #setClouderaNaviUserName(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaNaviUserName()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getClouderaNaviUserName();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUserName <em>Cloudera Navi User Name</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Navi User Name</em>' attribute.
+     * @see #getClouderaNaviUserName()
+     * @generated
+     */
+    void setClouderaNaviUserName(String value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Navi Password</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Navi Password</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Navi Password</em>' attribute.
+     * @see #setClouderaNaviPassword(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaNaviPassword()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getClouderaNaviPassword();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviPassword <em>Cloudera Navi Password</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Navi Password</em>' attribute.
+     * @see #getClouderaNaviPassword()
+     * @generated
+     */
+    void setClouderaNaviPassword(String value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Navi Url</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Navi Url</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Navi Url</em>' attribute.
+     * @see #setClouderaNaviUrl(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaNaviUrl()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getClouderaNaviUrl();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviUrl <em>Cloudera Navi Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Navi Url</em>' attribute.
+     * @see #getClouderaNaviUrl()
+     * @generated
+     */
+    void setClouderaNaviUrl(String value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Navi Metadata Url</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Navi Metadata Url</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Navi Metadata Url</em>' attribute.
+     * @see #setClouderaNaviMetadataUrl(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaNaviMetadataUrl()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getClouderaNaviMetadataUrl();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviMetadataUrl <em>Cloudera Navi Metadata Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Navi Metadata Url</em>' attribute.
+     * @see #getClouderaNaviMetadataUrl()
+     * @generated
+     */
+    void setClouderaNaviMetadataUrl(String value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Navi Client Url</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Navi Client Url</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Navi Client Url</em>' attribute.
+     * @see #setClouderaNaviClientUrl(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaNaviClientUrl()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getClouderaNaviClientUrl();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getClouderaNaviClientUrl <em>Cloudera Navi Client Url</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Navi Client Url</em>' attribute.
+     * @see #getClouderaNaviClientUrl()
+     * @generated
+     */
+    void setClouderaNaviClientUrl(String value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Disable SSL</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Disable SSL</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Disable SSL</em>' attribute.
+     * @see #setClouderaDisableSSL(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaDisableSSL()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isClouderaDisableSSL();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDisableSSL <em>Cloudera Disable SSL</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Disable SSL</em>' attribute.
+     * @see #isClouderaDisableSSL()
+     * @generated
+     */
+    void setClouderaDisableSSL(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Auto Commit</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Auto Commit</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Auto Commit</em>' attribute.
+     * @see #setClouderaAutoCommit(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaAutoCommit()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isClouderaAutoCommit();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Auto Commit</em>' attribute.
+     * @see #isClouderaAutoCommit()
+     * @generated
+     */
+    void setClouderaAutoCommit(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Cloudera Die No Error</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cloudera Die No Error</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cloudera Die No Error</em>' attribute.
+     * @see #setClouderaDieNoError(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_ClouderaDieNoError()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isClouderaDieNoError();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDieNoError <em>Cloudera Die No Error</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Cloudera Die No Error</em>' attribute.
+     * @see #isClouderaDieNoError()
+     * @generated
+     */
+    void setClouderaDieNoError(boolean value);
 
 } // HadoopClusterConnection
