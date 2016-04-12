@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh550.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -45,8 +42,9 @@ public class CDH550DistributionTest {
         HadoopComponent distribution = new CDH550Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
+        assertTrue(distribution.doSupportS3());
         assertEquals(CDH550Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
-        assertEquals(CDH550Distribution.VERSION, distribution.getVersion()); //$NON-NLS-1$
+        assertEquals(CDH550Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());

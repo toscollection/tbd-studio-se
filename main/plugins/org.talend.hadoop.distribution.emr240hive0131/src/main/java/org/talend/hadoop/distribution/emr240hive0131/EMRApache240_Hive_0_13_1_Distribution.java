@@ -148,4 +148,9 @@ public class EMRApache240_Hive_0_13_1_Distribution extends AbstractDistribution 
         return false;
     }
 
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
+
 }

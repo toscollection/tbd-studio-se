@@ -360,4 +360,9 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
     public boolean doJavaAPISqoopImportAllTablesSupportExcludeTable() {
         return true;
     }
+
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
 }

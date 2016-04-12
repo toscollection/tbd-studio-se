@@ -215,4 +215,9 @@ public class CustomDistribution extends AbstractDistribution implements HDFSComp
         // any harm.
         return true;
     }
+
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
 }

@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.apache100.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -45,6 +42,7 @@ public class Apache100DistributionTest {
         HadoopComponent apache100 = new Apache100Distribution();
         assertNotNull(apache100.getDistributionName());
         assertNotNull(apache100.getVersionName(null));
+        assertFalse(apache100.doSupportS3());
         assertEquals(Apache100Distribution.DISTRIBUTION_NAME, apache100.getDistribution());
         assertEquals(Apache100Distribution.VERSION, apache100.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, apache100.getHadoopVersion());

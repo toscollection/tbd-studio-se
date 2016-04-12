@@ -42,6 +42,7 @@ public class MapR510DistributionTest {
         HadoopComponent distribution = new MapR510Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
+        assertTrue(distribution.doSupportS3());
         assertEquals(MapR510Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertEquals(MapR510Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());

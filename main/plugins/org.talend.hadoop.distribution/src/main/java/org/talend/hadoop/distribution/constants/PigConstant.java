@@ -44,6 +44,8 @@ public final class PigConstant {
 
     public static final String PIGLOAD_ENGINE = "ENGINE"; //$NON-NLS-1$
 
+    public static final String PIGLOAD_LOCAL_MODE = "LOCAL"; //$NON-NLS-1$
+
     public static final String TEZ_ENGINE = "TEZ"; //$NON-NLS-1$
 
     public static final String TEZ_LIB = "TEZ_LIB"; //$NON-NLS-1$

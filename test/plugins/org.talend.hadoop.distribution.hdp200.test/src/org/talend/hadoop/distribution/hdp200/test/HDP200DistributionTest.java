@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hdp200.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -45,6 +42,7 @@ public class HDP200DistributionTest {
         HadoopComponent distribution = new HDP200Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
+        assertFalse(distribution.doSupportS3());
         assertEquals(HDP200Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertEquals(HDP200Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());

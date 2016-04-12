@@ -248,4 +248,9 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportBackpressure() {
         return false;
     }
+
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
 }

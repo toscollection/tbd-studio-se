@@ -89,6 +89,7 @@ public class DistributionBean implements IHDistribution {
         return getVersions();
     }
 
+    @Override
     public String[] getVersionsDisplay() {
         List<String> versionsDisplay = new ArrayList<String>();
         for (IHDistributionVersion v : getHDVersions()) {
@@ -120,6 +121,7 @@ public class DistributionBean implements IHDistribution {
         return null;
     }
 
+    @Override
     public IHDistributionVersion getHDVersion(String v, boolean byDisplay) {
         return getVersion(v, byDisplay);
     }
@@ -135,6 +137,7 @@ public class DistributionBean implements IHDistribution {
         }
     }
 
+    @Override
     public DistributionVersion getDefaultVersion() {
         if (defaultVersion == null) {
             DistributionVersion[] versions = getVersions();
@@ -175,6 +178,7 @@ public class DistributionBean implements IHDistribution {
         return cc == null ? null : cc.getConditionString();
     }
 
+    @Override
     public boolean useCustom() {
         return Constant.DISTRIBUTION_CUSTOM.equals(name);
     }

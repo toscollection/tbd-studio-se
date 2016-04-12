@@ -255,4 +255,9 @@ public class MapR500Distribution extends AbstractMapRDistribution implements HDF
         return false;
     }
 
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
+
 }

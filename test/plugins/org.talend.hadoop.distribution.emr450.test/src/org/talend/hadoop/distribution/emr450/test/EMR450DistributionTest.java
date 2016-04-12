@@ -42,6 +42,7 @@ public class EMR450DistributionTest {
         HadoopComponent distribution = new EMR450Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
+        assertTrue(distribution.doSupportS3());
         assertEquals(EMR450Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertEquals(EMR450Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());

@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.hdp240.test;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -39,12 +38,13 @@ public class HDP240DistributionTest {
     private final static String DEFAULT_YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-mapreduce-client/*,/usr/hdp/current/hadoop-mapreduce-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
     @Test
-    public void testCDH550Distribution() throws Exception {
+    public void testHDP240Distribution() throws Exception {
         HadoopComponent distribution = new HDP240Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
-        assertEquals(EHadoopDistributions.HORTONWORKS.getName(), distribution.getDistribution());
-        assertEquals("HDP_2_4", distribution.getVersion()); //$NON-NLS-1$
+        assertTrue(distribution.doSupportS3());
+        assertEquals(HDP240Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
+        assertEquals(HDP240Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertTrue(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportUseDatanodeHostname());
@@ -62,7 +62,7 @@ public class HDP240DistributionTest {
         assertTrue(((PigComponent) distribution).doSupportHCatalog());
         assertFalse(((PigComponent) distribution).pigVersionPriorTo_0_12());
         assertTrue(((PigComponent) distribution).doSupportHBase());
-        assertFalse(((PigComponent) distribution).doSupportTezForPig());
+        assertTrue(((PigComponent) distribution).doSupportTezForPig());
         assertFalse(((HiveComponent) distribution).doSupportEmbeddedMode());
         assertTrue(((HiveComponent) distribution).doSupportStandaloneMode());
         assertFalse(((HiveComponent) distribution).doSupportHive1());

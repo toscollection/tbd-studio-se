@@ -127,6 +127,10 @@ public abstract class AbstractDistribution {
         return false;
     }
 
+    public boolean doSupportS3() {
+        return false;
+    }
+
     /**
      * 
      * for Hive
