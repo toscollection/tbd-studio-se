@@ -1070,8 +1070,17 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         collectConFieldContextParameters(isCurrentHadoopVersionSupportYarn());
         collectAuthFieldContextParameters(kerberosBtn.getSelection());
         collectKeyTabContextParameters(kerberosBtn.getSelection() && keytabBtn.getSelection());
+        collectClouderaNavigatorFieldContextParameters(useClouderaNaviBtn.getSelection());
     }
 
+    private void collectClouderaNavigatorFieldContextParameters(boolean clouderaNav) {
+        addContextParams(EHadoopParamName.ClouderaNavigatorUsername, clouderaNav);
+        addContextParams(EHadoopParamName.ClouderaNavigatorPassword, clouderaNav);
+        addContextParams(EHadoopParamName.ClouderaNavigatorUrl, clouderaNav);
+        addContextParams(EHadoopParamName.ClouderaNavigatorMetadataUrl, clouderaNav);
+        addContextParams(EHadoopParamName.ClouderaNavigatorClientUrl, clouderaNav);
+    }
+    
     private void collectConFieldContextParameters(boolean useYarn) {
         addContextParams(EHadoopParamName.NameNodeUri, true);
         addContextParams(EHadoopParamName.JobTrackerUri, !useYarn);

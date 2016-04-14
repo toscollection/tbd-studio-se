@@ -335,4 +335,94 @@ public class HadoopClusterService implements IHadoopClusterService {
         }
     }
 
+    @Override
+    public boolean useClouderaNavi(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.isUseClouderaNavi();
+        }
+        return false;
+    }
+
+    @Override
+    public String getClouderaNaviUserName(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.getClouderaNaviUserName();
+        }
+        return null;
+    }
+
+    @Override
+    public String getClouderaNaviPassword(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.getClouderaNaviPassword();
+        }
+        return null;
+    }
+
+    @Override
+    public String getClouderaNaviUrl(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.getClouderaNaviUrl();
+        }
+        return null;
+    }
+
+    @Override
+    public String getClouderaNaviMetadataUrl(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.getClouderaNaviMetadataUrl();
+        }
+        return null;
+    }
+
+    @Override
+    public String getClouderaNaviClientUrl(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.getClouderaNaviClientUrl();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean clouderaNaviAutoCommit(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.isClouderaAutoCommit();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean clouderaNaviDisableSSL(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.isClouderaDisableSSL();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean clouderaNaviDieOnError(Connection hadoopSubConnection) {
+        HadoopClusterConnection hadoopClusterConnection = HCRepositoryUtil
+                .getRelativeHadoopClusterConnection(hadoopSubConnection);
+        if (hadoopClusterConnection != null) {
+            return hadoopClusterConnection.isClouderaDieNoError();
+        }
+        return false;
+    }
+
 }
