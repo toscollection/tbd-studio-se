@@ -54,6 +54,12 @@ public class DistributionHelperTest {
             public String getDisplayVersion() {
                 return null;
             }
+
+            @Override
+            public String getDefaultConfig(String... keys) {
+                return null;
+            }
+
         }, null));
     }
 
