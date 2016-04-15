@@ -1,4 +1,5 @@
 <%
+
 class TKafkaInputUtil {
 
     private INode node;
@@ -27,6 +28,10 @@ class TKafkaInputUtil {
     public String getZookeeperConnect() {
         return ElementParameterParser.getValue(connNode, "__ZOOKEEPER_CONNECT__");
     }
+    
+    public String getBrokerList() {
+        return ElementParameterParser.getValue(connNode, "__BROKER_LIST__");
+    }
 
     public String getTopic() {
         return ElementParameterParser.getValue(node, "__KAFKA_TOPIC__");
@@ -40,9 +45,13 @@ class TKafkaInputUtil {
         return "true".equals(ElementParameterParser.getValue(node, "__RESET_OFFSET__"));
     }
 
-    public String getAutoOffsetReset() {
+    public String getAutoOffsetResetNew() {
+        return ElementParameterParser.getValue(node, "__AUTO_OFFSET_RESET_NEW__").toLowerCase();
+	 }
+	 
+	 public String getAutoOffsetReset() {
         return ElementParameterParser.getValue(node, "__AUTO_OFFSET_RESET__").toLowerCase();
-   }
+	 }
 
     public String getOffsetStorage() {
         return ElementParameterParser.getValue(node, "__KAFKA_OFFSET_STORAGE__").toLowerCase();
@@ -86,10 +95,11 @@ class TKafkaInputUtil {
 
     public String getConsumerTimeout() {
         if (isStopOnMaxDuration()) {
-            String precision = ElementParameterParser.getValue(node, "__KAFKA_CONSUMER_TIMEOUT__");
-            return "\"-1\"".equals(precision) || "-1".equals(precision) ? "1000" : precision;
+            return getPrecision();
         } else if (isStopOnMaxMsgWait()) {
             return getMaxMsgWait();
+        } else if (!isKafkaVersion("KAFKA_0_8_2_0")) {
+            return getPrecision();
         }
         // If we're not stopping, then don't ever wait for consumer timeout.
         return "-1";
@@ -118,11 +128,20 @@ class TKafkaInputUtil {
     public String getOutgoingColumnName() {
         return this.outgoingConnection.getMetadataTable().getListColumns().get(0).getLabel();
     }
+    
+    private String getPrecision() {
+			String precision = ElementParameterParser.getValue(node, "__KAFKA_CONSUMER_TIMEOUT__");
+			return "\"-1\"".equals(precision) || "-1".equals(precision) ? "1000" : precision;
+    }
 
     private String getIntProperty(String inputMaybeNumeric) {
         if (inputMaybeNumeric.matches("-?\\d+"))
             return "\"" + inputMaybeNumeric + "\"";
         return inputMaybeNumeric;
+    }
+    
+    public boolean isKafkaVersion(String version) {
+			return (version != null) ? version.equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__")) : false;
     }
 
     public String getAsLong(String inputMaybeLong) {
@@ -135,23 +154,38 @@ class TKafkaInputUtil {
 
     private Map<String, String> findKafkaConsumerProperties() {
         java.util.Map<String, String> result = new java.util.TreeMap<String, String>();
-        result.put("\"auto.commit.enable\"", "\"" + isAutoCommitOffset() + "\"");
-        result.put("\"auto.commit.interval.ms\"", getIntProperty(getAutoCommitInterval()));
-        result.put("\"auto.offset.reset\"", "\"" + getAutoOffsetReset() + "\"");
-        result.put("\"consumer.timeout.ms\"", getIntProperty(getConsumerTimeout()));
-        result.put("\"dual.commit.enabled\"", "\"" + isDualCommit() + "\"");
-        result.put("\"group.id\"", getGroupId());
-        result.put("\"offsets.storage\"", "\"" + getOffsetStorage() + "\"");
-        result.put("\"serializer.encoding\"", getEncoding());
-        result.put("\"zookeeper.connect\"", getZookeeperConnect());
-        java.util.List<java.util.Map<String, String>> customProps = (java.util.List<java.util.Map<String, String>>)
-                ElementParameterParser.getObjectValue(node, "__KAFKA_CONSUMER_PROPERTIES__");
-        if(customProps != null) {
-            for (java.util.Map<String, String> prop : customProps) {
-                result.put(prop.get("PROPERTY"), prop.get("VALUE"));
-            }
+        if(isKafkaVersion("KAFKA_0_8_2_0")) {
+				// Old consumer API configuration
+	        result.put("\"auto.commit.enable\"", "\"" + isAutoCommitOffset() + "\"");
+	        result.put("\"auto.commit.interval.ms\"", getIntProperty(getAutoCommitInterval()));
+	        result.put("\"auto.offset.reset\"", "\"" + getAutoOffsetReset() + "\"");
+	        result.put("\"consumer.timeout.ms\"", getIntProperty(getConsumerTimeout()));
+	        result.put("\"dual.commit.enabled\"", "\"" + isDualCommit() + "\"");
+	        result.put("\"group.id\"", getGroupId());
+	        result.put("\"offsets.storage\"", "\"" + getOffsetStorage() + "\"");
+	        result.put("\"serializer.encoding\"", getEncoding());
+	        result.put("\"zookeeper.connect\"", getZookeeperConnect());
+			  fillWithCustomProps(result);
+        } else {
+				// New consumer API configuration
+				result.put("\"enable.auto.commit\"", "\"" + isAutoCommitOffset() + "\"");
+	        	result.put("\"auto.commit.interval.ms\"", getIntProperty(getAutoCommitInterval()));
+				result.put("\"auto.offset.reset\"", "\"" + getAutoOffsetResetNew() + "\"");
+				result.put("\"group.id\"", getGroupId());
+				result.put("\"bootstrap.servers\"", getBrokerList());
+				fillWithCustomProps(result);
         }
         return result;
+   }
+   
+   private void fillWithCustomProps(java.util.Map<String, String> result) {
+   	java.util.List<java.util.Map<String, String>> customProps = (java.util.List<java.util.Map<String, String>>)
+				        ElementParameterParser.getObjectValue(node, "__KAFKA_CONSUMER_PROPERTIES__");
+		if(customProps != null) {
+		    for (java.util.Map<String, String> prop : customProps) {
+		        result.put(prop.get("PROPERTY"), prop.get("VALUE"));
+		    }
+		}
    }
 
     private IConnection findOutgoingConnection() {
@@ -166,4 +200,6 @@ class TKafkaInputUtil {
         return result;
     }
 }
+
+
 %>

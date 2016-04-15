@@ -17,6 +17,8 @@
 class TKafkaOutputUtil {
 	
 	 private INode node;
+	 
+	 private INode connNode;
 
     private IConnection incomingConnection;
 
@@ -24,6 +26,9 @@ class TKafkaOutputUtil {
 
     public TKafkaOutputUtil(INode node) {
         this.node = node;
+        this.connNode = Boolean.valueOf(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"))
+            ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__")
+            : node;
         this.incomingConnection = findIncomingConnection();
         this.kafkaProducerProperties = findKafkaProducerProperties();
     }
@@ -37,7 +42,7 @@ class TKafkaOutputUtil {
     }
 
     public String getBrokerList() {
-        return ElementParameterParser.getValue(node, "__BROKER_LIST__");
+        return ElementParameterParser.getValue(connNode, "__BROKER_LIST__");
     }
 
     public String getCompression() {
@@ -63,7 +68,7 @@ class TKafkaOutputUtil {
     public String getIncomingColumnName() {
         return this.incomingConnection.getMetadataTable().getListColumns().get(0).getLabel();
     }
-
+    
     private IConnection findIncomingConnection() {
         IConnection result = null;
         if (node.getIncomingConnections() != null) {

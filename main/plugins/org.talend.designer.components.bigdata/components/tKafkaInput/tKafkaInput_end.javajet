@@ -20,37 +20,13 @@ String cid = node.getUniqueName();
 
 TKafkaInputUtil tKafkaInputUtil = new TKafkaInputUtil(node);
 
-// Stopping conditions for the loop.
-if (tKafkaInputUtil.isStopOnMaxSize()) {
-    %>
-    // Stop reading if the maximum number of input messages has been reached.
-    if (tos_count_<%=cid%> >= <%=tKafkaInputUtil.getMaxSize()%>) {
-        break;
-    }
-    <%
-}
-
-// Close the loop scope.
+if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
 %>
-    } catch (kafka.consumer.ConsumerTimeoutException e) {
-        <%
-        if (tKafkaInputUtil.isStopOnMaxMsgWait()) {
-            if (tKafkaInputUtil.isStopOnMaxDuration()) {
-                // If both maxDuration and maxMsgWait, then need to check if
-                // the deadline has passed.
-                %>
-                // Immediately stop processing messagesDeadline if the max duration deadline has passed.
-                if (System.currentTimeMillis() > maxMsgWaitDeadline_<%=cid%>)
-                    break;
-                <%
-            } else {
-                // If only maxMsgWait, then the consumer timeout was directly
-                // used and we can be sure that the component is finished.
-                %>
-                break;
-                <%
-                }
-        }
-        %>
-    }
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.8.2.x/tKafkaInput_end_0.8.2.x.javajet"%>
+<%
+} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_9_0_1")) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.9.0.x/tKafkaInput_end_0.9.0.x.javajet"%>
+<%
 }
+%>

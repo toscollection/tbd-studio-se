@@ -44,7 +44,8 @@
 
 		<PARAMETER NAME="KAFKA_VERSION" FIELD="CLOSED_LIST" NUM_ROW="15"
 			REQUIRED="true" SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-			<ITEMS DEFAULT="KAFKA_0_8_2_0">
+			<ITEMS DEFAULT="KAFKA_0_9_0_1">
+				<ITEM NAME="KAFKA_0_9_0_1" VALUE="KAFKA_0_9_0_1" />
 				<ITEM NAME="KAFKA_0_8_2_0" VALUE="KAFKA_0_8_2_0" />
 			</ITEMS>
 		</PARAMETER>
@@ -70,6 +71,17 @@
 				<ITEM NAME="SNAPPY" VALUE="SNAPPY" />
 			</ITEMS>
 		</PARAMETER>
+
+		<PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="40"
+			GROUP="SECURITY_GROUP"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (KAFKA_VERSION != 'KAFKA_0_8_2_0')">
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST"
+			FILTER="tSetKeystore" NUM_ROW="40" GROUP="SECURITY_GROUP"
+			SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_HTTPS == 'true') AND (KAFKA_VERSION != 'KAFKA_0_8_2_0')"
+			DYNAMIC_SETTINGS="true" />
 	</PARAMETERS>
 
 	<ADVANCED_PARAMETERS>
@@ -84,22 +96,13 @@
 
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="kafka-clients-0.8.2.0.jar" MODULE="kafka-clients-0.8.2.0.jar"
-				MVN="mvn:org.talend.libraries/kafka-clients-0.8.2.0/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/kafka-clients-0.8.2.0.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="log4j-1.2.16.jar" MODULE="log4j-1.2.16.jar"
-				MVN="mvn:org.talend.libraries/log4j-1.2.16/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/log4j-1.2.16.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="slf4j-api-1.7.6.jar" MODULE="slf4j-api-1.7.6.jar"
-				MVN="mvn:org.talend.libraries/slf4j-api-1.7.6/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-api-1.7.6.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
-			<IMPORT NAME="slf4j-log4j12-1.6.1.jar" MODULE="slf4j-log4j12-1.6.1.jar"
-				MVN="mvn:org.talend.libraries/slf4j-log4j12-1.6.1/6.0.0"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-log4j12-1.6.1.jar"
-				REQUIRED_IF="(KAFKA_VERSION == 'KAFKA_0_8_2_0')" />
+			<!-- Kafka client libraries for 2.10-0.8.2.0 -->
+			<IMPORT MODULE_GROUP="KAFKA-CLIENT-LIB-2_10-0_8_2_0"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_0_8_2_0') AND (USE_EXISTING_CONNECTION=='false')" />
+
+			<!-- Kafka client libraries for 2.10-0.9.0.1 -->
+			<IMPORT MODULE_GROUP="KAFKA-CLIENT-LIB-2_10-0_9_0_1"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_0_9_0_1') AND (USE_EXISTING_CONNECTION=='false')" />
 		</IMPORTS>
 	</CODEGENERATION>
 

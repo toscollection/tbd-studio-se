@@ -21,15 +21,14 @@ INode node = (INode)codeGenArgument.getArgument();
 String cid = node.getUniqueName();
 
 TKafkaInputUtil tKafkaInputUtil = new TKafkaInputUtil(node);
-String outStructName = tKafkaInputUtil.getOutStructName();
-%>
 
-kafka.message.MessageAndMetadata<byte[], <%=outStructName%>> <%=cid%>_messageAndMetadata = <%=cid%>_consumerIterator.next();
-<%=tKafkaInputUtil.getOutgoingConnectionName()%> = <%=cid%>_messageAndMetadata.message();
+if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.8.2.x/tKafkaInput_main_0.8.2.x.javajet"%>
 <%
-if (ElementParameterParser.getBooleanValue(node, "__SAVE_OFFSET__")) {
-    %>
-    <%=tKafkaInputUtil.getOutgoingConnectionName()%>.offset = <%=cid%>_messageAndMetadata.offset();
-    <%
+} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_9_0_1")) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.9.0.x/tKafkaInput_main_0.9.0.x.javajet"%>
+<%
 }
 %>
