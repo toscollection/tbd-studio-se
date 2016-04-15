@@ -43,7 +43,17 @@
 	
 	List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 	
-	log4jFileUtil.componentStartInfo(node);
+	boolean useMapRTicket = ElementParameterParser.getBooleanValue(node, "__USE_MAPRTICKET__");
+    String mapRTicketCluster = ElementParameterParser.getValue(node, "__MAPRTICKET_CLUSTER__");
+    String mapRTicketDuration = ElementParameterParser.getValue(node, "__MAPRTICKET_DURATION__");
+
+    boolean setMapRHomeDir = ElementParameterParser.getBooleanValue(node, "__SET_MAPR_HOME_DIR__");
+    String mapRHomeDir = ElementParameterParser.getValue(node, "__MAPR_HOME_DIR__");
+
+    boolean setMapRHadoopLogin = ElementParameterParser.getBooleanValue(node, "__SET_HADOOP_LOGIN__");
+    String mapRHadoopLogin = ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
+    
+    log4jFileUtil.componentStartInfo(node);
 	// BEGIN IF01
 	if(configureFromClassPath){
 %>
@@ -112,7 +122,15 @@
 		}
 		
 		if((!isCustom && hdfsDistrib.doSupportKerberos() && useKrb) || (isCustom && "KRB".equals(auth))) {
-%>
+            if((!isCustom && hdfsDistrib.doSupportMapRTicket() && useMapRTicket)) {
+                %>
+                System.setProperty("pname", "MapRLogin");
+                System.setProperty("https.protocols", "TLSv1.2");
+                System.setProperty("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
+                System.setProperty("hadoop.login", <%=setMapRHadoopLogin ? mapRHadoopLogin : "\"kerberos\""%>);
+                <%
+            }
+            %>
 			conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=kerberosPrincipal%>);
 <%
 			if(useKeytab) {
@@ -120,9 +138,40 @@
 				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
 <%
 			}
+            if ((!isCustom && hdfsDistrib.doSupportMapRTicket() && useMapRTicket)) {
+                %>
+                com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
+                maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=mapRTicketCluster%>, <%=mapRTicketDuration%>);
+                <%
+            }
+		} else { // no kerberos
+            if((!isCustom && hdfsDistrib.doSupportMapRTicket() && useMapRTicket)) {
+                String passwordFieldName = "__MAPRTICKET_PASSWORD__";
+                %>
+                System.setProperty("pname", "MapRLogin");
+                System.setProperty("https.protocols", "TLSv1.2");
+                System.setProperty("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
+                com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
+                <%
+                if (setMapRHadoopLogin) {
+                    %>
+                    System.setProperty("hadoop.login", <%=mapRHadoopLogin%>);
+                    <%
+                } else {
+                    %>
+                    maprLogin_<%=cid%>.setCheckUGI(false);
+                    <%
+                }
+                %>
+                <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+                maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>);
+                <%
+            }
 		}
 	%>
-<%
+	
+	<%
 	}
 	if(hadoopProps.size() > 0){
 			for(Map<String, String> item : hadoopProps){

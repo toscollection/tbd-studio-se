@@ -268,6 +268,13 @@
             mvn_uri="mvn:org.talend.libraries/commons-collections-3.2.2/6.2.0">
         </libraryNeeded>
 
+       <libraryNeeded
+            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
+            id="flexjson-2.1.jar"
+            name="flexjson-2.1.jar"
+            mvn_uri="mvn:org.talend.libraries/flexjson-2.1/6.2.0" >
+        </libraryNeeded>
+
         <libraryNeededGroup
                 description="S3 libraries for MapR 5.1.0"
                 id="S3-LIB-MAPR510"
@@ -300,6 +307,7 @@
            <library id="commons-configuration-1.6.jar"/>
            <library id="commons-lang-2.6.jar"/>
            <library id="commons-io-2.4.jar"/>
+           <library id="flexjson-2.1.jar"/>
         </libraryNeededGroup>
         
         <libraryNeededGroup
@@ -329,6 +337,7 @@
            <library id="slf4j-log4j12-1.7.5.jar"/>
             <library id="json-20080701.jar"/>
             <library id="netty-all-4.0.23.Final.jar"/>
+           <library id="flexjson-2.1.jar"/>
         </libraryNeededGroup>
         
         <libraryNeededGroup

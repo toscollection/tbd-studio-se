@@ -68,7 +68,13 @@ public interface HadoopComponent {
      * @return a boolean that indicates if the distribution supports Kerberos.
      */
     public boolean doSupportKerberos();
+    /**
+     * @return a boolean that indicates if the distribution supports MapR Ticket.
+     */
+    public boolean doSupportMapRTicket();
 
+    
+    
     /**
      * @return a boolean that indicates if the distribution supports the USE_DATANODE_HOSTNAME property.
      */

@@ -36,6 +36,13 @@ public abstract class AbstractDistribution {
 
     public abstract boolean doSupportKerberos();
 
+    /**
+     * Mapr ticket is an authentication method only available on MapR.
+     */
+    public boolean doSupportMapRTicket() {
+        return false;
+    }
+
     public boolean doSupportGroup() {
         return false;
     }
