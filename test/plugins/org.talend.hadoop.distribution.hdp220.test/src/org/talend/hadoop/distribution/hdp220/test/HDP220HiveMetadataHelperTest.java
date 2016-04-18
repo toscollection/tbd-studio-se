@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hdp130.test;
+package org.talend.hadoop.distribution.hdp220.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -18,24 +18,24 @@ import org.junit.Test;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
-import org.talend.hadoop.distribution.hdp130.HDP130Distribution;
+import org.talend.hadoop.distribution.hdp220.HDP220Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4HDP130Test extends AbstractVersionTest4HiveMetadataHelper {
+public class HDP220HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     private static final String NOT_SUPPORT_TOP_MESSAGE = "Shouldn't support for hive in TOS for DQ product";
 
     @Override
     protected String getDistribution() {
-        return HDP130Distribution.DISTRIBUTION_NAME;
+        return HDP220Distribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionVersion() {
-        return HDP130Distribution.VERSION;
+        return HDP220Distribution.VERSION;
     }
 
     private boolean notSupportForTOP() {
@@ -43,7 +43,7 @@ public class HiveMetadataHelper4HDP130Test extends AbstractVersionTest4HiveMetad
     }
 
     @Test
-    public void testHiveMode_HDP130_Server1WithEmbedded() {
+    public void testHiveMode_HDP220_Server1WithEmbedded() {
         if (notSupportForTOP()) {
             String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), getDistributionVersion(),
                     HiveServerVersionInfo.HIVE_SERVER_1.getKey(), false);
@@ -56,7 +56,7 @@ public class HiveMetadataHelper4HDP130Test extends AbstractVersionTest4HiveMetad
     }
 
     @Test
-    public void testHiveMode_HDP130_Server2WithAll() {
+    public void testHiveMode_HDP220_Server2WithAll() {
         if (notSupportForTOP()) {
             String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), getDistributionVersion(),
                     HiveServerVersionInfo.HIVE_SERVER_2.getKey(), false);
@@ -68,7 +68,7 @@ public class HiveMetadataHelper4HDP130Test extends AbstractVersionTest4HiveMetad
     }
 
     @Test
-    public void testHiveServer_HDP130_WithAll() {
+    public void testHiveServer_HDP220_WithAll() {
         if (notSupportForTOP()) {
             String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(), getDistributionVersion(),
                     false);

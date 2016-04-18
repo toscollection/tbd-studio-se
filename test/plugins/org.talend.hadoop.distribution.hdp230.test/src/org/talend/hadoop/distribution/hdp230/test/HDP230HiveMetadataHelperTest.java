@@ -24,7 +24,7 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4HDP230Test extends AbstractVersionTest4HiveMetadataHelper {
+public class HDP230HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     private static final String NOT_SUPPORT_TOP_MESSAGE = "Shouldn't support for hive in TOS for DQ product";
 

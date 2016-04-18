@@ -10,35 +10,34 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.emr240.test;
+package org.talend.hadoop.distribution.mapr500.test;
 
 import org.junit.Test;
-import org.talend.hadoop.distribution.emr240.EMRApache240Distribution;
+import org.talend.hadoop.distribution.mapr500.MapR500Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4AmazonEMRTest extends AbstractVersionTest4HiveMetadataHelper {
+public class MapR500HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return EMRApache240Distribution.DISTRIBUTION_NAME;
+        return MapR500Distribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionVersion() {
-        return EMRApache240Distribution.VERSION;
+        return MapR500Distribution.VERSION;
     }
 
     @Test
-    public void testHiveMode_EMRApache240_WithAll() {
-        doTestGetHiveModesDisplay(getDistributionVersion(), HIVE_MODE_DISPLAY_ALL);
+    public void testHiveMode_MapR500_Standalone_Only() {
+        doTestGetHiveModesDisplay(getDistributionVersion(), HIVE_MODE_DISPLAY_STANDALONE_ONLY);
     }
 
     @Test
-    public void testHiveServer_EMRApache240_Server2_Only() {
+    public void testHiveServer_MapR500_Server2_Only() {
         doTestGetHiveServersDisplay(getDistributionVersion(), HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
-
 }

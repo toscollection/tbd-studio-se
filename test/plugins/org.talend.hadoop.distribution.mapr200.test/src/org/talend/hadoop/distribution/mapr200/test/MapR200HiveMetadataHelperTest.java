@@ -10,35 +10,35 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.custom.test;
+package org.talend.hadoop.distribution.mapr200.test;
 
 import org.junit.Test;
-import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
+import org.talend.hadoop.distribution.mapr200.MapR200Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4CustomTest extends AbstractVersionTest4HiveMetadataHelper {
+public class MapR200HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return ICustomDistribution.DISTRIBUTION_NAME;
+        return MapR200Distribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionVersion() {
-        return null;
+        return MapR200Distribution.VERSION;
     }
 
     @Test
-    public void testHiveMode_Custom_All() {
+    public void testHiveMode_MapR200_WitAll() {
         doTestGetHiveModesDisplay(getDistributionVersion(), HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_Custom_All() {
-        doTestGetHiveServersDisplay(getDistributionVersion(), HIVE_SERVER_DISPLAY_ALL);
+    public void testHiveServer_MapR200_Server1_Only() {
+        doTestGetHiveServersDisplay(getDistributionVersion(), HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
 
 }

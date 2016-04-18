@@ -10,34 +10,34 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.emr240hive0131.test;
+package org.talend.hadoop.distribution.cdh540.test;
 
 import org.junit.Test;
-import org.talend.hadoop.distribution.emr240hive0131.EMRApache240_Hive_0_13_1_Distribution;
+import org.talend.hadoop.distribution.cdh540.CDH540Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4AmazonEMRApache240Hive0131Test extends AbstractVersionTest4HiveMetadataHelper {
+public class CDH540HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return EMRApache240_Hive_0_13_1_Distribution.DISTRIBUTION_NAME;
+        return CDH540Distribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionVersion() {
-        return EMRApache240_Hive_0_13_1_Distribution.VERSION;
+        return CDH540Distribution.VERSION;
     }
 
     @Test
-    public void testHiveMode_EMRApache240Hive0131_Standalone_Only() {
-        doTestGetHiveModesDisplay(getDistributionVersion(), HIVE_MODE_DISPLAY_STANDALONE_ONLY);
+    public void testHiveMode_CDH540_WithAll() {
+        doTestGetHiveModesDisplay(getDistributionVersion(), HIVE_MODE_DISPLAY_ALL);
     }
 
     @Test
-    public void testHiveServer_EMRApache240Hive0131_Server2_Only() {
+    public void testHiveServer_CDH540_Server2_Only() {
         doTestGetHiveServersDisplay(getDistributionVersion(), HIVE_SERVER_DISPLAY_SERVER2_ONLY);
     }
 

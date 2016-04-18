@@ -19,7 +19,7 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4CDH550Test extends AbstractVersionTest4HiveMetadataHelper {
+public class CDH550HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {

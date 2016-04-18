@@ -22,7 +22,7 @@ import org.talend.hadoop.distribution.hdinsight310.HDInsight31Distribution;
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4MicrosoftHDInsight31Test{
+public class HDInsight31HiveMetadataHelperTest{
 
     // @Override
     protected String getDistribution() {
