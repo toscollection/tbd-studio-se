@@ -10,30 +10,31 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hive;
+package org.talend.hadoop.distribution.test.hive;
 
-import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
-import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
+import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4MapRTest extends AbstractDistributionTest4HiveMetadataHelper {
+public class HiveMetadataHelper4HortonworksTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return IMapRDistribution.DISTRIBUTION_NAME;
+        return IHortonworksDistribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionDisplay() {
-        return IMapRDistribution.DISTRIBUTION_DISPLAY_NAME;
+        return IHortonworksDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { "MapR 5.0.0(YARN mode)", "MapR 4.1.0(YARN mode)", "MapR 4.0.1(YARN mode)", "MapR 3.1.0",
-                "MapR 3.0.1", "MapR 2.1.3", "MapR 2.1.2", "MapR 2.0.0" };
+        return new String[] { "Hortonworks Data Platform V2.4.0", "Hortonworks Data Platform V2.3.0",
+                "Hortonworks Data Platform V2.2.0", "Hortonworks Data Platform V2.1.0(Baikal)",
+                "Hortonworks Data Platform V2.0.0(BigWheel)", "Hortonworks Data Platform V1.3.0(Condor)",
+                "Hortonworks Data Platform V1.2.0(Bimota)" };
     }
 
 }

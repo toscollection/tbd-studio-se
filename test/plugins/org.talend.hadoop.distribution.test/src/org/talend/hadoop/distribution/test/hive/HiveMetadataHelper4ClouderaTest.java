@@ -10,31 +10,31 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hive;
+package org.talend.hadoop.distribution.test.hive;
 
-import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4HortonworksTest extends AbstractDistributionTest4HiveMetadataHelper {
+public class HiveMetadataHelper4ClouderaTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return IHortonworksDistribution.DISTRIBUTION_NAME;
+        return IClouderaDistribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionDisplay() {
-        return IHortonworksDistribution.DISTRIBUTION_DISPLAY_NAME;
+        return IClouderaDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { "Hortonworks Data Platform V2.3.0", "Hortonworks Data Platform V2.2.0",
-                "Hortonworks Data Platform V2.1.0(Baikal)", "Hortonworks Data Platform V2.0.0(BigWheel)",
-                "Hortonworks Data Platform V1.3.0(Condor)", "Hortonworks Data Platform V1.2.0(Bimota)" };
+        return new String[] { "Cloudera CDH5.5(YARN mode)", "Cloudera CDH5.4(YARN mode)", "Cloudera CDH5.1(YARN mode)",
+                "Cloudera CDH5.1(MR 1 mode)", "Cloudera CDH5.0(YARN mode)", "Cloudera CDH4.X(MR1 mode)",
+                "Cloudera CDH4.3+(YARN mode)" };
     }
 
 }

@@ -16,11 +16,13 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.core.hadoop.EHadoopCategory;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.hdinsight320.HDInsight32Distribution;
 import org.talend.hadoop.distribution.test.config.AbstractTest4DefaultConfiguration;
+import org.talend.utils.json.JSONException;
 
 /**
  * DOC ggu class global comment. Detailled comment
@@ -57,5 +59,12 @@ public class HDInsight32DefaultConfigurationTest extends AbstractTest4DefaultCon
                 .getDefaultConfig(hadoopComponent.getDistribution(), EHadoopCategory.HBASE.getName());
         assertTrue("Should not support for HBase", defaultValue == null);
 
+    }
+
+    @Test
+    @Ignore
+    public void testDefaultConfiguration_Existed() throws JSONException {
+        // because no need default configuration
+        super.testDefaultConfiguration_Existed();
     }
 }

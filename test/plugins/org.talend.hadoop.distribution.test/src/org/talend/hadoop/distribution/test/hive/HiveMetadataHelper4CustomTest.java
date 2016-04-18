@@ -10,29 +10,36 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hive;
+package org.talend.hadoop.distribution.test.hive;
 
-import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
+import org.junit.Ignore;
+import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
 import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4ApacheTest extends AbstractDistributionTest4HiveMetadataHelper {
+public class HiveMetadataHelper4CustomTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return IApacheDistribution.DISTRIBUTION_NAME;
+        return ICustomDistribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionDisplay() {
-        return IApacheDistribution.DISTRIBUTION_DISPLAY_NAME;
+        return ICustomDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { "Apache 1.0.0 (Hive 0.9.0)"/* Apache100Distribution.VERSION_100_HIVE_DISPLAY */};
+        return null;
+    }
+
+    @Override
+    @Ignore
+    public void testGetDistributionVersionsDisplay() {
+        //
     }
 
 }

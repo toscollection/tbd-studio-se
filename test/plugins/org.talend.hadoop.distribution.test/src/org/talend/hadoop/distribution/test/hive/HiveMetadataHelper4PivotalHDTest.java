@@ -10,36 +10,29 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hive;
+package org.talend.hadoop.distribution.test.hive;
 
-import org.junit.Ignore;
-import org.talend.hadoop.distribution.constants.custom.ICustomDistribution;
+import org.talend.hadoop.distribution.constants.piv.IPivotalHDDistribution;
 import org.talend.hadoop.distribution.test.hive.AbstractDistributionTest4HiveMetadataHelper;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class HiveMetadataHelper4CustomTest extends AbstractDistributionTest4HiveMetadataHelper {
+public class HiveMetadataHelper4PivotalHDTest extends AbstractDistributionTest4HiveMetadataHelper {
 
     @Override
     protected String getDistribution() {
-        return ICustomDistribution.DISTRIBUTION_NAME;
+        return IPivotalHDDistribution.DISTRIBUTION_NAME;
     }
 
     @Override
     protected String getDistributionDisplay() {
-        return ICustomDistribution.DISTRIBUTION_DISPLAY_NAME;
+        return IPivotalHDDistribution.DISTRIBUTION_DISPLAY_NAME;
     }
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return null;
-    }
-
-    @Override
-    @Ignore
-    public void testGetDistributionVersionsDisplay() {
-        //
+        return new String[] { "Pivotal HD 2.0", "Pivotal HD 1.0.1" };
     }
 
 }
