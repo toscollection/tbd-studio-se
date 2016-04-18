@@ -14,6 +14,7 @@
     "
 %>
 
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaConnection/tSetKeystore_util.javajet"%>
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaOutput/tKafkaOutput_util.javajet"%>
 
 <%

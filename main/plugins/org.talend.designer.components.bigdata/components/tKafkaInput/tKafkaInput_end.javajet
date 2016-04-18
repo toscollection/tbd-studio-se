@@ -12,7 +12,10 @@
     java.util.HashMap
 "
 %>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaConnection/tSetKeystore_util.javajet"%>
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/tKafkaInput_util.javajet"%>
+
 <%
 CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 INode node = (INode)codeGenArgument.getArgument();

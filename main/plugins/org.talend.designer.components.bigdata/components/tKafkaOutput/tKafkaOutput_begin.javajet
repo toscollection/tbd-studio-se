@@ -14,6 +14,7 @@
     "
 %>
 
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaConnection/tSetKeystore_util.javajet"%>
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaOutput/tKafkaOutput_util.javajet"%>
 
 <%
@@ -23,6 +24,7 @@ final INode node = (INode)codeGenArgument.getArgument();
 final String cid = node.getUniqueName();
 
 TKafkaOutputUtil tKafkaOutputUtil = new TKafkaOutputUtil(node);
+TSetKeystoreUtil tSetKeystoreUtil = tKafkaOutputUtil.getTSetKeystoreUtil();
 %>
 
 // Producer configuration
@@ -30,20 +32,39 @@ java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 <%
 	if(tKafkaOutputUtil.getBrokerList() == null || "".equals(tKafkaOutputUtil.getBrokerList())){
 %>
-	if(true){
-		throw new Exception("A broker list must be provided.");
-	}
+		if(true){
+			throw new Exception("A broker list must be provided.");
+		}
 <% 
 	} else {
+		// Basic configuration
 %>
-	<%=cid%>_kafkaProperties.setProperty("bootstrap.servers", <%=tKafkaOutputUtil.getBrokerList()%>);
-	<%=cid%>_kafkaProperties.setProperty("compression.type", "<%=tKafkaOutputUtil.getCompression()%>");
+		<%=cid%>_kafkaProperties.setProperty("bootstrap.servers", <%=tKafkaOutputUtil.getBrokerList()%>);
+		<%=cid%>_kafkaProperties.setProperty("compression.type", "<%=tKafkaOutputUtil.getCompression()%>");
+		<%=cid%>_kafkaProperties.setProperty("security.protocol", "<%=tKafkaOutputUtil.getSecurityProtocol()%>");
 <%
+		// Advanced configuration
 		for(Entry<String, String> kafkaProperty : tKafkaOutputUtil.getKafkaProducerProperties().entrySet()) {
 %>
-	<%=cid%>_kafkaProperties.setProperty(<%=kafkaProperty.getKey()%>, <%=kafkaProperty.getValue()%>);
+			<%=cid%>_kafkaProperties.setProperty(<%=kafkaProperty.getKey()%>, <%=kafkaProperty.getValue()%>);
 <%
 		} // end for
+		
+		// SSL configuration
+		if (tSetKeystoreUtil.useHTTPS()) {
+%>
+			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.type", <%=tSetKeystoreUtil.getTrustStoreType()%>);
+			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.location", <%=tSetKeystoreUtil.getTrustStorePath()%>); 
+			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.password", <%=tSetKeystoreUtil.getTrustStorePassword()%>); 
+<%
+			if (tSetKeystoreUtil.needClientAuth()) {
+%>
+			 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.type", <%=tSetKeystoreUtil.getKeyStoreType()%>);
+		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.location", <%=tSetKeystoreUtil.getKeyStorePath()%>); 
+		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);	
+<%
+			}
+		}			
 	} // end else
 %>
 

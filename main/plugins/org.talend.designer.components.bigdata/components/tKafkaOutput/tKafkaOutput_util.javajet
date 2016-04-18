@@ -19,6 +19,8 @@ class TKafkaOutputUtil {
 	 private INode node;
 	 
 	 private INode connNode;
+	 
+	 private TSetKeystoreUtil tSetKeystoreUtil;
 
     private IConnection incomingConnection;
 
@@ -29,6 +31,7 @@ class TKafkaOutputUtil {
         this.connNode = Boolean.valueOf(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"))
             ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__")
             : node;
+		  this.tSetKeystoreUtil = new TSetKeystoreUtil(connNode);
         this.incomingConnection = findIncomingConnection();
         this.kafkaProducerProperties = findKafkaProducerProperties();
     }
@@ -67,6 +70,18 @@ class TKafkaOutputUtil {
 
     public String getIncomingColumnName() {
         return this.incomingConnection.getMetadataTable().getListColumns().get(0).getLabel();
+    }
+    
+    public String getSecurityProtocol() {
+		if (tSetKeystoreUtil.useHTTPS()) {
+			return "SSL";
+		} else {
+			return "PLAINTEXT";
+		}
+    }
+    
+    public TSetKeystoreUtil getTSetKeystoreUtil() {
+        return tSetKeystoreUtil;
     }
     
     private IConnection findIncomingConnection() {

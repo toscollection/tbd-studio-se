@@ -5,6 +5,8 @@ class TKafkaInputUtil {
     private INode node;
 
     private INode connNode;
+    
+    private TSetKeystoreUtil tSetKeystoreUtil;
 
     private IConnection outgoingConnection;
 
@@ -17,6 +19,7 @@ class TKafkaInputUtil {
         this.connNode = Boolean.valueOf(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"))
             ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__")
             : node;
+        this.tSetKeystoreUtil = new TSetKeystoreUtil(connNode);
         this.outgoingConnection = findOutgoingConnection();
         this.kafkaConsumerProperties = findKafkaConsumerProperties();
     }
@@ -151,6 +154,18 @@ class TKafkaInputUtil {
             return inputMaybeLong.substring(1, inputMaybeLong.length() - 1);
         return "Long.valueOf("+inputMaybeLong+")";
     }
+    
+    public TSetKeystoreUtil getTSetKeystoreUtil() {
+        return tSetKeystoreUtil;
+    }
+    
+    public String getSecurityProtocol() {
+			if (tSetKeystoreUtil.useHTTPS()) {
+				return "SSL";
+			} else {
+				return "PLAINTEXT";
+			}
+    }
 
     private Map<String, String> findKafkaConsumerProperties() {
         java.util.Map<String, String> result = new java.util.TreeMap<String, String>();
@@ -173,7 +188,20 @@ class TKafkaInputUtil {
 				result.put("\"auto.offset.reset\"", "\"" + getAutoOffsetResetNew() + "\"");
 				result.put("\"group.id\"", getGroupId());
 				result.put("\"bootstrap.servers\"", getBrokerList());
+				result.put("\"security.protocol\"", "\"" + getSecurityProtocol() + "\"");
 				fillWithCustomProps(result);
+				
+				// SSL configuration
+				if (tSetKeystoreUtil.useHTTPS()) {
+					result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
+					result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath()); 
+					result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword()); 
+					if (tSetKeystoreUtil.needClientAuth()) {
+					 	result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
+				 	 	result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath()); 
+				 	 	result.put("\"ssl.keystore.password\"", tSetKeystoreUtil.getKeyStorePassword());	
+ 	 				}
+ 	 			}	
         }
         return result;
    }
@@ -200,6 +228,5 @@ class TKafkaInputUtil {
         return result;
     }
 }
-
-
 %>
+
