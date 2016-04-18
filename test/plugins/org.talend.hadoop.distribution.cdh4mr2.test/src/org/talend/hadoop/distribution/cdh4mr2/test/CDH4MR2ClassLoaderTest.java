@@ -71,4 +71,9 @@ public class CDH4MR2ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
         String libsStr = "hadoop-hdfs-2.0.0-cdh4.4.0.jar;hadoop-common-2.0.0-cdh4.4.0.jar;hadoop-auth-2.0.0-cdh4.4.0.jar;commons-configuration-1.6.jar;commons-lang-2.5.jar;commons-logging-1.1.1.jar;commons-cli-1.2.jar;guava-11.0.2.jar;protobuf-java-2.4.0a.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar;avro-1.5.4.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;commons-io-2.4.jar;log4j-1.2.16.jar";
         doTestClassLoader(EHadoopCategory.HDFS.getName(), libsStr);
     }
+
+    @Test
+    public void testHDFSWithKerberos_NotSupport() {
+        doTestNotSupportClassLoader(EHadoopCategory.HDFS.getName(), "?USE_KRB");
+    }
 }

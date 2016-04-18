@@ -116,4 +116,9 @@ public interface HadoopComponent {
      * @return true if the distribution supports S3.
      */
     public boolean doSupportS3();
+    
+    /**
+     * Get the default configurations for different distributions.
+     */
+    public String getDefaultConfig(String... keys);
 }
