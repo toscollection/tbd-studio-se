@@ -229,13 +229,17 @@ public class HCRepositoryUtil {
     }
 
     public static HadoopClusterConnectionItem getHadoopClusterItemBySubitemId(String subitemId) {
+        return getHadoopClusterItemBySubitemId(ProjectManager.getInstance().getCurrentProject(), subitemId);
+    }
+
+    public static HadoopClusterConnectionItem getHadoopClusterItemBySubitemId(Project project, String subitemId) {
         if (subitemId == null) {
             return null;
         }
 
         IRepositoryViewObject repObj = null;
         try {
-            repObj = ProxyRepositoryFactory.getInstance().getLastVersion(subitemId);
+            repObj = ProxyRepositoryFactory.getInstance().getLastVersion(project, subitemId);
         } catch (PersistenceException e) {
             ExceptionHandler.process(e);
         }
