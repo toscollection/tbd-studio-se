@@ -237,4 +237,9 @@ public class EMRApache240Distribution extends AbstractDistribution implements HD
     public ComponentCondition getDisplayCondition(ComponentType componentType) {
         return displayConditions.get(componentType);
     }
+
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
 }

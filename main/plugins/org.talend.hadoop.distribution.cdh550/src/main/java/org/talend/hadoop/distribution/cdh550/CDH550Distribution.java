@@ -352,4 +352,9 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportBackpressure() {
         return true;
     }
+
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
 }

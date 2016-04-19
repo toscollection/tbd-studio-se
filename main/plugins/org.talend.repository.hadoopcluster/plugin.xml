@@ -260,4 +260,11 @@
              serviceId="IRepositoryContextUpdateService">
        </Service>
     </extension>
+    <extension
+          point="org.talend.core.runtime.tokenInfo_provider">
+       <provider
+             collector="org.talend.repository.hadoopcluster.token.HadoopClusterTokenCollector"
+             id="HadoopClusterTokenCollector">
+       </provider>
+    </extension>
 </plugin>

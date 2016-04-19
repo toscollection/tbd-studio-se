@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.mapr310.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -45,6 +42,7 @@ public class MapR310DistributionTest {
         HadoopComponent distribution = new MapR310Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
+        assertFalse(distribution.doSupportS3());
         assertEquals(MapR310Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertEquals(MapR310Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_1, distribution.getHadoopVersion());

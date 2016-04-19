@@ -109,4 +109,16 @@ public interface HadoopComponent {
      * @return true if the distribution doesn't use the legacy imports in the java XML files.
      */
     public boolean doSupportOldImportMode();
+
+    /**
+     * Define whether a distribution supports S3 or not.
+     * 
+     * @return true if the distribution supports S3.
+     */
+    public boolean doSupportS3();
+    
+    /**
+     * Get the default configurations for different distributions.
+     */
+    public String getDefaultConfig(String... keys);
 }

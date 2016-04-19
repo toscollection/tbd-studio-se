@@ -1,0 +1,18 @@
+{
+    "RESOURCEMANAGER_SCHEDULER_ADDRESS":"localhost:8030",
+    "JOBHISTORY_ADDRESS":"0.0.0.0:10020",
+    "STAGING_DIRECTORY":"/user",
+    "NAMENODE_PRINCIPAL":"nn/_HOST@EXAMPLE.COM",
+    "JOBTRACKER_PRINCIPAL":"mapred/_HOST@EXAMPLE.COM",
+    "RESOURCE_MANAGER_PRINCIPAL":"yarn/_HOST@EXAMPLE.COM",
+    "HIVE":{
+        "EMBEDDED":{
+            "PORT":9083
+        },
+        "STANDALONE":{
+            "PORT":10004
+        },
+        "DATABASE":"default",
+        "HIVE_PRINCIPAL":"hive/_HOST@EXAMPLE.COM"
+    }
+}

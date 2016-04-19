@@ -42,6 +42,7 @@ public class HDInsight34DistributionTest {
         HadoopComponent distribution = new HDInsight34Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
+        assertFalse(distribution.doSupportS3());
         assertEquals(HDInsight34Distribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertEquals(HDInsight34Distribution.VERSION, distribution.getVersion());
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());

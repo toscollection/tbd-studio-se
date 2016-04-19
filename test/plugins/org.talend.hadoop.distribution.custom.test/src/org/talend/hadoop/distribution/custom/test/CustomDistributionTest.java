@@ -12,11 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.custom.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.component.HBaseComponent;
@@ -45,6 +41,7 @@ public class CustomDistributionTest {
         HadoopComponent distribution = new CustomDistribution();
         assertNotNull(distribution.getDistributionName());
         assertNull(distribution.getVersionName(null));
+        assertTrue(distribution.doSupportS3());
         assertEquals(CustomDistribution.DISTRIBUTION_NAME, distribution.getDistribution());
         assertNull(distribution.getVersion());
         assertNull(distribution.getHadoopVersion());

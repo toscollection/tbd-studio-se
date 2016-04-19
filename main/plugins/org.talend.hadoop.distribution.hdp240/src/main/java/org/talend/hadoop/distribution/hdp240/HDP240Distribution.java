@@ -365,4 +365,9 @@ public class HDP240Distribution extends AbstractDistribution implements HDFSComp
     public String getCustomMRApplicationCP() {
         return CUSTOM_MR_APPLICATION_CLASSPATH;
     }
+
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
 }
