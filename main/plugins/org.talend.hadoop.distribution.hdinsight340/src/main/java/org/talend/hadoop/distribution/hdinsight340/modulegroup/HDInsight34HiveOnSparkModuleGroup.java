@@ -10,26 +10,20 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkbatch;
+package org.talend.hadoop.distribution.hdinsight340.modulegroup;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.condition.common.SparkBatchLinkedNodeCondition;
-import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.hdinsight340.HDInsight34Constant;
-import org.talend.hadoop.distribution.hdinsight340.HDInsight34Distribution;
 
-public class HDInsight34SparkBatchS3NodeModuleGroup {
+public class HDInsight34HiveOnSparkModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
-                HDInsight34Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, new SparkBatchLinkedNodeCondition(
-                        EHadoopDistributions.MICROSOFT_HD_INSIGHT.getName(), HDInsight34Distribution.VERSION,
-                        SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
+                HDInsight34Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true, null);
         hs.add(dmg);
         return hs;
     }
