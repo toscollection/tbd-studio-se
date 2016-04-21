@@ -59,7 +59,7 @@ class <%=cid%>_KeyDeserializer implements org.apache.kafka.common.serialization.
 // Consumer configuration
 java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 <%
-// Regular configuration
+// Basic and advanced configuration
 for (java.util.Map.Entry<String, String> kafkaProperty : tKafkaInputUtil.getKafkaConsumerProperties().entrySet()) {
 %>
     <%=cid%>_kafkaProperties.put(<%=kafkaProperty.getKey()%>, <%=kafkaProperty.getValue()%>);
@@ -78,6 +78,27 @@ if (tSetKeystoreUtil.useHTTPS()) {
 	 	<%=cid%>_kafkaProperties.put("ssl.keystore.type", <%=tSetKeystoreUtil.getKeyStoreType()%>);
  	 	<%=cid%>_kafkaProperties.put("ssl.keystore.location", <%=tSetKeystoreUtil.getKeyStorePath()%>); 
  	 	<%=cid%>_kafkaProperties.put("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);		
+<%
+	}
+}
+
+// Kerberos configuration
+if (tKafkaInputUtil.useKrb()) {
+%>
+	<%=cid%>_kafkaProperties.put("sasl.kerberos.service.name", <%=tKafkaInputUtil.getKrbServiceName()%>);
+<%
+	if (tKafkaInputUtil.isSetKinitPath()) {
+%>
+		<%=cid%>_kafkaProperties.put("sasl.kerberos.kinit.cmd", <%=tKafkaInputUtil.getKinitPath()%>);		
+<%
+	}
+%>
+
+	System.setProperty("java.security.auth.login.config", <%=tKafkaInputUtil.getJAASConf()%>);
+<%
+	if (tKafkaInputUtil.isSetKrb5Conf()) {
+%>
+		System.setProperty("java.security.krb5.conf", <%=tKafkaInputUtil.getKrb5Conf()%>);
 <%
 	}
 }

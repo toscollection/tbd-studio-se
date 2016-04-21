@@ -161,10 +161,38 @@ class TKafkaInputUtil {
     
     public String getSecurityProtocol() {
 			if (tSetKeystoreUtil.useHTTPS()) {
-				return "SSL";
+				return useKrb() ? "SASL_SSL" : "SSL";
 			} else {
-				return "PLAINTEXT";
+				return useKrb() ? "SASL_PLAINTEXT" : "PLAINTEXT";
 			}
+    }
+    
+    public boolean useKrb() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__USE_KRB__"));
+    }
+    
+    public String getJAASConf() {
+    		return ElementParameterParser.getValue(connNode, "__JAAS_CONF__");
+    }
+    
+    public String getKrbServiceName() {
+    		return ElementParameterParser.getValue(connNode, "__KRB_SERVICE_NAME__");
+    }
+    
+    public boolean isSetKinitPath() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__SET_KINIT_PATH__"));
+    }
+    
+    public String getKinitPath() {
+    		return ElementParameterParser.getValue(connNode, "__KINIT_PATH__");
+    }
+    
+    public boolean isSetKrb5Conf() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__SET_KRB5_CONF__"));
+    }
+    
+    public String getKrb5Conf() {
+    		return ElementParameterParser.getValue(connNode, "__KRB5_CONF__");
     }
 
     private Map<String, String> findKafkaConsumerProperties() {
@@ -190,18 +218,6 @@ class TKafkaInputUtil {
 				result.put("\"bootstrap.servers\"", getBrokerList());
 				result.put("\"security.protocol\"", "\"" + getSecurityProtocol() + "\"");
 				fillWithCustomProps(result);
-				
-				// SSL configuration
-				if (tSetKeystoreUtil.useHTTPS()) {
-					result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
-					result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath()); 
-					result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword()); 
-					if (tSetKeystoreUtil.needClientAuth()) {
-					 	result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
-				 	 	result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath()); 
-				 	 	result.put("\"ssl.keystore.password\"", tSetKeystoreUtil.getKeyStorePassword());	
- 	 				}
- 	 			}	
         }
         return result;
    }

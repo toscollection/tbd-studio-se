@@ -64,8 +64,29 @@ java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);	
 <%
 			}
-		}			
-	} // end else
+		} // end SSL configuration
+		
+		// Kerberos configuration
+		if (tKafkaOutputUtil.useKrb()) {
+%>
+			<%=cid%>_kafkaProperties.put("sasl.kerberos.service.name", <%=tKafkaOutputUtil.getKrbServiceName()%>);
+<%
+			if (tKafkaOutputUtil.isSetKinitPath()) {
+%>
+				<%=cid%>_kafkaProperties.put("sasl.kerberos.kinit.cmd", <%=tKafkaOutputUtil.getKinitPath()%>);		
+<%
+			}
+%>
+
+			System.setProperty("java.security.auth.login.config", <%=tKafkaOutputUtil.getJAASConf()%>);
+<%
+			if (tKafkaOutputUtil.isSetKrb5Conf()) {
+%>
+				System.setProperty("java.security.krb5.conf", <%=tKafkaOutputUtil.getKrb5Conf()%>);
+<%
+			}
+		}	// end Kerberos configuration	
+	} // end else -> (brokerList is provided)
 %>
 
 org.apache.kafka.clients.producer.KafkaProducer<byte[], byte[]> <%=cid%>_kafkaProducer = (org.apache.kafka.clients.producer.KafkaProducer<byte[], byte[]>)globalMap.get("<%=cid%>_kafkaProducer");

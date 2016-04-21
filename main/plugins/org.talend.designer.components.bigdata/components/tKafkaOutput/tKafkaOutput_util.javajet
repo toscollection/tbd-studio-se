@@ -72,16 +72,44 @@ class TKafkaOutputUtil {
         return this.incomingConnection.getMetadataTable().getListColumns().get(0).getLabel();
     }
     
-    public String getSecurityProtocol() {
-		if (tSetKeystoreUtil.useHTTPS()) {
-			return "SSL";
-		} else {
-			return "PLAINTEXT";
-		}
-    }
-    
     public TSetKeystoreUtil getTSetKeystoreUtil() {
         return tSetKeystoreUtil;
+    }
+    
+    public String getSecurityProtocol() {
+			if (tSetKeystoreUtil.useHTTPS()) {
+				return useKrb() ? "SASL_SSL" : "SSL";
+			} else {
+				return useKrb() ? "SASL_PLAINTEXT" : "PLAINTEXT";
+			}
+    }
+    
+    public boolean useKrb() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__USE_KRB__"));
+    }
+    
+    public String getJAASConf() {
+    		return ElementParameterParser.getValue(connNode, "__JAAS_CONF__");
+    }
+    
+    public String getKrbServiceName() {
+    		return ElementParameterParser.getValue(connNode, "__KRB_SERVICE_NAME__");
+    }
+    
+    public boolean isSetKinitPath() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__SET_KINIT_PATH__"));
+    }
+    
+    public String getKinitPath() {
+    		return ElementParameterParser.getValue(connNode, "__KINIT_PATH__");
+    }
+    
+    public boolean isSetKrb5Conf() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__SET_KRB5_CONF__"));
+    }
+    
+    public String getKrb5Conf() {
+    		return ElementParameterParser.getValue(connNode, "__KRB5_CONF__");
     }
     
     private IConnection findIncomingConnection() {
