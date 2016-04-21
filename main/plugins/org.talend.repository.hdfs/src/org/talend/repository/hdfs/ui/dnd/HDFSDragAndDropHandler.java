@@ -156,6 +156,24 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getStagingDirectory()));
         } else if (EHDFSRepositoryToComponent.USE_DATANODE_HOSTNAME.getRepositoryValue().equals(value)) {
             return hcConnection.isUseDNHost();
+        }else if (EHDFSRepositoryToComponent.USE_CLOUDERA_NAVIGATOR.getRepositoryValue().equals(value)) {
+            return hcConnection.isUseClouderaNavi();
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_USERNAME.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviUserName(connection));
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_PASSWORD.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviPassword(connection));
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_URL.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviUrl(connection));
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_METADATA_URL.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviMetadataUrl(connection));
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_CLIENT_URL.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviClientUrl(connection));
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_AUTOCOMMIT.getRepositoryValue().equals(value)) {
+            return HadoopRepositoryUtil.clouderaNaviAutoCommit(connection);
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_DISABLE_SSL_VALIDATION.getRepositoryValue().equals(value)) {
+            return HadoopRepositoryUtil.clouderaNaviDisableSSL(connection);
+        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_DIE_ON_ERROR.getRepositoryValue().equals(value)) {
+            return HadoopRepositoryUtil.clouderaNaviDieOnError(connection);
         }
 
         return null;

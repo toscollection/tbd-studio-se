@@ -16,6 +16,6 @@ package org.talend.hadoop.distribution.component;
  * Interface that exposes specific Hive on Spark methods.
  *
  */
-public interface HiveOnSparkComponent extends HadoopComponent {
+public interface HiveOnSparkComponent extends SparkComponent {
     // No specific method for Hive on Spark currently.
 }

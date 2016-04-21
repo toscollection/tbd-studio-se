@@ -81,10 +81,6 @@
             class="org.talend.repository.hadoopcluster.service.HadoopClusterService"
             serviceId="IHadoopClusterService">
       </Service>
-      <Service
-            class="org.talend.repository.hadoopcluster.service.HadoopDistributionService"
-            serviceId="IHadoopDistributionService">
-      </Service>
    </extension>
    <extension
          point="org.eclipse.ui.navigator.navigatorContent">

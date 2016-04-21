@@ -15,14 +15,25 @@ package org.talend.hadoop.distribution;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.commons.collections.map.MultiKeyMap;
+import org.apache.commons.lang.ArrayUtils;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.utils.DefaultConfigurationManager;
+import org.talend.utils.json.JSONObject;
+import org.talend.utils.json.JSONUtil;
 
 /**
  * Base class that describes a Distribution.
  *
  */
 public abstract class AbstractDistribution {
+
+    protected static final MultiKeyMap defaultConfigsMap = new MultiKeyMap();
+
+    public abstract String getDistribution();
+
+    public abstract String getVersion();
 
     public abstract EHadoopVersion getHadoopVersion();
 
@@ -149,5 +160,50 @@ public abstract class AbstractDistribution {
      */
     public boolean doSupportStandaloneMode() {
         return true;
+    }
+
+    /**
+     * 
+     * load default
+     */
+    public String getDefaultConfig(String... keys) {
+        if (keys != null && keys.length > 0) {
+            // check distribution
+            final String keyDistr = keys[0];
+            final String distribution = getDistribution();
+            if (distribution.equals(keyDistr)) {
+                final String version = getVersion();
+                Object object = defaultConfigsMap.get(distribution, version);
+                if (object == null) { // init
+                    JSONObject defaultConfig = loadDefaultConfigurations();
+                    if (defaultConfig != null) {
+                        object = defaultConfig;
+                        defaultConfigsMap.put(distribution, version, defaultConfig);
+                    }
+                }
+                if (object instanceof JSONObject) {
+                    JSONObject json = (JSONObject) object;
+                    String[] keysWithoutDistribution = (String[]) ArrayUtils.remove(keys, 0);
+                    if (keysWithoutDistribution.length == 0) {// no key yet,
+                        return DefaultConfigurationManager.getValue(json, "");
+                    }
+                    return DefaultConfigurationManager.getValue(json, keysWithoutDistribution);
+                }
+
+            }
+        }
+        return null;
+    }
+
+    protected JSONObject loadDefaultConfigurations() {
+        // the class must be AbstractDistribution for load default config in current bundle
+        JSONObject globalJson = DefaultConfigurationManager.loadDefaultFile(AbstractDistribution.class, getDistribution()
+                .toLowerCase());
+        // the class is the version of distribution
+        if (getVersion() != null) {
+            JSONObject versionJson = DefaultConfigurationManager.loadDefaultFile(this.getClass(), getVersion().toLowerCase());
+            return JSONUtil.merge(globalJson, versionJson);
+        }
+        return globalJson;
     }
 }
