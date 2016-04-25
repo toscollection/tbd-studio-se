@@ -52,4 +52,8 @@ public final class SparkStreamingConstant {
 
     public static final String KINESIS_OUTPUT_COMPONENT = "tKinesisOutput"; //$NON-NLS-1$
 
+    public static final String FLUME_OUTPUT_COMPONENT = "tFlumeOutput"; //$NON-NLS-1$
+
+    public static final String FLUME_INPUT_COMPONENT = "tFlumeInput"; //$NON-NLS-1$
+
 }

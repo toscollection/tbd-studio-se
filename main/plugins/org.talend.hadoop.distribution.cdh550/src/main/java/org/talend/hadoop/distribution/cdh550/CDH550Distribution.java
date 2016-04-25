@@ -39,6 +39,7 @@ import org.talend.hadoop.distribution.cdh550.modulegroup.node.mr.CDH550MRS3NodeM
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.pigoutput.CDH550PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchS3NodeModuleGroup;
+import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingFlumeNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingKafkaAssemblyModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingKafkaAvroModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingKafkaClientModuleGroup;
@@ -131,6 +132,13 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
                 SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), kinesisNodeModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), kinesisNodeModuleGroups);
+
+        Set<DistributionModuleGroup> flumeNodeModuleGroups = CDH550SparkStreamingFlumeNodeModuleGroup.getModuleGroups();
+        nodeModuleGroups.put(
+                new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_INPUT_COMPONENT),
+                flumeNodeModuleGroups);
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.FLUME_OUTPUT_COMPONENT), flumeNodeModuleGroups);
 
         Set<DistributionModuleGroup> kafkaAssemblyModuleGroups = CDH550SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups();
         Set<DistributionModuleGroup> kafkaAvroModuleGroups = CDH550SparkStreamingKafkaAvroModuleGroup.getModuleGroups();
