@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -203,14 +202,6 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
     @Override
     public boolean doSupportEmbeddedMode() {
         return false;
-    }
-
-    @Override
-    public boolean doSupportStandaloneMode() {
-        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
-            return false;
-        }
-        return super.doSupportStandaloneMode();
     }
 
     @Override
