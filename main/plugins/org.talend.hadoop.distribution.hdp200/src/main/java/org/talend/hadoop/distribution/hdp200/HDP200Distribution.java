@@ -161,14 +161,6 @@ public class HDP200Distribution extends AbstractDistribution implements HDFSComp
     }
 
     @Override
-    public boolean doSupportStandaloneMode() {
-        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
-            return false;
-        }
-        return super.doSupportStandaloneMode();
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return true;
     }
