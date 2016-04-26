@@ -71,7 +71,7 @@ class TKafkaCreateTopicUtil {
 	}
 	
 	public boolean isKafkaVersion(String version) {
-		return (version != null) ? version.equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__")) : false;
+		return (version != null) ? version.equals(ElementParameterParser.getValue(connNode, "__KAFKA_VERSION__")) : false;
 	}
 
 	private Map<String, String> findKafkaTopicProperties() {
