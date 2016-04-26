@@ -1,6 +1,6 @@
 <%
 	// This is the tKafkaInput_begin javajet part for Kafka 0.9.0.x
-	
+
 	// Since the new Consumer API was introduced in Kafka 0.9.0.x, we must split the javajets
 	// in order to generate code with the relevant Consumer API depending of the current Kafka version.
 %>
@@ -13,7 +13,7 @@ TSetKeystoreUtil tSetKeystoreUtil = tKafkaInputUtil.getTSetKeystoreUtil();
 class <%=cid%>_ValueDeserializer implements org.apache.kafka.common.serialization.Deserializer<<%=outStructName%>> {
 
 	private org.apache.kafka.common.serialization.StringDeserializer stringDeserializer;
-    
+
 	public void configure(java.util.Map<java.lang.String,?> configs, boolean isKey) {
 		stringDeserializer = new org.apache.kafka.common.serialization.StringDeserializer();
 		stringDeserializer.configure(configs, isKey);
@@ -35,9 +35,9 @@ class <%=cid%>_ValueDeserializer implements org.apache.kafka.common.serializatio
 %>
 		return result;
     }
-    
+
 	public void close() {
-		// nothing	
+		// nothing
 	}
 }
 
@@ -46,13 +46,13 @@ class <%=cid%>_KeyDeserializer implements org.apache.kafka.common.serialization.
 	public void configure(java.util.Map<java.lang.String,?> configs, boolean isKey) {
 		// nothing
 	}
-	
+
 	public byte[] deserialize(String topic, byte[] data) {
 	    return data;
 	}
-	
+
 	public void close() {
-		// nothing	
+		// nothing
 	}
 }
 
@@ -70,14 +70,14 @@ for (java.util.Map.Entry<String, String> kafkaProperty : tKafkaInputUtil.getKafk
 if (tSetKeystoreUtil.useHTTPS()) {
 %>
 	 <%=cid%>_kafkaProperties.put("ssl.truststore.type", <%=tSetKeystoreUtil.getTrustStoreType()%>);
- 	 <%=cid%>_kafkaProperties.put("ssl.truststore.location", <%=tSetKeystoreUtil.getTrustStorePath()%>); 
- 	 <%=cid%>_kafkaProperties.put("ssl.truststore.password", <%=tSetKeystoreUtil.getTrustStorePassword()%>); 
+ 	 <%=cid%>_kafkaProperties.put("ssl.truststore.location", <%=tSetKeystoreUtil.getTrustStorePath()%>);
+ 	 <%=cid%>_kafkaProperties.put("ssl.truststore.password", <%=tSetKeystoreUtil.getTrustStorePassword()%>);
 <%
 	if (tSetKeystoreUtil.needClientAuth()) {
 %>
 	 	<%=cid%>_kafkaProperties.put("ssl.keystore.type", <%=tSetKeystoreUtil.getKeyStoreType()%>);
- 	 	<%=cid%>_kafkaProperties.put("ssl.keystore.location", <%=tSetKeystoreUtil.getKeyStorePath()%>); 
- 	 	<%=cid%>_kafkaProperties.put("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);		
+ 	 	<%=cid%>_kafkaProperties.put("ssl.keystore.location", <%=tSetKeystoreUtil.getKeyStorePath()%>);
+ 	 	<%=cid%>_kafkaProperties.put("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);
 <%
 	}
 }
@@ -89,7 +89,7 @@ if (tKafkaInputUtil.useKrb()) {
 <%
 	if (tKafkaInputUtil.isSetKinitPath()) {
 %>
-		<%=cid%>_kafkaProperties.put("sasl.kerberos.kinit.cmd", <%=tKafkaInputUtil.getKinitPath()%>);		
+		<%=cid%>_kafkaProperties.put("sasl.kerberos.kinit.cmd", <%=tKafkaInputUtil.getKinitPath()%>);
 <%
 	}
 %>
@@ -110,7 +110,8 @@ java.util.Map<String, String> instance_<%=cid%>_ValueDeserializer_configs = new 
 instance_<%=cid%>_ValueDeserializer_configs.put("serializer.encoding", <%=tKafkaInputUtil.getEncoding()%>);
 instance_<%=cid%>_ValueDeserializer.configure(instance_<%=cid%>_ValueDeserializer_configs, false);
 
-// Single-threaded consumer
+// Single-threaded consumer. Make sure the new security information is picked up.
+javax.security.auth.login.Configuration.setConfiguration(null);
 org.apache.kafka.clients.consumer.KafkaConsumer<byte[], <%=outStructName%>> <%=cid%>_kafkaConsumer = new org.apache.kafka.clients.consumer.KafkaConsumer<byte[], <%=outStructName%>>(<%=cid%>_kafkaProperties, new <%=cid%>_KeyDeserializer(), instance_<%=cid%>_ValueDeserializer);
 <%=cid%>_kafkaConsumer.subscribe(java.util.Arrays.asList(<%=tKafkaInputUtil.getTopic()%>));
 
@@ -119,7 +120,7 @@ globalMap.put("<%=cid%>_kafkaConsumer", <%=cid%>_kafkaConsumer);
 <%
 if (tKafkaInputUtil.isResetNewConsumerGroup()) {
 %>
-	// We first have to do a quick poll() in order to know which partitions are assigned to the consumer before  
+	// We first have to do a quick poll() in order to know which partitions are assigned to the consumer before
 	// "resetting" offsets by seeking to the beginning/end of the current partitions.
 	// Those polled records are not processed since we wanted to reset the offsets first.
 	<%=cid%>_kafkaConsumer.poll(0);
@@ -142,7 +143,7 @@ if (tKafkaInputUtil.isStopOnMaxDuration()) {
     // Stop processing messages if the job has passed this time.
 	 long initialTime_<%=cid%> = System.currentTimeMillis();
     long maxDurationDeadline_<%=cid%> = System.currentTimeMillis() + <%=tKafkaInputUtil.getAsLong(tKafkaInputUtil.getMaxDuration())%>;
-<%  
+<%
 }
 %>
 
@@ -164,7 +165,7 @@ while (true) {
 <%
 			} else {
 %>
-				// Use the provided consumer timeout and the consumer has to be stopped if there is no record polled from the topic  
+				// Use the provided consumer timeout and the consumer has to be stopped if there is no record polled from the topic
 				org.apache.kafka.clients.consumer.ConsumerRecords<byte[], <%=outStructName%>> <%=cid%>_consumerRecords = <%=cid%>_kafkaConsumer.poll(<%=tKafkaInputUtil.getAsLong(tKafkaInputUtil.getMaxMsgWait())%>);
 <%
 			}
@@ -179,7 +180,7 @@ while (true) {
 <%
 		} else {
 %>
-			// Either use a default poll timeout of 1s or the provided timeout precision. The consumer won't stop if there is no record polled from the topic. 
+			// Either use a default poll timeout of 1s or the provided timeout precision. The consumer won't stop if there is no record polled from the topic.
 			org.apache.kafka.clients.consumer.ConsumerRecords<byte[], <%=outStructName%>> <%=cid%>_consumerRecords = <%=cid%>_kafkaConsumer.poll(<%=tKafkaInputUtil.getConsumerTimeout()%>);
 <%
 		}
@@ -197,5 +198,5 @@ while (true) {
 			// Dummy condition to make sure we have a way to break the current loop, regardless of the tKafkaInput configuration (compilation matter).
 			break;
 		}
-		
+
 		for(org.apache.kafka.clients.consumer.ConsumerRecord<byte[], <%=outStructName%>> <%=cid%>_consumerRecord : <%=cid%>_consumerRecords) {

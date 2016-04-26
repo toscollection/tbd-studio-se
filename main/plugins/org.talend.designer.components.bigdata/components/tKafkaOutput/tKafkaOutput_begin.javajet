@@ -1,11 +1,11 @@
 <%@ jet
     imports="
-    org.talend.core.model.process.INode 
-    org.talend.core.model.process.ElementParameterParser 
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
     org.talend.core.model.process.IConnection
     org.talend.core.model.process.IConnectionCategory
-    org.talend.core.model.metadata.IMetadataTable 
-    org.talend.core.model.metadata.IMetadataColumn 
+    org.talend.core.model.metadata.IMetadataTable
+    org.talend.core.model.metadata.IMetadataColumn
     org.talend.designer.codegen.config.CodeGeneratorArgument
     java.util.List
     java.util.Map
@@ -35,7 +35,7 @@ java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 		if(true){
 			throw new Exception("A broker list must be provided.");
 		}
-<% 
+<%
 	} else {
 		// Basic configuration
 %>
@@ -49,31 +49,33 @@ java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 			<%=cid%>_kafkaProperties.setProperty(<%=kafkaProperty.getKey()%>, <%=kafkaProperty.getValue()%>);
 <%
 		} // end for
-		
+
 		// SSL configuration
 		if (tSetKeystoreUtil.useHTTPS()) {
 %>
 			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.type", <%=tSetKeystoreUtil.getTrustStoreType()%>);
-			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.location", <%=tSetKeystoreUtil.getTrustStorePath()%>); 
-			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.password", <%=tSetKeystoreUtil.getTrustStorePassword()%>); 
+			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.location", <%=tSetKeystoreUtil.getTrustStorePath()%>);
+			<%=cid%>_kafkaProperties.setProperty("ssl.truststore.password", <%=tSetKeystoreUtil.getTrustStorePassword()%>);
 <%
 			if (tSetKeystoreUtil.needClientAuth()) {
 %>
 			 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.type", <%=tSetKeystoreUtil.getKeyStoreType()%>);
-		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.location", <%=tSetKeystoreUtil.getKeyStorePath()%>); 
-		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);	
+		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.location", <%=tSetKeystoreUtil.getKeyStorePath()%>);
+		 	 	<%=cid%>_kafkaProperties.setProperty("ssl.keystore.password", <%=tSetKeystoreUtil.getKeyStorePassword()%>);
 <%
 			}
 		} // end SSL configuration
-		
+
 		// Kerberos configuration
 		if (tKafkaOutputUtil.useKrb()) {
 %>
+			// Make sure the new security information is picked up.
+			javax.security.auth.login.Configuration.setConfiguration(null);
 			<%=cid%>_kafkaProperties.put("sasl.kerberos.service.name", <%=tKafkaOutputUtil.getKrbServiceName()%>);
 <%
 			if (tKafkaOutputUtil.isSetKinitPath()) {
 %>
-				<%=cid%>_kafkaProperties.put("sasl.kerberos.kinit.cmd", <%=tKafkaOutputUtil.getKinitPath()%>);		
+				<%=cid%>_kafkaProperties.put("sasl.kerberos.kinit.cmd", <%=tKafkaOutputUtil.getKinitPath()%>);
 <%
 			}
 %>
@@ -85,7 +87,7 @@ java.util.Properties <%=cid%>_kafkaProperties = new java.util.Properties();
 				System.setProperty("java.security.krb5.conf", <%=tKafkaOutputUtil.getKrb5Conf()%>);
 <%
 			}
-		}	// end Kerberos configuration	
+		}	// end Kerberos configuration
 	} // end else -> (brokerList is provided)
 %>
 
