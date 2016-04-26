@@ -76,6 +76,7 @@
 		}
 	}
 %>
+	org.apache.hadoop.security.UserGroupInformation.setConfiguration(conf_<%=cid%>);
 	globalMap.put("conn_<%=cid%>",conf_<%=cid%>);
 	
 
