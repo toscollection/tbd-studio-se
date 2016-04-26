@@ -56,7 +56,7 @@ public class HDP240ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
 
     @Test
     public void testHbase() {
-        String libsStr = "commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;guava-12.0.1.jar;hadoop-auth-2.7.1.2.4.0.0-169.jar;hadoop-common-2.7.1.2.4.0.0-169.jar;hbase-client-1.1.2.2.4.0.0-169.jar;hbase-common-1.1.2.2.4.0.0-169.jar;hbase-protocol-1.1.2.2.4.0.0-169.jar;htrace-core-3.1.0-incubating.jar;jackson-core-asl-1.9.13.jar;jackson-mapper-asl-1.9.13.jar;log4j-1.2.17.jar;netty-all-4.0.23.Final.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.10.jar;zookeeper-3.4.6.2.4.0.0-169.jar";//$NON-NLS-1$
+        String libsStr = "commons-codec-1.9.jar;commons-io-2.4.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;guava-12.0.1.jar;hadoop-auth-2.7.1.2.4.0.0-169.jar;hadoop-common-2.7.1.2.4.0.0-169.jar;hbase-client-1.1.2.2.4.0.0-169.jar;hbase-common-1.1.2.2.4.0.0-169.jar;hbase-protocol-1.1.2.2.4.0.0-169.jar;htrace-core-3.1.0-incubating.jar;jackson-core-asl-1.9.13.jar;jackson-mapper-asl-1.9.13.jar;log4j-1.2.17.jar;netty-all-4.0.23.Final.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.10.jar;zookeeper-3.4.6.2.4.0.0-169.jar";//$NON-NLS-1$
         doTestClassLoader(EHadoopCategory.HBASE.getName(), libsStr);
     }
 
