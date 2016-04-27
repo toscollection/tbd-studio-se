@@ -17,18 +17,16 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
-import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
 import org.talend.hadoop.distribution.condition.common.MRLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.MRConstant;
 
 public class CDH550MRS3NodeModuleGroup {
 
-    public static Set<DistributionModuleGroup> getModuleGroups() {
+    public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, //
-                new MRLinkedNodeCondition(CDH550Distribution.DISTRIBUTION_NAME, CDH550Distribution.VERSION,
-                        MRConstant.MR_MRCONFIGURATION_LINKEDPARAMETER).getCondition());
+                new MRLinkedNodeCondition(distribution, version, MRConstant.MR_MRCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;
     }

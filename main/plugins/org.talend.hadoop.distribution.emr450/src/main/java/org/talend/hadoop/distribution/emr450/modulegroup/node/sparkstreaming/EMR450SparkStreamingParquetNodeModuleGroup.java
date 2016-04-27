@@ -17,16 +17,15 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
-import org.talend.hadoop.distribution.emr450.EMR450Distribution;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkbatch.EMR450SparkBatchParquetNodeModuleGroup;
 
 public class EMR450SparkStreamingParquetNodeModuleGroup {
 
-    public static Set<DistributionModuleGroup> getModuleGroups() {
+    public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
                 EMR450SparkBatchParquetNodeModuleGroup.SPARK_PARQUET_GROUP_NAME, true, new SparkStreamingLinkedNodeCondition(
-                        EMR450Distribution.DISTRIBUTION_NAME, EMR450Distribution.VERSION).getCondition());
+                        distribution, version).getCondition());
         hs.add(dmg);
         return hs;
     }

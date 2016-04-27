@@ -21,6 +21,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
+import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchS3NodeModuleGroup;
 
 /**
@@ -37,7 +38,8 @@ public class CDH550SparkBatchS3NodeModuleGroupTest {
                 CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
                 "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='Cloudera_CDH5_5')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')");
 
-        Set<DistributionModuleGroup> moduleGroups = CDH550SparkBatchS3NodeModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> moduleGroups = CDH550SparkBatchS3NodeModuleGroup.getModuleGroups(
+                CDH550Distribution.DISTRIBUTION_NAME, CDH550Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {

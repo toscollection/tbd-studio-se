@@ -33,7 +33,8 @@ public class EMR460Distribution extends EMR450Distribution {
 
     private static Map<ComponentType, String> customVersionDisplayNames = new HashMap<>();
 
-    static {
+    public EMR460Distribution() {
+        super();
         customVersionDisplayNames.put(ComponentType.PIG, PIG_EMR460_DISPLAY);
         customVersionDisplayNames.put(ComponentType.HIVE, HIVE_EMR460_DISPLAY);
         customVersionDisplayNames.put(ComponentType.SQOOP, SQOOP_EMR460_DISPLAY);

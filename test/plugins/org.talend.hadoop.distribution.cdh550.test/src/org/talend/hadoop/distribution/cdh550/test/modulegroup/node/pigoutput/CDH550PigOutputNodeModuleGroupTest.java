@@ -21,6 +21,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
+import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.pigoutput.CDH550PigOutputNodeModuleGroup;
 
 /**
@@ -39,7 +40,8 @@ public class CDH550PigOutputNodeModuleGroupTest {
                 "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_5') "
                         + "AND (S3_LOCATION=='true') AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE')");
 
-        Set<DistributionModuleGroup> moduleGroups = CDH550PigOutputNodeModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> moduleGroups = CDH550PigOutputNodeModuleGroup.getModuleGroups(
+                CDH550Distribution.DISTRIBUTION_NAME, CDH550Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {

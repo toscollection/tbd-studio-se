@@ -18,16 +18,15 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
-import org.talend.hadoop.distribution.emr450.EMR450Distribution;
 
 public class EMR450SparkStreamingKafkaAssemblyModuleGroup {
 
     public static final String KAFKA_ASSEMBLY_GROUP_NAME = "SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_4_5_0_LATEST"; //$NON-NLS-1$
 
-    public static Set<DistributionModuleGroup> getModuleGroups() {
+    public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(KAFKA_ASSEMBLY_GROUP_NAME, true,
-                new SparkStreamingLinkedNodeCondition(EMR450Distribution.DISTRIBUTION_NAME, EMR450Distribution.VERSION,
+                new SparkStreamingLinkedNodeCondition(distribution, version,
                         SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;
