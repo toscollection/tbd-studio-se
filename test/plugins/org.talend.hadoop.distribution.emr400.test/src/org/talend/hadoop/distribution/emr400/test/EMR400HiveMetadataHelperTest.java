@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.emr400.test;
 
 import org.junit.Test;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.emr400.EMR400Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
@@ -22,13 +23,8 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 public class EMR400HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
-    protected String getDistribution() {
-        return EMR400Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return EMR400Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return EMR400Distribution.class;
     }
 
     @Test

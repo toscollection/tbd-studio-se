@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.piv101.test;
 
 import org.junit.Test;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.piv101.Pivotal101Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
@@ -22,13 +23,8 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 public class Pivotal101HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
-    protected String getDistribution() {
-        return Pivotal101Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return Pivotal101Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return Pivotal101Distribution.class;
     }
 
     @Test

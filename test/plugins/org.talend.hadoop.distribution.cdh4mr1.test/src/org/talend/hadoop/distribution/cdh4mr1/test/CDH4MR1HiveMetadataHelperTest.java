@@ -14,6 +14,7 @@ package org.talend.hadoop.distribution.cdh4mr1.test;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.cdh4mr1.CDH4MR1Distribution;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
@@ -22,13 +23,8 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 public class CDH4MR1HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
-    protected String getDistribution() {
-        return CDH4MR1Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return CDH4MR1Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return CDH4MR1Distribution.class;
     }
 
     @Test

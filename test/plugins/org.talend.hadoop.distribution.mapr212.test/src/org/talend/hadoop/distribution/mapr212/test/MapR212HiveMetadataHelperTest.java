@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.mapr212.test;
 
 import org.junit.Test;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.mapr212.MapR212Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
@@ -22,13 +23,8 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 public class MapR212HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
-    protected String getDistribution() {
-        return MapR212Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return MapR212Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return MapR212Distribution.class;
     }
 
     @Test

@@ -20,8 +20,11 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.talend.core.database.EDatabaseTypeName;
+import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
+import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
+import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
 
 /**
  * DOC ggu class global comment. Detailled comment
@@ -58,5 +61,44 @@ public class HiveMetadataHelperTest {
 
         assertEquals(distribution2.getName(), distribution.getName());
         assertEquals(distribution2.getDisplayName(), distribution.getDisplayName());
+    }
+
+    @Test
+    public void testDoSupportMethod_NonExisted() {
+        assertFalse(HiveMetadataHelper.doSupportMethod(null, null, false, "doTest"));
+        assertFalse(HiveMetadataHelper.doSupportMethod("ABC", null, false, "doTest"));
+        assertFalse(HiveMetadataHelper.doSupportMethod("ABC", "V1", false, "doTest"));
+        assertFalse(HiveMetadataHelper.doSupportMethod(IApacheDistribution.DISTRIBUTION_NAME, "V1", false, "doSupportKerberos"));
+        assertFalse(HiveMetadataHelper.doSupportMethod(IApacheDistribution.DISTRIBUTION_NAME, "APACHE_1_0_0", false, "doTest123"));
+    }
+
+    @Test
+    public void testDoSupportMethod_Existed() {
+        assertTrue(HiveMetadataHelper.doSupportMethod(IApacheDistribution.DISTRIBUTION_NAME, "APACHE_1_0_0", false,
+                "doSupportKerberos"));
+    }
+
+    @Test
+    public void testDoSupportSecurity_HiveServerAndMode() {
+        boolean supportKerberos = HiveMetadataHelper.doSupportMethod(IApacheDistribution.DISTRIBUTION_NAME,
+                "APACHE_1_0_0", false, "doSupportKerberos");//$NON-NLS-1$
+        if (!supportKerberos) {
+            return; // will test supportKerberos in Apache100HiveMetadataHelperTest
+        }
+        // empty
+        assertFalse(HiveMetadataHelper
+                .doSupportSecurity(IApacheDistribution.DISTRIBUTION_NAME, "APACHE_1_0_0", null, null, false));
+        // hive server 1
+        assertFalse("Don't support in hive server 1 with unknown hive mode for apache", HiveMetadataHelper.doSupportSecurity(
+                IApacheDistribution.DISTRIBUTION_NAME, "APACHE_1_0_0", null, HiveServerVersionInfo.HIVE_SERVER_1.getKey(), false));
+        // hive standardalone
+        assertFalse("Don't support in standardalone model with unknown hive server for apache",
+                HiveMetadataHelper.doSupportSecurity(IApacheDistribution.DISTRIBUTION_NAME, "APACHE_1_0_0",
+                        HiveModeInfo.STANDALONE.getName(), null, false));
+        // hive server 1 with standardalone
+        assertFalse("Don't support in hive server 1 with standardalone for apache", HiveMetadataHelper.doSupportSecurity(
+                IApacheDistribution.DISTRIBUTION_NAME, "APACHE_1_0_0", HiveModeInfo.STANDALONE.getName(),
+                HiveServerVersionInfo.HIVE_SERVER_1.getKey(), false));
+
     }
 }

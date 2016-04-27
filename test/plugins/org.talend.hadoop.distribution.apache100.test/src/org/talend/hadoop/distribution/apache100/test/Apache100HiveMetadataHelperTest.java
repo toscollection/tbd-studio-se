@@ -14,6 +14,7 @@ package org.talend.hadoop.distribution.apache100.test;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.apache100.Apache100Distribution;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
@@ -22,13 +23,8 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 public class Apache100HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
-    protected String getDistribution() {
-        return Apache100Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return Apache100Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return Apache100Distribution.class;
     }
 
     @Test
@@ -40,5 +36,4 @@ public class Apache100HiveMetadataHelperTest extends AbstractVersionTest4HiveMet
     public void testHiveServer_Apache100_Server1_Only() {
         doTestGetHiveServersDisplay(getDistributionVersion(), HIVE_SERVER_DISPLAY_SERVER1_ONLY);
     }
-
 }
