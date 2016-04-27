@@ -75,4 +75,8 @@ public class HDP220HiveMetadataHelperTest extends AbstractVersionTest4HiveMetada
         }
     }
 
+    @Override
+    protected boolean isSupportTez() {
+        return true; // means support for HDP 2.2 always
+    }
 }

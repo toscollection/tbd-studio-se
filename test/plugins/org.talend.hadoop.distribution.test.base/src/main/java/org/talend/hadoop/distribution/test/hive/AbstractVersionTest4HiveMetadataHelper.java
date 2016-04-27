@@ -28,6 +28,7 @@ import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
 import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.test.AbstractTest4HadoopDistribution;
 
 /**
@@ -113,6 +114,19 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
         HadoopComponent hadoopComponent = getHadoopComponent();
         if (hadoopComponent != null) {
             return hadoopComponent.doSupportKerberos();
+        }
+        return false;
+    }
+
+    @Test
+    public void testDoSupportTez() {
+        assertThat(HiveMetadataHelper.doSupportTez(getDistribution(), getDistributionVersion(), false), is(isSupportTez()));
+    }
+
+    protected boolean isSupportTez() {
+        HadoopComponent hadoopComponent = getHadoopComponent();
+        if (hadoopComponent != null && hadoopComponent instanceof HiveComponent) {
+            return ((HiveComponent) hadoopComponent).doSupportTezForHive();
         }
         return false;
     }
