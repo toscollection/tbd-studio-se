@@ -135,6 +135,20 @@ if (tKafkaInputUtil.isResetNewConsumerGroup()) {
 	<%=cid%>_kafkaConsumer.seekToEnd(<%=cid%>_assignedtopicPartitions.toArray(new org.apache.kafka.common.TopicPartition[<%=cid%>_assignedtopicPartitions.size()]));
 <%
 	}
+
+	if (!tKafkaInputUtil.isAutoCommitOffset()) {
+%>
+		// Commit the offsets to ensure that the next job(s) use the reset offset.
+		{
+		java.util.HashMap<org.apache.kafka.common.TopicPartition, org.apache.kafka.clients.consumer.OffsetAndMetadata> <%=cid%>_resetOffsets = new java.util.HashMap<>();
+		for (org.apache.kafka.common.TopicPartition topic : <%=cid%>_assignedtopicPartitions) {
+			<%=cid%>_resetOffsets.put(topic, new org.apache.kafka.clients.consumer.OffsetAndMetadata(
+				<%=cid%>_kafkaConsumer.position(topic)));
+		}
+		<%=cid%>_kafkaConsumer.commitSync(<%=cid%>_resetOffsets);
+		}
+<%
+	}
 }
 
 // Save the global deadline for all messages.
