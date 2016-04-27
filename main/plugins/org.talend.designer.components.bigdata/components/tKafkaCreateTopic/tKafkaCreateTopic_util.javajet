@@ -45,6 +45,10 @@ class TKafkaCreateTopicUtil {
 	public boolean isRetentionSet() {
 		return "true".equals(ElementParameterParser.getValue(node, "__KAFKA_RETENTION_CHECK__"));
 	}
+	
+	public boolean isZookeeperSecurityEnabled() {
+		return "true".equals(ElementParameterParser.getValue(node, "__ZOOKEEPER_SECURITY_IS_ENABLED__"));
+	}
 
 	public String getRetention() {
 		return ElementParameterParser.getValue(node, "__KAFKA_RETENTION__");
@@ -64,6 +68,10 @@ class TKafkaCreateTopicUtil {
 
 	public Map<String, String> getKafkaTopicProperties(){
 		return this.kafkaTopicProperties;
+	}
+	
+	public boolean isKafkaVersion(String version) {
+		return (version != null) ? version.equals(ElementParameterParser.getValue(connNode, "__KAFKA_VERSION__")) : false;
 	}
 
 	private Map<String, String> findKafkaTopicProperties() {
