@@ -399,42 +399,38 @@
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.0.jar"
-            name="spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.0.jar"
-            uripath="platform:/plugin/org.talend.libraries.apache.flume/lib/spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.0/6.0.0">
+            id="spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.2.jar"
+            name="spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.2/6.0.0">
         </libraryNeeded>
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="spark-streaming-flume_2.10-1.5.0-cdh5.5.0.jar"
-            name="spark-streaming-flume_2.10-1.5.0-cdh5.5.0.jar"
-            uripath="platform:/plugin/org.talend.libraries.apache.flume/lib/spark-streaming-flume_2.10-1.5.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-streaming-flume_2.10-1.5.0-cdh5.5.0/6.0.0">
+            id="spark-streaming-flume_2.10-1.5.0-cdh5.5.2.jar"
+            name="spark-streaming-flume_2.10-1.5.0-cdh5.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-flume_2.10-1.5.0-cdh5.5.2/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="flume-ng-sdk-1.6.0-cdh5.5.0.jar"
-            name="flume-ng-sdk-1.6.0-cdh5.5.0.jar"
-            uripath="platform:/plugin/org.talend.libraries.apache.flume/lib/flume-ng-sdk-1.6.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/flume-ng-sdk-1.6.0-cdh5.5.0/6.0.0">
+            id="flume-ng-sdk-1.6.0-cdh5.5.2.jar"
+            name="flume-ng-sdk-1.6.0-cdh5.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/flume-ng-sdk-1.6.0-cdh5.5.2/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="flume-ng-core-1.6.0-cdh5.5.0.jar"
-            name="flume-ng-core-1.6.0-cdh5.5.0.jar"
-            uripath="platform:/plugin/org.talend.libraries.apache.flume/lib/flume-ng-core-1.6.0-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/flume-ng-core-1.6.0-cdh5.5.0/6.0.0">
+            id="flume-ng-core-1.6.0-cdh5.5.2.jar"
+            name="flume-ng-core-1.6.0-cdh5.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/flume-ng-core-1.6.0-cdh5.5.2/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="avro-ipc-1.7.6-cdh5.5.0.jar"
-            name="avro-ipc-1.7.6-cdh5.5.0.jar"
-            uripath="platform:/plugin/org.talend.libraries.apache/lib/avro-ipc-1.7.6-cdh5.5.0.jar"
-            mvn_uri="mvn:org.talend.libraries/avro-ipc-1.7.6-cdh5.5.0/6.1.1">
+            id="avro-ipc-1.7.6-cdh5.5.2.jar"
+            name="avro-ipc-1.7.6-cdh5.5.2.jar"
+            uripath="platform:/plugin/org.talend.libraries.apache/lib/avro-ipc-1.7.6-cdh5.5.2.jar"
+            mvn_uri="mvn:org.talend.libraries/avro-ipc-1.7.6-cdh5.5.2/6.1.0">
         </libraryNeeded>        
                 
         <libraryNeeded
@@ -796,11 +792,11 @@
                 description="Spark Flume libraries for CDH 5.5 that are MRREQUIRED"
                 id="SPARK-FLUME-LIB-MRREQUIRED-CDH_5_5"
                 name="SPARK-FLUME-LIB-MRREQUIRED-CDH_5_5">
-            <library id="spark-streaming-flume_2.10-1.5.0-cdh5.5.0.jar"/>
-            <library id="spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.0.jar"/>
-            <library id="flume-ng-sdk-1.6.0-cdh5.5.0.jar"/>
-            <library id="flume-ng-core-1.6.0-cdh5.5.0.jar"/>            
-            <library id="avro-ipc-1.7.6-cdh5.5.0.jar"/>            
+            <library id="spark-streaming-flume_2.10-1.5.0-cdh5.5.2.jar"/>
+            <library id="spark-streaming-flume-sink_2.10-1.5.0-cdh5.5.2.jar"/>
+            <library id="flume-ng-sdk-1.6.0-cdh5.5.2.jar"/>
+            <library id="flume-ng-core-1.6.0-cdh5.5.2.jar"/>            
+            <library id="avro-ipc-1.7.6-cdh5.5.2.jar"/>            
         </libraryNeededGroup>
         
         <!-- Spark Kafka group MRREQUIRED -->

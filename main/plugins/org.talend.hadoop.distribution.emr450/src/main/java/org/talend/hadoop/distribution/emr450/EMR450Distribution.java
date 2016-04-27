@@ -183,7 +183,8 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_DISPLAY;
+        String customVersionName = customVersionDisplayNames.get(componentType);
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override

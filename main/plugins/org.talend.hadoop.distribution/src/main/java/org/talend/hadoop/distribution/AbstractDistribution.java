@@ -185,7 +185,7 @@ public abstract class AbstractDistribution {
                     JSONObject json = (JSONObject) object;
                     String[] keysWithoutDistribution = (String[]) ArrayUtils.remove(keys, 0);
                     if (keysWithoutDistribution.length == 0) {// no key yet,
-                        return DefaultConfigurationManager.getValue(json, "");
+                        return DefaultConfigurationManager.getValue(json, ""); //$NON-NLS-1$
                     }
                     return DefaultConfigurationManager.getValue(json, keysWithoutDistribution);
                 }
