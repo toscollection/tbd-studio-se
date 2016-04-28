@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.hdp120.HDP120Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
@@ -29,13 +30,8 @@ public class HDP120HiveMetadataHelperTest extends AbstractVersionTest4HiveMetada
     private static final String NOT_SUPPORT_TOP_MESSAGE = "Shouldn't support for hive in TOS for DQ product";
 
     @Override
-    protected String getDistribution() {
-        return HDP120Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return HDP120Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return HDP120Distribution.class;
     }
 
     private boolean notSupportForTOP() {

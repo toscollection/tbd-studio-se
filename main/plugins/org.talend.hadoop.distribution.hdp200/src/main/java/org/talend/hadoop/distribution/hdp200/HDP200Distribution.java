@@ -211,11 +211,6 @@ public class HDP200Distribution extends AbstractDistribution implements HDFSComp
     }
 
     @Override
-    public boolean doSupportSecurity() {
-        return true;
-    }
-
-    @Override
     public ComponentCondition getDisplayCondition(ComponentType componentType) {
         return displayConditions.get(componentType);
     }

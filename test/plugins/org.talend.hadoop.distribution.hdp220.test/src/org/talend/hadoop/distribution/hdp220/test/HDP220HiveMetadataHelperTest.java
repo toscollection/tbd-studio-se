@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.hdp220.HDP220Distribution;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
@@ -29,13 +30,8 @@ public class HDP220HiveMetadataHelperTest extends AbstractVersionTest4HiveMetada
     private static final String NOT_SUPPORT_TOP_MESSAGE = "Shouldn't support for hive in TOS for DQ product";
 
     @Override
-    protected String getDistribution() {
-        return HDP220Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return HDP220Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return HDP220Distribution.class;
     }
 
     private boolean notSupportForTOP() {
@@ -79,4 +75,8 @@ public class HDP220HiveMetadataHelperTest extends AbstractVersionTest4HiveMetada
         }
     }
 
+    @Override
+    protected boolean isSupportTez() {
+        return true; // means support for HDP 2.2 always
+    }
 }

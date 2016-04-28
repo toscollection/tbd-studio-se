@@ -130,10 +130,6 @@ public abstract class AbstractDistribution {
         return ""; //$NON-NLS-1$
     }
 
-    public boolean doSupportSecurity() {
-        return false;
-    }
-
     public boolean doSupportSparkYarnClusterMode() {
         return false;
     }

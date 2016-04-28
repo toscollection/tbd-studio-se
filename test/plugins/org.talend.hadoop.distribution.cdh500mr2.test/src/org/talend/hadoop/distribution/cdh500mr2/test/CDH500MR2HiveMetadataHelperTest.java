@@ -14,6 +14,7 @@ package org.talend.hadoop.distribution.cdh500mr2.test;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.cdh500mr2.CDH500MR2Distribution;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadataHelper;
 
 /**
@@ -22,13 +23,8 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 public class CDH500MR2HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
-    protected String getDistribution() {
-        return CDH500MR2Distribution.DISTRIBUTION_NAME;
-    }
-
-    @Override
-    protected String getDistributionVersion() {
-        return CDH500MR2Distribution.VERSION;
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return CDH500MR2Distribution.class;
     }
 
     @Test

@@ -12,22 +12,29 @@
 // ============================================================================
 package org.talend.hadoop.distribution.test.hive;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 
+import java.text.MessageFormat;
 import java.util.Arrays;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.junit.Test;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.core.runtime.hd.hive.HiveMetadataHelper;
+import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
+import org.talend.hadoop.distribution.test.AbstractTest4HadoopDistribution;
 
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTest4HiveMetadataHelper {
+public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTest4HadoopDistribution {
 
     protected final static String[] HIVE_MODE_DISPLAY_ALL = new String[] { HiveModeInfo.EMBEDDED.getDisplayName(),
             HiveModeInfo.STANDALONE.getDisplayName() };
@@ -44,8 +51,6 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
 
     protected final static String[] HIVE_SERVER_DISPLAY_SERVER2_ONLY = new String[] { HiveServerVersionInfo.HIVE_SERVER_2
             .getDisplayName() };
-
-    protected abstract String getDistributionVersion();
 
     protected void doTestGetHiveModesDisplay(String hiveVersion, String[] modeArr) {
         doTestGetHiveModesDisplay(hiveVersion, HiveServerVersionInfo.HIVE_SERVER_1.getKey(), modeArr);
@@ -74,5 +79,55 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
             assertEquals(baseMessages + " , " + Arrays.asList(expecteds) + "<==>" + Arrays.asList(actuals), expecteds.length,
                     actuals.length);
         }
+    }
+
+    @Test
+    public void testDoSupportSecurity() {
+        String messages = "Have some problem for the {0} mode with {1}";
+
+        HiveModeInfo hiveMode = HiveModeInfo.EMBEDDED;
+        HiveServerVersionInfo hiveServer = HiveServerVersionInfo.HIVE_SERVER_2;
+
+        // embedded + server 2
+        assertThat(
+                MessageFormat.format(messages, hiveMode.getDisplayName(), hiveServer.getKey()),
+                HiveMetadataHelper.doSupportSecurity(getDistribution(), getDistributionVersion(), hiveMode.getName(),
+                        hiveServer.getKey(), false), is(isSupportSecurity()));
+
+        // embedded + server 1
+        hiveServer = HiveServerVersionInfo.HIVE_SERVER_1;
+        assertThat(
+                MessageFormat.format(messages, hiveMode.getDisplayName(), hiveServer.getKey()),
+                HiveMetadataHelper.doSupportSecurity(getDistribution(), getDistributionVersion(), hiveMode.getName(),
+                        hiveServer.getKey(), false), is(isSupportSecurity()));
+
+        // standardalone + server 2
+        hiveServer = HiveServerVersionInfo.HIVE_SERVER_2;
+        hiveMode = HiveModeInfo.STANDALONE;
+        assertThat(
+                MessageFormat.format(messages, hiveMode.getDisplayName(), hiveServer.getKey()),
+                HiveMetadataHelper.doSupportSecurity(getDistribution(), getDistributionVersion(), hiveMode.getName(),
+                        hiveServer.getKey(), false), is(isSupportSecurity()));
+    }
+
+    protected boolean isSupportSecurity() {
+        HadoopComponent hadoopComponent = getHadoopComponent();
+        if (hadoopComponent != null) {
+            return hadoopComponent.doSupportKerberos();
+        }
+        return false;
+    }
+
+    @Test
+    public void testDoSupportTez() {
+        assertThat(HiveMetadataHelper.doSupportTez(getDistribution(), getDistributionVersion(), false), is(isSupportTez()));
+    }
+
+    protected boolean isSupportTez() {
+        HadoopComponent hadoopComponent = getHadoopComponent();
+        if (hadoopComponent != null && hadoopComponent instanceof HiveComponent) {
+            return ((HiveComponent) hadoopComponent).doSupportTezForHive();
+        }
+        return false;
     }
 }
