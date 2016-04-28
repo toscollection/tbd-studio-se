@@ -316,6 +316,7 @@
                 name="HBASE-LIB-MAPR510" >
            <library id="maprfs-5.1.X-lastest"/>
            <library id="mapr-hbase-5.1.0-mapr.jar" />
+           <library id="hbase-hadoop2-compat-1.1.1-mapr-1602.jar" />
            <library id="hbase-client-1.1.1-mapr-1602.jar" />
            <library id="hbase-common-1.1.1-mapr-1602.jar" />
            <library id="hbase-protocol-1.1.1-mapr-1602.jar" />
