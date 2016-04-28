@@ -18,6 +18,7 @@
     </HEADER>
   <FAMILIES>
     <FAMILY>Databases/DynamoDB</FAMILY>
+    <FAMILY>Big Data/DynamoDB</FAMILY>
   </FAMILIES>
 	<DOCUMENTATION>
 		<URL />
@@ -95,6 +96,23 @@
 
 		
 		<PARAMETER
+            NAME="TABLE_ACTION"
+          FIELD="CLOSED_LIST"
+          NUM_ROW="40"
+		  GROUP="CONFIGURATION"
+        >
+            <ITEMS DEFAULT="NONE">
+                <ITEM NAME="NONE" VALUE="NONE" />
+                <ITEM NAME="DROP_CREATE" VALUE="DROP_CREATE"/>
+                <ITEM NAME="CREATE" VALUE="CREATE"/>
+				<ITEM NAME="CREATE_IF_NOT_EXISTS" VALUE="CREATE_IF_NOT_EXISTS"/>
+				<ITEM NAME="DROP_IF_EXISTS_AND_CREATE" VALUE="DROP_IF_EXISTS_AND_CREATE"/>
+
+            </ITEMS>
+        </PARAMETER>
+		
+		
+		<PARAMETER
             NAME="DATA_ACTION"
           FIELD="CLOSED_LIST"
           NUM_ROW="40"
@@ -105,14 +123,7 @@
                 <ITEM NAME="UPDATE" VALUE="UPDATE"/>
                 <ITEM NAME="DELETE" VALUE="DELETE"/>
             </ITEMS>
-        </PARAMETER>
-		
-		<PARAMETER
-            NAME="DIE_ON_ERROR"
-            FIELD="CHECK"
-            NUM_ROW="60">
-            <DEFAULT>false</DEFAULT>
-        </PARAMETER>
+        </PARAMETER>				
 		
 	</PARAMETERS>
 	
