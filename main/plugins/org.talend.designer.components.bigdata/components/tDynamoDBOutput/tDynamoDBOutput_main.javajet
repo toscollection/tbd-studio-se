@@ -17,7 +17,7 @@
 	String cid = node.getUniqueName();
 	
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
-	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+
 	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
 
 	String hashKeyName = ElementParameterParser.getValue(node, "__PARTITION_KEY__");
