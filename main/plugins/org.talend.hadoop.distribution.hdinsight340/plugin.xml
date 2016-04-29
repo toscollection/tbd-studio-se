@@ -222,6 +222,7 @@
                 name="MAPREDUCE-PARQUET-LIB-HD_INSIGHT_3_4_0"  >
              <library id="parquet-hadoop-bundle-1.6.0.jar" />
              <library id="snappy-java-1.0.5.jar" />
+             <library id="jodd-core-3.5.2.jar" />
         </libraryNeededGroup>
         
         <!-- Pig group -->
@@ -328,6 +329,7 @@
                 name="SPARK-PARQUET-LIB-MRREQUIRED-HD_INSIGHT_3_4_0">
              <library id="parquet-avro-hdinsight340"/>
              <library id="parquet-hadoop-bundle-hdinsight340"/>
+             <library id="jodd-core-3.5.2.jar" />
         </libraryNeededGroup>
         
         <!-- Spark S3 group MRREQUIRED -->

@@ -269,7 +269,7 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
 
     @Override
     public ESparkVersion getSparkVersion() {
-        return ESparkVersion.SPARK_1_5;
+        return ESparkVersion.SPARK_1_6;
     }
 
     @Override
