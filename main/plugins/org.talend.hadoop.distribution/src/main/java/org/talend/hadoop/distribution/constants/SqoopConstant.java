@@ -18,9 +18,9 @@ public final class SqoopConstant {
 
     public static final String DISTRIBUTION_PARAMETER = "DISTRIBUTION";//$NON-NLS-1$
 
-    public static final String DISTRIBUTION_REPOSITORYVALUE = "HADOOP_PROPERTY/DISTRIBUTION";//$NON-NLS-1$
+    public static final String DISTRIBUTION_REPOSITORYVALUE = "DISTRIBUTION";//$NON-NLS-1$
 
     public static final String VERSION_PARAMETER = "DB_VERSION";//$NON-NLS-1$
 
-    public static final String VERSION_REPOSITORYVALUE = "HADOOP_PROPERTY/DB_VERSION";//$NON-NLS-1$
+    public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 }
