@@ -265,6 +265,14 @@
          unpack="false"/>
 
    <plugin
+         id="org.talend.hadoop.distribution.cdh570.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>         
+
+   <plugin
          id="org.talend.hadoop.distribution.hdp130.test"
          download-size="0"
          install-size="0"

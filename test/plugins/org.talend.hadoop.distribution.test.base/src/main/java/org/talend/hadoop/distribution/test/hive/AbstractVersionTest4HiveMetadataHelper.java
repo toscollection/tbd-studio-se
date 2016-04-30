@@ -12,11 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.test.hive;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -31,9 +28,6 @@ import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.test.AbstractTest4HadoopDistribution;
 
-/**
- * DOC ggu class global comment. Detailled comment
- */
 public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTest4HadoopDistribution {
 
     protected final static String[] HIVE_MODE_DISPLAY_ALL = new String[] { HiveModeInfo.EMBEDDED.getDisplayName(),
@@ -62,28 +56,29 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
             modeArr = ArrayUtils.removeElement(modeArr, HiveModeInfo.EMBEDDED.getDisplayName());
         }
         String[] hiveModesDisplay = HiveMetadataHelper.getHiveModesDisplay(getDistribution(), hiveVersion, hiveServer, false);
-        doTestArray("Modes are different", modeArr, hiveModesDisplay);
+        doTestArray("Modes are different", modeArr, hiveModesDisplay); //$NON-NLS-1$
     }
 
     protected void doTestGetHiveServersDisplay(String hiveVersion, String[] serverArr) {
         String[] hiveServersDisplay = HiveMetadataHelper.getHiveServersDisplay(getDistribution(), hiveVersion, false);
-        doTestArray("Server Versions are different", serverArr, hiveServersDisplay);
+        doTestArray("Server Versions are different", serverArr, hiveServersDisplay); //$NON-NLS-1$
     }
 
+    @Override
     protected void doTestArray(String baseMessages, String[] expecteds, String[] actuals) {
         assertNotNull(expecteds);
         assertNotNull(actuals);
         if (expecteds.length == actuals.length) {
             assertArrayEquals(baseMessages, expecteds, actuals);
         } else {
-            assertEquals(baseMessages + " , " + Arrays.asList(expecteds) + "<==>" + Arrays.asList(actuals), expecteds.length,
+            assertEquals(baseMessages + " , " + Arrays.asList(expecteds) + "<==>" + Arrays.asList(actuals), expecteds.length, //$NON-NLS-1$ //$NON-NLS-2$
                     actuals.length);
         }
     }
 
     @Test
     public void testDoSupportSecurity() {
-        String messages = "Have some problem for the {0} mode with {1}";
+        String messages = "Have some problem for the {0} mode with {1}"; //$NON-NLS-1$
 
         HiveModeInfo hiveMode = HiveModeInfo.EMBEDDED;
         HiveServerVersionInfo hiveServer = HiveServerVersionInfo.HIVE_SERVER_2;
