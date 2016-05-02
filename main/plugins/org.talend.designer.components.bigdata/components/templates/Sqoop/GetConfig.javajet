@@ -141,31 +141,9 @@
             %>
             System.setProperty("pname", "MapRLogin");
             System.setProperty("https.protocols", "TLSv1.2");
-//            System.setProperty("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
+            System.setProperty("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
             System.setProperty("hadoop.login", <%=setMapRHadoopLogin ? mapRHadoopLogin : "\"kerberos\""%>);
-//            System.setProperty("org.apache.sqoop.security.authentication.type", "KERBEROS");
-//            System.setProperty("org.apache.sqoop.security.authentication.handler", "org.apache.sqoop.security.authentication.KerberosAuthenticationHandler");
-//            System.setProperty("org.apache.sqoop.security.authentication.kerberos.principal", "mapr/maprdemo@EXAMPLE.COM");
-//            System.setProperty("org.apache.sqoop.security.authentication.kerberos.keytab", "/opt/mapr/conf/mapr.keytab");
-//            System.setProperty("org.apache.sqoop.security.authentication.kerberos.http.principal", "HTTP/maprdemo@EXAMPLE.COM");
-//            System.setProperty("org.apache.sqoop.security.authentication.kerberos.http.keytab", "/opt/mapr/conf/mapr.keytab");
-//            System.setProperty("org.apache.sqoop.security.authentication.enable.doAs", "true");
-//            System.setProperty("org.apache.sqoop.security.authentication.proxyuser.mapr.users", "*");
-
-
-//            configuration_tSqoopImport_1.set("pname", "MapRLogin");
-//            configuration_tSqoopImport_1.set("https.protocols", "TLSv1.2");
-//            configuration_tSqoopImport_1.set("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
-//            configuration_tSqoopImport_1.set("hadoop.login", <%=setMapRHadoopLogin ? mapRHadoopLogin : "\"kerberos\""%>);
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.type", "KERBEROS");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.handler", "org.apache.sqoop.security.authentication.KerberosAuthenticationHandler");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.kerberos.principal", "mapr/maprdemo@EXAMPLE.COM");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.kerberos.http.principal", "HTTP/maprdemo@EXAMPLE.COM");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.kerberos.keytab", "/opt/mapr/conf/mapr.keytab");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.kerberos.http.keytab", "/opt/mapr/conf/mapr.keytab");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.enable.doAs", "true");
-//            configuration_tSqoopImport_1.set("org.apache.sqoop.security.authentication.proxyuser.mapr.users", "*");
-                        <%
+            <%
         }
 		if(useKeytab) {
 %>
@@ -176,7 +154,6 @@
             %>
             com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
             maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=mapRTicketCluster%>, <%=mapRTicketDuration%>);
-            System.out.println(maprLogin_tSqoopImport_1.toString());
             <%
         }
 	} else {

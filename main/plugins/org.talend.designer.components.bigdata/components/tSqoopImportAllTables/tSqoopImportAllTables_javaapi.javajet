@@ -55,9 +55,9 @@
     boolean setMapRHadoopLogin = ElementParameterParser.getBooleanValue(node, "__SET_HADOOP_LOGIN__");
     String mapRHadoopLogin = ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
 
-    String passwordFieldName = "";
-
 	String fsDefalutName = "fs.default.name";
+
+	String passwordFieldName = "";
 	
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));	
 %>
