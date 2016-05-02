@@ -141,6 +141,7 @@
 			jarsToRegister.add("hbase");
 			jarsToRegister.add("hbase-client");
 			jarsToRegister.add("hbase-common");
+			jarsToRegister.add("hbase-hadoop-compat");
 			jarsToRegister.add("hbase-protocol");
 			jarsToRegister.add("hbase-server");
 			jarsToRegister.add("zookeeper");
