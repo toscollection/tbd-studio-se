@@ -68,7 +68,7 @@ public class CDH570DistributionTest {
         assertFalse(((HiveComponent) distribution).doSupportHive1());
         assertTrue(((HiveComponent) distribution).doSupportHive2());
         assertFalse(((HiveComponent) distribution).doSupportTezForHive());
-        assertTrue(((HiveComponent) distribution).doSupportHBaseForHive());
+        assertFalse(((HiveComponent) distribution).doSupportHBaseForHive());
         assertTrue(((HiveComponent) distribution).doSupportSSL());
         assertTrue(((HiveComponent) distribution).doSupportORCFormat());
         assertTrue(((HiveComponent) distribution).doSupportAvroFormat());

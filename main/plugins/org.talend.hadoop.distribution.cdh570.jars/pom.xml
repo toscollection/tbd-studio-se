@@ -113,7 +113,7 @@
                 </artifactItem>
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
-                  <artifactId>hbase-hadoop2-compat-1.2.0-cdh5.7.0</artifactId>
+                  <artifactId>hbase-hadoop-compat-1.2.0-cdh5.7.0</artifactId>
                   <version>${talend.version.610}</version>
                 </artifactItem>
                 <artifactItem>
