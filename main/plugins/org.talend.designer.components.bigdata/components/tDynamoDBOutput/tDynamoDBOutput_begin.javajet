@@ -1,0 +1,260 @@
+<%@ jet 
+	imports="
+		org.talend.core.model.process.INode 
+		org.talend.core.model.process.ElementParameterParser 
+		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataColumn 
+		org.talend.core.model.process.IConnection
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.metadata.types.JavaTypesManager
+		org.talend.core.model.metadata.types.JavaType
+		org.talend.core.model.process.IConnectionCategory
+		java.util.List 
+    	java.util.Map		
+	" 
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+  	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+  	INode node = (INode)codeGenArgument.getArgument();
+  	String cid = node.getUniqueName();
+
+	String accessKey   = ElementParameterParser.getValue(node, "__ACCESS_KEY__");
+	String secretKey   = ElementParameterParser.getValue(node, "__SECRET_KEY__");
+	
+	String region = ElementParameterParser.getValue(node, "__REGION__");
+
+	boolean useEndPoint = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_ENDPOINT__"));
+	
+    String endPoint   = ElementParameterParser.getValue(node, "__ENDPOINT__");
+    
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+	
+	String tableAction = ElementParameterParser.getValue(node,"__TABLE_ACTION__");
+	
+	String table   = ElementParameterParser.getValue(node, "__TABLE__");
+	
+	String hashKeyName = ElementParameterParser.getValue(node, "__PARTITION_KEY__");
+	String rangeKeyName = ElementParameterParser.getValue(node, "__SORT_KEY__");
+	
+	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+  	List<IMetadataTable> metadatas = node.getMetadataList();
+  	List<IMetadataColumn> columnList = null;
+  	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
+  	String firstConnName = "";
+  	if (outputs.size() > 0){
+		IConnection out = outputs.get(0);
+		if(out!=null && out.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+			firstConnName = out.getName();
+		}
+    }
+	%>
+	int nb_line_<%=cid %> = 0;
+	
+	<%
+  	if(metadatas != null && metadatas.size() > 0){
+      	IMetadataTable metadata = metadatas.get(0);
+      	if(metadata != null){
+			if ("INSERT".equalsIgnoreCase(dataAction)) {
+		%>
+				com.amazonaws.services.dynamodbv2.document.Item item_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.Item(); 
+				com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec putItemSpec_<%=cid%>;
+				com.amazonaws.services.dynamodbv2.document.PutItemOutcome putItemOutcome_<%=cid%>;
+		<%
+			}
+			else if ("UPDATE".equalsIgnoreCase(dataAction)) {			
+		%>
+				com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec updateItemSpec_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.spec.UpdateItemSpec();
+				com.amazonaws.services.dynamodbv2.document.UpdateItemOutcome updateItemOutcome_<%=cid%>;
+		<%
+			}
+			else if ("DELETE".equalsIgnoreCase(dataAction)) {				
+		%>
+				com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec deleteItemSpec_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.spec.DeleteItemSpec();
+				com.amazonaws.services.dynamodbv2.document.DeleteItemOutcome deleteItemOutcome_<%=cid%>;
+		<%
+			}
+		%>	
+			com.amazonaws.auth.AWSCredentials credentials_<%=cid%> = new com.amazonaws.auth.BasicAWSCredentials(
+				<%=accessKey%>,
+				<%=secretKey%>);		
+			
+			com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient dynamoDBClient_<%=cid%> = new com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient(credentials_<%=cid%>);
+   
+			if(<%=useEndPoint%>)
+			{
+				dynamoDBClient_<%=cid%> = dynamoDBClient_<%=cid%>.withEndpoint(<%=endPoint%>);
+			}
+			
+		<%
+			if(region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
+			%>
+				dynamoDBClient_<%=cid%>.setRegion(com.amazonaws.regions.RegionUtils.getRegion(<%=region%>));
+			<%
+			}
+		%>
+							
+			com.amazonaws.services.dynamodbv2.document.DynamoDB dynamoDB_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.DynamoDB(dynamoDBClient_<%=cid%>);
+						
+			java.util.HashMap<String, String> attributeMap = new java.util.HashMap<String, String>();  			
+	
+			List<com.amazonaws.services.dynamodbv2.model.AttributeDefinition> attributeDefinitionList = new java.util.ArrayList<com.amazonaws.services.dynamodbv2.model.AttributeDefinition>();
+			
+			<%
+			columnList = metadata.getListColumns();
+			int sizeColumns = columnList.size();
+			
+			for (int i = 0; i < sizeColumns; i++) {
+				IMetadataColumn column = columnList.get(i);
+				if(column.isKey()){
+				%>		
+					attributeMap.put("<%=column.getLabel() %>", "<%=column.getTalendType() %>");  				
+				<%
+				}
+			}
+			%>		
+			
+			for(String key : attributeMap.keySet()){
+				String type = attributeMap.get(key);
+				if(type.toUpperCase().indexOf("STRING") >=0)
+				{
+					attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition(key, com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.S));
+				}
+				else if(type.toUpperCase().indexOf("INTEGER") >=0)
+				{
+					attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition(key, com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.N));			
+				}
+			}
+			
+			<%
+			if ("NONE".equalsIgnoreCase(tableAction)) {
+			%>
+		
+			<%
+			} else if ("CREATE".equalsIgnoreCase(tableAction)) {
+			%>
+				com.amazonaws.services.dynamodbv2.document.Table tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
+					<%=table%>,
+					java.util.Arrays.asList(
+						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
+						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
+					attributeDefinitionList,
+					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+				tableTemp_<%=cid%>.waitForActive();
+				<%
+				if(isLog4jEnabled){
+				%>
+					log.info(<%=table%> + " has been created.");
+				<%
+				}
+
+			} else if ("CREATE_IF_NOT_EXISTS".equalsIgnoreCase(tableAction)) {
+			%>
+				try{
+					com.amazonaws.services.dynamodbv2.document.Table tableTemp_<%=cid%> = dynamoDB_<%=cid%>.getTable(<%=table%>);
+				
+					tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
+						<%=table%>,
+						java.util.Arrays.asList(
+							new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
+							new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
+						attributeDefinitionList,
+						new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+					tableTemp_<%=cid%>.waitForActive();
+					<%
+					if(isLog4jEnabled){
+					%>
+						log.info(<%=table%> + " has been created.");
+					<%
+					}
+					%>
+				}
+				catch(com.amazonaws.services.dynamodbv2.model.ResourceInUseException ex)
+				{
+					<%
+					if(isLog4jEnabled){
+					%>
+						log.info(<%=table%> + " already exist.");
+					<%
+					}
+					%>
+				}
+				
+	
+			<%
+			} else if ("DROP_CREATE".equalsIgnoreCase(tableAction)) {
+			%>
+				com.amazonaws.services.dynamodbv2.document.Table tableTemp_<%=cid%> = dynamoDB_<%=cid%>.getTable(<%=table%>);
+				
+				tableTemp_<%=cid%>.delete();
+				tableTemp_<%=cid%>.waitForDelete();
+				<%
+				if(isLog4jEnabled){
+				%>
+					log.info(<%=table%> + " has been deleted.");
+				<%
+				}
+				%>
+				
+				tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
+					<%=table%>,
+					java.util.Arrays.asList(
+						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
+						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
+					attributeDefinitionList,
+					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+				tableTemp_<%=cid%>.waitForActive();			
+				<%
+				if(isLog4jEnabled){
+				%>	
+					log.info(<%=table%> + " has been created.");
+				<%
+				}				
+
+			} else if ("DROP_IF_EXISTS_AND_CREATE".equalsIgnoreCase(tableAction)) {
+			%>
+				com.amazonaws.services.dynamodbv2.document.Table tableTemp_<%=cid%> = dynamoDB_<%=cid%>.getTable(<%=table%>);
+				
+				try{				
+					tableTemp_<%=cid%>.delete();
+					tableTemp_<%=cid%>.waitForDelete();
+					if(isLog4jEnabled){
+						log.info(<%=table%> + " has been deleted.");
+					}					
+				}
+				catch(com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException ex)
+				{	
+					<%
+					if(isLog4jEnabled){
+					%>	
+						log.info(<%=table%> + " doesn't exist.");
+					<%
+					}
+					%>					
+				}
+
+				tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
+					<%=table%>,
+					java.util.Arrays.asList(
+						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
+						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
+					attributeDefinitionList,
+						new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+				tableTemp_<%=cid%>.waitForActive();				
+				<%
+				if(isLog4jEnabled){
+				%>	
+					log.info(<%=table%> + " has been created.");
+				<%
+				}
+			}
+			%>			
+			com.amazonaws.services.dynamodbv2.document.Table table_<%=cid%> = dynamoDB_<%=cid%>.getTable(<%=table%>);
+
+				
+	<%						
+		}
+	} 
+	%>
+

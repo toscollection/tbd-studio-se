@@ -39,6 +39,7 @@ import org.talend.hadoop.distribution.cdh550.modulegroup.node.mr.CDH550MRS3NodeM
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.pigoutput.CDH550PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkbatch.CDH550SparkBatchS3NodeModuleGroup;
+import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingFlumeNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingKafkaAssemblyModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingKafkaAvroModuleGroup;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.sparkstreaming.CDH550SparkStreamingKafkaClientModuleGroup;
@@ -80,7 +81,10 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
 
     private static Map<ComponentType, ComponentCondition> displayConditions;
 
-    static {
+    public CDH550Distribution() {
+
+        String distribution = getDistribution();
+        String version = getVersion();
 
         // Used to add a module group import for the components that have a HADOOP_DISTRIBUTION parameter, aka. the
         // components that have the distribution list.
@@ -102,29 +106,33 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
         nodeModuleGroups = new HashMap<>();
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
-                CDH550MRS3NodeModuleGroup.getModuleGroups());
+                CDH550MRS3NodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
-                CDH550MRS3NodeModuleGroup.getModuleGroups());
+                CDH550MRS3NodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
-                CDH550PigOutputNodeModuleGroup.getModuleGroups());
+                CDH550PigOutputNodeModuleGroup.getModuleGroups(distribution, version));
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
-                CDH550SparkBatchParquetNodeModuleGroup.getModuleGroups());
+                CDH550SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
-                CDH550SparkBatchParquetNodeModuleGroup.getModuleGroups());
+                CDH550SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
-                CDH550SparkBatchS3NodeModuleGroup.getModuleGroups());
+                CDH550SparkBatchS3NodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.PARQUET_INPUT_COMPONENT), CDH550SparkStreamingParquetNodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.PARQUET_INPUT_COMPONENT), CDH550SparkStreamingParquetNodeModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT), CDH550SparkStreamingParquetNodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT), CDH550SparkStreamingParquetNodeModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT), CDH550SparkStreamingParquetNodeModuleGroup
-                .getModuleGroups());
+                .getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.S3_CONFIGURATION_COMPONENT), CDH550SparkStreamingS3NodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.S3_CONFIGURATION_COMPONENT), CDH550SparkStreamingS3NodeModuleGroup.getModuleGroups(
+                distribution, version));
 
-        Set<DistributionModuleGroup> kinesisNodeModuleGroups = CDH550SparkStreamingKinesisNodeModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> kinesisNodeModuleGroups = CDH550SparkStreamingKinesisNodeModuleGroup.getModuleGroups(
+                distribution, version);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KINESIS_INPUT_COMPONENT), kinesisNodeModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
@@ -132,8 +140,18 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), kinesisNodeModuleGroups);
 
-        Set<DistributionModuleGroup> kafkaAssemblyModuleGroups = CDH550SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups();
-        Set<DistributionModuleGroup> kafkaAvroModuleGroups = CDH550SparkStreamingKafkaAvroModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> flumeNodeModuleGroups = CDH550SparkStreamingFlumeNodeModuleGroup.getModuleGroups(
+                distribution, version);
+        nodeModuleGroups.put(
+                new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_INPUT_COMPONENT),
+                flumeNodeModuleGroups);
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.FLUME_OUTPUT_COMPONENT), flumeNodeModuleGroups);
+
+        Set<DistributionModuleGroup> kafkaAssemblyModuleGroups = CDH550SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(
+                distribution, version);
+        Set<DistributionModuleGroup> kafkaAvroModuleGroups = CDH550SparkStreamingKafkaAvroModuleGroup.getModuleGroups(
+                distribution, version);
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 kafkaAssemblyModuleGroups);
@@ -142,7 +160,8 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAvroModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), CDH550SparkStreamingKafkaClientModuleGroup.getModuleGroups());
+                SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), CDH550SparkStreamingKafkaClientModuleGroup.getModuleGroups(
+                distribution, version));
 
         // Used to hide the distribution according to other parameters in the component.
         displayConditions = new HashMap<>();

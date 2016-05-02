@@ -121,7 +121,7 @@ public class ClouderaNavigatorOptionPage extends AbstractHadoopImportConfsPage {
 
       navigator_usernameText = new LabelledText(naviCommonComposite,
           Messages.getString("HadoopClusterForm.text.navigator_username"), 1); //$NON-NLS-1$
-      navigator_passwordText = new LabelledText(naviCommonComposite, Messages.getString("HadoopClusterForm.text.navigator_password"), 1); //$NON-NLS-1$
+      navigator_passwordText = new LabelledText(naviCommonComposite, Messages.getString("HadoopClusterForm.text.navigator_password"), 1,SWT.PASSWORD); //$NON-NLS-1$
       navigator_urlText = new LabelledText(naviCommonComposite,
           Messages.getString("HadoopClusterForm.text.navigator_url"), 1); //$NON-NLS-1$
       navigator_metatata_urlText = new LabelledText(naviCommonComposite,

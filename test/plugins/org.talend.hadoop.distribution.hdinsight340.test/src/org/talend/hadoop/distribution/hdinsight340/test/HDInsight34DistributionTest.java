@@ -73,8 +73,8 @@ public class HDInsight34DistributionTest {
         assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
         assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
-        assertFalse(((SparkBatchComponent) distribution).isSpark16());
-        assertTrue(((SparkBatchComponent) distribution).isSpark15());
+        assertTrue(((SparkBatchComponent) distribution).isSpark16());
+        assertFalse(((SparkBatchComponent) distribution).isSpark15());
         assertFalse(((SparkBatchComponent) distribution).isSpark14());
         assertFalse(((SparkBatchComponent) distribution).isSpark13());
         assertFalse(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
@@ -83,8 +83,8 @@ public class HDInsight34DistributionTest {
         assertFalse(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertFalse(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClusterMode());
-        assertFalse(((SparkStreamingComponent) distribution).isSpark16());
-        assertTrue(((SparkStreamingComponent) distribution).isSpark15());
+        assertTrue(((SparkStreamingComponent) distribution).isSpark16());
+        assertFalse(((SparkStreamingComponent) distribution).isSpark15());
         assertFalse(((SparkStreamingComponent) distribution).isSpark14());
         assertFalse(((SparkStreamingComponent) distribution).isSpark13());
         assertFalse(((SparkStreamingComponent) distribution).doSupportDynamicMemoryAllocation());

@@ -143,14 +143,6 @@ public class HDP120Distribution extends AbstractDistribution implements HDFSComp
     }
 
     @Override
-    public boolean doSupportStandaloneMode() {
-        if (PluginChecker.isOnlyTopLoaded()) { // don't support in TOS for DQ product.
-            return false;
-        }
-        return super.doSupportStandaloneMode();
-    }
-
-    @Override
     public boolean doSupportHive1() {
         return true;
     }
@@ -200,8 +192,4 @@ public class HDP120Distribution extends AbstractDistribution implements HDFSComp
         return false;
     }
 
-    @Override
-    public boolean doSupportSecurity() {
-        return true;
-    }
 }

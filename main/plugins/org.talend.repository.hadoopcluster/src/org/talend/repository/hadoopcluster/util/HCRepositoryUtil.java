@@ -21,16 +21,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
+import org.talend.core.GlobalServiceRegister;
 import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.hadoop.IHadoopDistributionService;
 import org.talend.core.hadoop.conf.EHadoopProperties;
-import org.talend.core.hadoop.conf.HadoopDefaultConfsManager;
-import org.talend.core.hadoop.version.EHadoopDistributions;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.model.general.Project;
 import org.talend.core.model.metadata.builder.connection.Connection;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
@@ -41,6 +39,8 @@ import org.talend.core.model.properties.Item;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
+import org.talend.core.runtime.hd.IHDistribution;
+import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ProjectManager;
@@ -229,13 +229,17 @@ public class HCRepositoryUtil {
     }
 
     public static HadoopClusterConnectionItem getHadoopClusterItemBySubitemId(String subitemId) {
+        return getHadoopClusterItemBySubitemId(ProjectManager.getInstance().getCurrentProject(), subitemId);
+    }
+
+    public static HadoopClusterConnectionItem getHadoopClusterItemBySubitemId(Project project, String subitemId) {
         if (subitemId == null) {
             return null;
         }
 
         IRepositoryViewObject repObj = null;
         try {
-            repObj = ProxyRepositoryFactory.getInstance().getLastVersion(subitemId);
+            repObj = ProxyRepositoryFactory.getInstance().getLastVersion(project, subitemId);
         } catch (PersistenceException e) {
             ExceptionHandler.process(e);
         }
@@ -542,33 +546,38 @@ public class HCRepositoryUtil {
         if (distribution == null) {
             return;
         }
-
-        String[] versionPrefix = new String[] { distribution };
-        if (EHadoopDistributions.AMAZON_EMR.getName().equals(distribution)
-                && (EHadoopVersion4Drivers.APACHE_1_0_3_EMR.getVersionValue().equals(version)
-                        || EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionValue().equals(version) || EHadoopVersion4Drivers.EMR_4_0_0
-                        .getVersionValue().equals(version))) {
-            versionPrefix = (String[]) ArrayUtils.add(versionPrefix, version);
+        IHadoopDistributionService hadoopDistributionService = null;
+        if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopDistributionService.class)) {
+            hadoopDistributionService = (IHadoopDistributionService) GlobalServiceRegister.getDefault().getService(
+                    IHadoopDistributionService.class);
+        }
+        if (hadoopDistributionService == null) {
+            return;
+        }
+        IHDistribution hiveDistribution = hadoopDistributionService.getHadoopDistribution(distribution, false);
+        if (hiveDistribution == null) {
+            return;
+        }
+        IHDistributionVersion hiveVersion = hiveDistribution.getHDVersion(version, false);
+        if (hiveVersion == null) {
+            return;
         }
         boolean isYarn = connection.isUseYarn();
 
         String defaultJTORRM = null;
         String defaultJTORRMPrincipal = null;
         if (isYarn) {
-            defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER.getName()));
-            defaultJTORRMPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.RESOURCE_MANAGER_PRINCIPAL.getName()));
+            defaultJTORRM = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.RESOURCE_MANAGER.getName());
+            defaultJTORRMPrincipal = hiveVersion.getDefaultConfig(distribution,
+                    EHadoopProperties.RESOURCE_MANAGER_PRINCIPAL.getName());
         } else {
-            defaultJTORRM = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER.getName()));
-            defaultJTORRMPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                    (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.JOBTRACKER_PRINCIPAL.getName()));
+            defaultJTORRM = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.JOBTRACKER.getName());
+            defaultJTORRMPrincipal = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.JOBTRACKER_PRINCIPAL.getName());
         }
         if (defaultJTORRM != null) {
             connection.setJobTrackerURI(defaultJTORRM);
         }
-        String defaultRMS = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+        String defaultRMS = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS.getName());
         if (defaultRMS != null) {
             connection.setRmScheduler(defaultRMS);
@@ -576,57 +585,52 @@ public class HCRepositoryUtil {
         if (defaultJTORRMPrincipal != null) {
             connection.setJtOrRmPrincipal(defaultJTORRMPrincipal);
         }
-        String defaultNN = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(
-                (String[]) ArrayUtils.add(versionPrefix, EHadoopProperties.NAMENODE_URI.getName()));
+        String defaultNN = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.NAMENODE_URI.getName());
         if (defaultNN != null) {
             connection.setNameNodeURI(defaultNN);
         }
-        String defaultNNP = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                EHadoopProperties.NAMENODE_PRINCIPAL.getName());
+        String defaultNNP = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.NAMENODE_PRINCIPAL.getName());
         if (defaultNNP != null) {
             connection.setPrincipal(defaultNNP);
         }
-        String defaultJobHistoryPrincipal = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+        String defaultJobHistoryPrincipal = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.JOBHISTORY_PRINCIPAL.getName());
         if (defaultJobHistoryPrincipal != null) {
             connection.setJobHistoryPrincipal(defaultJobHistoryPrincipal);
         }
-        String defaultJH = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                EHadoopProperties.JOBHISTORY_ADDRESS.getName());
+        String defaultJH = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.JOBHISTORY_ADDRESS.getName());
         if (defaultJH != null) {
             connection.setJobHistory(defaultJH);
         }
-        String defaultSD = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                EHadoopProperties.STAGING_DIRECTORY.getName());
+        String defaultSD = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.STAGING_DIRECTORY.getName());
         if (defaultSD != null) {
             connection.setStagingDirectory(defaultSD);
         }
-        
-        String defaultClouderaUserName = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+
+        String defaultClouderaUserName = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.CLOUDERA_NAVIGATOR_USERNAME.getName());
         if (defaultClouderaUserName != null) {
             connection.setClouderaNaviUserName(defaultClouderaUserName);
         }
-        String defaultClouderaPassword = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+        String defaultClouderaPassword = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.CLOUDERA_NAVIGATOR_PASSWORD.getName());
         if (defaultClouderaPassword != null) {
             connection.setClouderaNaviPassword(defaultClouderaPassword);
         }
-        String defaultClouderaUrl = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
-                EHadoopProperties.CLOUDERA_NAVIGATOR_URL.getName());
+        String defaultClouderaUrl = hiveVersion
+                .getDefaultConfig(distribution, EHadoopProperties.CLOUDERA_NAVIGATOR_URL.getName());
         if (defaultClouderaUrl != null) {
             connection.setClouderaNaviUrl(defaultClouderaUrl);
         }
-        String defaultClouderaMetUrl = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+        String defaultClouderaMetUrl = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.CLOUDERA_NAVIGATOR_METADATA_URL.getName());
         if (defaultClouderaMetUrl != null) {
             connection.setClouderaNaviMetadataUrl(defaultClouderaMetUrl);
         }
-        String defaultClouderaClientUrl = HadoopDefaultConfsManager.getInstance().getDefaultConfValue(distribution,
+        String defaultClouderaClientUrl = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.CLOUDERA_NAVIGATOR_CLIENT_URL.getName());
         if (defaultClouderaClientUrl != null) {
             connection.setClouderaNaviClientUrl(defaultClouderaClientUrl);
         }
     }
-
 }

@@ -145,6 +145,21 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
                         break;
+                    case  ClouderaNavigatorUsername:  
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getClouderaNaviUserName());
+                        break;
+                    case ClouderaNavigatorPassword:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getClouderaNaviPassword());
+                        break;
+                    case ClouderaNavigatorUrl:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getClouderaNaviUrl());
+                        break;
+                    case ClouderaNavigatorMetadataUrl:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getClouderaNaviMetadataUrl());
+                        break;
+                    case ClouderaNavigatorClientUrl:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getClouderaNaviClientUrl());
+                        break;
                     default:
                     }
 
@@ -328,6 +343,21 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
+        case  ClouderaNavigatorUsername:  
+            hadoopConn.setClouderaNaviUserName(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case ClouderaNavigatorPassword:
+            hadoopConn.setClouderaNaviPassword(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case ClouderaNavigatorUrl:
+            hadoopConn.setClouderaNaviUrl(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case ClouderaNavigatorMetadataUrl:
+            hadoopConn.setClouderaNaviMetadataUrl(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case ClouderaNavigatorClientUrl:
+            hadoopConn.setClouderaNaviClientUrl(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
         default:
         }
     }
@@ -358,6 +388,18 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             String principal = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
                     conn.getKeytabPrincipal()));
             String keyTab = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getKeytab()));
+            
+            String cnUserName = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviUserName()));
+            
+            String cnPassword = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviPassword()));
+            
+            String cnUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviUrl()));
+            
+            String cnMetadataUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviMetadataUrl()));
+            
+            String cnClientUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviClientUrl()));
+            
+            
             for (String paramKey : ((HadoopClusterConnection) hadoopConn).getParameters().keySet()) {
                 String originalValue = ContextParameterUtils.getOriginalValue(contextType, conn.getParameters().get(paramKey));
                 conn.getParameters().put(paramKey, originalValue);
@@ -380,6 +422,11 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             conn.setGroup(group);
             conn.setKeytab(keyTab);
             conn.setKeytabPrincipal(principal);
+            conn.setClouderaNaviUserName(cnUserName);
+            conn.setClouderaNaviPassword(cnPassword);
+            conn.setClouderaNaviUrl(cnUrl);
+            conn.setClouderaNaviMetadataUrl(cnMetadataUrl);
+            conn.setClouderaNaviClientUrl(cnClientUrl);
         }
     }
 

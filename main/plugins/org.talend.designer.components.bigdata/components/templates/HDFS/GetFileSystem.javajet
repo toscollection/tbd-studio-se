@@ -130,6 +130,10 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
             <%
         }
 	}
+
+%>
+       org.apache.hadoop.security.UserGroupInformation.setConfiguration(conf_<%=cid%>);
+<%
 	
 	if((!isCustom && hdfsDistrib.doSupportGroup()) || (isCustom && "UGI".equals(auth))){
 		String group = ElementParameterParser.getValue(node, "__GROUP__");

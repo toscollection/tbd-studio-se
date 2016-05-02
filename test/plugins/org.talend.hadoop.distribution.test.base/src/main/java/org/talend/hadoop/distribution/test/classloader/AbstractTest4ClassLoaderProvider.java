@@ -14,6 +14,7 @@ package org.talend.hadoop.distribution.test.classloader;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -88,6 +89,28 @@ public abstract class AbstractTest4ClassLoaderProvider extends AbstractTest4Hado
         if (libs != null && definedLibs != null) {
             doTestSet(new HashSet<String>(Arrays.asList(libs)), new HashSet<String>(Arrays.asList(definedLibs)));
         }
+    }
+
+    protected void doTestNotSupportHiveServerWithMode(HiveServerVersionInfo server, HiveModeInfo mode) {
+        String index = server.getKey() + SEP_INDEX + getDistribution() + SEP_INDEX + getDistributionVersion() + SEP_INDEX
+                + mode.getName();
+        doTestNotSupportClassLoaderViaIndex(index);
+    }
+
+    protected void doTestNotSupportClassLoader(String indexPrefix, String... additionsIndex) {
+        String index = indexPrefix + SEP_INDEX + getDistribution() + SEP_INDEX + getDistributionVersion();
+        if (additionsIndex != null) {
+            for (String addition : additionsIndex) {
+                index += addition;
+            }
+        }
+        doTestNotSupportClassLoaderViaIndex(index);
+    }
+
+    protected void doTestNotSupportClassLoaderViaIndex(String index) {
+        assertNotNull("Can't do test, because the JUnit test class was set incorrectly.", getHadoopComponentClass());
+        IConfigurationElement config = ClassLoaderFactory.findIndex(index);
+        assertTrue("Shouldn't support the classloader via key: " + index, config == null);
     }
 
 }

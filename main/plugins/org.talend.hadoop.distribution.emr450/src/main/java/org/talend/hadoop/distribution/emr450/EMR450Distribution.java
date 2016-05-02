@@ -88,7 +88,11 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
 
     private static Map<ComponentType, String> customVersionDisplayNames = new HashMap<>();
 
-    static {
+    public EMR450Distribution() {
+
+        String distribution = getDistribution();
+        String version = getVersion();
+
         displayConditions.put(ComponentType.PIGOUTPUT, getPigOutputDisplayCondition());
 
         customVersionDisplayNames.put(ComponentType.PIG, PIG_EMR450_DISPLAY);
@@ -108,56 +112,63 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
 
         // Mapreduce nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
-                EMR450MRS3NodeModuleGroup.getModuleGroups());
+                EMR450MRS3NodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
-                EMR450MRS3NodeModuleGroup.getModuleGroups());
+                EMR450MRS3NodeModuleGroup.getModuleGroups(distribution, version));
         // Pig nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
-                EMR450PigOutputNodeModuleGroup.getModuleGroups());
+                EMR450PigOutputNodeModuleGroup.getModuleGroups(distribution, version));
 
         // Spark Batch Parquet nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
-                EMR450SparkBatchParquetNodeModuleGroup.getModuleGroups());
+                EMR450SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
-                EMR450SparkBatchParquetNodeModuleGroup.getModuleGroups());
+                EMR450SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
 
         // Spark Batch S3 nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
-                EMR450SparkBatchS3NodeModuleGroup.getModuleGroups());
+                EMR450SparkBatchS3NodeModuleGroup.getModuleGroups(distribution, version));
 
         // Spark Streaming Parquet nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.PARQUET_INPUT_COMPONENT), EMR450SparkStreamingParquetNodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.PARQUET_INPUT_COMPONENT), EMR450SparkStreamingParquetNodeModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT), EMR450SparkStreamingParquetNodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT), EMR450SparkStreamingParquetNodeModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT), EMR450SparkStreamingParquetNodeModuleGroup
-                .getModuleGroups());
+                .getModuleGroups(distribution, version));
 
         // Spark Streaming S3 nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.S3_CONFIGURATION_COMPONENT), EMR450SparkStreamingS3NodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.S3_CONFIGURATION_COMPONENT), EMR450SparkStreamingS3NodeModuleGroup.getModuleGroups(
+                distribution, version));
 
         // Spark Streaming Kinesis nodes
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KINESIS_INPUT_COMPONENT), EMR450SparkStreamingKinesisNodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.KINESIS_INPUT_COMPONENT), EMR450SparkStreamingKinesisNodeModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), EMR450SparkStreamingKinesisNodeModuleGroup
-                .getModuleGroups());
+                SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), EMR450SparkStreamingKinesisNodeModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), EMR450SparkStreamingKinesisNodeModuleGroup.getModuleGroups());
+                SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), EMR450SparkStreamingKinesisNodeModuleGroup.getModuleGroups(
+                distribution, version));
 
         // Spark Streaming Kafka nodes
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
-                EMR450SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups());
+                EMR450SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), EMR450SparkStreamingKafkaAssemblyModuleGroup
-                .getModuleGroups());
+                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), EMR450SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), EMR450SparkStreamingKafkaAvroModuleGroup.getModuleGroups());
+                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), EMR450SparkStreamingKafkaAvroModuleGroup.getModuleGroups(
+                distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), EMR450SparkStreamingKafkaClientModuleGroup.getModuleGroups());
+                SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), EMR450SparkStreamingKafkaClientModuleGroup.getModuleGroups(
+                distribution, version));
     }
 
     private static ComponentCondition getPigOutputDisplayCondition() {
@@ -183,7 +194,8 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_DISPLAY;
+        String customVersionName = customVersionDisplayNames.get(componentType);
+        return customVersionName != null ? customVersionName : VERSION_DISPLAY;
     }
 
     @Override

@@ -1,10 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Hadoop distribution
-Bundle-SymbolicName: org.talend.hadoop.distribution
+Bundle-SymbolicName: org.talend.hadoop.distribution;singleton:=true
 Bundle-Version: 6.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Require-Bundle: org.talend.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ org.apache.commons.collections,
+ org.talend.core.runtime
 Export-Package: org.talend.hadoop.distribution,
  org.talend.hadoop.distribution.component,
  org.talend.hadoop.distribution.condition,

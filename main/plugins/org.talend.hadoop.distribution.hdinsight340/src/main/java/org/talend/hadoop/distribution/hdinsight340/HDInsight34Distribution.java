@@ -24,6 +24,7 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HiveComponent;
+import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
@@ -41,6 +42,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34HiveModuleGroup;
+import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34HiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34MapReduceModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34PigModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34PigOutputModuleGroup;
@@ -48,16 +50,10 @@ import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34SparkB
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.pigoutput.HDInsight34PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkbatch.HDInsight34SparkBatchParquetNodeModuleGroup;
-import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkbatch.HDInsight34SparkBatchS3NodeModuleGroup;
-import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingKafkaAssemblyModuleGroup;
-import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingKafkaAvroModuleGroup;
-import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingKafkaClientModuleGroup;
-import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingKinesisNodeModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingParquetNodeModuleGroup;
-import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingS3NodeModuleGroup;
 
 public class HDInsight34Distribution extends AbstractDistribution implements MRComponent, PigComponent, HiveComponent,
-        SparkBatchComponent, SparkStreamingComponent, IMicrosoftHDInsightDistribution {
+        SparkBatchComponent, SparkStreamingComponent, IMicrosoftHDInsightDistribution, HiveOnSparkComponent {
 
     public final static String VERSION = "MICROSOFT_HD_INSIGHT_3_4"; //$NON-NLS-1$
 
@@ -81,6 +77,7 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
         moduleGroups.put(ComponentType.PIGOUTPUT, HDInsight34PigOutputModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.HIVE, HDInsight34HiveModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKBATCH, HDInsight34SparkBatchModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.HIVEONSPARK, HDInsight34HiveOnSparkModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, HDInsight34SparkStreamingModuleGroup.getModuleGroups());
 
         // Used to add a module group import for a specific node. The given node must have a HADOOP_LIBRARIES parameter.
@@ -93,8 +90,6 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
                 HDInsight34SparkBatchParquetNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
                 HDInsight34SparkBatchParquetNodeModuleGroup.getModuleGroups());
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
-                HDInsight34SparkBatchS3NodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), HDInsight34SparkStreamingParquetNodeModuleGroup
                 .getModuleGroups());
@@ -104,30 +99,6 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT), HDInsight34SparkStreamingParquetNodeModuleGroup
                 .getModuleGroups());
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.S3_CONFIGURATION_COMPONENT), HDInsight34SparkStreamingS3NodeModuleGroup.getModuleGroups());
-
-        Set<DistributionModuleGroup> kinesisNodeModuleGroups = HDInsight34SparkStreamingKinesisNodeModuleGroup.getModuleGroups();
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KINESIS_INPUT_COMPONENT), kinesisNodeModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), kinesisNodeModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), kinesisNodeModuleGroups);
-
-        Set<DistributionModuleGroup> kafkaAssemblyModuleGroups = HDInsight34SparkStreamingKafkaAssemblyModuleGroup
-                .getModuleGroups();
-        Set<DistributionModuleGroup> kafkaAvroModuleGroups = HDInsight34SparkStreamingKafkaAvroModuleGroup.getModuleGroups();
-        nodeModuleGroups.put(
-                new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
-                kafkaAssemblyModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAssemblyModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAvroModuleGroups);
-        nodeModuleGroups
-                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
-                        HDInsight34SparkStreamingKafkaClientModuleGroup.getModuleGroups());
 
         ComponentCondition c1 = new NestedComponentCondition(new MultiComponentCondition(new SimpleComponentCondition(
                 new BasicExpression(Constant.PIG_STORE_PARAMETER, EqualityOperator.NOT_EQ, Constant.PIG_HBASESTORAGE_PARAMETER)),
@@ -298,7 +269,7 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
 
     @Override
     public ESparkVersion getSparkVersion() {
-        return ESparkVersion.SPARK_1_5;
+        return ESparkVersion.SPARK_1_6;
     }
 
     @Override

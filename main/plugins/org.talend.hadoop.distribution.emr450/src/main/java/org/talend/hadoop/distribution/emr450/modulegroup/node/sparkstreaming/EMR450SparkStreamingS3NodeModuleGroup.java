@@ -18,15 +18,14 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
-import org.talend.hadoop.distribution.emr450.EMR450Distribution;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.mr.EMR450MRS3NodeModuleGroup;
 
 public class EMR450SparkStreamingS3NodeModuleGroup {
 
-    public static Set<DistributionModuleGroup> getModuleGroups() {
+    public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(EMR450MRS3NodeModuleGroup.S3_GROUP_NAME, true,
-                new SparkStreamingLinkedNodeCondition(EMR450Distribution.DISTRIBUTION_NAME, EMR450Distribution.VERSION,
+                new SparkStreamingLinkedNodeCondition(distribution, version,
                         SparkStreamingConstant.S3_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;

@@ -1,0 +1,216 @@
+<%@ jet
+	imports="
+		org.talend.designer.codegen.config.CodeGeneratorArgument
+		org.talend.core.model.process.INode
+		org.talend.core.model.process.EConnectionType
+		org.talend.core.model.process.ElementParameterParser
+		org.talend.core.model.process.IConnection
+		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.IMetadataTable
+		org.talend.core.model.process.IConnectionCategory
+		java.util.List
+"
+%>
+<%
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
+
+	List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+
+	String hashKeyName = ElementParameterParser.getValue(node, "__PARTITION_KEY__");
+	String rangeKeyName = ElementParameterParser.getValue(node, "__SORT_KEY__");
+	
+	IConnection inConn = null;
+	IMetadataTable metadata = null;
+	
+	if(inConns!=null && inConns.size()> 0) {
+		inConn = inConns.get(0);
+		metadata = inConn.getMetadataTable();
+	}
+
+	if (metadata!=null) {
+		List< ? extends IConnection> conns = node.getIncomingConnections();
+		for (IConnection conn : conns) {
+			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+				List<IMetadataColumn> columnList = metadata.getListColumns();
+				int sizeColumns = columnList.size();
+
+				if(!"INSERT".equalsIgnoreCase(dataAction)){
+				%>
+					int countKey_<%=cid%>=0;
+					int countValue_<%=cid%>=0;
+				<%
+				}
+				
+				if ("INSERT".equalsIgnoreCase(dataAction)) {
+					for (int i = 0; i < sizeColumns; i++) {
+						IMetadataColumn column = columnList.get(i);
+
+						%>
+						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+   
+						<%
+							
+							if(column.isKey())
+							{	
+								%>							
+								item_<%=cid%>.withPrimaryKey("<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);			
+								<%
+							}
+							else
+							{
+								%>
+								item_<%=cid%>.with("<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+							<%
+							}	
+							%>
+						}
+						
+					<%			
+					}
+					%>
+					putItemSpec_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec().withItem(item_<%=cid%>);
+                    <%
+  				}
+				
+				if ("UPDATE".equalsIgnoreCase(dataAction)) {
+					%>
+					Object hashKeyValue_<%=cid%> = null;
+					Object rangeKeyValue_<%=cid%> = null;
+					
+					java.util.HashMap<String, Object> valueMap_<%=cid%> = new java.util.HashMap<String, Object>();					
+					StringBuffer updateExpressionBuffer_<%=cid%> = new StringBuffer();
+					updateExpressionBuffer_<%=cid%>.append("set ");
+					<%
+					for (int i = 0; i < sizeColumns; i++) {
+						IMetadataColumn column = columnList.get(i);
+
+						%>
+						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+   
+						<%
+						
+							if(column.isKey()) 
+							{		
+								%>
+								if("<%=column.getOriginalDbColumnName() %>".equalsIgnoreCase(<%=hashKeyName%>))
+								{									
+									hashKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;									
+								}
+
+								else if("<%=column.getOriginalDbColumnName() %>".equalsIgnoreCase(<%=rangeKeyName%>))
+								{
+									rangeKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;
+								}
+								
+								countKey_<%=cid%>++;
+								<%
+							
+							}
+							else
+							{
+								%>
+								updateExpressionBuffer_<%=cid%>.append("<%=column.getOriginalDbColumnName() %>  =:<%=column.getOriginalDbColumnName() %>");
+								valueMap_<%=cid%>.put(":<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+								countValue_<%=cid%>++;
+								
+							<%
+							}	
+							%>
+						}
+						
+						
+					<%			
+					}
+					%>
+					updateItemSpec_<%=cid%>.withPrimaryKey(<%=hashKeyName%>, hashKeyValue_<%=cid%>, <%=rangeKeyName%>, rangeKeyValue_<%=cid%>);
+					updateItemSpec_<%=cid%> = updateItemSpec_<%=cid%>.withUpdateExpression(updateExpressionBuffer_<%=cid%>.toString()).withValueMap(valueMap_<%=cid%>);					
+                    <%
+  				}
+				
+				if ("DELETE".equalsIgnoreCase(dataAction)) {
+					%>
+					Object hashKeyValue_<%=cid%> = null;
+					Object rangeKeyValue_<%=cid%> = null;
+					
+					<%
+					for (int i = 0; i < sizeColumns; i++) {
+						IMetadataColumn column = columnList.get(i);
+
+						%>
+						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {
+   
+						<%
+						
+							if(column.isKey()) 
+							{		
+								%>
+								if("<%=column.getOriginalDbColumnName() %>".equalsIgnoreCase(<%=hashKeyName%>))
+								{									
+									hashKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;									
+								}
+
+								else if("<%=column.getOriginalDbColumnName() %>".equalsIgnoreCase(<%=rangeKeyName%>))
+								{
+									rangeKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;
+								}
+								
+								countKey_<%=cid%>++;
+								<%
+							
+							}
+							%>
+
+						}
+						
+						
+					<%			
+					}
+					%>
+					deleteItemSpec_<%=cid%>.withPrimaryKey(<%=hashKeyName%>, hashKeyValue_<%=cid%>, <%=rangeKeyName%>, rangeKeyValue_<%=cid%>);		
+                    <%
+  				}
+				
+
+				// INSERT operation
+				if ("INSERT".equalsIgnoreCase(dataAction)) {
+				%>									
+					putItemOutcome_<%=cid%> = table_<%=cid%>.putItem(putItemSpec_<%=cid%>);
+				<%
+				// Other operations (UPDATE, UPSERT, DELETE)
+				}else{
+				%>
+
+						<%
+						// UPDATE
+						if("UPDATE".equalsIgnoreCase(dataAction)){
+							%>
+							updateItemOutcome_<%=cid%> = table_<%=cid%>.updateItem(updateItemSpec_<%=cid%>);
+						<%							
+                        // UPSERT
+						} else if("UPSERT".equalsIgnoreCase(dataAction)){
+                          
+
+                        // DELETE
+                        } else if("DELETE".equalsIgnoreCase(dataAction)){
+							%>
+							deleteItemOutcome_<%=cid%> = table_<%=cid%>.deleteItem(deleteItemSpec_<%=cid%>);
+							<%							
+						}
+						%>
+
+				<%
+				}
+
+    			%>
+				nb_line_<%=cid %> ++;
+				
+				<%
+				
+			}
+		}
+	}
+	%>
