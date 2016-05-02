@@ -75,6 +75,10 @@
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
 	
+	
+    boolean setPassword = ElementParameterParser.getBooleanValue(node, "__SET_PASSWORD__");
+    String passwordFieldName = "__PASSWORD__";
+	
 	boolean drop=false;
 	boolean dropIfExist=false;
 	boolean create=false;
@@ -176,13 +180,27 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_drop_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
-				
 <%
 				if(useKerberos) {
 %>
 					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_drop_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-				}
+				} else if (setPassword) {
+                    if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+                        final String decryptedPassword_drop_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+                    } else {
+%>
+                        final String decryptedPassword_drop_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+                    }
+%>                  
+                    String authorizationHeader_drop_<%=cid%> = "Basic "
+                        + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_drop_<%=cid%>).getBytes());
+                    client_drop_<%=cid%>.header("Authorization", authorizationHeader_drop_<%=cid%>);
+<%
+                }
 %>
 				
 				client_drop_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%>);
@@ -216,13 +234,27 @@
 				jsonRow_<%=cid%>.put("comment", <%=dbDescription%>);
 				jsonRow_<%=cid%>.put("location", <%=dbLocation%>);
 				org.apache.cxf.jaxrs.client.WebClient client_create_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
-									
 <%
 				if(useKerberos) {
 %>
 					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_create_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-				}
+				} else if (setPassword) {
+                    if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+                        final String decryptedPassword_create_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+                    } else {
+%>
+                        final String decryptedPassword_create_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+                    }
+%>                  
+                    String authorizationHeader_create_<%=cid%> = "Basic "
+                        + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_create_<%=cid%>).getBytes());
+                    client_create_<%=cid%>.header("Authorization", authorizationHeader_create_<%=cid%>);
+<%
+                }
 %>
 				
 				client_create_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%>);
@@ -255,13 +287,27 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_drop_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
-
 <%
 				if(useKerberos) {
 %>
 					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_drop_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-				}
+				} else if (setPassword) {
+                    if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+                        final String decryptedPassword_drop_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+                    } else {
+%>
+                        final String decryptedPassword_drop_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+                    }
+%>                  
+                    String authorizationHeader_drop_<%=cid%> = "Basic "
+                        + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_drop_<%=cid%>).getBytes());
+                    client_drop_<%=cid%>.header("Authorization", authorizationHeader_drop_<%=cid%>);
+<%
+                }
 %>
 				
 				client_drop_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%>);
@@ -408,13 +454,28 @@
 %>
 				
 				org.apache.cxf.jaxrs.client.WebClient client_create_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
-
 <%
 				if(useKerberos) {
 %>
 					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_create_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-				}
+				} else if (setPassword) {
+                    if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+                        final String decryptedPassword_create_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+                    } else {
+%>
+                        final String decryptedPassword_create_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+                    }
+%>                  
+                    String authorizationHeader_create_<%=cid%> = "Basic "
+                        + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_create_<%=cid%>).getBytes());
+
+                    client_create_<%=cid%>.header("Authorization", authorizationHeader_create_<%=cid%>);
+<%
+                }
 %>
 				
 				client_create_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%>);
@@ -446,13 +507,27 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_drop_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
-
 <%
 				if(useKerberos) {
 %>
 					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_drop_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-				}
+				} else if (setPassword) {
+                    if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+                        final String decryptedPassword_drop_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+                    } else {
+%>
+                        final String decryptedPassword_drop_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+                    }
+%>                  
+                    String authorizationHeader_drop_<%=cid%> = "Basic "
+                        + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_drop_<%=cid%>).getBytes());
+                    client_drop_<%=cid%>.header("Authorization", authorizationHeader_drop_<%=cid%>);
+<%
+                }
 %>				
 
 				client_drop_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> +"/table/" + <%=table%> + "/partition/" + <%=partition%>);
@@ -476,13 +551,27 @@
 				}
 %>
 				org.apache.cxf.jaxrs.client.WebClient client_create_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%><%=parameters%>);
-				
 <%
 				if(useKerberos) {
 %>
 					org.apache.cxf.jaxrs.client.WebClient.getConfig(client_create_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-				}
+				} else if (setPassword) {
+                    if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+                        final String decryptedPassword_create_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+                    } else {
+%>
+                        final String decryptedPassword_create_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+                    }
+%>                  
+                    String authorizationHeader_create_<%=cid%> = "Basic "
+                        + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_create_<%=cid%>).getBytes());
+                    client_create_<%=cid%>.header("Authorization", authorizationHeader_create_<%=cid%>);
+<%
+                }
 %>
 				
 				client_create_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%>+"/table/" + <%=table%> + "/partition/" + <%=partition%>);

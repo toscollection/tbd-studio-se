@@ -25,6 +25,8 @@
 	String table = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String partition = ElementParameterParser.getValue(node, "__PARTITION_NAME__");
 	String username = ElementParameterParser.getValue(node, "__USERNAME__");
+    boolean setPassword = ElementParameterParser.getBooleanValue(node, "__SET_PASSWORD__");
+    String passwordFieldName = "__PASSWORD__";
 	String fileLocation = ElementParameterParser.getValue(node, "__FILE_LOCATION__");
 	
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
@@ -96,13 +98,27 @@
 %>
 		jsonRow_<%=cid%>.put("location", <%=fileLocation%>);
 		org.apache.cxf.jaxrs.client.WebClient client_<%=cid%> = org.apache.cxf.jaxrs.client.WebClient.create("http://" + <%=templeton_host%> + ":" + <%=templeton_port%> + "?user.name=" + <%=username%>);
-		
 <%
 	if(useKerberos) {
 %>
 		org.apache.cxf.jaxrs.client.WebClient.getConfig(client_<%=cid%>).getOutInterceptors().add(kbInterceptor_<%=cid%>);
 <%
-	}
+	} else if (setPassword) {
+        if (ElementParameterParser.canEncrypt(node, passwordFieldName)) {
+%>
+            final String decryptedPassword_drop_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, passwordFieldName)%>);
+<%
+        } else {
+%>
+            final String decryptedPassword_drop_<%=cid%> = <%= ElementParameterParser.getValue(node, passwordFieldName)%>; 
+<%
+        }
+%>                  
+        String authorizationHeader_<%=cid%> = "Basic "
+            + org.apache.cxf.common.util.Base64Utility.encode((<%=username%> + ":" + decryptedPassword_drop_<%=cid%>).getBytes());
+        client_<%=cid%>.header("Authorization", authorizationHeader_<%=cid%>);
+<%
+    }
 %>
 		
 		client_<%=cid%>.path("templeton/v1/ddl/database/" + <%=database%> + "/table/" + <%=table%> + "/partition/" + <%=partition%>);
