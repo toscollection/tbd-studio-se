@@ -22,7 +22,7 @@
     <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/CQL_Helper.javajet"%> 
     <%
     Boolean dieOnError = ElementParameterParser.getBooleanValue(node, "__DIE_ON_ERROR__");
-    CQLManager cqlManager = new CQLManager(node, columns, true);
+    CQLManager cqlManager = new CQLManager(node, columns);
     boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
     String batchSize = ElementParameterParser.getValue(node, "__BATCH_SIZE__");
     if(useBatch){
