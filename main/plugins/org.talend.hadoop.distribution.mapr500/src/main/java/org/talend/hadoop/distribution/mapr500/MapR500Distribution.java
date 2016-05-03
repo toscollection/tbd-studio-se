@@ -101,6 +101,11 @@ public class MapR500Distribution extends AbstractMapRDistribution implements HDF
     }
 
     @Override
+    public boolean doSupportMapRTicket() {
+        return true;
+    }
+
+    @Override
     public boolean doSupportKerberos() {
         return true;
     }
