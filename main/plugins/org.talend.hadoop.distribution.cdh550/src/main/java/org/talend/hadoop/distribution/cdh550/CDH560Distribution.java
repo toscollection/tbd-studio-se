@@ -36,4 +36,9 @@ public class CDH560Distribution extends CDH550Distribution {
     public String getVersionName(ComponentType componentType) {
         return VERSION_DISPLAY_56;
     }
+
+    @Override
+    public boolean doSupportSSLwithKerberos() {
+        return true;
+    }
 }
