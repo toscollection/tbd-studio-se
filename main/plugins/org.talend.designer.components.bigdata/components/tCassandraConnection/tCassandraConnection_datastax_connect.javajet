@@ -8,7 +8,7 @@
 	boolean authentication = ElementParameterParser.getBooleanValue(node, "__REQUIRED_AUTHENTICATION__");
 	INode sslNode = ElementParameterParser.getLinkedNodeValue(node, "__HTTPS_SETTING__");
 	SSL_HELPER sslHelper = new SSL_HELPER(sslNode);
-	boolean useSSL = sslHelper.useHTTPS();
+	boolean useSSL = ElementParameterParser.getBooleanValue(node, "__USE_HTTPS__") && sslHelper.useHTTPS();
 	if(useSSL){
 	%>
 		javax.net.ssl.KeyManagerFactory kmf_<%=cid%> = null;

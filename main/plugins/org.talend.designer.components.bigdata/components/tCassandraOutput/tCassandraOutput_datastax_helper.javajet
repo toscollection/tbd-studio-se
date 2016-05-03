@@ -2,19 +2,18 @@
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/CQL_Helper.javajet"%>
 <%
 class CassandraOutputGenHelper{
-	String cid;
 	INode node;
+	String cid;
     IMetadataTable metadata = null;
     IConnection conn = null;
     List<IMetadataColumn> columns = null;
     
 	CQLManager cqlManager;
 	public CassandraOutputGenHelper(INode node){
-		init(node);
+		this.node = node;
 	}
 	
-	private void init(INode node){
-		this.node = node;
+	public void init(){
 		cid = node.getUniqueName();
 		List<IMetadataTable> metadatas = node.getMetadataList();
 	    if((metadatas!=null) && (metadatas.size() > 0)){
@@ -27,11 +26,7 @@ class CassandraOutputGenHelper{
 	    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 	        conn = conns.get(0);
 	    }
-	    if (("SPARKSTREAMING".equals(node.getComponent().getType())) || ("SPARK".equals(node.getComponent().getType()))) {
-            this.cqlManager = new CQLManager(node, columns, true, true);
-	    } else { // MR or DI
-	        this.cqlManager = new CQLManager(node, columns, true);
-	    }
+        cqlManager = new CQLManager(node, columns);
 	}
 	public String getCid(){
 		return cid;

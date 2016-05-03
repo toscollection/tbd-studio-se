@@ -22,6 +22,8 @@ import org.osgi.framework.ServiceReference;
 import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.HBaseComponent;
+import org.talend.hadoop.distribution.component.HCatalogComponent;
+import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
@@ -42,6 +44,13 @@ public class HadoopDistributionsHelper {
     public static final DistributionsManager HADOOP = new DistributionsManager(HadoopComponent.class.getName());
 
     /**
+     * for HDFS Distributions.
+     * 
+     * @link HDFSComponent
+     */
+    public static final DistributionsManager HDFS = new DistributionsManager(HDFSComponent.class.getName());
+
+    /**
      * for MapReduce Distributions.
      * 
      * @link MRComponent
@@ -54,6 +63,13 @@ public class HadoopDistributionsHelper {
      * @link HBaseComponent
      */
     public static final DistributionsManager HBASE = new DistributionsManager(HBaseComponent.class.getName());
+
+    /**
+     * for HCatalog Distributions.
+     * 
+     * @link HCatalogComponent
+     */
+    public static final DistributionsManager HCATALOG = new DistributionsManager(HCatalogComponent.class.getName());
 
     /**
      * for Spark Streaming Distributions.

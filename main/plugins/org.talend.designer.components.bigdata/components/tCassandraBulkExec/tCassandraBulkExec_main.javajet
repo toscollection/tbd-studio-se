@@ -47,6 +47,40 @@ args_<%=cid%>.add("-pw");
 args_<%=cid%>.add(decryptedPassword_<%=cid%>);
 
 <%}%>
+
+<%@ include file="@{org.talend.designer.components.localprovider}/components/tSetKeystore/SSL_Helper.javajet"%>
+<%
+INode sslNode = ElementParameterParser.getLinkedNodeValue(node, "__HTTPS_SETTING__");
+SSL_HELPER sslHelper = new SSL_HELPER(sslNode);
+boolean useSSL = ElementParameterParser.getBooleanValue(node, "__USE_HTTPS__") && sslHelper.useHTTPS();
+if(useSSL){
+%>
+	<%if(sslHelper.needKS()){%>
+		args_<%=cid%>.add("-ks");
+		args_<%=cid%>.add(<%=sslHelper.getKSPath()%>);
+		args_<%=cid%>.add("-kspw");
+		args_<%=cid%>.add(<%=sslHelper.getKSPwd()%>);
+	<%}%>
+	args_<%=cid%>.add("-prtcl");
+	args_<%=cid%>.add("TLS");
+	args_<%=cid%>.add("-ts");
+	args_<%=cid%>.add(<%=sslHelper.getTSPath()%>);
+	args_<%=cid%>.add("-tspw");
+	args_<%=cid%>.add(<%=sslHelper.getTSPwd()%>);
+<%
+}
+boolean useConfFile = ElementParameterParser.getBooleanValue(node, "__USE_CONF_FILE__");
+if(useConfFile){
+	String confFile = ElementParameterParser.getValue(node, "__CONF_FILE__");
+	%>
+	System.setProperty("cassandra.config", "file://" + <%=confFile%>);	
+	args_<%=cid%>.add("-f");
+	args_<%=cid%>.add(<%=confFile%>);
+<%
+}
+%>
+
+
 args_<%=cid%>.add(file_<%=cid%>.getAbsolutePath());
 <%
 if (isLog4jEnabled) {

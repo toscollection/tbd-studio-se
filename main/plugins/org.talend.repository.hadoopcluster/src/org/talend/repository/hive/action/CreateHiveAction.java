@@ -5,8 +5,11 @@ import java.util.Map;
 import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.database.conn.template.EDatabaseConnTemplate;
-import org.talend.core.hadoop.version.EHadoopDistributions;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
+import org.talend.core.runtime.hd.IHDistributionVersion;
+import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
+import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
+import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.RepositoryNode;
@@ -46,13 +49,18 @@ public class CreateHiveAction extends CreateHadoopDBNodeAction {
         HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
-            EHadoopDistributions distribution = EHadoopDistributions.getDistributionByName(hcConnection.getDistribution(), false);
-            if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
-                return true;
+            DistributionBean hiveDistribution = HadoopDistributionsHelper.HIVE.getDistribution(hcConnection.getDistribution(),
+                    false);
+            if (hiveDistribution != null) {
+                IHDistributionVersion hdVersion = hiveDistribution.getHDVersion(hcConnection.getDfVersion(), false);
+                if (hdVersion != null
+                        && !IMicrosoftHDInsightDistribution.DISTRIBUTION_NAME.equals(hdVersion.getDistribution().getName())) {
+                    // found and not HD Insight, don't hide
+                    return false;
+                }
             }
         }
-
-        return false;
+        return true;
     }
 
 }

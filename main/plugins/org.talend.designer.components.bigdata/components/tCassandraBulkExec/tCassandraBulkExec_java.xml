@@ -112,6 +112,24 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+        <PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="14" SHOW="false">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
+            NUM_ROW="14" SHOW_IF="(isShow[USE_HTTPS]) AND (USE_HTTPS == 'true')"
+            DYNAMIC_SETTINGS="true" />
+        <PARAMETER NAME="USE_CONF_FILE" FIELD="CHECK" NUM_ROW="15">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="CONF_FILE"
+            FIELD="FILE"
+            REQUIRED="true"
+            NUM_ROW="15"
+            SHOW_IF="USE_CONF_FILE == 'true'"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>    
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
@@ -534,6 +552,10 @@
                     NAME="super-csv-2.1.0"
                     MODULE="super-csv-2.1.0.jar" MVN="mvn:org.talend.libraries/super-csv-2.1.0/6.0.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/super-csv-2.1.0.jar" />
+                <IMPORT
+	                NAME="snakeyaml-1.11"
+	                MODULE="snakeyaml-1.11.jar" MVN="mvn:org.talend.libraries/snakeyaml-1.11/6.0.0" 
+	                UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/snakeyaml-1.11.jar" />
             </IMPORTS>
             <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))">
                 <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_2')">
@@ -548,13 +570,13 @@
                 </IMPORTS>
                 <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0')">
                     <IMPORT
-                        NAME="cassandra-all-3.3"
-                        MODULE="cassandra-all-3.3.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.3/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.3.jar" />
+                        NAME="cassandra-all-3.4"
+                        MODULE="cassandra-all-3.4.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.4/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.4.jar" />
                     <IMPORT
-                        NAME="cassandra-thrift-3.3"
-                        MODULE="cassandra-thrift-3.3.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-3.3/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-3.3.jar" />
+                        NAME="cassandra-thrift-3.4"
+                        MODULE="cassandra-thrift-3.4.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-3.4/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-3.4.jar" />
                 </IMPORTS>
                 <IMPORT
 				    NAME="antlr-3.5.2"
@@ -661,6 +683,10 @@
                     NAME="sigar-1.6.4"
                     MODULE="sigar-1.6.4.jar" MVN="mvn:org.talend.libraries/sigar-1.6.4/6.0.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/sigar-1.6.4.jar" />
+                <IMPORT
+                    NAME="snakeyaml-1.11"
+                    MODULE="snakeyaml-1.11.jar" MVN="mvn:org.talend.libraries/snakeyaml-1.11/6.0.0" 
+                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/snakeyaml-1.11.jar" />
             </IMPORTS>
         </IMPORTS>
     </CODEGENERATION>

@@ -68,21 +68,21 @@
         private String keyspace;
         private String tableName;
         private Boolean useSpark = false;
-        private Boolean newVersion = true;
+        private Boolean version22 = true;
         private List<Column> valueColumns;
 
-        public CQLManager(INode node, List<IMetadataColumn> columnList, boolean newVersion){
+        public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
             this.action = ElementParameterParser.getValue(node, "__DATA_ACTION__");
             this.keyspace = "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__KEY_SPACE__") + ")";
             this.tableName = this.keyspace + " + \".\" + " + "StringHandling.DQUOTE(" + ElementParameterParser.getValue(node, "__COLUMN_FAMILY__") + ")";
             createColumnList(columnList);
             this.valueColumns = collectValueColumns();
-            this.newVersion = newVersion;
         }
         
-        public CQLManager(INode node, List<IMetadataColumn> columnList,boolean newVersion, boolean useSpark){
-            this(node, columnList, newVersion);
+        public CQLManager(INode node, List<IMetadataColumn> columnList, boolean version22, boolean useSpark){
+            this(node, columnList);
+            this.version22 = version22;
             this.useSpark = useSpark;
         }
 
@@ -220,7 +220,7 @@
         	return columns;
         }
         protected String getDBMSId(){
-            if(newVersion){
+            if(version22){
             	return CASSANDRA22;
             }else{
             	return CASSANDRA;
@@ -609,7 +609,7 @@
                     setStmt.append(assignStmt +".setBytes(" + index + ", java.nio.ByteBuffer.wrap(" + columnValue + "));\r\n");
                 }
             }else if("timestamp".equals(dbType)){
-            	if(newVersion){
+            	if(version22){
                 	setStmt.append(assignStmt +".setTimestamp(" + index + ", " + columnValue + ");\r\n");
                 }else{
                 	setStmt.append(assignStmt +".setDate(" + index + ", " + columnValue + ");\r\n");
@@ -624,7 +624,7 @@
             	setStmt.append(assignStmt +".setInt(" + index + ", " + columnValue + ");\r\n");
             }else if("bigint".equals(dbType) || "count".equals(dbType)){
                 setStmt.append(assignStmt +".setLong(" + index + ", " + columnValue + ");\r\n");
-            }else if(newVersion){
+            }else if(version22){
             	if("smallint".equals(dbType)){
             		setStmt.append(assignStmt +".setShort(" + index + ", " + columnValue + ");\r\n");
             	}else if("tinyint".equals(dbType)){
