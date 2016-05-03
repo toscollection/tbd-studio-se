@@ -37,6 +37,9 @@
 	String hashKeyName = ElementParameterParser.getValue(node, "__PARTITION_KEY__");
 	String rangeKeyName = ElementParameterParser.getValue(node, "__SORT_KEY__");
 	
+	long rcu = Long.parseLong(ElementParameterParser.getValue(node, "__RCU__"));
+	long wcu = Long.parseLong(ElementParameterParser.getValue(node, "__WCU__"));
+		
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
   	List<IMetadataTable> metadatas = node.getMetadataList();
@@ -82,12 +85,14 @@
 			
 			com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient dynamoDBClient_<%=cid%> = new com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient(credentials_<%=cid%>);
    
-			if(<%=useEndPoint%>)
+			<%
+			if(useEndPoint)
 			{
+			%>
 				dynamoDBClient_<%=cid%> = dynamoDBClient_<%=cid%>.withEndpoint(<%=endPoint%>);
-			}
-			
-		<%
+			<%
+			}		
+		
 			if(region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
 			%>
 				dynamoDBClient_<%=cid%>.setRegion(com.amazonaws.regions.RegionUtils.getRegion(<%=region%>));
@@ -107,27 +112,24 @@
 			
 			for (int i = 0; i < sizeColumns; i++) {
 				IMetadataColumn column = columnList.get(i);
-				if(column.isKey()){
+				if(column.isKey()){				
+					String type = column.getTalendType();
+					if(type.toUpperCase().indexOf("STRING") >=0)
+					{
 				%>		
-					attributeMap.put("<%=column.getLabel() %>", "<%=column.getTalendType() %>");  				
-				<%
+						attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.S));
+				<%	
+					}
+					else if(type.toUpperCase().indexOf("INTEGER") >=0)
+					{
+				%>		
+						attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.N));			
+				<%	
+					}
+				
 				}
 			}
-			%>		
-			
-			for(String key : attributeMap.keySet()){
-				String type = attributeMap.get(key);
-				if(type.toUpperCase().indexOf("STRING") >=0)
-				{
-					attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition(key, com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.S));
-				}
-				else if(type.toUpperCase().indexOf("INTEGER") >=0)
-				{
-					attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition(key, com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.N));			
-				}
-			}
-			
-			<%
+
 			if ("NONE".equalsIgnoreCase(tableAction)) {
 			%>
 		
@@ -140,7 +142,7 @@
 						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
 						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
 					attributeDefinitionList,
-					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 				tableTemp_<%=cid%>.waitForActive();
 				<%
 				if(isLog4jEnabled){
@@ -160,7 +162,7 @@
 							new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
 							new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
 						attributeDefinitionList,
-						new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 					tableTemp_<%=cid%>.waitForActive();
 					<%
 					if(isLog4jEnabled){
@@ -203,7 +205,7 @@
 						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
 						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
 					attributeDefinitionList,
-					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 				tableTemp_<%=cid%>.waitForActive();			
 				<%
 				if(isLog4jEnabled){
@@ -219,9 +221,13 @@
 				try{				
 					tableTemp_<%=cid%>.delete();
 					tableTemp_<%=cid%>.waitForDelete();
+					<%
 					if(isLog4jEnabled){
+					%>	
 						log.info(<%=table%> + " has been deleted.");
-					}					
+					<%
+					}
+					%>					
 				}
 				catch(com.amazonaws.services.dynamodbv2.model.ResourceNotFoundException ex)
 				{	
@@ -240,7 +246,7 @@
 						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
 						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
 					attributeDefinitionList,
-						new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput(10L, 10L));
+					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 				tableTemp_<%=cid%>.waitForActive();				
 				<%
 				if(isLog4jEnabled){
