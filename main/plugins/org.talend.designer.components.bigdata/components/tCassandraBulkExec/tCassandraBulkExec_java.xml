@@ -112,6 +112,12 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+        <PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="15" SHOW="false">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
+            NUM_ROW="15" SHOW_IF="(isShow[USE_HTTPS]) AND (USE_HTTPS == 'true')"
+            DYNAMIC_SETTINGS="true" />
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
@@ -548,9 +554,9 @@
                 </IMPORTS>
                 <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0')">
                     <IMPORT
-                        NAME="cassandra-all-3.3"
-                        MODULE="cassandra-all-3.3.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.3/6.0.0" 
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.3.jar" />
+                        NAME="cassandra-all-3.4"
+                        MODULE="cassandra-all-3.4.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.4/6.0.0" 
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.4.jar" />
                     <IMPORT
                         NAME="cassandra-thrift-3.3"
                         MODULE="cassandra-thrift-3.3.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-3.3/6.0.0" 
