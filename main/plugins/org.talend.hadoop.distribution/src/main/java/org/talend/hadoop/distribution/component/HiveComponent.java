@@ -84,4 +84,13 @@ public interface HiveComponent extends MRComponent {
      */
     public boolean doSupportStoreAsParquet();
 
+    /**
+     * Hive supports SASL-QOP (HIVE-4911) with kerberos to provide a form of data integrity protection. Newer versions
+     * of Hive support using SSL (not SASL-QOP) with Kerberos. This should be tested after activating Kerberos and SSL
+     * in Hive, using a connection string that looks like :
+     * 
+     * jdbc:hive2://localhost:10000/default;principal=hive/_HOST@ABC.COM;ssl=true;sslTrustStore=my.truststore;
+     * trustStorePassword=pass
+     */
+    public boolean doSupportSSLwithKerberos();
 }

@@ -84,6 +84,7 @@ imports="
     String zNodeParent = null;
 
     String sslTrustStore = null;
+    String sslStorepasswordFieldName = null;
 
     boolean useSsl = false;
     String additionalJdbcSettings = "";
@@ -103,7 +104,7 @@ imports="
         additionalJdbcSettings = ElementParameterParser.getValue(previousNode, "__HIVE_ADDITIONAL_JDBC__");
         useSsl = "true".equals(ElementParameterParser.getValue(previousNode, "__USE_SSL__"));
         sslTrustStore = ElementParameterParser.getValue(previousNode, "__SSL_TRUST_STORE__");
-
+        sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
 
         storeByHBase = ElementParameterParser.getValue(previousNode, "__STORE_BY_HBASE__");
         zookeeperQuorumForHBase = ElementParameterParser.getValue(previousNode, "__ZOOKEEPER_QUORUM__");
@@ -323,10 +324,29 @@ imports="
                 }
             } else if("STANDALONE".equals(connectionMode) && (isCustom || hiveDistrib.doSupportStandaloneMode())) {
                 if(securedStandaloneHive2) {
+
+                    // Using SSL in Secure Mode
                     if(useSsl && hiveDistrib.doSupportSSL()) {
+                        // Does the distrib support SSL + KERBEROS
+                        if(hiveDistrib.doSupportSSLwithKerberos()){
+                            if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
-                        String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>+";sasl.qop=auth-conf";
+                                String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(previousNode, sslStorepasswordFieldName)%>);
 <%
+                            }else{
+%>
+                                String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(previousNode, sslStorepasswordFieldName)%>;
+<%
+                            }
+%>
+                            String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>+";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
+<%
+                        // Does the distrib support only SASL-QOP + KERBEROS Or was it migrated from old SASL job
+                        } else {
+%>
+                            String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>+";sasl.qop=auth-conf";
+<%
+                        }
                     } else {
 %>
                         String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=hivePrincipal%>;
@@ -335,7 +355,6 @@ imports="
                 } else {
                 // Using SSL in non Secure Mode
                     if(useSsl && hiveDistrib.doSupportSSL()){
-                        String sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
                         if(previousNode != null) {
                             if (ElementParameterParser.canEncrypt(previousNode, sslStorepasswordFieldName)) {
 %>

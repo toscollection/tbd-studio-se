@@ -209,4 +209,8 @@ public abstract class AbstractDistribution {
         }
         return globalJson;
     }
+
+    public boolean doSupportSSLwithKerberos() {
+        return false;
+    }
 }
