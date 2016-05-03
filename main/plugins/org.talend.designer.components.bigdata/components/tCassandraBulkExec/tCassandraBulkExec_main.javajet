@@ -67,7 +67,18 @@ if(useSSL){
 	args_<%=cid%>.add(<%=sslHelper.getTSPath()%>);
 	args_<%=cid%>.add("-tspw");
 	args_<%=cid%>.add(<%=sslHelper.getTSPwd()%>);
-<%}%>
+<%
+}
+boolean useConfFile = ElementParameterParser.getBooleanValue(node, "__USE_CONF_FILE__");
+if(useConfFile){
+	String confFile = ElementParameterParser.getValue(node, "__CONF_FILE__");
+	%>
+	System.setProperty("cassandra.config", "file://" + <%=confFile%>);	
+	args_<%=cid%>.add("-f");
+	args_<%=cid%>.add(<%=confFile%>);
+<%
+}
+%>
 
 
 args_<%=cid%>.add(file_<%=cid%>.getAbsolutePath());

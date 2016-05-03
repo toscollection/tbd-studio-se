@@ -146,6 +146,18 @@
         <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
             NUM_ROW="22" SHOW_IF="(isShow[USE_HTTPS]) AND (USE_HTTPS == 'true')"
             DYNAMIC_SETTINGS="true" />
+        <PARAMETER NAME="USE_CONF_FILE" FIELD="CHECK" NUM_ROW="23">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>            
+        <PARAMETER
+            NAME="CONF_FILE"
+            FIELD="FILE"
+            REQUIRED="true"
+            NUM_ROW="23"
+            SHOW_IF="USE_CONF_FILE == 'true'"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER> 
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
@@ -267,6 +279,8 @@
             <TEMPLATE_PARAM SOURCE="self.PASSWORD" TARGET="tCBE.PASSWORD"/>
             <TEMPLATE_PARAM SOURCE="self.USE_HTTPS" TARGET="tCBE.USE_HTTPS"/>
             <TEMPLATE_PARAM SOURCE="self.HTTPS_SETTING" TARGET="tCBE.HTTPS_SETTING"/>
+            <TEMPLATE_PARAM SOURCE="self.USE_CONF_FILE" TARGET="tCBE.USE_CONF_FILE"/>
+            <TEMPLATE_PARAM SOURCE="self.CONF_FILE" TARGET="tCBE.CONF_FILE"/>
             <TEMPLATE_PARAM SOURCE="self.KEY_SPACE" TARGET="tCBE.KEY_SPACE"/>
             <TEMPLATE_PARAM SOURCE="self.COLUMN_FAMILY" TARGET="tCBE.COLUMN_FAMILY"/>
             <TEMPLATE_PARAM SOURCE="self.SSTABLE_STORE_PATH" TARGET="tCBE.SSTABLE_STORE_PATH"/>
