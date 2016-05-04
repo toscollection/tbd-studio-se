@@ -129,6 +129,7 @@
 					String valuePlaceHolder1 = null;
 					String valuePlaceHolder2 = null;
 					String keyColumn = subExpression.get("KEY_COLUMN");
+
 					valuePlaceHolder1 = ":keyCondition_" + keyColumn +"_1";
 					valuePlaceHolder2 = ":keyCondition_" + keyColumn +"_2";
 				
@@ -156,10 +157,10 @@
 						sb.append(functionStr);
 
 						if(reservedKeyPlaceHolder!=null){
-							sb.append("(reservedKeyPlaceHolder, valuePlaceHolder1)");
+							sb.append("("+ reservedKeyPlaceHolder + "," + valuePlaceHolder1 + ")");
 						}
 						else{
-							sb.append("(keyColumn, valuePlaceHolder1)");
+							sb.append("("+ keyColumn + "," + valuePlaceHolder1 + ")");
 						}
 					}
 					else{
@@ -249,10 +250,10 @@
 							sb.append(functionStr);
 							
 							if(reservedKeyPlaceHolder!=null){
-								sb.append("(reservedKeyPlaceHolder, valuePlaceHolder1)");
+								sb.append("("+ reservedKeyPlaceHolder + "," + valuePlaceHolder1 + ")");
 							}
 							else{
-								sb.append("(columnName, valuePlaceHolder1)");
+								sb.append("("+ columnName + "," + valuePlaceHolder1 + ")");
 							}
 						}
 						else{
@@ -393,10 +394,10 @@
 							sb.append(functionStr);
 
 							if(reservedKeyPlaceHolder!=null){
-								sb.append("(reservedKeyPlaceHolder, valuePlaceHolder1)");
+								sb.append("("+ reservedKeyPlaceHolder + "," + valuePlaceHolder1 + ")");
 							}
 							else{
-								sb.append("(columnName, valuePlaceHolder1)");
+								sb.append("("+ columnName + "," + valuePlaceHolder1 + ")");
 							}
 						}
 						else{
