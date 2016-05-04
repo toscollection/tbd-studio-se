@@ -282,6 +282,14 @@
             name="aws-java-sdk-cloudwatch-1.10.56.jar"
             mvn_uri="mvn:org.talend.libraries/aws-java-sdk-cloudwatch-1.10.56/6.2.0"/>
             
+        <!-- Flume libraries -->    
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr450"
+            id="spark-streaming-flume-emr450-latest"
+            name="spark-streaming-flume-assembly_2.10-1.6.1.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-flume-assembly_2.10-1.6.1/6.2.0">
+        </libraryNeeded>
+            
         <!-- Third parties libraries -->   
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
@@ -734,6 +742,14 @@
                 id="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
                 name="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
             <library id="kafka-clients-0.8.2.1.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Spark Flume group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Flume libraries for EMR 4.5.0  that are MRREQUIRED"
+                id="SPARK-FLUME-LIB-MRREQUIRED-EMR_4_5_0_LATEST"
+                name="SPARK-FLUME-LIB-MRREQUIRED-EMR_4_5_0_LATEST">
+            <library id="spark-streaming-flume-emr450-latest"/>        
         </libraryNeededGroup>
     </extension>
     

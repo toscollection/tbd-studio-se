@@ -57,6 +57,7 @@ import org.talend.hadoop.distribution.emr450.modulegroup.node.mr.EMR450MRS3NodeM
 import org.talend.hadoop.distribution.emr450.modulegroup.node.pigoutput.EMR450PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkbatch.EMR450SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkbatch.EMR450SparkBatchS3NodeModuleGroup;
+import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingFlumeNodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingKafkaAssemblyModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingKafkaAvroModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingKafkaClientModuleGroup;
@@ -181,6 +182,12 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
                 EMR450SparkStreamingKafkaAvroModuleGroup.getModuleGroups(distribution, version));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
                 EMR450SparkStreamingKafkaClientModuleGroup.getModuleGroups(distribution, version));
+
+        // Spark Streaming Flume nodes
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_INPUT_COMPONENT),
+                EMR450SparkStreamingFlumeNodeModuleGroup.getModuleGroups(distribution, version));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_OUTPUT_COMPONENT),
+                EMR450SparkStreamingFlumeNodeModuleGroup.getModuleGroups(distribution, version));
 
         return result;
     }
