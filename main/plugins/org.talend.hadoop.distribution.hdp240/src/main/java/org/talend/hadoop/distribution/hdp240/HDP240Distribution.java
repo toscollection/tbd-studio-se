@@ -54,6 +54,7 @@ import org.talend.hadoop.distribution.hdp240.modulegroup.node.mr.HDP240MRS3NodeM
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.pigoutput.HDP240PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkbatch.HDP240SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkbatch.HDP240SparkBatchS3NodeModuleGroup;
+import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkstreaming.HDP240SparkStreamingFlumeNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkstreaming.HDP240SparkStreamingKafkaAssemblyModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkstreaming.HDP240SparkStreamingKafkaAvroModuleGroup;
 import org.talend.hadoop.distribution.hdp240.modulegroup.node.sparkstreaming.HDP240SparkStreamingKafkaClientModuleGroup;
@@ -141,6 +142,13 @@ public class HDP240Distribution extends AbstractDistribution implements HDFSComp
                 SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAvroModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), HDP240SparkStreamingKafkaClientModuleGroup.getModuleGroups());
+
+        Set<DistributionModuleGroup> flumeNodeModuleGroups = HDP240SparkStreamingFlumeNodeModuleGroup.getModuleGroups();
+        nodeModuleGroups.put(
+                new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_INPUT_COMPONENT),
+                flumeNodeModuleGroups);
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.FLUME_OUTPUT_COMPONENT), flumeNodeModuleGroups);
 
         // Used to hide the distribution according to other parameters in the component.
         displayConditions = new HashMap<>();
