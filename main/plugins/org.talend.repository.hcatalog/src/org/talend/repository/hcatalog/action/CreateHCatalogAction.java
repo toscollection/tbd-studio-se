@@ -5,6 +5,7 @@ import org.eclipse.ui.IWorkbench;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.runtime.hd.IHDistributionVersion;
+import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopNodeAction;
@@ -47,6 +48,19 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
         HadoopClusterConnectionItem hcConnectionItem = HCRepositoryUtil.getHCConnectionItemFromRepositoryNode(node);
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
+
+            // First check if the Distribution is a HD Insight one.
+            DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(
+                    hcConnection.getDistribution(), false);
+            if (hadoopDistribution != null) {
+                IHDistributionVersion hdVersion = hadoopDistribution.getHDVersion(hcConnection.getDfVersion(), false);
+                if (hdVersion != null
+                        && IMicrosoftHDInsightDistribution.DISTRIBUTION_NAME.equals(hdVersion.getDistribution().getName())) {
+                    return false;
+                }
+            }
+
+            // If not, check if the Distribution implements HCatalogComponent
             DistributionBean hcatalogDistribution = HadoopDistributionsHelper.HCATALOG.getDistribution(
                     hcConnection.getDistribution(), false);
             if (hcatalogDistribution != null) {
