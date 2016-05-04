@@ -81,9 +81,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     private Button kerberosBtn;
 
     private Button keytabBtn;
-    
+
     private Button useClouderaNaviBtn;
-    
+
     private Button clouderaNaviButton;
 
     private LabelledText namenodeUriText;
@@ -176,7 +176,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         stagingDirectoryText.setText(StringUtils.trimToEmpty(connection.getStagingDirectory()));
         useDNHostBtn.setSelection(connection.isUseDNHost());
         useCustomConfBtn.setSelection(connection.isUseCustomConfs());
-        if(useClouderaNaviBtn!=null){
+        if (useClouderaNaviBtn != null) {
             useClouderaNaviBtn.setSelection(connection.isUseClouderaNavi());
         }
         kerberosBtn.setSelection(connection.isEnableKerberos());
@@ -204,7 +204,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         useDNHostBtn.setEnabled(!readOnly);
         useCustomConfBtn.setEnabled(!readOnly);
         hadoopConfsButton.setEnabled(!readOnly && useCustomConfBtn.getSelection());
-        if(useClouderaNaviBtn!=null){
+        if (useClouderaNaviBtn != null) {
             useClouderaNaviBtn.setEnabled(!readOnly);
             clouderaNaviButton.setEnabled(!readOnly && useClouderaNaviBtn.getSelection());
         }
@@ -248,7 +248,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         addHadoopPropertiesFields();
         addNavigatorFields();
         addHadoopConfsFields();
-       
+
         addCheckFields();
     }
 
@@ -333,7 +333,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         String[] extensions = { "*.*" }; //$NON-NLS-1$
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
     }
-    
 
     private void addHadoopPropertiesFields() {
         hadoopPropertiesComposite = new Composite(this, SWT.NONE);
@@ -366,15 +365,16 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         MRComponent currentDistribution;
         boolean isShow = false;
         try {
-            currentDistribution = (MRComponent)DistributionFactory.buildDistribution(distriBean.getName(), hadoopVersison.getVersion());
-            isShow = !getDistribution().useCustom()&&currentDistribution.doSupportClouderaNavigator();
+            currentDistribution = (MRComponent) DistributionFactory.buildDistribution(distriBean.getName(),
+                    hadoopVersison.getVersion());
+            isShow = !getDistribution().useCustom() && currentDistribution.doSupportClouderaNavigator();
         } catch (Exception e) {
-           ExceptionHandler.process(e);
+            ExceptionHandler.process(e);
         }
-        if(!isShow){
-           return;
+        if (!isShow) {
+            return;
         }
-        
+
         Composite clouderaNaviComposite = new Composite(this, SWT.NONE);
         GridLayout hadoopConfsCompLayout = new GridLayout(3, false);
         hadoopConfsCompLayout.marginWidth = 5;
@@ -393,9 +393,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
         Label displayLabel = new Label(clouderaNaviComposite, SWT.NONE);
         displayLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-       
+
     }
-    
+
     private void addHadoopConfsFields() {
         Composite hadoopConfsComposite = new Composite(this, SWT.NONE);
         GridLayout hadoopConfsCompLayout = new GridLayout(3, false);
@@ -525,7 +525,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 HadoopConfsUtils.openHadoopConfsWizard(form, (HadoopClusterConnectionItem) connectionItem, creation);
             }
         });
-        if(useClouderaNaviBtn!=null){
+        if (useClouderaNaviBtn != null) {
             useClouderaNaviBtn.addSelectionListener(new SelectionAdapter() {
 
                 @Override
@@ -1070,7 +1070,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         collectConFieldContextParameters(isCurrentHadoopVersionSupportYarn());
         collectAuthFieldContextParameters(kerberosBtn.getSelection());
         collectKeyTabContextParameters(kerberosBtn.getSelection() && keytabBtn.getSelection());
-        collectClouderaNavigatorFieldContextParameters(useClouderaNaviBtn.getSelection());
+        if (useClouderaNaviBtn != null) {
+            collectClouderaNavigatorFieldContextParameters(useClouderaNaviBtn.getSelection());
+        }
     }
 
     private void collectClouderaNavigatorFieldContextParameters(boolean clouderaNav) {
@@ -1080,7 +1082,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         addContextParams(EHadoopParamName.ClouderaNavigatorMetadataUrl, clouderaNav);
         addContextParams(EHadoopParamName.ClouderaNavigatorClientUrl, clouderaNav);
     }
-    
+
     private void collectConFieldContextParameters(boolean useYarn) {
         addContextParams(EHadoopParamName.NameNodeUri, true);
         addContextParams(EHadoopParamName.JobTrackerUri, !useYarn);

@@ -95,7 +95,7 @@
 			
 			String keyConditionExpression_<%=cid%> = null;
 			String filterExpression_<%=cid%> = null;
-			StringBuffer sb_<%=cid%> = new StringBuffer();		
+				
 			
 			<%
 			for(Map<String,String> subNameMap : nameMap)
@@ -119,7 +119,9 @@
 					<%
 				}
 			}
-						
+					
+			StringBuffer sb = new StringBuffer();	
+			
 			if(!useAdvancedKeyConditionExpression){			
 				for(Map<String,String> subExpression : keyConditionExpression)
 				{
@@ -127,6 +129,7 @@
 					String valuePlaceHolder1 = null;
 					String valuePlaceHolder2 = null;
 					String keyColumn = subExpression.get("KEY_COLUMN");
+
 					valuePlaceHolder1 = ":keyCondition_" + keyColumn +"_1";
 					valuePlaceHolder2 = ":keyCondition_" + keyColumn +"_2";
 				
@@ -144,58 +147,47 @@
 					String value1 = subExpression.get("VALUE_1");
 					String value2 = subExpression.get("VALUE_2");
 					
+
+					
 					if(functionStr.equalsIgnoreCase("Begins_With"))
 					{
-						%>
-						if(sb_<%=cid%>length()>0){
-							sb_<%=cid%>.append(" and ");	
+						if(sb.length()>0){
+							sb.append(" and ");	
 						}
-						sb_<%=cid%>.append("<%=functionStr%>");
-						<%
+						sb.append(functionStr);
+
 						if(reservedKeyPlaceHolder!=null){
-						%>
-							sb_<%=cid%>.append("(<%=reservedKeyPlaceHolder%>, <%=valuePlaceHolder1%>)");
-						<%
+							sb.append("("+ reservedKeyPlaceHolder + "," + valuePlaceHolder1 + ")");
 						}
 						else{
-						%>
-							sb_<%=cid%>.append("(<%=keyColumn%>, <%=valuePlaceHolder1%>)");
-						<%
+							sb.append("("+ keyColumn + "," + valuePlaceHolder1 + ")");
 						}
 					}
 					else{
-						%>
-						if(sb_<%=cid%>.length()>0){
-							sb_<%=cid%>.append(" and ");	
+						if(sb.length()>0){
+							sb.append(" and ");	
 						}
-						<%
+			
 						if(reservedKeyPlaceHolder!=null){
-						%>
-							sb_<%=cid%>.append("<%=reservedKeyPlaceHolder%>");
-						<%
+							sb.append(reservedKeyPlaceHolder);
 						}
 						else{
-						%>
-							sb_<%=cid%>.append("<%=keyColumn%>");
-						<%
+							sb.append(keyColumn);
 						}
-						%>
-						sb_<%=cid%>.append(" ");
-						sb_<%=cid%>.append("<%=functionStr%>");
-						sb_<%=cid%>.append(" ");
-						sb_<%=cid%>.append("<%=valuePlaceHolder1%>");	
-						sb_<%=cid%>.append(" ");
+						sb.append(" ");
+						sb.append(functionStr);
+						sb.append(" ");
+						sb.append(valuePlaceHolder1);	
+						sb.append(" ");
 						
-						<%
 						if(functionStr.equalsIgnoreCase("Between"))
 						{
+							sb.append("AND");	
+							sb.append(" ");
+							sb.append(valuePlaceHolder2);	
+							sb.append(" ");
 						%>
-							sb_<%=cid%>.append("AND");	
-							sb_<%=cid%>.append(" ");
-							sb_<%=cid%>.append("<%=valuePlaceHolder2%>");	
-							sb_<%=cid%>.append(" ");
-							valueMap_<%=cid%>.put("<%=valuePlaceHolder2%>",  <%=value2%>);					
-							
+							valueMap_<%=cid%>.put("<%=valuePlaceHolder2%>",  <%=value2%>);												
 						<%
 						}							
 					}			
@@ -207,7 +199,7 @@
 				}
 				%>
 				
-				keyConditionExpression_<%=cid%> = sb_<%=cid%>.toString();
+				keyConditionExpression_<%=cid%> = "<%=sb%>";
 				<%
 			}
 			else{
@@ -222,9 +214,8 @@
 			<%
 			if(useFilterExpression)
 			{
-			%>
-				sb_<%=cid%> = new StringBuffer();
-			<%
+				sb = new StringBuffer();
+				
 				if(!useAdvancedFilterExpression){	
 			
 				
@@ -253,56 +244,43 @@
 						
 						if(functionStr.equalsIgnoreCase("Begins_With"))
 						{
-							%>
-							if(sb_<%=cid%>.length()>0){
-								sb_<%=cid%>.append(" and ");	
+							if(sb.length()>0){
+								sb.append(" and ");	
 							}
-							sb_<%=cid%>.append("<%=functionStr%>");
-							<%
+							sb.append(functionStr);
+							
 							if(reservedKeyPlaceHolder!=null){
-							%>
-								sb_<%=cid%>.append("(<%=reservedKeyPlaceHolder%>, <%=valuePlaceHolder1%>)");
-							<%
+								sb.append("("+ reservedKeyPlaceHolder + "," + valuePlaceHolder1 + ")");
 							}
 							else{
-							%>
-								sb_<%=cid%>.append("(<%=columnName%>, <%=valuePlaceHolder1%>)");
-							<%
+								sb.append("("+ columnName + "," + valuePlaceHolder1 + ")");
 							}
 						}
 						else{
-							%>
-							if(sb_<%=cid%>.length()>0){
-								sb_<%=cid%>.append(" and ");	
+							if(sb.length()>0){
+								sb.append(" and ");	
 							}
-							<%
+							
 							if(reservedKeyPlaceHolder!=null){
-							%>
-								sb_<%=cid%>.append("<%=reservedKeyPlaceHolder%>");
-							<%
+								sb.append(reservedKeyPlaceHolder);
 							}
 							else{
-							%>
-								sb_<%=cid%>.append("<%=columnName%>");
-							<%
+								sb.append(columnName);
 							}
-							%>
-							sb_<%=cid%>.append(" ");
-							sb_<%=cid%>.append("<%=functionStr%>");
-							sb_<%=cid%>.append(" ");
-							sb_<%=cid%>.append("<%=valuePlaceHolder1%>");	
-							sb_<%=cid%>.append(" ");
+							sb.append(" ");
+							sb.append(functionStr);
+							sb.append(" ");
+							sb.append(valuePlaceHolder1);	
+							sb.append(" ");
 							
-							<%
 							if(functionStr.equalsIgnoreCase("Between"))
 							{
-							%>
-								sb_<%=cid%>.append("AND");	
-								sb_<%=cid%>.append(" ");
-								sb_<%=cid%>.append("<%=valuePlaceHolder2%>");	
-								sb_<%=cid%>.append(" ");
-								valueMap_<%=cid%>.put("<%=valuePlaceHolder2%>",  <%=value2%>);					
-								
+								sb.append("AND");	
+								sb.append(" ");
+								sb.append(valuePlaceHolder2);	
+								sb.append(" ");
+							%>	
+								valueMap_<%=cid%>.put("<%=valuePlaceHolder2%>",  <%=value2%>);													
 							<%
 							}							
 						}	
@@ -314,7 +292,7 @@
 					}
 					%>
 				
-					filterExpression_<%=cid%> = sb_<%=cid%>.toString();
+					filterExpression_<%=cid%> = "<%=sb%>";
 				<%					
 				}	
 				else{
@@ -380,8 +358,9 @@
 				}
 				%>
 				String filterExpression_<%=cid%> = null;
-				StringBuffer sb_<%=cid%> = new StringBuffer();
 				<%
+				
+				StringBuffer sb = new StringBuffer();	
 				if(!useAdvancedFilterExpression){	
 				
 					for(Map<String,String> subExpression : filterExpression)
@@ -406,57 +385,44 @@
 						String functionStr = subExpression.get("FUNCTION");
 						String value1 = subExpression.get("VALUE_1");
 						String value2 = subExpression.get("VALUE_2");			
-						
+								
 						if(functionStr.equalsIgnoreCase("Begins_With"))
 						{
-							%>
-							if(sb_<%=cid%>.length()>0){
-								sb_<%=cid%>.append(" and ");	
+							if(sb.length()>0){
+								sb.append(" and ");	
 							}
-							sb_<%=cid%>.append("<%=functionStr%>");
-							<%
+							sb.append(functionStr);
+
 							if(reservedKeyPlaceHolder!=null){
-							%>
-								sb_<%=cid%>.append("(<%=reservedKeyPlaceHolder%>, <%=valuePlaceHolder1%>)");
-							<%
+								sb.append("("+ reservedKeyPlaceHolder + "," + valuePlaceHolder1 + ")");
 							}
 							else{
-							%>
-								sb_<%=cid%>.append("(<%=columnName%>, <%=valuePlaceHolder1%>)");
-							<%
+								sb.append("("+ columnName + "," + valuePlaceHolder1 + ")");
 							}
 						}
 						else{
-							%>
-							if(sb_<%=cid%>.length()>0){
-								sb_<%=cid%>.append(" and ");	
+							if(sb.length()>0){
+								sb.append(" and ");	
 							}
-							<%
 							if(reservedKeyPlaceHolder!=null){
-							%>
-								sb_<%=cid%>.append("<%=reservedKeyPlaceHolder%>");
-							<%
+								sb.append(reservedKeyPlaceHolder);
 							}
 							else{
-							%>
-								sb_<%=cid%>.append("<%=columnName%>");
-							<%
+								sb.append(columnName);
 							}
-							%>
-							sb_<%=cid%>.append(" ");
-							sb_<%=cid%>.append("<%=functionStr%>");
-							sb_<%=cid%>.append(" ");
-							sb_<%=cid%>.append("<%=valuePlaceHolder1%>");	
-							sb_<%=cid%>.append(" ");
+							sb.append(" ");
+							sb.append(functionStr);
+							sb.append(" ");
+							sb.append(valuePlaceHolder1);	
+							sb.append(" ");
 							
-							<%
 							if(functionStr.equalsIgnoreCase("Between"))
 							{
-							%>
-								sb_<%=cid%>.append("AND");	
-								sb_<%=cid%>.append(" ");
-								sb_<%=cid%>.append("<%=valuePlaceHolder2%>");	
-								sb_<%=cid%>.append(" ");
+								sb.append("AND");	
+								sb.append(" ");
+								sb.append(valuePlaceHolder2);	
+								sb.append(" ");
+								%>
 								valueMap_<%=cid%>.put("<%=valuePlaceHolder2%>",  <%=value2%>);					
 								
 							<%
@@ -472,7 +438,7 @@
 					}
 					%>
 				
-					filterExpression_<%=cid%> = sb_<%=cid%>.toString();			
+					filterExpression_<%=cid%> = "<%=sb%>";			
 				<%
 				}
 				else{				
