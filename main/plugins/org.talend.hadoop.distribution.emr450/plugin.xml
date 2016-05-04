@@ -155,7 +155,7 @@
             context="plugin:org.talend.hadoop.distribution.emr450"
             id="hadoop-lzo-emr450-latest"
             name="hadoop-lzo-0.4.19.jar" 
-            mvn_uri="mvn:org.talend.libraries/hadoop-lzo-0.4.19/6.2.0"/>
+            mvn_uri="mvn:org.talend.libraries/hadoop-lzo-0.4.19/6.0.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
@@ -180,28 +180,28 @@
             context="plugin:org.talend.libraries.pig"
             id="elephant-bird-core-4.9.jar"
             name="elephant-bird-core-4.9.jar" 
-            mvn_uri="mvn:org.talend.libraries/elephant-bird-core-4.9/6.2.0"
+            mvn_uri="mvn:org.talend.libraries/elephant-bird-core-4.9/6.0.0"
             uripath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-core-4.9.jar"/>
             
         <libraryNeeded
             context="plugin:org.talend.libraries.pig"
             id="elephant-bird-hadoop-compat-4.9.jar"
             name="elephant-bird-hadoop-compat-4.9.jar" 
-            mvn_uri="mvn:org.talend.libraries/elephant-bird-hadoop-compat-4.9/6.2.0"
+            mvn_uri="mvn:org.talend.libraries/elephant-bird-hadoop-compat-4.9/6.0.0"
             uripath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-hadoop-compat-4.9.jar"/>
             
         <libraryNeeded
             context="plugin:org.talend.libraries.pig"
             id="elephant-bird-rcfile-4.9-patched-hive-1.x.jar"
             name="elephant-bird-rcfile-4.9-patched-hive-1.x.jar" 
-            mvn_uri="mvn:org.talend.libraries/elephant-bird-rcfile-4.9-patched-hive-1.x/6.2.0"
+            mvn_uri="mvn:org.talend.libraries/elephant-bird-rcfile-4.9-patched-hive-1.x/6.0.0"
             uripath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.9-patched-hive-1.x.jar"/>
             
         <libraryNeeded
             context="plugin:org.talend.libraries.pig"
             id="elephant-bird-pig-4.9.jar"
             name="elephant-bird-pig-4.9.jar"
-            mvn_uri="mvn:org.talend.libraries/elephant-bird-pig-4.9/6.2.0"
+            mvn_uri="mvn:org.talend.libraries/elephant-bird-pig-4.9/6.0.0"
             uripath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-pig-4.9.jar">
         </libraryNeeded>
                         
@@ -209,7 +209,7 @@
             context="plugin:org.talend.libraries.pig"
             id="pigutil.jar"
             name="pigutil.jar"
-            mvn_uri="mvn:org.talend.libraries/pigutil/6.2.0"
+            mvn_uri="mvn:org.talend.libraries/pigutil/6.0.0"
             uripath="platform:/plugin/org.talend.libraries.pig/lib/pigutil.jar">
         </libraryNeeded>
         
@@ -217,17 +217,20 @@
          <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
             id="hadoop-aws-emr450-latest"
-            name="hadoop-aws-2.7.2-amzn-0.jar"/>
+            name="hadoop-aws-2.7.2-amzn-0.jar"
+            mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.7.2-amzn-0/6.2.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.libraries.s3"
             id="aws-java-sdk-s3-emr450-latest"
-            name="aws-java-sdk-s3-1.10.56.jar"/>
+            name="aws-java-sdk-s3-1.10.56.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-s3-1.10.56/6.2.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.libraries.s3"
             id="aws-java-sdk-core-emr450-latest"
-            name="aws-java-sdk-core-1.10.56.jar"/>
+            name="aws-java-sdk-core-1.10.56.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-core-1.10.56/6.2.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.libraries.s3"
@@ -308,7 +311,7 @@
             context="plugin:org.talend.hadoop.distribution.emr450"
             id="jetty-util-emr450-latest"
             name="jetty-util-6.1.26-emr.jar" 
-            mvn_uri="mvn:org.talend.libraries/jetty-util-6.1.26-emr/6.2.0"/>
+            mvn_uri="mvn:org.talend.libraries/jetty-util-6.1.26-emr/6.0.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr450"
