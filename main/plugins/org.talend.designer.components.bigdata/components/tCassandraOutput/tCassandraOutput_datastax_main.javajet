@@ -24,7 +24,6 @@
     Boolean dieOnError = ElementParameterParser.getBooleanValue(node, "__DIE_ON_ERROR__");
     CQLManager cqlManager = new CQLManager(node, columns);
     boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
-    String batchSize = ElementParameterParser.getValue(node, "__BATCH_SIZE__");
     if(useBatch){
     %>
         boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
@@ -35,36 +34,9 @@
     <%=cqlManager.generateStmt("boundStmt_" + cid, conn.getName())%>
     <%
     if(useBatch){
-    %>
-    	currentKey_<%=cid%> = cassandraBatchUtil_<%=cid%>.getKey(boundStmt_<%=cid%>);
-    	if(lastKey_<%=cid%> != null && lastKey_<%=cid%>.compareTo(currentKey_<%=cid%>) != 0){
-    		newOne_<%=cid%> = true;
-    	}else{
-    		newOne_<%=cid%> = false;
-    	}
-    
-    	if(batchStmt_<%=cid%>.size() > 0 && newOne_<%=cid%>){
-            try{
-                connection_<%=cid%>.execute(batchStmt_<%=cid%>);
-                batchStmt_<%=cid%>.clear();
-            }catch(java.lang.Exception e){
-                throw(e);
-            }
-        }
-    
-        batchStmt_<%=cid%>.add(boundStmt_<%=cid%>);
-        
-        lastKey_<%=cid%> = currentKey_<%=cid%>;
-        
-        if(batchStmt_<%=cid%>.size() >= <%=batchSize%>){
-            try{
-                connection_<%=cid%>.execute(batchStmt_<%=cid%>);
-                batchStmt_<%=cid%>.clear();
-            }catch(java.lang.Exception e){
-                throw(e);
-            }
-        }
-    <%
+	%>
+		cassandraBatchExec_<%=cid%>.addOrExecBatch(boundStmt_<%=cid%>);
+	<%
     }else{
     %>
         try{

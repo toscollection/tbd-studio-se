@@ -23,14 +23,7 @@
     boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
     if(useBatch){
     %>
-        if(batchStmt_<%=cid%>.size() > 0){
-            try{
-                connection_<%=cid%>.execute(batchStmt_<%=cid%>);
-                batchStmt_<%=cid%>.clear();
-            }catch(java.lang.Exception e){
-                throw(e);
-            }
-        }
+        cassandraBatchExec_<%=cid%>.endBatch();
     <%
     }
     boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
