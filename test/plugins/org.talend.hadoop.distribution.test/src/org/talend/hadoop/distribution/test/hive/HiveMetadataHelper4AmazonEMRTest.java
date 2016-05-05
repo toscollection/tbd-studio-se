@@ -31,8 +31,8 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractDistributionTest4H
 
     @Override
     protected String[] getDistributionVersionsDisplay() {
-        return new String[] { "EMR 4.5.0 (Apache 2.7.2)", "EMR 4.0.0 (Hive 1.0.0)", "Apache 2.4.0 (Hive 0.13.1)",
-                "Apache 2.4.0 (Hive 0.11.0)", "Apache 1.0.3 (Hive 0.8.1)" };
+        return new String[] { "EMR 4.6.0 (Hive 1.0.0)", "EMR 4.5.0 (Hive 1.0.0)", "EMR 4.0.0 (Hive 1.0.0)",
+                "Apache 2.4.0 (Hive 0.13.1)", "Apache 2.4.0 (Hive 0.11.0)", "Apache 1.0.3 (Hive 0.8.1)" };
     }
 
 }
