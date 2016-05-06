@@ -12,10 +12,12 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.token;
 
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
-import org.talend.core.ui.token.AbstractTokenCollector;
+import org.talend.core.ui.token.AutoSaveTokenCollector;
+import org.talend.repository.hadoopcluster.HadoopClusterPlugin;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 
@@ -25,9 +27,11 @@ import us.monoid.json.JSONObject;
  * created by nrousseau on Apr 1, 2016 Detailled comment
  *
  */
-public class HadoopClusterTokenCollector extends AbstractTokenCollector {
+public class HadoopClusterTokenCollector extends AutoSaveTokenCollector {
 
     private String HADOOPCLUSTER = "HADOOPCLUSTER"; //$NON-NLS-1$
+
+    private static final String PREF_HADOOPCLUSTER_TOKEN_RECORDS = "hadoopcluster.token.records"; //$NON-NLS-1$
 
     /**
      * DOC nrousseau HadoopClusterTokenCollector constructor comment.
@@ -35,14 +39,8 @@ public class HadoopClusterTokenCollector extends AbstractTokenCollector {
     public HadoopClusterTokenCollector() {
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.talend.core.ui.token.AbstractTokenCollector#collect()
-     */
     @Override
-    public JSONObject collect() throws Exception {
-        JSONObject finalToken = new JSONObject();
+    protected JSONObject getTokenDetailsForCurrentProject() throws Exception {
         JSONObject typesHadoop = new JSONObject();
 
         for (IRepositoryViewObject rvo : ProxyRepositoryFactory.getInstance()
@@ -59,11 +57,20 @@ public class HadoopClusterTokenCollector extends AbstractTokenCollector {
         }
 
         JSONObject hadoopCluster = new JSONObject();
-        finalToken.put(PROJECTS_REPOSITORY.getKey(), hadoopCluster);
         JSONObject types = new JSONObject();
         types.put("types", typesHadoop);
         hadoopCluster.put(HADOOPCLUSTER, types);
-        return finalToken;
+        return hadoopCluster;
+    }
+
+    @Override
+    protected IPreferenceStore getPreferenceStore() throws Exception {
+        return HadoopClusterPlugin.getDefault().getPreferenceStore();
+    }
+
+    @Override
+    protected String getPreferenceKey() throws Exception {
+        return PREF_HADOOPCLUSTER_TOKEN_RECORDS;
     }
 
 }
