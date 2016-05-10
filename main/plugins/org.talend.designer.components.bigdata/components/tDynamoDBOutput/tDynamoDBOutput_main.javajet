@@ -106,48 +106,38 @@
 					<%
 					for (int i = 0; i < sizeColumns; i++) {
 						IMetadataColumn column = columnList.get(i);
-
-						%>
-						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {
-   
-						<%
 						
-							if(column.isKey()) 
-							{		
-								%>							
-								if("<%=column.getOriginalDbColumnName()%>".equalsIgnoreCase(<%=hashKeyName%>))
-								{																		
-									hashKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;
-								}
-								else if(<%=rangeKeyName%>!=null && !<%=rangeKeyName%>.isEmpty() && "<%=column.getOriginalDbColumnName()%>".equalsIgnoreCase(<%=rangeKeyName%>))
-								{																		
-									rangeKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;
-								}
-
-								countKey_<%=cid%>++;
-								<%
-							
+						if(column.isKey()) 
+						{		
+							%>							
+							if("<%=column.getOriginalDbColumnName()%>".equalsIgnoreCase(<%=hashKeyName%>))
+							{																		
+								hashKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;
 							}
-							else
-							{
-								%>
-								if(countValue_<%=cid%> > 0)
-								{
-									updateExpressionBuffer_<%=cid%>.append(", ");
-								}
-								
-								updateExpressionBuffer_<%=cid%>.append("<%=column.getOriginalDbColumnName() %>  =:<%=column.getOriginalDbColumnName() %>");
-								
-								valueMap_<%=cid%>.put(":<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
-								countValue_<%=cid%>++;
-								
+							else if(<%=rangeKeyName%>!=null && !<%=rangeKeyName%>.isEmpty() && "<%=column.getOriginalDbColumnName()%>".equalsIgnoreCase(<%=rangeKeyName%>))
+							{																		
+								rangeKeyValue_<%=cid%> = <%=conn.getName() %>.<%=column.getLabel() %>;
+							}
+
+							countKey_<%=cid%>++;
 							<%
-							}	
-							%>
+						
 						}
-						
-						
-					<%			
+						else
+						{
+							%>
+							if(countValue_<%=cid%> > 0)
+							{
+								updateExpressionBuffer_<%=cid%>.append(", ");
+							}
+							
+							updateExpressionBuffer_<%=cid%>.append("<%=column.getOriginalDbColumnName() %>  =:<%=column.getOriginalDbColumnName() %>");
+							
+							valueMap_<%=cid%>.put(":<%=column.getOriginalDbColumnName() %>", <%=conn.getName() %>.<%=column.getLabel() %>);
+							countValue_<%=cid%>++;
+							
+						<%
+						}				
 					}
 			
 					%>
