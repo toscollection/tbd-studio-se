@@ -157,6 +157,9 @@
 					else{
 						updateItemSpec_<%=cid%> = updateItemSpec_<%=cid%>.withPrimaryKey(<%=hashKeyName%>, hashKeyValue_<%=cid%>);
 					}
+					
+					updateItemSpec_<%=cid%> = updateItemSpec_<%=cid%>.withUpdateExpression(updateExpressionBuffer_<%=cid%>.toString()).withValueMap(valueMap_<%=cid%>);	
+					
 					<%
 					
   				}
