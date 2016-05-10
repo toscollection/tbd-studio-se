@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.repository.hdfs.ui;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -21,8 +20,6 @@ import org.eclipse.core.resources.IWorkspaceRunnable;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
@@ -37,12 +34,10 @@ import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.repository.IRepositoryViewObject;
 import org.talend.core.model.update.RepositoryUpdateManager;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
-import org.talend.cwm.helper.ConnectionHelper;
 import org.talend.metadata.managment.ui.wizard.AbstractRepositoryFileTableWizard;
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
-import orgomg.cwm.objectmodel.core.Package;
 
 /**
  * DOC ycbai class global comment. Detailled comment
@@ -53,7 +48,7 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
 
     private HDFSSchemaWizardPage schemaWizardPage;
 
-    private HDFSConnection temConnection;
+    private HDFSConnection connection;
 
     private MetadataTable selectedMetadataTable;
 
@@ -70,7 +65,7 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         if (connectionItem != null) {
             oldTableMap = RepositoryUpdateManager.getOldTableIdAndNameMap(connectionItem, metadataTable, creation);
             oldMetadataTable = RepositoryUpdateManager.getConversionMetadataTables(connectionItem.getConnection());
-            cloneBaseHDFSConnection((HDFSConnection) connectionItem.getConnection());
+            connection = (HDFSConnection) connectionItem.getConnection();
         }
         setNeedsProgressMonitor(true);
         setRepositoryObject(object);
@@ -84,9 +79,9 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ECoreImage.METADATA_TABLE_WIZ));
 
         schemaWizardPage = new HDFSSchemaWizardPage(selectedMetadataTable, connectionItem, isRepositoryObjectEditable(),
-                temConnection);
+                connection);
         if (creation) {
-            fileSelectorWizardPage = new HDFSFileSelectorWizardPage(connectionItem, isRepositoryObjectEditable(), temConnection);
+            fileSelectorWizardPage = new HDFSFileSelectorWizardPage(connectionItem, isRepositoryObjectEditable(), connection);
             fileSelectorWizardPage.setTitle(Messages.getString(
                     "HDFSSchemaWizardPage.titleCreate", connectionItem.getProperty().getLabel())); //$NON-NLS-1$
             fileSelectorWizardPage.setDescription(Messages.getString("HDFSSchemaWizardPage.descriptionCreate")); //$NON-NLS-1$
@@ -116,11 +111,10 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
 
                 @Override
                 public void run(IProgressMonitor monitor) throws CoreException {
-                    connectionItem.setConnection(temConnection);
                     saveMetaData();
                     RepositoryUpdateManager.updateMultiSchema(connectionItem, oldMetadataTable, oldTableMap);
                     closeLockStrategy();
-                    temConnection = null;
+                    connection = null;
                 }
             };
             try {
@@ -144,7 +138,7 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         if (fileSelectorWizardPage != null) {
             fileSelectorWizardPage.performCancel();
         }
-        temConnection = null;
+        connection = null;
         return super.performCancel();
     }
 
@@ -160,13 +154,6 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         }
     }
 
-    private void cloneBaseHDFSConnection(HDFSConnection connection) {
-        temConnection = EcoreUtil.copy(connection);
-        EList<Package> dataPackage = connection.getDataPackage();
-        Collection<Package> newDataPackage = EcoreUtil.copyAll(dataPackage);
-        ConnectionHelper.addPackages(newDataPackage, temConnection);
-    }
-
     @Override
     public void init(final IWorkbench workbench, final IStructuredSelection selection) {
         this.selection = selection;
@@ -177,7 +164,4 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         return this.connectionItem;
     }
 
-    protected HDFSConnection getTempHDFSConnection() {
-        return this.temConnection;
-    }
 }
