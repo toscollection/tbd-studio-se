@@ -74,6 +74,11 @@
 	String fieldSeparator = ElementParameterParser.getValue(node, "__FIELD_SEPARATOR_CHAR__");
 	boolean rmResultDir = "true".equals(ElementParameterParser.getValue(node, "__RM_OUTPUT__"));
 	
+	// Cannot delete directory on S3.
+	if (isS3Location) {
+	    rmResultDir = false;
+	}
+
 	String database = ElementParameterParser.getValue(node, "__DATABASE_NAME__");
 	String table = ElementParameterParser.getValue(node, "__TABLE_NAME__");
 	String partitionFilter = ElementParameterParser.getValue(node, "__PARTITION_KEYVALUE__");
