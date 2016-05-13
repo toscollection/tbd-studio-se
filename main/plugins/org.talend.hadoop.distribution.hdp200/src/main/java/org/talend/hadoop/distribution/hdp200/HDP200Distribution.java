@@ -191,9 +191,6 @@ public class HDP200Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportHive1Standalone() {
-        if (PluginChecker.isOnlyTopLoaded()) { // because Hive1 doesn't support standalone.
-            return false;
-        }
         return false;
     }
 
