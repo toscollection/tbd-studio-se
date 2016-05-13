@@ -162,7 +162,7 @@ public class HDP200Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportHive1() {
-        // don't support Hive1 in TOS for DQ product because HDP210 doesn't support Hive1 standalone
+        // don't support Hive1 in TOS for DQ product because this distribution doesn't support Hive1 standalone
         if (PluginChecker.isOnlyTopLoaded()) {
             return false;
         }
