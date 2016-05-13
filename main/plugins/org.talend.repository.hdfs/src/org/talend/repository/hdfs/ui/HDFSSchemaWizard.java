@@ -164,4 +164,7 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
         return this.connectionItem;
     }
 
+    protected HDFSConnection getTempHDFSConnection() {
+        return this.connection;
+    }
 }
