@@ -227,7 +227,11 @@
                     <IMPORT 
                         NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" 
                         MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0"  
-                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>                    
+                        UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>   
+                    <IMPORT MODULE="talend-cassandra-1.0.jar"
+                        MVN="mvn:org.talend.libraries/talend-cassandra-1.0/6.0.0"
+                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/talend-cassandra-1.0.jar"
+                        NAME="talend-cassandra-1.0.jar" /><!-- for output only -->                 
                 </IMPORTS>
             </IMPORTS>
     	</IMPORTS>

@@ -353,11 +353,27 @@
             NUM_ROW="1"
             SHOW_IF="(((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX'))))"
         >
-            <DEFAULT>false</DEFAULT>
+            <DEFAULT>true</DEFAULT>
         </PARAMETER>
 		<PARAMETER FIELD="TEXT" NAME="BATCH_SIZE" REQUIRED="true" NUM_ROW="1" SHOW_IF="(((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'CASSANDRA_2_0_0') OR (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION != 'CASSANDRA_2_0_0') OR (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))) OR ((isShow[USE_UNLOGGED_BATCH]) AND (USE_UNLOGGED_BATCH == 'true'))">
-			<DEFAULT>10000</DEFAULT>
+			<DEFAULT>1000</DEFAULT>
 		</PARAMETER>
+		<PARAMETER NAME="GROUP_METHOD" FIELD="CLOSED_LIST" REQUIRED="true" NUM_ROW="3" SHOW_IF="(isShow[USE_UNLOGGED_BATCH]) AND (USE_UNLOGGED_BATCH == 'true')">
+            <ITEMS DEFAULT="PARTITION">
+                <ITEM NAME="PARTITION" VALUE="PARTITION"/>
+                <ITEM NAME="REPLICA" VALUE="REPLICA"/>
+                <ITEM NAME="NONE" VALUE="NONE"/>
+            </ITEMS>
+        </PARAMETER>
+        <PARAMETER NAME="GROUP_CACHE" FIELD="CHECK" REQUIRED="true" NUM_ROW="3" SHOW_IF="(isShow[USE_UNLOGGED_BATCH]) AND (USE_UNLOGGED_BATCH == 'true')">
+        	<DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="ASYNC" FIELD="CHECK" REQUIRED="true" NUM_ROW="5" SHOW_IF="(isShow[USE_UNLOGGED_BATCH]) AND (USE_UNLOGGED_BATCH == 'true')">
+        	<DEFAULT>true</DEFAULT>
+        </PARAMETER>
+        <PARAMETER NAME="CONCURRENT_TASKS" FIELD="TEXT" REQUIRED="true" NUM_ROW="5" SHOW_IF="(isShow[ASYNC]) AND (ASYNC == 'true')">
+        	<DEFAULT>5</DEFAULT>
+        </PARAMETER>
         <PARAMETER
             NAME="INSERT_IF_NOT_EXISTS"
             FIELD="CHECK"
@@ -620,6 +636,10 @@
                             NAME="slf4j-log4j12-1.7.5.jar" MODULE="slf4j-log4j12-1.7.5.jar" 
                             MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0"  
                             UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>	                        
+                        <IMPORT MODULE="talend-cassandra-1.0.jar"
+	                        MVN="mvn:org.talend.libraries/talend-cassandra-1.0/6.0.0"
+	                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/talend-cassandra-1.0.jar"
+	                        NAME="talend-cassandra-1.0.jar" />
                     </IMPORTS>
                 </IMPORTS>
             </IMPORTS>

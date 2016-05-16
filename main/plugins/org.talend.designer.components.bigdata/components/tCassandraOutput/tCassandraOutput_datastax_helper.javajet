@@ -158,60 +158,7 @@ class CassandraOutputGenHelper{
 	    }
 	}
 	
-	public void genBatchUtilClass(){
-		boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
-		if(useBatch){
-		%>
-			class CassandraBatchUtil_<%=cid%> {
-				java.util.List<Integer> keyPositions = new java.util.ArrayList<Integer>();
-				public CassandraBatchUtil_<%=cid%>(com.datastax.driver.core.Cluster cluster, String keyspace, String table, List<String> columns){
-			    	java.util.List<com.datastax.driver.core.ColumnMetadata> partitionKeys = cluster.getMetadata().getKeyspace(keyspace).getTable(table).getPartitionKey();
-					java.util.List<String> partitionColumnKeys = new java.util.ArrayList<String>();
-					for(com.datastax.driver.core.ColumnMetadata partitionKey : partitionKeys){
-					    partitionColumnKeys.add(partitionKey.getName());
-					}
-					int position = 0;
-					for(String col : columns){
-						if(partitionColumnKeys.contains(col)){
-							keyPositions.add(position);
-						}
-						position++;
-					}
-					
-				}
-				
-				public java.nio.ByteBuffer getKey(com.datastax.driver.core.BoundStatement stmt){
-					java.util.List<java.nio.ByteBuffer> keys = new java.util.ArrayList<java.nio.ByteBuffer>();
-					for(int position : keyPositions){
-						keys.add(stmt.getBytesUnsafe(position));
-					}
-					if(keys.size() == 1){
-						return keys.get(0);
-					}else{
-						return composeKeys(keys);
-					}
-				}
-				private java.nio.ByteBuffer composeKeys(java.util.List<java.nio.ByteBuffer> buffers){
-					int totalLength = 0;
-					for(java.nio.ByteBuffer buffer : buffers){
-						totalLength += buffer.remaining() + 3;
-					}
-					java.nio.ByteBuffer out = java.nio.ByteBuffer.allocate(totalLength);
-					for(java.nio.ByteBuffer buffer : buffers){
-						java.nio.ByteBuffer bb = buffer.duplicate();
-						out.put((byte)((bb.remaining() >> 8) & 0xFF));
-					    out.put((byte)(bb.remaining() & 0xFF));
-					    out.put(bb);
-					    out.put((byte)0);
-				    }
-				    out.flip();
-				    return out;
-				}
-			}
-		<%	
-		}
-	}
-	
+	//DI only, better to move
 	public void genInit(){
 	%>
 		int nb_line_<%=cid%> = 0;
@@ -219,9 +166,8 @@ class CassandraOutputGenHelper{
 	    prepareStmt_<%=cid%> = connection_<%=cid%>.prepare(<%=cqlManager.generatePreActionSQL()%>);
 	    com.datastax.driver.core.BoundStatement boundStmt_<%=cid%> = null;
 	    <%
-		boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
-	    if(useBatch){
-	    %>
+	    if(ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__")){
+    	%>
 	    	java.util.List<String> columns_<%=cid%> = new java.util.ArrayList<String>();	
 	    	<%
 	    	for(String col : cqlManager.getValueColumns()){
@@ -229,14 +175,18 @@ class CassandraOutputGenHelper{
 	    		columns_<%=cid%>.add("<%=col%>");
 	    	<%	
 	    	}
+	    	String batchClass = ElementParameterParser.getBooleanValue(node, "__GROUP_CACHE__") ? "BatchCacheExecutor" : "BatchExecutor";
 	    	%>
-	    	CassandraBatchUtil_<%=cid%> cassandraBatchUtil_<%=cid%> = new CassandraBatchUtil_<%=cid%>(cluster_<%=cid%>, StringHandling.DQUOTE(<%=ElementParameterParser.getValue(node, "__KEY_SPACE__")%>), StringHandling.DQUOTE(<%=ElementParameterParser.getValue(node, "__COLUMN_FAMILY__")%>), columns_<%=cid%>);
-			java.nio.ByteBuffer currentKey_<%=cid%> = null;     
-			java.nio.ByteBuffer lastKey_<%=cid%> = null;
-			boolean newOne_<%=cid%> = false;    
-	    	
-	        com.datastax.driver.core.BatchStatement batchStmt_<%=cid%> = new com.datastax.driver.core.BatchStatement(com.datastax.driver.core.BatchStatement.Type.UNLOGGED);
-	    <%
+	    	org.talend.bigdata.cassandra.<%=batchClass%> cassandraBatchExec_<%=cid%> = new org.talend.bigdata.cassandra.<%=batchClass%>(
+	    																					connection_<%=cid%>, 
+	    																					StringHandling.DQUOTE(<%=ElementParameterParser.getValue(node, "__KEY_SPACE__")%>),
+	    																					StringHandling.DQUOTE(<%=ElementParameterParser.getValue(node, "__COLUMN_FAMILY__")%>), 
+	    																					columns_<%=cid%>,
+	    																					org.talend.bigdata.cassandra.BatchGroupingKey.fromString("<%=ElementParameterParser.getValue(node, "__GROUP_METHOD__")%>"),
+	    																					<%=ElementParameterParser.getValue(node, "__BATCH_SIZE__")%>,
+	    																					<%=ElementParameterParser.getBooleanValue(node, "__ASYNC__")%>,
+	    																					<%=ElementParameterParser.getValue(node, "__CONCURRENT_TASKS__")%>);
+    	<%
 	    }else{
 	    %>
 	        boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
