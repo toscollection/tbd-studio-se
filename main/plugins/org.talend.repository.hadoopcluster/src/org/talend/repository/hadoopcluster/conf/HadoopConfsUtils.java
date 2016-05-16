@@ -181,10 +181,15 @@ public class HadoopConfsUtils {
                     EHadoopConfProperties.YARN_RESOURCEMANAGER_HA_ENABLED.getName());
             boolean isUseRmHa = Boolean.valueOf(useRmHa);
             if (isUseRmHa) {
-                String adminRmIdKey = getAdminRmIdKey(confsService,
-                        EHadoopConfProperties.YARN_RESOURCEMANAGER_ADMIN_ADDRESS_RM_ID.getName());
-                if (StringUtils.isNotEmpty(adminRmIdKey)) {
-                    rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), adminRmIdKey);
+                String rmIdKey = getRmIdKey(confsService, EHadoopConfProperties.YARN_RESOURCEMANAGER_ADDRESS_RM_ID.getName());
+                if (StringUtils.isNotEmpty(rmIdKey)) {
+                    rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), rmIdKey);
+                }
+                if (rmOrJt == null) {
+                    rmIdKey = getRmIdKey(confsService, EHadoopConfProperties.YARN_RESOURCEMANAGER_HOSTNAME_RM_ID.getName());
+                    if (StringUtils.isNotEmpty(rmIdKey)) {
+                        rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), rmIdKey);
+                    }
                 }
             } else {
                 rmOrJt = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.RESOURCE_MANAGER.getName());
@@ -200,10 +205,9 @@ public class HadoopConfsUtils {
         String rms = confsService.getConfValue(EHadoopConfs.YARN.getName(),
                 EHadoopConfProperties.RESOURCEMANAGER_SCHEDULER.getName());
         if (rms == null) {
-            String adminRmIdKey = getAdminRmIdKey(confsService,
-                    EHadoopConfProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS_RM_ID.getName());
-            if (StringUtils.isNotEmpty(adminRmIdKey)) {
-                rms = confsService.getConfValue(EHadoopConfs.YARN.getName(), adminRmIdKey);
+            String rmIdKey = getRmIdKey(confsService, EHadoopConfProperties.RESOURCEMANAGER_SCHEDULER_ADDRESS_RM_ID.getName());
+            if (StringUtils.isNotEmpty(rmIdKey)) {
+                rms = confsService.getConfValue(EHadoopConfs.YARN.getName(), rmIdKey);
             }
             if (yarnHostName != null) {
                 rms = replaceHostName(connection.getRmScheduler(), yarnHostName);
@@ -253,7 +257,7 @@ public class HadoopConfsUtils {
         }
     }
 
-    private static String getAdminRmIdKey(IRetrieveConfsService confsService, String name) throws Exception {
+    private static String getRmIdKey(IRetrieveConfsService confsService, String name) throws Exception {
         String rmIds = confsService.getConfValue(EHadoopConfs.YARN.getName(),
                 EHadoopConfProperties.YARN_RESOURCEMANAGER_HA_RM_IDS.getName());
         if (rmIds != null) {
