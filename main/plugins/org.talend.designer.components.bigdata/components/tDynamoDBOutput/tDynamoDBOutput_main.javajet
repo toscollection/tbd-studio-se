@@ -49,12 +49,12 @@
 					%>	
 					Object hashKeyValue_<%=cid%> = null;
 					Object rangeKeyValue_<%=cid%> = null;
+					item_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.Item();
 					<%
 					for (int i = 0; i < sizeColumns; i++) {
 						IMetadataColumn column = columnList.get(i);
 
 						%>				
-						item_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.Item();	
 						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {  				
 						<%
 							
