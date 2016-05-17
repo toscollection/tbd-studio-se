@@ -93,7 +93,7 @@
 			<%
 			}		
 		
-			if(region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
+			if(!useEndPoint && region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
 			%>
 				dynamoDBClient_<%=cid%>.setRegion(com.amazonaws.regions.RegionUtils.getRegion(<%=region%>));
 			<%
