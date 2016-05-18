@@ -124,7 +124,15 @@
                 <ITEM NAME="UPDATE" VALUE="UPDATE"/>
                 <ITEM NAME="DELETE" VALUE="DELETE"/>
             </ITEMS>
-        </PARAMETER>				
+        </PARAMETER>		
+
+		<PARAMETER NAME="NAME_MAPPING" FIELD="TABLE" NUM_ROW="100" 
+			SHOW_IF="DATA_ACTION == 'UPDATE'" GROUP="CONFIGURATION">
+	      <ITEMS>		  		
+		  	<ITEM NAME="NAME" FIELD="TEXT" />
+			<ITEM NAME="PLACEHOLDER" FIELD="TEXT" />			
+	      </ITEMS>
+		</PARAMETER>
 		
 	</PARAMETERS>
 	
