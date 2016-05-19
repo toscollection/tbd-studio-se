@@ -75,7 +75,7 @@
 			}
 			
 		<%
-			if(region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
+			if(!useEndPoint && region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
 			%>
 				dynamoDBClient_<%=cid%>.setRegion(com.amazonaws.regions.RegionUtils.getRegion(<%=region%>));
 			<%
@@ -229,7 +229,7 @@
 						valuePlaceHolder2 = ":filter_" + columnName +"_2";					
 						
 						for(Map<String,String> subNameMap : nameMap){
-							String placeholder = subNameMap.get("PLACE_HOLDER");
+							String placeholder = subNameMap.get("PLACEHOLDER");
 							String name = subNameMap.get("NAME");
 							if(name.equals(columnName))
 							{
@@ -373,7 +373,7 @@
 						valuePlaceHolder2 = ":filter_" + columnName +"_2";
 						
 						for(Map<String,String> subNameMap : nameMap){
-							String placeholder = subNameMap.get("PLACE_HOLDER");
+							String placeholder = subNameMap.get("PLACEHOLDER");
 							String name = subNameMap.get("NAME");
 							if(name.equals(columnName))
 							{

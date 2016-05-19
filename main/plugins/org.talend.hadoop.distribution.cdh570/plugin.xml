@@ -670,7 +670,7 @@
                 description="Sqoop libraries for CDH 5.5"
                 id="SQOOP-LIB-CDH_5_7"
                 name="SQOOP-LIB-CDH_5_7">
-            <library id="sqoop-cdh5.7.0"/>
+            <library id="sqoop-cdh5.5.2"/>
             <library id="avro-mapred-cdh5.7.0"/>
             <library id="json-20080701.jar"/>
         </libraryNeededGroup>

@@ -93,7 +93,7 @@
 			<%
 			}		
 		
-			if(region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
+			if(!useEndPoint && region!=null && !region.isEmpty() && !"DEFAULT".equalsIgnoreCase(region)){
 			%>
 				dynamoDBClient_<%=cid%>.setRegion(com.amazonaws.regions.RegionUtils.getRegion(<%=region%>));
 			<%
@@ -101,35 +101,46 @@
 		%>
 							
 			com.amazonaws.services.dynamodbv2.document.DynamoDB dynamoDB_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.DynamoDB(dynamoDBClient_<%=cid%>);
-						
-			java.util.HashMap<String, String> attributeMap = new java.util.HashMap<String, String>();  			
-	
-			List<com.amazonaws.services.dynamodbv2.model.AttributeDefinition> attributeDefinitionList = new java.util.ArrayList<com.amazonaws.services.dynamodbv2.model.AttributeDefinition>();
 			
 			<%
-			columnList = metadata.getListColumns();
-			int sizeColumns = columnList.size();
-			
-			for (int i = 0; i < sizeColumns; i++) {
-				IMetadataColumn column = columnList.get(i);
-				if(column.isKey()){				
-					String type = column.getTalendType();
-					if(type.toUpperCase().indexOf("STRING") >=0)
-					{
-				%>		
-						attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.S));
-				<%	
-					}
-					else if(type.toUpperCase().indexOf("INTEGER") >=0)
-					{
-				%>		
-						attributeDefinitionList.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.N));			
-				<%	
-					}
+			if(!"NONE".equalsIgnoreCase(tableAction))
+			{
+				%>
+				List<com.amazonaws.services.dynamodbv2.model.AttributeDefinition> attributeDefinitionList_<%=cid%> = new java.util.ArrayList<com.amazonaws.services.dynamodbv2.model.AttributeDefinition>();
 				
+				List<com.amazonaws.services.dynamodbv2.model.KeySchemaElement> keyList_<%=cid%> = new java.util.ArrayList<com.amazonaws.services.dynamodbv2.model.KeySchemaElement>();
+				
+				keyList_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH));
+				
+				if(<%=rangeKeyName%> != null && !<%=rangeKeyName%>.isEmpty())
+				{	
+					keyList_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE));
+				}
+				
+				<%
+				columnList = metadata.getListColumns();
+				int sizeColumns = columnList.size();
+				
+				for (int i = 0; i < sizeColumns; i++) {
+					IMetadataColumn column = columnList.get(i);
+					if(column.isKey()){				
+						String type = column.getTalendType();
+						if(type.toUpperCase().indexOf("STRING") >=0)
+						{
+					%>		
+							attributeDefinitionList_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.S));
+					<%	
+						}
+						else if(type.toUpperCase().indexOf("INTEGER") >=0)
+						{
+					%>		
+							attributeDefinitionList_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.N));			
+					<%	
+						}								
+					}
 				}
 			}
-
+			
 			if ("NONE".equalsIgnoreCase(tableAction)) {
 			%>
 		
@@ -138,10 +149,8 @@
 			%>
 				com.amazonaws.services.dynamodbv2.document.Table tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
 					<%=table%>,
-					java.util.Arrays.asList(
-						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
-						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
-					attributeDefinitionList,
+					keyList_<%=cid%>,
+					attributeDefinitionList_<%=cid%>,
 					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 				tableTemp_<%=cid%>.waitForActive();
 				<%
@@ -156,12 +165,12 @@
 				try{
 					com.amazonaws.services.dynamodbv2.document.Table tableTemp_<%=cid%> = dynamoDB_<%=cid%>.getTable(<%=table%>);
 				
+					
+					
 					tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
 						<%=table%>,
-						java.util.Arrays.asList(
-							new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
-							new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
-						attributeDefinitionList,
+						keyList_<%=cid%>,
+						attributeDefinitionList_<%=cid%>,
 					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 					tableTemp_<%=cid%>.waitForActive();
 					<%
@@ -201,10 +210,8 @@
 				
 				tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
 					<%=table%>,
-					java.util.Arrays.asList(
-						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
-						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
-					attributeDefinitionList,
+					keyList_<%=cid%>,
+					attributeDefinitionList_<%=cid%>,
 					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 				tableTemp_<%=cid%>.waitForActive();			
 				<%
@@ -242,10 +249,8 @@
 
 				tableTemp_<%=cid%> = dynamoDB_<%=cid%>.createTable(
 					<%=table%>,
-					java.util.Arrays.asList(
-						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=hashKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH),  //Partition key
-						new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=rangeKeyName%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE)), //Sort key
-					attributeDefinitionList,
+					keyList_<%=cid%>,
+					attributeDefinitionList_<%=cid%>,
 					new com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput((long)<%=rcu%>, (long)<%=wcu%>));
 				tableTemp_<%=cid%>.waitForActive();				
 				<%

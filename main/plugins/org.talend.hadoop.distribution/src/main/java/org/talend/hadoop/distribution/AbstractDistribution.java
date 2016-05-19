@@ -205,7 +205,7 @@ public abstract class AbstractDistribution {
         // the class is the version of distribution
         if (getVersion() != null) {
             JSONObject versionJson = DefaultConfigurationManager.loadDefaultFile(this.getClass(), getVersion().toLowerCase());
-            return JSONUtil.merge(globalJson, versionJson);
+            return JSONUtil.merge(versionJson, globalJson);
         }
         return globalJson;
     }
