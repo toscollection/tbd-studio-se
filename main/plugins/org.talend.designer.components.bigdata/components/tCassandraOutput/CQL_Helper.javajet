@@ -70,6 +70,7 @@
         private Boolean useSpark = false;
         private Boolean version22 = true;
         private List<Column> valueColumns;
+        private String apiPackageName = "com.datastax.driver.";
 
         public CQLManager(INode node, List<IMetadataColumn> columnList){
         	this.node = node;
@@ -84,6 +85,7 @@
             this(node, columnList);
             this.version22 = version22;
             this.useSpark = useSpark;
+            this.apiPackageName = "shade.com.datastax.spark.connector.driver.";
         }
 
         private List<Column> all;
@@ -632,7 +634,7 @@
             	}else if("time".equals(dbType)){
             		setStmt.append(assignStmt +".setTime(" + index + ", " + columnValue + ");\r\n");
             	}else if("date".equals(dbType)){
-            		setStmt.append(assignStmt +".setDate(" + index + ", com.datastax.driver.core.LocalDate.fromMillisSinceEpoch(" + columnValue + ".getTime()));\r\n");
+            		setStmt.append(assignStmt +".setDate(" + index + ", "+apiPackageName+"core.LocalDate.fromMillisSinceEpoch(" + columnValue + ".getTime()));\r\n");
             	}
             }
 
