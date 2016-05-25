@@ -146,6 +146,12 @@
                     <%
                 }
 
+                if(queryOptionNoTimeOut){
+                    %>
+                        mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
+                    <%
+                }
+
                 // the client
                 if(useReplicaSet){
                     %>
@@ -197,12 +203,6 @@
                         // Unhandled
                         <%
                     }
-            }
-
-            if(queryOptionNoTimeOut){
-                %>
-                    mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
-                <%
             }
 
             if(isLog4jEnabled){
