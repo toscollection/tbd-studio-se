@@ -24,7 +24,7 @@ import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 
 public class EMR450SparkStreamingModuleGroup {
 
-    private static final String MODULE_GROUP_NAME = "SPARK-LIB-EMR_4_5_0_LATEST"; //$NON-NLS-1$
+    public static final String MODULE_GROUP_NAME = "SPARK-LIB-EMR_4_5_0_LATEST"; //$NON-NLS-1$
 
     private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
             SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$

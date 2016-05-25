@@ -21,7 +21,7 @@ import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 
 public class EMR450SparkStreamingKafkaAvroModuleGroup {
 
-    public static final String KAFKA_AVRO_GROUP_NAME = "SPARK-KAFKA-AVRO-LIB-MRREQUIRED-EMR_4_5_0_LATEST";
+    public static final String KAFKA_AVRO_GROUP_NAME = "SPARK-KAFKA-AVRO-LIB-MRREQUIRED-EMR_4_5_0_LATEST"; //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
