@@ -12,8 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.test.hive;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -84,25 +86,25 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
         HiveServerVersionInfo hiveServer = HiveServerVersionInfo.HIVE_SERVER_2;
 
         // embedded + server 2
-        assertThat(
+        assertTrue(
                 MessageFormat.format(messages, hiveMode.getDisplayName(), hiveServer.getKey()),
                 HiveMetadataHelper.doSupportSecurity(getDistribution(), getDistributionVersion(), hiveMode.getName(),
-                        hiveServer.getKey(), false), is(isSupportSecurity()));
+                        hiveServer.getKey(), false) == isSupportSecurity());
 
         // embedded + server 1
         hiveServer = HiveServerVersionInfo.HIVE_SERVER_1;
-        assertThat(
+        assertTrue(
                 MessageFormat.format(messages, hiveMode.getDisplayName(), hiveServer.getKey()),
                 HiveMetadataHelper.doSupportSecurity(getDistribution(), getDistributionVersion(), hiveMode.getName(),
-                        hiveServer.getKey(), false), is(isSupportSecurity()));
+                        hiveServer.getKey(), false) == isSupportSecurity());
 
         // standardalone + server 2
         hiveServer = HiveServerVersionInfo.HIVE_SERVER_2;
         hiveMode = HiveModeInfo.STANDALONE;
-        assertThat(
+        assertTrue(
                 MessageFormat.format(messages, hiveMode.getDisplayName(), hiveServer.getKey()),
                 HiveMetadataHelper.doSupportSecurity(getDistribution(), getDistributionVersion(), hiveMode.getName(),
-                        hiveServer.getKey(), false), is(isSupportSecurity()));
+                        hiveServer.getKey(), false) == isSupportSecurity());
     }
 
     protected boolean isSupportSecurity() {
@@ -115,7 +117,7 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
 
     @Test
     public void testDoSupportTez() {
-        assertThat(HiveMetadataHelper.doSupportTez(getDistribution(), getDistributionVersion(), false), is(isSupportTez()));
+        assertTrue(HiveMetadataHelper.doSupportTez(getDistribution(), getDistributionVersion(), false) == isSupportTez());
     }
 
     protected boolean isSupportTez() {
