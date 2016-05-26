@@ -68,13 +68,12 @@ public interface HadoopComponent {
      * @return a boolean that indicates if the distribution supports Kerberos.
      */
     public boolean doSupportKerberos();
+
     /**
      * @return a boolean that indicates if the distribution supports MapR Ticket.
      */
     public boolean doSupportMapRTicket();
 
-    
-    
     /**
      * @return a boolean that indicates if the distribution supports the USE_DATANODE_HOSTNAME property.
      */
@@ -122,7 +121,13 @@ public interface HadoopComponent {
      * @return true if the distribution supports S3.
      */
     public boolean doSupportS3();
-    
+
+    /**
+     * @return true if the Hadoop version support S3 API in version 4. It will be used by spark s3 configuration in
+     * order to set the region. The V4 API is supported only since hadoop version 2.7.
+     */
+    public boolean doSupportS3V4();
+
     /**
      * Get the default configurations for different distributions.
      */
