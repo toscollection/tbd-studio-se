@@ -324,7 +324,7 @@ public class HDP240Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportSparkStandaloneMode() {
-        return true;
+        return false;
     }
 
     @Override
