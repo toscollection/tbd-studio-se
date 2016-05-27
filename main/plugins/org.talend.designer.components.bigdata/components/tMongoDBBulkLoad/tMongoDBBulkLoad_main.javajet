@@ -357,8 +357,8 @@
 					    }
 						%>				
 						int im=line.indexOf("imported");
-						int obj=line.indexOf("objects");
-						int doc=line.indexOf("documents");
+						int obj=line.indexOf("object");
+						int doc=line.indexOf("document");
 						if(im > 0 && obj > 0){
 							line = line.substring(im+8, obj).trim();
 						} else if(im > 0 && doc > 0){
