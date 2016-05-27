@@ -33,7 +33,6 @@ public class CDH550SparkStreamingKafkaAvroModuleGroupTest {
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
-
         results.put(
                 CDH550Constant.SPARK_KAFKA_ASSEMBLY_MRREQUIRED_MODULE_GROUP.getModuleName(),
                 "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='Cloudera_CDH5_5')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
