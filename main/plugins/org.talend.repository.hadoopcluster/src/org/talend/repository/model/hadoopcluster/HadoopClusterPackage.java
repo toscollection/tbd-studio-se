@@ -767,22 +767,13 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T = ConnectionPackage.CONNECTION_FEATURE_COUNT + 34;
 
     /**
-     * The feature id for the '<em><b>Mapr TUsername</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 35;
-
-    /**
      * The feature id for the '<em><b>Mapr TPassword</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD = ConnectionPackage.CONNECTION_FEATURE_COUNT + 36;
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD = ConnectionPackage.CONNECTION_FEATURE_COUNT + 35;
 
     /**
      * The feature id for the '<em><b>Mapr TCluster</b></em>' attribute.
@@ -791,7 +782,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER = ConnectionPackage.CONNECTION_FEATURE_COUNT + 37;
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER = ConnectionPackage.CONNECTION_FEATURE_COUNT + 36;
 
     /**
      * The feature id for the '<em><b>Mapr TDuration</b></em>' attribute.
@@ -800,7 +791,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 38;
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 37;
 
     /**
      * The feature id for the '<em><b>Set Mapr THome Dir</b></em>' attribute.
@@ -809,7 +800,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 39;
+    int HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 38;
 
     /**
      * The feature id for the '<em><b>Mapr THome Dir</b></em>' attribute.
@@ -818,7 +809,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 40;
+    int HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 39;
 
     /**
      * The feature id for the '<em><b>Set Hadoop Login</b></em>' attribute.
@@ -827,7 +818,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 41;
+    int HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 40;
 
     /**
      * The feature id for the '<em><b>Mapr THadoop Login</b></em>' attribute.
@@ -836,7 +827,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 42;
+    int HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 41;
 
     /**
      * The feature id for the '<em><b>Preload Authentification</b></em>' attribute.
@@ -845,7 +836,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 43;
+    int HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 42;
 
     /**
      * The number of structural features of the '<em>Connection</em>' class.
@@ -854,7 +845,7 @@ public interface HadoopClusterPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 44;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 43;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1869,17 +1860,6 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopClusterConnection_EnableMaprT();
 
     /**
-     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername <em>Mapr TUsername</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Mapr TUsername</em>'.
-     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername()
-     * @see #getHadoopClusterConnection()
-     * @generated
-     */
-    EAttribute getHadoopClusterConnection_MaprTUsername();
-
-    /**
      * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTPassword <em>Mapr TPassword</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2364,14 +2344,6 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T = eINSTANCE.getHadoopClusterConnection_EnableMaprT();
-
-        /**
-         * The meta object literal for the '<em><b>Mapr TUsername</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME = eINSTANCE.getHadoopClusterConnection_MaprTUsername();
 
         /**
          * The meta object literal for the '<em><b>Mapr TPassword</b></em>' attribute feature.

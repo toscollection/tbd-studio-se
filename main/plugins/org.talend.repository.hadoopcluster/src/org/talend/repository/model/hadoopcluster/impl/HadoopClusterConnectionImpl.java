@@ -72,7 +72,6 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaDieNoError <em>Cloudera Die No Error</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isEnableMaprT <em>Enable Mapr T</em>}</li>
- *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTUsername <em>Mapr TUsername</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTPassword <em>Mapr TPassword</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTCluster <em>Mapr TCluster</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTDuration <em>Mapr TDuration</em>}</li>
@@ -766,26 +765,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected boolean enableMaprT = ENABLE_MAPR_T_EDEFAULT;
-
-    /**
-     * The default value of the '{@link #getMaprTUsername() <em>Mapr TUsername</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getMaprTUsername()
-     * @generated
-     * @ordered
-     */
-    protected static final String MAPR_TUSERNAME_EDEFAULT = "";
-
-    /**
-     * The cached value of the '{@link #getMaprTUsername() <em>Mapr TUsername</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #getMaprTUsername()
-     * @generated
-     * @ordered
-     */
-    protected String maprTUsername = MAPR_TUSERNAME_EDEFAULT;
 
     /**
      * The default value of the '{@link #getMaprTPassword() <em>Mapr TPassword</em>}' attribute.
@@ -1688,27 +1667,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
-    public String getMaprTUsername() {
-        return maprTUsername;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public void setMaprTUsername(String newMaprTUsername) {
-        String oldMaprTUsername = maprTUsername;
-        maprTUsername = newMaprTUsername;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME, oldMaprTUsername, maprTUsername));
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public String getMaprTPassword() {
         return maprTPassword;
     }
@@ -1965,8 +1923,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return isClouderaDieNoError();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
                 return isEnableMaprT();
-            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
-                return getMaprTUsername();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
                 return getMaprTPassword();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER:
@@ -2101,9 +2057,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
                 setEnableMaprT((Boolean)newValue);
-                return;
-            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
-                setMaprTUsername((String)newValue);
                 return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
                 setMaprTPassword((String)newValue);
@@ -2246,9 +2199,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
                 setEnableMaprT(ENABLE_MAPR_T_EDEFAULT);
                 return;
-            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
-                setMaprTUsername(MAPR_TUSERNAME_EDEFAULT);
-                return;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
                 setMaprTPassword(MAPR_TPASSWORD_EDEFAULT);
                 return;
@@ -2355,8 +2305,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return clouderaDieNoError != CLOUDERA_DIE_NO_ERROR_EDEFAULT;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
                 return enableMaprT != ENABLE_MAPR_T_EDEFAULT;
-            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
-                return MAPR_TUSERNAME_EDEFAULT == null ? maprTUsername != null : !MAPR_TUSERNAME_EDEFAULT.equals(maprTUsername);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
                 return MAPR_TPASSWORD_EDEFAULT == null ? maprTPassword != null : !MAPR_TPASSWORD_EDEFAULT.equals(maprTPassword);
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER:
@@ -2455,8 +2403,6 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(clouderaDieNoError);
         result.append(", enableMaprT: ");
         result.append(enableMaprT);
-        result.append(", maprTUsername: ");
-        result.append(maprTUsername);
         result.append(", maprTPassword: ");
         result.append(maprTPassword);
         result.append(", maprTCluster: ");

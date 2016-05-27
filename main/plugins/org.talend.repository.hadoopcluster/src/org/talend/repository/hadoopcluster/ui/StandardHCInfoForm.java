@@ -133,8 +133,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     // Mapr Ticket Authentication
     private Button maprTBtn;
 
-    private LabelledText maprTUsernameText;
-
     private LabelledText maprTPasswordText;
 
     private LabelledText maprTClusterText;
@@ -212,7 +210,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
         //
         maprTBtn.setSelection(connection.isEnableMaprT());
-        maprTUsernameText.setText(connection.getMaprTUsername());
         maprTPasswordText.setText(connection.getMaprTPassword());
         maprTClusterText.setText(connection.getMaprTCluster());
         maprTDurationText.setText(connection.getMaprTDuration());
@@ -256,7 +253,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         groupText.setReadOnly(readOnly);
 
         maprTBtn.setEnabled(!readOnly);
-        maprTUsernameText.setReadOnly(readOnly);
         maprTPasswordText.setReadOnly(readOnly);
         maprTClusterText.setReadOnly(readOnly);
         maprTDurationText.setReadOnly(readOnly);
@@ -291,7 +287,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         //
         maprTBtn.setEnabled(isEditable && isCurrentHadoopVersionSupportMapRTicket());
         boolean isMaprTEditable = maprTBtn.isEnabled() && maprTBtn.getSelection();
-        maprTUsernameText.setEditable(isMaprTEditable && !isKerberosEditable);
         maprTPasswordText.setEditable(isMaprTEditable && !isKerberosEditable);
         maprTClusterText.setEditable(isMaprTEditable);
         maprTDurationText.setEditable(isMaprTEditable);
@@ -410,27 +405,17 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTBtn.setText(Messages.getString("HadoopClusterForm.button.maprTicket")); //$NON-NLS-1$
         maprTBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-        Composite maprTUserPasswordComp = new Composite(authMaprTComposite, SWT.NULL);
-        GridLayout maprTUserPasswordCompLayout = new GridLayout(4, false);
-        maprTUserPasswordCompLayout.marginWidth = 0;
-        maprTUserPasswordCompLayout.marginHeight = 0;
-        maprTUserPasswordComp.setLayout(maprTUserPasswordCompLayout);
-        maprTUserPasswordComp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        maprTUsernameText = new LabelledText(maprTUserPasswordComp, Messages.getString("HadoopClusterForm.text.maprTUsername"), 1); //$NON-NLS-1$
-        maprTPasswordText = new LabelledText(maprTUserPasswordComp,
+        Composite maprTPCDCompposite = new Composite(authMaprTComposite, SWT.NULL);
+        GridLayout maprTPCDCompositeLayout = new GridLayout(2, false);
+        maprTPCDCompositeLayout.marginWidth = 0;
+        maprTPCDCompositeLayout.marginHeight = 0;
+        maprTPCDCompposite.setLayout(maprTPCDCompositeLayout);
+        maprTPCDCompposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        maprTPasswordText = new LabelledText(maprTPCDCompposite,
                 Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD); //$NON-NLS-1$
-
-        Composite maprTClusterDurationComp = new Composite(authMaprTComposite, SWT.NULL);
-        GridLayout maprTClusterDurationCompLayout = new GridLayout(2, false);
-        maprTClusterDurationCompLayout.marginWidth = 0;
-        maprTClusterDurationCompLayout.marginHeight = 0;
-        maprTClusterDurationComp.setLayout(maprTClusterDurationCompLayout);
-        maprTClusterDurationComp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
-        maprTClusterText = new LabelledText(maprTClusterDurationComp,
-                Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
-        maprTDurationText = new LabelledText(maprTClusterDurationComp,
-                Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
+        maprTClusterText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
+        maprTDurationText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
 
         Composite maprTSetComposite = new Composite(authMaprTComposite, SWT.NULL);
         GridLayout maprTicketSetCompLayout = new GridLayout(3, false);
@@ -803,14 +788,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 checkFieldsValue();
             }
         });
-        maprTUsernameText.addModifyListener(new ModifyListener() {
-
-            @Override
-            public void modifyText(final ModifyEvent e) {
-                getConnection().setMaprTUsername(maprTUsernameText.getText());
-                checkFieldsValue();
-            }
-        });
         maprTPasswordText.addModifyListener(new ModifyListener() {
 
             @Override
@@ -986,7 +963,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
                     // maprt
                     maprTBtn.setEnabled(false);
-                    maprTUsernameText.setEditable(false);
                     maprTPasswordText.setEditable(false);
                     maprTClusterText.setEditable(false);
                     maprTDurationText.setEditable(false);
@@ -1014,8 +990,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
             // maprt
             maprTBtn.setEnabled(isCurrentHadoopVersionSupportMapRTicket());
-            maprTUsernameText.setEditable(maprTBtn.isEnabled()
-                    && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
             maprTPasswordText.setEditable(maprTBtn.isEnabled()
                     && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
             maprTClusterText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection());
@@ -1158,7 +1132,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         if (!maprTBtn.isEnabled()) {
             maprTBtn.setSelection(false);
-            maprTUsernameText.setText(EMPTY_STRING);
             maprTPasswordText.setText(EMPTY_STRING);
             maprTClusterText.setText(EMPTY_STRING);
             maprTDurationText.setText(EMPTY_STRING);
@@ -1293,8 +1266,39 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         }
 
-        checkServicesBtn.setEnabled(true);
+        if (maprTPasswordText.getEditable()) {
+            if (!validText(maprTPasswordText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTPassword")); //$NON-NLS-1$
+                return false;
+            }
+            if (!isContextMode() && !HadoopParameterValidator.isValidMaprTPassword(maprTPasswordText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTPassword.invalid")); //$NON-NLS-1$
+                return false;
+            }
+        }
 
+        if (maprTClusterText.getEditable()) {
+            if (!validText(maprTClusterText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTCluster")); //$NON-NLS-1$
+                return false;
+            }
+            if (!isContextMode() && !HadoopParameterValidator.isValidMaprTCluster(maprTClusterText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTCluster.invalid")); //$NON-NLS-1$
+                return false;
+            }
+        }
+
+        if (maprTDurationText.getEditable()) {
+            if (!validText(maprTDurationText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTDuration")); //$NON-NLS-1$
+                return false;
+            }
+            if (!isContextMode() && !HadoopParameterValidator.isValidMaprTDuration(maprTDurationText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTDuration.invalid")); //$NON-NLS-1$
+                return false;
+            }
+        }
+        checkServicesBtn.setEnabled(true);
         updateStatus(IStatus.OK, null);
         return true;
     }
@@ -1360,7 +1364,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private void collectAuthMaprTFieldContextParameters(boolean useMaprT) {
-        addContextParams(EHadoopParamName.maprTUsername, useMaprT);
         addContextParams(EHadoopParamName.maprTPassword, useMaprT);
         addContextParams(EHadoopParamName.maprTCluster, useMaprT);
         addContextParams(EHadoopParamName.maprTDuration, useMaprT);

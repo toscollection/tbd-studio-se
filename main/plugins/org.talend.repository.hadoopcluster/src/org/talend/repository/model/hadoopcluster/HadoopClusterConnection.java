@@ -56,7 +56,6 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDieNoError <em>Cloudera Die No Error</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableMaprT <em>Enable Mapr T</em>}</li>
- *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername <em>Mapr TUsername</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTPassword <em>Mapr TPassword</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTCluster <em>Mapr TCluster</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTDuration <em>Mapr TDuration</em>}</li>
@@ -980,33 +979,6 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setEnableMaprT(boolean value);
-
-    /**
-     * Returns the value of the '<em><b>Mapr TUsername</b></em>' attribute.
-     * The default value is <code>""</code>.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Mapr TUsername</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Mapr TUsername</em>' attribute.
-     * @see #setMaprTUsername(String)
-     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTUsername()
-     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
-     * @generated
-     */
-    String getMaprTUsername();
-
-    /**
-     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername <em>Mapr TUsername</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Mapr TUsername</em>' attribute.
-     * @see #getMaprTUsername()
-     * @generated
-     */
-    void setMaprTUsername(String value);
 
     /**
      * Returns the value of the '<em><b>Mapr TPassword</b></em>' attribute.

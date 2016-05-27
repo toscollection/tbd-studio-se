@@ -42,7 +42,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/clouderaAutoCommit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/clouderaDieNoError"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/enableMaprT"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/maprTUsername"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/maprTPassword"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/maprTCluster"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute hadoopcluster.ecore#//HadoopClusterConnection/maprTDuration"/>

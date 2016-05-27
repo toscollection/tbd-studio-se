@@ -145,7 +145,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
                         break;
-                    case  ClouderaNavigatorUsername:  
+                    case ClouderaNavigatorUsername:
                         ConnectionContextHelper.createParameters(varList, paramName, conn.getClouderaNaviUserName());
                         break;
                     case ClouderaNavigatorPassword:
@@ -343,7 +343,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case  ClouderaNavigatorUsername:  
+        case ClouderaNavigatorUsername:
             hadoopConn.setClouderaNaviUserName(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         case ClouderaNavigatorPassword:
@@ -355,8 +355,20 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
         case ClouderaNavigatorMetadataUrl:
             hadoopConn.setClouderaNaviMetadataUrl(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case ClouderaNavigatorClientUrl:
-            hadoopConn.setClouderaNaviClientUrl(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        case maprTPassword:
+            hadoopConn.setMaprTPassword(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case maprTCluster:
+            hadoopConn.setMaprTCluster(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case maprTDuration:
+            hadoopConn.setMaprTDuration(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case maprTHomeDir:
+            hadoopConn.setMaprTHomeDir(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case maprTHadoopLogin:
+            hadoopConn.setMaprTHadoopLogin(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         default:
         }
@@ -388,18 +400,33 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             String principal = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
                     conn.getKeytabPrincipal()));
             String keyTab = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getKeytab()));
-            
-            String cnUserName = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviUserName()));
-            
-            String cnPassword = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviPassword()));
-            
-            String cnUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviUrl()));
-            
-            String cnMetadataUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviMetadataUrl()));
-            
-            String cnClientUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType, conn.getClouderaNaviClientUrl()));
-            
-            
+
+            String cnUserName = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getClouderaNaviUserName()));
+
+            String cnPassword = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getClouderaNaviPassword()));
+
+            String cnUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getClouderaNaviUrl()));
+
+            String cnMetadataUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getClouderaNaviMetadataUrl()));
+
+            String cnClientUrl = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getClouderaNaviClientUrl()));
+
+            String maprTPassword = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getMaprTPassword()));
+            String maprTCluster = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getMaprTCluster()));
+            String maprTDuration = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getMaprTDuration()));
+            String maprTHomeDir = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getMaprTHomeDir()));
+            String maprTHadoopLogin = TalendQuoteUtils.removeQuotes(ContextParameterUtils.getOriginalValue(contextType,
+                    conn.getMaprTHadoopLogin()));
+
             for (String paramKey : ((HadoopClusterConnection) hadoopConn).getParameters().keySet()) {
                 String originalValue = ContextParameterUtils.getOriginalValue(contextType, conn.getParameters().get(paramKey));
                 conn.getParameters().put(paramKey, originalValue);
@@ -427,6 +454,11 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             conn.setClouderaNaviUrl(cnUrl);
             conn.setClouderaNaviMetadataUrl(cnMetadataUrl);
             conn.setClouderaNaviClientUrl(cnClientUrl);
+            conn.setMaprTPassword(maprTPassword);
+            conn.setMaprTCluster(maprTCluster);
+            conn.setMaprTDuration(maprTDuration);
+            conn.setMaprTHomeDir(maprTHomeDir);
+            conn.setMaprTHadoopLogin(maprTHadoopLogin);
         }
     }
 

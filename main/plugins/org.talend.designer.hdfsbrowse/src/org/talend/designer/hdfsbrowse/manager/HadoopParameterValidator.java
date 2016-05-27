@@ -90,6 +90,18 @@ public class HadoopParameterValidator {
         return isValid(principal, HadoopPatternConstants.WITHOUT_SPACE);
     }
 
+    public static boolean isValidMaprTPassword(String maprTPassword) {
+        return isValid(maprTPassword, HadoopPatternConstants.WITHOUT_SPACE);
+    }
+
+    public static boolean isValidMaprTCluster(String maprTCluster) {
+        return isValid(maprTCluster, HadoopPatternConstants.WITHOUT_SPACE);
+    }
+
+    public static boolean isValidMaprTDuration(String maprTDuration) {
+        return isValid(maprTDuration, HadoopPatternConstants.WITHOUT_SPACE);
+    }
+
     /**
      * Check whether or not the realm is valid.
      * <p>
