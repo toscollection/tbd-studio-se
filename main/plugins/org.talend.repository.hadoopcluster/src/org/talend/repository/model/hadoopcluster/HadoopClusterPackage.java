@@ -758,13 +758,103 @@ public interface HadoopClusterPackage extends EPackage {
     int HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 33;
 
     /**
+     * The feature id for the '<em><b>Enable Mapr T</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T = ConnectionPackage.CONNECTION_FEATURE_COUNT + 34;
+
+    /**
+     * The feature id for the '<em><b>Mapr TUsername</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME = ConnectionPackage.CONNECTION_FEATURE_COUNT + 35;
+
+    /**
+     * The feature id for the '<em><b>Mapr TPassword</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD = ConnectionPackage.CONNECTION_FEATURE_COUNT + 36;
+
+    /**
+     * The feature id for the '<em><b>Mapr TCluster</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER = ConnectionPackage.CONNECTION_FEATURE_COUNT + 37;
+
+    /**
+     * The feature id for the '<em><b>Mapr TDuration</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 38;
+
+    /**
+     * The feature id for the '<em><b>Set Mapr THome Dir</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 39;
+
+    /**
+     * The feature id for the '<em><b>Mapr THome Dir</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR = ConnectionPackage.CONNECTION_FEATURE_COUNT + 40;
+
+    /**
+     * The feature id for the '<em><b>Set Hadoop Login</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 41;
+
+    /**
+     * The feature id for the '<em><b>Mapr THadoop Login</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN = ConnectionPackage.CONNECTION_FEATURE_COUNT + 42;
+
+    /**
+     * The feature id for the '<em><b>Preload Authentification</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION = ConnectionPackage.CONNECTION_FEATURE_COUNT + 43;
+
+    /**
      * The number of structural features of the '<em>Connection</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 34;
+    int HADOOP_CLUSTER_CONNECTION_FEATURE_COUNT = ConnectionPackage.CONNECTION_FEATURE_COUNT + 44;
 
     /**
      * The meta object id for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.
@@ -1768,6 +1858,116 @@ public interface HadoopClusterPackage extends EPackage {
     EAttribute getHadoopClusterConnection_ClouderaDieNoError();
 
     /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableMaprT <em>Enable Mapr T</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Enable Mapr T</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableMaprT()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_EnableMaprT();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername <em>Mapr TUsername</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mapr TUsername</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_MaprTUsername();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTPassword <em>Mapr TPassword</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mapr TPassword</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTPassword()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_MaprTPassword();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTCluster <em>Mapr TCluster</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mapr TCluster</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTCluster()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_MaprTCluster();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTDuration <em>Mapr TDuration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mapr TDuration</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTDuration()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_MaprTDuration();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetMaprTHomeDir <em>Set Mapr THome Dir</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Set Mapr THome Dir</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetMaprTHomeDir()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_SetMaprTHomeDir();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHomeDir <em>Mapr THome Dir</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mapr THome Dir</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHomeDir()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_MaprTHomeDir();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetHadoopLogin <em>Set Hadoop Login</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Set Hadoop Login</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetHadoopLogin()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_SetHadoopLogin();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHadoopLogin <em>Mapr THadoop Login</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Mapr THadoop Login</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHadoopLogin()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_MaprTHadoopLogin();
+
+    /**
+     * Returns the meta object for the attribute '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isPreloadAuthentification <em>Preload Authentification</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Preload Authentification</em>'.
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isPreloadAuthentification()
+     * @see #getHadoopClusterConnection()
+     * @generated
+     */
+    EAttribute getHadoopClusterConnection_PreloadAuthentification();
+
+    /**
      * Returns the meta object for class '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem <em>Connection Item</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2156,6 +2356,86 @@ public interface HadoopClusterPackage extends EPackage {
          * @generated
          */
         EAttribute HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR = eINSTANCE.getHadoopClusterConnection_ClouderaDieNoError();
+
+        /**
+         * The meta object literal for the '<em><b>Enable Mapr T</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T = eINSTANCE.getHadoopClusterConnection_EnableMaprT();
+
+        /**
+         * The meta object literal for the '<em><b>Mapr TUsername</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME = eINSTANCE.getHadoopClusterConnection_MaprTUsername();
+
+        /**
+         * The meta object literal for the '<em><b>Mapr TPassword</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD = eINSTANCE.getHadoopClusterConnection_MaprTPassword();
+
+        /**
+         * The meta object literal for the '<em><b>Mapr TCluster</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER = eINSTANCE.getHadoopClusterConnection_MaprTCluster();
+
+        /**
+         * The meta object literal for the '<em><b>Mapr TDuration</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION = eINSTANCE.getHadoopClusterConnection_MaprTDuration();
+
+        /**
+         * The meta object literal for the '<em><b>Set Mapr THome Dir</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR = eINSTANCE.getHadoopClusterConnection_SetMaprTHomeDir();
+
+        /**
+         * The meta object literal for the '<em><b>Mapr THome Dir</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR = eINSTANCE.getHadoopClusterConnection_MaprTHomeDir();
+
+        /**
+         * The meta object literal for the '<em><b>Set Hadoop Login</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN = eINSTANCE.getHadoopClusterConnection_SetHadoopLogin();
+
+        /**
+         * The meta object literal for the '<em><b>Mapr THadoop Login</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN = eINSTANCE.getHadoopClusterConnection_MaprTHadoopLogin();
+
+        /**
+         * The meta object literal for the '<em><b>Preload Authentification</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION = eINSTANCE.getHadoopClusterConnection_PreloadAuthentification();
 
         /**
          * The meta object literal for the '{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionItemImpl <em>Connection Item</em>}' class.

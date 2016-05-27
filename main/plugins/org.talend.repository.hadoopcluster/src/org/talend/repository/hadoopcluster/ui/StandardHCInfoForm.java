@@ -130,6 +130,27 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private boolean needInitializeContext = false;
 
+    // Mapr Ticket Authentication
+    private Button maprTBtn;
+
+    private LabelledText maprTUsernameText;
+
+    private LabelledText maprTPasswordText;
+
+    private LabelledText maprTClusterText;
+
+    private LabelledText maprTDurationText;
+
+    private Button setMaprTHomeDirBtn;
+
+    private Button setHadoopLoginBtn;
+
+    private Button preloadAuthentificationBtn;
+
+    private LabelledText maprTHomeDirText;
+
+    private LabelledText maprTHadoopLoginText;
+
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
         super(parent, SWT.NONE, existingNames);
@@ -189,6 +210,18 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         userNameText.setText(connection.getUserName());
         groupText.setText(connection.getGroup());
 
+        //
+        maprTBtn.setSelection(connection.isEnableMaprT());
+        maprTUsernameText.setText(connection.getMaprTUsername());
+        maprTPasswordText.setText(connection.getMaprTPassword());
+        maprTClusterText.setText(connection.getMaprTCluster());
+        maprTDurationText.setText(connection.getMaprTDuration());
+        setMaprTHomeDirBtn.setSelection(connection.isSetMaprTHomeDir());
+        setHadoopLoginBtn.setSelection(connection.isSetHadoopLogin());
+        preloadAuthentificationBtn.setSelection(connection.isPreloadAuthentification());
+        maprTHomeDirText.setText(connection.getMaprTHomeDir());
+        maprTHadoopLoginText.setText(connection.getMaprTHadoopLogin());
+
         needInitializeContext = true;
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -214,6 +247,24 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         jobHistoryPrincipalText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
         groupText.setReadOnly(readOnly);
+
+        kerberosBtn.setEnabled(!readOnly);
+        namenodePrincipalText.setReadOnly(readOnly);
+        jtOrRmPrincipalText.setReadOnly(readOnly);
+        jobHistoryPrincipalText.setReadOnly(readOnly);
+        userNameText.setReadOnly(readOnly);
+        groupText.setReadOnly(readOnly);
+
+        maprTBtn.setEnabled(!readOnly);
+        maprTUsernameText.setReadOnly(readOnly);
+        maprTPasswordText.setReadOnly(readOnly);
+        maprTClusterText.setReadOnly(readOnly);
+        maprTDurationText.setReadOnly(readOnly);
+        setMaprTHomeDirBtn.setEnabled(!readOnly);
+        setHadoopLoginBtn.setEnabled(!readOnly);
+        preloadAuthentificationBtn.setEnabled(!readOnly);
+        maprTHomeDirText.setReadOnly(readOnly);
+        maprTHadoopLoginText.setReadOnly(readOnly);
     }
 
     @Override
@@ -236,6 +287,20 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         boolean isKeyTabEditable = keytabBtn.isEnabled() && keytabBtn.getSelection();
         keytabText.setEditable(isKeyTabEditable);
         keytabPrincipalText.setEditable(isKeyTabEditable);
+
+        //
+        maprTBtn.setEnabled(isEditable && isCurrentHadoopVersionSupportMapRTicket());
+        boolean isMaprTEditable = maprTBtn.isEnabled() && maprTBtn.getSelection();
+        maprTUsernameText.setEditable(isMaprTEditable && !isKerberosEditable);
+        maprTPasswordText.setEditable(isMaprTEditable && !isKerberosEditable);
+        maprTClusterText.setEditable(isMaprTEditable);
+        maprTDurationText.setEditable(isMaprTEditable);
+        setMaprTHomeDirBtn.setEnabled(isEditable && maprTBtn.getSelection());
+        setHadoopLoginBtn.setEnabled(isEditable && maprTBtn.getSelection());
+        preloadAuthentificationBtn.setEnabled(isEditable && maprTBtn.getSelection());
+        maprTHomeDirText.setEditable(isMaprTEditable);
+        maprTHadoopLoginText.setEditable(isMaprTEditable);
+
         hadoopPropertiesComposite.setEnabled(isEditable);
         propertiesDialog.updateStatusLabel(getHadoopProperties());
     }
@@ -332,6 +397,58 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 Messages.getString("HadoopClusterForm.text.keytabPrincipal"), 1); //$NON-NLS-1$
         String[] extensions = { "*.*" }; //$NON-NLS-1$
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
+
+        // Mapr Ticket Authentication
+        Composite authMaprTComposite = new Composite(authGroup, SWT.NULL);
+        GridLayout authMaprTicketCompLayout = new GridLayout(1, false);
+        authMaprTicketCompLayout.marginWidth = 0;
+        authMaprTicketCompLayout.marginHeight = 0;
+        authMaprTComposite.setLayout(authMaprTicketCompLayout);
+        authMaprTComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        maprTBtn = new Button(authMaprTComposite, SWT.CHECK);
+        maprTBtn.setText(Messages.getString("HadoopClusterForm.button.maprTicket")); //$NON-NLS-1$
+        maprTBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
+
+        Composite maprTUserPasswordComp = new Composite(authMaprTComposite, SWT.NULL);
+        GridLayout maprTUserPasswordCompLayout = new GridLayout(4, false);
+        maprTUserPasswordCompLayout.marginWidth = 0;
+        maprTUserPasswordCompLayout.marginHeight = 0;
+        maprTUserPasswordComp.setLayout(maprTUserPasswordCompLayout);
+        maprTUserPasswordComp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        maprTUsernameText = new LabelledText(maprTUserPasswordComp, Messages.getString("HadoopClusterForm.text.maprTUsername"), 1); //$NON-NLS-1$
+        maprTPasswordText = new LabelledText(maprTUserPasswordComp,
+                Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD); //$NON-NLS-1$
+
+        Composite maprTClusterDurationComp = new Composite(authMaprTComposite, SWT.NULL);
+        GridLayout maprTClusterDurationCompLayout = new GridLayout(2, false);
+        maprTClusterDurationCompLayout.marginWidth = 0;
+        maprTClusterDurationCompLayout.marginHeight = 0;
+        maprTClusterDurationComp.setLayout(maprTClusterDurationCompLayout);
+        maprTClusterDurationComp.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        maprTClusterText = new LabelledText(maprTClusterDurationComp,
+                Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
+        maprTDurationText = new LabelledText(maprTClusterDurationComp,
+                Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
+
+        Composite maprTSetComposite = new Composite(authMaprTComposite, SWT.NULL);
+        GridLayout maprTicketSetCompLayout = new GridLayout(3, false);
+        maprTicketSetCompLayout.marginWidth = 0;
+        maprTicketSetCompLayout.marginHeight = 0;
+        maprTSetComposite.setLayout(maprTicketSetCompLayout);
+        maprTSetComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        setMaprTHomeDirBtn = new Button(maprTSetComposite, SWT.CHECK);
+        setMaprTHomeDirBtn.setText(Messages.getString("HadoopClusterForm.button.setMaprTHomeDir")); //$NON-NLS-1$
+        maprTHomeDirText = new LabelledText(maprTSetComposite, "", 1); //$NON-NLS-1$
+
+        setHadoopLoginBtn = new Button(maprTSetComposite, SWT.CHECK);
+        setHadoopLoginBtn.setText(Messages.getString("HadoopClusterForm.button.setHadoopLogin")); //$NON-NLS-1$
+        maprTHadoopLoginText = new LabelledText(maprTSetComposite, "", 1); //$NON-NLS-1$
+
+        preloadAuthentificationBtn = new Button(maprTSetComposite, SWT.CHECK);
+        preloadAuthentificationBtn.setText(Messages.getString("HadoopClusterForm.button.preloadAuthentification")); //$NON-NLS-1$
     }
 
     private void addHadoopPropertiesFields() {
@@ -677,6 +794,91 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             }
         });
 
+        maprTBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setEnableMaprT(maprTBtn.getSelection());
+                updateForm();
+                checkFieldsValue();
+            }
+        });
+        maprTUsernameText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setMaprTUsername(maprTUsernameText.getText());
+                checkFieldsValue();
+            }
+        });
+        maprTPasswordText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setMaprTPassword(maprTPasswordText.getText());
+                checkFieldsValue();
+            }
+        });
+        maprTClusterText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setMaprTCluster(maprTClusterText.getText());
+                checkFieldsValue();
+            }
+        });
+        maprTDurationText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setMaprTDuration(maprTDurationText.getText());
+                checkFieldsValue();
+            }
+        });
+        setMaprTHomeDirBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setSetMaprTHomeDir(setMaprTHomeDirBtn.getSelection());
+                updateForm();
+                checkFieldsValue();
+            }
+        });
+        maprTHomeDirText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setMaprTHomeDir(maprTHomeDirText.getText());
+                checkFieldsValue();
+            }
+        });
+        setHadoopLoginBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setSetHadoopLogin(setHadoopLoginBtn.getSelection());
+                updateForm();
+                checkFieldsValue();
+            }
+        });
+        maprTHadoopLoginText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().setMaprTHadoopLogin(maprTHadoopLoginText.getText());
+                checkFieldsValue();
+            }
+        });
+        preloadAuthentificationBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().setPreloadAuthentification(preloadAuthentificationBtn.getSelection());
+                updateForm();
+                checkFieldsValue();
+            }
+        });
+
     }
 
     @Override
@@ -781,6 +983,18 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabText.setEditable(false);
                     userNameText.setEditable(true);
                     groupText.setEditable(false);
+
+                    // maprt
+                    maprTBtn.setEnabled(false);
+                    maprTUsernameText.setEditable(false);
+                    maprTPasswordText.setEditable(false);
+                    maprTClusterText.setEditable(false);
+                    maprTDurationText.setEditable(false);
+                    setMaprTHomeDirBtn.setEnabled(false);
+                    setHadoopLoginBtn.setEnabled(false);
+                    preloadAuthentificationBtn.setEnabled(false);
+                    maprTHomeDirText.setEditable(false);
+                    maprTHadoopLoginText.setEditable(false);
                     break;
                 }
             }
@@ -797,6 +1011,22 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             groupText.setEditable(isCurrentHadoopVersionSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
+
+            // maprt
+            maprTBtn.setEnabled(isCurrentHadoopVersionSupportMapRTicket());
+            maprTUsernameText.setEditable(maprTBtn.isEnabled()
+                    && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
+            maprTPasswordText.setEditable(maprTBtn.isEnabled()
+                    && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
+            maprTClusterText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection());
+            maprTDurationText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection());
+            setMaprTHomeDirBtn.setEnabled(maprTBtn.isEnabled() && maprTBtn.getSelection());
+            setHadoopLoginBtn.setEnabled(maprTBtn.isEnabled() && maprTBtn.getSelection());
+            preloadAuthentificationBtn.setEnabled(maprTBtn.isEnabled() && maprTBtn.getSelection());
+            maprTHomeDirText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection() && setMaprTHomeDirBtn.isEnabled()
+                    && setMaprTHomeDirBtn.getSelection());
+            maprTHadoopLoginText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection() && setHadoopLoginBtn.isEnabled()
+                    && setHadoopLoginBtn.getSelection());
 
         }
         updateMRRelatedContent();
@@ -889,6 +1119,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         return supportSecurity;
     }
 
+    private boolean isCurrentHadoopVersionSupportMapRTicket() {
+        boolean supportMapRTicket = false;
+        final DistributionVersion distributionVersion = getDistributionVersion();
+        if (distributionVersion != null && distributionVersion.hadoopComponent != null) {
+            supportMapRTicket = distributionVersion.hadoopComponent.doSupportMapRTicket();
+        }
+        return supportMapRTicket;
+    }
+
     private boolean isCurrentHadoopVersionSupportYarn() {
 
         boolean supportYarn = false;
@@ -916,6 +1155,19 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             jtOrRmPrincipalText.setText(EMPTY_STRING);
             jobHistoryPrincipalText.setText(EMPTY_STRING);
             getConnection().setEnableKerberos(false);
+        }
+        if (!maprTBtn.isEnabled()) {
+            maprTBtn.setSelection(false);
+            maprTUsernameText.setText(EMPTY_STRING);
+            maprTPasswordText.setText(EMPTY_STRING);
+            maprTClusterText.setText(EMPTY_STRING);
+            maprTDurationText.setText(EMPTY_STRING);
+            setMaprTHomeDirBtn.setSelection(false);
+            setHadoopLoginBtn.setSelection(false);
+            preloadAuthentificationBtn.setSelection(false);
+            maprTHomeDirText.setText(EMPTY_STRING);
+            maprTHadoopLoginText.setText(EMPTY_STRING);
+            getConnection().setEnableMaprT(false);
         }
         if (!groupText.getEditable()) {
             groupText.setText(EMPTY_STRING);
@@ -1070,6 +1322,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         collectConFieldContextParameters(isCurrentHadoopVersionSupportYarn());
         collectAuthFieldContextParameters(kerberosBtn.getSelection());
         collectKeyTabContextParameters(kerberosBtn.getSelection() && keytabBtn.getSelection());
+        collectAuthMaprTFieldContextParameters(maprTBtn.getSelection());
         if (useClouderaNaviBtn != null) {
             collectClouderaNavigatorFieldContextParameters(useClouderaNaviBtn.getSelection());
         }
@@ -1104,5 +1357,14 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     private void collectKeyTabContextParameters(boolean useKeyTab) {
         addContextParams(EHadoopParamName.Principal, useKeyTab);
         addContextParams(EHadoopParamName.KeyTab, useKeyTab);
+    }
+
+    private void collectAuthMaprTFieldContextParameters(boolean useMaprT) {
+        addContextParams(EHadoopParamName.maprTUsername, useMaprT);
+        addContextParams(EHadoopParamName.maprTPassword, useMaprT);
+        addContextParams(EHadoopParamName.maprTCluster, useMaprT);
+        addContextParams(EHadoopParamName.maprTDuration, useMaprT);
+        addContextParams(EHadoopParamName.maprTHomeDir, useMaprT);
+        addContextParams(EHadoopParamName.maprTHadoopLogin, useMaprT);
     }
 }

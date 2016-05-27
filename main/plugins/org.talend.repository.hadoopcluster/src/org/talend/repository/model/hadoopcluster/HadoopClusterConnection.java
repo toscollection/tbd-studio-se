@@ -55,6 +55,16 @@ import org.talend.core.model.metadata.builder.connection.Connection;
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDisableSSL <em>Cloudera Disable SSL</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isClouderaDieNoError <em>Cloudera Die No Error</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableMaprT <em>Enable Mapr T</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername <em>Mapr TUsername</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTPassword <em>Mapr TPassword</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTCluster <em>Mapr TCluster</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTDuration <em>Mapr TDuration</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetMaprTHomeDir <em>Set Mapr THome Dir</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHomeDir <em>Mapr THome Dir</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetHadoopLogin <em>Set Hadoop Login</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHadoopLogin <em>Mapr THadoop Login</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isPreloadAuthentification <em>Preload Authentification</em>}</li>
  * </ul>
  * </p>
  *
@@ -944,5 +954,271 @@ public interface HadoopClusterConnection extends Connection {
      * @generated
      */
     void setClouderaDieNoError(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Enable Mapr T</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Enable Mapr T</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Enable Mapr T</em>' attribute.
+     * @see #setEnableMaprT(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_EnableMaprT()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isEnableMaprT();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isEnableMaprT <em>Enable Mapr T</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Enable Mapr T</em>' attribute.
+     * @see #isEnableMaprT()
+     * @generated
+     */
+    void setEnableMaprT(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Mapr TUsername</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapr TUsername</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapr TUsername</em>' attribute.
+     * @see #setMaprTUsername(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTUsername()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getMaprTUsername();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTUsername <em>Mapr TUsername</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapr TUsername</em>' attribute.
+     * @see #getMaprTUsername()
+     * @generated
+     */
+    void setMaprTUsername(String value);
+
+    /**
+     * Returns the value of the '<em><b>Mapr TPassword</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapr TPassword</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapr TPassword</em>' attribute.
+     * @see #setMaprTPassword(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTPassword()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getMaprTPassword();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTPassword <em>Mapr TPassword</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapr TPassword</em>' attribute.
+     * @see #getMaprTPassword()
+     * @generated
+     */
+    void setMaprTPassword(String value);
+
+    /**
+     * Returns the value of the '<em><b>Mapr TCluster</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapr TCluster</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapr TCluster</em>' attribute.
+     * @see #setMaprTCluster(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTCluster()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getMaprTCluster();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTCluster <em>Mapr TCluster</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapr TCluster</em>' attribute.
+     * @see #getMaprTCluster()
+     * @generated
+     */
+    void setMaprTCluster(String value);
+
+    /**
+     * Returns the value of the '<em><b>Mapr TDuration</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapr TDuration</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapr TDuration</em>' attribute.
+     * @see #setMaprTDuration(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTDuration()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getMaprTDuration();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTDuration <em>Mapr TDuration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapr TDuration</em>' attribute.
+     * @see #getMaprTDuration()
+     * @generated
+     */
+    void setMaprTDuration(String value);
+
+    /**
+     * Returns the value of the '<em><b>Set Mapr THome Dir</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Set Mapr THome Dir</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Set Mapr THome Dir</em>' attribute.
+     * @see #setSetMaprTHomeDir(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_SetMaprTHomeDir()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isSetMaprTHomeDir();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetMaprTHomeDir <em>Set Mapr THome Dir</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Set Mapr THome Dir</em>' attribute.
+     * @see #isSetMaprTHomeDir()
+     * @generated
+     */
+    void setSetMaprTHomeDir(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Mapr THome Dir</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapr THome Dir</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapr THome Dir</em>' attribute.
+     * @see #setMaprTHomeDir(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTHomeDir()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getMaprTHomeDir();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHomeDir <em>Mapr THome Dir</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapr THome Dir</em>' attribute.
+     * @see #getMaprTHomeDir()
+     * @generated
+     */
+    void setMaprTHomeDir(String value);
+
+    /**
+     * Returns the value of the '<em><b>Set Hadoop Login</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Set Hadoop Login</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Set Hadoop Login</em>' attribute.
+     * @see #setSetHadoopLogin(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_SetHadoopLogin()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isSetHadoopLogin();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isSetHadoopLogin <em>Set Hadoop Login</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Set Hadoop Login</em>' attribute.
+     * @see #isSetHadoopLogin()
+     * @generated
+     */
+    void setSetHadoopLogin(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Mapr THadoop Login</b></em>' attribute.
+     * The default value is <code>""</code>.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Mapr THadoop Login</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Mapr THadoop Login</em>' attribute.
+     * @see #setMaprTHadoopLogin(String)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_MaprTHadoopLogin()
+     * @model default="" dataType="org.eclipse.emf.ecore.xml.type.String"
+     * @generated
+     */
+    String getMaprTHadoopLogin();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#getMaprTHadoopLogin <em>Mapr THadoop Login</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Mapr THadoop Login</em>' attribute.
+     * @see #getMaprTHadoopLogin()
+     * @generated
+     */
+    void setMaprTHadoopLogin(String value);
+
+    /**
+     * Returns the value of the '<em><b>Preload Authentification</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Preload Authentification</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Preload Authentification</em>' attribute.
+     * @see #setPreloadAuthentification(boolean)
+     * @see org.talend.repository.model.hadoopcluster.HadoopClusterPackage#getHadoopClusterConnection_PreloadAuthentification()
+     * @model dataType="org.eclipse.emf.ecore.xml.type.Boolean"
+     * @generated
+     */
+    boolean isPreloadAuthentification();
+
+    /**
+     * Sets the value of the '{@link org.talend.repository.model.hadoopcluster.HadoopClusterConnection#isPreloadAuthentification <em>Preload Authentification</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Preload Authentification</em>' attribute.
+     * @see #isPreloadAuthentification()
+     * @generated
+     */
+    void setPreloadAuthentification(boolean value);
 
 } // HadoopClusterConnection

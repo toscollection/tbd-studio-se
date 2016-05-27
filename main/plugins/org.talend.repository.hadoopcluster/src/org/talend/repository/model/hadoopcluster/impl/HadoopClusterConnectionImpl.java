@@ -71,6 +71,16 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaDisableSSL <em>Cloudera Disable SSL</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaAutoCommit <em>Cloudera Auto Commit</em>}</li>
  *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isClouderaDieNoError <em>Cloudera Die No Error</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isEnableMaprT <em>Enable Mapr T</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTUsername <em>Mapr TUsername</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTPassword <em>Mapr TPassword</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTCluster <em>Mapr TCluster</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTDuration <em>Mapr TDuration</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isSetMaprTHomeDir <em>Set Mapr THome Dir</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTHomeDir <em>Mapr THome Dir</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isSetHadoopLogin <em>Set Hadoop Login</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#getMaprTHadoopLogin <em>Mapr THadoop Login</em>}</li>
+ *   <li>{@link org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl#isPreloadAuthentification <em>Preload Authentification</em>}</li>
  * </ul>
  * </p>
  *
@@ -736,6 +746,206 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * @ordered
      */
     protected boolean clouderaDieNoError = CLOUDERA_DIE_NO_ERROR_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isEnableMaprT() <em>Enable Mapr T</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isEnableMaprT()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean ENABLE_MAPR_T_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isEnableMaprT() <em>Enable Mapr T</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isEnableMaprT()
+     * @generated
+     * @ordered
+     */
+    protected boolean enableMaprT = ENABLE_MAPR_T_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getMaprTUsername() <em>Mapr TUsername</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTUsername()
+     * @generated
+     * @ordered
+     */
+    protected static final String MAPR_TUSERNAME_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getMaprTUsername() <em>Mapr TUsername</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTUsername()
+     * @generated
+     * @ordered
+     */
+    protected String maprTUsername = MAPR_TUSERNAME_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getMaprTPassword() <em>Mapr TPassword</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTPassword()
+     * @generated
+     * @ordered
+     */
+    protected static final String MAPR_TPASSWORD_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getMaprTPassword() <em>Mapr TPassword</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTPassword()
+     * @generated
+     * @ordered
+     */
+    protected String maprTPassword = MAPR_TPASSWORD_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getMaprTCluster() <em>Mapr TCluster</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTCluster()
+     * @generated
+     * @ordered
+     */
+    protected static final String MAPR_TCLUSTER_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getMaprTCluster() <em>Mapr TCluster</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTCluster()
+     * @generated
+     * @ordered
+     */
+    protected String maprTCluster = MAPR_TCLUSTER_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getMaprTDuration() <em>Mapr TDuration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTDuration()
+     * @generated
+     * @ordered
+     */
+    protected static final String MAPR_TDURATION_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getMaprTDuration() <em>Mapr TDuration</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTDuration()
+     * @generated
+     * @ordered
+     */
+    protected String maprTDuration = MAPR_TDURATION_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isSetMaprTHomeDir() <em>Set Mapr THome Dir</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetMaprTHomeDir()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SET_MAPR_THOME_DIR_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSetMaprTHomeDir() <em>Set Mapr THome Dir</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetMaprTHomeDir()
+     * @generated
+     * @ordered
+     */
+    protected boolean setMaprTHomeDir = SET_MAPR_THOME_DIR_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getMaprTHomeDir() <em>Mapr THome Dir</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTHomeDir()
+     * @generated
+     * @ordered
+     */
+    protected static final String MAPR_THOME_DIR_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getMaprTHomeDir() <em>Mapr THome Dir</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTHomeDir()
+     * @generated
+     * @ordered
+     */
+    protected String maprTHomeDir = MAPR_THOME_DIR_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isSetHadoopLogin() <em>Set Hadoop Login</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetHadoopLogin()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean SET_HADOOP_LOGIN_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isSetHadoopLogin() <em>Set Hadoop Login</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isSetHadoopLogin()
+     * @generated
+     * @ordered
+     */
+    protected boolean setHadoopLogin = SET_HADOOP_LOGIN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #getMaprTHadoopLogin() <em>Mapr THadoop Login</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTHadoopLogin()
+     * @generated
+     * @ordered
+     */
+    protected static final String MAPR_THADOOP_LOGIN_EDEFAULT = "";
+
+    /**
+     * The cached value of the '{@link #getMaprTHadoopLogin() <em>Mapr THadoop Login</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMaprTHadoopLogin()
+     * @generated
+     * @ordered
+     */
+    protected String maprTHadoopLogin = MAPR_THADOOP_LOGIN_EDEFAULT;
+
+    /**
+     * The default value of the '{@link #isPreloadAuthentification() <em>Preload Authentification</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isPreloadAuthentification()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean PRELOAD_AUTHENTIFICATION_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isPreloadAuthentification() <em>Preload Authentification</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isPreloadAuthentification()
+     * @generated
+     * @ordered
+     */
+    protected boolean preloadAuthentification = PRELOAD_AUTHENTIFICATION_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -1457,6 +1667,216 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
      * <!-- end-user-doc -->
      * @generated
      */
+    public boolean isEnableMaprT() {
+        return enableMaprT;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setEnableMaprT(boolean newEnableMaprT) {
+        boolean oldEnableMaprT = enableMaprT;
+        enableMaprT = newEnableMaprT;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T, oldEnableMaprT, enableMaprT));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getMaprTUsername() {
+        return maprTUsername;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaprTUsername(String newMaprTUsername) {
+        String oldMaprTUsername = maprTUsername;
+        maprTUsername = newMaprTUsername;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME, oldMaprTUsername, maprTUsername));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getMaprTPassword() {
+        return maprTPassword;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaprTPassword(String newMaprTPassword) {
+        String oldMaprTPassword = maprTPassword;
+        maprTPassword = newMaprTPassword;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD, oldMaprTPassword, maprTPassword));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getMaprTCluster() {
+        return maprTCluster;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaprTCluster(String newMaprTCluster) {
+        String oldMaprTCluster = maprTCluster;
+        maprTCluster = newMaprTCluster;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER, oldMaprTCluster, maprTCluster));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getMaprTDuration() {
+        return maprTDuration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaprTDuration(String newMaprTDuration) {
+        String oldMaprTDuration = maprTDuration;
+        maprTDuration = newMaprTDuration;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION, oldMaprTDuration, maprTDuration));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSetMaprTHomeDir() {
+        return setMaprTHomeDir;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSetMaprTHomeDir(boolean newSetMaprTHomeDir) {
+        boolean oldSetMaprTHomeDir = setMaprTHomeDir;
+        setMaprTHomeDir = newSetMaprTHomeDir;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR, oldSetMaprTHomeDir, setMaprTHomeDir));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getMaprTHomeDir() {
+        return maprTHomeDir;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaprTHomeDir(String newMaprTHomeDir) {
+        String oldMaprTHomeDir = maprTHomeDir;
+        maprTHomeDir = newMaprTHomeDir;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR, oldMaprTHomeDir, maprTHomeDir));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isSetHadoopLogin() {
+        return setHadoopLogin;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setSetHadoopLogin(boolean newSetHadoopLogin) {
+        boolean oldSetHadoopLogin = setHadoopLogin;
+        setHadoopLogin = newSetHadoopLogin;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN, oldSetHadoopLogin, setHadoopLogin));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String getMaprTHadoopLogin() {
+        return maprTHadoopLogin;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMaprTHadoopLogin(String newMaprTHadoopLogin) {
+        String oldMaprTHadoopLogin = maprTHadoopLogin;
+        maprTHadoopLogin = newMaprTHadoopLogin;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN, oldMaprTHadoopLogin, maprTHadoopLogin));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public boolean isPreloadAuthentification() {
+        return preloadAuthentification;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setPreloadAuthentification(boolean newPreloadAuthentification) {
+        boolean oldPreloadAuthentification = preloadAuthentification;
+        preloadAuthentification = newPreloadAuthentification;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION, oldPreloadAuthentification, preloadAuthentification));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
@@ -1543,6 +1963,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return isClouderaAutoCommit();
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
                 return isClouderaDieNoError();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
+                return isEnableMaprT();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
+                return getMaprTUsername();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
+                return getMaprTPassword();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER:
+                return getMaprTCluster();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION:
+                return getMaprTDuration();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR:
+                return isSetMaprTHomeDir();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR:
+                return getMaprTHomeDir();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN:
+                return isSetHadoopLogin();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN:
+                return getMaprTHadoopLogin();
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION:
+                return isPreloadAuthentification();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -1659,6 +2099,36 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
                 setClouderaDieNoError((Boolean)newValue);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
+                setEnableMaprT((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
+                setMaprTUsername((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
+                setMaprTPassword((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER:
+                setMaprTCluster((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION:
+                setMaprTDuration((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR:
+                setSetMaprTHomeDir((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR:
+                setMaprTHomeDir((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN:
+                setSetHadoopLogin((Boolean)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN:
+                setMaprTHadoopLogin((String)newValue);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION:
+                setPreloadAuthentification((Boolean)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -1773,6 +2243,36 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
                 setClouderaDieNoError(CLOUDERA_DIE_NO_ERROR_EDEFAULT);
                 return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
+                setEnableMaprT(ENABLE_MAPR_T_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
+                setMaprTUsername(MAPR_TUSERNAME_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
+                setMaprTPassword(MAPR_TPASSWORD_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER:
+                setMaprTCluster(MAPR_TCLUSTER_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION:
+                setMaprTDuration(MAPR_TDURATION_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR:
+                setSetMaprTHomeDir(SET_MAPR_THOME_DIR_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR:
+                setMaprTHomeDir(MAPR_THOME_DIR_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN:
+                setSetHadoopLogin(SET_HADOOP_LOGIN_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN:
+                setMaprTHadoopLogin(MAPR_THADOOP_LOGIN_EDEFAULT);
+                return;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION:
+                setPreloadAuthentification(PRELOAD_AUTHENTIFICATION_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -1853,6 +2353,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
                 return clouderaAutoCommit != CLOUDERA_AUTO_COMMIT_EDEFAULT;
             case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR:
                 return clouderaDieNoError != CLOUDERA_DIE_NO_ERROR_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T:
+                return enableMaprT != ENABLE_MAPR_T_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TUSERNAME:
+                return MAPR_TUSERNAME_EDEFAULT == null ? maprTUsername != null : !MAPR_TUSERNAME_EDEFAULT.equals(maprTUsername);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD:
+                return MAPR_TPASSWORD_EDEFAULT == null ? maprTPassword != null : !MAPR_TPASSWORD_EDEFAULT.equals(maprTPassword);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER:
+                return MAPR_TCLUSTER_EDEFAULT == null ? maprTCluster != null : !MAPR_TCLUSTER_EDEFAULT.equals(maprTCluster);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION:
+                return MAPR_TDURATION_EDEFAULT == null ? maprTDuration != null : !MAPR_TDURATION_EDEFAULT.equals(maprTDuration);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR:
+                return setMaprTHomeDir != SET_MAPR_THOME_DIR_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR:
+                return MAPR_THOME_DIR_EDEFAULT == null ? maprTHomeDir != null : !MAPR_THOME_DIR_EDEFAULT.equals(maprTHomeDir);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN:
+                return setHadoopLogin != SET_HADOOP_LOGIN_EDEFAULT;
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN:
+                return MAPR_THADOOP_LOGIN_EDEFAULT == null ? maprTHadoopLogin != null : !MAPR_THADOOP_LOGIN_EDEFAULT.equals(maprTHadoopLogin);
+            case HadoopClusterPackage.HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION:
+                return preloadAuthentification != PRELOAD_AUTHENTIFICATION_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -1933,6 +2453,26 @@ public class HadoopClusterConnectionImpl extends ConnectionImpl implements Hadoo
         result.append(clouderaAutoCommit);
         result.append(", clouderaDieNoError: ");
         result.append(clouderaDieNoError);
+        result.append(", enableMaprT: ");
+        result.append(enableMaprT);
+        result.append(", maprTUsername: ");
+        result.append(maprTUsername);
+        result.append(", maprTPassword: ");
+        result.append(maprTPassword);
+        result.append(", maprTCluster: ");
+        result.append(maprTCluster);
+        result.append(", maprTDuration: ");
+        result.append(maprTDuration);
+        result.append(", setMaprTHomeDir: ");
+        result.append(setMaprTHomeDir);
+        result.append(", maprTHomeDir: ");
+        result.append(maprTHomeDir);
+        result.append(", setHadoopLogin: ");
+        result.append(setHadoopLogin);
+        result.append(", maprTHadoopLogin: ");
+        result.append(maprTHadoopLogin);
+        result.append(", preloadAuthentification: ");
+        result.append(preloadAuthentification);
         result.append(')');
         return result.toString();
     }
