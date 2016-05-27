@@ -42,12 +42,12 @@ public class HadoopAmbariClusterService implements HadoopClusterService {
     /**
      * DOC bchen HadoopAmbariClusterService constructor comment.
      */
-    public HadoopAmbariClusterService(List<ApiConfigFile> configFiles) {
+    public HadoopAmbariClusterService(List<ApiConfigFile> configFiles, List<String> blacklistParams) {
         this.configFiles = configFiles;
-        init();
+        init(blacklistParams);
     }
 
-    private void init() {
+    private void init(List<String> blacklistParams) {
         confs = new HashMap<>();
         for (ApiConfigFile file : configFiles) {
             String type = file.getType();
@@ -57,6 +57,9 @@ public class HadoopAmbariClusterService implements HadoopClusterService {
             Configuration conf = new Configuration(false);
             Map<String, String> properties = file.getProperties();
             for (String key : properties.keySet()) {
+            	if(blacklistParams != null && blacklistParams.contains(key)){
+            		continue;
+            	}
                 conf.set(key, properties.get(key));
             }
             confs.put(type, conf);
