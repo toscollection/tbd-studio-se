@@ -156,8 +156,6 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 kafkaAssemblyModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAssemblyModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAvroModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), CDH550SparkStreamingKafkaClientModuleGroup.getModuleGroups(

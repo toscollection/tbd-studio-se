@@ -29,6 +29,8 @@ public class EMR450SparkStreamingKafkaAvroModuleGroup {
                 new SparkStreamingLinkedNodeCondition(distribution, version,
                         SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
+        // Add Spark Streaming Kafka dependencies as well
+        hs.addAll(EMR450SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(distribution, version));
         return hs;
     }
 }

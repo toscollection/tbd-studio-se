@@ -31,6 +31,8 @@ public class MapR510SparkStreamingKafkaAvroModuleGroup {
                 new SparkStreamingLinkedNodeCondition(EHadoopDistributions.MAPR.getName(), MapR510Distribution.VERSION,
                         SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
+        // Add Spark Streaming Kafka dependencies as well
+        hs.addAll(MapR510SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups());
         return hs;
     }
 }

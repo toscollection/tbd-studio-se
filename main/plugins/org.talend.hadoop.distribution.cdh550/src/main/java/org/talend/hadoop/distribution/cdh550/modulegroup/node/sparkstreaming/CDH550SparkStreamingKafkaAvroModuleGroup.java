@@ -29,6 +29,8 @@ public class CDH550SparkStreamingKafkaAvroModuleGroup {
                 new SparkStreamingLinkedNodeCondition(distribution, version,
                         SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
+        // Add Spark Streaming Kafka dependencies as well
+        hs.addAll(CDH550SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(distribution, version));
         return hs;
     }
 }

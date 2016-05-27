@@ -177,8 +177,6 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 EMR450SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(distribution, version));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT),
-                EMR450SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(distribution, version));
-        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT),
                 EMR450SparkStreamingKafkaAvroModuleGroup.getModuleGroups(distribution, version));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
                 EMR450SparkStreamingKafkaClientModuleGroup.getModuleGroups(distribution, version));

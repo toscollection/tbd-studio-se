@@ -21,6 +21,7 @@ import java.util.Set;
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.emr450.EMR450Distribution;
+import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingKafkaAssemblyModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingKafkaAvroModuleGroup;
 
 public class EMR450SparkStreamingKafkaAvroModuleGroupTest {
@@ -28,7 +29,9 @@ public class EMR450SparkStreamingKafkaAvroModuleGroupTest {
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
-
+        results.put(
+                EMR450SparkStreamingKafkaAssemblyModuleGroup.KAFKA_ASSEMBLY_GROUP_NAME,
+                "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='EMR_4_5_0')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
         results.put(
                 EMR450SparkStreamingKafkaAvroModuleGroup.KAFKA_AVRO_GROUP_NAME,
                 "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='EMR_4_5_0')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$

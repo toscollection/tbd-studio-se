@@ -132,8 +132,6 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 kafkaAssemblyModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAssemblyModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAvroModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), MapR510SparkStreamingKafkaClientModuleGroup.getModuleGroups());

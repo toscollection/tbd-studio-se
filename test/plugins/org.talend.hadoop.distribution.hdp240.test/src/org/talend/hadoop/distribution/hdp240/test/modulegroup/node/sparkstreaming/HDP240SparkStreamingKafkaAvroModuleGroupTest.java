@@ -32,7 +32,9 @@ public class HDP240SparkStreamingKafkaAvroModuleGroupTest {
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<String, String>();
-
+        results.put(
+                HDP240Constant.SPARK_KAFKA_ASSEMBLY_MRREQUIRED_MODULE_GROUP.getModuleName(),
+                "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='HORTONWORKS') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='HDP_2_4')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')");
         results.put(
                 HDP240Constant.SPARK_KAFKA_AVRO_MRREQUIRED_MODULE_GROUP.getModuleName(),
                 "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='HORTONWORKS') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='HDP_2_4')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')");
