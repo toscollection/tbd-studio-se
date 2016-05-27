@@ -51,7 +51,7 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
         HiveOnSparkComponent, IHortonworksDistribution {
 
-    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.3.0"; //$NON-NLS-1$
+    public static final String VERSION_DISPLAY = "Hortonworks Data Platform V2.3.2"; //$NON-NLS-1$
 
     public final static String VERSION = "HDP_2_3"; //$NON-NLS-1$
 
