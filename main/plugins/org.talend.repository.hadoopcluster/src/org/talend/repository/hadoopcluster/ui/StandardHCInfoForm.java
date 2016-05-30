@@ -28,6 +28,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.talend.commons.exception.ExceptionHandler;
@@ -148,6 +149,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     private LabelledText maprTHomeDirText;
 
     private LabelledText maprTHadoopLoginText;
+
+    private Composite authMaprTComposite;
+
+    private Composite maprTPCDCompposite;
+
+    private Composite maprTSetComposite;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -394,7 +401,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
 
         // Mapr Ticket Authentication
-        Composite authMaprTComposite = new Composite(authGroup, SWT.NULL);
+        authMaprTComposite = new Composite(authGroup, SWT.NULL);
         GridLayout authMaprTicketCompLayout = new GridLayout(1, false);
         authMaprTicketCompLayout.marginWidth = 0;
         authMaprTicketCompLayout.marginHeight = 0;
@@ -405,7 +412,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTBtn.setText(Messages.getString("HadoopClusterForm.button.maprTicket")); //$NON-NLS-1$
         maprTBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
-        Composite maprTPCDCompposite = new Composite(authMaprTComposite, SWT.NULL);
+        maprTPCDCompposite = new Composite(authMaprTComposite, SWT.NULL);
         GridLayout maprTPCDCompositeLayout = new GridLayout(2, false);
         maprTPCDCompositeLayout.marginWidth = 0;
         maprTPCDCompositeLayout.marginHeight = 0;
@@ -417,7 +424,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTClusterText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
         maprTDurationText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
 
-        Composite maprTSetComposite = new Composite(authMaprTComposite, SWT.NULL);
+        maprTSetComposite = new Composite(authMaprTComposite, SWT.NULL);
         GridLayout maprTicketSetCompLayout = new GridLayout(3, false);
         maprTicketSetCompLayout.marginWidth = 0;
         maprTicketSetCompLayout.marginHeight = 0;
@@ -783,6 +790,16 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
             @Override
             public void widgetSelected(SelectionEvent e) {
+                if (maprTBtn.getSelection()) {
+                    hideControl(maprTPCDCompposite, false);
+                    hideControl(maprTSetComposite, false);
+                } else {
+                    hideControl(maprTPCDCompposite, true);
+                    hideControl(maprTSetComposite, true);
+                }
+                authMaprTComposite.layout();
+                authMaprTComposite.getParent().layout();
+
                 getConnection().setEnableMaprT(maprTBtn.getSelection());
                 updateForm();
                 checkFieldsValue();
@@ -1002,6 +1019,16 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             maprTHadoopLoginText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection() && setHadoopLoginBtn.isEnabled()
                     && setHadoopLoginBtn.getSelection());
 
+            if (maprTBtn.getSelection()) {
+                hideControl(maprTPCDCompposite, false);
+                hideControl(maprTSetComposite, false);
+            } else {
+                hideControl(maprTPCDCompposite, true);
+                hideControl(maprTSetComposite, true);
+            }
+            authMaprTComposite.layout();
+            authMaprTComposite.getParent().layout();
+
         }
         updateMRRelatedContent();
         updateConnectionContent();
@@ -1147,6 +1174,20 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         }
         if (!userNameText.getEditable()) {
             userNameText.setText(EMPTY_STRING);
+        }
+    }
+
+    @Override
+    protected void hideControl(Control control, boolean hide) {
+        Object layoutData = control.getLayoutData();
+        if (layoutData instanceof GridData) {
+            GridData data = (GridData) layoutData;
+            data.exclude = hide;
+            control.setLayoutData(data);
+            control.setVisible(!hide);
+            if (control.getParent() != null) {
+                control.getParent().layout();
+            }
         }
     }
 

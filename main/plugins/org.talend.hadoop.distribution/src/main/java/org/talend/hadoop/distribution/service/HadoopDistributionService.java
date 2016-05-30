@@ -20,11 +20,13 @@ import org.talend.core.hadoop.IHadoopDistributionService;
 import org.talend.core.runtime.hd.IDistributionsManager;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.IHDistributionVersion;
+import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
 import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 import org.talend.hadoop.distribution.helper.DistributionHelper;
 import org.talend.hadoop.distribution.helper.DistributionsManager;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 
 /**
  * created by cmeng on Jan 15, 2016 Detailled comment
@@ -32,6 +34,7 @@ import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
  */
 public class HadoopDistributionService implements IHadoopDistributionService {
 
+    @Override
     public IHDistribution[] getDistributions(String service) {
         if (service != null) {
             DistributionsManager helper = new DistributionsManager(service);
@@ -99,12 +102,24 @@ public class HadoopDistributionService implements IHadoopDistributionService {
         return DistributionHelper.doSupportMethod(distributionVersion, method);
     }
 
+    @Override
     public IHDistribution getHadoopDistribution(String name, boolean byDisplay) {
         return HadoopDistributionsHelper.HADOOP.getDistribution(name, byDisplay);
     }
 
+    @Override
     public IHDistributionVersion getHadoopDistributionVersion(String version, boolean byDisplay) {
         return HadoopDistributionsHelper.HADOOP.getDistributionVersion(version, byDisplay);
     }
 
+    @Override
+    public boolean doSupportMapRTicket(IHDistributionVersion distributionVersion) {
+        if (distributionVersion != null && distributionVersion instanceof DistributionVersion) {
+            HadoopComponent hadoopComponent = ((DistributionVersion) distributionVersion).hadoopComponent;
+            if (hadoopComponent != null) {
+                return hadoopComponent.doSupportMapRTicket();
+            }
+        }
+        return false;
+    }
 }
