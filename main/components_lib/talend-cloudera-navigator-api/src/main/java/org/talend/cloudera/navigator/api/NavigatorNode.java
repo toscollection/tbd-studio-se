@@ -39,8 +39,8 @@ public class NavigatorNode {
      * @param inputNodes
      * @param outputNodes
      */
-    public NavigatorNode(String name, Map<String, String> schema, List<String> inputNodes,
-                         List<String> outputNodes) {
+    public NavigatorNode(String name, Map<String, String> schema,
+                         List<String> inputNodes, List<String> outputNodes) {
         this(name, schema, new HashMap<String, String>(), inputNodes, outputNodes);
     }
 

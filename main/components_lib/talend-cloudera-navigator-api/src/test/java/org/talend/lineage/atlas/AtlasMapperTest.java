@@ -10,20 +10,14 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.governance.atlas;
+package org.talend.lineage.atlas;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ListMultimap;
-import org.apache.atlas.AtlasServiceException;
-import org.apache.atlas.TalendAtlasClient;
+import org.apache.atlas.AtlasClient;
 import org.junit.Before;
 import org.junit.Test;
 import org.talend.cloudera.navigator.api.NavigatorNode;
-import org.talend.governance.atlas.AtlasMapper;
-import scala.collection.mutable.MultiMap;
 
 
 import java.util.*;
@@ -44,7 +38,7 @@ public class AtlasMapperTest {
     private static final String ENDPOINT_URL = "http://localhost:21000";
     private AtlasMapper mapper = new AtlasMapper(ENDPOINT_URL, null, null);
     //TODO delete and fix
-    private TalendAtlasClient client = new TalendAtlasClient(ENDPOINT_URL, null, null);
+    private AtlasClient client = new AtlasClient(ENDPOINT_URL);
 
     @Before
     public void setUp() {
@@ -61,42 +55,47 @@ public class AtlasMapperTest {
         Map<String, String> metadata = new HashMap<>();
         metadata.put("description", ENTITY_DESCRIPTION);
         metadata.put("link", ENTITY_LINK);
-        Collection<String> tags = ImmutableList.of("tag1", "tag2");
         metadata.put("jobId", "TestJob");
+        metadata.put("owner", "scott");
+        Collection<String> tags = ImmutableList.of("tag1", "tag2");
         metadata.put("tags", Joiner.on(", ").join(tags));
 
         metadata.put("user", "scott");
-        metadata.put("startTime", String.valueOf(System.currentTimeMillis()));
-        metadata.put("endTime", String.valueOf(System.currentTimeMillis() + 10000));
-        metadata.put("query", "queryText");
+//        metadata.put("startTime", System.currentTimeMillis());
+//        metadata.put("endTime", System.currentTimeMillis() + 10000);
+        metadata.put("queryText", "create table as select ");
+        metadata.put("queryPlan", "plan");
+        metadata.put("queryId", "id");
+        metadata.put("queryGraph", "graph");
+
         return metadata;
     }
 
 
-    private void deleteTalendEntities() {
-        try {
-            client.deleteEntitiesByType(AtlasMapper.TABLE_TYPE,
-                    AtlasMapper.COLUMN_TYPE, AtlasMapper.LOAD_PROCESS_TYPE);
-        } catch (AtlasServiceException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void deleteTalendEntities() {
+//        try {
+//            client.deleteEntitiesByType(AtlasMapper.TABLE_TYPE,
+//                    AtlasMapper.COLUMN_TYPE, AtlasMapper.LOAD_PROCESS_TYPE);
+//        } catch (AtlasServiceException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    //TODO this is a debug method since I don't have a GUI
-    public Map<String, Collection<String>> getEntitiesByType(String... types) {
-        ListMultimap<String, String> m = ArrayListMultimap.create();
-        for (String type : types) {
-            try {
-                List<String> guids = guids = client.listEntities(type);
-                for (String guid : guids) {
-                    m.put(type, guid);
-                }
-            } catch (AtlasServiceException e) {
-                e.printStackTrace();
-            }
-        }
-        return m.asMap();
-    }
+//    //TODO this is a debug method since I don't have a GUI
+//    public Map<String, Collection<String>> getEntitiesByType(String... types) {
+//        ListMultimap<String, String> m = ArrayListMultimap.create();
+//        for (String type : types) {
+//            try {
+//                List<String> guids = guids = client.listEntities(type);
+//                for (String guid : guids) {
+//                    m.put(type, guid);
+//                }
+//            } catch (AtlasServiceException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return m.asMap();
+//    }
 
     @Test
     public void test_simple() {
@@ -107,21 +106,21 @@ public class AtlasMapperTest {
         schema1.put("name", "string");
 
         Map<String, String> schema2 = new HashMap<>();
-        schema1.put("a", "string");
-        schema1.put("b", "string");
-        schema1.put("c", "int");
+        schema2.put("a", "string");
+        schema2.put("b", "string");
+        schema2.put("c", "int");
 
         nodes.add(new NavigatorNode("input", schema1, createGenericMetadata(), new ArrayList<String>(), Arrays.asList("out")));
         nodes.add(new NavigatorNode("out", schema2, createGenericMetadata(), Arrays.asList("input"), new ArrayList<String>()));
 
         mapper.map(nodes, "job");
 
-        Map<String, Collection<String>> m = getEntitiesByType(AtlasMapper.TABLE_TYPE,
-                AtlasMapper.COLUMN_TYPE, AtlasMapper.LOAD_PROCESS_TYPE);
-        for (Map.Entry<String,Collection<String>> entry : m.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue().size());
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
+//        Map<String, Collection<String>> m = getEntitiesByType(AtlasMapper.TABLE_TYPE,
+//                AtlasMapper.COLUMN_TYPE, AtlasMapper.LOAD_PROCESS_TYPE);
+//        for (Map.Entry<String,Collection<String>> entry : m.entrySet()) {
+//            System.out.println(entry.getKey() + " - " + entry.getValue().size());
+//            System.out.println(entry.getKey() + " - " + entry.getValue());
+//        }
 
 //        deleteTalendEntities();
 
@@ -164,13 +163,13 @@ public class AtlasMapperTest {
         Map<String, String> schema3 = new HashMap<String, String>();
         schema3.put("id", "int");
 
-        nodes.add(new NavigatorNode("input", schema1, new ArrayList<String>(), Arrays.asList("middle1")));
-        nodes.add(new NavigatorNode("middle1", schema1, Arrays.asList("input"), Arrays.asList("middle2", "out1")));
-        nodes.add(new NavigatorNode("middle2", schema2, Arrays.asList("middle1"), Arrays.asList("out2")));
-        nodes.add(new NavigatorNode("out1", schema3, Arrays.asList("middle1"), new ArrayList<String>()));
-        nodes.add(new NavigatorNode("out2", schema3, Arrays.asList("middle2"), new ArrayList<String>()));
+        nodes.add(new NavigatorNode("input", schema1, createGenericMetadata(), new ArrayList<String>(), Arrays.asList("middle1")));
+        nodes.add(new NavigatorNode("middle1", schema1, createGenericMetadata(), Arrays.asList("input"), Arrays.asList("middle2", "out1")));
+        nodes.add(new NavigatorNode("middle2", schema2, createGenericMetadata(), Arrays.asList("middle1"), Arrays.asList("out2")));
+        nodes.add(new NavigatorNode("out1", schema3, createGenericMetadata(), Arrays.asList("middle1"), new ArrayList<String>()));
+        nodes.add(new NavigatorNode("out2", schema3, createGenericMetadata(), Arrays.asList("middle2"), new ArrayList<String>()));
 
-        mapper.map(nodes, "job");
+        mapper.map(nodes, "test_hard");
         assertNotNull(mapper);
 
 //        String idInput = GeneratorID.generateEntityID("job", "input");
@@ -212,30 +211,33 @@ public class AtlasMapperTest {
 ////                + "\t" + idOut2 + "__id(" + idOut2Id + ") --->[" + idOut2 + "]\n", tem.toString());
 ////        assertEquals(14, entities.size());
     }
-//
-//    @Test
-//    public void test_hardMultipleInput() {
-//        List<NavigatorNode> nodes = new ArrayList<NavigatorNode>();
-//
-//        Map<String, String> schema1 = new HashMap<String, String>();
-//        schema1.put("id", "int");
-//        schema1.put("name", "string");
-//
-//        Map<String, String> schema2 = new HashMap<String, String>();
-//        schema2.put("id", "int");
-//        schema2.put("name", "string");
-//        schema2.put("value", "int");
-//
-//        Map<String, String> schema3 = new HashMap<String, String>();
-//        schema3.put("id", "int");
-//
-//        nodes.add(new NavigatorNode("input1", schema1, new ArrayList<String>(), Arrays.asList("middle1")));
-//        nodes.add(new NavigatorNode("input2", schema2, new ArrayList<String>(), Arrays.asList("middle1")));
-//        nodes.add(new NavigatorNode("middle1", schema1, Arrays.asList("input1", "input2"), Arrays.asList("middle2", "out1")));
-//        nodes.add(new NavigatorNode("middle2", schema2, Arrays.asList("middle1"), Arrays.asList("out2")));
-//        nodes.add(new NavigatorNode("out1", schema3, Arrays.asList("middle1"), new ArrayList<String>()));
-//        nodes.add(new NavigatorNode("out2", schema3, Arrays.asList("middle2"), new ArrayList<String>()));
-//
+
+    @Test
+    public void test_hardMultipleInput() {
+        List<NavigatorNode> nodes = new ArrayList<NavigatorNode>();
+
+        Map<String, String> schema1 = new HashMap<String, String>();
+        schema1.put("id", "int");
+        schema1.put("name", "string");
+
+        Map<String, String> schema2 = new HashMap<String, String>();
+        schema2.put("id", "int");
+        schema2.put("name", "string");
+        schema2.put("value", "int");
+
+        Map<String, String> schema3 = new HashMap<String, String>();
+        schema3.put("id", "int");
+
+        nodes.add(new NavigatorNode("input1", schema1, createGenericMetadata(), new ArrayList<String>(), Arrays.asList("middle1")));
+        nodes.add(new NavigatorNode("input2", schema2, createGenericMetadata(), new ArrayList<String>(), Arrays.asList("middle1")));
+        nodes.add(new NavigatorNode("middle1", schema1, createGenericMetadata(), Arrays.asList("input1", "input2"), Arrays.asList("middle2", "out1")));
+        nodes.add(new NavigatorNode("middle2", schema2, createGenericMetadata(), Arrays.asList("middle1"), Arrays.asList("out2")));
+        nodes.add(new NavigatorNode("out1", schema3, createGenericMetadata(), Arrays.asList("middle1"), new ArrayList<String>()));
+        nodes.add(new NavigatorNode("out2", schema3, createGenericMetadata(), Arrays.asList("middle2"), new ArrayList<String>()));
+
+        mapper.map(nodes, "test_hardMultipleInput");
+        assertNotNull(mapper);
+
 //        TalendEntityMapper tem = new TalendEntityMapper(nodes, "job");
 //        assertEquals("", tem.toString());
 //        List<Entity> entities = tem.map();
@@ -333,5 +335,5 @@ public class AtlasMapperTest {
 //                + "\t" + idOut + "__id(" + idOutId + ") --->[" + datasetOut + "]\n", tem.toString());
 //
 //        assertEquals(6, entities.size());
-//    }
+    }
 }
