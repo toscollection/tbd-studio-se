@@ -67,6 +67,24 @@ public class HadoopServiceProperties {
 
     private List<Map<String, Object>> hadoopProperties;
 
+    private boolean maprT;
+
+    private String maprTPassword;
+
+    private String maprTCluster;
+
+    private String maprTDuration;
+
+    private boolean setMaprTHomeDir;
+
+    private boolean setHadoopLogin;
+
+    private boolean preloadAuthentification;
+
+    private String maprTHomeDir;
+
+    private String maprTHadoopLogin;
+
     private String getRealValue(String value) {
         if (contextType == null) {
             return value;
@@ -239,4 +257,75 @@ public class HadoopServiceProperties {
         this.relativeHadoopClusterId = relativeHadoopClusterId;
     }
 
+    public boolean isMaprT() {
+        return this.maprT;
+    }
+
+    public void setMaprT(boolean maprT) {
+        this.maprT = maprT;
+    }
+
+    public String getMaprTPassword() {
+        return this.maprTPassword;
+    }
+
+    public void setMaprTPassword(String maprTPassword) {
+        this.maprTPassword = maprTPassword;
+    }
+
+    public String getMaprTCluster() {
+        return this.maprTCluster;
+    }
+
+    public void setMaprTCluster(String maprTCluster) {
+        this.maprTCluster = maprTCluster;
+    }
+
+    public String getMaprTDuration() {
+        return this.maprTDuration;
+    }
+
+    public void setMaprTDuration(String maprTDuration) {
+        this.maprTDuration = maprTDuration;
+    }
+
+    public boolean isSetMaprTHomeDir() {
+        return this.setMaprTHomeDir;
+    }
+
+    public void setSetMaprTHomeDir(boolean setMaprTHomeDir) {
+        this.setMaprTHomeDir = setMaprTHomeDir;
+    }
+
+    public boolean isSetHadoopLogin() {
+        return this.setHadoopLogin;
+    }
+
+    public void setSetHadoopLogin(boolean setHadoopLogin) {
+        this.setHadoopLogin = setHadoopLogin;
+    }
+
+    public boolean isPreloadAuthentification() {
+        return this.preloadAuthentification;
+    }
+
+    public void setPreloadAuthentification(boolean preloadAuthentification) {
+        this.preloadAuthentification = preloadAuthentification;
+    }
+
+    public String getMaprTHomeDir() {
+        return this.maprTHomeDir;
+    }
+
+    public void setMaprTHomeDir(String maprTHomeDir) {
+        this.maprTHomeDir = maprTHomeDir;
+    }
+
+    public String getMaprTHadoopLogin() {
+        return this.maprTHadoopLogin;
+    }
+
+    public void setMaprTHadoopLogin(String maprTHadoopLogin) {
+        this.maprTHadoopLogin = maprTHadoopLogin;
+    }
 }
