@@ -157,12 +157,18 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
 
                 String mapRTicketCluster = (String) metadataConnection
                         .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_CLUSTER);
-                Object mapRTicketDuration = metadataConnection
+                String mapRTicketDuration = (String) metadataConnection
                         .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_DURATION);
+                Long desiredTicketDurInSecs = 86400L;
+                if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+                    desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
+                }
+                Object mapRClientConfig = ReflectionUtils.newInstance(
+                        "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
                 ReflectionUtils
-                        .invokeStaticMethod(
-                                "com.mapr.login.client.MapRLoginHttpsClient", classLoader, //$NON-NLS-1$
-                                "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketCluster), mapRTicketDuration }); //$NON-NLS-1$
+                        .invokeMethod(
+                                mapRClientConfig,
+                                "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketCluster), desiredTicketDurInSecs }); //$NON-NLS-1$
             }
         }
         // Mapr ticket
@@ -178,16 +184,20 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_PASSWORD);
             String mapRTicketCluster = (String) metadataConnection
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_CLUSTER);
-            Object mapRTicketDuration = metadataConnection
+            String mapRTicketDuration = (String) metadataConnection
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_DURATION);
+            Long desiredTicketDurInSecs = 86400L;
+            if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+                desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
+            }
             String decryptedPassword = PasswordEncryptUtil.encryptPassword(mapRTicketPassword);
-            Object mapRLoginHttpsClientConfig = ReflectionUtils.newInstance(
+            Object mapRClientConfig = ReflectionUtils.newInstance(
                     "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
-            ReflectionUtils.invokeMethod(mapRLoginHttpsClientConfig, "setCheckUGI", new Object[] { false }, Boolean.class);//$NON-NLS-1$
+            ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
             ReflectionUtils
                     .invokeMethod(
-                            mapRLoginHttpsClientConfig,
-                            "getMapRCredentialsViaPassword", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketCluster), ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketUsername), decryptedPassword, mapRTicketDuration }); //$NON-NLS-1$
+                            mapRClientConfig,
+                            "getMapRCredentialsViaPassword", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketCluster), ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketUsername), decryptedPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
         }
         updateHadoopProperties(config, metadataConnection);
         return config;

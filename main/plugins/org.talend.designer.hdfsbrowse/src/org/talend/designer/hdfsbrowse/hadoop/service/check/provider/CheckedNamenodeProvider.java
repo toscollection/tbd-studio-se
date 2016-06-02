@@ -59,10 +59,16 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
                     System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
                     System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
                     String mapRTicketCluster = serviceProperties.getMaprTCluster();
-                    Object mapRTicketDuration = serviceProperties.getMaprTDuration();
+                    String mapRTicketDuration = serviceProperties.getMaprTDuration();
+                    Long desiredTicketDurInSecs = 86400L;
+                    if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+                        desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
+                    }
                     try {
-                        ReflectionUtils.invokeStaticMethod("com.mapr.login.client.MapRLoginHttpsClient", classLoader, //$NON-NLS-1$
-                                "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, mapRTicketDuration }); //$NON-NLS-1$
+                        Object mapRClientConfig = ReflectionUtils.newInstance(
+                                "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+                        ReflectionUtils.invokeMethod(mapRClientConfig,
+                                "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
                     } catch (Exception e) {
                         throw new SQLException(e);
                     }
@@ -77,17 +83,20 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
                 String mapRTicketUsername = serviceProperties.getUserName();
                 String mapRTicketPassword = serviceProperties.getMaprTPassword();
                 String mapRTicketCluster = serviceProperties.getMaprTCluster();
-                Object mapRTicketDuration = serviceProperties.getMaprTDuration();
+                String mapRTicketDuration = serviceProperties.getMaprTDuration();
+                Long desiredTicketDurInSecs = 86400L;
+                if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+                    desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
+                }
                 try {
                     String decryptedPassword = PasswordEncryptUtil.encryptPassword(mapRTicketPassword);
+                    Object mapRClientConfig = ReflectionUtils.newInstance(
+                            "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+                    ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
                     ReflectionUtils
-                            .invokeStaticMethod(
-                                    "com.mapr.login.client.MapRLoginHttpsClient", classLoader, "setCheckUGI", new Object[] { false }, Boolean.class);//$NON-NLS-1$//$NON-NLS-2$
-                    ReflectionUtils
-                            .invokeStaticMethod(
-                                    "com.mapr.login.client.MapRLoginHttpsClient",//$NON-NLS-1$
-                                    classLoader,
-                                    "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, decryptedPassword, mapRTicketDuration }); //$NON-NLS-1$
+                            .invokeMethod(
+                                    mapRClientConfig,
+                                    "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, decryptedPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
                 } catch (Exception e) {
                     throw new SQLException(e);
                 }

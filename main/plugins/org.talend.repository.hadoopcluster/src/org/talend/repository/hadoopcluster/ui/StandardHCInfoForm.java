@@ -81,6 +81,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private Button kerberosBtn;
 
+    private Composite authCommonComposite;
+
+    private Composite authNodejtOrRmHistoryComposite;
+
+    private Composite authKeytabComposite;
+
     private Button keytabBtn;
 
     private Button useClouderaNaviBtn;
@@ -360,8 +366,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         authPartComposite.setLayout(authPartLayout);
         authPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        Composite authCommonComposite = new Composite(authPartComposite, SWT.NULL);
-        GridLayout authCommonCompLayout = new GridLayout(4, false);
+        authCommonComposite = new Composite(authPartComposite, SWT.NULL);
+        GridLayout authCommonCompLayout = new GridLayout(1, false);
         authCommonCompLayout.marginWidth = 0;
         authCommonCompLayout.marginHeight = 0;
         authCommonComposite.setLayout(authCommonCompLayout);
@@ -370,22 +376,31 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         kerberosBtn = new Button(authCommonComposite, SWT.CHECK);
         kerberosBtn.setText(Messages.getString("HadoopClusterForm.button.kerberos")); //$NON-NLS-1$
         kerberosBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 4, 1));
-        namenodePrincipalText = new LabelledText(authCommonComposite,
+
+        authNodejtOrRmHistoryComposite = new Composite(authCommonComposite, SWT.NULL);
+        GridLayout authNodejtOrRmHistoryCompLayout = new GridLayout(4, false);
+        authNodejtOrRmHistoryCompLayout.marginWidth = 0;
+        authNodejtOrRmHistoryCompLayout.marginHeight = 0;
+        authNodejtOrRmHistoryComposite.setLayout(authNodejtOrRmHistoryCompLayout);
+        authNodejtOrRmHistoryComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        namenodePrincipalText = new LabelledText(authNodejtOrRmHistoryComposite,
                 Messages.getString("HadoopClusterForm.text.namenodePrincipal"), 1); //$NON-NLS-1$
-        jtOrRmPrincipalText = new LabelledText(authCommonComposite, Messages.getString("HadoopClusterForm.text.rmPrincipal"), 1); //$NON-NLS-1$
-        jobHistoryPrincipalText = new LabelledText(authCommonComposite,
+        jtOrRmPrincipalText = new LabelledText(authNodejtOrRmHistoryComposite,
+                Messages.getString("HadoopClusterForm.text.rmPrincipal"), 1); //$NON-NLS-1$
+        jobHistoryPrincipalText = new LabelledText(authNodejtOrRmHistoryComposite,
                 Messages.getString("HadoopClusterForm.text.jobHistoryPrincipal"), 1); //$NON-NLS-1$
 
         // placeHolder is only used to make userNameText and groupText to new line
         Composite placeHolder = new Composite(authCommonComposite, SWT.NULL);
-        GridData placeHolderLayoutData = new GridData(GridData.FILL, GridData.FILL, true, false, 2, 1);
-        placeHolderLayoutData.heightHint = 1;
-        placeHolder.setLayoutData(placeHolderLayoutData);
+        GridLayout placeHolderLayout = new GridLayout(4, false);
+        placeHolderLayout.marginWidth = 0;
+        placeHolderLayout.marginHeight = 0;
+        placeHolder.setLayout(placeHolderLayout);
+        placeHolder.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        userNameText = new LabelledText(placeHolder, Messages.getString("HadoopClusterForm.text.userName"), 1); //$NON-NLS-1$
+        groupText = new LabelledText(placeHolder, Messages.getString("HadoopClusterForm.text.group"), 1); //$NON-NLS-1$
 
-        userNameText = new LabelledText(authCommonComposite, Messages.getString("HadoopClusterForm.text.userName"), 1); //$NON-NLS-1$
-        groupText = new LabelledText(authCommonComposite, Messages.getString("HadoopClusterForm.text.group"), 1); //$NON-NLS-1$
-
-        Composite authKeytabComposite = new Composite(authGroup, SWT.NULL);
+        authKeytabComposite = new Composite(authGroup, SWT.NULL);
         GridLayout authKeytabCompLayout = new GridLayout(5, false);
         authKeytabCompLayout.marginWidth = 0;
         authKeytabCompLayout.marginHeight = 0;
@@ -752,6 +767,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
             @Override
             public void widgetSelected(SelectionEvent e) {
+                if (kerberosBtn.getSelection()) {
+                    hideControl(authNodejtOrRmHistoryComposite, false);
+                    hideControl(authKeytabComposite, false);
+                } else {
+                    hideControl(authNodejtOrRmHistoryComposite, true);
+                    hideControl(authKeytabComposite, true);
+                }
+                authCommonComposite.layout();
+                authCommonComposite.getParent().layout();
                 getConnection().setEnableKerberos(kerberosBtn.getSelection());
                 updateForm();
                 checkFieldsValue();
@@ -1015,6 +1039,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             groupText.setEditable(isCurrentHadoopVersionSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
+            if (kerberosBtn.getSelection()) {
+                hideControl(authNodejtOrRmHistoryComposite, false);
+                hideControl(authKeytabComposite, false);
+            } else {
+                hideControl(authNodejtOrRmHistoryComposite, true);
+                hideControl(authKeytabComposite, true);
+            }
+            authCommonComposite.layout();
+            authCommonComposite.getParent().layout();
 
             // maprt
             maprTBtn.setEnabled(isCurrentHadoopVersionSupportMapRTicket());
@@ -1029,7 +1062,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     && setMaprTHomeDirBtn.getSelection());
             maprTHadoopLoginText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection() && setHadoopLoginBtn.isEnabled()
                     && setHadoopLoginBtn.getSelection());
-
             if (maprTBtn.getSelection()) {
                 hideControl(maprTPCDCompposite, false);
                 hideControl(maprTSetComposite, false);
