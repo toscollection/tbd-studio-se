@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.cloudera.navigator.api;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,37 +25,13 @@ public class NavigatorNode {
 
     private Map<String, String> schema;
 
-    private Map<String, String> metadata;
-
     private List<String> inputNodes;
 
     private List<String> outputNodes;
 
-    /**
-     *
-     * @param name
-     * @param schema
-     * @param inputNodes
-     * @param outputNodes
-     */
-    public NavigatorNode(String name, Map<String, String> schema,
-                         List<String> inputNodes, List<String> outputNodes) {
-        this(name, schema, new HashMap<String, String>(), inputNodes, outputNodes);
-    }
-
-    /**
-     *
-     * @param name
-     * @param schema
-     * @param inputNodes
-     * @param outputNodes
-     * @param metadata
-     */
-    public NavigatorNode(String name, Map<String, String> schema, Map<String, String> metadata,
-                         List<String> inputNodes, List<String> outputNodes) {
+    public NavigatorNode(String name, Map<String, String> schema, List<String> inputNodes, List<String> outputNodes) {
         this.name = name;
         this.schema = schema;
-        this.metadata = metadata;
         this.inputNodes = inputNodes;
         this.outputNodes = outputNodes;
     }
@@ -93,16 +68,8 @@ public class NavigatorNode {
         this.schema = schema;
     }
 
-    public Map<String, String> getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
-    }
-
     @Override
     public String toString() {
-        return "[" + name + "|" + schema + "|" + metadata + "|" + inputNodes + "|" + outputNodes + "]";
+        return "[" + name + "|" + schema + "|" + inputNodes + "|" + outputNodes + "]";
     }
 }

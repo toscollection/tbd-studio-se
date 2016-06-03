@@ -13,21 +13,29 @@ import java.util.Collection;
 
 
 /**
- * This is an util class to encapsulate all the communication with Atlas.
- * It enhances the AtlasClient as well as provides some missing util methods.
+ * This is a client access class for all the communication with Atlas.
+ * It encapsulates the original AtlasClient and provides some missing util methods.
  * Some of these methods are replacements for existing methods in more recent
  * versions, or may end up going upstream (to the Apache Atlas project).
+ *
+ * It exists to offer a stable foundation in case API changes in Apache Atlas
  */
-public class AtlasUtils {
+final class TalendAtlasClient {
 
-    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(AtlasUtils.class);
+    private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(TalendAtlasClient.class);
 
     private final AtlasClient client;
 
-    public AtlasUtils(final String url, final String login, final String password) {
+    TalendAtlasClient(final String url, final String login, final String password) {
         client = new AtlasClient(url);
     }
 
+    /**
+     *
+     * @param ref
+     * @return the Id corresponding to the ref in Atlas
+     * @throws Exception
+     */
     public Id persistInstance(final Referenceable ref) throws Exception {
         String entityJSON = InstanceSerialization.toJson(ref, true);
         JSONObject jsonObject = client.createEntity(entityJSON);
@@ -37,7 +45,8 @@ public class AtlasUtils {
 
     /**
      * This method is just a wrapper to log the invocation of AtlasUtil.createInstance
-     * It only exists for debuggin purposes and can be replaced with the direct call
+     * It only exists for debugging purposes and can be replaced with the direct call
+     *
      * @param ref
      * @return
      * @throws Exception
@@ -51,32 +60,22 @@ public class AtlasUtils {
     }
 
     /**
-     *
-     * @param typesDef object to persit
+     * @param typesDef object to persist
      * @return the Id corresponding to the created types
      */
-    public JSONObject persistTypes(final TypesDef typesDef) {
+    public JSONObject persistTypes(final TypesDef typesDef) throws AtlasServiceException {
         String typeAsJson = TypesSerialization.toJson(typesDef);
-        try {
-            return this.client.createType(typeAsJson);
-        } catch (AtlasServiceException e) {
-            LOG.error("Error on persistTypes:", e);
-            throw new RuntimeException(e);
-        }
+        return this.client.createType(typeAsJson);
     }
 
     /**
-     *
-     * @param the collection of type names we want to check if they exist in Atlas
+     * @param types collection of type names we want to check if they exist in Atlas
      * @return the collection of types that don't exist in Atlas
      */
-    public Collection<String> getMissingTypes(final Collection<String> types) {
-        try {
-            Collection<String> allTypes = this.client.listTypes();
-            return CollectionUtils.subtract(types, allTypes);
-        } catch (AtlasServiceException e) {
-            LOG.error("Error on getMissingTypes:", e);
-            throw new RuntimeException(e);
-        }
+    public Collection<String> getMissingTypes(final Collection<String> types)
+            throws AtlasServiceException {
+        Collection<String> allTypes = this.client.listTypes();
+        return CollectionUtils.subtract(types, allTypes);
     }
+
 }
