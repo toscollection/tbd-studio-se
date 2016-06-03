@@ -117,9 +117,20 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
         } else if (EHDFSRepositoryToComponent.KEYTAB_PATH.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getKeytab()));
         } else if (EHDFSRepositoryToComponent.USERNAME.getRepositoryValue().equals(value)) {
+            if (hcConnection.isEnableMaprT()) {
+                return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getUserName()));
+            }
             return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getUserName()));
         } else if (EHDFSRepositoryToComponent.GROUP.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getGroup()));
+        } else if (EHDFSRepositoryToComponent.USE_MAPRTICKET.getRepositoryValue().equals(value)) {
+            return hcConnection.isEnableMaprT();
+        } else if (EHDFSRepositoryToComponent.MAPRTICKET_PASSWORD.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getMaprTPassword()));
+        } else if (EHDFSRepositoryToComponent.MAPRTICKET_CLUSTER.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getMaprTCluster()));
+        } else if (EHDFSRepositoryToComponent.MAPRTICKET_DURATION.getRepositoryValue().equals(value)) {
+            return hcConnection.getMaprTDuration();
         } else if (EHDFSRepositoryToComponent.ROWSEPARATOR.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(connection, StringUtils.trimToNull(connection.getRowSeparator()));
         } else if (EHDFSRepositoryToComponent.FIELDSEPARATOR.getRepositoryValue().equals(value)) {
@@ -156,23 +167,23 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             return getRepositoryValueOfStringType(hcConnection, StringUtils.trimToNull(hcConnection.getStagingDirectory()));
         } else if (EHDFSRepositoryToComponent.USE_DATANODE_HOSTNAME.getRepositoryValue().equals(value)) {
             return hcConnection.isUseDNHost();
-        }else if (EHDFSRepositoryToComponent.USE_CLOUDERA_NAVIGATOR.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.USE_CLOUDERA_NAVIGATOR.getRepositoryValue().equals(value)) {
             return hcConnection.isUseClouderaNavi();
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_USERNAME.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviUserName(connection));
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_PASSWORD.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviPassword(connection));
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_URL.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviUrl(connection));
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_METADATA_URL.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviMetadataUrl(connection));
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_CLIENT_URL.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(connection,HadoopRepositoryUtil.getClouderaNaviClientUrl(connection));
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_AUTOCOMMIT.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_USERNAME.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection, HadoopRepositoryUtil.getClouderaNaviUserName(connection));
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_PASSWORD.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection, HadoopRepositoryUtil.getClouderaNaviPassword(connection));
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_URL.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection, HadoopRepositoryUtil.getClouderaNaviUrl(connection));
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_METADATA_URL.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection, HadoopRepositoryUtil.getClouderaNaviMetadataUrl(connection));
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_CLIENT_URL.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(connection, HadoopRepositoryUtil.getClouderaNaviClientUrl(connection));
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_AUTOCOMMIT.getRepositoryValue().equals(value)) {
             return HadoopRepositoryUtil.clouderaNaviAutoCommit(connection);
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_DISABLE_SSL_VALIDATION.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_DISABLE_SSL_VALIDATION.getRepositoryValue().equals(value)) {
             return HadoopRepositoryUtil.clouderaNaviDisableSSL(connection);
-        }else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_DIE_ON_ERROR.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.CLOUDERA_NAVIGATOR_DIE_ON_ERROR.getRepositoryValue().equals(value)) {
             return HadoopRepositoryUtil.clouderaNaviDieOnError(connection);
         }
 
@@ -356,6 +367,26 @@ public class HDFSDragAndDropHandler extends AbstractDragAndDropServiceHandler {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.setHeaderValue(value);
+            }
+        } else if (EHDFSRepositoryToComponent.USE_MAPRTICKET.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
+            if (value != null) {
+                hcConnection.setEnableMaprT(Boolean.valueOf(value));
+            }
+        } else if (EHDFSRepositoryToComponent.MAPRTICKET_PASSWORD.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
+            if (value != null) {
+                hcConnection.setMaprTPassword(value);
+            }
+        } else if (EHDFSRepositoryToComponent.MAPRTICKET_CLUSTER.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
+            if (value != null) {
+                hcConnection.setMaprTCluster(value);
+            }
+        } else if (EHDFSRepositoryToComponent.MAPRTICKET_DURATION.getRepositoryValue().equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(hcConnection, node, param);
+            if (value != null) {
+                hcConnection.setMaprTDuration(value);
             }
         }
     }

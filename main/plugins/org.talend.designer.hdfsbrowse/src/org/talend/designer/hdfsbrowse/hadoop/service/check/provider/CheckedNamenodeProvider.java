@@ -13,8 +13,10 @@
 package org.talend.designer.hdfsbrowse.hadoop.service.check.provider;
 
 import java.net.URI;
+import java.sql.SQLException;
 
 import org.apache.commons.lang.StringUtils;
+import org.talend.commons.utils.PasswordEncryptUtil;
 import org.talend.core.hadoop.HadoopClassLoaderFactory2;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
@@ -40,6 +42,7 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
             String userName = StringUtils.trimToNull(serviceProperties.getUserName());
             String group = StringUtils.trimToNull(serviceProperties.getGroup());
             boolean useKrb = serviceProperties.isUseKrb();
+            boolean useMaprTicket = serviceProperties.isMaprT();
             if (useKrb) {
                 String nameNodePrincipal = serviceProperties.getPrincipal();
                 ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.namenode.kerberos.principal", nameNodePrincipal }); //$NON-NLS-1$//$NON-NLS-2$
@@ -50,9 +53,55 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
                     ReflectionUtils.invokeStaticMethod("org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
                             "loginUserFromKeytab", new String[] { keytabPrincipal, keytab }); //$NON-NLS-1$
                 }
+                if (useMaprTicket) {
+                    System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
+                    System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
+                    System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+                    System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+                    String mapRTicketCluster = serviceProperties.getMaprTCluster();
+                    String mapRTicketDuration = serviceProperties.getMaprTDuration();
+                    Long desiredTicketDurInSecs = 86400L;
+                    if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+                        desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
+                    }
+                    try {
+                        Object mapRClientConfig = ReflectionUtils.newInstance(
+                                "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+                        ReflectionUtils.invokeMethod(mapRClientConfig,
+                                "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
+                    } catch (Exception e) {
+                        throw new SQLException(e);
+                    }
+                }
             } else if (userName != null && group != null) {
                 ReflectionUtils.invokeMethod(conf, "set", new Object[] { "hadoop.job.ugi", userName + "," + group }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
             }
+            if (useMaprTicket) {
+                System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
+                System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
+                System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+                String mapRTicketUsername = serviceProperties.getUserName();
+                String mapRTicketPassword = serviceProperties.getMaprTPassword();
+                String mapRTicketCluster = serviceProperties.getMaprTCluster();
+                String mapRTicketDuration = serviceProperties.getMaprTDuration();
+                Long desiredTicketDurInSecs = 86400L;
+                if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+                    desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
+                }
+                try {
+                    String decryptedPassword = PasswordEncryptUtil.encryptPassword(mapRTicketPassword);
+                    Object mapRClientConfig = ReflectionUtils.newInstance(
+                            "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+                    ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+                    ReflectionUtils
+                            .invokeMethod(
+                                    mapRClientConfig,
+                                    "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, decryptedPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
+                } catch (Exception e) {
+                    throw new SQLException(e);
+                }
+            }
+
             fileSystem = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[] { nameNodeURI, conf });
             if (fileSystem != null) {

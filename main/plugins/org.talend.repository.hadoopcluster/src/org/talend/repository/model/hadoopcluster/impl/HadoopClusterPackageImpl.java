@@ -455,6 +455,87 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
      * <!-- end-user-doc -->
      * @generated
      */
+    public EAttribute getHadoopClusterConnection_EnableMaprT() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(34);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_MaprTPassword() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(35);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_MaprTCluster() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(36);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_MaprTDuration() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(37);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_SetMaprTHomeDir() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(38);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_MaprTHomeDir() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(39);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_SetHadoopLogin() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(40);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_MaprTHadoopLogin() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(41);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getHadoopClusterConnection_PreloadAuthentification() {
+        return (EAttribute)hadoopClusterConnectionEClass.getEStructuralFeatures().get(42);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public EClass getHadoopClusterConnectionItem() {
         return hadoopClusterConnectionItemEClass;
     }
@@ -585,6 +666,15 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__CLOUDERA_DISABLE_SSL);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__CLOUDERA_AUTO_COMMIT);
         createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__CLOUDERA_DIE_NO_ERROR);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__ENABLE_MAPR_T);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__MAPR_TPASSWORD);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__MAPR_TCLUSTER);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__MAPR_TDURATION);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__SET_MAPR_THOME_DIR);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__MAPR_THOME_DIR);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__SET_HADOOP_LOGIN);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__MAPR_THADOOP_LOGIN);
+        createEAttribute(hadoopClusterConnectionEClass, HADOOP_CLUSTER_CONNECTION__PRELOAD_AUTHENTIFICATION);
 
         hadoopClusterConnectionItemEClass = createEClass(HADOOP_CLUSTER_CONNECTION_ITEM);
 
@@ -673,6 +763,15 @@ public class HadoopClusterPackageImpl extends EPackageImpl implements HadoopClus
         initEAttribute(getHadoopClusterConnection_ClouderaDisableSSL(), theXMLTypePackage.getBoolean(), "clouderaDisableSSL", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_ClouderaAutoCommit(), theXMLTypePackage.getBoolean(), "clouderaAutoCommit", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getHadoopClusterConnection_ClouderaDieNoError(), theXMLTypePackage.getBoolean(), "clouderaDieNoError", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_EnableMaprT(), theXMLTypePackage.getBoolean(), "enableMaprT", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_MaprTPassword(), theXMLTypePackage.getString(), "maprTPassword", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_MaprTCluster(), theXMLTypePackage.getString(), "maprTCluster", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_MaprTDuration(), theXMLTypePackage.getString(), "maprTDuration", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_SetMaprTHomeDir(), theXMLTypePackage.getBoolean(), "setMaprTHomeDir", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_MaprTHomeDir(), theXMLTypePackage.getString(), "maprTHomeDir", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_SetHadoopLogin(), theXMLTypePackage.getBoolean(), "setHadoopLogin", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_MaprTHadoopLogin(), theXMLTypePackage.getString(), "maprTHadoopLogin", "", 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getHadoopClusterConnection_PreloadAuthentification(), theXMLTypePackage.getBoolean(), "preloadAuthentification", null, 0, 1, HadoopClusterConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(hadoopClusterConnectionItemEClass, HadoopClusterConnectionItem.class, "HadoopClusterConnectionItem", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
