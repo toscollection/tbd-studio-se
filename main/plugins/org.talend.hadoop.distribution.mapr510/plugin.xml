@@ -169,14 +169,6 @@
             mvn_uri="mvn:org.talend.libraries/piggybank-MAPR510/6.2.0">
         </libraryNeeded>
         
-        <!-- yes, this is a snapshot, and this is in the final build -->
-        <libraryNeeded
-            context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
-            id="pig-0.15.0-mapr-1602-SNAPSHOT.jar"
-            name="pig-0.15.0-mapr-1602-SNAPSHOT.jar"
-            mvn_uri="mvn:org.talend.libraries/pig-0.15.0-mapr-1602-SNAPSHOT/6.2.0">
-        </libraryNeeded>
-
         <libraryNeeded
             context="plugin:org.talend.libraries.hadoop.mapr.5.1.0"
             id="parquet-pig-bundle-1.6.0.jar"
@@ -451,13 +443,13 @@
                 description="Pig libraries for MapR 5.1.0"
                 id="PIG-LIB-MAPR510"
                 name="PIG-LIB-MAPR510">
-            <library id="pig-0.15.0-mapr-1602-SNAPSHOT.jar"/>
             <library id="antlr-runtime-3.4.jar"/>
             <library id="jline-1.0.jar"/>
             <library id="joda-time-2.5.jar"/>
             <library id="snappy-java-1.0.4.1.jar" />
             <library id="hive-exec-1.2.0-mapr.jar"/>
             <library id="hive-metastore-1.2.0-mapr.jar"/>
+            <library id="flexjson-2.1.jar"/>
             <library id="pig-core-h2.jar"/>
             <library id="automaton-1.11-8.jar"/>
         </libraryNeededGroup>
