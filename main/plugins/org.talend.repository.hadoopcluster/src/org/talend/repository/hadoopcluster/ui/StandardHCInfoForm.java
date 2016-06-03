@@ -1014,15 +1014,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     groupText.setEditable(false);
 
                     // maprt
-                    maprTBtn.setEnabled(false);
-                    maprTPasswordText.setEditable(false);
-                    maprTClusterText.setEditable(false);
-                    maprTDurationText.setEditable(false);
-                    setMaprTHomeDirBtn.setEnabled(false);
-                    setHadoopLoginBtn.setEnabled(false);
-                    preloadAuthentificationBtn.setEnabled(false);
-                    maprTHomeDirText.setEditable(false);
-                    maprTHadoopLoginText.setEditable(false);
+                    hideControl(maprTBtn, true);
+                    hideControl(maprTPCDCompposite, true);
+                    hideControl(maprTSetComposite, true);
                     break;
                 }
             }
@@ -1050,6 +1044,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             authCommonComposite.getParent().layout();
 
             // maprt
+            hideControl(maprTBtn, !isCurrentHadoopVersionSupportMapRTicket());
             maprTBtn.setEnabled(isCurrentHadoopVersionSupportMapRTicket());
             maprTPasswordText.setEditable(maprTBtn.isEnabled()
                     && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
