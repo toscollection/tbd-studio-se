@@ -1018,9 +1018,12 @@ public class OozieSettingComposite extends ScrolledComposite {
         String originalVersionValue = getHadoopVersionValue();
 
         if (hadoopDistributionVersion != null && hadoopDistributionVersion.getVersion() != null
-                && !hadoopDistributionVersion.getVersion().equals(originalVersionValue)
                 && hadoopDistributionVersion.getDisplayVersion() != null) {
-            hadoopVersionCombo.setText(hadoopDistributionVersion.getDisplayVersion());
+            if (hadoopDistributionVersion.getVersion().equals(originalVersionValue)) {
+                return;
+            } else {
+                hadoopVersionCombo.setText(hadoopDistributionVersion.getDisplayVersion());
+            }
         } else {
             hadoopVersionCombo.select(0);
         }
