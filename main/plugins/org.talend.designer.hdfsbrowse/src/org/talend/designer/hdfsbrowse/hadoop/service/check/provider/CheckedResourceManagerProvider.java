@@ -28,7 +28,9 @@ public class CheckedResourceManagerProvider extends AbstractCheckedServiceProvid
         setHadoopProperties(conf, serviceProperties);
         boolean useKrb = serviceProperties.isUseKrb();
         boolean useMaprTicket = serviceProperties.isMaprT();
-        setMaprTicketConfig(serviceProperties, classLoader, useMaprTicket, useKrb);
+        if (useMaprTicket) {
+            setMaprTicketConfig(serviceProperties, classLoader, useKrb);
+        }
         if (useKrb) {
             String yarnPrincipal = serviceProperties.getJtOrRmPrincipal();
             ReflectionUtils.invokeMethod(conf, "set", new Object[] { "yarn.resourcemanager.principal", yarnPrincipal }); //$NON-NLS-1$//$NON-NLS-2$

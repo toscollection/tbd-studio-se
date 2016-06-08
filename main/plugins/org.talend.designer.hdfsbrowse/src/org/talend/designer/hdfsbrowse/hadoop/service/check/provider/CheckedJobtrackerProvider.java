@@ -36,7 +36,9 @@ public class CheckedJobtrackerProvider extends AbstractCheckedServiceProvider {
         setHadoopProperties(conf, serviceProperties);
         boolean useKrb = serviceProperties.isUseKrb();
         boolean useMaprTicket = serviceProperties.isMaprT();
-        setMaprTicketConfig(serviceProperties, classLoader, useMaprTicket, useKrb);
+        if (useMaprTicket) {
+            setMaprTicketConfig(serviceProperties, classLoader, useKrb);
+        }
         if (useKrb) {
             String mrPrincipal = serviceProperties.getJtOrRmPrincipal();
             ReflectionUtils.invokeMethod(conf, "set", new Object[] { "mapreduce.jobhistory.principal", mrPrincipal }); //$NON-NLS-1$//$NON-NLS-2$
