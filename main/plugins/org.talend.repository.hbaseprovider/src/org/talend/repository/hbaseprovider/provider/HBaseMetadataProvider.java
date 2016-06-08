@@ -122,6 +122,7 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         boolean useKerberos = Boolean.valueOf((String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_USE_KRB));
         boolean useMaprTicket = Boolean.valueOf((String) metadataConnection
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_USE_MAPRTICKET));
+        setMaprTicketConfig(config, metadataConnection, classLoader, useMaprTicket, useKerberos);
         if (useKerberos) {
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authentication", "kerberos" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authorization", "true" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -148,59 +149,47 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                                 "org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
                                 "loginUserFromKeytab", new String[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, keytabPrincipal), ConnectionContextHelper.getParamValueOffContext(metadataConnection, keytabPath) }); //$NON-NLS-1$
             }
-            if (useMaprTicket) {
-                ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.cluster.distributed", "true" }); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
-                System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
-                System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
-                System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
-                System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
-
-                String mapRTicketCluster = (String) metadataConnection
-                        .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_CLUSTER);
-                String mapRTicketDuration = (String) metadataConnection
-                        .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_DURATION);
-                Long desiredTicketDurInSecs = 86400L;
-                if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
-                    desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
-                }
-                Object mapRClientConfig = ReflectionUtils.newInstance(
-                        "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
-                ReflectionUtils
-                        .invokeMethod(
-                                mapRClientConfig,
-                                "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketCluster), desiredTicketDurInSecs }); //$NON-NLS-1$
-            }
         }
-        // Mapr ticket
+        updateHadoopProperties(config, metadataConnection);
+        return config;
+    }
+
+    private void setMaprTicketConfig(Object config, IMetadataConnection metadataConn, ClassLoader classLoader,
+            boolean useMaprTicket, boolean useKerberos) throws Exception {
         if (useMaprTicket) {
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.cluster.distributed", "true" }); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
             System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
             System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
             System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
-
-            String mapRTicketUsername = (String) metadataConnection
+            String mapRTicketUsername = (String) metadataConn
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_USERNAME);
-            String mapRTicketPassword = (String) metadataConnection
+            String mapRTicketPassword = (String) metadataConn
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_PASSWORD);
-            String mapRTicketCluster = (String) metadataConnection
+            String mapRTicketCluster = (String) metadataConn
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_CLUSTER);
-            String mapRTicketDuration = (String) metadataConnection
+            String mapRTicketDuration = (String) metadataConn
                     .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_DURATION);
             Long desiredTicketDurInSecs = 86400L;
             if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
                 desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
             }
-            String decryptedPassword = PasswordEncryptUtil.encryptPassword(mapRTicketPassword);
             Object mapRClientConfig = ReflectionUtils.newInstance(
                     "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
-            ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
-            ReflectionUtils
-                    .invokeMethod(
-                            mapRClientConfig,
-                            "getMapRCredentialsViaPassword", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketCluster), ConnectionContextHelper.getParamValueOffContext(metadataConnection, mapRTicketUsername), decryptedPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
+            if (useKerberos) {
+                System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+                ReflectionUtils
+                        .invokeMethod(
+                                mapRClientConfig,
+                                "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), desiredTicketDurInSecs }); //$NON-NLS-1$
+            } else {
+                String decryptedPassword = PasswordEncryptUtil.encryptPassword(mapRTicketPassword);
+                ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+                ReflectionUtils
+                        .invokeMethod(
+                                mapRClientConfig,
+                                "getMapRCredentialsViaPassword", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketUsername), decryptedPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
+            }
         }
-        updateHadoopProperties(config, metadataConnection);
-        return config;
     }
 
     private Callable<Object> checkHBaseAvailable(final Object config) {
