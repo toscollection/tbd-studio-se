@@ -51,6 +51,7 @@ public class MapR510PigOutputNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
+        hs.add(new DistributionModuleGroup(MapR510Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(), false, condition));
         hs.add(new DistributionModuleGroup(MapR510Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), false, s3condition));
         return hs;
     }

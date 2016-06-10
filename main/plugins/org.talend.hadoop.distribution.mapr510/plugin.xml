@@ -418,6 +418,7 @@
                 description="MapReduce parquet libraries for MapR 5.1.0"
                 id="MAPREDUCE-PARQUET-LIB-MAPR510"
                 name="MAPREDUCE-PARQUET-LIB-MAPR510" >
+             <library id="jodd-core-3.5.2.jar" />
             <library id="parquet-hadoop-bundle-1.6.0.jar" />
             <library id="snappy-java-1.0.4.1.jar" />
         </libraryNeededGroup>
