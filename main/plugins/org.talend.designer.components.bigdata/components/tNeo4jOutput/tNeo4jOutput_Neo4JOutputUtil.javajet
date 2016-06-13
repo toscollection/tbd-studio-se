@@ -60,7 +60,7 @@ class Neo4JOutputUtil {
                 boolean setUsername = ElementParameterParser.getBooleanValue(node, "__SET_USERNAME__");
                 String username = ElementParameterParser.getValue(node, "__USERNAME__");
                 String passwordFieldName = "__PASSWORD__";
-                if ((setUsername) || ("NEO4J_2_2_X".equals(dbVersion))) {
+                if ((setUsername) || ((!"NEO4J_1_X_X".equals(dbVersion)) && (!"NEO4J_2_1_X".equals(dbVersion)))) {
                     %>
                     <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
                     org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>, <%=username%>, decryptedPassword_<%=cid%>);
@@ -164,6 +164,50 @@ class Neo4JOutputUtil {
         }
     }
 
+    private void writeBatchModeSpring(Set<String> indexNames, List<String> autoIndexedColumns) {
+        %>
+        if (databaseService_<%=cid%> instanceof org.neo4j.kernel.impl.factory.GraphDatabaseFacade) {
+            if (!globalMap.containsKey("<%=dbConnectionName%>_inserter")) {
+                org.neo4j.kernel.impl.factory.GraphDatabaseFacade db_<%=cid%> = (org.neo4j.kernel.impl.factory.GraphDatabaseFacade) databaseService_<%=cid%>;
+                storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
+                db_<%=cid%>.shutdown();
+                inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+                globalMap.put("<%=dbConnectionName%>_inserter", inserter_<%=cid%>);
+                globalMap.put("<%=dbConnectionName%>_is_temporary_shutted_down", true);
+            } else {
+               inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbConnectionName%>_inserter");
+            }
+        } else {
+            throw new UnsupportedOperationException("Batch import is not supported with database server edition");
+        }
+
+        if (!globalMap.containsKey("<%=dbConnectionName%>_indexprovider")) {
+            indexProvider_<%=cid%> = new org.neo4j.index.lucene.unsafe.batchinsert.LuceneBatchInserterIndexProvider(inserter_<%=cid%>);
+            globalMap.put("<%=dbConnectionName%>_indexprovider", indexProvider_<%=cid%>);
+        } else {
+            indexProvider_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserterIndexProvider) globalMap.get("<%=dbConnectionName%>_indexprovider");
+        }
+        resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
+        resourceMap.put("indexProvider_<%=cid%>", indexProvider_<%=cid%>);
+        java.util.Map<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex> indexInserterMap_<%=cid%> = new java.util.HashMap<String, org.neo4j.unsafe.batchinsert.BatchInserterIndex>();
+
+        <%
+        for (String indexName : indexNames) {
+            %>
+            indexInserterMap_<%=cid%>.put(<%=indexName%>, indexProvider_<%=cid%>.nodeIndex(<%=indexName%>, org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact")));
+            <%
+        }
+
+        // There is no autoindex in batch mode, so we did it by hand.
+        if (autoIndexedColumns.size() > 0) {
+            %>
+            org.neo4j.unsafe.batchinsert.BatchInserterIndex autoindex_<%=cid%> = indexProvider_<%=cid%>.nodeIndex("node_auto_index", org.neo4j.helpers.collection.MapUtil.stringMap("type", "exact"));
+            long autoindex_id_<%=cid%>  = inserter_<%=cid%>.createNode(null);
+            java.util.Map<String, Object> autoindex_props_<%=cid%> = new java.util.HashMap<String, Object>();
+            <%
+        }
+    }
+
     private void writeBatchMode(Set<String> indexNames, List<String> autoIndexedColumns) {
         String nodeMappedMemory = ElementParameterParser.getValue(node, "__NODE_MAPPED_MEMORY__");
         String relationshipMappedMemory = ElementParameterParser.getValue(node, "__RELATIONSHIP_MAPPED_MEMORY__");
@@ -184,8 +228,10 @@ class Neo4JOutputUtil {
         <%
         if ("NEO4J_1_X_X".equals(dbVersion)) {
             writeBatchModeVersion1_9(indexNames, autoIndexedColumns);
-        } else { // NEO4J_2_1_X
+        } else if (("NEO4J_2_1_X".equals(dbVersion)) || ("NEO4J_2_2_X".equals(dbVersion))) { // NEO4J_2_X before moving to spring framework
             writeBatchModeVersion2_1(indexNames, autoIndexedColumns);
+        } else { // NEO4J_2_3 and more using spring framework
+            writeBatchModeSpring(indexNames, autoIndexedColumns);
         }
     }
 
