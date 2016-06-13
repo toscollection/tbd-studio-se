@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.mapr510.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.talend.core.hadoop.EHadoopCategory;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
@@ -75,5 +76,10 @@ public class MapR510ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
     @Test
     public void testHDFSWithKerberos_NotSupport() {
         doTestNotSupportClassLoader(EHadoopCategory.HDFS.getName(), "?USE_KRB");//$NON-NLS-1$
+    }
+
+    @Test
+    public void testImpala() {
+        Assert.fail("Not impl yet!");
     }
 }
