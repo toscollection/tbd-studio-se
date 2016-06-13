@@ -15,14 +15,14 @@ package org.talend.cloudera.navigator.api.util;
 import com.cloudera.nav.sdk.model.CustomIdGenerator;
 
 /**
- * created by pbailly on 21 Oct 2015 Detailled comment
+ * Utilities to generate Cloudera Navigator unique entity ids
  *
  */
 public class GeneratorID {
 
     public static final String CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE = "Talend";
 
-    public static final String DATASET_MARKER = "DATASET_";
+    public static final String DATASET_MARKER                           = "DATASET_";
 
     public static String generateDatasetID(String jobId, String componentName) {
         return CustomIdGenerator.generateIdentity(DATASET_MARKER, CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE, jobId, componentName);

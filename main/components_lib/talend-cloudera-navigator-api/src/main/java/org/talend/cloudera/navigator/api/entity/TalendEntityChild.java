@@ -14,23 +14,25 @@ import com.cloudera.nav.sdk.model.entities.EndPointProxy;
 import com.cloudera.nav.sdk.model.entities.EntityType;
 import com.cloudera.nav.sdk.model.relations.RelationRole;
 
-/*
+/**
+ * 
  * Represents Talend schema element (column) as a Cloudera Navigator entity
+ *
  */
 @MClass(model = "talend")
 public class TalendEntityChild extends DatasetField {
 
-    private String parentEntityId;
+    private String              parentEntityId;
 
-    private List<String> targetEntitiesId;
+    private List<String>        targetEntitiesId;
 
-    private String entityId;
+    private String              entityId;
 
     @MProperty
-    private String link;
+    private String              link;
 
     @MRelation(role = RelationRole.PARENT)
-    private TalendEntity parent;
+    private TalendEntity        parent;
 
     @MRelation(role = RelationRole.TARGET)
     private List<EndPointProxy> targets;

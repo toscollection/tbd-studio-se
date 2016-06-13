@@ -14,15 +14,19 @@ import com.cloudera.nav.sdk.model.entities.EndPointProxy;
 import com.cloudera.nav.sdk.model.entities.EntityType;
 import com.cloudera.nav.sdk.model.relations.RelationRole;
 
-/*
- * Cloudera navigator entity to represent a Talend processing or a FileInput/Output component
+/**
+ * Cloudera navigator entity to represent any Talend processing component.
+ * 
+ * Note : FileInput/OutputXXX components are also modeled using this class. These components (FileInput/OutputXXX) are
+ * represented as datasets + TalendInputOutputEntity
+ *
  */
 @MClass(model = "talend")
 public class TalendInputOutputEntity extends TalendEntity {
 
-    private List<String> previousEntitiesId;
+    private List<String>        previousEntitiesId;
 
-    private List<String> nextEntitiesId;
+    private List<String>        nextEntitiesId;
 
     @MRelation(role = RelationRole.SOURCE)
     private List<EndPointProxy> sourceProxies;

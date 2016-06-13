@@ -21,7 +21,7 @@ import org.apache.commons.collections.MapUtils;
 import org.talend.cloudera.navigator.api.entity.TalendField;
 
 /**
- * created by pbailly on 14 Oct 2015 Detailled comment
+ * Utilities to convert Talend schemas to Cloudera Navigator fiel entities
  *
  */
 public class ClouderaFieldConvertor {

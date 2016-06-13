@@ -12,13 +12,14 @@ import com.cloudera.nav.sdk.model.entities.EndPointProxy;
 import com.cloudera.nav.sdk.model.entities.EntityType;
 import com.cloudera.nav.sdk.model.relations.RelationRole;
 
-/*
- * Cloudera navigator entity to represent a Talend output component
+/**
+ * Cloudera navigator entity to represent any Talend output component
+ *
  */
 @MClass(model = "talend")
 public class TalendOutputEntity extends TalendEntity {
 
-    private List<String> previousEntitiesId;
+    private List<String>        previousEntitiesId;
 
     @MRelation(role = RelationRole.SOURCE)
     private List<EndPointProxy> sourceProxies;

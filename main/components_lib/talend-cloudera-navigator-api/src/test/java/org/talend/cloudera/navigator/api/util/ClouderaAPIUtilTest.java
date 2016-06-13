@@ -87,10 +87,10 @@ public class ClouderaAPIUtilTest {
         NavigatorNode nav2 = new NavigatorNode("comp2", schema, null, null);
         navigatorNodes.add(nav2);
 
-        assertTrue(ClouderaAPIUtil.isThisComponentContainsThisField("comp1", "id", navigatorNodes));
-        assertTrue(ClouderaAPIUtil.isThisComponentContainsThisField("comp2", "id", navigatorNodes));
-        assertFalse(ClouderaAPIUtil.isThisComponentContainsThisField("comp1", "nope", navigatorNodes));
-        assertFalse(ClouderaAPIUtil.isThisComponentContainsThisField("comp2", "nope", navigatorNodes));
-        assertFalse(ClouderaAPIUtil.isThisComponentContainsThisField("comp3", "id", navigatorNodes));
+        assertTrue(ClouderaAPIUtil.isFieldinComponent("comp1", "id", navigatorNodes));
+        assertTrue(ClouderaAPIUtil.isFieldinComponent("comp2", "id", navigatorNodes));
+        assertFalse(ClouderaAPIUtil.isFieldinComponent("comp1", "nope", navigatorNodes));
+        assertFalse(ClouderaAPIUtil.isFieldinComponent("comp2", "nope", navigatorNodes));
+        assertFalse(ClouderaAPIUtil.isFieldinComponent("comp3", "id", navigatorNodes));
     }
 }

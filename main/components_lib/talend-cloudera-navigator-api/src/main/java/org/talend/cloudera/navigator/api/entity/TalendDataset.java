@@ -12,17 +12,24 @@ import com.cloudera.nav.sdk.model.entities.HdfsEntity;
 import com.cloudera.nav.sdk.model.relations.RelationRole;
 import com.google.common.base.Preconditions;
 
+/**
+ * Cloudera Navigator specific model to represent an input/output component. The created dataset is linked to the
+ * input/output component HDFS folder.
+ *
+ * Note : Currently TalendDatasets represent tFileXXXInput/Output components. Other input/output components (tMysqlXXX,
+ * tFixedFlow, tLogRow ...) do not have an input/output TalendDataset.
+ */
 @MClass(model = "talend_dataset")
 public class TalendDataset extends Dataset {
 
     private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(TalendDataset.class);
 
     @MRelation(role = RelationRole.PHYSICAL)
-    private Entity dataContainer;
+    private Entity                         dataContainer;
 
-    private String componentName;
+    private String                         componentName;
 
-    private String generatedId;
+    private String                         generatedId;
 
     public TalendDataset(String name, String componentName, String jobId) {
         super();

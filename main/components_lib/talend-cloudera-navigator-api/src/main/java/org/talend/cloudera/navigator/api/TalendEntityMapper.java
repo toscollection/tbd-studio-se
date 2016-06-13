@@ -17,22 +17,24 @@ import org.talend.cloudera.navigator.api.util.GeneratorID;
 import com.cloudera.nav.sdk.model.entities.Entity;
 
 /**
- * Class to map studio components into cloudera navigator connected entities
+ * Cloudera Navigator Entity Mapper.
+ * 
+ * Maps Lineage entities into Cloudera navigator specific entities including all the relations between the entities.
  */
 public class TalendEntityMapper {
 
     private static final String ENTITY_DESCRIPTION = "Talend Component";
 
-    private static final String ENTITY_LINK = "http://www.talend.com/";
+    private static final String ENTITY_LINK        = "http://www.talend.com/";
 
     private List<NavigatorNode> navigatorNodes;
 
     // The mapper uses a jobId to create unique entities in Cloudera navigator
-    private String jobId;
+    private String              jobId;
 
-    private StringBuilder debugStringBuilder;
+    private StringBuilder       debugStringBuilder;
 
-    private List<String> tags = new ArrayList<String>();
+    private List<String>        tags               = new ArrayList<String>();
 
     public TalendEntityMapper(List<NavigatorNode> navigatorNodes, String jobId) {
         this.navigatorNodes = navigatorNodes;
@@ -172,8 +174,7 @@ public class TalendEntityMapper {
             } else {
                 Boolean childConnected = false;
                 for (String outputComponent : navigatorNode.getOutputNodes()) {
-                    if (ClouderaAPIUtil.isThisComponentContainsThisField(outputComponent, talendEntityChild.getName(),
-                            this.navigatorNodes)) {
+                    if (ClouderaAPIUtil.isFieldinComponent(outputComponent, talendEntityChild.getName(), this.navigatorNodes)) {
                         String targetComponentId = GeneratorID.generateEntityChildID(getJobId(), outputComponent,
                                 talendEntityChild.getName());
                         talendEntityChild.addTarget(targetComponentId);

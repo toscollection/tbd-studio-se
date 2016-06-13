@@ -19,41 +19,49 @@ import com.cloudera.nav.sdk.model.entities.FileFormat;
 import com.cloudera.nav.sdk.model.entities.HdfsEntity;
 import com.google.common.collect.ImmutableList;
 
+/**
+ * 
+ * Cloudera Navigator lineage creator.
+ * 
+ * An instance of this class is created at the beginning of a Talend job that uses Cloudera Navigator. The main role of
+ * this class is to hide the Cloudera Navigator implementation details from being directly called in the studio.
+ *
+ */
 public class LineageCreator {
 
     // TODO : the PluginConfigurationAPI is going to change its name on version 1.1,
     // I keep the variable here for compatibility
-    public static final String APP_URL = "application_url"; //$NON-NLS-1$
+    public static final String             APP_URL                = "application_url";                                      //$NON-NLS-1$
 
-    public static final String FILE_FORMAT = "file_format"; //$NON-NLS-1$
+    public static final String             FILE_FORMAT            = "file_format";                                          //$NON-NLS-1$
 
-    public static final String METADATA_URI = "metadata_parent_uri"; //$NON-NLS-1$
+    public static final String             METADATA_URI           = "metadata_parent_uri";                                  //$NON-NLS-1$
 
-    public static final String NAMESPACE = "namespace"; //$NON-NLS-1$
+    public static final String             NAMESPACE              = "namespace";                                            //$NON-NLS-1$
 
-    public static final String NAV_URL = "navigator_url"; //$NON-NLS-1$
+    public static final String             NAV_URL                = "navigator_url";                                        //$NON-NLS-1$
 
-    public static final String USERNAME = "username"; //$NON-NLS-1$
+    public static final String             USERNAME               = "username";                                             //$NON-NLS-1$
 
-    public static final String PASSWORD = "password"; //$NON-NLS-1$
+    public static final String             PASSWORD               = "password";                                             //$NON-NLS-1$
 
-    public static final String AUTOCOMMIT = "autocommit"; //$NON-NLS-1$
+    public static final String             AUTOCOMMIT             = "autocommit";                                           //$NON-NLS-1$
 
-    public static final String DISABLE_SSL_VALIDATION = "disable_ssl_validation"; //$NON-NLS-1$
+    public static final String             DISABLE_SSL_VALIDATION = "disable_ssl_validation";                               //$NON-NLS-1$
 
-    private static org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(LineageCreator.class);
+    private static org.apache.log4j.Logger LOG                    = org.apache.log4j.Logger.getLogger(LineageCreator.class);
 
-    private String jobName;
+    private String                         jobName;
 
-    private String projectName;
+    private String                         projectName;
 
-    private Source fileSystem;
+    private Source                         fileSystem;
 
-    private NavigatorPlugin plugin;
+    private NavigatorPlugin                plugin;
 
-    private List<NavigatorNode> inputNavigatorNodes = new ArrayList<NavigatorNode>();
+    private List<NavigatorNode>            inputNavigatorNodes    = new ArrayList<NavigatorNode>();
 
-    private List<Entity> datasets = new ArrayList<Entity>();
+    private List<Entity>                   datasets               = new ArrayList<Entity>();
 
     public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, String projectName) {
@@ -66,7 +74,8 @@ public class LineageCreator {
     }
 
     /**
-     * Initialize a Navigator plugin, which will be used to comminicate dataset and lieage to the cloudera navigator
+     * The constructor creates an instance of NavigatorPlugin to manage all of the requests/responses to/from Cloudera
+     * Navigator
      */
     public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, String projectName, Boolean autoCommit, Boolean disableValidationSSL) {
@@ -96,12 +105,12 @@ public class LineageCreator {
     }
 
     /**
-     * Instanciate a Navigator with the data retrieve from a graphical component. This function will be used for any
-     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets. This node
-     * must have a schema or it will not be added to the lineage.
+     * Creates a LineageNode to represent a Talend Graphical Node. The Talend Graphical Node must have a schema or it
+     * will not get created. The LienageNode is then added to the list of nodes associated with this Lineage creator
+     * (which is associated with a single job)
      *
      * @param componentName The component name
-     * @param schema An hashmap containing the union of any output column name and column type from the component.
+     * @param schema An Hashmap containing the union of any output column name and column type from the component.
      * @param inputNodes The list of the nodes before the current node, defined by their unique name
      * @param outputNodes The list of the nodes after the current node, defined by their unique name
      */
@@ -113,10 +122,9 @@ public class LineageCreator {
     }
 
     /**
-     * Instanciate a TalendDataSet with the data retrieve from a component. This function will be used for any
-     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets.
+     * Creates a TalendDataSet with the data retrieved from an input/output tFileInputXXX Talend Graphical Node.
      *
-     * @param schema The hashmap of column name and column type of the component.
+     * @param schema The Hashmap of column name and column type of the component.
      * @param componentName The component name
      * @param fileSystemPath The HDFS patht to the file where the component read/write data
      * @param fileFormat The file format as a String (ie: "CSV", "XML", "JSON", ...)
@@ -126,19 +134,18 @@ public class LineageCreator {
     }
 
     /**
-     * Instanciate a TalendDataSet with the data retrieve from a component. This function will be used for any
-     * input/output HDFS component of the studio and allow the cloudera navigator to display the datasets.
+     * Creates a TalendDataSet with the data retrieved from an input/output tFileInputOutputXXX Talend Graphical Node.
      *
-     * @param schema The hashmap of column name and column type of the component.
+     * @param schema The Hashmap of column name and column type of the component.
      * @param componentName The component name
-     * @param fileSystemPath The HDFS patht to the file where the component read/write data
+     * @param fileSystemPath The HDFS path to the file where the component read/write data
      * @param fileFormat The file format as a FileFormat
      */
     public void addDataset(Map<String, String> schema, String componentName, String fileSystemPath, FileFormat fileFormat) {
         HdfsEntity container = new HdfsEntity(fileSystemPath, EntityType.DIRECTORY, this.fileSystem.getIdentity());
 
-        TalendDataset dataset = new TalendDataset(ClouderaAPIUtil.getDatasetName(fileSystemPath), componentName, this.jobName
-                + this.projectName);
+        TalendDataset dataset = new TalendDataset(ClouderaAPIUtil.getDatasetName(fileSystemPath), componentName,
+                this.jobName + this.projectName);
         dataset.setDataContainer(container);
         dataset.setFileFormat(fileFormat);
         dataset.setFields(ClouderaFieldConvertor.convertToTalendField(schema));
@@ -148,18 +155,20 @@ public class LineageCreator {
     }
 
     /**
-     * Send the current lineage into the cloudera navigator
+     * Calls the Cloudera Navigator Mapper to map Lineage entities to Cloudera Navigator entities and writes them to
+     * Cloudera Navigator using NavigatorPlugin.
      *
      * @param dieOnError throw or not a RuntimeException on error
      */
     public void sendToNavigator(Boolean dieOnError) {
         try {
+            // Start by writing the datasets
             ResultSet results = this.plugin.write(this.datasets);
             if (results.hasErrors()) {
                 throw new RuntimeException(results.toString());
             }
 
-            // Mapper
+            // Create Cloudera navigator mapper
             TalendEntityMapper tem = new TalendEntityMapper(this.inputNavigatorNodes, this.jobName + this.projectName);
             tem.addTag(this.jobName);
 
@@ -169,16 +178,18 @@ public class LineageCreator {
                 }
             }
 
+            // Map Lineage nodes to Cloudera navigator entities
             List<Entity> entities = tem.map();
             LOG.debug(tem.toString());
 
+            // Write the rest of the entities (processing components)
             results = this.plugin.write(entities);
             if (results.hasErrors()) {
                 throw new RuntimeException(results.toString());
             }
         } catch (RuntimeException e) {
             if (dieOnError) {
-                throw new RuntimeException(e);
+                throw e;
             } else {
                 LOG.error(e);
             }

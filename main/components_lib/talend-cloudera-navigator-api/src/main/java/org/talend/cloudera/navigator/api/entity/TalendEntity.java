@@ -10,18 +10,19 @@ import com.cloudera.nav.sdk.model.annotations.MProperty;
 import com.cloudera.nav.sdk.model.entities.Entity;
 import com.cloudera.nav.sdk.model.entities.EntityType;
 
-/*
- * Represents Talend components as a Cloudera Navigator entity
+/**
+ * Base model to represent Talend components as a Cloudera Navigator entities
+ * 
  */
 @MClass(model = "talend")
 public abstract class TalendEntity extends Entity {
 
-    private String entityId;
+    private String       entityId;
 
     private final String jobId;
 
     @MProperty
-    private String link;
+    private String       link;
 
     public TalendEntity(String jobId, String componentName) {
         this.entityId = GeneratorID.generateEntityID(jobId, componentName);

@@ -18,7 +18,7 @@ import org.apache.commons.lang.StringUtils;
 import org.talend.cloudera.navigator.api.NavigatorNode;
 
 /**
- * created by pbailly on 16 Oct 2015 Detailled comment
+ * Utilities for Cloudera Navigator entities.
  *
  */
 public class ClouderaAPIUtil {
@@ -39,7 +39,7 @@ public class ClouderaAPIUtil {
     }
 
     /**
-     * Retrieve the last chuck of a path, in order to define the datasetName
+     * Retrieve the last chunk of a path, in order to define the datasetName
      */
     public static String getDatasetName(String path) {
         if (StringUtils.isNotBlank(path)) {
@@ -63,8 +63,7 @@ public class ClouderaAPIUtil {
 
     }
 
-    public static Boolean isThisComponentContainsThisField(String componentName, String fieldName,
-            List<NavigatorNode> navigatorNodes) {
+    public static Boolean isFieldinComponent(String componentName, String fieldName, List<NavigatorNode> navigatorNodes) {
         NavigatorNode outputNavigatorNode = ClouderaAPIUtil.retrieveNavigatorNode(componentName, navigatorNodes);
         return (outputNavigatorNode != null) && (outputNavigatorNode.getSchema().containsKey(fieldName));
     }
