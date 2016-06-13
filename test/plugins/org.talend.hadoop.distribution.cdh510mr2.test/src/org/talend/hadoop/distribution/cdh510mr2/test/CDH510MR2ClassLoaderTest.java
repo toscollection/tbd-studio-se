@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.cdh510mr2.test;
 
 import org.junit.Test;
+import org.talend.core.database.EDatabaseTypeName;
 import org.talend.core.hadoop.EHadoopCategory;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
@@ -76,5 +77,11 @@ public class CDH510MR2ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
     public void testHDFSWithKerberos() {
         String libsStr = "avro-1.7.5-cdh5.1.2.jar;commons-cli-1.2.jar;commons-codec-1.4.jar;commons-collections-3.2.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-11.0.2.jar;hadoop-auth-2.3.0-cdh5.1.2.jar;hadoop-common-2.3.0-cdh5.1.2.jar;hadoop-hdfs-2.3.0-cdh5.1.2.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;hadoop-conf-kerberos.jar;jetty-util-6.1.26.jar;jersey-core-1.9.jar;commons-configuration-1.6.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar";
         doTestClassLoader(EHadoopCategory.HDFS.getName(), libsStr, "?USE_KRB");
+    }
+
+    @Test
+    public void testImpala() {
+        String libsStr = "commons-logging-1.1.1.jar;hadoop-core-1.0.0.jar;hive-exec-0.12.0-cdh5.0.4.jar;hive-jdbc-0.12.0-cdh5.0.4.jar;hive-metastore-0.12.0-cdh5.0.4.jar;hive-service-0.12.0-cdh5.0.4.jar;httpclient-4.2.5.jar;httpcore-4.2.5.jar;libfb303-0.9.0.jar;log4j-1.2.16.jar;slf4j-api-1.6.1.jar;slf4j-log4j12-1.6.1.jar";
+        doTestClassLoader(EDatabaseTypeName.IMPALA.getProduct(), libsStr);
     }
 }
