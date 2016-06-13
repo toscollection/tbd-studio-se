@@ -435,7 +435,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTPCDCompposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         maprTPasswordText = new LabelledText(maprTPCDCompposite,
-                Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD); //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        maprTPasswordText.getTextControl().setEchoChar('*');
         maprTClusterText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
         maprTDurationText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
 
@@ -858,6 +859,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             @Override
             public void widgetSelected(SelectionEvent e) {
                 getConnection().setSetMaprTHomeDir(setMaprTHomeDirBtn.getSelection());
+                maprTHomeDirText.setText(getConnection().getMaprTHomeDir());
                 updateForm();
                 checkFieldsValue();
             }
@@ -875,6 +877,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             @Override
             public void widgetSelected(SelectionEvent e) {
                 getConnection().setSetHadoopLogin(setHadoopLoginBtn.getSelection());
+                maprTHadoopLoginText.setText(getConnection().getMaprTHadoopLogin());
                 updateForm();
                 checkFieldsValue();
             }
