@@ -81,6 +81,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private Button kerberosBtn;
 
+    private Composite authPartComposite;
+
     private Composite authCommonComposite;
 
     private Composite authNodejtOrRmHistoryComposite;
@@ -361,7 +363,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         Group authGroup = Form.createGroup(this, 1, Messages.getString("HadoopClusterForm.authenticationSettings"), 110); //$NON-NLS-1$
         authGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        Composite authPartComposite = new Composite(authGroup, SWT.NULL);
+        authPartComposite = new Composite(authGroup, SWT.NULL);
         GridLayout authPartLayout = new GridLayout(1, false);
         authPartLayout.marginWidth = 0;
         authPartLayout.marginHeight = 0;
@@ -402,7 +404,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         userNameText = new LabelledText(placeHolder, Messages.getString("HadoopClusterForm.text.userName"), 1); //$NON-NLS-1$
         groupText = new LabelledText(placeHolder, Messages.getString("HadoopClusterForm.text.group"), 1); //$NON-NLS-1$
 
-        authKeytabComposite = new Composite(authGroup, SWT.NULL);
+        authKeytabComposite = new Composite(authPartComposite, SWT.NULL);
         GridLayout authKeytabCompLayout = new GridLayout(5, false);
         authKeytabCompLayout.marginWidth = 0;
         authKeytabCompLayout.marginHeight = 0;
@@ -418,7 +420,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         keytabText = new LabelledFileField(authKeytabComposite, Messages.getString("HadoopClusterForm.text.keytab"), extensions); //$NON-NLS-1$
 
         // Mapr Ticket Authentication
-        authMaprTComposite = new Composite(authGroup, SWT.NULL);
+        authMaprTComposite = new Composite(authPartComposite, SWT.NULL);
         GridLayout authMaprTicketCompLayout = new GridLayout(1, false);
         authMaprTicketCompLayout.marginWidth = 0;
         authMaprTicketCompLayout.marginHeight = 0;
@@ -584,6 +586,16 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 String originalAuthName = getConnection().getAuthMode();
                 EAuthenticationMode originalAuthMode = EAuthenticationMode.getAuthenticationByName(originalAuthName, false);
                 if (newAuthMode != null && newAuthMode != originalAuthMode) {
+                    if (EAuthenticationMode.UGI.equals(newAuthMode)) {
+                        maprTBtn.setEnabled(true);
+                        hideControl(maprTBtn, false);
+                        if (maprTBtn.getSelection()) {
+                            hideControl(maprTPCDCompposite, false);
+                            hideControl(maprTSetComposite, false);
+                        }
+                        authMaprTComposite.layout();
+                        authMaprTComposite.getParent().layout();
+                    }
                     getConnection().setAuthMode(newAuthMode.getName());
                     updateForm();
                     checkFieldsValue();
@@ -995,17 +1007,26 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     userNameText.setEditable(false);
                     groupText.setEditable(false);
+                    hideKerberosControl(!kerberosBtn.getSelection());
+                    hideMaprTicketControl(true);
+                    maprTPasswordText.setEditable(false);
                     break;
                 case UGI:
-                    kerberosBtn.setEnabled(false);
-                    namenodePrincipalText.setEditable(false);
-                    jtOrRmPrincipalText.setEditable(false);
-                    jobHistoryPrincipalText.setEditable(false);
-                    keytabBtn.setEnabled(false);
-                    keytabPrincipalText.setEditable(false);
-                    keytabText.setEditable(false);
-                    userNameText.setEditable(true);
-                    groupText.setEditable(true);
+                    kerberosBtn.setEnabled(true);
+                    namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
+                    jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
+                    jobHistoryPrincipalText.setEditable(namenodePrincipalText.getEditable());
+                    keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
+                    keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+                    keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+                    userNameText.setEditable(maprTBtn.isEnabled()
+                            && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
+                    groupText.setEditable(false);
+                    hideKerberosControl(!kerberosBtn.getSelection());
+                    // maprt
+                    hideMaprTicketChildControl(!maprTBtn.getSelection());
+                    maprTPasswordText.setEditable(maprTBtn.isEnabled()
+                            && (maprTBtn.getSelection() && !(kerberosBtn.isEnabled() && kerberosBtn.getSelection())));
                     break;
                 default:
                     kerberosBtn.setEnabled(false);
@@ -1017,14 +1038,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabText.setEditable(false);
                     userNameText.setEditable(true);
                     groupText.setEditable(false);
-
-                    // maprt
+                    hideKerberosControl(true);
+                    hideMaprTicketControl(true);
                     maprTPasswordText.setEditable(false);
-                    maprTClusterText.setEditable(false);
-                    maprTDurationText.setEditable(false);
-                    hideControl(maprTBtn, true);
-                    hideControl(maprTPCDCompposite, true);
-                    hideControl(maprTSetComposite, true);
                     break;
                 }
             }
@@ -1041,15 +1057,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             groupText.setEditable(isCurrentHadoopVersionSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
-            if (kerberosBtn.getSelection()) {
-                hideControl(authNodejtOrRmHistoryComposite, false);
-                hideControl(authKeytabComposite, false);
-            } else {
-                hideControl(authNodejtOrRmHistoryComposite, true);
-                hideControl(authKeytabComposite, true);
-            }
-            authCommonComposite.layout();
-            authCommonComposite.getParent().layout();
+            hideKerberosControl(!kerberosBtn.getSelection());
 
             // maprt
             hideControl(maprTBtn, !isCurrentHadoopVersionSupportMapRTicket());
@@ -1061,27 +1069,41 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             setMaprTHomeDirBtn.setEnabled(maprTBtn.isEnabled() && maprTBtn.getSelection());
             setHadoopLoginBtn.setEnabled(maprTBtn.isEnabled() && maprTBtn.getSelection());
             preloadAuthentificationBtn.setEnabled(maprTBtn.isEnabled() && maprTBtn.getSelection());
-            maprTHomeDirText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection() && setMaprTHomeDirBtn.isEnabled()
-                    && setMaprTHomeDirBtn.getSelection());
-            maprTHadoopLoginText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection() && setHadoopLoginBtn.isEnabled()
-                    && setHadoopLoginBtn.getSelection());
-            if (maprTBtn.getSelection()) {
-                hideControl(maprTPCDCompposite, false);
-                hideControl(maprTSetComposite, false);
-                hideControl(maprTPasswordCompposite, kerberosBtn.getSelection());
-            } else {
-                hideControl(maprTPCDCompposite, true);
-                hideControl(maprTSetComposite, true);
-            }
-            authMaprTComposite.layout();
-            authMaprTComposite.getParent().layout();
-
+            hideMaprTicketChildControl(!maprTBtn.getSelection());
         }
         updateMRRelatedContent();
         updateConnectionContent();
         if (isContextMode()) {
             adaptFormToEditable();
         }
+    }
+
+    private void hideMaprTicketControl(boolean hide) {
+        maprTClusterText.setEditable(!hide);
+        maprTDurationText.setEditable(!hide);
+        hideControl(maprTBtn, hide);
+        hideControl(maprTPCDCompposite, hide);
+        hideControl(maprTSetComposite, hide);
+        authMaprTComposite.layout();
+        authMaprTComposite.getParent().layout();
+    }
+
+    private void hideMaprTicketChildControl(boolean hide) {
+        maprTClusterText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection());
+        maprTDurationText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection());
+        maprTHomeDirText.setEditable(!hide && setMaprTHomeDirBtn.isEnabled() && setMaprTHomeDirBtn.getSelection());
+        maprTHadoopLoginText.setEditable(!hide && setHadoopLoginBtn.isEnabled() && setHadoopLoginBtn.getSelection());
+        hideControl(maprTPCDCompposite, hide);
+        hideControl(maprTSetComposite, hide);
+        authMaprTComposite.layout();
+        authMaprTComposite.getParent().layout();
+    }
+
+    private void hideKerberosControl(boolean hide) {
+        hideControl(authNodejtOrRmHistoryComposite, hide);
+        hideControl(authKeytabComposite, hide);
+        authCommonComposite.layout();
+        authCommonComposite.getParent().layout();
     }
 
     /**
