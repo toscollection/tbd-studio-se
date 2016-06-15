@@ -160,6 +160,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     private Composite maprTPCDCompposite;
 
+    private Composite maprTPasswordCompposite;
+
     private Composite maprTSetComposite;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
@@ -428,16 +430,30 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1));
 
         maprTPCDCompposite = new Composite(authMaprTComposite, SWT.NULL);
-        GridLayout maprTPCDCompositeLayout = new GridLayout(2, false);
+        GridLayout maprTPCDCompositeLayout = new GridLayout(1, false);
         maprTPCDCompositeLayout.marginWidth = 0;
         maprTPCDCompositeLayout.marginHeight = 0;
         maprTPCDCompposite.setLayout(maprTPCDCompositeLayout);
         maprTPCDCompposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        maprTPasswordText = new LabelledText(maprTPCDCompposite,
+        maprTPasswordCompposite = new Composite(maprTPCDCompposite, SWT.NULL);
+        GridLayout maprTPasswordComppositeLayout = new GridLayout(2, false);
+        maprTPasswordComppositeLayout.marginWidth = 0;
+        maprTPasswordComppositeLayout.marginHeight = 0;
+        maprTPasswordCompposite.setLayout(maprTPasswordComppositeLayout);
+        maprTPasswordCompposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        maprTPasswordText = new LabelledText(maprTPasswordCompposite,
                 Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD); //$NON-NLS-1$
-        maprTClusterText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
-        maprTDurationText = new LabelledText(maprTPCDCompposite, Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
+
+        Composite maprTCDCompposite = new Composite(maprTPCDCompposite, SWT.NULL);
+        GridLayout maprTCDComppositeLayout = new GridLayout(2, false);
+        maprTCDComppositeLayout.marginWidth = 0;
+        maprTCDComppositeLayout.marginHeight = 0;
+        maprTCDCompposite.setLayout(maprTCDComppositeLayout);
+        maprTCDCompposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        maprTClusterText = new LabelledText(maprTCDCompposite, Messages.getString("HadoopClusterForm.text.maprTCluster"), 1); //$NON-NLS-1$
+        maprTDurationText = new LabelledText(maprTCDCompposite, Messages.getString("HadoopClusterForm.text.maprTDuration"), 1); //$NON-NLS-1$
 
         maprTSetComposite = new Composite(authMaprTComposite, SWT.NULL);
         GridLayout maprTicketSetCompLayout = new GridLayout(3, false);
@@ -770,9 +786,19 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                 if (kerberosBtn.getSelection()) {
                     hideControl(authNodejtOrRmHistoryComposite, false);
                     hideControl(authKeytabComposite, false);
+                    if (maprTBtn.getSelection()) {
+                        hideControl(maprTPasswordCompposite, true);
+                        maprTPCDCompposite.layout();
+                        maprTPCDCompposite.getParent().layout();
+                    }
                 } else {
                     hideControl(authNodejtOrRmHistoryComposite, true);
                     hideControl(authKeytabComposite, true);
+                    if (maprTBtn.getSelection()) {
+                        hideControl(maprTPasswordCompposite, false);
+                        maprTPCDCompposite.layout();
+                        maprTPCDCompposite.getParent().layout();
+                    }
                 }
                 authCommonComposite.layout();
                 authCommonComposite.getParent().layout();
@@ -1063,6 +1089,11 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             if (maprTBtn.getSelection()) {
                 hideControl(maprTPCDCompposite, false);
                 hideControl(maprTSetComposite, false);
+                if (kerberosBtn.getSelection()) {
+                    hideControl(maprTPasswordCompposite, true);
+                    maprTPCDCompposite.layout();
+                    maprTPCDCompposite.getParent().layout();
+                }
             } else {
                 hideControl(maprTPCDCompposite, true);
                 hideControl(maprTSetComposite, true);
