@@ -33,5 +33,5 @@ public interface INeo4jConstants {
 
     public final static String NEO4J_2_2_X = "NEO4J_2_2_X"; //$NON-NLS-1$
 
-    public final static String[] DBVERSIONS = { "NEO4J_1_X_X", "NEO4J_2_1_X", NEO4J_2_2_X };//$NON-NLS-1$//$NON-NLS-2$
+    public final static String[] DBVERSIONS = { "NEO4J_1_X_X", "NEO4J_2_1_X", NEO4J_2_2_X,"NEO4J_2_3_X","NEO4J_3_0_X" };//$NON-NLS-1$//$NON-NLS-2$
 }
