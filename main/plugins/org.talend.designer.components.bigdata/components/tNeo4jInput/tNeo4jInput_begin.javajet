@@ -40,7 +40,7 @@
             boolean setUsername = ElementParameterParser.getBooleanValue(node, "__SET_USERNAME__");
             String username = ElementParameterParser.getValue(node, "__USERNAME__");
             String passwordFieldName = "__PASSWORD__";
-            if ((setUsername) || ("NEO4J_2_2_X".equals(dbVersion))) {
+            if ((setUsername) || ((!"NEO4J_1_X_X".equals(dbVersion)) && (!"NEO4J_2_1_X".equals(dbVersion)))) {
                 %>
                 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
                 org.neo4j.graphdb.GraphDatabaseService databaseService_<%=cid%> = new org.neo4j.rest.graphdb.RestGraphDatabase(<%=serverUrl%>, <%=username%>, decryptedPassword_<%=cid%>);
@@ -76,9 +76,13 @@ if (databaseService_<%=cid%> instanceof org.neo4j.rest.graphdb.RestGraphDatabase
         %>
         org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>);
         <%
-    } else { // NEO4J_2_1_X or NEO4J_2_2_X
+    } else if (("NEO4J_2_1_X".equals(dbVersion)) || ("NEO4J_2_2_X".equals(dbVersion))) { // NEO4J_2_X before moving to spring framework
         %>
         org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>, org.neo4j.kernel.impl.util.StringLogger.SYSTEM);
+        <%
+    } else { // NEO4J_2_3 and more using spring framework
+        %>
+        org.neo4j.cypher.ExecutionEngine engine_<%=cid%> = new org.neo4j.cypher.ExecutionEngine(databaseService_<%=cid%>, org.neo4j.logging.FormattedLogProvider.toOutputStream(System.out));
         <%
     }
     %>
