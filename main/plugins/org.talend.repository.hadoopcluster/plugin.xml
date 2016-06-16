@@ -263,4 +263,16 @@
              id="HadoopClusterTokenCollector">
        </provider>
     </extension>
+    <extension
+          point="org.talend.core.migrationTask">
+       <projecttask
+             beforeLogon="false"
+             breaks="6.0.0"
+             class="org.talend.repository.hadoopcluster.migration.ChangeHadoopConfJarNameMigrationTask"
+             description="Reuse the old conf jars named like hadoop-conf-{ItemId}."
+             id="org.talend.repository.hadoopcluster.migration.ChangeHadoopConfJarNameMigrationTask"
+             name="ChangeHadoopConfJarNameMigrationTask"
+             version="6.2.1">
+       </projecttask>
+    </extension>
 </plugin>
