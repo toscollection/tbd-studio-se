@@ -908,7 +908,7 @@
                 description="Atlas lineage API"
                 id="ATLAS_HDP_2_4"
                 name="ATLAS_HDP_2_4"  >
-             <library id="talend-cloudera-navigator-api-6.1.0-SNAPSHOT-20160615" />
+             <library id="talend-lineage-api-0.1.0" />
              <library id="atlas-client-0.5-incubating" />
              <library id="atlas-typesystem-0.5-incubating" />
              <library id="json4s-native_2.10-3.2.11" />

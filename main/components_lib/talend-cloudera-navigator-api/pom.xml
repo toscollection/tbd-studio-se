@@ -10,11 +10,12 @@
 		<version>${talend.lib.version}</version>
 	</parent>
 
-	<artifactId>talend-cloudera-navigator-api</artifactId>
+	<artifactId>talend-lineage-api</artifactId>
 	<packaging>jar</packaging>
+	<version>0.1.0</version>
 
-	<name>talend-cloudera-navigator-api</name>
-	<description>Talend API for cloudera navigator.</description>
+	<name>talend-lineage-api</name>
+	<description>Talend BigData lineage API</description>
 	<url>http://www.talend.com</url>
 
 	<repositories>
@@ -27,16 +28,21 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
-		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 		<cloudera.navigator.version>1.0</cloudera.navigator.version>
 		<atlas.version>0.5-incubating</atlas.version>
 	</properties>
 
 	<dependencies>
+	<!-- Using Patched version of navigator-client & model that include HTTPS patch -->
 		<dependency>
-			<groupId>com.cloudera.navigator</groupId>
-			<artifactId>navigator-sdk-client</artifactId>
-			<version>${cloudera.navigator.version}</version>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>navigator-sdk-client-1.0-BETA20151126</artifactId>
+			<version>6.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>navigator-sdk-model-1.0-BETA20151126</artifactId>
+			<version>6.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.atlas</groupId>
@@ -66,7 +72,6 @@
 	</dependencies>
 
 	<build>
-		<finalName>${project.artifactId}-${project.version}-${timestamp}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
