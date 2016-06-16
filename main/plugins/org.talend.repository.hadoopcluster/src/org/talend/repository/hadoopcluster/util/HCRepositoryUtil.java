@@ -632,5 +632,28 @@ public class HCRepositoryUtil {
         if (defaultClouderaClientUrl != null) {
             connection.setClouderaNaviClientUrl(defaultClouderaClientUrl);
         }
+
+        String defaultMaprticket_Cluster = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.MAPRTICKET_CLUSTER.getName());
+        if (defaultMaprticket_Cluster != null) {
+            connection.setMaprTCluster(defaultMaprticket_Cluster);
+        }
+
+        String defaultMaprticket_Duration = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.MAPRTICKET_DURATION.getName());
+        if (defaultMaprticket_Duration != null) {
+            connection.setMaprTDuration(defaultMaprticket_Duration);
+        }
+
+        String defaultMapr_Home_Dir = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.MAPR_HOME_DIR.getName());
+        if (defaultMapr_Home_Dir != null) {
+            connection.setMaprTHomeDir(defaultMapr_Home_Dir);
+        }
+
+        String defaultHadoop_Login = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HADOOP_LOGIN.getName());
+        if (defaultHadoop_Login != null) {
+            connection.setMaprTHadoopLogin(defaultHadoop_Login);
+        }
+        connection.setPreloadAuthentification(true);
     }
 }
