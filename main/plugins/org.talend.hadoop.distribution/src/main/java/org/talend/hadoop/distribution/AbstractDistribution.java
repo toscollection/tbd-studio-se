@@ -217,4 +217,8 @@ public abstract class AbstractDistribution {
     public boolean doSupportSSLwithKerberos() {
         return false;
     }
+
+    public boolean doSupportAtlas() {
+        return false;
+    }
 }
