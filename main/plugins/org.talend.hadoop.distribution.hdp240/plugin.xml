@@ -932,6 +932,13 @@
              <library id="guice-4.0" />
              <library id="javax.inject-1.jar" />
              <library id="commons-lang3-3.4" />
+             <library id="hadoop-common-HDP_2_4" />
+             <library id="hadoop-annotations-HDP_2_4" />
+             <library id="jersey-client-1.9.jar" />
+             <library id="paranamer-2.3.jar"/>
+             <library id="commons-configuration-1.6.jar"/>
+             <library id="slf4j-api-1.7.10.jar"/>
+             <library id="slf4j-log4j12-1.7.10.jar"/>
         </libraryNeededGroup>
              
     </extension>
