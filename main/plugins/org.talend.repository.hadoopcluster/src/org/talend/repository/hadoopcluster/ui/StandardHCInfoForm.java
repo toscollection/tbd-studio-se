@@ -444,7 +444,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTPasswordCompposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         maprTPasswordText = new LabelledText(maprTPasswordCompposite,
-                Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD); //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.text.maprTPassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+        maprTPasswordText.getTextControl().setEchoChar('*');
 
         Composite maprTCDCompposite = new Composite(maprTPCDCompposite, SWT.NULL);
         GridLayout maprTCDComppositeLayout = new GridLayout(2, false);
@@ -783,25 +784,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (kerberosBtn.getSelection()) {
-                    hideControl(authNodejtOrRmHistoryComposite, false);
-                    hideControl(authKeytabComposite, false);
-                    if (maprTBtn.getSelection()) {
-                        hideControl(maprTPasswordCompposite, true);
-                        maprTPCDCompposite.layout();
-                        maprTPCDCompposite.getParent().layout();
-                    }
-                } else {
-                    hideControl(authNodejtOrRmHistoryComposite, true);
-                    hideControl(authKeytabComposite, true);
-                    if (maprTBtn.getSelection()) {
-                        hideControl(maprTPasswordCompposite, false);
-                        maprTPCDCompposite.layout();
-                        maprTPCDCompposite.getParent().layout();
-                    }
-                }
-                authCommonComposite.layout();
-                authCommonComposite.getParent().layout();
+                hideControl(authNodejtOrRmHistoryComposite, !kerberosBtn.getSelection());
+                hideControl(authKeytabComposite, !kerberosBtn.getSelection());
+                hideControl(maprTPasswordCompposite, kerberosBtn.getSelection() && maprTBtn.getSelection());
                 getConnection().setEnableKerberos(kerberosBtn.getSelection());
                 updateForm();
                 checkFieldsValue();
@@ -840,16 +825,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if (maprTBtn.getSelection()) {
-                    hideControl(maprTPCDCompposite, false);
-                    hideControl(maprTSetComposite, false);
-                } else {
-                    hideControl(maprTPCDCompposite, true);
-                    hideControl(maprTSetComposite, true);
-                }
-                authMaprTComposite.layout();
-                authMaprTComposite.getParent().layout();
-
+                hideControl(maprTPCDCompposite, !maprTBtn.getSelection());
+                hideControl(maprTSetComposite, !maprTBtn.getSelection());
                 getConnection().setEnableMaprT(maprTBtn.getSelection());
                 updateForm();
                 checkFieldsValue();
@@ -884,6 +861,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             @Override
             public void widgetSelected(SelectionEvent e) {
                 getConnection().setSetMaprTHomeDir(setMaprTHomeDirBtn.getSelection());
+                maprTHomeDirText.setText(getConnection().getMaprTHomeDir());
                 updateForm();
                 checkFieldsValue();
             }
@@ -901,6 +879,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             @Override
             public void widgetSelected(SelectionEvent e) {
                 getConnection().setSetHadoopLogin(setHadoopLoginBtn.getSelection());
+                maprTHadoopLoginText.setText(getConnection().getMaprTHadoopLogin());
                 updateForm();
                 checkFieldsValue();
             }
@@ -1089,11 +1068,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             if (maprTBtn.getSelection()) {
                 hideControl(maprTPCDCompposite, false);
                 hideControl(maprTSetComposite, false);
-                if (kerberosBtn.getSelection()) {
-                    hideControl(maprTPasswordCompposite, true);
-                    maprTPCDCompposite.layout();
-                    maprTPCDCompposite.getParent().layout();
-                }
+                hideControl(maprTPasswordCompposite, kerberosBtn.getSelection());
             } else {
                 hideControl(maprTPCDCompposite, true);
                 hideControl(maprTSetComposite, true);

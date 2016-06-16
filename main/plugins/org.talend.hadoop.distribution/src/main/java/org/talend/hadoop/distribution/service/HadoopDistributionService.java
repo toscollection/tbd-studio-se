@@ -88,6 +88,11 @@ public class HadoopDistributionService implements IHadoopDistributionService {
     }
 
     @Override
+    public IDistributionsManager getImpalaDistributionManager() {
+        return HadoopDistributionsHelper.IMPALA;
+    }
+
+    @Override
     public boolean doSupportService(IHDistributionVersion distributionVersion, String service) {
         return DistributionHelper.doSupportService(distributionVersion, service);
     }

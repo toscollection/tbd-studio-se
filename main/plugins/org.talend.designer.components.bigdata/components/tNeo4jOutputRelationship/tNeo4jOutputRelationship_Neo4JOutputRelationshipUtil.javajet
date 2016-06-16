@@ -97,17 +97,21 @@ class Neo4JOutputRelationshipUtil {
     public void getInserter() {
         %>
         org.neo4j.unsafe.batchinsert.BatchInserter inserter_<%=cid%> = null;
-        if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
-            <%
-            if ("NEO4J_1_X_X".equals(this.dbVersion)) {
-                %>
+        <%
+        if ("NEO4J_1_X_X".equals(this.dbVersion)) {
+            %>
+            if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
                 org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
                 storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
                 db_<%=cid%>.shutdown();
                 inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
-                <%
-            } else { // NEO4J_2_1_X or NEO4J_2_2_X
-               %>
+            } else {
+                throw new UnsupportedOperationException("Not supported yet");
+            }
+            <%
+        } else if (("NEO4J_2_1_X".equals(dbVersion)) || ("NEO4J_2_2_X".equals(dbVersion))) { // NEO4J_2_X before moving to spring framework
+           %>
+           if (databaseService_<%=cid%> instanceof org.neo4j.kernel.EmbeddedGraphDatabase) {
                if (!globalMap.containsKey("<%=dbConnectionName%>_inserter")) {
                    org.neo4j.kernel.EmbeddedGraphDatabase db_<%=cid%> = (org.neo4j.kernel.EmbeddedGraphDatabase) databaseService_<%=cid%>;
                    storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
@@ -118,12 +122,29 @@ class Neo4JOutputRelationshipUtil {
                } else {
                    inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbConnectionName%>_inserter");
                }
-               <%
+            } else {
+                throw new UnsupportedOperationException("Not supported yet");
             }
+            <%
+        } else { // NEO4J_2_3 and more using spring framework
             %>
-        } else {
-            throw new UnsupportedOperationException("Not supported yet");
+            if (databaseService_<%=cid%> instanceof org.neo4j.kernel.impl.factory.GraphDatabaseFacade) {
+                if (!globalMap.containsKey("<%=dbConnectionName%>_inserter")) {
+                    org.neo4j.kernel.impl.factory.GraphDatabaseFacade db_<%=cid%> = (org.neo4j.kernel.impl.factory.GraphDatabaseFacade) databaseService_<%=cid%>;
+                    storeDir_<%=cid%> = db_<%=cid%>.getStoreDir();
+                    db_<%=cid%>.shutdown();
+                    inserter_<%=cid%> = org.neo4j.unsafe.batchinsert.BatchInserters.inserter(db_<%=cid%>.getStoreDir(), importProperties_<%=cid%>);
+                    globalMap.put("<%=dbConnectionName%>_inserter", inserter_<%=cid%>);
+                    globalMap.put("<%=dbConnectionName%>_is_temporary_shutted_down", true);
+                } else {
+                    inserter_<%=cid%> = (org.neo4j.unsafe.batchinsert.BatchInserter) globalMap.get("<%=dbConnectionName%>_inserter");
+                }
+             } else {
+                 throw new UnsupportedOperationException("Not supported yet");
+             }
+             <%
         }
+        %>
         resourceMap.put("inserter_<%=cid%>", inserter_<%=cid%>);
         <%
     }

@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh570.test;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.talend.core.hadoop.EHadoopCategory;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
@@ -76,5 +77,10 @@ public class CDH570ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
     public void testHDFSWithKerberos() {
         String libsStr = "hadoop-common-2.6.0-cdh5.5.0.jar;hadoop-hdfs-2.6.0-cdh5.5.0.jar;hadoop-auth-2.6.0-cdh5.5.0.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;commons-cli-1.2.jar;commons-collections-3.2.1.jar;avro-1.7.6-cdh5.5.0.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-xc-1.8.8.jar;guava-12.0.1.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;log4j-1.2.17.jar;jersey-core-1.9.jar;htrace-core4-4.0.1-incubating.jar;servlet-api-2.5.jar;commons-io-2.4.jar;commons-codec-1.9.jar;hadoop-conf-kerberos.jar"; //$NON-NLS-1$
         doTestClassLoader(EHadoopCategory.HDFS.getName(), libsStr, "?USE_KRB"); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testImpala() {
+        Assert.fail("Not impl yet!");
     }
 }

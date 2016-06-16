@@ -26,6 +26,7 @@ import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
+import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -91,6 +92,13 @@ public class HadoopDistributionsHelper {
      * @link HiveComponent
      */
     public static final DistributionsManager HIVE = new DistributionsManager(HiveComponent.class.getName());
+
+    /**
+     * for Impala Distributions.
+     * 
+     * @link ImpalaComponent
+     */
+    public static final DistributionsManager IMPALA = new DistributionsManager(ImpalaComponent.class.getName());
 
     /**
      *
