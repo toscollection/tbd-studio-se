@@ -15,26 +15,43 @@ package org.talend.lineage.atlas;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.atlas.typesystem.Referenceable;
 import org.apache.atlas.typesystem.persistence.Id;
 import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Before;
 import org.junit.Test;
 
 public class AtlasLineageCreatorIT {
 
-    private static final String ENTITY_DESCRIPTION  = "Talend Component";
+    private static final String ENTITY_DESCRIPTION = "Talend Component";
 
-    private static final String ENTITY_LINK         = "http://www.talend.com/";
+    private static final String ENTITY_LINK        = "http://www.talend.com/";
 
-    private static final String ENDPOINT_URL        = "http://sandbox.hortonworks.com:21000/";
+    private static String       ENDPOINT_URL       = "http://localhost:21000/";
 
-    AtlasLineageCreator         atlasLineageCreator = new AtlasLineageCreator(ENDPOINT_URL);
+    private AtlasLineageCreator atlasLineageCreator;
+
+    @Before
+    public void setupTests() {
+        try {
+            Properties prop = new Properties();
+            ClassLoader loader = Thread.currentThread().getContextClassLoader();
+            InputStream stream = loader.getResourceAsStream("atlas.properties");
+            prop.load(stream);
+            ENDPOINT_URL = prop.getProperty("atlas.http.address");
+        } catch (Exception e) {
+            // Nothing
+        }
+        atlasLineageCreator = new AtlasLineageCreator(ENDPOINT_URL);
+    }
 
     private static Map<String, Object> createGenericMetadata() {
         final long id = System.currentTimeMillis();
