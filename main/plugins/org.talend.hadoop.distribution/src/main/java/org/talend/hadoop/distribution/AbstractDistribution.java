@@ -96,4 +96,8 @@ public abstract class AbstractDistribution {
     public boolean doSupportOldImportMode() {
         return true;
     }
+
+    public boolean doSupportParquetOutput() {
+        return false;
+    }
 }
