@@ -44,18 +44,19 @@ public class HadoopConfsUtilsTest {
         String expectedConfJarName = HadoopParameterUtil.getConfsJarDefaultName(hcConnectionItem.getProperty().getLabel());
         HadoopConfsUtils.removeFromDeployedCache(hcConnectionItem, expectedConfJarName);
 
-        // If parameter value of "createJarIfNotExist" is false will not deploy the jar. So will not be update the
-        // deployed cache.
+        // If parameter value of "createJarIfNotExist" is false will not deploy the jar. So will not update the
+        // deployed cache too.
         String confsJarName = HadoopConfsUtils.getConfsJarDefaultName(hcConnectionItem, false);
         assertEquals(expectedConfJarName, confsJarName);
         assertFalse(HadoopConfsUtils.containsInDeployedCache(hcConnectionItem, confsJarName));
 
         // Although parameter value of "createJarIfNotExist" is true, but "confFile" is null in HadoopClusterConnection
-        // still will not deploy the jar. Of course will not be update the deployed cache too.
+        // still will not deploy the jar. Of course will not update the deployed cache too.
         HadoopConfsUtils.getConfsJarDefaultName(hcConnectionItem);
         assertEquals(expectedConfJarName, confsJarName);
         assertFalse(HadoopConfsUtils.containsInDeployedCache(hcConnectionItem, confsJarName));
 
+        // Store conf jar file into HadoopClusterConnection.
         HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
         File testConfJarFile = File.createTempFile("testConf", "jar"); //$NON-NLS-1$ //$NON-NLS-2$
         testConfJarFile.deleteOnExit();
@@ -70,7 +71,7 @@ public class HadoopConfsUtilsTest {
                 isNeedToBeDeployed = true;
             }
         }
-        if (isNeedToBeDeployed) { // If need to be deploy then will deploy the jar and update the deployed cache.
+        if (isNeedToBeDeployed) { // If need to be deployed then will deploy the jar and update the deployed cache.
             assertTrue(HadoopConfsUtils.containsInDeployedCache(hcConnectionItem, confsJarName));
         } else { // Otherwise will not deploy the jar and update the deployed cache.
             assertFalse(HadoopConfsUtils.containsInDeployedCache(hcConnectionItem, confsJarName));
