@@ -221,4 +221,8 @@ public abstract class AbstractDistribution {
     public boolean doSupportAtlas() {
         return false;
     }
+
+    public boolean doSupportParquetOutput() {
+        return false;
+    }
 }
