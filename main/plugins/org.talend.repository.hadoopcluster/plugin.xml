@@ -260,4 +260,23 @@
              serviceId="IRepositoryContextUpdateService">
        </Service>
     </extension>
+    <extension
+          point="org.talend.core.runtime.tokenInfo_provider">
+       <provider
+             collector="org.talend.repository.hadoopcluster.token.HadoopClusterTokenCollector"
+             id="HadoopClusterTokenCollector">
+       </provider>
+    </extension>
+    <extension
+          point="org.talend.core.migrationTask">
+       <projecttask
+             beforeLogon="false"
+             breaks="6.0.0"
+             class="org.talend.repository.hadoopcluster.migration.AdaptDeprecatedHadoopVersionsMigrationTask"
+             description="Migrate deprecated hadoop versions to the default versons of their distributions respectively."
+             id="org.talend.repository.hadoopcluster.migration.AdaptDeprecatedHadoopVersionsMigrationTask"
+             name="AdaptDeprecatedHadoopVersionsMigrationTask"
+             version="6.1.2">
+       </projecttask>
+    </extension>
 </plugin>
