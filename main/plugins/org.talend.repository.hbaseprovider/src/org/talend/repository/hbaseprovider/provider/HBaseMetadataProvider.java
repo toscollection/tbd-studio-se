@@ -173,8 +173,10 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
             if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 
                 mapRTicketDuration = mapRTicketDuration.substring(0, mapRTicketDuration.length() - 1);
+                desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
+            } else if (StringUtils.isNumeric(mapRTicketDuration)) {
+                desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
             }
-            desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
         }
         Object mapRClientConfig = ReflectionUtils.newInstance(
                 "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$

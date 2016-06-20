@@ -102,8 +102,10 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
         if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
             if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 
                 mapRTicketDuration = mapRTicketDuration.substring(0, mapRTicketDuration.length() - 1);
+                desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
+            } else if (StringUtils.isNumeric(mapRTicketDuration)) {
+                desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
             }
-            desiredTicketDurInSecs = Long.parseLong(mapRTicketDuration);
         }
         try {
             Object mapRClientConfig = ReflectionUtils.newInstance(
