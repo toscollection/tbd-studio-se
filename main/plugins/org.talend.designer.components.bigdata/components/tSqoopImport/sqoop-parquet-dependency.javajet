@@ -22,7 +22,7 @@
 		parquetJarsToRegister.add("kite-hadoop-compatibility-");
 		parquetJarsToRegister.add("jackson-databind-");
 		parquetJarsToRegister.add("jackson-core-");
-		parquetJarsToRegister.add("parquet-avro-");
+		parquetJarsToRegister.add("parquet-");
 	
 		for (int j = 0; j < commandLine.length; j++) {
 			if(commandLine[j].contains("jar")) {

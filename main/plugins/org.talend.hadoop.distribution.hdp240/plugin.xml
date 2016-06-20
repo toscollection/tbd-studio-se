@@ -354,6 +354,34 @@
             name="avro-ipc-1.7.3.jar"
             mvn_uri="mvn:org.talend.libraries/avro-ipc-1.7.3/6.1.0">
         </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.hdp240"
+            id="kite-data-mapreduce-1.0.0"
+            name="kite-data-mapreduce-1.0.0.jar"
+            mvn_uri="mvn:org.talend.libraries/kite-data-mapreduce-1.0.0/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.hdp240"
+            id="kite-hadoop-compatibility-1.0.0"
+            name="kite-hadoop-compatibility-1.0.0.jar"
+            mvn_uri="mvn:org.talend.libraries/kite-hadoop-compatibility-1.0.0/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.hdp240"
+            id="kite-data-core-1.0.0"
+            name="kite-data-core-1.0.0.jar"
+            mvn_uri="mvn:org.talend.libraries/kite-data-core-1.0.0/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.hdp240"
+            id="parquet-avro-1.4.1"
+            name="parquet-avro-1.4.1.jar"
+            mvn_uri="mvn:org.talend.libraries/parquet-avro-1.4.1/6.1.0">
+        </libraryNeeded>
                                    
         <!-- Groups -->
         
@@ -939,6 +967,20 @@
              <library id="commons-configuration-1.6.jar"/>
              <library id="slf4j-api-1.7.10.jar"/>
              <library id="slf4j-log4j12-1.7.10.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Sqoop Parquet group -->
+        <libraryNeededGroup
+                description="Sqoop Parquet libraries for HDP 2.4"
+                id="SQOOP-PARQUET-LIB-HDP_2_4"
+                name="SQOOP-PARQUET-LIB-HDP_2_4">
+            <library id="kite-data-core-1.0.0.jar"/>
+            <library id="kite-data-mapreduce-1.0.0.jar"/>
+            <library id="kite-hadoop-compatibility-1.0.0.jar"/>
+            <library id="jackson-databind-2.2.3.jar"/>
+            <library id="jackson-core-2.2.3.jar"/>
+            <library id="parquet-hadoop-bundle-1.6.0.jar" />
+            <library id="parquet-avro-1.4.1.jar"/>
         </libraryNeededGroup>
              
     </extension>

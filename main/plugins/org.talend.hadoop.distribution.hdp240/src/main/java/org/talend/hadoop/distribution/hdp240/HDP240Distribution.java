@@ -386,4 +386,9 @@ public class HDP240Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportAtlas() {
         return true;
     }
+
+    @Override
+    public boolean doSupportParquetOutput() {
+        return true;
+    }
 }
