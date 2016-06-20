@@ -13,7 +13,6 @@
 package org.talend.repository.hadoopcluster.migration;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -23,6 +22,7 @@ import org.talend.core.GlobalServiceRegister;
 import org.talend.core.ILibraryManagerService;
 import org.talend.core.model.migration.AbstractItemMigrationTask;
 import org.talend.core.model.properties.Item;
+import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
 import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
@@ -60,8 +60,9 @@ public class ChangeHadoopConfJarNameMigrationTask extends AbstractItemMigrationT
                 if (retrieved && confJarFile.exists()) {
                     try {
                         connection.setConfFile(FileUtils.readFileToByteArray(confJarFile));
+                        ProxyRepositoryFactory.getInstance().save(hcItem, true);
                         return ExecutionResult.SUCCESS_WITH_ALERT;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         ExceptionHandler.process(e);
                         return ExecutionResult.FAILURE;
                     }
