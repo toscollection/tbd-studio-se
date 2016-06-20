@@ -272,7 +272,7 @@
              description="Reuse the old conf jars named like hadoop-conf-{ItemId}."
              id="org.talend.repository.hadoopcluster.migration.ChangeHadoopConfJarNameMigrationTask"
              name="ChangeHadoopConfJarNameMigrationTask"
-             version="6.2.1">
+             version="6.1.2">
        </projecttask>
     </extension>
 </plugin>
