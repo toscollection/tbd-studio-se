@@ -274,5 +274,14 @@
              name="ChangeHadoopConfJarNameMigrationTask"
              version="6.1.2">
        </projecttask>
+       <projecttask
+             beforeLogon="false"
+             breaks="6.0.0"
+             class="org.talend.repository.hadoopcluster.migration.AdaptDeprecatedHadoopVersionsMigrationTask"
+             description="Migrate deprecated hadoop versions to the default versons of their distributions respectively."
+             id="org.talend.repository.hadoopcluster.migration.AdaptDeprecatedHadoopVersionsMigrationTask"
+             name="AdaptDeprecatedHadoopVersionsMigrationTask"
+             version="6.1.2">
+       </projecttask>
     </extension>
 </plugin>
