@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +40,6 @@ import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
-import org.talend.core.hadoop.version.EHadoopVersion4Drivers;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
@@ -261,14 +259,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         jobHistoryPrincipalText.setReadOnly(readOnly);
         userNameText.setReadOnly(readOnly);
         groupText.setReadOnly(readOnly);
-
-        kerberosBtn.setEnabled(!readOnly);
-        namenodePrincipalText.setReadOnly(readOnly);
-        jtOrRmPrincipalText.setReadOnly(readOnly);
-        jobHistoryPrincipalText.setReadOnly(readOnly);
-        userNameText.setReadOnly(readOnly);
-        groupText.setReadOnly(readOnly);
-
         maprTBtn.setEnabled(!readOnly);
         maprTPasswordText.setReadOnly(readOnly);
         maprTClusterText.setReadOnly(readOnly);
@@ -293,7 +283,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         boolean isKerberosEditable = kerberosBtn.isEnabled() && kerberosBtn.getSelection();
         namenodePrincipalText.setEditable(isKerberosEditable);
         jtOrRmPrincipalText.setEditable(isKerberosEditable);
-        jobHistoryPrincipalText.setEditable(isKerberosEditable);
+        jobHistoryPrincipalText.setEditable(isEditable && isJobHistoryPrincipalEditable());
         userNameText.setEditable(isEditable && !kerberosBtn.getSelection());
         groupText.setEditable(isEditable && (isCurrentHadoopVersionSupportGroup() || isCustomUnsupportHasGroup()));
         keytabBtn.setEnabled(isEditable && kerberosBtn.getSelection());
@@ -1001,7 +991,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     kerberosBtn.setEnabled(true);
                     namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
                     jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
-                    jobHistoryPrincipalText.setEditable(namenodePrincipalText.getEditable());
+                    jobHistoryPrincipalText.setEditable(isJobHistoryPrincipalEditable());
                     keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
                     keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
@@ -1050,8 +1040,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             kerberosBtn.setEnabled(isCurrentHadoopVersionSupportSecurity());
             namenodePrincipalText.setEditable(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             jtOrRmPrincipalText.setEditable(namenodePrincipalText.getEditable());
-            jobHistoryPrincipalText.setEditable(namenodePrincipalText.getEditable()
-                    && isCurrentHadoopVersionSupportJobHistoryPrincipal());
+            jobHistoryPrincipalText.setEditable(isJobHistoryPrincipalEditable());
             keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
@@ -1106,47 +1095,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         authCommonComposite.getParent().layout();
     }
 
-    /**
-     * is current hadoop version support JobHistoryPrincipal
-     * 
-     * @return
-     */
-    protected boolean isCurrentHadoopVersionSupportJobHistoryPrincipal() {
-        if (hadoopDistribution == null || hadoopVersison == null) {
-            return false;
-        }
-        boolean isSupport = false;
-        // this strategy is based on tMRConfiguration_java.xml, Parameter: JOBHISTORY_PRINCIPAL
-        if (hadoopVersison.version != null
-                && (hadoopVersison.version.equals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_1.getVersionValue()) || hadoopVersison.version
-                        .equals(EHadoopVersion4Drivers.MICROSOFT_HD_INSIGHT_3_2.getVersionValue()))) {
-            return false;
-        } else {
-            if (hadoopDistribution.useCustom()) {
-                return true;
-            } else {
-                List<String> supportVersions = new ArrayList<String>();
+    private boolean isJobHistoryPrincipalEditable() {
+        return isCurrentHadoopVersionSupportJobHistoryPrincipal()
+                && getConnection().isEnableKerberos()
+                && (!hadoopDistribution.useCustom() || hadoopDistribution.useCustom() && isCustomUnsupportHasSecurity()
+                        && getConnection().isUseYarn());
+    }
 
-                supportVersions.add(EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.PIVOTAL_HD_2_0.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.HDP_2_0.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.HDP_2_1.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.HDP_2_2.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.HDP_2_3.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.CLOUDERA_CDH4_YARN.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.CLOUDERA_CDH5.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.CLOUDERA_CDH5_1.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.CLOUDERA_CDH5_4.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.CLOUDERA_CDH5_5.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.MAPR401.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.MAPR500.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.APACHE_2_4_0_EMR.getVersionValue());
-                supportVersions.add(EHadoopVersion4Drivers.EMR_4_0_0.getVersionValue());
-
-                isSupport = supportVersions.contains(hadoopVersison.version);
-            }
-        }
-        return isSupport;
+    private boolean isCurrentHadoopVersionSupportJobHistoryPrincipal() {
+        return isCurrentHadoopVersionSupportSecurity() && (isCurrentHadoopVersionSupportYarn() || hadoopDistribution.useCustom());
     }
 
     private DistributionBean getDistribution() {
@@ -1199,7 +1156,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     }
 
     private boolean isCurrentHadoopVersionSupportYarn() {
-
         boolean supportYarn = false;
         final DistributionVersion distributionVersion = getDistributionVersion();
         if (distributionVersion != null && distributionVersion.hadoopComponent != null) {
