@@ -13,7 +13,6 @@
 package org.talend.designer.hdfsbrowse.hadoop.service.check;
 
 import java.net.MalformedURLException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -91,13 +90,19 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
 
     protected void setMaprTicketConfig(HadoopServiceProperties serviceProperties, ClassLoader classLoader, boolean useKerberos)
             throws Exception {
-        System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
-        System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
-        System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
         String mapRTicketUsername = serviceProperties.getUserName();
         String mapRTicketPassword = serviceProperties.getMaprTPassword();
         String mapRTicketCluster = serviceProperties.getMaprTCluster();
         String mapRTicketDuration = serviceProperties.getMaprTDuration();
+        boolean setMapRHomeDir = serviceProperties.isSetMaprTHomeDir();
+        String mapRHomeDir = serviceProperties.getMaprTHomeDir();
+        boolean setMapRHadoopLogin = serviceProperties.isSetHadoopLogin();
+
+        String mapRHadoopLogin = serviceProperties.getMaprTHomeDir();
+        System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("mapr.home.dir", setMapRHomeDir ? mapRHomeDir : "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+
         Long desiredTicketDurInSecs = 86400L;
         if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
             if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 
@@ -115,14 +120,18 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
                 ReflectionUtils.invokeMethod(mapRClientConfig,
                         "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
             } else {
-                ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+                if (setMapRHadoopLogin) {
+                    System.setProperty("hadoop.login", mapRHadoopLogin);//$NON-NLS-1$
+                } else {
+                    ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+                }
                 ReflectionUtils
                         .invokeMethod(
                                 mapRClientConfig,
                                 "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, mapRTicketPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
             }
         } catch (Exception e) {
-            throw new SQLException(e);
+            e.printStackTrace();
         }
     }
 }

@@ -178,20 +178,24 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                 desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
             }
         }
-        Object mapRClientConfig = ReflectionUtils.newInstance(
-                "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
-        if (useKerberos) {
-            System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
-            ReflectionUtils
-                    .invokeMethod(
-                            mapRClientConfig,
-                            "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), desiredTicketDurInSecs }); //$NON-NLS-1$
-        } else {
-            ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
-            ReflectionUtils
-                    .invokeMethod(
-                            mapRClientConfig,
-                            "getMapRCredentialsViaPassword", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketUsername), ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketPassword), desiredTicketDurInSecs }); //$NON-NLS-1$
+        try {
+            Object mapRClientConfig = ReflectionUtils.newInstance(
+                    "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+            if (useKerberos) {
+                System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+                ReflectionUtils
+                        .invokeMethod(
+                                mapRClientConfig,
+                                "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), desiredTicketDurInSecs }); //$NON-NLS-1$
+            } else {
+                ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+                ReflectionUtils
+                        .invokeMethod(
+                                mapRClientConfig,
+                                "getMapRCredentialsViaPassword", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketUsername), ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketPassword), desiredTicketDurInSecs }); //$NON-NLS-1$
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
