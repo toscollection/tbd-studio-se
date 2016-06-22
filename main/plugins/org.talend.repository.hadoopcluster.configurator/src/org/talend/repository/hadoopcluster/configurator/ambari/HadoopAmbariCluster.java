@@ -43,6 +43,8 @@ public class HadoopAmbariCluster implements HadoopCluster {
     ClusterResource cluster;
 
     ServicesResource services;
+    
+    List<String> blacklistParams;
 
     // if the server support service_config_versions
     boolean supportSCV = true;
@@ -98,10 +100,10 @@ public class HadoopAmbariCluster implements HadoopCluster {
             }
             if (hcatalogConfig != null) {
                 configs.remove(hcatalogConfig);
-                servicesMapping.put(HadoopHostedService.WEBHCAT, new HadoopAmbariClusterService(Arrays.asList(hcatalogConfig)));
+                servicesMapping.put(HadoopHostedService.WEBHCAT, new HadoopAmbariClusterService(Arrays.asList(hcatalogConfig), blacklistParams));
             }
         }
-        servicesMapping.put(service, new HadoopAmbariClusterService(configs));
+        servicesMapping.put(service, new HadoopAmbariClusterService(configs, blacklistParams));
         return servicesMapping;
     }
 
@@ -119,7 +121,7 @@ public class HadoopAmbariCluster implements HadoopCluster {
         Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<>();
         for (String serviceName : servicesName) {
             servicesMapping.put(HadoopHostedService.fromString(serviceName), new HadoopAmbariClusterService(
-                    getConfigFiles(actualConfigVersion.get(serviceName))));
+                    getConfigFiles(actualConfigVersion.get(serviceName)), blacklistParams));
         }
         return servicesMapping;
     }
@@ -180,5 +182,10 @@ public class HadoopAmbariCluster implements HadoopCluster {
         }
         return configFiles;
     }
+
+	@Override
+	public void setBlacklistParams(List<String> names) {
+		blacklistParams = names;
+	}
 
 }

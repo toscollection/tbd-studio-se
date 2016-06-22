@@ -13,6 +13,7 @@
 package org.talend.repository.hadoopcluster.configurator.cloudera;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.talend.repository.hadoopcluster.configurator.HadoopCluster;
@@ -31,6 +32,8 @@ import com.cloudera.api.v3.ServicesResourceV3;
 public class HadoopCMCluster implements HadoopCluster {
 
     ServicesResourceV3 cluster;
+    
+    List<String> blacklistParams;
 
     /**
      * DOC bchen HadoopCMCluster constructor comment.
@@ -50,7 +53,7 @@ public class HadoopCMCluster implements HadoopCluster {
         Map<HadoopHostedService, HadoopClusterService> servicesMapping = new HashMap<HadoopHostedService, HadoopClusterService>();
         for (ApiService service : services.getServices()) {
             if (HadoopHostedService.isSupport(service.getType())) {
-                HadoopCMClusterService clusterService = new HadoopCMClusterService(service.getName(), cluster);
+                HadoopCMClusterService clusterService = new HadoopCMClusterService(service.getName(), cluster, blacklistParams);
                 if (clusterService.hasConfigurations()) {
                     servicesMapping.put(HadoopHostedService.fromString(service.getType()), clusterService);
                 }
@@ -58,4 +61,9 @@ public class HadoopCMCluster implements HadoopCluster {
         }
         return servicesMapping;
     }
+
+	@Override
+	public void setBlacklistParams(List<String> names) {
+		blacklistParams = names;
+	}
 }

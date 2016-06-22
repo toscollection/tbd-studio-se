@@ -21,8 +21,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -54,16 +59,16 @@ public class HadoopCMClusterService implements HadoopClusterService {
      * 
      * @param cluster
      */
-    public HadoopCMClusterService(String serviceName, ServicesResourceV3 cluster) {
+    public HadoopCMClusterService(String serviceName, ServicesResourceV3 cluster, List<String> blacklistParams) {
         this.serviceName = serviceName;
         this.cluster = cluster;
-        init();
+        init(blacklistParams);
     }
 
     /**
      * DOC bchen Comment method "init".
      */
-    private void init() {
+    private void init(List<String> blacklistParams) {
         confs = new HashMap<>();
         InputStreamDataSource clientConfig = null;
         try {
@@ -106,6 +111,18 @@ public class HadoopCMClusterService implements HadoopClusterService {
                 }
                 Configuration conf = new Configuration(false);
                 conf.addResource(new Path(file.toURI()));
+                if(blacklistParams != null && blacklistParams.size() > 0){
+                	Configuration filteredConf = new Configuration(false);
+                	Iterator<Entry<String, String>> iterator = conf.iterator();
+                	while(iterator.hasNext()){
+                		Entry<String, String> next = iterator.next();
+                		if(blacklistParams.contains(next.getKey())){
+                			continue;
+                		}
+                		filteredConf.set(next.getKey(), next.getValue());
+                	}
+                	conf = filteredConf;
+                }
                 confs.put(configFile, conf);
 
             }

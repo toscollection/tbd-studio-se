@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.configurator;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +21,8 @@ import java.util.Map;
  */
 public interface HadoopCluster {
 
+	public void setBlacklistParams(List<String> names);
+	
     public Map<HadoopHostedService, HadoopClusterService> getHostedServices();
 
 }
