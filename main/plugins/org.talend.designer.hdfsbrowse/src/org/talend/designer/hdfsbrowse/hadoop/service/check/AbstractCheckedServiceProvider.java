@@ -112,26 +112,22 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
                 desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
             }
         }
-        try {
-            Object mapRClientConfig = ReflectionUtils.newInstance(
-                    "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
-            if (useKerberos) {
-                System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$  
-                ReflectionUtils.invokeMethod(mapRClientConfig,
-                        "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
+        Object mapRClientConfig = ReflectionUtils.newInstance(
+                "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+        if (useKerberos) {
+            System.setProperty("hadoop.login", "kerberos");//$NON-NLS-1$ //$NON-NLS-2$  
+            ReflectionUtils.invokeMethod(mapRClientConfig,
+                    "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
+        } else {
+            if (setMapRHadoopLogin) {
+                System.setProperty("hadoop.login", mapRHadoopLogin);//$NON-NLS-1$
             } else {
-                if (setMapRHadoopLogin) {
-                    System.setProperty("hadoop.login", mapRHadoopLogin);//$NON-NLS-1$
-                } else {
-                    ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
-                }
-                ReflectionUtils
-                        .invokeMethod(
-                                mapRClientConfig,
-                                "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, mapRTicketPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
+                ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            ReflectionUtils
+                    .invokeMethod(
+                            mapRClientConfig,
+                            "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, mapRTicketPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
         }
     }
 }
