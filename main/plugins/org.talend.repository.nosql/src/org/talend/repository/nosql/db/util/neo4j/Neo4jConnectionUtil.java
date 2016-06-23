@@ -84,6 +84,8 @@ public class Neo4jConnectionUtil {
     public static boolean isNeedAuthorization(String neo4jVersion) {
         if (INeo4jConstants.NEO4J_2_2_X.equals(neo4jVersion)) {
             return true;
+        }if (INeo4jConstants.NEO4J_2_3_X.equals(neo4jVersion)) {
+            return true;
         } else {
             return false;
         }

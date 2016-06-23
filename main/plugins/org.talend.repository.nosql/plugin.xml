@@ -163,7 +163,7 @@
             dbDNDProvider="org.talend.repository.nosql.db.provider.neo4j.Neo4jDNDProvider"
             dbMetadataProvider="org.talend.repository.nosql.db.provider.neo4j.Neo4jMetadataProvider"
             dbType="NEO4J"
-            dbVersions="NEO4J_3_0_X;NEO4J_2_3_X;NEO4J_2_2_X;NEO4J_2_1_X;NEO4J_1_X_X"
+            dbVersions="NEO4J_2_3_X;NEO4J_2_2_X;NEO4J_2_1_X;NEO4J_1_X_X"
             dbWizPageProvider="org.talend.repository.nosql.db.provider.neo4j.Neo4jWizardPageProvider"
             description="Neo4j">
       </factory>
@@ -219,12 +219,8 @@
             libraries="netty-common-4.0.33.Final.jar;netty-transport-4.0.33.Final.jar;cassandra-driver-core-3.0.0.jar;guava-16.0.1.jar;slf4j-api-1.7.7.jar;metrics-core-3.1.2.jar;netty-buffer-4.0.33.Final.jar;netty-codec-4.0.33.Final.jar;netty-handler-4.0.33.Final.jar;">
       </classloader>
       <classloader
-            index="NOSQL:NEO4J:NEO4J_3_0_X"
-             libraries="neo4j-kernel-2.3.4.jar;neo4j-logging-2.3.4.jar;neo4j-unsafe-2.3.4.jar;neo4j-primitive-collections-2.3.4.jar;neo4j-function-2.3.4.jar;neo4j-cypher-frontend-2.3-2.3.4.jar;neo4j-io-2.3.4.jar;lucene-core-3.6.2.jar;neo4j-cypher-compiler-1.9_2.11-2.0.5.jar;neo4j-cypher-compiler-2.2_2.11-2.2.9.jar;neo4j-cypher-compiler-2.3-2.3.4.jar;neo4j-graph-algo-2.3.4.jar;neo4j-graph-matching-2.3.4.jar;neo4j-lucene-index-2.3.4.jar;concurrentlinkedhashmap-lru-1.4.2.jar;scala-library-2.11.7.jar;neo4j-cypher-2.3.4.jar;parboiled-scala_2.11-1.1.7.jar;parboiled-core-1.1.7.jar;spring-data-neo4j-rest-3.4.4.RELEASE.jar;spring-data-neo4j-3.4.4.RELEASE.jar;geronimo-jta_1.1_spec-1.1.1.jar;javax.ws.rs-api-2.0-m10.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;slf4j-api-1.7.12.jar;jackson-mapper-asl-1.9.7.jar;jackson-jaxrs-1.9.7.jar;jackson-core-asl-1.9.7.jar;commons-lang3-3.3.2.jar">
-      </classloader>   
-      <classloader
             index="NOSQL:NEO4J:NEO4J_2_3_X"
-            libraries="neo4j-kernel-2.3.4.jar;neo4j-logging-2.3.4.jar;neo4j-unsafe-2.3.4.jar;neo4j-primitive-collections-2.3.4.jar;neo4j-function-2.3.4.jar;neo4j-cypher-frontend-2.3-2.3.4.jar;neo4j-io-2.3.4.jar;lucene-core-3.6.2.jar;neo4j-cypher-compiler-1.9_2.11-2.0.5.jar;neo4j-cypher-compiler-2.2_2.11-2.2.9.jar;neo4j-cypher-compiler-2.3-2.3.4.jar;neo4j-graph-algo-2.3.4.jar;neo4j-graph-matching-2.3.4.jar;neo4j-lucene-index-2.3.4.jar;concurrentlinkedhashmap-lru-1.4.2.jar;scala-library-2.11.7.jar;neo4j-cypher-2.3.4.jar;parboiled-scala_2.11-1.1.7.jar;parboiled-core-1.1.7.jar;spring-data-neo4j-rest-3.4.4.RELEASE.jar;spring-data-neo4j-3.4.4.RELEASE.jar;geronimo-jta_1.1_spec-1.1.1.jar;javax.ws.rs-api-2.0-m10.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;slf4j-api-1.7.12.jar;jackson-mapper-asl-1.9.7.jar;jackson-jaxrs-1.9.7.jar;jackson-core-asl-1.9.7.jar;commons-lang3-3.3.2.jar">
+            libraries="jsr311-api-1.1.2.r612.jar;neo4j-kernel-2.3.4.jar;neo4j-logging-2.3.4.jar;neo4j-unsafe-2.3.4.jar;neo4j-primitive-collections-2.3.4.jar;neo4j-function-2.3.4.jar;neo4j-cypher-frontend-2.3-2.3.4.jar;neo4j-io-2.3.4.jar;lucene-core-3.6.2.jar;neo4j-cypher-compiler-1.9_2.11-2.0.5.jar;neo4j-cypher-compiler-2.2_2.11-2.2.9.jar;neo4j-cypher-compiler-2.3-2.3.4.jar;neo4j-graph-algo-2.3.4.jar;neo4j-graph-matching-2.3.4.jar;neo4j-lucene-index-2.3.4.jar;concurrentlinkedhashmap-lru-1.4.2.jar;scala-library-2.11.7.jar;neo4j-cypher-2.3.4.jar;parboiled-scala_2.11-1.1.7.jar;parboiled-core-1.1.7.jar;spring-data-neo4j-rest-3.4.4.RELEASE.jar;spring-data-neo4j-3.4.4.RELEASE.jar;geronimo-jta_1.1_spec-1.1.1.jar;javax.ws.rs-api-2.0-m10.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;slf4j-api-1.7.12.jar;jackson-mapper-asl-1.9.7.jar;jackson-jaxrs-1.9.7.jar;jackson-core-asl-1.9.7.jar;commons-lang3-3.3.2.jar">
       </classloader>  
       <classloader
             index="NOSQL:NEO4J:NEO4J_2_2_X"
