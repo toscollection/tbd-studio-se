@@ -490,10 +490,15 @@
             <library id="jackson-core-asl-1.9.13.jar"/>
             <library id="jackson-mapper-asl-1.9.13.jar"/>
             <library id="log4j-1.2.17.jar"/>
-            <library id="netty-all-4.0.23.Final.jar"/>
             <library id="protobuf-java-2.5.0.jar"/>
             <library id="slf4j-api-1.7.10.jar"/>
+            <library id="slf4j-log4j12-1.7.10.jar"/>
             <library id="zookeeper-HDP_2_4"/>
+            <library id="hadoop-hdfs-HDP_2_4"/>
+            <library id="servlet-api-2.5.jar"/>
+            <library id="commons-io-2.4.jar"/>
+            <library id="commons-cli-1.2.jar"/>
+            <library id="netty-all-4.0.23.Final.jar"/>
         </libraryNeededGroup>
         
         <!-- Pig group -->
