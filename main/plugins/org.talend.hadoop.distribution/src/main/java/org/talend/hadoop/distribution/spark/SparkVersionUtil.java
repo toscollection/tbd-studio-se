@@ -149,7 +149,8 @@ public class SparkVersionUtil {
      * 
      * @param node Either a Spark configuration node direction (which is the most effective), or any node in a spark
      * process that can be used to find a Spark configuration node.
-     * @return the {@link ESparkVersion} corresponding to the different parameters.
+     * @return A spark version if one can be found from the node, or the process associated with the node. Otherwise
+     * null.
      */
     public static ESparkVersion getSparkVersion(INode node) {
         // Try to get the version directly from the node.
@@ -164,50 +165,26 @@ public class SparkVersionUtil {
 
     /**
      * This method returns the {@link ESparkVersion} depending on some parameters value coming from the
-     * tSparkConfiguration.
+     * tSparkConfiguration in a job.
      * 
-     * @param sparkConfig Either a Spark configuration node direction (which is the most effective), or any node in a
-     * spark process that can be used to find a Spark configuration node.
-     * @return the {@link ESparkVersion} corresponding to the different parameters.
+     * @param process a job that contains spark configuration information.
+     * @return A spark version if one can be found from the process. Otherwise null.
      */
     public static ESparkVersion getSparkVersion(IProcess process) {
+        if (process == null) {
+            return null;
+        }
+
         // Try to get the version directly from the node.
         ESparkVersion sparkVersion = getSparkVersion((IElement) process);
         if (sparkVersion != null) {
             return sparkVersion;
         }
 
-        IElementParameter sparkLocalModeParameter = process.getElementParameter("SPARK_LOCAL_MODE"); //$NON-NLS-1$
-        IElementParameter sparkLocalVersionParameter = process.getElementParameter("SPARK_LOCAL_VERSION"); //$NON-NLS-1$
-        IElementParameter sparkCustomVersionParameter = process.getElementParameter("SPARK_API_VERSION"); //$NON-NLS-1$
-        IElementParameter distributionParameter = process.getElementParameter("DISTRIBUTION"); //$NON-NLS-1$
-        IElementParameter versionParameter = process.getElementParameter("SPARK_VERSION"); //$NON-NLS-1$
-        if (sparkLocalModeParameter != null && sparkLocalVersionParameter != null && sparkCustomVersionParameter != null
-                && distributionParameter != null && versionParameter != null) {
-            boolean isLocalMode = (Boolean) sparkLocalModeParameter.getValue();
-            String sparkLocalVersion = (String) sparkLocalVersionParameter.getValue();
-            String sparkCustomVersion = (String) sparkCustomVersionParameter.getValue();
-            String distribution = (String) distributionParameter.getValue();
-            String version = (String) versionParameter.getValue();
-
-            SparkComponent sparkDistrib = null;
-            try {
-                sparkDistrib = (SparkComponent) DistributionFactory.buildDistribution(distribution, version);
-            } catch (java.lang.Exception e) {
-                e.printStackTrace();
-            }
-
-            return getSparkVersion(isLocalMode, sparkLocalVersion, distribution, sparkCustomVersion, sparkDistrib);
-        }
-
         // Try to get the version from any compatible node in the process.
-        try {
-            List<? extends INode> sparkConfigs = process.getNodesOfType("tSparkConfiguration"); //$NON-NLS-1$
-            if (sparkConfigs != null && sparkConfigs.size() > 0) {
-                return getSparkVersion(sparkConfigs.get(0));
-            }
-        } catch (NullPointerException npe) {
-            return null;
+        List<? extends INode> sparkConfigs = process.getNodesOfType("tSparkConfiguration"); //$NON-NLS-1$
+        if (sparkConfigs != null && sparkConfigs.size() > 0) {
+            return getSparkVersion(sparkConfigs.get(0));
         }
         return null;
     }
