@@ -14,6 +14,8 @@ package org.talend.repository.hadoopcluster.conf;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +29,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
@@ -41,10 +50,13 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
 
     private Map<String, Map<String, String>> confsMap;
 
+    private List<String> filterProps = new ArrayList<>();
+
     public RetrieveLocalConfsService(String confsDirPath) {
         this.confsDirPath = confsDirPath;
     }
 
+    @Override
     public Map<String, Map<String, String>> getConfsMap() throws MalformedURLException {
         if (confsMap != null) {
             return confsMap;
@@ -82,6 +94,9 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
         Iterator<Entry<String, String>> confsIter = configuration.iterator();
         while (confsIter.hasNext()) {
             Entry<String, String> confsEntry = confsIter.next();
+            if (filterProps != null && filterProps.contains(confsEntry.getKey())) {
+                continue;
+            }
             cMap.put(confsEntry.getKey(), confsEntry.getValue());
         }
         return cMap;
@@ -128,9 +143,71 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
                 }
             };
             FilesUtils.copyFolder(sourceFolder, targetFolder, true, null, sourceFileFilter, true);
+            applyFilterInConfFile(targetFolder, filterProps);
             return targetFolderPath;
         }
         return null;
+    }
+
+    @Override
+    public void applyFilter(List<String> filterProperties) {
+        filterProps = filterProperties;
+    }
+
+    @SuppressWarnings("rawtypes")
+    private void applyFilterInConfFile(File confFile, List<String> filterProperties) {
+        if (confFile == null || filterProperties == null || filterProperties.size() == 0) {
+            return;
+        }
+        if (confFile.isDirectory()) {
+            File[] confFiles = confFile.listFiles();
+            for (File file : confFiles) {
+                applyFilterInConfFile(file, filterProperties);
+            }
+        }
+        boolean modified = false;
+        try {
+            Document doc = readConfFile(confFile);
+            List selectNodes = doc.selectNodes("/configuration/property"); //$NON-NLS-1$
+            Iterator nodesIter = selectNodes.iterator();
+            while (nodesIter.hasNext()) {
+                Object node = nodesIter.next();
+                if (!(node instanceof Element)) {
+                    continue;
+                }
+                Element propertyElement = (Element) node;
+                Iterator nameIter = propertyElement.elementIterator("name"); //$NON-NLS-1$
+                while (nameIter.hasNext()) {
+                    Object nameNode = nameIter.next();
+                    if (!(nameNode instanceof Element)) {
+                        continue;
+                    }
+                    Element nameElement = (Element) nameNode;
+                    if (filterProperties.contains(nameElement.getText())) {
+                        propertyElement.getParent().remove(propertyElement);
+                        modified = true;
+                    }
+                }
+            }
+            if (modified) {
+                writeConfFile(confFile, doc);
+            }
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+    }
+
+    private void writeConfFile(File file, Document doc) throws IOException {
+        OutputFormat format = OutputFormat.createPrettyPrint();
+        XMLWriter writer = new XMLWriter(new FileWriter(file), format);
+        writer.write(doc);
+        writer.close();
+    }
+
+    public Document readConfFile(File file) throws MalformedURLException, DocumentException {
+        SAXReader reader = new SAXReader();
+        Document document = reader.read(file);
+        return document;
     }
 
 }

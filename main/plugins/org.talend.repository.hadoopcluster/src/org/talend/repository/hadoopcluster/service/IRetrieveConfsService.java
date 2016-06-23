@@ -34,4 +34,6 @@ public interface IRetrieveConfsService {
 
     public String exportConfs(List<String> services) throws Exception;
 
+    public void applyFilter(List<String> filterProperties);
+
 }

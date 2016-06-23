@@ -74,6 +74,7 @@ public class HadoopImportConfsWizard extends Wizard {
             final IRetrieveConfsService confsService = currentPage.getConfsService();
             try {
                 if (confsService != null) {
+                    currentPage.applyFilter();
                     List<String> selectedServices = currentPage.getSelectedServices();
                     final String confsDir = confsService.exportConfs(selectedServices);
                     if (confsDir != null) {
