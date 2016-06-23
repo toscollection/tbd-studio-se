@@ -14,8 +14,6 @@ package org.talend.repository.hadoopcluster.conf;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,12 +28,6 @@ import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.SAXReader;
-import org.dom4j.io.XMLWriter;
-import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
@@ -154,7 +146,6 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
         filterProps = filterProperties;
     }
 
-    @SuppressWarnings("rawtypes")
     private void applyFilterInConfFile(File confFile, List<String> filterProperties) {
         if (confFile == null || filterProperties == null || filterProperties.size() == 0) {
             return;
@@ -166,48 +157,16 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
             }
         }
         boolean modified = false;
-        try {
-            Document doc = readConfFile(confFile);
-            List selectNodes = doc.selectNodes("/configuration/property"); //$NON-NLS-1$
-            Iterator nodesIter = selectNodes.iterator();
-            while (nodesIter.hasNext()) {
-                Object node = nodesIter.next();
-                if (!(node instanceof Element)) {
-                    continue;
-                }
-                Element propertyElement = (Element) node;
-                Iterator nameIter = propertyElement.elementIterator("name"); //$NON-NLS-1$
-                while (nameIter.hasNext()) {
-                    Object nameNode = nameIter.next();
-                    if (!(nameNode instanceof Element)) {
-                        continue;
-                    }
-                    Element nameElement = (Element) nameNode;
-                    if (filterProperties.contains(nameElement.getText())) {
-                        propertyElement.getParent().remove(propertyElement);
-                        modified = true;
-                    }
-                }
+        Document doc = HadoopConfsResolveUtils.readConfFile(confFile);
+        for (String property : filterProperties) {
+            boolean removed = HadoopConfsResolveUtils.removePropertyElement(doc, property);
+            if (!modified && removed) {
+                modified = true;
             }
-            if (modified) {
-                writeConfFile(confFile, doc);
-            }
-        } catch (Exception e) {
-            ExceptionHandler.process(e);
         }
-    }
-
-    private void writeConfFile(File file, Document doc) throws IOException {
-        OutputFormat format = OutputFormat.createPrettyPrint();
-        XMLWriter writer = new XMLWriter(new FileWriter(file), format);
-        writer.write(doc);
-        writer.close();
-    }
-
-    public Document readConfFile(File file) throws MalformedURLException, DocumentException {
-        SAXReader reader = new SAXReader();
-        Document document = reader.read(file);
-        return document;
+        if (modified) {
+            HadoopConfsResolveUtils.writeConfFile(confFile, doc);
+        }
     }
 
 }
