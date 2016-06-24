@@ -60,4 +60,9 @@ public interface MRComponent extends HadoopComponent {
      */
     public boolean doSupportAtlas();
 
+    /**
+     * @return Cloudera Navigator API version. Supported by the cloudera Navigator installed by the distribution (CDH)
+     */
+    public int getClouderaNavigatorAPIVersion();
+
 }

@@ -16,7 +16,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import org.joda.time.Instant;
 import org.talend.lineage.cloudera.entity.TalendDataset;
 import org.talend.lineage.cloudera.util.ClouderaAPIUtil;
 import org.talend.lineage.cloudera.util.ClouderaFieldConvertor;
@@ -63,6 +66,11 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
 
     public static final String             DISABLE_SSL_VALIDATION = "disable_ssl_validation";                               //$NON-NLS-1$
 
+    public static final String             API_VERSION            = "navigator_api_version";                                //$NON-NLS-1$
+
+    // minimum supported version : Cloudera Navigator 2.4.0
+    public static final int                DEFAULT_API_VERSION    = 8;                                                      // $NON-NLS-1$
+
     private static org.apache.log4j.Logger LOG                    = org.apache.log4j.Logger.getLogger(LineageCreator.class);
 
     private String                         jobName;
@@ -77,6 +85,8 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
 
     private List<Entity>                   datasets               = new ArrayList<Entity>();
 
+    private Instant                        creationInstant;
+
     public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, String projectName) {
         this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, projectName, false);
@@ -84,7 +94,8 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
 
     public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
             String jobName, String projectName, Boolean autoCommit) {
-        this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, projectName, autoCommit, false);
+        this(clientApplicationUrl, navigatorUrl, metadataUri, username, password, jobName, projectName, autoCommit, false,
+                DEFAULT_API_VERSION);
     }
 
     /**
@@ -92,10 +103,9 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
      * Navigator
      */
     public LineageCreator(String clientApplicationUrl, String navigatorUrl, String metadataUri, String username, String password,
-            String jobName, String projectName, Boolean autoCommit, Boolean disableValidationSSL) {
+            String jobName, String projectName, Boolean autoCommit, Boolean disableValidationSSL, int apiVersion) {
         Map<String, Object> configurationMap = new HashMap<String, Object>();
         configurationMap.put(LineageCreator.APP_URL, clientApplicationUrl);
-        configurationMap.put(LineageCreator.NAV_URL, navigatorUrl);
         configurationMap.put(LineageCreator.METADATA_URI, metadataUri);
         configurationMap.put(LineageCreator.USERNAME, username);
         configurationMap.put(LineageCreator.PASSWORD, password);
@@ -112,6 +122,11 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
             configurationMap.put(LineageCreator.AUTOCOMMIT, "true"); //$NON-NLS-1$
         }
 
+        configurationMap.put(LineageCreator.API_VERSION, apiVersion); // $NON-NLS-1$
+
+        // Extract Navigator URL
+        configurationMap.put(LineageCreator.NAV_URL, extractNavigatorURL(navigatorUrl));
+
         this.plugin = NavigatorPlugin.fromConfigMap(configurationMap);
         // We call the Cloudera Navigator API using the client
         // This call will fail if Cloudera Navigator is not available
@@ -119,6 +134,27 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
         this.fileSystem = this.plugin.getClient().getOnlySource(SourceType.HDFS);
         this.jobName = jobName;
         this.projectName = projectName;
+        this.creationInstant = new Instant();
+    }
+
+    /**
+     * Try to extract navigator URL else Fall back to user input.
+     * 
+     * Note : Navigator SDK 2.0 requires URL of the following form : http://subdoamin.doamin.ext:port/
+     * (http://quickstart.cloudera:7187/)
+     * 
+     * @param navigatorUrl
+     * @return
+     */
+    public String extractNavigatorURL(String navigatorUrl) {
+
+        Pattern compile = Pattern.compile("((?:ht|f)tps?\\:\\/\\/[^:]*:[0-9]*)");
+        Matcher matcher = compile.matcher(navigatorUrl);
+        if (matcher.find()) {
+            return matcher.group(0);
+        } else {
+            return navigatorUrl;
+        }
     }
 
     /**
@@ -168,6 +204,7 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
         dataset.setFileFormat(fileFormat);
         dataset.setFields(ClouderaFieldConvertor.convertToTalendField(schema));
         dataset.addTags(ImmutableList.of("Talend", this.jobName)); //$NON-NLS-1$
+        dataset.setCreated(this.creationInstant);
 
         this.datasets.add(dataset);
     }

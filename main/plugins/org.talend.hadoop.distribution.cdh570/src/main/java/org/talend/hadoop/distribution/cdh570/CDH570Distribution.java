@@ -384,4 +384,9 @@ public class CDH570Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportParquetOutput() {
         return true;
     }
+
+    @Override
+    public int getClouderaNavigatorAPIVersion() {
+        return 9;
+    }
 }
