@@ -54,6 +54,8 @@ public class HadoopImportLocalOptionPage extends AbstractHadoopImportConfsPage {
         servicesTableComp.setLayoutData(new GridData(GridData.FILL_BOTH));
         addCheckListener(servicesTableComp);
 
+        createFilterPropertiesTable(container);
+
         addListener();
 
         setControl(container);

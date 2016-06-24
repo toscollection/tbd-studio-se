@@ -52,6 +52,7 @@ public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage 
 
         addConnectionFields(container);
         addClusterFields(container);
+        createFilterPropertiesTable(container);
 
         addListener();
 
