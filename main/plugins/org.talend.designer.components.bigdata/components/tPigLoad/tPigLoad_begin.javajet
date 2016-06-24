@@ -461,6 +461,12 @@
 %>
 					props_<%=cid%>.put("hcat.metastore.uri", <%=thriftServer%>);
 <%
+                    // activate sasl if we using a security
+                    if ((isCustom || pigDistrib.doSupportMapRTicket()) && useMapRTicket) {
+%>
+                        props_<%=cid%>.put("hive.metastore.sasl.enabled", "true");
+<%
+                    }
 				}
 
 				if("HBaseStorage".equals(function) && pigDistrib.doSupportHBase()) {
