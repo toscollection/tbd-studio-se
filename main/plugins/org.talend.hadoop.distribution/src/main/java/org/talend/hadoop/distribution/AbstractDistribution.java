@@ -232,4 +232,9 @@ public abstract class AbstractDistribution {
     public boolean doSupportParquetOutput() {
         return false;
     }
+
+    public int getClouderaNavigatorAPIVersion() {
+        // Version 8 is the first version of Cloudera Navigator Supported by SDK
+        return 8;
+    }
 }

@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.joda.time.Instant;
 import org.talend.lineage.cloudera.entity.TalendEntity;
 import org.talend.lineage.cloudera.entity.TalendEntityChild;
 import org.talend.lineage.cloudera.entity.TalendInputEntity;
@@ -48,11 +49,14 @@ public class EntityMapper {
 
     private List<String>        tags               = new ArrayList<String>();
 
+    private Instant             creationInstant;
+
     public EntityMapper(List<NavigatorNode> navigatorNodes, String jobId) {
         this.navigatorNodes = navigatorNodes;
         this.jobId = jobId;
         this.debugStringBuilder = new StringBuilder();
         this.tags.add(GeneratorID.CLOUDERA_NAVIGATOR_APPLICATION_NAMESPACE);
+        creationInstant = new Instant();
     }
 
     /**
@@ -115,6 +119,7 @@ public class EntityMapper {
     public void setEntityMetadata(TalendEntity talendEntity) {
         talendEntity.setDescription(ENTITY_DESCRIPTION);
         talendEntity.setLink(ENTITY_LINK);
+        talendEntity.setCreated(creationInstant);
         talendEntity.setTags(this.tags);
     }
 
@@ -151,6 +156,7 @@ public class EntityMapper {
     public void setChildEntityMetadata(TalendEntityChild talendEntityChild) {
         talendEntityChild.setDescription(ENTITY_DESCRIPTION);
         talendEntityChild.setLink(ENTITY_LINK);
+        talendEntityChild.setCreated(creationInstant);
     }
 
     /**

@@ -50,7 +50,7 @@ public abstract class TalendEntity extends Entity {
 
     @Override
     public EntityType getEntityType() {
-        return EntityType.OPERATION_EXECUTION;
+        return EntityType.TABLE;
     }
 
     @Override

@@ -33,22 +33,76 @@
 	</properties>
 
 	<dependencies>
-	<!-- Using Patched version of navigator-client & model that include HTTPS patch -->
+	<!-- Using our navigator build : v2.0   2e26f1a -->
 		<dependency>
 			<groupId>org.talend.libraries</groupId>
-			<artifactId>navigator-sdk-client-1.0-BETA20151126</artifactId>
-			<version>6.1.0</version>
+			<artifactId>navigator-sdk-client-2.0-20160624</artifactId>
+			<version>6.2.0</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.talend.libraries</groupId>
-			<artifactId>navigator-sdk-model-1.0-BETA20151126</artifactId>
-			<version>6.1.0</version>
+			<artifactId>navigator-sdk-model-2.0-20160624</artifactId>
+			<version>6.2.0</version>
 		</dependency>
+	<!-- Using our navigator build : v2.0   2e26f1a -->
+
 		<dependency>
 			<groupId>org.apache.atlas</groupId>
 			<artifactId>atlas-client</artifactId>
 			<version>${atlas.version}</version>
 		</dependency>
+		
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time</artifactId>
+		    <version>2.4</version>
+		</dependency>
+		
+               <!--  CLOUDERA NAVIGATOR INTEGRATION TESTS ONLY
+               <dependency>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-core</artifactId>
+                   <version>4.0.7.RELEASE</version>
+               </dependency>
+               
+               <dependency>
+                   <groupId>org.springframework</groupId>
+                   <artifactId>spring-web</artifactId>
+                   <version>4.0.7.RELEASE</version>
+               </dependency>
+               
+               <dependency>
+                   <groupId>com.fasterxml.jackson.core</groupId>
+                   <artifactId>jackson-databind</artifactId>
+                   <version>2.1.0</version>
+               </dependency>
+               
+               <dependency>
+                   <groupId>com.fasterxml.jackson.core</groupId>
+                   <artifactId>jackson-core</artifactId>
+                   <version>2.1.0</version>
+               </dependency>
+                              
+               <dependency>
+                   <groupId>com.fasterxml.jackson.datatype</groupId>
+                   <artifactId>jackson-datatype-joda</artifactId>
+                   <version>2.1.0</version>
+               </dependency>
+
+               
+               <dependency>
+                   <groupId>com.fasterxml.jackson.core</groupId>
+                   <artifactId>jackson-annotations</artifactId>
+                   <version>2.1.0</version>
+               </dependency>
+               
+               <dependency>
+                   <groupId>commons-net</groupId>
+                   <artifactId>commons-net</artifactId>
+                   <version>3.1</version>
+               </dependency> -->
+				
 
 		<!-- Testing only. -->
 		<dependency>
