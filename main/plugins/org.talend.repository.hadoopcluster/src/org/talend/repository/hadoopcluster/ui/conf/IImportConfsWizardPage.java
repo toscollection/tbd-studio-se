@@ -29,4 +29,6 @@ public interface IImportConfsWizardPage extends IWizardPage {
 
     public List<String> getSelectedServices();
 
+    public void applyFilter();
+
 }

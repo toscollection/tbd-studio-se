@@ -27,6 +27,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.hadoop.conf.Configuration;
+import org.dom4j.Document;
 import org.talend.commons.utils.io.FilesUtils;
 import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
@@ -41,10 +42,13 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
 
     private Map<String, Map<String, String>> confsMap;
 
+    private List<String> filterProps = new ArrayList<>();
+
     public RetrieveLocalConfsService(String confsDirPath) {
         this.confsDirPath = confsDirPath;
     }
 
+    @Override
     public Map<String, Map<String, String>> getConfsMap() throws MalformedURLException {
         if (confsMap != null) {
             return confsMap;
@@ -82,6 +86,9 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
         Iterator<Entry<String, String>> confsIter = configuration.iterator();
         while (confsIter.hasNext()) {
             Entry<String, String> confsEntry = confsIter.next();
+            if (filterProps != null && filterProps.contains(confsEntry.getKey())) {
+                continue;
+            }
             cMap.put(confsEntry.getKey(), confsEntry.getValue());
         }
         return cMap;
@@ -128,9 +135,38 @@ public class RetrieveLocalConfsService implements IRetrieveConfsService {
                 }
             };
             FilesUtils.copyFolder(sourceFolder, targetFolder, true, null, sourceFileFilter, true);
+            applyFilterInConfFile(targetFolder, filterProps);
             return targetFolderPath;
         }
         return null;
+    }
+
+    @Override
+    public void applyFilter(List<String> filterProperties) {
+        filterProps = filterProperties;
+    }
+
+    private void applyFilterInConfFile(File confFile, List<String> filterProperties) {
+        if (confFile == null || filterProperties == null || filterProperties.size() == 0) {
+            return;
+        }
+        if (confFile.isDirectory()) {
+            File[] confFiles = confFile.listFiles();
+            for (File file : confFiles) {
+                applyFilterInConfFile(file, filterProperties);
+            }
+        }
+        boolean modified = false;
+        Document doc = HadoopConfsResolveUtils.readConfFile(confFile);
+        for (String property : filterProperties) {
+            boolean removed = HadoopConfsResolveUtils.removePropertyElement(doc, property);
+            if (!modified && removed) {
+                modified = true;
+            }
+        }
+        if (modified) {
+            HadoopConfsResolveUtils.writeConfFile(confFile, doc);
+        }
     }
 
 }

@@ -464,7 +464,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTHadoopLoginText = new LabelledText(maprTSetComposite, "", 1); //$NON-NLS-1$
 
         preloadAuthentificationBtn = new Button(maprTSetComposite, SWT.CHECK);
-        preloadAuthentificationBtn.setText(Messages.getString("HadoopClusterForm.button.preloadAuthentification")); //$NON-NLS-1$
+        preloadAuthentificationBtn.setText(Messages.getString("HadoopClusterForm.button.preloadAuthentification.label")); //$NON-NLS-1$
     }
 
     private void addHadoopPropertiesFields() {

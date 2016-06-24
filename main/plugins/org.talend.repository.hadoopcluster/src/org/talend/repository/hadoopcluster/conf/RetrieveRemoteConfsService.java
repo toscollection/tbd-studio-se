@@ -96,4 +96,11 @@ public class RetrieveRemoteConfsService implements IRetrieveConfsService {
         return targetFolderPath;
     }
 
+    @Override
+    public void applyFilter(List<String> filterProperties) {
+        if (filterProperties != null) {
+            cluster.setBlacklistParams(filterProperties);
+        }
+    }
+
 }
