@@ -1,17 +1,16 @@
 <%@ jet
-imports="
-        org.talend.designer.codegen.config.CodeGeneratorArgument
-        org.talend.core.model.process.INode
-        org.talend.core.model.process.ElementParameterParser
-        org.talend.core.model.metadata.IMetadataTable
-        org.talend.core.model.metadata.IMetadataColumn
-        org.talend.core.model.process.IConnection
-        org.talend.designer.runprocess.ProcessorException
-        org.talend.designer.runprocess.ProcessorUtilities
-
-        java.util.List
-        java.util.Map
-"
+    imports="
+    java.util.List
+    java.util.Map
+    org.talend.core.model.metadata.IMetadataColumn
+    org.talend.core.model.metadata.IMetadataTable
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.INode
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    org.talend.designer.runprocess.ProcessorException
+    org.talend.designer.runprocess.ProcessorUtilities
+    "
 %>
 
 <%
@@ -350,19 +349,19 @@ if(useExistingConn) {
     <%
                         } else {
     %>
-                            String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(previousNode, sslStorepasswordFieldName)%>; 
+                            String decryptedSslStorePassword_<%=cid%> = <%= ElementParameterParser.getValue(previousNode, sslStorepasswordFieldName)%>;
     <%
-                        }                       
+                        }
                     }
                     else {
 %>
                         String decryptedSslStorePassword_<%=cid%> = "";
-<%                        
+<%
                     }
 %>
                     String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-                } else {                            
+                } else {
 %>
                 String url_<%=cid%> = "jdbc:<%=hiveServer%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
 <%
@@ -538,12 +537,12 @@ if(useExistingConn) {
 
 		<%
 		boolean useExistingConnection = "true".equals(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
-		if(!useExistingConnection){	
+		if(!useExistingConnection){
 		%>
         	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/PrepareTez.javajet"%>
         	<%
         	(new PrepareTez()).invoke(previousNode, cid);
-        }	
+        }
         %>
         init_<%=cid%>.close();
 
@@ -715,10 +714,10 @@ if(useExistingConn) {
 <%
     }
 %>
-    StringBuffer partitionSql = new StringBuffer();
-    String startPartition = "";
-    String endPartition = "";
-    String bodyPartition = "";
+    StringBuffer partitionSql_<%=cid%> = new StringBuffer();
+    String startPartition_<%=cid%> = "";
+    String endPartition_<%=cid%> = "";
+    String bodyPartition_<%=cid%> = "";
 <%
     //For Bug TDI-24105,support context variables
     if(fieldPartitions != null && !fieldPartitions.isEmpty()) {
@@ -726,8 +725,8 @@ if(useExistingConn) {
         String columnValue = null;
         int count = 0 ;
 %>
-    startPartition = " PARTITION(";
-    endPartition = ")";
+    startPartition_<%=cid%> = " PARTITION(";
+    endPartition_<%=cid%> = ")";
 <%
         for(Map<String, String> line : fieldPartitions ) {// search in the configuration table
              columnName = line.get("COLUMN_NAME");
@@ -735,31 +734,31 @@ if(useExistingConn) {
             if (columnName!=null && !"".equals(columnName)) {
                 count++;
 %>
-                bodyPartition = bodyPartition + <%=columnName%>;
+                bodyPartition_<%=cid%> = bodyPartition_<%=cid%> + <%=columnName%>;
 <%
                    if (columnValue!=null && !"".equals(columnValue)) {
 %>
-                       bodyPartition = bodyPartition + "=";
-                       bodyPartition = bodyPartition + <%=columnValue%>;
+                       bodyPartition_<%=cid%> = bodyPartition_<%=cid%> + "=";
+                       bodyPartition_<%=cid%> = bodyPartition_<%=cid%> + <%=columnValue%>;
 <%
                 }
                 if(count < fieldPartitions.size()){
 %>
-                    bodyPartition = bodyPartition + ",";
+                    bodyPartition_<%=cid%> = bodyPartition_<%=cid%> + ",";
 <%
                 }
             }
         }
     }
 %>
-    partitionSql.append(startPartition).append(bodyPartition).append(endPartition);
+    partitionSql_<%=cid%>.append(startPartition_<%=cid%>).append(bodyPartition_<%=cid%>).append(endPartition_<%=cid%>);
 
 <%
 
 if(columnList != null && columnList.size()>0){
     if(("INSERT").equals(dataAction)){
 %>
-    String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + partitionSql.toString() + " "+select_query_<%=cid %>;
+    String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + partitionSql_<%=cid%>.toString() + " "+select_query_<%=cid %>;
 <%
             if(!isExecutedThroughWebHCat) {
 %>
@@ -774,7 +773,7 @@ if(columnList != null && columnList.size()>0){
 <%
     }else if (("OVERWRITE").equals(dataAction)){
 %>
-    String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ partitionSql.toString() + " "+select_query_<%=cid %>;
+    String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ partitionSql_<%=cid%>.toString() + " "+select_query_<%=cid %>;
 <%
             if(!isExecutedThroughWebHCat) {
 %>
