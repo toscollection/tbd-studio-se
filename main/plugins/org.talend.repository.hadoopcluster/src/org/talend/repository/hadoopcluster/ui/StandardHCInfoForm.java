@@ -1082,6 +1082,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTDurationText.setEditable(maprTBtn.isEnabled() && maprTBtn.getSelection());
         maprTHomeDirText.setEditable(!hide && setMaprTHomeDirBtn.isEnabled() && setMaprTHomeDirBtn.getSelection());
         maprTHadoopLoginText.setEditable(!hide && setHadoopLoginBtn.isEnabled() && setHadoopLoginBtn.getSelection());
+        hideControl(maprTPasswordCompposite, kerberosBtn.getSelection() && maprTBtn.getSelection());
         hideControl(maprTPCDCompposite, hide);
         hideControl(maprTSetComposite, hide);
         authMaprTComposite.layout();

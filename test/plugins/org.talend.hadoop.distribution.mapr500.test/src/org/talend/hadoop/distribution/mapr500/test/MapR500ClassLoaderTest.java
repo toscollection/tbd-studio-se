@@ -76,4 +76,10 @@ public class MapR500ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
     public void testHDFSWithKerberos_NotSupport() {
         doTestNotSupportClassLoader(EHadoopCategory.HDFS.getName(), "?USE_KRB");
     }
+
+    @Test
+    public void testHCatalog() {
+        String libsStr = "maprfs-5.0.0-mapr.jar;hadoop-auth-2.7.0-mapr-1506.jar;hadoop-common-2.7.0-mapr-1506.jar;zookeeper-3.4.5-mapr-1503.jar;json-20080701.jar;guava-13.0.1.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;commons-logging-1.1.3.jar;commons-collections-3.2.1.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;hadoop-mapreduce-client-app-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-common-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-contrib-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-core-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-hs-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-hs-plugins-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-jobclient-2.7.0-mapr-1506.jar;hadoop-mapreduce-client-shuffle-2.7.0-mapr-1506.jar;hadoop-yarn-api-2.7.0-mapr-1506.jar;hadoop-yarn-client-2.7.0-mapr-1506.jar;hadoop-yarn-common-2.7.0-mapr-1506.jar;commons-cli-1.2.jar;commons-codec-1.5.jar;commons-io-2.4.jar;avro-1.7.4.jar;jackson-core-asl-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;htrace-core-3.1.0-incubating.jar";//$NON-NLS-1$
+        doTestClassLoader(EHadoopCategory.HCATALOG.getName(), libsStr);
+    }
 }
