@@ -3,8 +3,6 @@ package org.talend.repository.hadoopcluster.ui.conf;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -13,13 +11,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
-import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledText;
-import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
-import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
-import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
-import org.talend.hadoop.distribution.model.DistributionBean;
-import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
@@ -121,7 +113,8 @@ public class ClouderaNavigatorOptionPage extends AbstractHadoopImportConfsPage {
 
       navigator_usernameText = new LabelledText(naviCommonComposite,
           Messages.getString("HadoopClusterForm.text.navigator_username"), 1); //$NON-NLS-1$
-      navigator_passwordText = new LabelledText(naviCommonComposite, Messages.getString("HadoopClusterForm.text.navigator_password"), 1,SWT.PASSWORD); //$NON-NLS-1$
+        navigator_passwordText = new LabelledText(naviCommonComposite,
+                Messages.getString("HadoopClusterForm.text.navigator_password"), 1, SWT.PASSWORD | SWT.BORDER); //$NON-NLS-1$
       navigator_urlText = new LabelledText(naviCommonComposite,
           Messages.getString("HadoopClusterForm.text.navigator_url"), 1); //$NON-NLS-1$
       navigator_metatata_urlText = new LabelledText(naviCommonComposite,
