@@ -31,7 +31,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.hadoop.HadoopClassLoaderFactory2;
 import org.talend.core.repository.model.connection.ConnectionStatus;
+import org.talend.core.utils.ReflectionUtils;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
@@ -73,16 +75,20 @@ public class HCatalogServiceUtil {
      * 
      * @param connection
      * @return the HCatalog client of the special database from HCatalogConnection.
+     * @throws Exception
      */
-    public static WebClient getHCatalogDBClient(HCatalogConnection connection) {
+    public static WebClient getHCatalogDBClient(HCatalogConnection connection) throws Exception {
         String database = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection,
                 connection.getDatabase()));
         WebClient client = getHCatalogClient(connection, database);
         return client;
     }
 
-    private static void addKerberos2Client(WebClient client, HCatalogConnection connection) {
+    private static void addKerberos2Client(WebClient client, HCatalogConnection connection) throws Exception {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        if (hcConnection != null && hcConnection.isEnableMaprT()) {
+            setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), hcConnection.isEnableKerberos());
+        }
         if (hcConnection != null && hcConnection.isEnableKerberos()) {
             KerberosAuthOutInterceptor kbInterceptor = new KerberosAuthOutInterceptor();
             AuthorizationPolicy policy = new AuthorizationPolicy();
@@ -109,14 +115,61 @@ public class HCatalogServiceUtil {
         }
     }
 
+    private static void setMaprTicketConfig(HadoopClusterConnection hcConnection, ClassLoader classLoader, boolean useKerberos)
+            throws Exception {
+        String mapRTicketUsername = hcConnection.getUserName();
+        String mapRTicketPassword = hcConnection.getMaprTPassword();
+        String mapRTicketCluster = hcConnection.getMaprTCluster();
+        String mapRTicketDuration = hcConnection.getMaprTDuration();
+        boolean setMapRHomeDir = hcConnection.isSetMaprTHomeDir();
+        String mapRHomeDir = hcConnection.getMaprTHomeDir();
+        boolean setMapRHadoopLogin = hcConnection.isSetHadoopLogin();
+        String mapRHadoopLogin = hcConnection.getMaprTHadoopLogin();
+        System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("mapr.home.dir", setMapRHomeDir ? mapRHomeDir : "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("hadoop.login", setMapRHadoopLogin ? mapRHadoopLogin : "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+        Long desiredTicketDurInSecs = 86400L;
+        if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
+            if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 
+                mapRTicketDuration = mapRTicketDuration.substring(0, mapRTicketDuration.length() - 1);
+                desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
+            } else if (StringUtils.isNumeric(mapRTicketDuration)) {
+                desiredTicketDurInSecs = Long.valueOf(mapRTicketDuration) + 'L';
+            }
+        }
+        Object mapRClientConfig = ReflectionUtils.newInstance(
+                "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
+        if (useKerberos) {
+            ReflectionUtils.invokeMethod(mapRClientConfig,
+                    "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
+        } else {
+            if (setMapRHadoopLogin) {
+                System.setProperty("hadoop.login", mapRHadoopLogin);//$NON-NLS-1$
+            } else {
+                ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+            }
+            ReflectionUtils
+                    .invokeMethod(
+                            mapRClientConfig,
+                            "getMapRCredentialsViaPassword", new Object[] { mapRTicketCluster, mapRTicketUsername, mapRTicketPassword, desiredTicketDurInSecs }); //$NON-NLS-1$
+        }
+    }
+
+    public static ClassLoader getClassLoader(HadoopClusterConnection hcConnection, HCatalogConnection connection) {
+        return HadoopClassLoaderFactory2.getHCatalogClassLoader(connection.getRelativeHadoopClusterId(),
+                hcConnection.getDistribution(), hcConnection.getDfVersion(), hcConnection.isEnableKerberos());
+    }
+
     /**
      * DOC ycbai Comment method "getHCatalogClient".
      * 
      * @param connection
      * @param path the path must start with database name or "templeton/v1/ddl/database/".
      * @return the HCatalog client with the special path.
+     * @throws Exception
      */
-    public static WebClient getHCatalogClient(HCatalogConnection connection, String path) {
+    public static WebClient getHCatalogClient(HCatalogConnection connection, String path) throws Exception {
         String queryPath = path;
         if (connection == null || queryPath == null) {
             return null;
@@ -131,7 +184,7 @@ public class HCatalogServiceUtil {
         return rootClient;
     }
 
-    private static WebClient getHCatalogRootClient(HCatalogConnection connection) {
+    private static WebClient getHCatalogRootClient(HCatalogConnection connection) throws Exception {
         boolean isHDI = HCVersionUtil.isHDI(connection);
         String host = StringUtils.trimToEmpty(ConnectionContextHelper.getParamValueOffContext(connection,
                 connection.getHostName()));
