@@ -47,13 +47,16 @@ public class ChangeHadoopConfJarNameMigrationTask extends AbstractItemMigrationT
             libService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(ILibraryManagerService.class);
         }
         if (libService == null) {
-            return null;
+            return ExecutionResult.NOTHING_TO_DO;
         }
         if (item instanceof HadoopClusterConnectionItem) {
             HadoopClusterConnectionItem hcItem = (HadoopClusterConnectionItem) item;
             HadoopClusterConnection connection = (HadoopClusterConnection) hcItem.getConnection();
             if (connection.getConfFile() == null) {
                 String confJarName = HadoopParameterUtil.getConfsJarDefaultName(hcItem.getProperty().getId());
+                if (!libService.contains(confJarName)) {
+                    return ExecutionResult.NOTHING_TO_DO;
+                }
                 File confsTempFolder = new File(HadoopConfsUtils.getConfsJarTempFolder());
                 boolean retrieved = libService.retrieve(confJarName, confsTempFolder.getAbsolutePath(), false);
                 File confJarFile = new File(confsTempFolder, confJarName);
