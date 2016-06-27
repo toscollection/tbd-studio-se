@@ -964,6 +964,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         properties.setKeytab(connection.getKeytab());
         properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties()));
         properties.setRelativeHadoopClusterId(connectionItem.getProperty().getId());
+        properties.setRelativeHadoopClusterLabel(connectionItem.getProperty().getLabel());
 
         properties.setMaprT(connection.isEnableMaprT());
         properties.setUserName(connection.getUserName());

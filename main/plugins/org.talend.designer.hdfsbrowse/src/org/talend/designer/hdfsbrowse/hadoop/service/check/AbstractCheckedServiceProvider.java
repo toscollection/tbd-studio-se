@@ -15,6 +15,7 @@ package org.talend.designer.hdfsbrowse.hadoop.service.check;
 import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
@@ -74,14 +75,24 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
     protected ClassLoader addCustomConfsJarIfNeeded(ClassLoader baseLoader, HadoopServiceProperties serviceProperties) {
         ClassLoader classLoader = baseLoader;
         if (serviceProperties.isUseCustomConfs()) {
-            String clusterId = serviceProperties.getRelativeHadoopClusterId();
-            if (baseLoader instanceof DynamicClassLoader && clusterId != null) {
-                String customConfsJarName = HadoopParameterUtil.getConfsJarDefaultName(clusterId);
-                try {
-                    classLoader = DynamicClassLoader.createNewOneBaseLoader((DynamicClassLoader) baseLoader,
-                            new String[] { customConfsJarName }, null);
-                } catch (MalformedURLException e) {
-                    ExceptionHandler.process(e);
+            String clusterLabel = serviceProperties.getRelativeHadoopClusterLabel();
+            if (classLoader instanceof DynamicClassLoader && clusterLabel != null) {
+                String customConfsJarName = HadoopParameterUtil.getConfsJarDefaultName(clusterLabel);
+                boolean confFileExist = false;
+                Set<String> libraries = ((DynamicClassLoader) classLoader).getLibraries();
+                for (String lib : libraries) {
+                    if (customConfsJarName.equals(lib)) {
+                        confFileExist = true;
+                        break;
+                    }
+                }
+                if (!confFileExist) {
+                    try {
+                        classLoader = DynamicClassLoader.createNewOneBaseLoader((DynamicClassLoader) baseLoader,
+                                new String[] { customConfsJarName }, null);
+                    } catch (MalformedURLException e) {
+                        ExceptionHandler.process(e);
+                    }
                 }
             }
         }
