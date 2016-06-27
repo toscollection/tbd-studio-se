@@ -29,6 +29,8 @@ public class HadoopServiceProperties {
 
     private String relativeHadoopClusterId;
 
+    private String relativeHadoopClusterLabel;
+
     private String distribution;
 
     private String version;
@@ -257,6 +259,14 @@ public class HadoopServiceProperties {
         this.relativeHadoopClusterId = relativeHadoopClusterId;
     }
 
+    public String getRelativeHadoopClusterLabel() {
+        return this.relativeHadoopClusterLabel;
+    }
+
+    public void setRelativeHadoopClusterLabel(String relativeHadoopClusterLabel) {
+        this.relativeHadoopClusterLabel = relativeHadoopClusterLabel;
+    }
+
     public boolean isMaprT() {
         return this.maprT;
     }
@@ -328,4 +338,5 @@ public class HadoopServiceProperties {
     public void setMaprTHadoopLogin(String maprTHadoopLogin) {
         this.maprTHadoopLogin = maprTHadoopLogin;
     }
+
 }
