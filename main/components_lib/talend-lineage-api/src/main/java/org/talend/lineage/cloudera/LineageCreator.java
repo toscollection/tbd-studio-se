@@ -16,8 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.joda.time.Instant;
 import org.talend.lineage.cloudera.entity.TalendDataset;
@@ -125,7 +123,7 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
         configurationMap.put(LineageCreator.API_VERSION, apiVersion); // $NON-NLS-1$
 
         // Extract Navigator URL
-        configurationMap.put(LineageCreator.NAV_URL, extractNavigatorURL(navigatorUrl));
+        configurationMap.put(LineageCreator.NAV_URL, ClouderaAPIUtil.extractNavigatorURL(navigatorUrl));
 
         this.plugin = NavigatorPlugin.fromConfigMap(configurationMap);
         // We call the Cloudera Navigator API using the client
@@ -135,26 +133,6 @@ public class LineageCreator extends AbstractLineageCreator implements ILineageCr
         this.jobName = jobName;
         this.projectName = projectName;
         this.creationInstant = new Instant();
-    }
-
-    /**
-     * Try to extract navigator URL else Fall back to user input.
-     * 
-     * Note : Navigator SDK 2.0 requires URL of the following form : http://subdoamin.doamin.ext:port/
-     * (http://quickstart.cloudera:7187/)
-     * 
-     * @param navigatorUrl
-     * @return
-     */
-    public String extractNavigatorURL(String navigatorUrl) {
-
-        Pattern compile = Pattern.compile("((?:ht|f)tps?\\:\\/\\/[^:]*:[0-9]*)");
-        Matcher matcher = compile.matcher(navigatorUrl);
-        if (matcher.find()) {
-            return matcher.group(0);
-        } else {
-            return navigatorUrl;
-        }
     }
 
     /**

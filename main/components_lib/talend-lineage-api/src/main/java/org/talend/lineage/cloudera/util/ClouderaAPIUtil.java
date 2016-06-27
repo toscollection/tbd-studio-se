@@ -13,6 +13,8 @@
 package org.talend.lineage.cloudera.util;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.lineage.cloudera.NavigatorNode;
@@ -66,5 +68,25 @@ public class ClouderaAPIUtil {
     public static Boolean isFieldinComponent(String componentName, String fieldName, List<NavigatorNode> navigatorNodes) {
         NavigatorNode outputNavigatorNode = ClouderaAPIUtil.retrieveNavigatorNode(componentName, navigatorNodes);
         return (outputNavigatorNode != null) && (outputNavigatorNode.getSchema().containsKey(fieldName));
+    }
+
+    /**
+     * Try to extract navigator URL else Fall back to user input.
+     * 
+     * Note : Navigator SDK 2.0 requires URL of the following form : http://subdoamin.doamin.ext:port/
+     * (http://quickstart.cloudera:7187/)
+     * 
+     * @param navigatorUrl
+     * @return
+     */
+    public static String extractNavigatorURL(String navigatorUrl) {
+
+        Pattern compile = Pattern.compile("((?:ht|f)tps?\\:\\/\\/[^:]*:[0-9]*)");
+        Matcher matcher = compile.matcher(navigatorUrl);
+        if (matcher.find()) {
+            return matcher.group(0);
+        } else {
+            return navigatorUrl;
+        }
     }
 }

@@ -12,7 +12,11 @@
 // ============================================================================
 package org.talend.lineage.cloudera.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +26,6 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.junit.Test;
 import org.talend.lineage.cloudera.NavigatorNode;
-import org.talend.lineage.cloudera.util.ClouderaAPIUtil;
 
 /**
  * created by pbailly on 16 Oct 2015 Detailled comment
@@ -93,5 +96,28 @@ public class ClouderaAPIUtilTest {
         assertFalse(ClouderaAPIUtil.isFieldinComponent("comp1", "nope", navigatorNodes));
         assertFalse(ClouderaAPIUtil.isFieldinComponent("comp2", "nope", navigatorNodes));
         assertFalse(ClouderaAPIUtil.isFieldinComponent("comp3", "id", navigatorNodes));
+    }
+
+    @Test
+    public void TestExtractNavigatorURL()
+
+    {
+        assertEquals("http://domain:3333", ClouderaAPIUtil.extractNavigatorURL("http://domain:3333/api/v1/"));
+        assertEquals("https://domain:3333", ClouderaAPIUtil.extractNavigatorURL("https://domain:3333/api/v1/"));
+        assertEquals("http://sd01.sd02.domain:3333", ClouderaAPIUtil.extractNavigatorURL("http://sd01.sd02.domain:3333/api/v1/"));
+        assertEquals("https://sd01.sd02.domain:3333",
+                ClouderaAPIUtil.extractNavigatorURL("https://sd01.sd02.domain:3333/api/v1/"));
+        assertEquals("http://sd01.sd02.sd03.sd04.x.y.z.domain:3333",
+                ClouderaAPIUtil.extractNavigatorURL("http://sd01.sd02.sd03.sd04.x.y.z.domain:3333/api/v1/"));
+        assertEquals("http://sd01.sd02.domain:3333",
+                ClouderaAPIUtil.extractNavigatorURL("http://sd01.sd02.domain:3333/api/v1/x/y/z/e/u/"));
+        assertEquals("http://sd01.sd02.domain:3333",
+                ClouderaAPIUtil.extractNavigatorURL("http://sd01.sd02.domain:3333/api/v1/x/y/z/:e/u/"));
+        assertEquals("http://sd01.sd02.domain:12345678910",
+                ClouderaAPIUtil.extractNavigatorURL("http://sd01.sd02.domain:12345678910/api/v1/"));
+        assertEquals("http://sd01.sd02.domain:12345678910",
+                ClouderaAPIUtil.extractNavigatorURL("http://sd01.sd02.domain:12345678910/api/v1/"));
+        assertEquals("http://sd01/sd02/domain:3333", ClouderaAPIUtil.extractNavigatorURL("http://sd01/sd02/domain:3333/api/v1/"));
+        assertEquals("httpXX://domain:3333/api/v1/", ClouderaAPIUtil.extractNavigatorURL("httpXX://domain:3333/api/v1/"));
     }
 }
