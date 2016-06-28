@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh570.test;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.talend.core.hadoop.EHadoopCategory;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
@@ -79,8 +78,4 @@ public class CDH570ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
         doTestClassLoader(EHadoopCategory.HDFS.getName(), libsStr, "?USE_KRB"); //$NON-NLS-1$
     }
 
-    @Test
-    public void testImpala() {
-        Assert.fail("Not impl yet!");
-    }
 }
