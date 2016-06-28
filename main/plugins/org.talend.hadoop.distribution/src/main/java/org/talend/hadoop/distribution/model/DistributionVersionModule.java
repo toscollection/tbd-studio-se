@@ -12,6 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.talend.core.GlobalServiceRegister;
+import org.talend.core.model.general.ILibrariesService;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.condition.BasicExpression;
@@ -33,6 +39,8 @@ public class DistributionVersionModule {
     public final DistributionVersion distributionVersion;
 
     public DistributionModuleGroup moduleGrop;
+
+    private List<ModuleNeeded> modulesNeeded = new ArrayList<ModuleNeeded>();
 
     DistributionVersionModule(DistributionVersion distributionVersion) {
         super();
@@ -62,6 +70,17 @@ public class DistributionVersionModule {
                     moduleGrop.getRequiredIf()));
         }
         return condition;
+    }
+
+    public List<ModuleNeeded> getModulesNeeded() {
+        if (modulesNeeded.isEmpty()) {
+            if (GlobalServiceRegister.getDefault().isServiceRegistered(ILibrariesService.class)) {
+                ILibrariesService libService = (ILibrariesService) GlobalServiceRegister.getDefault().getService(
+                        ILibrariesService.class);
+                modulesNeeded.addAll(libService.getModuleNeeded(moduleGrop.getModuleName(), true));
+            }
+        }
+        return modulesNeeded;
     }
 
 }

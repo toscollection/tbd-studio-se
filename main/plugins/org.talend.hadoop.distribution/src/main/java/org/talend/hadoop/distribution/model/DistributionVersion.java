@@ -12,10 +12,13 @@
 // ============================================================================
 package org.talend.hadoop.distribution.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -44,6 +47,13 @@ public class DistributionVersion implements IHDistributionVersion {
      */
     public final String version, displayVersion;
 
+    /**
+     * Modules
+     */
+    private Set<DistributionVersionModule> modules = new LinkedHashSet<DistributionVersionModule>();
+
+    private List<ModuleNeeded> modulesNeeded = new ArrayList<ModuleNeeded>();
+
     public DistributionVersion(HadoopComponent hadoopComponent, DistributionBean distribution, String version,
             String displayVersion) {
         super();
@@ -68,11 +78,6 @@ public class DistributionVersion implements IHDistributionVersion {
         return displayVersion;
     }
 
-    /**
-     * Modules
-     */
-    private Set<DistributionVersionModule> modules = new LinkedHashSet<DistributionVersionModule>();
-
     public DistributionVersionModule[] getVersionModules() {
         return modules.toArray(new DistributionVersionModule[0]);
     }
@@ -81,6 +86,7 @@ public class DistributionVersion implements IHDistributionVersion {
         if (g != null) {
             DistributionVersionModule vm = new DistributionVersionModule(this);
             vm.moduleGrop = g;
+            modulesNeeded.addAll(vm.getModulesNeeded());
             modules.add(vm);
         }
     }
@@ -91,6 +97,10 @@ public class DistributionVersion implements IHDistributionVersion {
                 addModuleGroup(g);
             }
         }
+    }
+
+    public List<ModuleNeeded> getModulesNeeded() {
+        return modulesNeeded;
     }
 
     /**
