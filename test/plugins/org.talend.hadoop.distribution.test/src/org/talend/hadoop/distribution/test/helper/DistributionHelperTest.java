@@ -12,9 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.test.helper;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.hd.IHDConstants;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.IHDistributionVersion;
@@ -58,6 +61,11 @@ public class DistributionHelperTest {
 
             @Override
             public String getDefaultConfig(String... keys) {
+                return null;
+            }
+
+            @Override
+            public List<ModuleNeeded> getModulesNeeded() {
                 return null;
             }
 
