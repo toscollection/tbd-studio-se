@@ -1011,7 +1011,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     userNameText.setEditable(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection()));
-                    groupText.setEditable(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection()));
+                    groupText.setEditable(true);
                     hideKerberosControl(!kerberosBtn.getSelection());
                     // maprt
                     hideMaprTicketChildControl(!maprTBtn.getSelection());
