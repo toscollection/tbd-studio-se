@@ -86,32 +86,37 @@ public class HCatalogServiceUtil {
 
     private static void addKerberos2Client(WebClient client, HCatalogConnection connection) throws Exception {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
-        if (hcConnection != null && hcConnection.isEnableMaprT()) {
-            setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), hcConnection.isEnableKerberos());
-        }
-        if (hcConnection != null && hcConnection.isEnableKerberos()) {
-            KerberosAuthOutInterceptor kbInterceptor = new KerberosAuthOutInterceptor();
-            AuthorizationPolicy policy = new AuthorizationPolicy();
-            policy.setAuthorizationType(HttpAuthHeader.AUTH_TYPE_NEGOTIATE);
-            kbInterceptor.setPolicy(policy);
-            java.util.Map<String, String> properties = new HashMap<String, String>();
-            String krbPrincipal = ConnectionContextHelper.getParamValueOffContext(connection,
-                    StringUtils.trimToEmpty(connection.getKrbPrincipal()));
-            kbInterceptor.setServicePrincipalName(StringUtils.trimToEmpty(krbPrincipal));
-            String krbRealm = ConnectionContextHelper.getParamValueOffContext(connection,
-                    StringUtils.trimToEmpty(connection.getKrbRealm()));
-            kbInterceptor.setRealm(StringUtils.trimToEmpty(krbRealm));
-            properties.put("useTicketCache", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-            properties.put("refreshKrb5Config", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-            properties.put("renewTGT", "true"); //$NON-NLS-1$ //$NON-NLS-2$
-            if (hcConnection.isUseKeytab()) {
-                properties.put("useKeyTab", "true"); //$NON-NLS-1$//$NON-NLS-2$
-                properties.put("principal", //$NON-NLS-1$
-                        ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytabPrincipal()));
-                properties.put("keyTab", ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytab())); //$NON-NLS-1$
+        if (hcConnection != null) {
+            if (hcConnection.isEnableKerberos()) {
+                KerberosAuthOutInterceptor kbInterceptor = new KerberosAuthOutInterceptor();
+                AuthorizationPolicy policy = new AuthorizationPolicy();
+                policy.setAuthorizationType(HttpAuthHeader.AUTH_TYPE_NEGOTIATE);
+                kbInterceptor.setPolicy(policy);
+                java.util.Map<String, String> properties = new HashMap<String, String>();
+                String krbPrincipal = ConnectionContextHelper.getParamValueOffContext(connection,
+                        StringUtils.trimToEmpty(connection.getKrbPrincipal()));
+                kbInterceptor.setServicePrincipalName(StringUtils.trimToEmpty(krbPrincipal));
+                String krbRealm = ConnectionContextHelper.getParamValueOffContext(connection,
+                        StringUtils.trimToEmpty(connection.getKrbRealm()));
+                kbInterceptor.setRealm(StringUtils.trimToEmpty(krbRealm));
+                properties.put("useTicketCache", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+                properties.put("refreshKrb5Config", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+                properties.put("renewTGT", "true"); //$NON-NLS-1$ //$NON-NLS-2$
+                if (hcConnection.isUseKeytab()) {
+                    properties.put("useKeyTab", "true"); //$NON-NLS-1$//$NON-NLS-2$
+                    properties.put("principal", //$NON-NLS-1$
+                            ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytabPrincipal()));
+                    properties.put(
+                            "keyTab", ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytab())); //$NON-NLS-1$
+                }
+                kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
+                WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
+                if (hcConnection.isEnableMaprT()) {
+                    setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), true);
+                }
+            } else if (hcConnection.isEnableMaprT()) {
+                setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), false);
             }
-            kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
-            WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
         }
     }
 
@@ -141,6 +146,9 @@ public class HCatalogServiceUtil {
         Object mapRClientConfig = ReflectionUtils.newInstance(
                 "com.mapr.login.client.MapRLoginHttpsClient", classLoader, new Object[] {}); //$NON-NLS-1$
         if (useKerberos) {
+            Object conf = Class.forName("org.apache.hadoop.conf.Configuration", true, classLoader).newInstance(); //$NON-NLS-1$
+            String nameNodePrincipal = hcConnection.getPrincipal();
+            ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.namenode.kerberos.principal", nameNodePrincipal }); //$NON-NLS-1$//$NON-NLS-2$
             ReflectionUtils.invokeMethod(mapRClientConfig,
                     "getMapRCredentialsViaKerberos", new Object[] { mapRTicketCluster, desiredTicketDurInSecs }); //$NON-NLS-1$
         } else {

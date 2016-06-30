@@ -41,12 +41,14 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
             String group = StringUtils.trimToNull(serviceProperties.getGroup());
             boolean useKrb = serviceProperties.isUseKrb();
             boolean useMaprTicket = serviceProperties.isMaprT();
+            if (useKrb) {
+                String nameNodePrincipal = serviceProperties.getPrincipal();
+                ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.namenode.kerberos.principal", nameNodePrincipal }); //$NON-NLS-1$//$NON-NLS-2$
+            }
             if (useMaprTicket) {
                 setMaprTicketConfig(serviceProperties, classLoader, useKrb);
             }
             if (useKrb) {
-                String nameNodePrincipal = serviceProperties.getPrincipal();
-                ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.namenode.kerberos.principal", nameNodePrincipal }); //$NON-NLS-1$//$NON-NLS-2$
                 boolean useKeytab = serviceProperties.isUseKeytab();
                 if (useKeytab) {
                     String keytabPrincipal = serviceProperties.getKeytabPrincipal();
