@@ -121,9 +121,6 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         boolean useKerberos = Boolean.valueOf((String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_USE_KRB));
         boolean useMaprTicket = Boolean.valueOf((String) metadataConnection
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_USE_MAPRTICKET));
-        if (useMaprTicket) {
-            setMaprTicketConfig(config, metadataConnection, classLoader, useKerberos);
-        }
         if (useKerberos) {
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authentication", "kerberos" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authorization", "true" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -150,6 +147,11 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                                 "org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
                                 "loginUserFromKeytab", new String[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, keytabPrincipal), ConnectionContextHelper.getParamValueOffContext(metadataConnection, keytabPath) }); //$NON-NLS-1$
             }
+            if (useMaprTicket) {
+                setMaprTicketConfig(config, metadataConnection, classLoader, true);
+            }
+        } else if (useMaprTicket) {
+            setMaprTicketConfig(config, metadataConnection, classLoader, false);
         }
         updateHadoopProperties(config, metadataConnection);
         return config;
