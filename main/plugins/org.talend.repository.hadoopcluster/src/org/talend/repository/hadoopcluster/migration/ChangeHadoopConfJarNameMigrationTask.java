@@ -64,6 +64,9 @@ public class ChangeHadoopConfJarNameMigrationTask extends AbstractItemMigrationT
                     try {
                         connection.setConfFile(FileUtils.readFileToByteArray(confJarFile));
                         ProxyRepositoryFactory.getInstance().save(hcItem, true);
+                        // Clear cache of the new confs jar name.
+                        String newConfJarName = HadoopParameterUtil.getConfsJarDefaultName(hcItem.getProperty().getLabel());
+                        HadoopConfsUtils.removeFromDeployedCache(hcItem, newConfJarName);
                         return ExecutionResult.SUCCESS_WITH_ALERT;
                     } catch (Exception e) {
                         ExceptionHandler.process(e);
