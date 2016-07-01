@@ -13,7 +13,6 @@
 package org.talend.hadoop.distribution.helper;
 
 import java.util.Collection;
-import java.util.Collections;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
@@ -36,6 +35,8 @@ import org.talend.hadoop.distribution.constants.Constant;
  * DOC ggu class global comment. Detailled comment
  */
 public class HadoopDistributionsHelper {
+
+    private static Collection<ServiceReference<HadoopComponent>> hadoopDistributions;
 
     /**
      * for Hadoop Distributions.
@@ -110,16 +111,22 @@ public class HadoopDistributionsHelper {
      * @throws Exception
      */
     public static HadoopComponent buildDistribution(String pDistribution, String pVersion) throws Exception {
+        final BundleContext bc = FrameworkUtil.getBundle(DistributionFactory.class).getBundleContext();
 
-        BundleContext bc = FrameworkUtil.getBundle(DistributionFactory.class).getBundleContext();
-        Collection<ServiceReference<HadoopComponent>> distributions = Collections.emptyList();
-        try {
-            distributions = bc.getServiceReferences(HadoopComponent.class, null);
-        } catch (InvalidSyntaxException e) {
-            CommonExceptionHandler.process(e);
+        // find hadoop components
+        if (hadoopDistributions == null) {
+            synchronized (HadoopDistributionsHelper.class) {
+                if (hadoopDistributions == null) {
+                    try {
+                        hadoopDistributions = bc.getServiceReferences(HadoopComponent.class, null);
+                    } catch (InvalidSyntaxException e) {
+                        CommonExceptionHandler.process(e);
+                    }
+                }
+            }
         }
 
-        for (ServiceReference<HadoopComponent> sr : distributions) {
+        for (ServiceReference<HadoopComponent> sr : hadoopDistributions) {
             HadoopComponent np = bc.getService(sr);
             String thatDistribution = np.getDistribution();
             if (Constant.DISTRIBUTION_CUSTOM.equals(thatDistribution) && thatDistribution.equals(pDistribution)) {

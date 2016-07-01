@@ -43,6 +43,8 @@ public final class DistributionsManager implements IDistributionsManager {
 
     private final ComponentType componentType;
 
+    private DistributionBean[] distributionBeans;
+
     /**
      * service can't be null. if the service is HadoopComponent directly, the componentType will be null.
      */
@@ -79,6 +81,17 @@ public final class DistributionsManager implements IDistributionsManager {
     }
 
     public DistributionBean[] getDistributions() {
+        if (distributionBeans == null) {
+            synchronized (DistributionsManager.class) {
+                if (distributionBeans == null) {
+                    distributionBeans = getDistributionsDelegate();
+                }
+            }
+        }
+        return distributionBeans;
+    }
+
+    DistributionBean[] getDistributionsDelegate() {
         if (getServiceName() == null) {
             return new DistributionBean[0];
         }
