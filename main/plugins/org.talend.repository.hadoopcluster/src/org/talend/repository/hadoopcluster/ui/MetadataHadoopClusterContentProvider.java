@@ -90,14 +90,16 @@ public class MetadataHadoopClusterContentProvider extends AbstractMetadataConten
             Set<RepositoryNode> topLevelNodes = getTopNodes();
             for (final RepositoryNode repoNode : topLevelNodes) {
                 IPath topLevelNodeWorkspaceRelativePath = null;
-                if ((repoNode.getContentType() == ERepositoryObjectType.METADATA_CONNECTIONS)
-                        || (repoNode.getContentType() == HadoopClusterRepositoryNodeType.HADOOPCLUSTER)) {
+                if (repoNode.getContentType() == ERepositoryObjectType.METADATA_CONNECTIONS) {
                     IProjectRepositoryNode root = repoNode.getRoot();
                     if (root != null) {
                         String projectName = root.getProject().getTechnicalLabel();
                         topLevelNodeWorkspaceRelativePath = Path.fromPortableString('/' + projectName).append(
                                 repoNode.getContentType().getFolder());
                     }
+                    topLevelNodeToPathMap.put(repoNode, topLevelNodeWorkspaceRelativePath);
+                } else if (repoNode.getContentType() == HadoopClusterRepositoryNodeType.HADOOPCLUSTER) {
+                    topLevelNodeWorkspaceRelativePath = getWorkspaceTopNodePath(repoNode);
                     topLevelNodeToPathMap.put(repoNode, topLevelNodeWorkspaceRelativePath);
                 }
                 if (topLevelNodeWorkspaceRelativePath != null && visitHelper.valid(topLevelNodeWorkspaceRelativePath, merged)) {
@@ -108,8 +110,12 @@ public class MetadataHadoopClusterContentProvider extends AbstractMetadataConten
             return false;
         }
 
-        /* (non-Javadoc)
-         * @see org.talend.repository.viewer.content.listener.ResourceCollectorVisitor#getTopNodeFromResourceDelta(org.eclipse.core.resources.IResourceDelta)
+        /*
+         * (non-Javadoc)
+         * 
+         * @see
+         * org.talend.repository.viewer.content.listener.ResourceCollectorVisitor#getTopNodeFromResourceDelta(org.eclipse
+         * .core.resources.IResourceDelta)
          */
         @Override
         protected IRepositoryNode getTopNodeFromResourceDelta(IResourceDelta delta) {
