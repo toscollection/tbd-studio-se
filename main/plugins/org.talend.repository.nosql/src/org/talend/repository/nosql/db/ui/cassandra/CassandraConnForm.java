@@ -100,7 +100,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         } else {
             dbVersionCombo.select(0);
             if (apiTypeCombo != null && !apiTypeCombo.getCombo().isDisposed()) {
-                apiTypeCombo.setHideWidgets(false);
+                apiTypeCombo.setHideWidgets(true);
             }
         }
         portText.setText(port == null ? ICassandraConstants.DEFAULT_PORT : port);
@@ -216,12 +216,14 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
         // update port
         String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
-        if (ICassandraConstants.DBVERSIONS[0].equals(dbVersion)) {
+        if (ICassandraConstants.DBVERSIONS[2].equals(dbVersion)) {
             if (ICassandraConstants.API_TYPES[0].equals(repositoryTranslator.getLabel(apiTypeCombo.getText()))) {
                 portText.setText(ICassandraConstants.DATASTAX_PORT);
             } else {
                 portText.setText(ICassandraConstants.DEFAULT_PORT);
             }
+        } else if (ICassandraConstants.DBVERSIONS[0].equals(dbVersion) || ICassandraConstants.DBVERSIONS[1].equals(dbVersion)) {
+            portText.setText(ICassandraConstants.DATASTAX_PORT);
         } else {
             portText.setText(ICassandraConstants.DEFAULT_PORT);
         }
