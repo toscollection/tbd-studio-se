@@ -86,7 +86,6 @@ public class DistributionVersion implements IHDistributionVersion {
         if (g != null) {
             DistributionVersionModule vm = new DistributionVersionModule(this);
             vm.moduleGrop = g;
-            modulesNeeded.addAll(vm.getModulesNeeded());
             modules.add(vm);
         }
     }
@@ -100,6 +99,15 @@ public class DistributionVersion implements IHDistributionVersion {
     }
 
     public List<ModuleNeeded> getModulesNeeded() {
+        if (modulesNeeded.isEmpty()) {
+            synchronized (DistributionVersion.class) {
+                if (modulesNeeded.isEmpty()) {
+                    for (DistributionVersionModule vm : modules) {
+                        modulesNeeded.addAll(vm.getModulesNeeded());
+                    }
+                }
+            }
+        }
         return modulesNeeded;
     }
 
