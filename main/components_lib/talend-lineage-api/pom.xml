@@ -29,7 +29,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<cloudera.navigator.version>1.0</cloudera.navigator.version>
-		<atlas.version>0.5-incubating</atlas.version>
+		<atlas.version>0.7-incubating</atlas.version>
 	</properties>
 
 	<dependencies>

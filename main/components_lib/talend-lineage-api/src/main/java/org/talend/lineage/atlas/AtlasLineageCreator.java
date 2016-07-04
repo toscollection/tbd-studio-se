@@ -1,15 +1,3 @@
-// ============================================================================
-//
-// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
-//
-// This source code is available under agreement available at
-// %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
-//
-// You should have received a copy of the agreement
-// along with this program; if not, write to Talend SA
-// 9 rue Pages 92150 Suresnes, France
-//
-// ============================================================================
 package org.talend.lineage.atlas;
 
 import java.util.ArrayList;
@@ -18,6 +6,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -55,8 +44,8 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
      * @param login
      * @param password
      */
-    public AtlasLineageCreator(final String url) {
-        this.client = new TalendAtlasClient(url);
+    public AtlasLineageCreator(final String url, String login, String password) {
+        this.client = new TalendAtlasClient(url, login, password);
     }
 
     @Override
@@ -64,6 +53,10 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
         Map<String, Object> values = new HashMap<>();
 
         values.put("name", jobMetadata.containsKey("name") ? jobMetadata.get("name").toString() : "Talend Job");
+        values.put("qualifiedName", jobMetadata.containsKey("name") ?
+                jobMetadata.get("name").toString() + " [" + UUID.randomUUID().toString() + "]" :
+                "Talend Job" + " [" + UUID.randomUUID().toString() + "]");
+
         values.put("description",
                 jobMetadata.containsKey("description") ? jobMetadata.get("description").toString() : "Talend Job");
         values.put("purpose", jobMetadata.containsKey("purpose") ? jobMetadata.get("purpose").toString() : "Talend Job");
@@ -73,30 +66,30 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
         values.put("framework", jobMetadata.containsKey("framework") ? jobMetadata.get("framework").toString() : "");
         values.put("status", jobMetadata.containsKey("status") ? jobMetadata.get("status").toString() : "FINISHED");
 
-        long creationDate = 0;
-        long lastModificationDate = 0;
+        long creationTime = 0;
+        long lastModificationTime = 0;
         long startTime = 0;
         long endTime = 0;
 
         try {
-            if (jobMetadata.containsKey("creationDate")) {
-                creationDate = Long.parseLong(jobMetadata.get("creationDate").toString().trim());
+            if (jobMetadata.containsKey("creationTime")) {
+                creationTime = Long.parseLong(jobMetadata.get("creationTime").toString().trim());
             }
-            if (jobMetadata.containsKey("lastModificationDate")) {
-                creationDate = Long.parseLong(jobMetadata.get("lastModificationDate").toString().trim());
+            if (jobMetadata.containsKey("lastModificationTime")) {
+                lastModificationTime = Long.parseLong(jobMetadata.get("lastModificationTime").toString().trim());
             }
             if (jobMetadata.containsKey("startTime")) {
-                creationDate = Long.parseLong(jobMetadata.get("startTime").toString().trim());
+                startTime = Long.parseLong(jobMetadata.get("startTime").toString().trim());
             }
             if (jobMetadata.containsKey("endTime")) {
-                creationDate = Long.parseLong(jobMetadata.get("endTime").toString().trim());
+                endTime = Long.parseLong(jobMetadata.get("endTime").toString().trim());
             }
         } catch (NumberFormatException nfe) {
             // Nothing
         }
 
-        values.put("creationDate", creationDate);
-        values.put("lastModificationDate", lastModificationDate);
+        values.put("creationTime", creationTime);
+        values.put("lastModificationTime", lastModificationTime);
         values.put("startTime", startTime);
         values.put("endTime", endTime);
 
@@ -136,9 +129,18 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
                 this.persistedJobs = new HashMap<>();
                 this.persistedJobs.put(jobName, Pair.of(jobRef, idJobRef));
 
-                // we create an artificial instance to link the job with the components
+                // we find the input components
+                List<Id> inputInstanceIds = new ArrayList<>();
+                for (Pair<Referenceable, Id> pair : this.persistedComponents.values()) {
+                    Referenceable ref = pair.getLeft();
+                    List<String> inputs = (List<String>) ref.get("inputs");
+                    if (inputs == null || inputs.size() == 0) {
+                        inputInstanceIds.add(pair.getRight());
+                    }
+                }
+                // we create an artificial instance to link the job with the input components
                 Referenceable artificialRef = TalendModelFactory.buildTalendArtificialComponent(jobName, Arrays.asList(idJobRef),
-                        instancesIds);
+                        inputInstanceIds);
                 Id idArtificialRef = client.persistInstanceWithLog(artificialRef);
             }
         } catch (Throwable e) {
@@ -202,7 +204,7 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
         if (!missingTypes.isEmpty()) {
             // notice that we force the creation of the types if they don't exist
             TypesDef typesDef = TalendModelFactory.buildTypesDef(missingTypes);
-            JSONObject typesIds = client.persistTypes(typesDef);
+            List<String> typesIds = client.persistTypes(typesDef);
         }
     }
 
