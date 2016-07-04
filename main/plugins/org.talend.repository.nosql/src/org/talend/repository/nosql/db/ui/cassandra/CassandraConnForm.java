@@ -216,13 +216,14 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
         // update port
         String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
-        if (ICassandraConstants.DBVERSIONS[2].equals(dbVersion)) {
-            if (ICassandraConstants.API_TYPES[0].equals(repositoryTranslator.getLabel(apiTypeCombo.getText()))) {
+        if (ICassandraConstants.DB_VERSION_CASSANDRA_2_0_0.equals(dbVersion)) {
+            if (ICassandraConstants.API_TYPE_DATASTAX.equals(repositoryTranslator.getLabel(apiTypeCombo.getText()))) {
                 portText.setText(ICassandraConstants.DATASTAX_PORT);
             } else {
                 portText.setText(ICassandraConstants.DEFAULT_PORT);
             }
-        } else if (ICassandraConstants.DBVERSIONS[0].equals(dbVersion) || ICassandraConstants.DBVERSIONS[1].equals(dbVersion)) {
+        } else if (ICassandraConstants.DB_VERSION_CASSANDRA_3_0.equals(dbVersion)
+                || ICassandraConstants.DB_VERSION_CASSANDRA_2_2.equals(dbVersion)) {
             portText.setText(ICassandraConstants.DATASTAX_PORT);
         } else {
             portText.setText(ICassandraConstants.DEFAULT_PORT);
