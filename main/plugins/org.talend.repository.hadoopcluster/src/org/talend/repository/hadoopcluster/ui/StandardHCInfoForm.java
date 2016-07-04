@@ -996,8 +996,15 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
                     keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+                    keytabPrincipalText.setHideWidgets(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection()
+                            && keytabBtn.isEnabled() && keytabBtn.getSelection()));
+                    keytabText.setVisible(kerberosBtn.isEnabled() && kerberosBtn.getSelection() && keytabBtn.isEnabled()
+                            && keytabBtn.getSelection());
                     userNameText.setEditable(false);
                     groupText.setEditable(false);
+                    // userNameText.setHideWidgets(true);
+                    userNameText.setVisible(false);
+                    groupText.setHideWidgets(true);
                     hideKerberosControl(!kerberosBtn.getSelection());
                     hideMaprTicketControl(true);
                     maprTPasswordText.setEditable(false);
@@ -1010,8 +1017,14 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
                     keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
                     keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+                    keytabPrincipalText.setHideWidgets(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection()
+                            && keytabBtn.isEnabled() && keytabBtn.getSelection()));
+                    keytabText.setVisible(kerberosBtn.isEnabled() && kerberosBtn.getSelection() && keytabBtn.isEnabled()
+                            && keytabBtn.getSelection());
                     userNameText.setEditable(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection()));
                     groupText.setEditable(true);
+                    userNameText.setHideWidgets(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
+                    groupText.setHideWidgets(false);
                     hideKerberosControl(!kerberosBtn.getSelection());
                     // maprt
                     hideMaprTicketChildControl(!maprTBtn.getSelection());
@@ -1028,6 +1041,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
                     keytabText.setEditable(false);
                     userNameText.setEditable(true);
                     groupText.setEditable(false);
+                    userNameText.setHideWidgets(false);
+                    groupText.setHideWidgets(true);
                     hideKerberosControl(true);
                     hideMaprTicketControl(true);
                     maprTPasswordText.setEditable(false);
@@ -1044,8 +1059,19 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
             keytabBtn.setEnabled(kerberosBtn.isEnabled() && kerberosBtn.getSelection());
             keytabPrincipalText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
             keytabText.setEditable(keytabBtn.isEnabled() && keytabBtn.getSelection());
+            keytabPrincipalText
+                    .setHideWidgets(!(kerberosBtn.isEnabled() && kerberosBtn.getSelection() && keytabBtn.isEnabled() && keytabBtn
+                            .getSelection()));
+            keytabText.setVisible(kerberosBtn.isEnabled() && kerberosBtn.getSelection() && keytabBtn.isEnabled()
+                    && keytabBtn.getSelection());
             groupText.setEditable(isCurrentHadoopVersionSupportGroup());
             userNameText.setEditable(!kerberosBtn.getSelection());
+            if (isCurrentHadoopVersionSupportGroup()) {
+                userNameText.setHideWidgets(kerberosBtn.getSelection());
+            } else {
+                userNameText.setVisible(!kerberosBtn.getSelection());
+            }
+            groupText.setHideWidgets(!isCurrentHadoopVersionSupportGroup());
             hideKerberosControl(!kerberosBtn.getSelection());
 
             // maprt
