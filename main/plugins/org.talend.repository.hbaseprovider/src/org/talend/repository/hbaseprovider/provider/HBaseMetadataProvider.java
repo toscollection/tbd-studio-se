@@ -147,11 +147,9 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                                 "org.apache.hadoop.security.UserGroupInformation", classLoader, //$NON-NLS-1$
                                 "loginUserFromKeytab", new String[] { ConnectionContextHelper.getParamValueOffContext(metadataConnection, keytabPrincipal), ConnectionContextHelper.getParamValueOffContext(metadataConnection, keytabPath) }); //$NON-NLS-1$
             }
-            if (useMaprTicket) {
-                setMaprTicketConfig(config, metadataConnection, classLoader, true);
-            }
-        } else if (useMaprTicket) {
-            setMaprTicketConfig(config, metadataConnection, classLoader, false);
+        }
+        if (useMaprTicket) {
+            setMaprTicketConfig(config, metadataConnection, classLoader, useKerberos);
         }
         updateHadoopProperties(config, metadataConnection);
         return config;

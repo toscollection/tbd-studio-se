@@ -111,11 +111,9 @@ public class HCatalogServiceUtil {
                 }
                 kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
                 WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
-                if (hcConnection.isEnableMaprT()) {
-                    setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), true);
-                }
-            } else if (hcConnection.isEnableMaprT()) {
-                setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), false);
+            }
+            if (hcConnection.isEnableMaprT()) {
+                setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), hcConnection.isEnableKerberos());
             }
         }
     }
