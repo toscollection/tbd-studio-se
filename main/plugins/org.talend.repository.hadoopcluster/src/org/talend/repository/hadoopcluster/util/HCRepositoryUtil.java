@@ -422,52 +422,46 @@ public class HCRepositoryUtil {
      * @return
      */
     public static Map<String, String> getHadoopDbParameters(String clusterId) {
-        Map<String, String> map = new HashMap<String, String>();
         HadoopClusterConnectionItem clusterItem = HCRepositoryUtil.getRelativeHadoopClusterItem(clusterId);
-        if (clusterItem != null) {
-            HadoopClusterConnection hcConnection = (HadoopClusterConnection) clusterItem.getConnection();
-            map.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, clusterItem.getProperty().getId());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getNameNodeURI()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getJobTrackerURI()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USE_YARN, String.valueOf(hcConnection.isUseYarn()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USE_CUSTOM_CONFS, String.valueOf(hcConnection.isUseCustomConfs()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USE_KRB, String.valueOf(hcConnection.isEnableKerberos()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getPrincipal()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getJtOrRmPrincipal()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getJobHistoryPrincipal()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_RESOURCEMANAGER_SCHEDULER_ADDRESS,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getRmScheduler()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getJobHistory()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_STAGING_DIRECTORY,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getStagingDirectory()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USE_DATANODE_HOSTNAME, String.valueOf(hcConnection.isUseDNHost()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER, HadoopParameterUtil
-                    .getHostNameFromNameNodeURI(ConnectionContextHelper.getParamValueOffContext(hcConnection,
-                            hcConnection.getNameNodeURI())));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME,
-                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getUserName()));
-            map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION, hcConnection.getDistribution());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION, hcConnection.getDfVersion());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION, hcConnection.getDistribution());
-            map.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION, hcConnection.getDfVersion());
-            if (hcConnection.isEnableKerberos()) {
-                map.put(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB, String.valueOf(hcConnection.isUseKeytab()));
-                if (hcConnection.isUseKeytab()) {
-                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL,
-                            ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytabPrincipal()));
-                    map.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB,
-                            ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getKeytab()));
-                }
+        return getHadoopDbParameters(clusterItem);
+    }
+
+    public static Map<String, String> getHadoopDbParameters(HadoopClusterConnectionItem clusterItem) {
+        Map<String, String> parameters = new HashMap<>();
+        if (clusterItem == null) {
+            return parameters;
+        }
+        HadoopClusterConnection hcConnection = (HadoopClusterConnection) clusterItem.getConnection();
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CLUSTER_ID, clusterItem.getProperty().getId());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_URL, hcConnection.getNameNodeURI());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_URL, hcConnection.getJobTrackerURI());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_USE_YARN, String.valueOf(hcConnection.isUseYarn()));
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_USE_CUSTOM_CONFS, String.valueOf(hcConnection.isUseCustomConfs()));
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_USE_KRB, String.valueOf(hcConnection.isEnableKerberos()));
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_NAME_NODE_PRINCIPAL, hcConnection.getPrincipal());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_JOB_TRACKER_PRINCIPAL, hcConnection.getJtOrRmPrincipal());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_JOB_HISTORY_PRINCIPAL, hcConnection.getJobHistoryPrincipal());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_RESOURCEMANAGER_SCHEDULER_ADDRESS, hcConnection.getRmScheduler());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_JOBHISTORY_ADDRESS, hcConnection.getJobHistory());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_STAGING_DIRECTORY, hcConnection.getStagingDirectory());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_USE_DATANODE_HOSTNAME, String.valueOf(hcConnection.isUseDNHost()));
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_DB_SERVER, HadoopParameterUtil
+                .getHostNameFromNameNodeURI(ConnectionContextHelper.getParamValueOffContext(hcConnection,
+                        hcConnection.getNameNodeURI())));
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME, hcConnection.getUserName());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_DISTRIBUTION, hcConnection.getDistribution());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_VERSION, hcConnection.getDfVersion());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_DISTRIBUTION, hcConnection.getDistribution());
+        parameters.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_VERSION, hcConnection.getDfVersion());
+        if (hcConnection.isEnableKerberos()) {
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_USEKEYTAB, String.valueOf(hcConnection.isUseKeytab()));
+            if (hcConnection.isUseKeytab()) {
+                parameters.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB_PRINCIPAL, hcConnection.getKeytabPrincipal());
+                parameters.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB, hcConnection.getKeytab());
             }
         }
-
-        return map;
+        
+        return parameters;
     }
 
     /**
