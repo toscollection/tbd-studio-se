@@ -19,18 +19,12 @@ import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.talend.commons.utils.VersionUtils;
 import org.talend.core.GlobalServiceRegister;
 import org.talend.core.ILibraryManagerService;
-import org.talend.core.context.Context;
-import org.talend.core.context.RepositoryContext;
-import org.talend.core.model.properties.PropertiesFactory;
-import org.talend.core.model.properties.Property;
-import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.repository.hadoopcluster.util.ClusterTestUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
-import org.talend.repository.model.hadoopcluster.HadoopClusterFactory;
 
 /**
  * created by ycbai on 2016年6月16日 Detailled comment
@@ -40,7 +34,7 @@ public class HadoopConfsUtilsTest {
 
     @Test
     public void testGetConfsJarDefaultName() throws IOException {
-        HadoopClusterConnectionItem hcConnectionItem = createHadoopClusterItem();
+        HadoopClusterConnectionItem hcConnectionItem = ClusterTestUtil.createDefaultHadoopClusterItem();
         String expectedConfJarName = HadoopParameterUtil.getConfsJarDefaultName(hcConnectionItem.getProperty().getLabel());
         HadoopConfsUtils.removeFromDeployedCache(hcConnectionItem, expectedConfJarName);
 
@@ -76,23 +70,6 @@ public class HadoopConfsUtilsTest {
         } else { // Otherwise will not deploy the jar and update the deployed cache.
             assertFalse(HadoopConfsUtils.containsInDeployedCache(hcConnectionItem, confsJarName));
         }
-    }
-
-    private HadoopClusterConnectionItem createHadoopClusterItem() {
-        HadoopClusterConnection connection = HadoopClusterFactory.eINSTANCE.createHadoopClusterConnection();
-        Property connectionProperty = PropertiesFactory.eINSTANCE.createProperty();
-        connectionProperty.setAuthor(((RepositoryContext) CoreRuntimePlugin.getInstance().getContext()
-                .getProperty(Context.REPOSITORY_CONTEXT_KEY)).getUser());
-        connectionProperty.setVersion(VersionUtils.DEFAULT_VERSION);
-        connectionProperty.setStatusCode(""); //$NON-NLS-1$
-        connectionProperty.setId("testId"); //$NON-NLS-1$
-        connectionProperty.setLabel("testCluster"); //$NON-NLS-1$
-
-        HadoopClusterConnectionItem connectionItem = HadoopClusterFactory.eINSTANCE.createHadoopClusterConnectionItem();
-        connectionItem.setProperty(connectionProperty);
-        connectionItem.setConnection(connection);
-
-        return connectionItem;
     }
 
 }
