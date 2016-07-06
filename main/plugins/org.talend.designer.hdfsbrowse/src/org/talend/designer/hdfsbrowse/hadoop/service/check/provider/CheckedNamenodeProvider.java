@@ -44,11 +44,6 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
             if (useKrb) {
                 String nameNodePrincipal = serviceProperties.getPrincipal();
                 ReflectionUtils.invokeMethod(conf, "set", new Object[] { "dfs.namenode.kerberos.principal", nameNodePrincipal }); //$NON-NLS-1$//$NON-NLS-2$
-            }
-            if (useMaprTicket) {
-                setMaprTicketConfig(serviceProperties, classLoader, useKrb);
-            }
-            if (useKrb) {
                 boolean useKeytab = serviceProperties.isUseKeytab();
                 if (useKeytab) {
                     String keytabPrincipal = serviceProperties.getKeytabPrincipal();
@@ -58,6 +53,12 @@ public class CheckedNamenodeProvider extends AbstractCheckedServiceProvider {
                 }
             } else if (userName != null && group != null) {
                 ReflectionUtils.invokeMethod(conf, "set", new Object[] { "hadoop.job.ugi", userName + "," + group }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+            }
+            if (useMaprTicket) {
+                if (useKrb && group != null) {
+                    ReflectionUtils.invokeMethod(conf, "set", new Object[] { "hadoop.job.ugi", null + "," + group }); //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+                }
+                setMaprTicketConfig(serviceProperties, classLoader, useKrb);
             }
 
             fileSystem = ReflectionUtils.invokeStaticMethod("org.apache.hadoop.fs.FileSystem", classLoader, "get", //$NON-NLS-1$ //$NON-NLS-2$
