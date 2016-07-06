@@ -10,6 +10,7 @@ import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.hadoopcluster.action.common.CreateHadoopDBNodeAction;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.RepositoryNode;
@@ -42,6 +43,8 @@ public class CreateHiveAction extends CreateHadoopDBNodeAction {
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_TYPE, EDatabaseConnTemplate.HIVE.getDBTypeName());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PRODUCT, EDatabaseTypeName.HIVE.getProduct());
         initMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PORT, EDatabaseConnTemplate.HIVE.getDefaultPort());
+        initMap.put(ConnParameterKeys.CONN_PARA_KEY_USERNAME,
+                ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getUserName()));
     }
 
     @Override
