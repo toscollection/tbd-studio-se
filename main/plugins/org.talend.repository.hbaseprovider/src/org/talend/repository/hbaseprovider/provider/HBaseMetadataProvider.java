@@ -121,6 +121,10 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
         boolean useKerberos = Boolean.valueOf((String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_USE_KRB));
         boolean useMaprTicket = Boolean.valueOf((String) metadataConnection
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_USE_MAPRTICKET));
+        if (useMaprTicket) {
+            ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.cluster.distributed", "true" }); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+            setMaprTicketPropertiesConfig(metadataConnection);
+        }
         if (useKerberos) {
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authentication", "kerberos" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.security.authorization", "true" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -149,18 +153,27 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
             }
         }
         if (useMaprTicket) {
-            setMaprTicketConfig(config, metadataConnection, classLoader, useKerberos);
+            setMaprTicketConfig(metadataConnection, classLoader, useKerberos);
         }
         updateHadoopProperties(config, metadataConnection);
         return config;
     }
 
-    private void setMaprTicketConfig(Object config, IMetadataConnection metadataConn, ClassLoader classLoader, boolean useKerberos)
-            throws Exception {
-        ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.cluster.distributed", "true" }); //$NON-NLS-1$ //$NON-NLS-2$//$NON-NLS-3$
+    protected void setMaprTicketPropertiesConfig(IMetadataConnection metadataConn) throws Exception {
+        boolean setMapRHomeDir = Boolean.valueOf((String) metadataConn
+                .getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHOMEDIR));
+        String mapRHomeDir = (String) metadataConn.getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHOMEDIR);
+        boolean setMapRHadoopLogin = Boolean.valueOf((String) metadataConn
+                .getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHADOOPLOGIN));
+        String mapRHadoopLogin = (String) metadataConn.getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHADOOPLOGIN);
         System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
         System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
-        System.setProperty("mapr.home.dir", "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("mapr.home.dir", setMapRHomeDir ? mapRHomeDir : "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("hadoop.login", setMapRHadoopLogin ? mapRHadoopLogin : "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    private void setMaprTicketConfig(IMetadataConnection metadataConn, ClassLoader classLoader, boolean useKerberos)
+            throws Exception {
         String mapRTicketUsername = (String) metadataConn
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_USERNAME);
         String mapRTicketPassword = (String) metadataConn
@@ -169,6 +182,9 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_CLUSTER);
         String mapRTicketDuration = (String) metadataConn
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_MAPRTICKET_DURATION);
+        boolean setMapRHadoopLogin = Boolean.valueOf((String) metadataConn
+                .getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHADOOPLOGIN));
+        String mapRHadoopLogin = (String) metadataConn.getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHADOOPLOGIN);
         Long desiredTicketDurInSecs = 86400L;
         if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
             if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 
@@ -187,7 +203,11 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
                             mapRClientConfig,
                             "getMapRCredentialsViaKerberos", new Object[] { ConnectionContextHelper.getParamValueOffContext(metadataConn, mapRTicketCluster), desiredTicketDurInSecs }); //$NON-NLS-1$
         } else {
-            ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+            if (setMapRHadoopLogin) {
+                System.setProperty("hadoop.login", mapRHadoopLogin);//$NON-NLS-1$
+            } else {
+                ReflectionUtils.invokeMethod(mapRClientConfig, "setCheckUGI", new Object[] { false }, boolean.class);//$NON-NLS-1$
+            }
             ReflectionUtils
                     .invokeMethod(
                             mapRClientConfig,
