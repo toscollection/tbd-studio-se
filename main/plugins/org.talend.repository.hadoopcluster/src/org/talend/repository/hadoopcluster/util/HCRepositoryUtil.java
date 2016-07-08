@@ -93,6 +93,10 @@ public class HCRepositoryUtil {
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_AUTHENTICATION_MAPRTICKET_PASSWORD);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_AUTHENTICATION_MAPRTICKET_CLUSTER);
         hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_HIVE_AUTHENTICATION_MAPRTICKET_DURATION);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHOMEDIR);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHOMEDIR);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHADOOPLOGIN);
+        hadoopDbParameters.add(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHADOOPLOGIN);
     }
 
     /**
@@ -494,6 +498,14 @@ public class HCRepositoryUtil {
                     .put(ConnParameterKeys.CONN_PARA_KEY_HIVE_AUTHENTICATION_MAPRTICKET_CLUSTER, hcConnection.getMaprTCluster());
             parameters.put(ConnParameterKeys.CONN_PARA_KEY_HIVE_AUTHENTICATION_MAPRTICKET_DURATION,
                     hcConnection.getMaprTDuration());
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHOMEDIR,
+                    String.valueOf(hcConnection.isSetMaprTHomeDir()));
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHOMEDIR,
+                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getMaprTHomeDir()));
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_SETMAPRHADOOPLOGIN,
+                    String.valueOf(hcConnection.isSetHadoopLogin()));
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_MAPRTICKET_MAPRHADOOPLOGIN,
+                    ConnectionContextHelper.getParamValueOffContext(hcConnection, hcConnection.getMaprTHadoopLogin()));
         }
         return parameters;
     }
