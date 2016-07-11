@@ -323,8 +323,12 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         hadoopPropertiesComposite.setLayout(hadoopPropertiesLayout);
         hadoopPropertiesComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        List<Map<String, Object>> hadoopPropertiesList = getHadoopProperties();
-        propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesList) {
+        propertiesDialog = new HadoopPropertiesDialog(getShell(), getHadoopProperties()) {
+
+            @Override
+            protected List<Map<String, Object>> getLatestInitProperties() {
+                return getHadoopProperties();
+            }
 
             @Override
             public void applyProperties(List<Map<String, Object>> properties) {
@@ -658,7 +662,8 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         properties.setUseKeytab(connection.isUseKeytab());
         properties.setKeytabPrincipal(connection.getKeytabPrincipal());
         properties.setKeytab(connection.getKeytab());
-        properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesList(connection.getHadoopProperties()));
+        properties.setHadoopProperties(HadoopRepositoryUtil.getHadoopPropertiesWithOriginalValue(
+                connection.getHadoopProperties(), contextType, false));
         properties.setRelativeHadoopClusterId(connectionItem.getProperty().getId());
     }
 
