@@ -81,8 +81,16 @@ public class HDFSConnectionBean {
         }
     }
 
+    public ContextType getParentContextType() {
+        return this.parentContextType;
+    }
+
     public void setParentContextType(ContextType parentContextType) {
         this.parentContextType = parentContextType;
+    }
+
+    public ContextType getContextType() {
+        return this.contextType;
     }
 
     public void setContextType(ContextType contextType) {
