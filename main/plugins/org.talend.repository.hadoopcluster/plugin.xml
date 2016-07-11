@@ -256,4 +256,16 @@
              serviceId="IRepositoryContextUpdateService">
        </Service>
     </extension>
+    <extension
+          point="org.talend.core.migrationTask">
+       <projecttask
+             beforeLogon="false"
+             breaks="6.0.0"
+             class="org.talend.repository.hadoopcluster.migration.ReviseInvalidContextNamesOfHadoopPropertiesMigrationTask"
+             description="Revise invalid context names of hadoop properties."
+             id="org.talend.repository.hadoopcluster.migration.ReviseInvalidContextNamesOfHadoopPropertiesMigrationTask"
+             name="ReviseInvalidContextNamesOfHadoopPropertiesMigrationTask"
+             version="6.1.2">
+       </projecttask>
+    </extension>
 </plugin>
