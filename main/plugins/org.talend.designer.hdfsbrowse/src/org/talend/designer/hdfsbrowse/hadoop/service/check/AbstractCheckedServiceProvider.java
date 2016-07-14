@@ -99,21 +99,25 @@ public abstract class AbstractCheckedServiceProvider implements ICheckedServiceP
         return classLoader;
     }
 
+    protected void setMaprTicketPropertiesConfig(HadoopServiceProperties serviceProperties) {
+        boolean setMapRHomeDir = serviceProperties.isSetMaprTHomeDir();
+        String mapRHomeDir = serviceProperties.getMaprTHomeDir();
+        boolean setMapRHadoopLogin = serviceProperties.isSetHadoopLogin();
+        String mapRHadoopLogin = serviceProperties.getMaprTHadoopLogin();
+        System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("mapr.home.dir", setMapRHomeDir ? mapRHomeDir : "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
+        System.setProperty("hadoop.login", setMapRHadoopLogin ? mapRHadoopLogin : "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+    }
+
     protected void setMaprTicketConfig(HadoopServiceProperties serviceProperties, ClassLoader classLoader, boolean useKerberos)
             throws Exception {
         String mapRTicketUsername = serviceProperties.getUserName();
         String mapRTicketPassword = serviceProperties.getMaprTPassword();
         String mapRTicketCluster = serviceProperties.getMaprTCluster();
         String mapRTicketDuration = serviceProperties.getMaprTDuration();
-        boolean setMapRHomeDir = serviceProperties.isSetMaprTHomeDir();
-        String mapRHomeDir = serviceProperties.getMaprTHomeDir();
         boolean setMapRHadoopLogin = serviceProperties.isSetHadoopLogin();
-
-        String mapRHadoopLogin = serviceProperties.getMaprTHomeDir();
-        System.setProperty("pname", "MapRLogin");//$NON-NLS-1$ //$NON-NLS-2$
-        System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
-        System.setProperty("mapr.home.dir", setMapRHomeDir ? mapRHomeDir : "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
-
+        String mapRHadoopLogin = serviceProperties.getMaprTHadoopLogin();
         Long desiredTicketDurInSecs = 86400L;
         if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
             if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 

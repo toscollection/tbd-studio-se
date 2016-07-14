@@ -87,6 +87,9 @@ public class HCatalogServiceUtil {
     private static void addKerberos2Client(WebClient client, HCatalogConnection connection) throws Exception {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
         if (hcConnection != null) {
+            if (hcConnection.isEnableMaprT()) {
+                setMaprTicketPropertiesConfig(hcConnection);
+            }
             if (hcConnection.isEnableKerberos()) {
                 KerberosAuthOutInterceptor kbInterceptor = new KerberosAuthOutInterceptor();
                 AuthorizationPolicy policy = new AuthorizationPolicy();
@@ -111,21 +114,14 @@ public class HCatalogServiceUtil {
                 }
                 kbInterceptor.setLoginConfig(new KerberosPolicyConfig(properties));
                 WebClient.getConfig(client).getOutInterceptors().add(kbInterceptor);
-                if (hcConnection.isEnableMaprT()) {
-                    setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), true);
-                }
-            } else if (hcConnection.isEnableMaprT()) {
-                setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), false);
+            }
+            if (hcConnection.isEnableMaprT()) {
+                setMaprTicketConfig(hcConnection, getClassLoader(hcConnection, connection), hcConnection.isEnableKerberos());
             }
         }
     }
 
-    private static void setMaprTicketConfig(HadoopClusterConnection hcConnection, ClassLoader classLoader, boolean useKerberos)
-            throws Exception {
-        String mapRTicketUsername = hcConnection.getUserName();
-        String mapRTicketPassword = hcConnection.getMaprTPassword();
-        String mapRTicketCluster = hcConnection.getMaprTCluster();
-        String mapRTicketDuration = hcConnection.getMaprTDuration();
+    private static void setMaprTicketPropertiesConfig(HadoopClusterConnection hcConnection) {
         boolean setMapRHomeDir = hcConnection.isSetMaprTHomeDir();
         String mapRHomeDir = hcConnection.getMaprTHomeDir();
         boolean setMapRHadoopLogin = hcConnection.isSetHadoopLogin();
@@ -134,6 +130,16 @@ public class HCatalogServiceUtil {
         System.setProperty("https.protocols", "TLSv1.2");//$NON-NLS-1$ //$NON-NLS-2$
         System.setProperty("mapr.home.dir", setMapRHomeDir ? mapRHomeDir : "/opt/mapr");//$NON-NLS-1$ //$NON-NLS-2$
         System.setProperty("hadoop.login", setMapRHadoopLogin ? mapRHadoopLogin : "kerberos");//$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    private static void setMaprTicketConfig(HadoopClusterConnection hcConnection, ClassLoader classLoader, boolean useKerberos)
+            throws Exception {
+        String mapRTicketUsername = hcConnection.getUserName();
+        String mapRTicketPassword = hcConnection.getMaprTPassword();
+        String mapRTicketCluster = hcConnection.getMaprTCluster();
+        String mapRTicketDuration = hcConnection.getMaprTDuration();
+        boolean setMapRHadoopLogin = hcConnection.isSetHadoopLogin();
+        String mapRHadoopLogin = hcConnection.getMaprTHadoopLogin();
         Long desiredTicketDurInSecs = 86400L;
         if (mapRTicketDuration != null && StringUtils.isNotBlank(mapRTicketDuration)) {
             if (mapRTicketDuration.endsWith("L")) {//$NON-NLS-1$ 
