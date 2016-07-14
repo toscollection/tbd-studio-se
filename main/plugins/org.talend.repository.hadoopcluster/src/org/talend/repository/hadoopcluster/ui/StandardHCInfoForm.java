@@ -303,7 +303,6 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         maprTHomeDirText.setEditable(isMaprTEditable);
         maprTHadoopLoginText.setEditable(isMaprTEditable);
 
-        hadoopPropertiesComposite.setEnabled(isEditable);
         propertiesDialog.updateStatusLabel(getHadoopProperties());
     }
 
@@ -476,6 +475,11 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         hadoopPropertiesComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         propertiesDialog = new HadoopPropertiesDialog(getShell(), getHadoopProperties()) {
+
+            @Override
+            protected boolean isReadOnly() {
+                return !isEditable();
+            }
 
             @Override
             protected List<Map<String, Object>> getLatestInitProperties() {
