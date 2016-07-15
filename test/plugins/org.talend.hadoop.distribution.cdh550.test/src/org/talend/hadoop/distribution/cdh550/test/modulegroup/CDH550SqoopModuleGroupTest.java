@@ -36,6 +36,7 @@ public class CDH550SqoopModuleGroupTest {
         results.put(CDH550Constant.SQOOP_MODULE_GROUP.getModuleName(), null);
         results.put(CDH550Constant.HDFS_MODULE_GROUP.getModuleName(), null);
         results.put(CDH550Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
+        results.put(CDH550Constant.SQOOP_PARQUET_MODULE_GROUP.getModuleName(), null);
 
         Set<DistributionModuleGroup> moduleGroups = CDH550SqoopModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
