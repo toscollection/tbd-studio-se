@@ -37,9 +37,10 @@ public class HDP240SparkBatchModuleGroupTest {
         results.put(HDP240Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')");
         results.put(HDP240Constant.HDFS_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')");
         results.put(HDP240Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')");
+        results.put(HDP240Constant.ATLAS_HDP_2_4.getModuleName(), null);
 
         Set<DistributionModuleGroup> moduleGroups = HDP240SparkBatchModuleGroup.getModuleGroups();
-        assertEquals(4, moduleGroups.size());
+        assertEquals(results.size(), moduleGroups.size());
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName()));

@@ -32,6 +32,7 @@ public class EMR450SqoopModuleGroupTest {
         results.put(EMR450SqoopModuleGroup.MODULE_GROUP_NAME, null);
         results.put(EMR450MapReduceModuleGroup.MAPREDUCE_GROUP_NAME, null);
         results.put(EMR450HDFSModuleGroup.MODULE_GROUP_NAME, null);
+        results.put(EMR450SqoopModuleGroup.SQOOP_PARQUET_MODULE_GROUP_NAME, null);
 
         Set<DistributionModuleGroup> moduleGroups = EMR450SqoopModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
