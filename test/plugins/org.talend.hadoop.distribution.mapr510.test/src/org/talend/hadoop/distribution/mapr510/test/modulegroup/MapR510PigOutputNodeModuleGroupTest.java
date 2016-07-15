@@ -32,7 +32,8 @@ public class MapR510PigOutputNodeModuleGroupTest {
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<String, String>();
-
+        results.put(MapR510Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(),
+                "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='MAPR') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='MAPR510')");
         results.put(MapR510Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
                 "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='MAPR') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='MAPR510') "
                         + "AND (S3_LOCATION=='true') AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE')");

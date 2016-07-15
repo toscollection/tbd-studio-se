@@ -43,9 +43,10 @@ public class HDP240PigModuleGroupTest {
         results.put(HDP240Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), "(LOAD=='RCFILEPIGSTORAGE')");
         results.put(HDP240Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), "(LOAD=='SEQUENCEFILELOADER')");
         results.put(HDP240Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')");
-
+        results.put(HDP240Constant.TEZ_MODULE_GROUP.getModuleName(), "(ENGINE=='TEZ')");
+        results.put(HDP240Constant.TEZ_SERVER_MODULE_GROUP.getModuleName(), "(ENGINE=='TEZ') AND (TEZ_LIB=='INSTALL')");
         Set<DistributionModuleGroup> moduleGroups = HDP240PigModuleGroup.getModuleGroups();
-        assertEquals(11, moduleGroups.size());
+        assertEquals(results.size(), moduleGroups.size());
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName()));
