@@ -192,7 +192,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
 
     @Override
     public void init() {
-        if (!isContextMode()) {
+        if (isNeedFillDefaults()) {
             fillDefaults();
         }
 
