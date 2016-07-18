@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hdp240.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -84,7 +81,7 @@ public class HDP240DistributionTest {
         assertTrue(((SparkBatchComponent) distribution).isSpark16());
         assertTrue(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
         assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
-        assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
+        assertFalse(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
         assertFalse(((SparkStreamingComponent) distribution).isSpark14());
         assertFalse(((SparkStreamingComponent) distribution).isSpark13());
@@ -93,7 +90,7 @@ public class HDP240DistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).doSupportDynamicMemoryAllocation());
         assertFalse(((SparkStreamingComponent) distribution).isExecutedThroughSparkJobServer());
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
-        assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
+        assertFalse(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
 

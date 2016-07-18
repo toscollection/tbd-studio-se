@@ -36,8 +36,9 @@ public class HDP240MapReduceModuleGroupTest {
         results.put(HDP240Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
         results.put(HDP240Constant.MAPREDUCE_PARQUET_MODULE_GROUP.getModuleName(), null);
         results.put(HDP240Constant.MAPREDUCE_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
+        results.put(HDP240Constant.ATLAS_HDP_2_4.getModuleName(), null);
         Set<DistributionModuleGroup> moduleGroups = HDP240MapReduceModuleGroup.getModuleGroups();
-        assertEquals(4, moduleGroups.size());
+        assertEquals(results.size(), moduleGroups.size());
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName()));
             if (results.get(module.getModuleName()) == null) {

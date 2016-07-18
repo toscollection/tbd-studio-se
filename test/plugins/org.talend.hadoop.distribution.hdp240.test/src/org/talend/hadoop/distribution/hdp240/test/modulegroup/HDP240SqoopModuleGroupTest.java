@@ -36,6 +36,7 @@ public class HDP240SqoopModuleGroupTest {
         results.put(HDP240Constant.SQOOP_MODULE_GROUP.getModuleName(), null);
         results.put(HDP240Constant.HDFS_MODULE_GROUP.getModuleName(), null);
         results.put(HDP240Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
+        results.put(HDP240Constant.SQOOP_PARQUET_MODULE_GROUP.getModuleName(), null);
 
         Set<DistributionModuleGroup> moduleGroups = HDP240SqoopModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
