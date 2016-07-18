@@ -96,7 +96,11 @@
 		for(java.util.Map.Entry entry_<%=cid%>:fileMap_<%=cid%>.entrySet()) {
 			com.microsoft.windowsazure.services.blob.client.CloudBlockBlob object_<%=cid%> = container_<%=cid%>.getBlockBlobReference(entry_<%=cid%>.getValue().toString());
 			java.io.File source_<%=cid%> = new java.io.File(entry_<%=cid%>.getKey().toString());
-			object_<%=cid%>.upload(new java.io.FileInputStream(source_<%=cid%>), source_<%=cid%>.length());
+			java.io.FileInputStream currentStream_<%=cid%> = new java.io.FileInputStream(source_<%=cid%>);
+			resourceMap.put("stream_<%=cid%>", currentStream_<%=cid%>);
+			object_<%=cid%>.upload(currentStream_<%=cid%>, source_<%=cid%>.length());
+			resourceMap.remove("stream_<%=cid%>");
+			currentStream_<%=cid%>.close();
 <%
 			if(isLog4jEnabled) {
 %>
@@ -127,4 +131,19 @@
 <%
 		}
 %>
+	} finally {
+		java.io.FileInputStream lastStream_<%=cid%> = (java.io.FileInputStream)resourceMap.remove("stream_<%=cid%>");
+		if(lastStream_<%=cid%> != null) {
+			try {
+				lastStream_<%=cid%>.close();
+			} catch(java.io.IOException eStreamClose_<%=cid%>) {
+<%
+				if(isLog4jEnabled) {
+%>
+				log.error("<%=cid%> - " + eStreamClose_<%=cid%>.getMessage());
+<%
+				}
+%>
+			}
+		}
 	}
