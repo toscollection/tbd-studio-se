@@ -57,7 +57,7 @@ public class CDH550ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
 
     @Test
     public void testHbase() {
-        String libsStr = "hbase-common-1.0.0-cdh5.5.0.jar;hbase-client-1.0.0-cdh5.5.0.jar;hbase-protocol-1.0.0-cdh5.5.0.jar;hadoop-common-2.6.0-cdh5.5.0.jar;hadoop-auth-2.6.0-cdh5.5.0.jar;commons-logging-1.2.jar;commons-codec-1.9.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.1.jar;zookeeper-3.4.5-cdh5.5.0.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;guava-12.0.1.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.6.6.Final.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;hbase-server-1.0.0-cdh5.5.0.jar";
+        String libsStr = "hbase-common-1.0.0-cdh5.5.2.jar;hbase-client-1.0.0-cdh5.5.2.jar;hbase-protocol-1.0.0-cdh5.5.2.jar;hadoop-common-2.6.0-cdh5.5.2.jar;hadoop-auth-2.6.0-cdh5.5.2.jar;commons-logging-1.2.jar;commons-codec-1.9.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.2.jar;zookeeper-3.4.5-cdh5.5.2.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;guava-12.0.1.jar;jackson-mapper-asl-1.8.8.jar;jackson-core-asl-1.8.8.jar;netty-3.6.6.Final.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;hbase-server-1.0.0-cdh5.5.2.jar;hadoop-hdfs-2.6.0-cdh5.5.2.jar;servlet-api-2.5.jar;commons-io-2.4.jar;commons-cli-1.2.jar";
         doTestClassLoader(EHadoopCategory.HBASE.getName(), libsStr);
     }
 
