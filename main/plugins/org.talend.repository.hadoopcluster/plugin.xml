@@ -265,7 +265,7 @@
              description="Revise invalid context names of hadoop properties."
              id="org.talend.repository.hadoopcluster.migration.ReviseInvalidContextNamesOfHadoopPropertiesMigrationTask"
              name="ReviseInvalidContextNamesOfHadoopPropertiesMigrationTask"
-             version="6.1.2">
+             version="6.1.1">
        </projecttask>
     </extension>
 </plugin>
