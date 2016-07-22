@@ -80,7 +80,7 @@ public class HDFSModelUtil {
             bean.setRelativeHadoopClusterId(connection.getRelativeHadoopClusterId());
             Map<String, Object> configurations = bean.getConfigurations();
             List<Map<String, Object>> hadoopProperties = HadoopRepositoryUtil.getHadoopPropertiesFullList(connection,
-                    connection.getHadoopProperties(), bean.getParentContextType(), bean.getContextType(), false);
+                    connection.getHadoopProperties(), false, true);
             for (Map<String, Object> propMap : hadoopProperties) {
                 String key = TalendQuoteUtils.removeQuotesIfExist(String.valueOf(propMap.get("PROPERTY"))); //$NON-NLS-1$
                 String value = TalendQuoteUtils.removeQuotesIfExist(String.valueOf(propMap.get("VALUE"))); //$NON-NLS-1$
