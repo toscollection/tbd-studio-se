@@ -94,8 +94,8 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
-    <plugin
+
+   <plugin
          id="org.talend.hadoop.distribution.hdp240.test"
          download-size="0"
          install-size="0"
@@ -126,8 +126,8 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
-    <plugin
+
+   <plugin
          id="org.talend.hadoop.distribution.emr450.test"
          download-size="0"
          install-size="0"
@@ -191,14 +191,13 @@
          fragment="true"
          unpack="false"/>
 
-
    <plugin
          id="org.talend.hadoop.distribution.hdinsight340.test"
          download-size="0"
          install-size="0"
          version="0.0.0"
          fragment="true"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="org.talend.hadoop.distribution.mapr213.test"
@@ -270,7 +269,7 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
-         unpack="false"/>         
+         unpack="false"/>
 
    <plugin
          id="org.talend.hadoop.distribution.hdp130.test"
@@ -334,6 +333,21 @@
          install-size="0"
          version="0.0.0"
          fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.hadoopcluster.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.talend.repository.hadoopcluster.configurator.test"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
