@@ -323,6 +323,11 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         propertiesDialog = new HadoopPropertiesDialog(getShell(), getHadoopProperties()) {
 
             @Override
+            protected boolean isReadOnly() {
+                return !isEditable();
+            }
+
+            @Override
             protected List<Map<String, Object>> getLatestInitProperties() {
                 return getHadoopProperties();
             }
