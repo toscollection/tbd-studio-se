@@ -143,19 +143,11 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
         T connection = getConnection();
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
         String hadoopPropertiesOfCluster = StringUtils.trimToEmpty(hcConnection.getHadoopProperties());
+        String hadoopProperties = connection.getHadoopProperties();
         List<Map<String, Object>> hadoopPropertiesListOfCluster = HadoopRepositoryUtil
                 .getHadoopPropertiesList(hadoopPropertiesOfCluster);
-        propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesListOfCluster, getHadoopProperties()) {
-
-            @Override
-            protected boolean isReadOnly() {
-                return !isEditable();
-            }
-
-            @Override
-            protected List<Map<String, Object>> getLatestInitProperties() {
-                return getHadoopProperties();
-            }
+        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+        propertiesDialog = new HadoopPropertiesDialog(getShell(), hadoopPropertiesListOfCluster, hadoopPropertiesList) {
 
             @Override
             public void applyProperties(List<Map<String, Object>> properties) {
@@ -166,13 +158,23 @@ public abstract class AbstractHadoopSubForm<T extends HadoopSubConnection> exten
     }
 
     protected void updateHadoopPropertiesFields(boolean isEditable) {
-        propertiesDialog.updateStatusLabel(getHadoopProperties());
+        refreshHadoopProperties(isEditable);
+        updatePropertiesFileds(isEditable);
     }
 
-    protected List<Map<String, Object>> getHadoopProperties() {
-        String hadoopProperties = getConnection().getHadoopProperties();
-        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
-        return hadoopPropertiesList;
+    private void refreshHadoopProperties(boolean isEditable) {
+        if (propertiesDialog != null) {
+            List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(getConnection()
+                    .getHadoopProperties());
+            propertiesDialog.setInitProperties(hadoopPropertiesList);
+            propertiesDialog.updateStatusLabel(hadoopPropertiesList);
+        }
+    }
+
+    private void updatePropertiesFileds(boolean isEditable) {
+        if (propertiesDialog != null) {
+            propertiesDialog.updatePropertiesFields(isEditable);
+        }
     }
 
 }
