@@ -25,6 +25,8 @@
         "HIVE_PRINCIPAL":"hive/_HOST@EXAMPLE.COM"
     },
     "HBASE":{
-        "PORT":5181
+        "PORT":5181,
+        "HBASE_MASTER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM",
+        "HBASE_REGIONSERVER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM"
     }
 }
