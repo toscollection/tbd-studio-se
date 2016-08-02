@@ -195,6 +195,9 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         if (isNeedFillDefaults()) {
             fillDefaults();
         }
+        if (isContextMode()) {
+            adaptFormToEditable();
+        }
 
         EAuthenticationMode authMode = EAuthenticationMode.getAuthenticationByName(getConnection().getAuthMode(), false);
         if (authMode != null) {
@@ -268,6 +271,16 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
         preloadAuthentificationBtn.setEnabled(!readOnly);
         maprTHomeDirText.setReadOnly(readOnly);
         maprTHadoopLoginText.setReadOnly(readOnly);
+    }
+
+    @Override
+    protected void adaptFormToEditable() {
+        super.adaptFormToEditable();
+        if (isContextMode()) {
+            maprTPasswordText.getTextControl().setEchoChar('\0');
+        } else {
+            maprTPasswordText.getTextControl().setEchoChar('*');
+        }
     }
 
     @Override
@@ -1414,11 +1427,13 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         updateForm();
+        if (isContextMode()) {
+            adaptFormToEditable();
+        }
         if (isReadOnly() != readOnly) {
             adaptFormToReadOnly();
         }
         if (visible) {
-            adaptFormToEditable();
             updateStatus(getStatusLevel(), getStatus());
         }
     }
