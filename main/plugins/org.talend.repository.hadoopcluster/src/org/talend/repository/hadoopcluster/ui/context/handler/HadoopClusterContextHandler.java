@@ -97,6 +97,22 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case KeyTab:
                         ConnectionContextHelper.createParameters(varList, paramName, conn.getKeytab());
                         break;
+                    case maprTPassword:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getMaprTPassword(),
+                                JavaTypesManager.PASSWORD);
+                        break;
+                    case maprTCluster:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getMaprTCluster());
+                        break;
+                    case maprTDuration:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getMaprTDuration());
+                        break;
+                    case maprTHomeDir:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getMaprTHomeDir());
+                        break;
+                    case maprTHadoopLogin:
+                        ConnectionContextHelper.createParameters(varList, paramName, conn.getMaprTHadoopLogin());
+                        break;
 
                     case WebHostName:
                         ConnectionContextHelper.createParameters(varList, paramName,
