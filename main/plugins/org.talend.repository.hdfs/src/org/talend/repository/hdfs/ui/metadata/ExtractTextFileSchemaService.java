@@ -43,6 +43,7 @@ import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
 import org.talend.core.model.metadata.types.JavaDataTypeHelper;
 import org.talend.core.model.metadata.types.JavaTypesManager;
+import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.ui.preference.metadata.MetadataTypeLengthConstants;
 import org.talend.core.ui.services.IDesignerCoreUIService;
 import org.talend.core.utils.CsvArray;
@@ -128,8 +129,10 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
         ProcessDescription processDescription = new ProcessDescription();
         Charset guessedCharset = CharsetToolkit.guessEncoding(tmpFile, 4096);
         processDescription.setEncoding(TalendQuoteUtils.addQuotesIfNotExist(guessedCharset.displayName()));
-        processDescription.setFieldSeparator(TalendQuoteUtils.addQuotesIfNotExist(connection.getFieldSeparator()));
-        processDescription.setRowSeparator(TalendQuoteUtils.addQuotesIfNotExist(connection.getRowSeparator()));
+        processDescription.setFieldSeparator(TalendQuoteUtils.addQuotesIfNotExist(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(connection), connection.getFieldSeparator())));
+        processDescription.setRowSeparator(TalendQuoteUtils.addQuotesIfNotExist(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(connection), connection.getRowSeparator())));
         processDescription.setFilepath(TalendQuoteUtils.addQuotesIfNotExist(formatFilePath(tmpFile.getAbsolutePath())));
         processDescription.setFooterRow(0);
         int i = -1;
@@ -142,7 +145,8 @@ public class ExtractTextFileSchemaService implements IExtractSchemaService<HDFSC
         processDescription.setHeaderRow(i);
         processDescription.setCSVOption(false);
         processDescription.setLimitRows(DEFAULT_READ_LINE_NUM);
-        processDescription.setPattern(TalendQuoteUtils.addQuotesIfNotExist(connection.getFieldSeparator()));
+        processDescription.setPattern(TalendQuoteUtils.addQuotesIfNotExist(ContextParameterUtils.getOriginalValue(
+                ConnectionContextHelper.getContextTypeForContextMode(connection), connection.getFieldSeparator())));
         processDescription.setRemoveEmptyRow(false);
         processDescription.setServer(TalendQuoteUtils.addQuotesIfNotExist(DEFAULT_FILE_SERVER));
         processDescription.setSplitRecord(false);
