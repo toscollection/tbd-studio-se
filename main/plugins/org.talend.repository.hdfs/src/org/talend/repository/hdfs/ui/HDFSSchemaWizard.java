@@ -24,6 +24,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.talend.commons.exception.ExceptionHandler;
@@ -42,6 +43,7 @@ import org.talend.metadata.managment.ui.wizard.AbstractRepositoryFileTableWizard
 import org.talend.repository.hdfs.i18n.Messages;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.hdfs.HDFSConnection;
+
 import orgomg.cwm.objectmodel.core.Package;
 
 /**
@@ -118,8 +120,14 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
                 public void run(IProgressMonitor monitor) throws CoreException {
                     connectionItem.setConnection(temConnection);
                     saveMetaData();
-                    RepositoryUpdateManager.updateMultiSchema(connectionItem, oldMetadataTable, oldTableMap);
-                    closeLockStrategy();
+                    Display.getDefault().asyncExec(new Runnable() {
+                        
+                        @Override
+                        public void run() {
+                            RepositoryUpdateManager.updateMultiSchema(connectionItem, oldMetadataTable, oldTableMap);
+                            closeLockStrategy();
+                        }
+                    });
                     temConnection = null;
                 }
             };
