@@ -71,13 +71,6 @@ public class MetadataHadoopClusterContentProvider extends AbstractMetadataConten
                             root.getRootRepositoryNode(HadoopClusterRepositoryNodeType.HADOOPCLUSTER).getContentType()
                                     .getFolder());
                 }
-            } else if (repoNode.getContentType() == ERepositoryObjectType.METADATA_CONNECTIONS) {
-                IProjectRepositoryNode root = repoNode.getRoot();
-                if (root != null) {
-                    String projectName = root.getProject().getTechnicalLabel();
-                    topLevelNodeWorkspaceRelativePath = Path.fromPortableString('/' + projectName)
-                            .append(repoNode.getContentType().getFolder());
-                }
             }
             return topLevelNodeWorkspaceRelativePath;
         }
@@ -142,6 +135,14 @@ public class MetadataHadoopClusterContentProvider extends AbstractMetadataConten
     @Override
     protected RepositoryNode getTopLevelNodeFromProjectRepositoryNode(ProjectRepositoryNode projectNode) {
         return projectNode.getRootRepositoryNode(HadoopClusterRepositoryNodeType.HADOOPCLUSTER);
+    }
+
+    @Override
+    public Set<RepositoryNode> getTopLevelNodes() {
+        Set<RepositoryNode> topLevelNodes = super.getTopLevelNodes();
+        topLevelNodes.clear();
+        topLevelNodes.add(getTopLevelNodeFromProjectRepositoryNode(ProjectRepositoryNode.getInstance()));
+        return topLevelNodes;
     }
 
     @Override
