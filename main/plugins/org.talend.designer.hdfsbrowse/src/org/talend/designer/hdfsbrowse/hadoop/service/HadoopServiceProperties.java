@@ -276,7 +276,7 @@ public class HadoopServiceProperties {
     }
 
     public String getMaprTPassword() {
-        return this.maprTPassword;
+        return getRealValue(this.maprTPassword);
     }
 
     public void setMaprTPassword(String maprTPassword) {
@@ -284,7 +284,7 @@ public class HadoopServiceProperties {
     }
 
     public String getMaprTCluster() {
-        return this.maprTCluster;
+        return getRealValue(this.maprTCluster);
     }
 
     public void setMaprTCluster(String maprTCluster) {
@@ -292,7 +292,7 @@ public class HadoopServiceProperties {
     }
 
     public String getMaprTDuration() {
-        return this.maprTDuration;
+        return getRealValue(this.maprTDuration);
     }
 
     public void setMaprTDuration(String maprTDuration) {
@@ -324,7 +324,7 @@ public class HadoopServiceProperties {
     }
 
     public String getMaprTHomeDir() {
-        return this.maprTHomeDir;
+        return getRealValue(this.maprTHomeDir);
     }
 
     public void setMaprTHomeDir(String maprTHomeDir) {
@@ -332,7 +332,7 @@ public class HadoopServiceProperties {
     }
 
     public String getMaprTHadoopLogin() {
-        return this.maprTHadoopLogin;
+        return getRealValue(this.maprTHadoopLogin);
     }
 
     public void setMaprTHadoopLogin(String maprTHadoopLogin) {
