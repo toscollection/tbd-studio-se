@@ -175,8 +175,9 @@ public class HCRepositoryUtil {
         ERepositoryObjectType repositoryObjectType = viewObject != null ? viewObject.getRepositoryObjectType() : null;
         if (viewObject != null
                 && repositoryObjectType != null
-                && (repositoryObjectType.equals(ERepositoryObjectType.METADATA_CONNECTIONS) || repositoryObjectType
-                        .equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER))) {
+                && (repositoryObjectType.equals(ERepositoryObjectType.METADATA_CONNECTIONS)
+                        || repositoryObjectType.equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)
+                        || isHadoopSubType(repositoryObjectType))) {
             final Property property = viewObject.getProperty();
             if (property != null) {
                 Item item = property.getItem();
@@ -191,6 +192,25 @@ public class HCRepositoryUtil {
         }
 
         return null;
+    }
+
+    private static boolean isHadoopSubType(ERepositoryObjectType repType) {
+        /**
+         * Don't use the ERepositoryObjectType.findParentType, just to improve the performance.
+         */
+        if (repType == null) {
+            return false;
+        }
+        ERepositoryObjectType[] parentTypes = repType.getParentTypesArray();
+        if (parentTypes == null || parentTypes.length == 0) {
+            return false;
+        }
+        for (ERepositoryObjectType parentType : parentTypes) {
+            if (HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(parentType)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
