@@ -54,6 +54,10 @@ public abstract class AbstractDistribution {
         return false;
     }
 
+    public boolean doSupportMaprTicketV52API() {
+        return false;
+    }
+
     public boolean doSupportGroup() {
         return false;
     }
