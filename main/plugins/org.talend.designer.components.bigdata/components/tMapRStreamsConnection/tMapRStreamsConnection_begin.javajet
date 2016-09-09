@@ -1,0 +1,68 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.core.model.process.IConnection
+    org.talend.core.model.process.IConnectionCategory
+    org.talend.core.model.metadata.IMetadataTable
+    org.talend.core.model.metadata.IMetadataColumn
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.HashMap
+"
+%>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsConnection/tMapRStreamsConnection_util.javajet"%>
+
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+TMapRStreamsConnectionUtil tMapRStreamsConnectionUtil = new TMapRStreamsConnectionUtil(node);
+
+if(tMapRStreamsConnectionUtil.isUsingMapRTicket()) {
+%>
+	System.setProperty("pname", "MapRLogin");
+	System.setProperty("https.protocols", "TLSv1.2");
+	System.setProperty("mapr.home.dir", <%=tMapRStreamsConnectionUtil.isSetMapRHomeDir() ? tMapRStreamsConnectionUtil.getMapRHomeDir() : "\"/opt/mapr\"" %>);
+	
+	com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
+
+<%
+	if(tMapRStreamsConnectionUtil.isUsingKerberos()) {
+%>
+		maprLogin_<%=cid%>.setCheckUGI(false);
+		javax.security.auth.login.Configuration oldConfiguration_<%=cid%> = javax.security.auth.login.Configuration.getConfiguration();
+		
+		javax.security.auth.login.Configuration configuration_<%=cid%> = new javax.security.auth.login.Configuration() {
+			@Override
+			public javax.security.auth.login.AppConfigurationEntry[] getAppConfigurationEntry(String name) {
+				java.util.HashMap<String, Object> props = new java.util.HashMap<>();
+				props.put("principal", <%=tMapRStreamsConnectionUtil.getPrincipal()%>);
+				props.put("storeKey", "true");
+				props.put("keyTab", <%=tMapRStreamsConnectionUtil.getKeytabPath()%>);
+				props.put("useKeyTab", "true");
+				return new javax.security.auth.login.AppConfigurationEntry[] { 
+					new javax.security.auth.login.AppConfigurationEntry("com.sun.security.auth.module.Krb5LoginModule", javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, props) 
+				};
+			}
+		};
+		javax.security.auth.login.Configuration.setConfiguration(configuration_<%=cid%>);
+		javax.security.auth.login.LoginContext loginContext_<%=cid%> = new javax.security.auth.login.LoginContext("loginContext_<%=cid%>", new com.sun.security.auth.callback.TextCallbackHandler());
+		loginContext_<%=cid%>.login();
+		maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>);
+		
+		// Reset login configuration
+		javax.security.auth.login.Configuration.setConfiguration(oldConfiguration_<%=cid%>);
+<%
+	} else {
+%>
+		String decryptedMaprPassword_<%=cid%> = <%=tMapRStreamsConnectionUtil.getPassword()%>;
+		maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getUsername()%>, decryptedMaprPassword_<%=cid%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>);
+<%
+	}
+} // end if(tMapRStreamsConnectionUtil.isUsingMapRTicket())
+%>
+

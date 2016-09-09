@@ -1,0 +1,78 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.HashMap
+"
+%>
+
+<%
+class TMapRStreamsCreateStreamUtil {
+
+	private INode node;
+
+	private Map<String, String> streamProperties;
+
+	public TMapRStreamsCreateStreamUtil(INode node) {
+		this.node = node;
+		this.streamProperties = findStreamProperties();
+	}
+
+	public boolean isCreate() {
+		return "CREATE_STREAM".equals(ElementParameterParser.getValue(node, "__STREAM_ACTION__")) || isCreateIfNotExists();
+	}
+
+	public boolean isCreateIfNotExists() {
+		return "CREATE_IF_NOT_EXISTS".equals(ElementParameterParser.getValue(node, "__STREAM_ACTION__"));
+	}
+
+	public boolean isAlter() {
+		return "ALTER_STREAM".equals(ElementParameterParser.getValue(node, "__STREAM_ACTION__"));
+	}
+
+	public boolean isRetentionSet() {
+		return "true".equals(ElementParameterParser.getValue(node, "__STREAM_RETENTION_CHECK__"));
+	}
+	
+	public String getZookeeperConnect() {
+		return ElementParameterParser.getValue(node, "__ZOOKEEPER_CONNECT__");
+	}
+	
+	public boolean isZookeeperSecurityEnabled() {
+		return "true".equals(ElementParameterParser.getValue(node, "__ZOOKEEPER_SECURITY_IS_ENABLED__"));
+	}
+
+	public String getRetention() {
+		return ElementParameterParser.getValue(node, "__STREAM_RETENTION__");
+	}
+
+	public String getTopic() {
+		return ElementParameterParser.getValue(node, "__STREAM__");
+	}
+
+	public String getReplicationFactor() {
+		return ElementParameterParser.getValue(node, "__STREAM_REPLICATION__");
+	}
+
+	public String getNbPartitions() {
+		return ElementParameterParser.getValue(node, "__STREAM_PARTITION__");
+	}
+
+	public Map<String, String> getStreamProperties(){
+		return this.streamProperties;
+	}
+
+	private Map<String, String> findStreamProperties() {
+		Map<String, String> result = new HashMap<String, String>();
+		List<Map<String, String>> streamPropertiesFromStudio = (List<Map<String, String>>) ElementParameterParser
+		        .getObjectValue(node, "__STREAM_PROPERTIES__");
+		for (Map<String, String> streamPropertyFromStudio : streamPropertiesFromStudio) {
+		    result.put(streamPropertyFromStudio.get("PROPERTY"), streamPropertyFromStudio.get("VALUE"));
+		}
+		return result;
+   }
+}
+%>
