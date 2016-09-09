@@ -14,5 +14,6 @@
     <provide interface="org.talend.hadoop.distribution.component.SparkBatchComponent"/>
     <provide interface="org.talend.hadoop.distribution.component.SparkStreamingComponent"/>
     <provide interface="org.talend.hadoop.distribution.component.ImpalaComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.MapRStreamsComponent"/>
   </service>
 </component>
