@@ -226,9 +226,4 @@ public class CustomDistribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportMapRTicket() {
         return true;
     }
-
-    @Override
-    public boolean doSupportMapRStreams() {
-        return true;
-    }
 }

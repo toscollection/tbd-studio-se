@@ -16,9 +16,5 @@ package org.talend.hadoop.distribution.component;
  * Interface that exposes specific MapRStreams methods.
  */
 public interface MapRStreamsComponent {
-
-    /**
-     * @return Whether or not the distribution supports MapR-Streams
-     */
-    public boolean doSupportMapRStreams();
+    // nothing to expose yet
 }
