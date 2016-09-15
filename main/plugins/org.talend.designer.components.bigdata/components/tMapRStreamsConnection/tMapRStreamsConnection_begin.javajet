@@ -60,7 +60,7 @@ if(tMapRStreamsConnectionUtil.isUsingMapRTicket()) {
 	} else {
 %>
 		String decryptedMaprPassword_<%=cid%> = <%=tMapRStreamsConnectionUtil.getPassword()%>;
-		maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getUsername()%>, decryptedMaprPassword_<%=cid%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>);
+		maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getUsername()%>, decryptedMaprPassword_<%=cid%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>, "");
 <%
 	}
 } // end if(tMapRStreamsConnectionUtil.isUsingMapRTicket())

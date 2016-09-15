@@ -30,6 +30,7 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
+import org.talend.hadoop.distribution.component.MapRStreamsComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -46,6 +47,7 @@ import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520HiveModuleGroup
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520HiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520ImpalaModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520MRS3NodeModuleGroup;
+import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520MapRStreamsModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520MapReduceModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520PigModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520PigOutputModuleGroup;
@@ -57,13 +59,16 @@ import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingK
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingKafkaAvroModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingKafkaClientModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingKinesisNodeModuleGroup;
+import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingMapRStreamsAssemblyModuleGroup;
+import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingMapRStreamsAvroModuleGroup;
+import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingMapRStreamsClientModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SparkStreamingParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SqoopModuleGroup;
 
 public class MapR520Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
-        HiveOnSparkComponent, ImpalaComponent, IMapRDistribution {
+        HiveOnSparkComponent, ImpalaComponent, MapRStreamsComponent, IMapRDistribution {
 
     public final static String VERSION = "MAPR520"; //$NON-NLS-1$
 
@@ -89,6 +94,7 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
         moduleGroups.put(ComponentType.SPARKBATCH, MapR520SparkBatchModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, MapR520SparkStreamingModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.HIVEONSPARK, MapR520HiveOnSparkModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.MAPRSTREAMS, MapR520MapRStreamsModuleGroup.getModuleGroups());
 
         nodeModuleGroups = new HashMap<>();
 
@@ -134,6 +140,17 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
                 SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT), kafkaAvroModuleGroups);
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT), MapR520SparkStreamingKafkaClientModuleGroup.getModuleGroups());
+
+        // Spark MapR Streams
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.MAPRSTREAMS_INPUT_COMPONENT), MapR520SparkStreamingMapRStreamsAssemblyModuleGroup
+                .getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.MAPRSTREAMS_AVRO_INPUT_COMPONENT), MapR520SparkStreamingMapRStreamsAvroModuleGroup
+                .getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.MAPRSTREAMS_OUTPUT_COMPONENT), MapR520SparkStreamingMapRStreamsClientModuleGroup
+                .getModuleGroups());
     }
 
     @Override
