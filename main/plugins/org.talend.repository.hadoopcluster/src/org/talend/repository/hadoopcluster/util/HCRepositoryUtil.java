@@ -36,8 +36,10 @@ import org.talend.core.model.process.IProcess;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.properties.DatabaseConnectionItem;
 import org.talend.core.model.properties.Item;
+import org.talend.core.model.properties.Property;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.model.repository.IRepositoryViewObject;
+import org.talend.core.repository.model.ProjectRepositoryNode;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.IHDistributionVersion;
@@ -46,10 +48,12 @@ import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
 import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNodeType;
+import org.talend.repository.hadoopcluster.tester.HadoopClusterMetadataNodeTester;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode;
 import org.talend.repository.model.IRepositoryNode.ENodeType;
 import org.talend.repository.model.IRepositoryNode.EProperties;
+import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
@@ -63,6 +67,8 @@ import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
 public class HCRepositoryUtil {
 
     private static List<String> hadoopDbParameters = null;
+
+    private static HadoopClusterMetadataNodeTester hcTester = null;
 
     static {
         hadoopDbParameters = new ArrayList<String>();
@@ -171,18 +177,95 @@ public class HCRepositoryUtil {
      */
     public static HadoopClusterConnectionItem getHCConnectionItemFromRepositoryNode(IRepositoryNode node) {
         IRepositoryViewObject viewObject = node.getObject();
-        if (viewObject != null && viewObject.getProperty() != null) {
-            Item item = viewObject.getProperty().getItem();
-            if (item instanceof HadoopClusterConnectionItem) {
-                return (HadoopClusterConnectionItem) item;
-            } else if (item instanceof ConnectionItem) {
-                return getRelativeHadoopClusterItem(item);
+        ERepositoryObjectType repositoryObjectType = viewObject != null ? viewObject.getRepositoryObjectType() : null;
+        if (viewObject != null
+                && repositoryObjectType != null
+                && (repositoryObjectType.equals(ERepositoryObjectType.METADATA_CONNECTIONS)
+                        || repositoryObjectType.equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)
+                        || isHadoopSubItem(repositoryObjectType, node))) {
+            final Property property = viewObject.getProperty();
+            if (property != null) {
+                Item item = property.getItem();
+                if (item instanceof HadoopClusterConnectionItem) {
+                    return (HadoopClusterConnectionItem) item;
+                } else if (item instanceof ConnectionItem) {
+                    return getRelativeHadoopClusterItem(item);
+                }
             }
         } else if (isHadoopFolderNode(node)) {
             return getHCConnectionItemFromRepositoryNode(node.getParent());
         }
 
         return null;
+    }
+
+    private static boolean isHadoopSubItem(ERepositoryObjectType repType, IRepositoryNode node) {
+
+        if (ERepositoryObjectType.METADATA_CON_TABLE.equals(repType)
+                || ERepositoryObjectType.METADATA_CON_COLUMN.equals(repType)) {
+            List<ERepositoryObjectType> allLinkedTypes = getAllLinkedTypes(node);
+            if (allLinkedTypes.contains(ERepositoryObjectType.METADATA_CONNECTIONS)
+                    || allLinkedTypes.contains(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)) {
+                return true;
+            }
+        }
+
+        /**
+         * Don't use the ERepositoryObjectType.findParentType, just to improve the performance.
+         */
+        ERepositoryObjectType[] parentTypes = repType.getParentTypesArray();
+        if (parentTypes != null && 0 < parentTypes.length) {
+            for (ERepositoryObjectType parentType : parentTypes) {
+                if (HadoopClusterRepositoryNodeType.HADOOPCLUSTER.equals(parentType)) {
+                    return true;
+                }
+            }
+        }
+
+        if (node instanceof RepositoryNode) {
+            RepositoryNode repositoryNode = (RepositoryNode) node;
+            HadoopClusterMetadataNodeTester hcNodeTester = getHadoopClusterMetadataNodeTester();
+            if (hcNodeTester.isHadoopSubNodeSchema(repositoryNode)) {
+                return true;
+            }
+            if (hcNodeTester.isHadoopSubNodeSchemaColumn(repositoryNode)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static HadoopClusterMetadataNodeTester getHadoopClusterMetadataNodeTester() {
+        if (hcTester == null) {
+            hcTester = new HadoopClusterMetadataNodeTester();
+        }
+        return hcTester;
+    }
+
+    private static List<ERepositoryObjectType> getAllLinkedTypes(IRepositoryNode node) {
+        List<ERepositoryObjectType> objTypes = new ArrayList<ERepositoryObjectType>();
+
+        IRepositoryNode curNode = node;
+        Set<IRepositoryNode> checkedNodeSet = new HashSet<IRepositoryNode>();
+        while (curNode != null) {
+            if (curNode instanceof ProjectRepositoryNode) {
+                break;
+            }
+            if (checkedNodeSet.contains(curNode)) {
+                break;
+            } else {
+                checkedNodeSet.add(curNode);
+            }
+
+            ERepositoryObjectType curType = curNode.getObjectType();
+            if (curType != null) {
+                objTypes.add(curType);
+            }
+            curNode = curNode.getParent();
+        }
+
+        return objTypes;
     }
 
     /**
