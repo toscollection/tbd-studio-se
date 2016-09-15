@@ -30,6 +30,7 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
+import org.talend.hadoop.distribution.component.MapRDBComponent;
 import org.talend.hadoop.distribution.component.MapRStreamsComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
@@ -67,7 +68,7 @@ import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510SqoopModuleGrou
 
 public class MapR510Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
-        HiveOnSparkComponent, ImpalaComponent, MapRStreamsComponent, IMapRDistribution {
+        HiveOnSparkComponent, ImpalaComponent, MapRStreamsComponent, MapRDBComponent, IMapRDistribution {
 
     public final static String VERSION = "MAPR510";
 
@@ -94,6 +95,7 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
         moduleGroups.put(ComponentType.SPARKSTREAMING, MapR510SparkStreamingModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.HIVEONSPARK, MapR510HiveOnSparkModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.MAPRSTREAMS, MapR510MapRStreamsModuleGroup.getModuleGroups());
+        moduleGroups.put(ComponentType.MAPRDB, MapR510HBaseModuleGroup.getModuleGroups());
 
         nodeModuleGroups = new HashMap<>();
 

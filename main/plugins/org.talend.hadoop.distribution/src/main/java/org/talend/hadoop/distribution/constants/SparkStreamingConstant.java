@@ -66,4 +66,10 @@ public final class SparkStreamingConstant {
 
     public static final String MAPRSTREAMS_OUTPUT_COMPONENT = "tMapRStreamsOutput"; //$NON-NLS-1$
 
+    public static final String MAPRDB_CONFIGURATION_COMPONENT = "tMapRDBConfiguration"; //$NON-NLS-1$
+
+    public static final String MAPRDB_LOOKUPINPUT_COMPONENT = "tMapRDBLookupInput"; //$NON-NLS-1$
+
+    public static final String MAPRDB_OUTPUT_COMPONENT = "tMapRDBOutput"; //$NON-NLS-1$
+
 }
