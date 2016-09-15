@@ -1,0 +1,23 @@
+<%@ jet
+    imports="
+    org.talend.core.model.process.INode
+    org.talend.core.model.process.ElementParameterParser
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    java.util.List
+    java.util.Map
+    java.util.HashMap
+    java.util.Map.Entry
+"
+%>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/tMapRStreamsCreateStream_util.javajet"%>
+
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+
+TMapRStreamsCreateStreamUtil tMapRStreamsCreateStreamUtil = new TMapRStreamsCreateStreamUtil(node);
+%>
+
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/0.9.0.x/tMapRStreamsCreateStream_begin_0.9.0.x.javajet"%>
