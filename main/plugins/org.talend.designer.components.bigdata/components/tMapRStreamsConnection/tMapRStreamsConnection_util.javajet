@@ -47,6 +47,30 @@ class TMapRStreamsConnectionUtil {
     public String getMapRHomeDir() {
         return ElementParameterParser.getValue(node, "__MAPR_HOME_DIR__");
 	 }
+	 
+	 public boolean isSetMapRHadoopLogin() {
+        return "true".equals(ElementParameterParser.getValue(node, "__SET_HADOOP_LOGIN__"));
+    }
+
+    public String getMapRHadoopLogin() {
+        return ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
+	 }
+	 
+	 public String getFsDefaultName() {
+        return ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
+	 }
+	 
+ 	 public String getNamenodePrincipal() {
+        return ElementParameterParser.getValue(node, "__NAMENODE_PRINCIPAL__");
+	 }
+	 
+ 	 public boolean useDatanodeHostname() {
+        return "true".equals(ElementParameterParser.getValue(node, "__USE_DATANODE_HOSTNAME__"));
+    }
+    
+    public List<Map<String,String>> getHadoopProperties() {
+		  return (List<Map<String,String>>) ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
+    }
 }
 %>
 

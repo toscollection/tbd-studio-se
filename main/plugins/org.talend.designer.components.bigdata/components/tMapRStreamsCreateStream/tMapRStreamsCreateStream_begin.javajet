@@ -20,4 +20,25 @@ String cid = node.getUniqueName();
 TMapRStreamsCreateStreamUtil tMapRStreamsCreateStreamUtil = new TMapRStreamsCreateStreamUtil(node);
 %>
 
-<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/0.9.0.x/tMapRStreamsCreateStream_begin_0.9.0.x.javajet"%>
+org.apache.hadoop.conf.Configuration conf_<%=cid%> = (org.apache.hadoop.conf.Configuration) globalMap.get("conf_<%=tMapRStreamsCreateStreamUtil.getConnectionCid()%>");
+com.mapr.streams.Admin admin_<%=cid%> = com.mapr.streams.Streams.newAdmin(conf_<%=cid%>);
+
+<%
+if (tMapRStreamsCreateStreamUtil.isCreateStream()) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/tMapRStreamsCreateStream_create_stream.javajet"%>
+<%
+} else if (tMapRStreamsCreateStreamUtil.isAlterStream()) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/tMapRStreamsCreateStream_alter_stream.javajet"%>
+<%
+} else if (tMapRStreamsCreateStreamUtil.isCreateTopic()) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/tMapRStreamsCreateStream_create_topic.javajet"%>
+<%
+} else if (tMapRStreamsCreateStreamUtil.isAlterTopic()) {
+%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tMapRStreamsCreateStream/tMapRStreamsCreateStream_alter_topic.javajet"%>
+<%
+}
+%>

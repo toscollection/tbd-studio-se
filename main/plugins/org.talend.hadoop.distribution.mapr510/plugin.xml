@@ -619,6 +619,13 @@
                 id="MAPRSTREAMS-LIB-MAPR510"
                 name="MAPRSTREAMS-LIB-MAPR510">
             <library id="maprfs-5.1.X-lastest"/>
+            <library id="hadoop-common-mapr-5.0.X-lastest"/>
+            <library id="hadoop-auth-mapr-5.0.X-lastest"/>
+            <library id="commons-logging-1.1.3.jar"/>
+            <library id="commons-collections-3.2.2.jar"/>
+            <library id="commons-configuration-1.6.jar"/>
+            <library id="commons-lang-2.6.jar"/>
+            <library id="commons-io-2.4.jar"/>
             <library id="protobuf-java-2.5.0.jar"/>
             <library id="mapr-streams-5.1.0-mapr.jar"/>
             <library id="kafka_2.10-0.9.0.0-mapr-1607.jar"/>

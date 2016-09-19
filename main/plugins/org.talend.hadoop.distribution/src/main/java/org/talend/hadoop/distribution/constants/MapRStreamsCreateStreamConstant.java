@@ -12,9 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
-public final class MapRStreamsConstant {
+public final class MapRStreamsCreateStreamConstant {
 
-    public static final String SERVICE = "org.talend.hadoop.distribution.component.MapRStreamsComponent";//$NON-NLS-1$
+    public static final String SERVICE = "org.talend.hadoop.distribution.component.MapRStreamsCreateStreamComponent";//$NON-NLS-1$
 
     public static final String DISTRIBUTION_PARAMETER = "DISTRIBUTION";//$NON-NLS-1$
 

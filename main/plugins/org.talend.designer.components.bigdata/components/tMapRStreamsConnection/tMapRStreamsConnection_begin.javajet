@@ -22,6 +22,33 @@ String cid = node.getUniqueName();
 
 TMapRStreamsConnectionUtil tMapRStreamsConnectionUtil = new TMapRStreamsConnectionUtil(node);
 
+// We need to know what the current distribution is since MapR Login API is subject to change between versions.
+String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+String hadoopVersion = ElementParameterParser.getValue(node, "__MAPRSTREAMS_VERSION__");
+org.talend.hadoop.distribution.component.HDFSComponent hdfsDistrib = null;
+try {
+	hdfsDistrib = (org.talend.hadoop.distribution.component.HDFSComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hadoopVersion);
+} catch (java.lang.Exception e) {
+	e.printStackTrace();
+	return "";
+}
+%>
+	org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+	conf_<%=cid%>.set("fs.default.name", <%=tMapRStreamsConnectionUtil.getFsDefaultName()%>);
+<%
+if (tMapRStreamsConnectionUtil.useDatanodeHostname()) {
+%>
+		conf_<%=cid%>.set("dfs.client.use.datanode.hostname", "true");
+<%
+}
+
+List<Map<String,String>> hadoopProperties = tMapRStreamsConnectionUtil.getHadoopProperties();
+for(Map<String, String> item : hadoopProperties) {
+%>
+		conf_<%=cid%>.set(<%=item.get("PROPERTY")%> ,<%=item.get("VALUE")%>);
+<% 
+}
+
 if(tMapRStreamsConnectionUtil.isUsingMapRTicket()) {
 %>
 	System.setProperty("pname", "MapRLogin");
@@ -33,36 +60,26 @@ if(tMapRStreamsConnectionUtil.isUsingMapRTicket()) {
 <%
 	if(tMapRStreamsConnectionUtil.isUsingKerberos()) {
 %>
-		maprLogin_<%=cid%>.setCheckUGI(false);
-		javax.security.auth.login.Configuration oldConfiguration_<%=cid%> = javax.security.auth.login.Configuration.getConfiguration();
-		
-		javax.security.auth.login.Configuration configuration_<%=cid%> = new javax.security.auth.login.Configuration() {
-			@Override
-			public javax.security.auth.login.AppConfigurationEntry[] getAppConfigurationEntry(String name) {
-				java.util.HashMap<String, Object> props = new java.util.HashMap<>();
-				props.put("principal", <%=tMapRStreamsConnectionUtil.getPrincipal()%>);
-				props.put("storeKey", "true");
-				props.put("keyTab", <%=tMapRStreamsConnectionUtil.getKeytabPath()%>);
-				props.put("useKeyTab", "true");
-				return new javax.security.auth.login.AppConfigurationEntry[] { 
-					new javax.security.auth.login.AppConfigurationEntry("com.sun.security.auth.module.Krb5LoginModule", javax.security.auth.login.AppConfigurationEntry.LoginModuleControlFlag.REQUIRED, props) 
-				};
-			}
-		};
-		javax.security.auth.login.Configuration.setConfiguration(configuration_<%=cid%>);
-		javax.security.auth.login.LoginContext loginContext_<%=cid%> = new javax.security.auth.login.LoginContext("loginContext_<%=cid%>", new com.sun.security.auth.callback.TextCallbackHandler());
-		loginContext_<%=cid%>.login();
+		System.setProperty("hadoop.login", <%=tMapRStreamsConnectionUtil.isSetMapRHadoopLogin() ? tMapRStreamsConnectionUtil.getMapRHadoopLogin() : "\"kerberos\""%>);
+		conf_<%=cid%>.set("dfs.namenode.kerberos.principal", <%=tMapRStreamsConnectionUtil.getNamenodePrincipal()%>);
+		org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=tMapRStreamsConnectionUtil.getPrincipal()%>, <%=tMapRStreamsConnectionUtil.getKeytabPath()%>);
 		maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>);
-		
-		// Reset login configuration
-		javax.security.auth.login.Configuration.setConfiguration(oldConfiguration_<%=cid%>);
 <%
 	} else {
 %>
 		String decryptedMaprPassword_<%=cid%> = <%=tMapRStreamsConnectionUtil.getPassword()%>;
-		maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getUsername()%>, decryptedMaprPassword_<%=cid%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>, "");
 <%
+			if(hdfsDistrib.doSupportMaprTicketV52API()){
+%>
+				maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getUsername()%>, decryptedPassword_<%=cid%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>, "");
+<%
+			} else {
+%>
+				maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=tMapRStreamsConnectionUtil.getCluster()%>, <%=tMapRStreamsConnectionUtil.getUsername()%>, decryptedPassword_<%=cid%>, <%=tMapRStreamsConnectionUtil.getMapRTicketDuration()%>);
+<%
+			}
 	}
 } // end if(tMapRStreamsConnectionUtil.isUsingMapRTicket())
 %>
 
+globalMap.put("conf_<%=cid%>", conf_<%=cid%>);
