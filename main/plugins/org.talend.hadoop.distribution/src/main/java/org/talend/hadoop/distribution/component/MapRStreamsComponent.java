@@ -16,5 +16,11 @@ package org.talend.hadoop.distribution.component;
  * Interface that exposes specific MapRStreams methods.
  */
 public interface MapRStreamsComponent {
-    // nothing to expose yet
+
+    /**
+     * Spark Streaming jobs need to know where mapr-streams-X.X.X-mapr.jar is located on the cluster.
+     * 
+     * @return The default mapr-streams-X.X.X-mapr.jar path on the cluster.
+     */
+    String getMapRStreamsJarPath();
 }

@@ -20,7 +20,7 @@ import org.talend.hadoop.distribution.test.hive.AbstractVersionTest4HiveMetadata
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class MapR510HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
+public class MapR520HiveMetadataHelperTest extends AbstractVersionTest4HiveMetadataHelper {
 
     @Override
     protected Class<? extends HadoopComponent> getHadoopComponentClass() {

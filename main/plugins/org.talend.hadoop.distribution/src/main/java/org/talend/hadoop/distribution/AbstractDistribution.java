@@ -241,4 +241,8 @@ public abstract class AbstractDistribution {
         // Version 8 is the first version of Cloudera Navigator Supported by SDK
         return 8;
     }
+
+    public String getMapRStreamsJarPath() {
+        return null;
+    }
 }

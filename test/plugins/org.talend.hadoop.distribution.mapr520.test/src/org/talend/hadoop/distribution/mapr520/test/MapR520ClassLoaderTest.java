@@ -23,7 +23,7 @@ import org.talend.hadoop.distribution.test.classloader.AbstractTest4ClassLoaderP
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class MapR510ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
+public class MapR520ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
 
     @Override
     protected Class<? extends HadoopComponent> getHadoopComponentClass() {

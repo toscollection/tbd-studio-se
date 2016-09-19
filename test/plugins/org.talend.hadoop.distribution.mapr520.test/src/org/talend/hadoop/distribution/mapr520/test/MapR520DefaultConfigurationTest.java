@@ -22,7 +22,7 @@ import org.talend.hadoop.distribution.test.config.AbstractTest4DefaultConfigurat
 /**
  * DOC ggu class global comment. Detailled comment
  */
-public class MapR510DefaultConfigurationTest extends AbstractTest4DefaultConfiguration {
+public class MapR520DefaultConfigurationTest extends AbstractTest4DefaultConfiguration {
 
     @Override
     protected Class<? extends HadoopComponent> getHadoopComponentClass() {

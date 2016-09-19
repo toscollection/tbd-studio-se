@@ -23,6 +23,8 @@ import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
+import org.talend.hadoop.distribution.component.MapRStreamsComponent;
+import org.talend.hadoop.distribution.component.MapRStreamsCreateStreamComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -30,15 +32,15 @@ import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.mapr520.MapR520Distribution;
 
 /**
- * Test class for the {@link MapR500Distribution} distribution.
+ * Test class for the {@link MapR520Distribution} distribution.
  *
  */
-public class MapR510DistributionTest {
+public class MapR520DistributionTest {
 
     private final static String DEFAULT_YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*,$HADOOP_YARN_HOME/share/hadoop/tools/lib/*"; //$NON-NLS-1$
 
     @Test
-    public void testMapR500Distribution() throws Exception {
+    public void testMapR520Distribution() throws Exception {
         HadoopComponent distribution = new MapR520Distribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
@@ -76,20 +78,26 @@ public class MapR510DistributionTest {
         assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertFalse(((SparkBatchComponent) distribution).isSpark14());
-        assertTrue(((SparkBatchComponent) distribution).isSpark15());
+        assertFalse(((SparkBatchComponent) distribution).isSpark15());
+        assertTrue(((SparkBatchComponent) distribution).isSpark16());
         assertFalse(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
         assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(distribution instanceof SparkStreamingComponent);
         assertFalse(((SparkStreamingComponent) distribution).isSpark14());
-        assertTrue(((SparkStreamingComponent) distribution).isSpark15());
+        assertFalse(((SparkStreamingComponent) distribution).isSpark15());
+        assertTrue(((SparkStreamingComponent) distribution).isSpark16());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(distribution instanceof HCatalogComponent);
         assertTrue(distribution instanceof ImpalaComponent);
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
         assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
+        assertTrue(distribution instanceof MapRStreamsComponent);
+        assertTrue(distribution instanceof MapRStreamsCreateStreamComponent);
+        assertEquals(MapR520Distribution.MAPR_STREAMS_JAR_PATH, ((MapRStreamsComponent) distribution).getMapRStreamsJarPath());
+
     }
 
 }
