@@ -24,7 +24,6 @@ import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.MapRStreamsComponent;
-import org.talend.hadoop.distribution.component.MapRStreamsCreateStreamComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -93,7 +92,7 @@ public class MapR510DistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
         assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertTrue(distribution instanceof MapRStreamsComponent);
-        assertFalse(distribution instanceof MapRStreamsCreateStreamComponent);
+        assertFalse(((MapRStreamsComponent) distribution).canCreateMapRStream());
         assertEquals(MapR510Distribution.MAPR_STREAMS_JAR_PATH, ((MapRStreamsComponent) distribution).getMapRStreamsJarPath());
     }
 

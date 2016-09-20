@@ -23,4 +23,11 @@ public interface MapRStreamsComponent {
      * @return The default mapr-streams-X.X.X-mapr.jar path on the cluster.
      */
     String getMapRStreamsJarPath();
+
+    /**
+     * Whether the distribution supports MapR Streams Admin API or not.
+     * 
+     * @return true if the distribution supports MapR Streams Admin API.
+     */
+    boolean canCreateMapRStream();
 }

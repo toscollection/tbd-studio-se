@@ -24,4 +24,6 @@ public final class MapRStreamsConstant {
     public static final String VERSION_PARAMETER = "MAPRSTREAMS_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = HDFSConstant.VERSION_REPOSITORYVALUE;
+
+    public static final String CREATE_STREAM_COMPONENT = "tMapRStreamsCreateStream"; //$NON-NLS-1$
 }

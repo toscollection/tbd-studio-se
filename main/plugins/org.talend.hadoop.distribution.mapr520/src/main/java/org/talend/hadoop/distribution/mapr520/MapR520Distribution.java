@@ -32,12 +32,12 @@ import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.MapRDBComponent;
 import org.talend.hadoop.distribution.component.MapRStreamsComponent;
-import org.talend.hadoop.distribution.component.MapRStreamsCreateStreamComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.MRConstant;
+import org.talend.hadoop.distribution.constants.MapRStreamsConstant;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
@@ -71,8 +71,7 @@ import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520SqoopModuleGrou
 
 public class MapR520Distribution extends AbstractMapRDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
-        HiveOnSparkComponent, ImpalaComponent, MapRStreamsComponent, MapRStreamsCreateStreamComponent, MapRDBComponent,
-        IMapRDistribution {
+        HiveOnSparkComponent, ImpalaComponent, MapRStreamsComponent, MapRDBComponent, IMapRDistribution {
 
     public final static String VERSION = "MAPR520"; //$NON-NLS-1$
 
@@ -101,10 +100,12 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
         moduleGroups.put(ComponentType.SPARKSTREAMING, MapR520SparkStreamingModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.HIVEONSPARK, MapR520HiveOnSparkModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.MAPRSTREAMS, MapR520MapRStreamsModuleGroup.getModuleGroups());
-        moduleGroups.put(ComponentType.MAPRSTREAMS_CREATE_STREAM, MapR520MapRStreamsCreateStreamModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.MAPRDB, MapR520HBaseModuleGroup.getModuleGroups());
 
         nodeModuleGroups = new HashMap<>();
+
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPRSTREAMS, MapRStreamsConstant.CREATE_STREAM_COMPONENT),
+                MapR520MapRStreamsCreateStreamModuleGroup.getModuleGroups());
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
                 MapR520PigOutputNodeModuleGroup.getModuleGroups());
@@ -374,6 +375,11 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
     @Override
     public String getMapRStreamsJarPath() {
         return MAPR_STREAMS_JAR_PATH;
+    }
+
+    @Override
+    public boolean canCreateMapRStream() {
+        return true;
     }
 
 }

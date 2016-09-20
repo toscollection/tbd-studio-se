@@ -245,4 +245,8 @@ public abstract class AbstractDistribution {
     public String getMapRStreamsJarPath() {
         return null;
     }
+
+    public boolean canCreateMapRStream() {
+        return false;
+    }
 }
