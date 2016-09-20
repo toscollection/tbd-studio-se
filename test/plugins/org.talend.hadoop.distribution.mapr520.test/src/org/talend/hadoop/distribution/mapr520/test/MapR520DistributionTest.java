@@ -93,7 +93,7 @@ public class MapR520DistributionTest {
         assertTrue(distribution instanceof HCatalogComponent);
         assertTrue(distribution instanceof ImpalaComponent);
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
-        assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertTrue(distribution instanceof MapRStreamsComponent);
         assertTrue(distribution instanceof MapRStreamsCreateStreamComponent);
         assertEquals(MapR520Distribution.MAPR_STREAMS_JAR_PATH, ((MapRStreamsComponent) distribution).getMapRStreamsJarPath());

@@ -345,7 +345,7 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
 
     @Override
     public boolean doSupportBackpressure() {
-        return false;
+        return true;
     }
 
     @Override
