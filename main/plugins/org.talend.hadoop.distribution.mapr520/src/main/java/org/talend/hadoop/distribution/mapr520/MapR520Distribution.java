@@ -387,4 +387,8 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
         return false;
     }
 
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }

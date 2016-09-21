@@ -256,4 +256,9 @@ public class CDH540Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportS3() {
         return true;
     }
+
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }

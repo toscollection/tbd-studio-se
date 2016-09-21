@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hdp250.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -99,6 +96,8 @@ public class HDP250DistributionTest {
 
         assertTrue(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
+
+        assertTrue(distribution.doSupportHDFSEncryption());
 
     }
 }

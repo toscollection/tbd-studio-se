@@ -253,4 +253,9 @@ public abstract class AbstractDistribution {
     public boolean doSupportOfficialSparkStreamingKafka() {
         return true;
     }
+
+    public boolean doSupportHDFSEncryption() {
+        return false;
+    }
+
 }

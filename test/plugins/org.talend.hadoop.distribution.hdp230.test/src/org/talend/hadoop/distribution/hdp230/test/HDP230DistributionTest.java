@@ -86,6 +86,7 @@ public class HDP230DistributionTest {
         assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertTrue(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

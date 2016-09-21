@@ -445,6 +445,10 @@
            <library id="commons-lang-2.6.jar"/>
            <library id="commons-io-2.4.jar"/>
            <library id="flexjson-2.1.jar"/>
+           <library id="httpclient-4.4.jar" />
+           <library id="httpcore-4.4.jar" />
+           <library id="jackson-core-asl-1.9.13.jar" />
+           <library id="jackson-mapper-asl-1.9.13.jar" />
         </libraryNeededGroup>
         
         <libraryNeededGroup

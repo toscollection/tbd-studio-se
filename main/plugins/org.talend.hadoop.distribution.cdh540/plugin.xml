@@ -98,6 +98,8 @@
              <library
                  id="htrace-core-3.0.4.jar">
              </library>
+             <library id="httpclient-4.2.5.jar" />
+             <library id="httpcore-4.2.5.jar" />
         </libraryNeededGroup>
         
 

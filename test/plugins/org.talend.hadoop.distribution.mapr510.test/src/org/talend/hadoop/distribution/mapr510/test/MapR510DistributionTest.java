@@ -94,6 +94,8 @@ public class MapR510DistributionTest {
         assertTrue(distribution instanceof MapRStreamsComponent);
         assertFalse(((MapRStreamsComponent) distribution).canCreateMapRStream());
         assertEquals(MapR510Distribution.MAPR_STREAMS_JAR_PATH, ((MapRStreamsComponent) distribution).getMapRStreamsJarPath());
+
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

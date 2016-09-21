@@ -96,6 +96,7 @@ public class EMR450DistributionTest {
         assertTrue(((SqoopComponent) distribution).doJavaAPISqoopImportAllTablesSupportExcludeTable());
         assertTrue(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
         assertTrue(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

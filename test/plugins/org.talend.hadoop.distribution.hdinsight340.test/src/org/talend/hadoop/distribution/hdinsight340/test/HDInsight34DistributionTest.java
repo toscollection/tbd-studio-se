@@ -97,6 +97,7 @@ public class HDInsight34DistributionTest {
         assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
         assertFalse(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

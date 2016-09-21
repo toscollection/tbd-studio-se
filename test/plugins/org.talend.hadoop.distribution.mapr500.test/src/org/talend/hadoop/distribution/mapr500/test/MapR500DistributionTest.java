@@ -90,6 +90,8 @@ public class MapR500DistributionTest {
         assertFalse(distribution instanceof ImpalaComponent);
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
         assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
+
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

@@ -94,5 +94,7 @@ public class CDH580DistributionTest {
 
         assertTrue(distribution instanceof HCatalogComponent);
         assertTrue(distribution instanceof ImpalaComponent);
+
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 }

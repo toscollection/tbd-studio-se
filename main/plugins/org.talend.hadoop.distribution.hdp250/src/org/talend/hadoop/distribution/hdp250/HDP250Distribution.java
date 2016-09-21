@@ -391,4 +391,9 @@ public class HDP250Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportParquetOutput() {
         return true;
     }
+
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }

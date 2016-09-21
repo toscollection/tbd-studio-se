@@ -292,4 +292,9 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
         return false;
     }
 
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
+
 }

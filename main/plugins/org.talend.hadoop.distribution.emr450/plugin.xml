@@ -357,6 +357,8 @@
              <library id="htrace-core-3.1.0-incubating.jar"/>
              <library id="servlet-api-2.5.jar"/>
              <library id="avro-1.7.5.jar"/>
+             <library id="jackson-mapper-asl-1.9.13.jar"/>
+             <library id="jackson-core-asl-1.9.13.jar"/>
         </libraryNeededGroup>
         
         <!-- S3 group -->

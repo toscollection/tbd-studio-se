@@ -80,6 +80,7 @@ public class HDP220DistributionTest {
         assertFalse(distribution instanceof SparkStreamingComponent);
         assertTrue(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

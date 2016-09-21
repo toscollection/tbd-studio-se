@@ -97,6 +97,7 @@ public class EMR460DistributionTest {
         assertTrue(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
         assertTrue(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
         assertTrue(((HBaseComponent) distribution).doSupportNewHBaseAPI());
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

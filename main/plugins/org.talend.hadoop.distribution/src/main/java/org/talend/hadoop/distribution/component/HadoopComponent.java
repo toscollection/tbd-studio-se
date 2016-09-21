@@ -140,4 +140,10 @@ public interface HadoopComponent {
      * Get the default configurations for different distributions.
      */
     public String getDefaultConfig(String... keys);
+
+    /**
+     *
+     * @return true if the distribution supports HDFS encryption which is supported on Hadoop >= 2.6.0.
+     */
+    public boolean doSupportHDFSEncryption();
 }

@@ -384,4 +384,9 @@ public class CDH550Distribution extends AbstractDistribution implements HDFSComp
     public int getClouderaNavigatorAPIVersion() {
         return 8;
     }
+
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }

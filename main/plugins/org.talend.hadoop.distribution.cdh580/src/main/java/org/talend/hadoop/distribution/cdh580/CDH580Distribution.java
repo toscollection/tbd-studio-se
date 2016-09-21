@@ -391,4 +391,9 @@ public class CDH580Distribution extends AbstractDistribution implements IClouder
     public boolean doSupportBackpressure() {
         return true;
     }
+
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }

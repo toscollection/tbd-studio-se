@@ -89,6 +89,7 @@ public class EMR400DistributionTest {
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertFalse(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
+        assertTrue(distribution.doSupportHDFSEncryption());
     }
 
 }

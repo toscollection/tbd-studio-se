@@ -96,6 +96,7 @@ public class HDP240DistributionTest {
 
         assertTrue(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
+        assertTrue(distribution.doSupportHDFSEncryption());
 
     }
 }

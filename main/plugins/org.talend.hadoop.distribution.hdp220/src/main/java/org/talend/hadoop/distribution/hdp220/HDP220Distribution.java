@@ -246,4 +246,9 @@ public class HDP220Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportS3() {
         return true;
     }
+
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }

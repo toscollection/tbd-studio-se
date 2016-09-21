@@ -368,4 +368,9 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
         return MAPR_STREAMS_JAR_PATH;
     }
 
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
+
 }

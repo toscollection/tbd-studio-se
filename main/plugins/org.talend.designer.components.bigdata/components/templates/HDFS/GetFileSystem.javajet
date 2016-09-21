@@ -155,6 +155,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 		if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
 			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 		}else{
+			System.setProperty("HADOOP_USER_NAME", username_<%=cid%>);
 			fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
 		}	
 	<%
@@ -213,6 +214,7 @@ if(!useExistingConnection) { // if we don't use an existing connection, we creat
 				if(username_<%=cid%> == null || "".equals(username_<%=cid%>)){
 					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(conf_<%=cid%>);
 				}else{
+					System.setProperty("HADOOP_USER_NAME", username_<%=cid%>);
 					fs_<%=cid%> = org.apache.hadoop.fs.FileSystem.get(new java.net.URI(conf_<%=cid%>.get("<%=fsDefalutName%>")),conf_<%=cid%>,username_<%=cid%>);
 				}			  		
 		  	<%

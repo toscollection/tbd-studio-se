@@ -53,6 +53,9 @@
     boolean setMapRHadoopLogin = ElementParameterParser.getBooleanValue(node, "__SET_HADOOP_LOGIN__");
     String mapRHadoopLogin = ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
     
+    boolean useHDFSEnc = ElementParameterParser.getBooleanValue(node, "__USE_HDFS_ENCRYPTION__");
+    String hdfsKMS = ElementParameterParser.getValue(node, "__HDFS_ENCRYPTION_KEY_PROVIDER__");
+
     log4jFileUtil.componentStartInfo(node);
 	// BEGIN IF01
 	if(configureFromClassPath){
@@ -177,6 +180,12 @@
                 }
 
             }
+		}
+		if(useHDFSEnc){
+			%>
+			conf_<%=cid%>.set("hadoop.security.key.provider.path", <%=hdfsKMS%>);
+			conf_<%=cid%>.set("dfs.encryption.key.provider.uri", <%=hdfsKMS%>);
+			<%
 		}
 	%>
 	

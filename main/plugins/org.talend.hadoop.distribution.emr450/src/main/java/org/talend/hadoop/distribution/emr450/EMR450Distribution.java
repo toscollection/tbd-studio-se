@@ -400,4 +400,9 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
     public boolean doSupportParquetOutput() {
         return true;
     }
+
+    @Override
+    public boolean doSupportHDFSEncryption() {
+        return true;
+    }
 }
