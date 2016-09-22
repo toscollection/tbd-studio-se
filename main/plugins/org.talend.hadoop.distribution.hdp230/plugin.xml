@@ -2,6 +2,29 @@
 <?eclipse version="3.2"?>
 <plugin>
     <extension point="org.talend.core.runtime.librariesNeeded">
+    
+        <!-- GraphFrames libraries -->
+		<libraryNeeded 
+			context="plugin:org.talend.hadoop.distribution.hdp230"
+			id="graphframes-0.2.0-spark1.4-s_2.10.jar" 
+			name="graphframes-0.2.0-spark1.4-s_2.10.jar"
+			mvn_uri="mvn:org.talend.libraries/graphframes-0.2.0-spark1.4-s_2.10/6.0.0">
+		</libraryNeeded>
+		
+		<libraryNeeded 
+			context="plugin:org.talend.hadoop.distribution.hdp230"
+			id="scala-logging-slf4j_2.10-2.1.2.jar" 
+			name="scala-logging-slf4j_2.10-2.1.2.jar"
+			mvn_uri="mvn:org.talend.libraries/scala-logging-slf4j_2.10-2.1.2/6.0.0">
+		</libraryNeeded>
+		
+		<libraryNeeded 
+			context="plugin:org.talend.hadoop.distribution.hdp230"
+			id="scala-logging-api_2.10-2.1.2.jar" 
+			name="scala-logging-api_2.10-2.1.2.jar"
+			mvn_uri="mvn:org.talend.libraries/scala-logging-api_2.10-2.1.2/6.0.0">
+		</libraryNeeded> 
+		
         <!-- group of spark libraries -->
         <libraryNeededGroup
                 description="Spark libraries for HDP 2.3"
@@ -23,6 +46,15 @@
             <library id="htrace-core-3.1.0-incubating.jar"/>
             <library id="talend-spark-assembly-HDP_2_3"/>
         </libraryNeededGroup>
+        <!-- GraphFrames group MRREQUIRED -->
+		<libraryNeededGroup
+			description="GraphFrames libraries for HDP 2.3" 
+			id="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-HDP_2_3"
+			name="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-HDP_2_3">
+			<library id="scala-logging-slf4j_2.10-2.1.2.jar" />
+			<library id="scala-logging-api_2.10-2.1.2.jar" />
+			<library id="graphframes-0.2.0-spark1.4-s_2.10.jar" />
+		</libraryNeededGroup>
     </extension>
     <extension
           point="org.talend.core.runtime.classloader_provider">
