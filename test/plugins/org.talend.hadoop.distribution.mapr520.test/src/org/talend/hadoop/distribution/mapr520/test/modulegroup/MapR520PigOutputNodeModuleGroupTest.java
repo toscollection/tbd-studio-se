@@ -29,9 +29,9 @@ public class MapR520PigOutputNodeModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<String, String>();
         results.put(MapR520Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(),
-                "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='MAPR') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='MAPR510')");
+                "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='MAPR') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='MAPR520')");
         results.put(MapR520Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='MAPR') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='MAPR510') "
+                "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='MAPR') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='MAPR520') "
                         + "AND (S3_LOCATION=='true') AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE')");
 
         Set<DistributionModuleGroup> moduleGroups = MapR520PigOutputNodeModuleGroup.getModuleGroups();
