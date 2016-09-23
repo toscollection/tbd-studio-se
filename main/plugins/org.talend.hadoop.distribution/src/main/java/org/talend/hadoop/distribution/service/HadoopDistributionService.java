@@ -73,6 +73,11 @@ public class HadoopDistributionService implements IHadoopDistributionService {
     }
 
     @Override
+    public IDistributionsManager getMaprdbDistributionManager() {
+        return HadoopDistributionsHelper.MAPRDB;
+    }
+
+    @Override
     public IDistributionsManager getSparkStreamingDistributionManager() {
         return HadoopDistributionsHelper.SPARK_STREAMING;
     }
