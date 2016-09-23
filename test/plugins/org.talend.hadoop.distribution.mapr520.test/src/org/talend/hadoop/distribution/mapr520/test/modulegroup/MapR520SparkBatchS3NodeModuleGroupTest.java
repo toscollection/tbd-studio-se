@@ -12,7 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.mapr520.test.modulegroup;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class MapR520SparkBatchS3NodeModuleGroupTest {
         Map<String, String> results = new HashMap<String, String>();
 
         results.put(MapR520Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='MAPR') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='MAPR510')) "
+                "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='MAPR') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='MAPR520')) "
                         + "AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')");
 
         Set<DistributionModuleGroup> moduleGroups = MapR520SparkBatchS3NodeModuleGroup.getModuleGroups();
