@@ -37,6 +37,7 @@ import org.talend.hadoop.distribution.cdh570.modulegroup.CDH570SparkStreamingMod
 import org.talend.hadoop.distribution.cdh570.modulegroup.CDH570SqoopModuleGroup;
 import org.talend.hadoop.distribution.cdh570.modulegroup.node.mr.CDH570MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.cdh570.modulegroup.node.pigoutput.CDH570PigOutputNodeModuleGroup;
+import org.talend.hadoop.distribution.cdh570.modulegroup.node.sparkbatch.CDH570GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh570.modulegroup.node.sparkbatch.CDH570SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh570.modulegroup.node.sparkbatch.CDH570SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.cdh570.modulegroup.node.sparkstreaming.CDH570SparkStreamingFlumeNodeModuleGroup;
@@ -118,6 +119,10 @@ public class CDH570Distribution extends AbstractDistribution implements HDFSComp
                 CDH570SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 CDH570SparkBatchS3NodeModuleGroup.getModuleGroups(distribution, version));
+        
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
+                CDH570GraphFramesNodeModuleGroup.getModuleGroups(distribution, version));
+        
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), CDH570SparkStreamingParquetNodeModuleGroup.getModuleGroups(
                 distribution, version));

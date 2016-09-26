@@ -55,6 +55,7 @@ import org.talend.hadoop.distribution.emr450.modulegroup.EMR450SparkStreamingMod
 import org.talend.hadoop.distribution.emr450.modulegroup.EMR450SqoopModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.mr.EMR450MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.pigoutput.EMR450PigOutputNodeModuleGroup;
+import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkbatch.EMR450GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkbatch.EMR450SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkbatch.EMR450SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr450.modulegroup.node.sparkstreaming.EMR450SparkStreamingFlumeNodeModuleGroup;
@@ -151,6 +152,10 @@ public class EMR450Distribution extends AbstractDistribution implements HDFSComp
         // Spark Batch S3 nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 EMR450SparkBatchS3NodeModuleGroup.getModuleGroups(distribution, version));
+        
+        // Spark Batch GraphFrames nodes
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
+                EMR450GraphFramesNodeModuleGroup.getModuleGroups(distribution, version));
 
         // Spark Streaming Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),

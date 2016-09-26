@@ -240,7 +240,29 @@
             id="sqoop-cdh5.5.2"
             name="sqoop-1.4.6-cdh5.5.2.jar"
             mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6-cdh5.5.2/6.1.0">
-        </libraryNeeded>                        
+        </libraryNeeded>
+        
+        <!-- GraphFrames libraries -->
+		<libraryNeeded 
+			context="plugin:org.talend.hadoop.distribution.cdh550"
+			id="graphframes-0.2.0-spark1.5-s_2.10.jar" 
+			name="graphframes-0.2.0-spark1.5-s_2.10.jar"
+			mvn_uri="mvn:org.talend.libraries/graphframes-0.2.0-spark1.5-s_2.10/6.0.0">
+		</libraryNeeded>
+		
+		<libraryNeeded 
+			context="plugin:org.talend.hadoop.distribution.cdh550"
+			id="scala-logging-slf4j_2.10-2.1.2.jar" 
+			name="scala-logging-slf4j_2.10-2.1.2.jar"
+			mvn_uri="mvn:org.talend.libraries/scala-logging-slf4j_2.10-2.1.2/6.0.0">
+		</libraryNeeded>
+		
+		<libraryNeeded 
+			context="plugin:org.talend.hadoop.distribution.cdh550"
+			id="scala-logging-api_2.10-2.1.2.jar" 
+			name="scala-logging-api_2.10-2.1.2.jar"
+			mvn_uri="mvn:org.talend.libraries/scala-logging-api_2.10-2.1.2/6.0.0">
+		</libraryNeeded>                        
         
         <!-- Third parties libraries -->
         <libraryNeeded
@@ -788,6 +810,15 @@
              <library id="httpcore-4.2.5.jar" />
         </libraryNeededGroup>
         
+        <!-- GraphFrames group MRREQUIRED -->
+		<libraryNeededGroup
+			description="GraphFrames libraries for CDH 5.5 that are MRREQUIRED" id="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-CDH_5_5"
+			name="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-CDH_5_5">
+			<library id="scala-logging-slf4j_2.10-2.1.2.jar" />
+			<library id="scala-logging-api_2.10-2.1.2.jar" />
+			<library id="graphframes-0.2.0-spark1.5-s_2.10.jar" />
+		</libraryNeededGroup>
+
         <!-- Spark Hive group MRREQUIRED -->
         <libraryNeededGroup
                 description="Spark Hive libraries for CDH 5.5 that are MRREQUIRED"
