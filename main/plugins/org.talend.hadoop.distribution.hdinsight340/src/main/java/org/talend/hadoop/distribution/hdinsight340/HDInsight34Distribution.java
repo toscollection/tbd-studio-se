@@ -49,6 +49,7 @@ import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34PigOut
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.HDInsight34SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.pigoutput.HDInsight34PigOutputNodeModuleGroup;
+import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkbatch.HDInsight34SparkBatchGraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkbatch.HDInsight34SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.hdinsight340.modulegroup.node.sparkstreaming.HDInsight34SparkStreamingParquetNodeModuleGroup;
 
@@ -90,6 +91,9 @@ public class HDInsight34Distribution extends AbstractDistribution implements MRC
                 HDInsight34SparkBatchParquetNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
                 HDInsight34SparkBatchParquetNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
+                HDInsight34SparkBatchGraphFramesNodeModuleGroup.getModuleGroups(DISTRIBUTION_NAME, VERSION));
+        
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), HDInsight34SparkStreamingParquetNodeModuleGroup
                 .getModuleGroups());
