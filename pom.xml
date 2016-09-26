@@ -71,6 +71,8 @@
         <module>main/plugins/org.talend.hadoop.distribution.emr400</module>
         <module>main/plugins/org.talend.hadoop.distribution.emr450</module>
         <module>main/plugins/org.talend.hadoop.distribution.emr450.jars</module>
+	<module>main/plugins/org.talend.hadoop.distribution.emr500</module>
+        <module>main/plugins/org.talend.hadoop.distribution.emr500.jars</module>
         <module>main/plugins/org.talend.hadoop.distribution.hdinsight310</module>
         <module>main/plugins/org.talend.hadoop.distribution.hdinsight320</module>
         <module>main/plugins/org.talend.hadoop.distribution.hdinsight340</module>
@@ -153,6 +155,7 @@
         <module>test/plugins/org.talend.hadoop.distribution.emr240hive0131.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.emr400.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.emr450.test</module>
+	<module>test/plugins/org.talend.hadoop.distribution.emr500.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.hdinsight310.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.hdinsight320.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.hdinsight340.test</module>
