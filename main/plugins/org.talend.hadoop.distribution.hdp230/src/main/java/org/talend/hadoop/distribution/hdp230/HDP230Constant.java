@@ -12,13 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.hdp230;
 
-/**
- * created by rdubois on 16 nov. 2015 Detailled comment
- *
- */
 public enum HDP230Constant {
 
-    SPARK_S3_MRREQUIRED_MODULE_GROUP("S3-LIB-HDP_2_3_0_LATEST"); //$NON-NLS-1$
+    SPARK_S3_MRREQUIRED_MODULE_GROUP("S3-LIB-HDP_2_3_0_LATEST"), //$NON-NLS-1$
+    SPARK_PARQUET_MRREQUIRED_MODULE_GROUP("SPARK-PARQUET-LIB-MRREQUIRED-HDP_2_3"); //$NON-NLS-1$
 
     private String mModuleName;
 

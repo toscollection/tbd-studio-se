@@ -23,6 +23,15 @@
             <library id="htrace-core-3.1.0-incubating.jar"/>
             <library id="talend-spark-assembly-HDP_2_3"/>
         </libraryNeededGroup>
+        
+        <!-- Spark Parquet group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark libraries for HDP 2.3 that are MRREQUIRED"
+                id="SPARK-PARQUET-LIB-MRREQUIRED-HDP_2_3"
+                name="SPARK-PARQUET-LIB-MRREQUIRED-HDP_2_3">
+             <library id="parquet-hadoop-bundle-1.6.0.jar" />
+             <library id="jodd-core-3.5.2.jar" />             
+        </libraryNeededGroup>
     </extension>
     <extension
           point="org.talend.core.runtime.classloader_provider">

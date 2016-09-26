@@ -46,6 +46,8 @@ import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkBatchModuleG
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkStreamingKafkaNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230SparkStreamingModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.node.sparkbatch.HDP230SparkBatchParquetNodeModuleGroup;
+import org.talend.hadoop.distribution.hdp230.modulegroup.node.sparkstreaming.HDP230SparkStreamingParquetNodeModuleGroup;
 
 public class HDP230Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, HBaseComponent,
         SqoopComponent, PigComponent, HiveComponent, HCatalogComponent, SparkBatchComponent, SparkStreamingComponent,
@@ -72,6 +74,18 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
         moduleGroups.put(ComponentType.PIG, HDP230PigModuleGroup.getModuleGroups());
 
         nodeModuleGroups = new HashMap<>();
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
+                HDP230SparkBatchParquetNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
+                HDP230SparkBatchParquetNodeModuleGroup.getModuleGroups());
+
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.PARQUET_INPUT_COMPONENT), HDP230SparkStreamingParquetNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT), HDP230SparkStreamingParquetNodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT), HDP230SparkStreamingParquetNodeModuleGroup
+                .getModuleGroups());
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 HDP230SparkStreamingKafkaNodeModuleGroup.getModuleGroups());
