@@ -117,7 +117,7 @@ public class SparkVersionUtil {
      * the spark version.
      * @return A spark version if all of the parameters are present in that element, or null otherwise.
      */
-    private static ESparkVersion getSparkVersion(IElement element) {
+    private static ESparkVersion getSparkVersionFromElementParameters(IElement element) {
         IElementParameter sparkLocalModeParameter = element.getElementParameter("SPARK_LOCAL_MODE"); //$NON-NLS-1$
         IElementParameter sparkLocalVersionParameter = element.getElementParameter("SPARK_LOCAL_VERSION"); //$NON-NLS-1$
         IElementParameter sparkCustomVersionParameter = element.getElementParameter("SPARK_API_VERSION"); //$NON-NLS-1$
@@ -153,14 +153,27 @@ public class SparkVersionUtil {
      * null.
      */
     public static ESparkVersion getSparkVersion(INode node) {
+        return getSparkVersion(node, true);
+
+    }
+
+    /**
+     * @param node Either a Spark configuration node direction (which is the most effective), or any node in a spark
+     * process that can be used to find a Spark configuration node.
+     * @param fallbackOnProcess If a spark version can't be found in the node, and this is true, check over any node in
+     * the entire process associated with the node.
+     * @return A spark version if one can be found from the node, or the process associated with the node. Otherwise
+     * null.
+     */
+    private static ESparkVersion getSparkVersion(INode node, boolean fallbackOnProcess) {
         // Try to get the version directly from the node.
-        ESparkVersion sparkVersion = getSparkVersion((IElement) node);
+        ESparkVersion sparkVersion = getSparkVersionFromElementParameters(node);
         if (sparkVersion != null) {
             return sparkVersion;
         }
 
-        // Otherwise, try to get the version from any compatible node in the process.
-        return getSparkVersion(node.getProcess());
+        // Otherwise, either return null or check any compatible node in the process.
+        return fallbackOnProcess ? getSparkVersion(node.getProcess()) : null;
     }
 
     /**
@@ -176,7 +189,7 @@ public class SparkVersionUtil {
         }
 
         // Try to get the version directly from the node.
-        ESparkVersion sparkVersion = getSparkVersion((IElement) process);
+        ESparkVersion sparkVersion = getSparkVersionFromElementParameters(process);
         if (sparkVersion != null) {
             return sparkVersion;
         }
@@ -184,7 +197,7 @@ public class SparkVersionUtil {
         // Try to get the version from any compatible node in the process.
         List<? extends INode> sparkConfigs = process.getNodesOfType("tSparkConfiguration"); //$NON-NLS-1$
         if (sparkConfigs != null && sparkConfigs.size() > 0) {
-            return getSparkVersion(sparkConfigs.get(0));
+            return getSparkVersion(sparkConfigs.get(0), false);
         }
         return null;
     }
