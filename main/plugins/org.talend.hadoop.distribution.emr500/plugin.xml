@@ -178,9 +178,9 @@
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr500"
-            id="piggybank-emr450-latest"
-            name="piggybank-emr450.jar" 
-            mvn_uri="mvn:org.talend.libraries/piggybank-emr450/6.0.0"/>
+            id="piggybank-emr500-latest"
+            name="piggybank-emr500.jar" 
+            mvn_uri="mvn:org.talend.libraries/piggybank-emr500/6.0.0"/>
             
         <libraryNeeded
             context="plugin:org.talend.libraries.pig"
@@ -202,6 +202,13 @@
             name="elephant-bird-rcfile-4.9-patched-hive-1.x.jar" 
             mvn_uri="mvn:org.talend.libraries/elephant-bird-rcfile-4.9-patched-hive-1.x/6.0.0"
             uripath="platform:/plugin/org.talend.libraries.pig/lib/elephant-bird-rcfile-4.9-patched-hive-1.x.jar"/>
+         
+        <libraryNeeded 
+        	context="plugin:org.talend.hadoop.distribution.emr500" 
+        	id="javax.ws.rs-api-2.0.1.jar" 
+        	name="javax.ws.rs-api-2.0.1.jar" 
+        	mvn_uri="mvn:org.talend.libraries/javax.ws.rs-api-2.0.1/6.1.0"/>
+            
             
         <libraryNeeded
             context="plugin:org.talend.libraries.pig"
@@ -251,13 +258,7 @@
             mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6/6.0.0">
         </libraryNeeded>    
         
-        <!-- Spark libraries -->
-        <libraryNeeded
-            context="plugin:org.talend.hadoop.distribution.emr 500"
-            id="talend-spark-assembly-emr500-latest"
-            name="talend-spark-assembly-1.6.1-hadoop2.7.2-amzn-0.jar" 
-            mvn_uri="mvn:org.talend.libraries/talend-spark-assembly-1.6.1-hadoop2.7.2-amzn-0/6.0.0"/>
-            
+                 
         
         <!-- Spark2 libraries -->
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="metrics-graphite-3.1.2.jar" name="metrics-graphite-3.1.2.jar" mvn_uri="mvn:org.talend.libraries/metrics-graphite-3.1.2/6.0.0"/>
@@ -420,11 +421,10 @@
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="pyrolite-4.9.jar" name="pyrolite-4.9.jar" mvn_uri="mvn:org.talend.libraries/pyrolite-4.9/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="commons-configuration-1.6.jar" name="commons-configuration-1.6.jar" mvn_uri="mvn:org.talend.libraries/commons-configuration-1.6/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="leveldbjni-all-1.8.jar" name="leveldbjni-all-1.8.jar" mvn_uri="mvn:org.talend.libraries/leveldbjni-all-1.8/6.0.0"/>
-<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="javax.annotation-api-1.2.jar" name="javax.annotation-api-1.2.jar" mvn_uri="mvn:org.talend.libraries/javax.annotation-api-1.2/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="javax.annotation-api-1.2.jar" name="javax.annotation-api-1.2.jar" mvn_uri="mvn:org.talend.libraries/javax.annotation-api-1.2/6.1.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jpam-1.1.jar" name="jpam-1.1.jar" mvn_uri="mvn:org.talend.libraries/jpam-1.1/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="objenesis-2.1.jar" name="objenesis-2.1.jar" mvn_uri="mvn:org.talend.libraries/objenesis-2.1/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="parquet-format-2.3.0-incubating.jar" name="parquet-format-2.3.0-incubating.jar" mvn_uri="mvn:org.talend.libraries/parquet-format-2.3.0-incubating/6.0.0"/>
-<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="javax.ws.rs-api-2.0.1.jar" name="javax.ws.rs-api-2.0.1.jar" mvn_uri="mvn:org.talend.libraries/javax.ws.rs-api-2.0.1/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jta-1.1.jar" name="jta-1.1.jar" mvn_uri="mvn:org.talend.libraries/jta-1.1/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="parquet-encoding-1.7.0.jar" name="parquet-encoding-1.7.0.jar" mvn_uri="mvn:org.talend.libraries/parquet-encoding-1.7.0/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="datanucleus-rdbms-3.2.9.jar" name="datanucleus-rdbms-3.2.9.jar" mvn_uri="mvn:org.talend.libraries/datanucleus-rdbms-3.2.9/6.0.0"/>
@@ -506,7 +506,7 @@
             context="plugin:org.talend.hadoop.distribution.emr500"
             id="avro-mapred-emr500-latest"
             name="avro-mapred-1.7.5-hadoop2.jar" 
-            mvn_uri="mvn:org.talend.libraries/avro-mapred-1.7.5-hadoop2/6.0.0"/>
+            mvn_uri="mvn:org.talend.libraries/avro-mapred-1.7.5-hadoop2/6.1.0"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr500"
@@ -525,7 +525,7 @@
             context="plugin:org.talend.hadoop.distribution.emr500"
             id="emr-metrics-client-emr500-latest"
             name="emr-metrics-client-2.1.0.jar" 
-            mvn_uri="mvn:org.talend.libraries/emr-metrics-client-2.1.0/6.0.0"/>
+            mvn_uri="mvn:org.talend.libraries/emr-metrics-client-2.1.0/6.2.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.libraries.zookeeper"
@@ -674,7 +674,7 @@
              <library id="httpclient-4.3.4.jar"/>
              <library id="jetty-util-emr500-latest"/>
              <!--<library id="emr-metrics-client-emr500-latest"/>-->
-             <library id="snappy-java-1.1.0.1.jar"/>
+             <!--<library id="snappy-java-1.1.0.1.jar"/>-->
              <library id="htrace-core-3.1.0-incubating.jar"/>
              <library id="guava-11.0.2.jar"/>
              <library id="jline-1.0.jar"/>
@@ -682,6 +682,8 @@
              <library id="joda-time-2.9.3.jar"/>
              <library id="automaton-1.11-8.jar"/>
              <library id="servlet-api-2.5.jar"/>
+             <!--<library id="piggybank-emr500-latest"/>
+             <library id="commons-io-2.4.jar"/> -->
         </libraryNeededGroup>
         
         <!-- Pig Parquet group -->
@@ -723,8 +725,8 @@
         <!-- Pig Avro group -->
         <libraryNeededGroup
                 description="The latest pig avro storage libraries for EMR 5.0.0"
-                id="PIG-AVRO-LIB-EMR_4_5_0_LATEST"
-                name="PIG-AVRO-LIB-EMR_4_5_0_LATEST">
+                id="PIG-AVRO-LIB-EMR_5_0_0_LATEST"
+                name="PIG-AVRO-LIB-EMR_5_0_0_LATEST">
              <library id="piggybank-emr500-latest"/>
              <library id="commons-io-2.4.jar"/>
         </libraryNeededGroup>
@@ -732,8 +734,8 @@
         <!-- Pig SequenceFile group -->
         <libraryNeededGroup
                 description="Pig SequenceFile libraries for EMR 5.0.0"
-                id="PIG-SEQUENCEFILE-LIB-EMR_4_5_0_LATEST"
-                name="PIG-SEQUENCEFILE-LIB-EMR_4_5_0_LATEST">
+                id="PIG-SEQUENCEFILE-LIB-EMR_5_0_0_LATEST"
+                name="PIG-SEQUENCEFILE-LIB-EMR_5_0_0_LATEST">
             <library id="elephant-bird-core-4.9.jar"/>
             <library id="elephant-bird-hadoop-compat-4.9.jar"/>
             <library id="elephant-bird-pig-4.9.jar"/>
@@ -851,7 +853,7 @@
         </libraryNeededGroup>
                 
         <!-- Spark group -->
-        <libraryNeededGroup
+       <!-- <libraryNeededGroup
                 description="The latest Spark libraries for EMR 5.0.0"
                 id="SPARK-LIB-EMR_5_0_0_LATEST_O"
                 name="SPARK-LIB-EMR_5_0_0_LATEST_O">
@@ -878,6 +880,7 @@
              <library id="log4j-1.2.17.jar"/>
               <library id="htrace-core-3.1.0-incubating.jar"/>
         </libraryNeededGroup>
+        -->
         
           <libraryNeededGroup
                 description="The latest Spark libraries for EMR 5.0.0"
@@ -1027,7 +1030,7 @@
 			<library id="curator-recipes-2.6.0.jar"/>
 			<library id="hadoop-common-emr500-latest"/>
 			<library id="commons-beanutils-1.7.0.jar"/>
-			<library id="hadoop-mapreduce-client-app-2.6.4.jar"/>
+			<library id="hadoop-mapreduce-client-app-2.7.2.amzn-3.jar"/>
 			<library id="hive-jdbc-1.2.1.spark2.jar"/>
 			<library id="avro-ipc-1.7.7.jar"/>
 			<library id="httpcore-4.4.4.jar"/>
