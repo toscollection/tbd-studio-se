@@ -35,7 +35,7 @@
               <artifactItems>
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
-                  <artifactId>datanucleus-api-jdo-4.2.1/artifactId>
+                  <artifactId>datanucleus-api-jdo-4.2.1</artifactId>
                   <version>${talend.version.620}</version>
                 </artifactItem>
                 <artifactItem>
