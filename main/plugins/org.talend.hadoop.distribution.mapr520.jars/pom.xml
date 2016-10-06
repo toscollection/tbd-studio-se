@@ -201,7 +201,7 @@
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
                   <artifactId>parquet-hive-bundle-1.6.0</artifactId>
-                  <version>${talend.version.620}</version>
+                  <version>${talend.version.600}</version>
                 </artifactItem>
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
@@ -211,7 +211,7 @@
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
                   <artifactId>javax.ws.rs-api-2.0.1</artifactId>
-                  <version>${talend.version.620}</version>
+                  <version>${talend.version.610}</version>
                 </artifactItem>
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
@@ -246,7 +246,7 @@
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
                   <artifactId>automaton-1.11-8</artifactId>
-                  <version>${talend.version.620}</version>
+                  <version>${talend.version.600}</version>
                 </artifactItem>
                 <artifactItem>
                   <groupId>${talend.groupid}</groupId>
