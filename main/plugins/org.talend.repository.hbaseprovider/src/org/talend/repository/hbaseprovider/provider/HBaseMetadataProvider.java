@@ -228,14 +228,23 @@ public class HBaseMetadataProvider implements IDBMetadataProvider {
     }
 
     private void updateHadoopProperties(Object hbaseConfiguration, IMetadataConnection metadataConnection) throws Exception {
-        String hadoopProperties = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_PROPERTIES);
-        List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
-        for (Map<String, Object> hadoopPros : hadoopPropertiesList) {
-            ReflectionUtils
-                    .invokeMethod(hbaseConfiguration,
-                            "set", //$NON-NLS-1$
-                            new Object[] {
-                                    hadoopPros.get("PROPERTY"), ConnectionContextHelper.getParamValueOffContext(metadataConnection, String.valueOf(hadoopPros.get("VALUE"))) }); //$NON-NLS-1$ //$NON-NLS-2$
+        String setZnodeParentStr = (String)metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_SET_ZNODE_PARENT);
+        String znodeParent = (String)metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_ZNODE_PARENT);
+        boolean selected_Znode_Parent = Boolean.valueOf(setZnodeParentStr);
+        if (selected_Znode_Parent) {
+            ReflectionUtils.invokeMethod(hbaseConfiguration, "set", //$NON-NLS-1$
+                    new Object[] { "zookeeper.znode.parent", ConnectionContextHelper.getParamValueOffContext(metadataConnection, //$NON-NLS-1$
+                                            znodeParent) });
+        } else {
+            String hadoopProperties = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_HBASE_PROPERTIES);
+            List<Map<String, Object>> hadoopPropertiesList = HadoopRepositoryUtil.getHadoopPropertiesList(hadoopProperties);
+            for (Map<String, Object> hadoopPros : hadoopPropertiesList) {
+                ReflectionUtils
+                        .invokeMethod(hbaseConfiguration,
+                                "set", //$NON-NLS-1$
+                                new Object[] {
+                                        hadoopPros.get("PROPERTY"), ConnectionContextHelper.getParamValueOffContext(metadataConnection, String.valueOf(hadoopPros.get("VALUE"))) }); //$NON-NLS-1$ //$NON-NLS-2$
+            }
         }
     }
 
