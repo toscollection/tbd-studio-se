@@ -86,13 +86,20 @@
 %>
 			}else{
 				String localFilePath_<%=cid%> = "";
-				String gridfsFilename_<%=cid%> = map_<%=cid %>.get(key_<%=cid %>);
+				FileInfo_<%=cid%> info_<%=cid%> = map_<%=cid %>.get(key_<%=cid %>);
+				String gridfsFilename_<%=cid%> = info_<%=cid%>.newName;
 				for (int m_<%=cid %> = 0; m_<%=cid %> < listings_<%=cid %>.length; m_<%=cid %>++){
-					if(("").equals(map_<%=cid %>.get(key_<%=cid %>))){
+					if(("").equals(gridfsFilename_<%=cid%>)){
 						gridfsFilename_<%=cid%> = listings_<%=cid %>[m_<%=cid %>].getName();
 					}
 					com.mongodb.gridfs.GridFSInputFile gridfsFile_<%=cid%> = gridfs_<%=cid%>.createFile(listings_<%=cid %>[m_<%=cid %>]);
 					gridfsFile_<%=cid%>.setFilename(gridfsFilename_<%=cid%>);
+					
+					if(info_<%=cid%>.setMetadata) {
+						com.mongodb.DBObject metadata_<%=cid%> = (com.mongodb.DBObject)com.mongodb.util.JSON.parse(info_<%=cid%>.metadataJson);
+						gridfsFile_<%=cid%>.setMetaData(metadata_<%=cid%>);
+					}
+					
 					gridfsFile_<%=cid%>.save();
 					nb_line_<%=cid %>++;
 <%					if(isLog4jEnabled) {

@@ -227,9 +227,10 @@
             <ITEMS>
                 <ITEM NAME="FILEMASK" />
                 <ITEM NAME="NEWNAME" VALUE="&quot;&quot;" />
+                <ITEM NAME="SET_METADATA" FIELD="CHECK" />
+                <ITEM NAME="METADATA" VALUE="&quot;{&apos;key&apos; : &apos;value&apos;}&quot;" />
             </ITEMS>
         </PARAMETER>
-
     </PARAMETERS>
 
     <ADVANCED_PARAMETERS>
