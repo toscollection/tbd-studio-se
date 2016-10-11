@@ -28,21 +28,41 @@
 			com.mongodb.gridfs.GridFS gridfs_<%=cid%> = new com.mongodb.gridfs.GridFS(db_<%=cid%>, <%=bucketName%>);
 
 			java.util.List<String> msg_<%=cid%> = new java.util.ArrayList<String>();
-			java.util.List<java.util.Map<String,String>> list_<%=cid %> = new java.util.ArrayList<java.util.Map<String,String>>();	
+			
+			class FileInfo_<%=cid%> {
+				String newName;
+				boolean setMetadata;
+				String metadataJson;
+			}
+			
+			java.util.List<java.util.Map<String,FileInfo_<%=cid%>>> list_<%=cid %> = new java.util.ArrayList<java.util.Map<String,FileInfo_<%=cid%>>>();
+			
+			FileInfo_<%=cid%> fileInfo_<%=cid%> = null;	
 			<%
-
 			// Get filemasks
 			for (int i=0; i<files.size(); i++) {
 				Map<String, String> line = files.get(i);
 				%>
-				java.util.Map<String,String> map_<%=cid %>_<%=i %> = new java.util.HashMap<String,String>();
-				map_<%=cid %>_<%=i %>.put(<%= line.get("FILEMASK") %>,<%= line.get("NEWNAME") %>);
+				java.util.Map<String,FileInfo_<%=cid%>> map_<%=cid %>_<%=i %> = new java.util.HashMap<String,FileInfo_<%=cid%>>();
+				
+				fileInfo_<%=cid%> = new FileInfo_<%=cid%>();
+				
+				fileInfo_<%=cid%>.newName = <%= line.get("NEWNAME") %>;
+				<%
+				boolean setMetadata = "true".equals(line.get("SET_METADATA"));
+				%>
+				fileInfo_<%=cid%>.setMetadata = <%= setMetadata %>;
+				<%if(setMetadata) {%>
+				fileInfo_<%=cid%>.metadataJson = <%= line.get("METADATA") %>;
+				<%}%>
+				
+				map_<%=cid %>_<%=i %>.put(<%= line.get("FILEMASK") %>, fileInfo_<%=cid%>);
 			 	list_<%=cid %>.add(map_<%=cid %>_<%=i %>);       
 				<%
 			}
 			%>
 			String localdir_<%=cid %>  = <%=localdir%>;	
-			for (java.util.Map<String, String> map_<%=cid %> : list_<%=cid %>) {
+			for (java.util.Map<String, FileInfo_<%=cid%>> map_<%=cid %> : list_<%=cid %>) {
 			<%
 %>
 
