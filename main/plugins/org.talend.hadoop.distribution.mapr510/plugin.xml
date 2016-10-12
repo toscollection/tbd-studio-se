@@ -93,12 +93,12 @@
             context="plugin:org.talend.hadoop.distribution.mapr510"
             id="kafka_2.10-0.9.0.0-mapr-1607.jar"
             name="kafka_2.10-0.9.0.0-mapr-1607.jar"
-            mvn_uri="mvn:org.talend.libraries/kafka_2.10-0.9.0.0-mapr-1607/6.3.0"/>
+            mvn_uri="mvn:org.talend.libraries/kafka_2.10-0.9.0.0-mapr-1607/6.2.0"/>
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.mapr510"
             id="kafka-clients-0.9.0.0-mapr-1607.jar"
             name="kafka-clients-0.9.0.0-mapr-1607.jar"
-            mvn_uri="mvn:org.talend.libraries/kafka-clients-0.9.0.0-mapr-1607/6.3.0"/>
+            mvn_uri="mvn:org.talend.libraries/kafka-clients-0.9.0.0-mapr-1607/6.2.0"/>
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.mapr510"
             id="spark-streaming-kafka-v09_2.10-1.5.2-mapr-1605.jar"
