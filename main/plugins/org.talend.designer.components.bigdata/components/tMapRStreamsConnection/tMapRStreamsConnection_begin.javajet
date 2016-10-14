@@ -67,7 +67,7 @@ if(tMapRStreamsConnectionUtil.isUsingMapRTicket()) {
 <%
 	} else {
 %>
-		String decryptedMaprPassword_<%=cid%> = <%=tMapRStreamsConnectionUtil.getPassword()%>;
+		String decryptedPassword_<%=cid%> = <%=tMapRStreamsConnectionUtil.getPassword()%>;
 <%
 			if(hdfsDistrib.doSupportMaprTicketV52API()){
 %>

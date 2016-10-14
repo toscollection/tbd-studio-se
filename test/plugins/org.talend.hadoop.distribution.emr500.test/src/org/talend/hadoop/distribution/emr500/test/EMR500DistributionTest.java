@@ -12,7 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.emr500.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -71,7 +74,8 @@ public class EMR500DistributionTest {
         assertTrue(((HiveComponent) distribution).doSupportORCFormat());
         assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
         assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
-        assertTrue(((SparkBatchComponent) distribution).isSpark16());
+        assertTrue(((SparkBatchComponent) distribution).isSpark20());
+        assertFalse(((SparkBatchComponent) distribution).isSpark16());
         assertFalse(((SparkBatchComponent) distribution).isSpark15());
         assertFalse(((SparkBatchComponent) distribution).isSpark14());
         assertFalse(((SparkBatchComponent) distribution).isSpark13());
@@ -79,7 +83,8 @@ public class EMR500DistributionTest {
         assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
         assertFalse(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
-        assertTrue(((SparkStreamingComponent) distribution).isSpark16());
+        assertTrue(((SparkStreamingComponent) distribution).isSpark20());
+        assertFalse(((SparkStreamingComponent) distribution).isSpark16());
         assertFalse(((SparkStreamingComponent) distribution).isSpark15());
         assertFalse(((SparkStreamingComponent) distribution).isSpark14());
         assertFalse(((SparkStreamingComponent) distribution).isSpark13());
