@@ -41,6 +41,48 @@
             mvn_uri="mvn:org.talend.libraries/slf4j-log4j12-1.7.6/6.2.0"
             uripath="platform:/plugin/org.talend.libraries.apache.kafka/lib/slf4j-log4j12-1.7.6.jar"/>
             
+        <!-- Kafka 0.10.0.1 libraries -->
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="kafka_2.10-0.10.0.1.jar"
+            name="kafka_2.10-0.10.0.1.jar"
+            mvn_uri="mvn:org.talend.libraries/kafka_2.10-0.10.0.1/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="kafka-clients-0.10.0.1.jar"
+            name="kafka-clients-0.10.0.1.jar"
+            mvn_uri="mvn:org.talend.libraries/kafka-clients-0.10.0.1/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="scala-library-2.10.6.jar"
+            name="scala-library-2.10.6.jar" 
+            mvn_uri="mvn:org.talend.libraries/scala-library-2.10.6/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="snappy-java-1.1.2.6.jar"
+            name="snappy-java-1.1.2.6.jar" 
+            mvn_uri="mvn:org.talend.libraries/snappy-java-1.1.2.6/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="zkclient-0.8.jar"
+            name="zkclient-0.8.jar" 
+            mvn_uri="mvn:org.talend.libraries/zkclient-0.8/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="slf4j-log4j12-1.7.21.jar"
+            name="slf4j-log4j12-1.7.21.jar" 
+            mvn_uri="mvn:org.talend.libraries/slf4j-log4j12-1.7.21/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="slf4j-api-1.7.21.jar"
+            name="slf4j-api-1.7.21.jar" 
+            mvn_uri="mvn:org.talend.libraries/slf4j-api-1.7.21.jar/6.3.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.libraries.apache.kafka"
+            id="jopt-simple-4.9.jar"
+            name="jopt-simple-4.9.jar" 
+            mvn_uri="mvn:org.talend.libraries/jopt-simple-4.9/6.3.0"/>
+            
         <!-- Kafka 0.8.2.0 client group (tKafkaOutput) -->
         <libraryNeededGroup
                 description="Kafka 0.8.2.0 client group"
@@ -80,6 +122,36 @@
             <library id="log4j-1.2.17.jar"/>
             <library id="slf4j-api-1.7.6.jar"/>
             <library id="slf4j-log4j12-1.7.6.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Kafka 0.10.0.1 group (tKafkaInput) -->    
+        <libraryNeededGroup
+                description="Kafka libraries for 2.10-0.10.0.1"
+                id="KAFKA-LIB-2_10-0_10_0_1"
+                name="KAFKA-LIB-2_10-0_10_0_1">
+            <library id="kafka_2.10-0.10.0.1.jar"/>
+            <library id="scala-library-2.10.6.jar"/>
+            <library id="jopt-simple-4.9.jar"/>
+            <library id="kafka-clients-0.10.0.1.jar"/>
+            <library id="lz4-1.3.0.jar"/>
+            <library id="metrics-core-2.2.0.jar"/>
+            <library id="snappy-java-1.1.2.6.jar"/>
+            <library id="zkclient-0.8.jar"/>
+            <library id="zookeeper-3.4.6.jar"/>
+            <library id="log4j-1.2.17.jar"/>
+            <library id="slf4j-api-1.7.21.jar"/>
+            <library id="slf4j-log4j12-1.7.21.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Kafka 0.10.0.1 client group (tKafkaOutput) -->
+        <libraryNeededGroup
+                description="Kafka 0.10.0.1 client group"
+                id="KAFKA-CLIENT-LIB-2_10-0_10_0_1"
+                name="KAFKA-CLIENT-LIB-2_10-0_10_0_1">
+            <library id="kafka-clients-0.10.0.1.jar"/>
+            <library id="log4j-1.2.17.jar"/>
+            <library id="slf4j-api-1.7.21.jar"/>
+            <library id="slf4j-log4j12-1.7.21.jar"/>
         </libraryNeededGroup>
         
     </extension>
