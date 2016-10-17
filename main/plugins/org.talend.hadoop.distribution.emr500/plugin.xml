@@ -872,12 +872,12 @@
              <library id="aws-java-sdk-s3-1.10.75.jar"/>
              <library id="aws-java-sdk-core-1.10.75.jar"/>              
              <library id="activation-1.1.1.jar"/>
-			<!-- <library id="antlr-2.7.7.jar"/>
+			- <library id="antlr-2.7.7.jar"/>
 			 <library id="antlr-runtime-3.4.jar"/>
 			 <library id="antlr4-runtime-4.5.3.jar"/>
 			 <library id="aopalliance-1.0.jar"/>
 			 <library id="aopalliance-repackaged-2.4.0-b34.jar"/>
-		-->	
+			
 			 <library id="apache-log4j-extras-1.2.17.jar"/>
 			 
 			 <library id="apacheds-i18n-2.0.0-M15.jar"/>
@@ -957,16 +957,19 @@
 			 <library id="hadoop-yarn-common-emr500-latest"/>
 			 <library id="hadoop-yarn-server-common-2.7.2-amzn-3.jar"/>
 			 <library id="hadoop-yarn-server-web-proxy-2.7.2-amzn-3.jar"/>
-	     <!--		 
+	     		 
 			 <library id="hive-beeline-1.2.1.spark2.jar"/>
 			 <library id="hive-cli-1.2.1.spark2.jar"/>
 			 <library id="hive-exec-1.2.1.spark2.jar"/>
 			 <library id="hive-jdbc-1.2.1.spark2.jar"/>
 			 <library id="hive-metastore-1.2.1.spark2.jar"/>
+		<!--
 			 <library id="hk2-api-2.4.0-b34.jar"/>
 			 <library id="hk2-locator-2.4.0-b34.jar"/>
 			 <library id="hk2-utils-2.4.0-b34.jar"/>
 			 -->
+			 
+			<!--  <library id="hive-common-emr500-latest"/> -->
 			 
 			 <library id="htrace-core-3.1.0-incubating.jar"/> <!--replacing -->
          	 <!--<library id="htrace-core-3.0.4.jar"/> replaced--> 
