@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.component;
 
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
+
 /**
  * Interface that exposes specific Spark Streaming methods.
  *
@@ -33,11 +35,18 @@ public interface SparkStreamingComponent extends SparkComponent {
     public boolean doSupportBackpressure();
 
     /**
-     * Most of the distributions stick with the official spark-streaming-kafka implementation. Some MapR distributions
-     * have their own spark-streaming-kafka implementation and their own API.
+     * This method defines which version of the spark-streaming-kafka connector the distribution does support.
      * 
-     * @return true if the distribution supports the official spark-streaming-kafka implementation.
+     * @return the version of the spark-streaming-kafka connector.
      */
-    public boolean doSupportOfficialSparkStreamingKafka();
+    public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion();
+
+    /**
+     * This version defines whether the distribution supports the spark-streaming-kafka-0.10 connector. This is needed
+     * for the GUI of the Kafka components, in order to hide/show some fields.
+     * 
+     * @return true if the distribution supports spark-streaming-kafka-0.10
+     */
+    public boolean doSupportSparkStreamingKafka010();
 
 }

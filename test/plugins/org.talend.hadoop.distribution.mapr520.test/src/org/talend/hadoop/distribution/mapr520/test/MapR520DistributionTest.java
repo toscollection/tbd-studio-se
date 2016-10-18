@@ -28,6 +28,7 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.mapr520.MapR520Distribution;
 
 /**
@@ -96,7 +97,7 @@ public class MapR520DistributionTest {
         assertTrue(distribution instanceof MapRStreamsComponent);
         assertTrue(((MapRStreamsComponent) distribution).canCreateMapRStream());
         assertEquals(MapR520Distribution.MAPR_STREAMS_JAR_PATH, ((MapRStreamsComponent) distribution).getMapRStreamsJarPath());
-        assertFalse(((SparkStreamingComponent) distribution).doSupportOfficialSparkStreamingKafka());
+        assertEquals(SparkStreamingKafkaVersion.MAPR, ((SparkStreamingComponent) distribution).getSparkStreamingKafkaVersion());
 
         assertTrue(distribution.doSupportHDFSEncryption());
     }

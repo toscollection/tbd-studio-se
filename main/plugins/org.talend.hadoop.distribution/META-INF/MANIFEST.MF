@@ -21,6 +21,7 @@ Export-Package: org.talend.hadoop.distribution,
  org.talend.hadoop.distribution.constants.mapr,
  org.talend.hadoop.distribution.constants.piv,
  org.talend.hadoop.distribution.helper,
+ org.talend.hadoop.distribution.kafka,
  org.talend.hadoop.distribution.model,
  org.talend.hadoop.distribution.spark,
  org.talend.hadoop.distribution.utils

@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.emr500.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -31,6 +28,7 @@ import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.emr500.EMR500Distribution;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 
 /**
  * Test class for the {@link EMR500Distribution} distribution.
@@ -94,6 +92,9 @@ public class EMR500DistributionTest {
         assertFalse(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
+        assertEquals(SparkStreamingKafkaVersion.KAFKA_0_10,
+                ((SparkStreamingComponent) distribution).getSparkStreamingKafkaVersion());
+        assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStreamingKafka010());
         assertTrue(((HiveComponent) distribution).doSupportStoreAsParquet());
         assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertTrue(distribution instanceof HCatalogComponent);

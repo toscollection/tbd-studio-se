@@ -19,6 +19,7 @@ import org.apache.commons.collections.map.MultiKeyMap;
 import org.apache.commons.lang.ArrayUtils;
 import org.talend.commons.utils.platform.PluginChecker;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.DefaultConfigurationManager;
 import org.talend.utils.json.JSONObject;
 import org.talend.utils.json.JSONUtil;
@@ -250,8 +251,12 @@ public abstract class AbstractDistribution {
         return false;
     }
 
-    public boolean doSupportOfficialSparkStreamingKafka() {
-        return true;
+    public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion() {
+        return SparkStreamingKafkaVersion.KAFKA_0_8;
+    }
+
+    public boolean doSupportSparkStreamingKafka010() {
+        return false;
     }
 
     public boolean doSupportHDFSEncryption() {

@@ -1192,8 +1192,8 @@
                 id="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_5_0_0_LATEST"
                 name="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_5_0_0_LATEST">
             <library id="spark-streaming-kafka-emr500-latest"/>
-            <library id="kafka_2.10-0.8.2.1.jar"/>
-            <library id="metrics-core-2.2.0.jar"/>
+            <!--library id="kafka_2.10-0.8.2.1.jar"/>
+            <library id="metrics-core-2.2.0.jar"/-->
         </libraryNeededGroup>
         
         <!-- Spark Kafka Avro group MRREQUIRED -->
@@ -1211,7 +1211,7 @@
                 description="Spark Kafka client libraries for EMR 5.0.0 that are MRREQUIRED"
                 id="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-EMR_5_0_0_LATEST"
                 name="SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-EMR_5_0_0_LATEST">
-            <library id="kafka-clients-0.8.2.1.jar"/>
+            <library id="kafka-clients-0.10.0.1.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Flume group MRREQUIRED -->

@@ -61,6 +61,7 @@ import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkstreaming.EMR
 import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkstreaming.EMR500SparkStreamingKinesisNodeModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkstreaming.EMR500SparkStreamingParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkstreaming.EMR500SparkStreamingS3NodeModuleGroup;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 
 public class EMR500Distribution extends AbstractDistribution implements HBaseComponent, HDFSComponent, MRComponent, PigComponent,
         HCatalogComponent, HiveComponent, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, SqoopComponent,
@@ -399,6 +400,16 @@ public class EMR500Distribution extends AbstractDistribution implements HBaseCom
 
     @Override
     public boolean doSupportHDFSEncryption() {
+        return true;
+    }
+
+    @Override
+    public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion() {
+        return SparkStreamingKafkaVersion.KAFKA_0_10;
+    }
+
+    @Override
+    public boolean doSupportSparkStreamingKafka010() {
         return true;
     }
 }
