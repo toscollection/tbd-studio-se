@@ -87,8 +87,8 @@
 			}else{
 				String localFilePath_<%=cid%> = "";
 				FileInfo_<%=cid%> info_<%=cid%> = map_<%=cid %>.get(key_<%=cid %>);
-				String gridfsFilename_<%=cid%> = info_<%=cid%>.newName;
 				for (int m_<%=cid %> = 0; m_<%=cid %> < listings_<%=cid %>.length; m_<%=cid %>++){
+					String gridfsFilename_<%=cid%> = info_<%=cid%>.newName;
 					if(("").equals(gridfsFilename_<%=cid%>)){
 						gridfsFilename_<%=cid%> = listings_<%=cid %>[m_<%=cid %>].getName();
 					}
