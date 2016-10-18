@@ -329,6 +329,9 @@ public class HadoopConfsUtils {
             }
             String jhp = confsService.getConfValue(EHadoopConfs.MAPREDUCE2.getName(),
                     EHadoopConfProperties.JH_PRINCIPAL.getName());
+            if (StringUtils.isEmpty(jhp)) {
+                jhp = confsService.getConfValue(EHadoopConfs.YARN.getName(), EHadoopConfProperties.JH_PRINCIPAL.getName());
+            }
             if (StringUtils.isNotEmpty(jhp)) {
                 connection.setJobHistoryPrincipal(jhp);
             }
