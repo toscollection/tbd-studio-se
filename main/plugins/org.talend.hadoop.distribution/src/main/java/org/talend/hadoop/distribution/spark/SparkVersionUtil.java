@@ -27,7 +27,7 @@ import org.talend.hadoop.distribution.component.SparkComponent;
  */
 public class SparkVersionUtil {
 
-    private static boolean isSparkCustom(boolean useLocalMode, String sparkLocalVersion, String distributionName) {
+    public static boolean isSparkCustom(boolean useLocalMode, String sparkLocalVersion, String distributionName) {
         if (useLocalMode) {
             return "CUSTOM".equals(sparkLocalVersion); //$NON-NLS-1$
         } else {
@@ -42,7 +42,7 @@ public class SparkVersionUtil {
         return null;
     }
 
-    private static ESparkVersion getSparkAPIVersion(String apiVersion) {
+    public static ESparkVersion getSparkAPIVersion(String apiVersion) {
         if ("SPARK_130".equals(apiVersion)) { //$NON-NLS-1$
             return ESparkVersion.SPARK_1_3;
         }
@@ -61,7 +61,7 @@ public class SparkVersionUtil {
         return null;
     }
 
-    private static ESparkVersion getSparkLocalVersion(String localVersion) {
+    public static ESparkVersion getSparkLocalVersion(String localVersion) {
         if ("SPARK_1_3_0".equals(localVersion)) { //$NON-NLS-1$
             return ESparkVersion.SPARK_1_3;
         }

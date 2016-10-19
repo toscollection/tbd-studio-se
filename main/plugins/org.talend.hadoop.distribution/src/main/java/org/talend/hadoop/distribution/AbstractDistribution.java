@@ -255,10 +255,6 @@ public abstract class AbstractDistribution {
         return SparkStreamingKafkaVersion.KAFKA_0_8;
     }
 
-    public boolean doSupportSparkStreamingKafka010() {
-        return false;
-    }
-
     public boolean doSupportHDFSEncryption() {
         return false;
     }
