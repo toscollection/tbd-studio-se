@@ -52,6 +52,7 @@ import org.talend.hadoop.distribution.hdp250.modulegroup.HDP250SparkStreamingMod
 import org.talend.hadoop.distribution.hdp250.modulegroup.HDP250SqoopModuleGroup;
 import org.talend.hadoop.distribution.hdp250.modulegroup.node.mr.HDP250MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp250.modulegroup.node.pigoutput.HDP250PigOutputNodeModuleGroup;
+import org.talend.hadoop.distribution.hdp250.modulegroup.node.sparkbatch.HDP250GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp250.modulegroup.node.sparkbatch.HDP250SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp250.modulegroup.node.sparkbatch.HDP250SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp250.modulegroup.node.sparkstreaming.HDP250SparkStreamingFlumeNodeModuleGroup;
@@ -113,6 +114,9 @@ public class HDP250Distribution extends AbstractDistribution implements HDFSComp
                 HDP250SparkBatchParquetNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 HDP250SparkBatchS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
+                HDP250GraphFramesNodeModuleGroup.getModuleGroups());
+        
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), HDP250SparkStreamingParquetNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,

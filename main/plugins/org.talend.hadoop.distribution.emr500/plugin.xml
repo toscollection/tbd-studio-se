@@ -529,6 +529,14 @@
             name="spark-streaming-flume-assembly_2.11-2.0.0.jar"
             mvn_uri="mvn:org.talend.libraries/spark-streaming-flume-assembly_2.11-2.0.0/6.0.0">
         </libraryNeeded>
+        
+        <!-- GraphFrames libraries -->
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="graphframes-0.2.0-spark2.0-s_2.11.jar"
+            name="graphframes-0.2.0-spark2.0-s_2.11.jar"
+            mvn_uri="mvn:org.talend.libraries/graphframes-0.2.0-spark2.0-s_2.11/6.0.0">
+        </libraryNeeded>
             
         <!-- Third parties libraries -->   
         <libraryNeeded
@@ -612,6 +620,14 @@
              <library id="aws-java-sdk-s3-emr500-latest"/>
              <library id="hadoop-aws-emr500-latest"/>
              <library id="jets3t-0.9.0"/>
+        </libraryNeededGroup>
+        
+        <!-- GraphFrames group MRREQUIRED -->
+        <libraryNeededGroup
+                description="GraphFrames libraries for EMR 5.0.0 that are MRREQUIRED"
+                id="GRAPHFRAMES-LIB-EMR_5_0_0_LATEST"
+                name="GRAPHFRAMES-LIB-EMR_5_0_0_LATEST">
+             <library id="graphframes-0.2.0-spark2.0-s_2.11.jar" />
         </libraryNeededGroup>
         
         <!-- Map/Reduce group -->

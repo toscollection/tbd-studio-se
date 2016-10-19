@@ -52,6 +52,7 @@ import org.talend.hadoop.distribution.emr500.modulegroup.EMR500SparkStreamingMod
 import org.talend.hadoop.distribution.emr500.modulegroup.EMR500SqoopModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.mr.EMR500MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.pigoutput.EMR500PigOutputNodeModuleGroup;
+import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkbatch.EMR500GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkbatch.EMR500SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkbatch.EMR500SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr500.modulegroup.node.sparkstreaming.EMR500SparkStreamingFlumeNodeModuleGroup;
@@ -143,6 +144,8 @@ public class EMR500Distribution extends AbstractDistribution implements HBaseCom
         // Spark Batch S3 nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 EMR500SparkBatchS3NodeModuleGroup.getModuleGroups(distribution, version));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
+                EMR500GraphFramesNodeModuleGroup.getModuleGroups(distribution, version));
 
         // Spark Streaming Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),

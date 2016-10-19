@@ -43,6 +43,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
+import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520HBaseModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520HCatalogModuleGroup;
 import org.talend.hadoop.distribution.mapr520.modulegroup.MapR520HDFSModuleGroup;
@@ -117,6 +118,8 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 MapR520SparkBatchS3NodeModuleGroup.getModuleGroups());
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
+                MapR520GraphFramesNodeModuleGroup.getModuleGroups());
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkBatchConstant.S3_CONFIGURATION_COMPONENT), MapR520SparkBatchS3NodeModuleGroup.getModuleGroups());
