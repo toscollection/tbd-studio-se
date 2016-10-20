@@ -493,8 +493,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr500"
             id="spark-streaming-kafka-emr500-latest"
-            name="spark-streaming-kafka-0-10-assembly_2.11-2.0.0-emr500.jar"
-            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-0-10-assembly_2.11-2.0.0-emr500/6.0.0">
+            name="spark-streaming-kafka-0-10-assembly_2.11-2.0.0.jar"
+            mvn_uri="mvn:org.talend.libraries/spark-streaming-kafka-0-10-assembly_2.11-2.0.0/6.0.0">
         </libraryNeeded>
         
         <!-- Kinesis libraries -->
