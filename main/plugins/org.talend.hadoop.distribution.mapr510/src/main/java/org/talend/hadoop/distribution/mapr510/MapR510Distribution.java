@@ -41,7 +41,6 @@ import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
-import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HBaseModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HCatalogModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HDFSModuleGroup;
@@ -109,9 +108,6 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
                 MapR510MRS3NodeModuleGroup.getModuleGroups());
 
-
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
-                MapR510GraphFramesNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 MapR510SparkBatchS3NodeModuleGroup.getModuleGroups());
 

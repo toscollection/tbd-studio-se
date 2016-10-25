@@ -40,7 +40,6 @@ import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
-import org.talend.hadoop.distribution.emr400.modulegroup.node.sparkbatch.EMR400GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.emr400.modulegroup.EMR400SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.emr400.modulegroup.EMR400SparkStreamingModuleGroup;
 
@@ -81,10 +80,6 @@ public class EMR400Distribution extends AbstractDistribution implements HDFSComp
 
         moduleGroups.put(ComponentType.SPARKBATCH, EMR400SparkBatchModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, EMR400SparkStreamingModuleGroup.getModuleGroups());
-        
-        // Spark Batch GraphFrames nodes
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
-                EMR400GraphFramesNodeModuleGroup.getModuleGroups(DISTRIBUTION_NAME, VERSION));
     }
 
     @Override

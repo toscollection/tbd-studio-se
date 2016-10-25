@@ -2,13 +2,6 @@
 <?eclipse version="3.2"?>
 <plugin>
     <extension point="org.talend.core.runtime.librariesNeeded">
-    	<!-- GraphFrames libraries -->
-		<libraryNeeded 
-			context="plugin:org.talend.hadoop.distribution.emr400"
-			id="graphframes-0.2.0-spark1.4-s_2.10.jar" 
-			name="graphframes-0.2.0-spark1.4-s_2.10.jar"
-			mvn_uri="mvn:org.talend.libraries/graphframes-0.2.0-spark1.4-s_2.10/6.0.0">
-		</libraryNeeded>
         <!-- group of spark libraries -->
         <libraryNeededGroup
                 description="The latest Spark libraries for EMR 4.0.0"
@@ -84,13 +77,6 @@
                  id="htrace-core-3.0.4.jar">
              </library>
         </libraryNeededGroup>
-        <!-- GraphFrames group MRREQUIRED -->
-		<libraryNeededGroup
-			description="GraphFrames libraries for EMR 4.0.0 that are MRREQUIRED" 
-			id="GRAPHFRAMES-LIB-EMR_4_0_0_LATEST"
-			name="GRAPHFRAMES-LIB-EMR_4_0_0_LATEST">
-			<library id="graphframes-0.2.0-spark1.4-s_2.10.jar" />
-		</libraryNeededGroup>
     </extension>
     <extension
           point="org.talend.core.runtime.classloader_provider">

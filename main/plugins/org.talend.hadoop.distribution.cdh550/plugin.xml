@@ -240,15 +240,7 @@
             id="sqoop-cdh5.5.2"
             name="sqoop-1.4.6-cdh5.5.2.jar"
             mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6-cdh5.5.2/6.1.0">
-        </libraryNeeded>
-        
-        <!-- GraphFrames libraries -->
-		<libraryNeeded 
-			context="plugin:org.talend.hadoop.distribution.cdh550"
-			id="graphframes-0.2.0-spark1.5-s_2.10.jar" 
-			name="graphframes-0.2.0-spark1.5-s_2.10.jar"
-			mvn_uri="mvn:org.talend.libraries/graphframes-0.2.0-spark1.5-s_2.10/6.0.0">
-		</libraryNeeded>                 
+        </libraryNeeded>               
         
         <!-- Third parties libraries -->
         <libraryNeeded
@@ -795,13 +787,6 @@
              <library id="httpclient-4.2.5.jar" />
              <library id="httpcore-4.2.5.jar" />
         </libraryNeededGroup>
-        
-        <!-- GraphFrames group MRREQUIRED -->
-		<libraryNeededGroup
-			description="GraphFrames libraries for CDH 5.5 that are MRREQUIRED" id="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-CDH_5_5"
-			name="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-CDH_5_5">
-			<library id="graphframes-0.2.0-spark1.5-s_2.10.jar" />
-		</libraryNeededGroup>
 
         <!-- Spark Hive group MRREQUIRED -->
         <libraryNeededGroup

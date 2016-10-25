@@ -38,7 +38,6 @@ import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
-import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230HDFSModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230PigModuleGroup;
@@ -99,8 +98,6 @@ public class HDP230Distribution extends AbstractDistribution implements HDFSComp
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 HDP230SparkBatchS3NodeModuleGroup.getModuleGroups());
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
-                HDP230GraphFramesNodeModuleGroup.getModuleGroups());
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkBatchConstant.S3_CONFIGURATION_COMPONENT), HDP230SparkBatchS3NodeModuleGroup.getModuleGroups());
