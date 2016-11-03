@@ -350,6 +350,7 @@
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="compress-lzf-1.0.3.jar" name="compress-lzf-1.0.3.jar" mvn_uri="mvn:org.talend.libraries/compress-lzf-1.0.3/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="stax-api-1.0.1.jar" name="stax-api-1.0.1.jar" mvn_uri="mvn:org.talend.libraries/stax-api-1.0.1/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="chill-java-0.8.0.jar" name="chill-java-0.8.0.jar" mvn_uri="mvn:org.talend.libraries/chill-java-0.8.0/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jersey-client-1.9.jar" name="jersey-client-1.9.jar" mvn_uri="mvn:org.talend.libraries/jersey-client-1.9/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jersey-client-2.22.2.jar" name="jersey-client-2.22.2.jar" mvn_uri="mvn:org.talend.libraries/jersey-client-2.22.2/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="commons-lang3-3.3.2.jar" name="commons-lang3-3.3.2.jar" mvn_uri="mvn:org.talend.libraries/commons-lang3-3.3.2/6.0.0"/>
 
@@ -1002,11 +1003,11 @@
 			 <library id="hive-jdbc-1.2.1.spark2.jar"/>
 			 <library id="hive-metastore-1.2.1.spark2.jar"/>
 			 
-		     <!--
+		     
 			 <library id="hk2-api-2.4.0-b34.jar"/>
 			 <library id="hk2-locator-2.4.0-b34.jar"/>
 			 <library id="hk2-utils-2.4.0-b34.jar"/>
-			 -->
+			 
 			 
 			<!--  <library id="hive-common-emr500-latest"/> -->
 			 
@@ -1017,31 +1018,40 @@
 			 <library id="jackson-annotations-2.6.5.jar"/>
 			 <library id="jackson-core-2.6.5.jar"/>
 			 <library id="jackson-core-asl-2.6.5.jar"/>
+		
+			 <library id="jackson-jaxrs-1.9.13.jar"/>
 			 <library id="jackson-jaxrs-2.6.5.jar"/>
+		
 			 <library id="jackson-mapper-asl-2.6.5.jar"/>
-			 <library id="jackson-xc-2.6.5.jar"/>
+		
+			 <library id="jackson-xc-1.9.13.jar"/>
+         	 <library id="jackson-xc-2.6.5.jar"/>
 			 	
 			 <library id="jackson-databind-2.6.5.jar"/>
 			 <library id="jackson-module-paranamer-2.6.5.jar"/> 
 			 <library id="jackson-module-scala_2.11-2.6.5.jar"/>
+			 
 			 <library id="janino-2.7.8.jar"/>
 			 <library id="java-xmlbuilder-1.0.jar"/> 
 			 <!--<library id="JavaEWAH-0.3.2.jar"/> -->
 			 <library id="javassist-3.18.1-GA.jar"/>
 			 <library id="javax.annotation-api-1.2.jar"/>
-			 <!--
+			
 			 <library id="javax.inject-1.jar"/>
 			 <library id="javax.inject-2.4.0-b34.jar"/>
-			--> 
+			 
 			 <library id="javax.servlet-api-3.1.0.jar"/>
 			 <library id="javax.ws.rs-api-2.0.1.jar"/>
-			 <!-- -->
+		
 			 <library id="javolution-5.5.1.jar"/>
 			 <library id="jaxb-api-2.2.2.jar"/>
 			
 			 <library id="jcl-over-slf4j-1.7.16.jar"/>
 			 <library id="jdo-api-3.0.1.jar"/>
+		
+			 <library id="jersey-client-1.9.jar"/>
 			 <library id="jersey-client-2.22.2.jar"/>
+		
 			 <library id="jersey-common-2.22.2.jar"/>
 			 <library id="jersey-container-servlet-2.22.2.jar"/>
 			 <library id="jersey-container-servlet-core-2.22.2.jar"/>
