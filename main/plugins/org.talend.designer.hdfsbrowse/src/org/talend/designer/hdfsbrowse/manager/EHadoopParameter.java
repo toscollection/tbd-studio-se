@@ -44,6 +44,8 @@ public enum EHadoopParameter {
 
     HADOOP_CUSTOM_JARS,
 
+    HADOOP_ADVANCED_PROPERTIES,
+
     ;
 
     public String getName() {
