@@ -14,6 +14,7 @@ package org.talend.designer.hdfsbrowse.controllers;
 
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -288,7 +289,36 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
             }
         }
 
+        connectionBean.getConfigurations().putAll(getHadoopProperties(node, context));
+
         return connectionBean;
+    }
+
+    protected Map<String, Object> getHadoopProperties(INode node, IContext context) {
+        Map<String, Object> propertiesMap = new HashMap<>();
+        Object parameterValue = getParameterValue(node, EHadoopParameter.HADOOP_ADVANCED_PROPERTIES.getName());
+        if (parameterValue instanceof List) {
+            List propertiesList = (List) parameterValue;
+            for (Object obj : propertiesList) {
+                if (obj instanceof Map) {
+                    Map<String, Object> propertyMap = (Map) obj;
+                    String key = (String) propertyMap.get("PROPERTY"); //$NON-NLS-1$
+                    Object value = propertyMap.get("VALUE"); //$NON-NLS-1$
+                    if (key != null && value != null) {
+                        key = TalendQuoteUtils.removeQuotesIfExist(key);
+                        if (value instanceof String) {
+                            String strValue = TalendQuoteUtils.removeQuotesIfExist((String) value);
+                            if (context != null && ContextParameterUtils.isContainContextParam(strValue)) {
+                                strValue = ContextParameterUtils.parseScriptContextCode(strValue, context);
+                            }
+                            value = strValue;
+                        }
+                        propertiesMap.put(key, value);
+                    }
+                }
+            }
+        }
+        return propertiesMap;
     }
 
     protected String getParameterValueWithContext(IElement ele, IContext context, String paramName) {
