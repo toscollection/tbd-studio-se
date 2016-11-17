@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.metadata.MappingTypeRetriever;
 import org.talend.core.model.metadata.MetadataTalendType;
 import org.talend.core.model.metadata.types.JavaTypesManager;
@@ -31,7 +30,6 @@ import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
-import org.talend.repository.nosql.db.util.cassandra.CassandraConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
@@ -121,16 +119,17 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
             ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
             ContextType contextType = null;
             String host = connection.getAttributes().get(ICassandraAttributies.HOST);
-            // String port = connection.getAttributes().get(ICassandraAttributies.PORT);
+            String port = connection.getAttributes().get(ICassandraAttributies.PORT);
             if (connection.isContextMode()) {
                 contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
             }
             if (contextType != null) {
                 host = ContextParameterUtils.getOriginalValue(contextType, host);
-                // port = ContextParameterUtils.getOriginalValue(contextType, port);
+                port = ContextParameterUtils.getOriginalValue(contextType, port);
             }
             cluster = NoSQLReflection.invokeStaticMethod("com.datastax.driver.core.Cluster", "builder", classLoader); //$NON-NLS-1$ //$NON-NLS-2$
             cluster = NoSQLReflection.invokeMethod(cluster, "addContactPoint", new Object[] { host }); //$NON-NLS-1$
+            cluster = NoSQLReflection.invokeMethod(cluster, "withPort", new Object[] { Integer.valueOf(port) }, int.class);// //$NON-NLS-1$
             // Do authenticate
             String requireAuthAttr = connection.getAttributes().get(ICassandraAttributies.REQUIRED_AUTHENTICATION);
             boolean requireAuth = requireAuthAttr == null ? false : Boolean.valueOf(requireAuthAttr);
