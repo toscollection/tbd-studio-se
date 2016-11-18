@@ -34,6 +34,7 @@
     },
     MAPRDB:{
         "PORT":5181,
+        "MAPRDB_TABLE_NS_MAPPING":"*:/tables",
         "MAPRDB_MASTER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM",
         "MAPRDB_REGIONSERVER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM"
     },

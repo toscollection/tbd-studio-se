@@ -82,6 +82,10 @@ public class MapRDBConnectionCreator extends AbstractHadoopDBConnectionCreator {
             if (StringUtils.isNotEmpty(port)) {
                 paramsMap.put(ConnParameterKeys.CONN_PARA_KEY_DB_PORT, port);
             }
+            String tableNSMapping = params.get(EHadoopConfProperties.MAPRDB_TABLE_NS_MAPPING.getName());
+            if (StringUtils.isNotEmpty(tableNSMapping)) {
+                paramsMap.put(ConnParameterKeys.CONN_PARA_KEY_MAPRDB_TABLE_NS_MAPPING, tableNSMapping);
+            }
             String masterPrincipal = params.get(EHadoopConfProperties.MAPRDB_MASTER_KERBEROS_PRINCIPAL.getName());
             if (StringUtils.isNotEmpty(masterPrincipal)) {
                 paramsMap.put(ConnParameterKeys.CONN_PARA_KEY_MAPRDB_AUTHENTICATION_MASTERPRINCIPAL, masterPrincipal);
