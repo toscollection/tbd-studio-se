@@ -57,6 +57,7 @@ import org.talend.repository.maprdbprovider.Activator;
 import org.talend.repository.maprdbprovider.util.MapRDBClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
+
 import orgomg.cwm.objectmodel.core.TaggedValue;
 import orgomg.cwm.resource.relational.Catalog;
 
@@ -120,6 +121,9 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
         ReflectionUtils.invokeMethod(config, "set", //$NON-NLS-1$
                 new Object[] { "hbase.zookeeper.property.clientPort", metadataConnection.getPort() }); //$NON-NLS-1$
         ReflectionUtils.invokeMethod(config, "set", new Object[] { "zookeeper.recovery.retry", "1" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        String tableNSMapping = (String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRDB_TABLE_NS_MAPPING);
+        ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.table.namespace.mappings", //$NON-NLS-1$//$NON-NLS-2$
+                ConnectionContextHelper.getParamValueOffContext(metadataConnection, tableNSMapping) });
         boolean useKerberos = Boolean.valueOf((String) metadataConnection.getParameter(ConnParameterKeys.CONN_PARA_KEY_USE_KRB));
         boolean useMaprTicket = Boolean.valueOf((String) metadataConnection
                 .getParameter(ConnParameterKeys.CONN_PARA_KEY_MAPRDB_AUTHENTICATION_USE_MAPRTICKET));
@@ -157,7 +161,6 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
         if (useMaprTicket) {
             setMaprTicketConfig(metadataConnection, classLoader, useKerberos);
         }
-        ReflectionUtils.invokeMethod(config, "set", new Object[] { "hbase.table.namespace.mappings", "*:/tables" }); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         updateHadoopProperties(config, metadataConnection);
         return config;
     }
