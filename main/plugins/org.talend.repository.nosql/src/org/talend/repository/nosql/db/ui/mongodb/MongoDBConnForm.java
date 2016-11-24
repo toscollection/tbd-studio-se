@@ -132,6 +132,10 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
             userText.setText(user == null ? "" : user); //$NON-NLS-1$
             pwdText.setText(passwd == null ? "" : passwd); //$NON-NLS-1$
         }
+        initReplicaField();
+        if (replicaTableView != null) {
+            replicaTableView.getModel().registerDataList(replicaList);
+        }
         updateReplicaField();
         updateAuthGroup();
     }
@@ -155,9 +159,13 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
     @Override
     protected void updateAttributes() {
         super.updateAttributes();
-        attributes.add(INoSQLCommonAttributes.HOST);
-        attributes.add(INoSQLCommonAttributes.PORT);
         attributes.add(INoSQLCommonAttributes.DATABASE);
+        if (checkUseReplicaBtn.getSelection()) {
+            attributes.add(IMongoDBAttributes.REPLICA_SET);
+        } else {
+            attributes.add(INoSQLCommonAttributes.HOST);
+            attributes.add(INoSQLCommonAttributes.PORT);
+        }
         if (checkRequireAuthBtn.getSelection()) {
             attributes.add(INoSQLCommonAttributes.USERNAME);
             attributes.add(INoSQLCommonAttributes.PASSWORD);
@@ -165,6 +173,7 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
     }
 
     private void initReplicaField() {
+        replicaList.clear();
         String replica = getConnection().getAttributes().get(IMongoDBAttributes.REPLICA_SET);
         try {
             if (StringUtils.isNotEmpty(replica)) {
@@ -407,6 +416,7 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
+                updateAttributes();
                 updateReplicaField();
                 checkFieldsValue();
                 getConnection().getAttributes().put(IMongoDBAttributes.USE_REPLICA_SET,
@@ -458,19 +468,25 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         portText.setHideWidgets(hide);
 
         setHideWidgets(replicaComposite, !hide);
+        replicaTableView.setReadOnly(isContextMode());
         connectionGroup.getParent().layout();
     }
 
     @Override
     protected void collectConParameters() {
-        collectReplicaParameters(!checkUseReplicaBtn.getSelection());
+        collectReplicaParameters(checkUseReplicaBtn.getSelection());
         collectAuthParams(checkRequireAuthBtn.getSelection());
     }
 
-    private void collectReplicaParameters(boolean isNeed) {
-        addContextParams(EHadoopParamName.Server, isNeed);
-        addContextParams(EHadoopParamName.Port, isNeed);
+    private void collectReplicaParameters(boolean isReplica) {
+        clearContextParams();
         addContextParams(EHadoopParamName.Database, true);
+        if (isReplica) {
+            addContextParams(EHadoopParamName.ReplicaSets, true);
+        } else {
+            addContextParams(EHadoopParamName.Server, true);
+            addContextParams(EHadoopParamName.Port, true);
+        }
     }
 
     /*
@@ -484,6 +500,10 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         if (!checkUseReplicaBtn.getSelection()) {
             getConnection().getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
             getConnection().getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
+        } else {
+            List<HashMap<String, Object>> currentReplicaList = replicaTableView.getModel().getBeansList();
+            JSONArray jsa = new JSONArray(currentReplicaList);
+            getConnection().getAttributes().put(IMongoDBAttributes.REPLICA_SET, jsa.toString());
         }
         if (checkRequireAuthBtn.getSelection()) {
             getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());

@@ -16,12 +16,18 @@ import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EMap;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.language.LanguageManager;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
+import org.talend.repository.nosql.db.common.mongodb.IMongoConstants;
+import org.talend.repository.nosql.db.common.mongodb.IMongoDBAttributes;
+import org.talend.utils.json.JSONArray;
+import org.talend.utils.json.JSONException;
+import org.talend.utils.json.JSONObject;
 
 /**
  * DOC PLV class global comment. Detailled comment
@@ -84,8 +90,27 @@ public final class NoSQLConnectionContextManager {
             return;
         }
         for (String attributeName : attributes) {
-            String originalValue = ContextParameterUtils.getOriginalValue(contextType, connAttributes.get(attributeName));
-            connAttributes.put(attributeName, originalValue);
+            if (attributeName.equals(IMongoDBAttributes.REPLICA_SET)) {
+                String replicaSets = connAttributes.get(IMongoDBAttributes.REPLICA_SET);
+                try {
+                    JSONArray jsa = new JSONArray(replicaSets);
+                    for (int i = 0; i < jsa.length(); i++) {
+                        JSONObject jso = jsa.getJSONObject(i);
+                        String hostValue = jso.getString(IMongoConstants.REPLICA_HOST_KEY);
+                        String portValue = jso.getString(IMongoConstants.REPLICA_PORT_KEY);
+                        String originalHostValue = ContextParameterUtils.getOriginalValue(contextType, hostValue);
+                        String originalPortValue = ContextParameterUtils.getOriginalValue(contextType, portValue);
+                        jso.put(IMongoConstants.REPLICA_HOST_KEY, originalHostValue);
+                        jso.put(IMongoConstants.REPLICA_PORT_KEY, originalPortValue);
+                    }
+                    connAttributes.put(IMongoDBAttributes.REPLICA_SET, jsa.toString());
+                } catch (JSONException e) {
+                    ExceptionHandler.process(e);
+                }
+            } else {
+                String originalValue = ContextParameterUtils.getOriginalValue(contextType, connAttributes.get(attributeName));
+                connAttributes.put(attributeName, originalValue);
+            }
         }
 
         // set connection for context mode
