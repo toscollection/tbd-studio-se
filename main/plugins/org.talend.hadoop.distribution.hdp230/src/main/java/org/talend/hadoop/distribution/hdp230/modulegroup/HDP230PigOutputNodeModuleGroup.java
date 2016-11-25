@@ -50,7 +50,7 @@ public class HDP230PigOutputNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(HDP230Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), false, s3condition));
+        hs.add(new DistributionModuleGroup(HDP230Constant.PIG_S3_MODULE_GROUP.getModuleName(), false, s3condition));
         return hs;
     }
 

@@ -32,7 +32,7 @@ public class CDH570PigOutputNodeModuleGroupTest {
 
         results.put(CDH570Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(),
                 "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_7')"); //$NON-NLS-1$
-        results.put(CDH570Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
+        results.put(CDH570Constant.PIG_S3_MODULE_GROUP.getModuleName(),
                 "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_7') " //$NON-NLS-1$
                         + "AND (S3_LOCATION=='true') AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE')"); //$NON-NLS-1$
 
