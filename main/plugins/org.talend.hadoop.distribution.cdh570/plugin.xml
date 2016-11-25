@@ -207,8 +207,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh570"
             id="pig-cdh5.7.0"
-            name="pig-0.12.0-cdh5.7.0-withouthadoop.jar"
-            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.7.0-withouthadoop/6.1.0">
+            name="pig-0.12.0-cdh5.7.0-withoutHadoopAndJoda.jar"
+            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.7.0-withoutHadoopAndJoda/6.1.0">
         </libraryNeeded>
         
         
@@ -626,7 +626,7 @@
             <library id="pig-cdh5.7.0"/>
             <library id="antlr-runtime-3.4.jar"/>
             <library id="jline-2.11.jar"/>
-            <library id="joda-time-2.5.jar"/>
+            <library id="joda-time-2.8.1.jar"/>
             <library id="snappy-java-1.0.4.1.jar"/>
             <library id="datafu-1.2.0.jar"/>
         </libraryNeededGroup>
@@ -783,7 +783,7 @@
         
         <!-- Spark S3 group MRREQUIRED -->
         <libraryNeededGroup
-                description="Spark S3 libraries for CDH 5.5 that are MRREQUIRED"
+                description="Spark S3 libraries for CDH 5.7 that are MRREQUIRED"
                 id="SPARK-S3-LIB-MRREQUIRED-CDH_5_7"
                 name="SPARK-S3-LIB-MRREQUIRED-CDH_5_7">
              <library id="hadoop-aws-cdh5.7.0"/>
@@ -802,6 +802,18 @@
                 name="SPARK-GRAPHFRAMES-LIB-MRREQUIRED-CDH_5_7">
              <library id="graphframes-0.2.0-spark1.6-s_2.10.jar" />
         </libraryNeededGroup>
+
+        <!-- Pig S3 group -->
+        <libraryNeededGroup
+                description="Pig S3 libraries for CDH 5.7"
+                id="PIG-S3-LIB-CDH_5_7"
+                name="PIG-S3-LIB-CDH_5_7">
+             <library id="hadoop-aws-cdh5.7.0"/>
+             <library id="aws-java-sdk-1.10.52"/>
+             <library id="jets3t-0.9.0" />
+             <library id="httpclient-4.3.3.jar" />
+             <library id="httpcore-4.3.3.jar" />
+        </libraryNeededGroup>        
         
         <!-- Spark Hive group MRREQUIRED -->
         <libraryNeededGroup

@@ -23,10 +23,6 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh550.CDH550Constant;
 import org.talend.hadoop.distribution.cdh550.modulegroup.CDH550PigModuleGroup;
 
-/**
- * created by pbailly on 16 Feb 2016 Detailled comment
- *
- */
 public class CDH550PigModuleGroupTest {
 
     @Test
@@ -42,7 +38,7 @@ public class CDH550PigModuleGroupTest {
         results.put(CDH550Constant.PIG_AVRO_MODULE_GROUP.getModuleName(), "(LOAD=='AVROSTORAGE')");
         results.put(CDH550Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), "(LOAD=='RCFILEPIGSTORAGE')");
         results.put(CDH550Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), "(LOAD=='SEQUENCEFILELOADER')");
-        results.put(CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')");
+        results.put(CDH550Constant.PIG_S3_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')");
 
         Set<DistributionModuleGroup> moduleGroups = CDH550PigModuleGroup.getModuleGroups();
         assertEquals(11, moduleGroups.size());

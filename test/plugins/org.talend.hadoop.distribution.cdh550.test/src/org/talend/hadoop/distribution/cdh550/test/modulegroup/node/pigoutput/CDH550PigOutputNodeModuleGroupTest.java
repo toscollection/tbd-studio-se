@@ -24,10 +24,6 @@ import org.talend.hadoop.distribution.cdh550.CDH550Constant;
 import org.talend.hadoop.distribution.cdh550.CDH550Distribution;
 import org.talend.hadoop.distribution.cdh550.modulegroup.node.pigoutput.CDH550PigOutputNodeModuleGroup;
 
-/**
- * created by pbailly on 16 Feb 2016 Detailled comment
- *
- */
 public class CDH550PigOutputNodeModuleGroupTest {
 
     @Test
@@ -36,7 +32,7 @@ public class CDH550PigOutputNodeModuleGroupTest {
 
         results.put(CDH550Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(),
                 "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_5')");
-        results.put(CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(),
+        results.put(CDH550Constant.PIG_S3_MODULE_GROUP.getModuleName(),
                 "(#LINK@NODE.ASSOCIATED_PIG_LOAD.DISTRIBUTION=='CLOUDERA') AND (#LINK@NODE.ASSOCIATED_PIG_LOAD.PIG_VERSION=='Cloudera_CDH5_5') "
                         + "AND (S3_LOCATION=='true') AND (STORE!='HCATSTORER') AND (STORE!='HBASESTORAGE')");
 

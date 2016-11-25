@@ -38,7 +38,7 @@ public class CDH570PigModuleGroupTest {
         results.put(CDH570Constant.PIG_AVRO_MODULE_GROUP.getModuleName(), "(LOAD=='AVROSTORAGE')"); //$NON-NLS-1$
         results.put(CDH570Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), "(LOAD=='RCFILEPIGSTORAGE')"); //$NON-NLS-1$
         results.put(CDH570Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), "(LOAD=='SEQUENCEFILELOADER')"); //$NON-NLS-1$
-        results.put(CDH570Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')"); //$NON-NLS-1$
+        results.put(CDH570Constant.PIG_S3_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = CDH570PigModuleGroup.getModuleGroups();
         assertEquals(11, moduleGroups.size());

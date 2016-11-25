@@ -53,7 +53,7 @@ public class CDH550PigModuleGroup {
         hs.add(new DistributionModuleGroup(CDH550Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), false, rcfileLoaderCondition));
         hs.add(new DistributionModuleGroup(CDH550Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), false,
                 sequencefileLoaderCondition));
-        hs.add(new DistributionModuleGroup(CDH550Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, s3condition));
+        hs.add(new DistributionModuleGroup(CDH550Constant.PIG_S3_MODULE_GROUP.getModuleName(), false, s3condition));
 
         return hs;
     }

@@ -33,7 +33,7 @@
         "HBASE_MASTER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM",
         "HBASE_REGIONSERVER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM"
     },
-    MAPRDB:{
+    "MAPRDB":{
         "PORT":5181,
         "MAPRDB_TABLE_NS_MAPPING":"*:/tables",
         "MAPRDB_MASTER_PRINCIPAL":"hbase/_HOST@EXAMPLE.COM",

@@ -23,30 +23,25 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.hdp230.HDP230Constant;
 import org.talend.hadoop.distribution.hdp230.modulegroup.HDP230PigModuleGroup;
 
-/**
- * created by pbailly on 16 Feb 2016 Detailled comment
- *
- */
 public class HDP230PigModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
-        Map<String, String> results = new HashMap<String, String>();
-        results.put(HDP230Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')");
+        Map<String, String> results = new HashMap<>();
+        results.put(HDP230Constant.PIG_S3_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = HDP230PigModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
 
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
-            assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName()));
+            assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {
-                assertTrue("The condition of the module " + module.getModuleName() + " is not null.",
+                assertTrue("The condition of the module " + module.getModuleName() + " is not null.", //$NON-NLS-1$ //$NON-NLS-2$
                         results.get(module.getModuleName()) == null);
             } else {
-                assertTrue(
-                        "The condition of the module " + module.getModuleName() + " is null, but it should be "
-                                + results.get(module.getModuleName()) + ".", results.get(module.getModuleName()) != null);
+                assertTrue("The condition of the module " + module.getModuleName() + " is null, but it should be " //$NON-NLS-1$ //$NON-NLS-2$
+                        + results.get(module.getModuleName()) + ".", results.get(module.getModuleName()) != null); //$NON-NLS-1$
                 assertEquals(results.get(module.getModuleName()), module.getRequiredIf().getConditionString());
             }
         }

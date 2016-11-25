@@ -207,8 +207,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
             id="pig-cdh5.5.2"
-            name="pig-0.12.0-cdh5.5.2-withouthadoop.jar"
-            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.5.2-withouthadoop/6.1.0">
+            name="pig-0.12.0-cdh5.5.2-withoutHadoopAndJoda.jar"
+            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.5.2-withoutHadoopAndJoda/6.1.0">
         </libraryNeeded>
         
         
@@ -385,6 +385,13 @@
                 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
+            id="aws-java-sdk-1.10.52.jar"
+            name="aws-java-sdk-1.10.52.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.10.52/6.0.0">
+        </libraryNeeded> 
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh550"
             id="aws-java-sdk-1.9.16.jar"
             name="aws-java-sdk-1.9.16.jar"
             mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.9.16/6.0.0">
@@ -487,7 +494,14 @@
             id="joda-time-2.7.jar"
             name="joda-time-2.7.jar"
             mvn_uri="mvn:org.talend.libraries/joda-time-2.7/6.0.0">
-        </libraryNeeded>        
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.esb"
+            id="joda-time-2.8.1.jar"
+            name="joda-time-2.8.1.jar"
+            mvn_uri="mvn:org.talend.libraries/joda-time-2.8.1/6.0.0">
+        </libraryNeeded>          
                 
         <libraryNeeded
             context="plugin:org.talend.libraries.apache.kafka"
@@ -624,7 +638,7 @@
             <library id="pig-cdh5.5.2"/>
             <library id="antlr-runtime-3.4.jar"/>
             <library id="jline-2.11.jar"/>
-            <library id="joda-time-2.5.jar"/>
+            <library id="joda-time-2.8.1.jar"/>
             <library id="snappy-java-1.0.4.1.jar"/>
             <library id="datafu-1.2.0.jar"/>
         </libraryNeededGroup>
@@ -787,7 +801,19 @@
              <library id="httpclient-4.2.5.jar" />
              <library id="httpcore-4.2.5.jar" />
         </libraryNeededGroup>
-
+        
+        <!-- Pig S3 group -->
+        <libraryNeededGroup
+                description="Pig S3 libraries for CDH 5.5"
+                id="PIG-S3-LIB-CDH_5_5"
+                name="PIG-S3-LIB-CDH_5_5">
+             <library id="hadoop-aws-cdh5.5.2"/>
+             <library id="aws-java-sdk-1.10.52.jar"/>
+             <library id="jets3t-0.9.0" />
+             <library id="httpclient-4.3.3.jar" />
+             <library id="httpcore-4.3.3.jar" />
+        </libraryNeededGroup>
+        
         <!-- Spark Hive group MRREQUIRED -->
         <libraryNeededGroup
                 description="Spark Hive libraries for CDH 5.5 that are MRREQUIRED"
