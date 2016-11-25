@@ -207,8 +207,8 @@
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
             id="pig-cdh5.5.0"
-            name="pig-0.12.0-cdh5.5.0-withouthadoop.jar"
-            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.5.0-withouthadoop/6.1.0">
+            name="pig-0.12.0-cdh5.5.0-withoutHadoopAndJoda.jar"
+            mvn_uri="mvn:org.talend.libraries/pig-0.12.0-cdh5.5.0-withoutHadoopAndJoda/6.1.0">
         </libraryNeeded>
         
         
@@ -458,7 +458,14 @@
             id="joda-time-2.7.jar"
             name="joda-time-2.7.jar"
             mvn_uri="mvn:org.talend.libraries/joda-time-2.7/6.0.0">
-        </libraryNeeded>        
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.libraries.esb"
+            id="joda-time-2.8.1.jar"
+            name="joda-time-2.8.1.jar"
+            mvn_uri="mvn:org.talend.libraries/joda-time-2.8.1/6.0.0">
+        </libraryNeeded>          
                 
         <libraryNeeded
             context="plugin:org.talend.libraries.apache.kafka"
@@ -591,7 +598,7 @@
             <library id="pig-cdh5.5.0"/>
             <library id="antlr-runtime-3.4.jar"/>
             <library id="jline-2.11.jar"/>
-            <library id="joda-time-2.5.jar"/>
+            <library id="joda-time-2.8.1.jar"/>
             <library id="snappy-java-1.0.4.1.jar"/>
             <library id="datafu-1.2.0.jar"/>
         </libraryNeededGroup>
