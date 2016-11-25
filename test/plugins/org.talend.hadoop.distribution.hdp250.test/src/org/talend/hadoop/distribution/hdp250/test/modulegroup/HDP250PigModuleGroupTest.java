@@ -23,40 +23,35 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.hdp250.HDP250Constant;
 import org.talend.hadoop.distribution.hdp250.modulegroup.HDP250PigModuleGroup;
 
-/**
- * created by pbailly on 16 Feb 2016 Detailled comment
- *
- */
 public class HDP250PigModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
-        Map<String, String> results = new HashMap<String, String>();
+        Map<String, String> results = new HashMap<>();
         results.put(HDP250Constant.PIG_MODULE_GROUP.getModuleName(), null);
         results.put(HDP250Constant.HDFS_MODULE_GROUP.getModuleName(), null);
         results.put(HDP250Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
-        results.put(HDP250Constant.PIG_HCATALOG_MODULE_GROUP.getModuleName(), "(LOAD=='HCATLOADER')");
-        results.put(HDP250Constant.HBASE_MODULE_GROUP.getModuleName(), "(LOAD=='HBASESTORAGE')");
-        results.put(HDP250Constant.PIG_HBASE_MODULE_GROUP.getModuleName(), "(LOAD=='HBASESTORAGE')");
-        results.put(HDP250Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(), "(LOAD=='PARQUETLOADER')");
-        results.put(HDP250Constant.PIG_AVRO_MODULE_GROUP.getModuleName(), "(LOAD=='AVROSTORAGE')");
-        results.put(HDP250Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), "(LOAD=='RCFILEPIGSTORAGE')");
-        results.put(HDP250Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), "(LOAD=='SEQUENCEFILELOADER')");
-        results.put(HDP250Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')");
-        results.put(HDP250Constant.TEZ_MODULE_GROUP.getModuleName(), "(ENGINE=='TEZ')");
-        results.put(HDP250Constant.TEZ_SERVER_MODULE_GROUP.getModuleName(), "(ENGINE=='TEZ') AND (TEZ_LIB=='INSTALL')");
+        results.put(HDP250Constant.PIG_HCATALOG_MODULE_GROUP.getModuleName(), "(LOAD=='HCATLOADER')"); //$NON-NLS-1$
+        results.put(HDP250Constant.HBASE_MODULE_GROUP.getModuleName(), "(LOAD=='HBASESTORAGE')"); //$NON-NLS-1$
+        results.put(HDP250Constant.PIG_HBASE_MODULE_GROUP.getModuleName(), "(LOAD=='HBASESTORAGE')"); //$NON-NLS-1$
+        results.put(HDP250Constant.PIG_PARQUET_MODULE_GROUP.getModuleName(), "(LOAD=='PARQUETLOADER')"); //$NON-NLS-1$
+        results.put(HDP250Constant.PIG_AVRO_MODULE_GROUP.getModuleName(), "(LOAD=='AVROSTORAGE')"); //$NON-NLS-1$
+        results.put(HDP250Constant.PIG_RCFILE_MODULE_GROUP.getModuleName(), "(LOAD=='RCFILEPIGSTORAGE')"); //$NON-NLS-1$
+        results.put(HDP250Constant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(), "(LOAD=='SEQUENCEFILELOADER')"); //$NON-NLS-1$
+        results.put(HDP250Constant.PIG_S3_MODULE_GROUP.getModuleName(), "(S3_LOCATION_LOAD=='true')"); //$NON-NLS-1$
+        results.put(HDP250Constant.TEZ_MODULE_GROUP.getModuleName(), "(ENGINE=='TEZ')"); //$NON-NLS-1$
+        results.put(HDP250Constant.TEZ_SERVER_MODULE_GROUP.getModuleName(), "(ENGINE=='TEZ') AND (TEZ_LIB=='INSTALL')"); //$NON-NLS-1$
         Set<DistributionModuleGroup> moduleGroups = HDP250PigModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
         moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
-            assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName()));
+            assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {
-                assertTrue("The condition of the module " + module.getModuleName() + " is not null.",
+                assertTrue("The condition of the module " + module.getModuleName() + " is not null.", //$NON-NLS-1$ //$NON-NLS-2$
                         results.get(module.getModuleName()) == null);
             } else {
-                assertTrue(
-                        "The condition of the module " + module.getModuleName() + " is null, but it should be "
-                                + results.get(module.getModuleName()) + ".", results.get(module.getModuleName()) != null);
+                assertTrue("The condition of the module " + module.getModuleName() + " is null, but it should be " //$NON-NLS-1$ //$NON-NLS-2$
+                        + results.get(module.getModuleName()) + ".", results.get(module.getModuleName()) != null); //$NON-NLS-1$
                 assertEquals(results.get(module.getModuleName()), module.getRequiredIf().getConditionString());
             }
         }
