@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.process.IContextParameter;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.core.model.properties.PropertiesFactory;
@@ -65,9 +66,11 @@ public class NoSQLRepositoryContextHandlerTest {
         for (IContextParameter contextParameter : varList) {
             if (contextParameter.getValue().equals("localhost")) {
                 assertEquals("Mongo_ReplicaHost_1", contextParameter.getName());
+                assertEquals(contextParameter.getType(), JavaTypesManager.STRING.getId());
                 i++;
             } else if (contextParameter.getValue().equals("12701")) {
                 assertEquals("Mongo_ReplicaPort_1", contextParameter.getName());
+                assertEquals(contextParameter.getType(), JavaTypesManager.INTEGER.getId());
                 i++;
             }
         }
