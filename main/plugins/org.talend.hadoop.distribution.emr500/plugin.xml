@@ -279,8 +279,49 @@
             context="plugin:org.talend.hadoop.distribution.emr500"
             id="sqoop-emr500-latest"
             name="sqoop-1.4.6.jar"
-            mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6/6.0.0">
-        </libraryNeeded>    
+            mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6/6.0.0"/>
+        
+        <!-- Tez -->
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-api-0.8.4.jar"
+            name="tez-api-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-api-0.8.4/6.0.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-common-0.8.4.jar"
+            name="tez-common-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-common-0.8.4/6.0.0"/>
+         <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-dag-0.8.4.jar"
+            name="tez-dag-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-dag-0.8.4/6.0.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-mapreduce-0.8.4.jar"
+            name="tez-mapreduce-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-mapreduce-0.8.4/6.0.0"/>
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-runtime-internals-0.8.4.jar"
+            name="tez-runtime-internals-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-runtime-internals-0.8.4/6.0.0"/>
+         <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-runtime-library-0.8.4.jar"
+            name="tez-runtime-library-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-runtime-library-0.8.4/6.0.0"/>    
+          <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-yarn-timeline-history-0.8.4.jar"
+            name="tez-yarn-timeline-history-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-yarn-timeline-history-0.8.4/6.0.0"/>       
+          <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr500"
+            id="tez-yarn-timeline-history-with-acls-0.8.4.jar"
+            name="tez-yarn-timeline-history-with-acls-0.8.4.jar"
+            mvn_uri="mvn:org.talend.libraries/tez-yarn-timeline-history-with-acls-0.8.4/6.0.0"/>      
                  
         
         <!-- Spark2 libraries -->
@@ -1165,6 +1206,16 @@
 			 <library id="xmlenc-0.52.jar"/> 
 			 <library id="xz-1.0.jar"/>
 			 <library id="zookeeper-3.4.6.jar"/>
+					 
+			 <library id="tez-api-0.8.4.jar"/>
+       		 <library id="tez-common-0.8.4.jar"/>
+        	 <library id="tez-dag-0.8.4.jar"/>
+			 <library id="tez-mapreduce-0.8.4.jar"/>
+        	 <library id="tez-runtime-internals-0.8.4.jar"/>
+             <library id="tez-runtime-library-0.8.4.jar"/>
+             <library id="tez-yarn-timeline-history-0.8.4.jar"/>
+             <library id="tez-yarn-timeline-history-with-acls-0.8.4.jar"/>
+			 
 		  </libraryNeededGroup>
         
         <!-- Spark group MRREQUIRED -->
