@@ -55,7 +55,7 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
         } else if (IMongoDBAttributes.REPLICA_SET.equals(value)) {
             try {
                 String replicaSetJsonStr = connection.getAttributes().get(IMongoDBAttributes.REPLICA_SET);
-                return MongoDBConnectionUtil.getReplicaSetList(replicaSetJsonStr, true);
+                return MongoDBConnectionUtil.getReplicaSetList(replicaSetJsonStr, !connection.isContextMode());
             } catch (JSONException e) {
                 ExceptionHandler.process(e);
             }

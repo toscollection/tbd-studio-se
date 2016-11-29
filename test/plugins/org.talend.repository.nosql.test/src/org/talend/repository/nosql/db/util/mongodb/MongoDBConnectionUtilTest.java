@@ -12,77 +12,60 @@
 // ============================================================================
 package org.talend.repository.nosql.db.util.mongodb;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import static org.junit.Assert.*;
 
-import org.junit.Assert;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
-import org.talend.repository.nosql.db.util.mongodb.MongoDBConnectionUtil;
-import org.talend.utils.json.JSONArray;
-import org.talend.utils.json.JSONException;
-import org.talend.utils.json.JSONObject;
+import org.talend.core.utils.TalendQuoteUtils;
+import org.talend.repository.nosql.db.common.mongodb.IMongoConstants;
 
 /**
  * DOC PLV class global comment. Detailled comment
  */
 public class MongoDBConnectionUtilTest {
 
-    private static final String KEY = "key"; //$NON-NLS-1$
+    private String contextReplicaSet;
 
-    private static final String VALUE = "value"; //$NON-NLS-1$
+    private String builtInReplicaSet;
 
-    private static final String QUOTATION_MARK = "\""; //$NON-NLS-1$
-
-    private List<HashMap<String, Object>> replicaSet;
-
-    /**
-     * DOC PLV Comment method "setUp".
-     * 
-     * @throws java.lang.Exception
-     */
     @Before
     public void setUp() throws Exception {
-        replicaSet = new ArrayList<HashMap<String, Object>>();
-        HashMap<String, Object> mapObject = new HashMap<String, Object>();
-        mapObject.put(KEY, VALUE);
-        replicaSet.add(mapObject);
+        contextReplicaSet = "[{\"REPLICA_HOST\":\"context.Mongo1_ReplicaHost_1\",\"REPLICA_PORT\":\"context.Mongo1_ReplicaPort_1\"}]";
+        builtInReplicaSet = "[{\"REPLICA_HOST\":\"localhost\",\"REPLICA_PORT\":\"12701\"}]";
     }
 
-    /**
-     * Test method for
-     * {@link org.talend.repository.nosql.db.util.mongodb.MongoDBConnectionUtil#getReplicaSetList(java.lang.String, boolean)}
-     * .
-     */
     @Test
-    public void testGetReplicaSetList() {
-        try {
-            boolean includeQuotes = false;
-            JSONArray jsonArr = new JSONArray();
-            for (HashMap<String, Object> map : replicaSet) {
-                JSONObject object = new JSONObject();
-                Iterator it = map.keySet().iterator();
-                while (it.hasNext()) {
-                    String key = (String) it.next();
-                    object.put(key, map.get(key));
-                }
-                jsonArr.put(object);
-            }
-            String replicaSetJsonStr = jsonArr.toString();
-            List<HashMap<String, Object>> replicaSetList = MongoDBConnectionUtil.getReplicaSetList(replicaSetJsonStr,
-                    includeQuotes);
-            Assert.assertNotNull(replicaSetList);
-            Assert.assertSame(replicaSetList.size(), 1);
-            HashMap<String, Object> mapObject = replicaSetList.get(0);
-            Assert.assertEquals(mapObject.get(KEY), VALUE);
-            includeQuotes = true;
-            replicaSetList = MongoDBConnectionUtil.getReplicaSetList(replicaSetJsonStr, includeQuotes);
-            mapObject = replicaSetList.get(0);
-            Assert.assertEquals(mapObject.get(KEY), QUOTATION_MARK + VALUE + QUOTATION_MARK);
-        } catch (JSONException e) {
-            Assert.fail();
+    public void testGetReplicaSetList() throws Exception {
+        boolean isContextMode = true;
+        // test context mode
+        List<HashMap<String, Object>> replicaSetList = MongoDBConnectionUtil.getReplicaSetList(contextReplicaSet, !isContextMode);
+        validateResult(replicaSetList, isContextMode);
+        // test built-in mode
+        isContextMode = false;
+        replicaSetList = MongoDBConnectionUtil.getReplicaSetList(builtInReplicaSet, !isContextMode);
+        validateResult(replicaSetList, isContextMode);
+    }
+
+    private void validateResult(List<HashMap<String, Object>> list, boolean isContextMode) {
+        assertTrue(list != null && !list.isEmpty());
+        Map<String, Object> map = list.get(0);
+        assertTrue(map.size() == 2);
+        String hostParam = (String) map.get(IMongoConstants.REPLICA_HOST_KEY);
+        String portParam = (String) map.get(IMongoConstants.REPLICA_PORT_KEY);
+        if (isContextMode) {
+            assertFalse(
+                    hostParam.startsWith(TalendQuoteUtils.QUOTATION_MARK) || hostParam.endsWith(TalendQuoteUtils.QUOTATION_MARK));
+            assertFalse(
+                    portParam.startsWith(TalendQuoteUtils.QUOTATION_MARK) || portParam.endsWith(TalendQuoteUtils.QUOTATION_MARK));
+        } else {
+            assertTrue(
+                    hostParam.startsWith(TalendQuoteUtils.QUOTATION_MARK) && hostParam.endsWith(TalendQuoteUtils.QUOTATION_MARK));
+            assertFalse(
+                    portParam.startsWith(TalendQuoteUtils.QUOTATION_MARK) || portParam.endsWith(TalendQuoteUtils.QUOTATION_MARK));
         }
     }
 

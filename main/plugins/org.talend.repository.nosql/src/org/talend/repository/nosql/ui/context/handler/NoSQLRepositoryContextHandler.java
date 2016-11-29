@@ -120,8 +120,8 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
                                             + ConnectionContextHelper.LINE + (i + 1);
                                     String hostValue = jso.getString(IMongoConstants.REPLICA_HOST_KEY);
                                     String portValue = jso.getString(IMongoConstants.REPLICA_PORT_KEY);
-                                    ConnectionContextHelper.createParameters(varList, hostParamName, hostValue, javaType);
-                                    ConnectionContextHelper.createParameters(varList, portParamName, portValue, javaType);
+                                    ConnectionContextHelper.createParameters(varList, hostParamName, hostValue, JavaTypesManager.STRING);
+                                    ConnectionContextHelper.createParameters(varList, portParamName, portValue, JavaTypesManager.INTEGER);
                                 }
                             } catch (JSONException e) {
                                 ExceptionHandler.process(e);
