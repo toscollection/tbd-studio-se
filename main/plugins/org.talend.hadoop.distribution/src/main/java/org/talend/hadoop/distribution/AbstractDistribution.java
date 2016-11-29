@@ -259,4 +259,8 @@ public abstract class AbstractDistribution {
         return false;
     }
 
+    public boolean doSupportBasicAtlasAuthentification() {
+        return false;
+    }
+
 }

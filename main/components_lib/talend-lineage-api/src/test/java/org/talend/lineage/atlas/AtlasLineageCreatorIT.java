@@ -36,7 +36,9 @@ public class AtlasLineageCreatorIT {
     private static final String ENTITY_LINK        = "http://www.talend.com/";
 
     private static String       ENDPOINT_URL       = "http://localhost:21000/";
+
     private static String       ATLAS_LOGIN        = "admin";
+
     private static String       ATLAS_PASSWORD     = "admin";
 
     private AtlasLineageCreator atlasLineageCreator;

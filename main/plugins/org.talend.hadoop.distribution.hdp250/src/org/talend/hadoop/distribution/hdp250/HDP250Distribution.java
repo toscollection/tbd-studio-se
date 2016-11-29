@@ -114,9 +114,9 @@ public class HDP250Distribution extends AbstractDistribution implements HDFSComp
                 HDP250SparkBatchParquetNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 HDP250SparkBatchS3NodeModuleGroup.getModuleGroups());
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
                 HDP250GraphFramesNodeModuleGroup.getModuleGroups());
-        
+
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), HDP250SparkStreamingParquetNodeModuleGroup.getModuleGroups());
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
@@ -398,6 +398,11 @@ public class HDP250Distribution extends AbstractDistribution implements HDFSComp
 
     @Override
     public boolean doSupportHDFSEncryption() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportBasicAtlasAuthentification() {
         return true;
     }
 }
