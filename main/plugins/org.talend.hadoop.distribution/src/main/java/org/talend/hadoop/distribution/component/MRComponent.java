@@ -56,7 +56,7 @@ public interface MRComponent extends HadoopComponent {
     public String getCustomMRApplicationCP();
 
     /**
-     * @return true if the distribution is supports sending lineage data to Apache Atlas.
+     * @return true if the distribution supports sending lineage data to Apache Atlas.
      */
     public boolean doSupportAtlas();
 
@@ -64,5 +64,10 @@ public interface MRComponent extends HadoopComponent {
      * @return Cloudera Navigator API version. Supported by the cloudera Navigator installed by the distribution (CDH)
      */
     public int getClouderaNavigatorAPIVersion();
+
+    /**
+     * @return true if the distribution supports/requires basic username/password authentification
+     */
+    public boolean doSupportBasicAtlasAuthentification();
 
 }

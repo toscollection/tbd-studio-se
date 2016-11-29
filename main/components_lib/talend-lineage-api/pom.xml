@@ -12,7 +12,7 @@
 
 	<artifactId>talend-lineage-api</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 
 	<name>talend-lineage-api</name>
 	<description>Talend BigData lineage API</description>
@@ -29,7 +29,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<cloudera.navigator.version>1.0</cloudera.navigator.version>
-		<atlas.version>0.5-incubating</atlas.version>
+		<atlas.version>0.7-incubating</atlas.version>
 	</properties>
 
 	<dependencies>
@@ -53,11 +53,11 @@
 			<version>${atlas.version}</version>
 		</dependency>
 		
-		<dependency>
-		    <groupId>joda-time</groupId>
-		    <artifactId>joda-time</artifactId>
-		    <version>2.4</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 		    <groupId>joda-time</groupId> -->
+<!-- 		    <artifactId>joda-time</artifactId> -->
+<!-- 		    <version>2.4</version> -->
+<!-- 		</dependency> -->
 		
                <!--  CLOUDERA NAVIGATOR INTEGRATION TESTS ONLY
                <dependency>

@@ -37,6 +37,10 @@ public class AtlasLineageCreatorIT {
 
     private static String       ENDPOINT_URL       = "http://localhost:21000/";
 
+    private static String       ATLAS_LOGIN        = "admin";
+
+    private static String       ATLAS_PASSWORD     = "admin";
+
     private AtlasLineageCreator atlasLineageCreator;
 
     @Before
@@ -44,13 +48,13 @@ public class AtlasLineageCreatorIT {
         try {
             Properties prop = new Properties();
             ClassLoader loader = Thread.currentThread().getContextClassLoader();
-            InputStream stream = loader.getResourceAsStream("atlas.properties");
+            InputStream stream = loader.getResourceAsStream("atlas-application.properties");
             prop.load(stream);
             ENDPOINT_URL = prop.getProperty("atlas.http.address");
         } catch (Exception e) {
             // Nothing
         }
-        atlasLineageCreator = new AtlasLineageCreator(ENDPOINT_URL);
+        atlasLineageCreator = new AtlasLineageCreator(ENDPOINT_URL, ATLAS_LOGIN, ATLAS_PASSWORD);
     }
 
     private static Map<String, Object> createGenericMetadata() {
@@ -84,8 +88,8 @@ public class AtlasLineageCreatorIT {
         jobMetadata.put("version", name + "_version");
         jobMetadata.put("jobType", name + "_jobType");
         jobMetadata.put("framework", name + "_framework");
-        jobMetadata.put("creationDate", currentTime - 10000);
-        jobMetadata.put("lastModificationDate", currentTime);
+        jobMetadata.put("creationTime", currentTime - 10000);
+        jobMetadata.put("lastModificationTime", currentTime);
         jobMetadata.put("startTime", currentTime);
         jobMetadata.put("endTime", currentTime);
 
@@ -149,7 +153,7 @@ public class AtlasLineageCreatorIT {
 
         atlasLineageCreator.sendToLineageProvider(true);
         atlasLineageCreator.logPersistedEntities();
-        testPersistence(1, 5, 4);
+        testPersistence(1, 5, 1);
     }
 
     @Test
@@ -182,7 +186,7 @@ public class AtlasLineageCreatorIT {
 
         atlasLineageCreator.sendToLineageProvider(true);
         atlasLineageCreator.logPersistedEntities();
-        testPersistence(1, 6, 4);
+        testPersistence(1, 6, 1);
     }
 
     private void testPersistence(int numPersistedJobInstances, int numPersistedInstances, int numPersistedArticialInstances) {
