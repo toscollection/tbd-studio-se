@@ -34,9 +34,6 @@ import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
 
-/**
- * DOC ggu class global comment. Detailled comment
- */
 public final class DistributionsManager implements IDistributionsManager {
 
     private final String serviceName;
@@ -46,7 +43,7 @@ public final class DistributionsManager implements IDistributionsManager {
     private DistributionBean[] distributionBeans;
 
     /**
-     * service can't be null. if the service is HadoopComponent directly, the componentType will be null.
+     * Service can't be null. if the service is HadoopComponent directly, the componentType will be null.
      */
     public DistributionsManager(String serviceName, ComponentType componentType) {
         super();
@@ -80,6 +77,7 @@ public final class DistributionsManager implements IDistributionsManager {
         return componentType;
     }
 
+    @Override
     public DistributionBean[] getDistributions() {
         if (distributionBeans == null) {
             synchronized (DistributionsManager.class) {
@@ -107,7 +105,7 @@ public final class DistributionsManager implements IDistributionsManager {
             CommonExceptionHandler.process(e);
             return new DistributionBean[0];
         }
-        Map<String, DistributionBean> disctributionsMap = new HashMap<String, DistributionBean>();
+        Map<String, DistributionBean> disctributionsMap = new HashMap<>();
 
         for (ServiceReference<? extends HadoopComponent> sr : distributions) {
             HadoopComponent hc = bc.getService(sr);
@@ -120,7 +118,7 @@ public final class DistributionsManager implements IDistributionsManager {
                 disctributionsMap.put(distribution, disctributionBean);
             } else {// check the name and displayName
                 if (!distribution.equals(disctributionBean.name) || !distributionName.equals(disctributionBean.displayName)) {
-                    CommonExceptionHandler.warn(" There are different distribution name for " + disctributionBean);
+                    CommonExceptionHandler.warn(" There are different distribution name for " + disctributionBean); //$NON-NLS-1$
                     continue;
                 }
             }
@@ -133,15 +131,11 @@ public final class DistributionsManager implements IDistributionsManager {
             versionBean.displayCondition = hc.getDisplayCondition(type);
             disctributionBean.addVersion(versionBean);
 
-            // FIXME, the default version is last one via service order?
-            disctributionBean.setDefaultVersion(versionBean);
-            // }
-
             // add all version conditions ?
             disctributionBean.addCondition(hc.getDisplayCondition(type));
         }
 
-        List<DistributionBean> distributionsList = new ArrayList<DistributionBean>(disctributionsMap.values());
+        List<DistributionBean> distributionsList = new ArrayList<>(disctributionsMap.values());
         Collections.sort(distributionsList, new Comparator<DistributionBean>() {
 
             @Override
@@ -158,8 +152,9 @@ public final class DistributionsManager implements IDistributionsManager {
         return distributionsList.toArray(new DistributionBean[0]);
     }
 
+    @Override
     public String[] getDistributionsDisplay(boolean withCustom) {
-        List<String> distributionsDisplay = new ArrayList<String>();
+        List<String> distributionsDisplay = new ArrayList<>();
         for (DistributionBean bean : getDistributions()) {
             if (!withCustom && bean.useCustom()) {
                 continue;
@@ -169,6 +164,7 @@ public final class DistributionsManager implements IDistributionsManager {
         return distributionsDisplay.toArray(new String[0]);
     }
 
+    @Override
     public DistributionBean getDistribution(String name, boolean byDisplay) {
         if (name != null) {
             for (DistributionBean bean : getDistributions()) {
@@ -184,6 +180,7 @@ public final class DistributionsManager implements IDistributionsManager {
         return null;
     }
 
+    @Override
     public DistributionVersion getDistributionVersion(String version, boolean byDisplay) {
         for (DistributionBean bean : getDistributions()) {
             DistributionVersion v = bean.getVersion(version, byDisplay);

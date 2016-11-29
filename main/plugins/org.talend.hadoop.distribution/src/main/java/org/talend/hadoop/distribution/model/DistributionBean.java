@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -27,9 +28,6 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.Constant;
 import org.talend.hadoop.distribution.utils.ComponentConditionUtil;
 
-/**
- * DOC ggu class global comment. Detailled comment
- */
 public class DistributionBean implements IHDistribution {
 
     public final ComponentType componentType;
@@ -59,7 +57,7 @@ public class DistributionBean implements IHDistribution {
     /**
      * All versions.
      */
-    private List<DistributionVersion> versions = new ArrayList<DistributionVersion>();
+    private List<DistributionVersion> versions = new ArrayList<>();
 
     public void addVersion(DistributionVersion v) {
         if (v != null) {
@@ -73,12 +71,7 @@ public class DistributionBean implements IHDistribution {
 
             @Override
             public int compare(DistributionVersion b1, DistributionVersion b2) {
-                int cmp = b1.displayVersion != null && b2.displayVersion != null ? b2.displayVersion.compareTo(b1.displayVersion)
-                        : 0;
-                if (cmp == 0) {
-                    cmp = b1.version != null && b2.version != null ? b2.version.compareTo(b1.version) : 0;
-                }
-                return cmp;
+                return b1.version != null && b2.version != null ? b2.version.compareTo(b1.version) : 0;
             }
         });
         return versions.toArray(new DistributionVersion[versions.size()]);
@@ -91,7 +84,7 @@ public class DistributionBean implements IHDistribution {
 
     @Override
     public String[] getVersionsDisplay() {
-        List<String> versionsDisplay = new ArrayList<String>();
+        List<String> versionsDisplay = new ArrayList<>();
         for (IHDistributionVersion v : getHDVersions()) {
             if (v.getDisplayVersion() != null) {
                 versionsDisplay.add(v.getDisplayVersion());
@@ -131,7 +124,7 @@ public class DistributionBean implements IHDistribution {
      */
     private DistributionVersion defaultVersion;
 
-    public void setDefaultVersion(DistributionVersion v) {
+    private void setDefaultVersion(DistributionVersion v) {
         if (v != null) {
             defaultVersion = v;
         }
@@ -140,9 +133,11 @@ public class DistributionBean implements IHDistribution {
     @Override
     public DistributionVersion getDefaultVersion() {
         if (defaultVersion == null) {
-            DistributionVersion[] versions = getVersions();
-            if (versions.length > 0) {
-                return versions[versions.length - 1];// last one by default?
+            DistributionVersion[] versionsArrays = getVersions();
+            List<DistributionVersion> versionsList = Arrays.asList(versionsArrays);
+            if (versionsList.size() > 0) {
+                setDefaultVersion(versionsList.get(0));
+                return defaultVersion;
             }
             return null;
         } else {
@@ -153,7 +148,7 @@ public class DistributionBean implements IHDistribution {
     /**
      * Conditions
      */
-    private Set<ComponentCondition> conditions = new HashSet<ComponentCondition>();
+    private Set<ComponentCondition> conditions = new HashSet<>();
 
     public void addCondition(ComponentCondition c) {
         /*
@@ -162,9 +157,7 @@ public class DistributionBean implements IHDistribution {
          * 
          * @see the method getDisplayShowIf with api ComponentConditionUtil.buildDistributionShowIf
          */
-        // if (c != null) {
         conditions.add(c);
-        // }
     }
 
     public ComponentCondition[] getConditions() {
