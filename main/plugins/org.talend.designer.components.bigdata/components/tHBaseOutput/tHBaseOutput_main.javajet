@@ -26,6 +26,9 @@ String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
 
 final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
+boolean useBatchMode = ElementParameterParser.getBooleanValue(node, "__USE_BATCH_MODE__");
+String batchSize = ElementParameterParser.getValue(node, "__BATCH_SIZE__");
+
 List<IMetadataTable> metadatas = node.getMetadataList();
 if ((metadatas!=null) && (metadatas.size() > 0)) {
     IMetadataTable metadata = metadatas.get(0);
@@ -100,10 +103,21 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 						p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid %>);
 					<%
 					}
-					%>
-					table_<%=cid%>.put(p_<%=cid%>);
-					nb_line_<%=cid%>++;
-					<%
+					if (useBatchMode) {
+						%>
+						batchPuts_<%=cid%>.add(p_<%=cid%>);
+						if (batchPuts_<%=cid%>.size() > <%=batchSize%>) {
+							table_<%=cid%>.put(batchPuts_<%=cid%>);
+							nb_line_<%=cid%> += batchPuts_<%=cid%>.size();
+							batchPuts_<%=cid%>.clear();
+						}
+						<%
+					} else {
+						%>
+						table_<%=cid%>.put(p_<%=cid%>);
+						nb_line_<%=cid%>++;
+						<%
+					}
 					log4jFileUtil.debugWriteData(node);
 					%>
 				}catch(java.lang.Exception e){

@@ -22,6 +22,8 @@ imports="
 	boolean setTableNsMapping = "true".equals(ElementParameterParser.getValue(node, "__SET_TABLE_NS_MAPPING__"));
 	String tableNsMapping = ElementParameterParser.getValue(node, "__TABLE_NS_MAPPING__");
 	boolean useTableNsMapping = setTableNsMapping && ((tableNsMapping != null)&&(!tableNsMapping.equals("")));
+
+	boolean useBatchMode = ElementParameterParser.getBooleanValue(node, "__USE_BATCH_MODE__");
 	
 	String distribution = null;
 	String hbaseVersion = null;
@@ -335,3 +337,11 @@ if("NONE".equals(table_action)){
 org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
 table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid %>,<%=table_name%>);
 byte[] temp_<%=cid %> = null;
+
+<%
+if (useBatchMode) {
+	%>
+	java.util.ArrayList<org.apache.hadoop.hbase.client.Put> batchPuts_<%=cid%> = new java.util.ArrayList<org.apache.hadoop.hbase.client.Put>();
+	<%
+}
+%>
