@@ -92,14 +92,14 @@
 			if(additionalMap.get("ADDITIONAL_VALUE")==null || "".equals(additionalMap.get("ADDITIONAL_VALUE"))) { 
 				break; 
 			}
-			if(additionalMap.get("ADDITIONAL_ARGUMENT").contains("delimiters")) {
-				
+            String currentArgument = additionalMap.get("ADDITIONAL_ARGUMENT");
+            if(currentArgument.contains("delimiters") && !currentArgument.contains("required")) {
 %> 
-				additionalProperties_<%=cid%>.put(<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>, ""+<%=additionalMap.get("ADDITIONAL_VALUE")%>.codePointAt(0)); 
+				additionalProperties_<%=cid%>.put(<%=currentArgument%>, ""+<%=additionalMap.get("ADDITIONAL_VALUE")%>.codePointAt(0)); 
 <%
 			} else {
 %> 
-				additionalProperties_<%=cid%>.put(<%=additionalMap.get("ADDITIONAL_ARGUMENT")%>, <%=additionalMap.get("ADDITIONAL_VALUE")%>); 
+				additionalProperties_<%=cid%>.put(<%=currentArgument%>, <%=additionalMap.get("ADDITIONAL_VALUE")%>); 
 <%
 			}
 		} 
