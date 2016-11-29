@@ -83,14 +83,14 @@
                 if(generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")==null || "".equals(generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE"))) { 
                     break; 
                 }
-                if(generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT").contains("delimiters")) {
-                
+                String currentArgument = generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT");
+                if(currentArgument.contains("delimiters") && !currentArgument.contains("required")) {
 %> 
-                    generateJarAdditionalProperties_<%=cid%>.put(<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT")%>, ""+<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")%>.codePointAt(0)); 
+                    generateJarAdditionalProperties_<%=cid%>.put(<%=currentArgument%>, ""+<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")%>.codePointAt(0)); 
 <%
                 } else {
 %> 
-                    generateJarAdditionalProperties_<%=cid%>.put(<%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_ARGUMENT")%>, <%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")%>); 
+                    generateJarAdditionalProperties_<%=cid%>.put(<%=currentArgument%>, <%=generateJarAdditionalMap.get("GENERATE_JAR_ADDITIONAL_VALUE")%>); 
 <%
                 }
             } 
