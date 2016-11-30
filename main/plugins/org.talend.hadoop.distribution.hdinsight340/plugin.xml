@@ -344,6 +344,14 @@
              <library id="jodd-core-3.5.2.jar" />
         </libraryNeededGroup>
         
+        <!-- S3 group -->
+        <libraryNeededGroup
+                description="S3 libraries for HDInsight 3.4.0"
+                id="S3-LIB-HD_INSIGHT_3_4_0"
+                name="S3-LIB-HD_INSIGHT_3_4_0">
+             <library id="jets3t-0.9.0" />
+        </libraryNeededGroup>
+        
         <!-- Spark S3 group MRREQUIRED -->
         <libraryNeededGroup
                 description="Spark S3 libraries for HDInsight 3.4.0 that are MRREQUIRED"
