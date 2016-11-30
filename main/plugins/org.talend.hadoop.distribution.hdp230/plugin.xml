@@ -30,7 +30,7 @@
                 description="Spark libraries for HDP 2.3 that are MRREQUIRED"
                 id="SPARK-PARQUET-LIB-MRREQUIRED-HDP_2_3"
                 name="SPARK-PARQUET-LIB-MRREQUIRED-HDP_2_3">
-             <library id="parquet-hadoop-bundle-1.6.0.jar" />
+             <!-- <library id="parquet-hadoop-bundle-1.6.0.jar" /> -->
              <library id="jodd-core-3.5.2.jar" />             
         </libraryNeededGroup>
     </extension>
