@@ -473,7 +473,7 @@
             context="plugin:org.talend.libraries.apache.kafka"
             id="kafka-clients-cdh5.8.1"
             name="kafka-clients-0.9.0-kafka-2.0.0.jar"
-            mvn_uri="mvn:org.talend.libraries/kafka-clients-0.9.0-kafka-2.0.0/6.1.0">
+            mvn_uri="mvn:org.talend.libraries/kafka-clients-0.9.0-kafka-2.0.0/6.0.0">
         </libraryNeeded>   
         
         <libraryNeeded
