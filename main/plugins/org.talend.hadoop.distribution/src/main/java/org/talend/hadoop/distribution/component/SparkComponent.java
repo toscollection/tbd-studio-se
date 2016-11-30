@@ -81,6 +81,12 @@ public interface SparkComponent extends MRComponent {
     /**
      * @return true if the distribution executes its Spark job through Livy.
      */
-    public boolean isExecutedThroughLivy();
+    public boolean isExecutedThroughLivy();    
+    
+    /**
+     * @return the Spark Jars path . This method won't be used for Spark 1.x
+     */
+    public String getSparkYarnJarsPath();
+    
 
 }
