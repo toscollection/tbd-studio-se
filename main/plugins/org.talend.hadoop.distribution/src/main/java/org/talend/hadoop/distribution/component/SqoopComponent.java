@@ -40,4 +40,15 @@ public interface SqoopComponent extends MRComponent {
      */
     public boolean doSupportParquetOutput();
 
+    /**
+     * @return true if the distribution is impacted by the bug https://issues.apache.org/jira/browse/SQOOP-2995. Have to
+     * set a init value to the new map type key "customtool.options.jsonmap". But the key hasn't been used.
+     */
+    public boolean isImpactedBySqoop2995();
+
+    /**
+     * @return true if the distribution does support fetch password from file
+     */
+    public boolean doSupportFetchPasswordFromFile();
+
 }
