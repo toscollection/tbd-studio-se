@@ -104,6 +104,7 @@ public abstract class AbstractHadoopImportConfsPage extends WizardPage implement
     protected Set<String> getInitFilterProperties() {
         Set<String> fProps = new HashSet<>();
         fProps.add("net.topology.script.file.name"); //$NON-NLS-1$
+        fProps.add("hbase.rpc.controllerfactory.class"); //$NON-NLS-1$
         return fProps;
     }
 
