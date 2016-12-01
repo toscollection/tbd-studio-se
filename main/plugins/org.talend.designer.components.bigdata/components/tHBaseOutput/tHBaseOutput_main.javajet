@@ -106,7 +106,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
 					if (useBatchMode) {
 						%>
 						batchPuts_<%=cid%>.add(p_<%=cid%>);
-						if (batchPuts_<%=cid%>.size() > <%=batchSize%>) {
+						if (batchPuts_<%=cid%>.size() >= <%=batchSize%>) {
 							table_<%=cid%>.put(batchPuts_<%=cid%>);
 							nb_line_<%=cid%> += batchPuts_<%=cid%>.size();
 							batchPuts_<%=cid%>.clear();
