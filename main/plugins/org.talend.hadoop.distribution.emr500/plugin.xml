@@ -343,9 +343,9 @@
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="slf4j-api-1.7.16.jar" name="slf4j-api-1.7.16.jar" mvn_uri="mvn:org.talend.libraries/slf4j-api-1.7.16/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="protobuf-java-2.5.0.jar" name="protobuf-java-2.5.0.jar" mvn_uri="mvn:org.talend.libraries/protobuf-java-2.5.0/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-annotations-2.7.2-amzn-3.jar" name="hadoop-annotations-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-annotations-2.7.2-amzn-3/6.0.0"/>
-<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-ant-2.7.2-amzn-3.jar" name="hadoop-ant-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-ant-2.7.2-amzn-3.jar/6.0.0"/>
-<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-archives-2.7.2-amzn-3.jar" name="hadoop-archives-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-archives-2.7.2-amzn-3.jar/6.0.0"/>
-<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-aws-2.7.2-amzn-3.jar" name="hadoop-aws-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.7.2-amzn-3.jar/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-ant-2.7.2-amzn-3.jar" name="hadoop-ant-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-ant-2.7.2-amzn-3/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-archives-2.7.2-amzn-3.jar" name="hadoop-archives-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-archives-2.7.2-amzn-3/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-aws-2.7.2-amzn-3.jar" name="hadoop-aws-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.7.2-amzn-3/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="scalap-2.11.8.jar" name="scalap-2.11.8.jar" mvn_uri="mvn:org.talend.libraries/scalap-2.11.8/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="spark-launcher_2.11-2.0.0.jar" name="spark-launcher_2.11-2.0.0.jar" mvn_uri="mvn:org.talend.libraries/spark-launcher_2.11-2.0.0/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="core-1.1.2.jar" name="core-1.1.2.jar" mvn_uri="mvn:org.talend.libraries/core-1.1.2/6.0.0"/>
@@ -393,6 +393,7 @@
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="chill-java-0.8.0.jar" name="chill-java-0.8.0.jar" mvn_uri="mvn:org.talend.libraries/chill-java-0.8.0/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jersey-client-1.9.jar" name="jersey-client-1.9.jar" mvn_uri="mvn:org.talend.libraries/jersey-client-1.9/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jersey-client-2.22.2.jar" name="jersey-client-2.22.2.jar" mvn_uri="mvn:org.talend.libraries/jersey-client-2.22.2/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jersey-core-1.9.jar" name="jersey-core-1.9.jar" mvn_uri="mvn:org.talend.libraries/jersey-core-1.9/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="commons-lang3-3.3.2.jar" name="commons-lang3-3.3.2.jar" mvn_uri="mvn:org.talend.libraries/commons-lang3-3.3.2/6.0.0"/>
 
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="commons-lang3-3.4.jar" name="commons-lang3-3.4.jar" mvn_uri="mvn:org.talend.libraries/commons-lang3-3.4/6.2.0"/>
@@ -623,7 +624,7 @@
             context="plugin:org.talend.hadoop.distribution.emr500"
             id="joda-time-2.9.3.jar"
             name="joda-time-2.9.3.jar" 
-            mvn_uri="mvn:org.talend.libraries/joda-time-2.9.3.jar/6.0.0"/>
+            mvn_uri="mvn:org.talend.libraries/joda-time-2.9.3/6.0.0"/>
          
        
         <!-- Groups -->

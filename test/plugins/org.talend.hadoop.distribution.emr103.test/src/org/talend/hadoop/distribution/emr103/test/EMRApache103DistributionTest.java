@@ -28,12 +28,17 @@ import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.emr103.EMRApache103Distribution;
+import org.talend.hadoop.distribution.test.AbstractDistributionTest;
 
 /**
  * Test class for the {@link EMRApache103Distribution} distribution.
  *
  */
-public class EMRApache103DistributionTest {
+public class EMRApache103DistributionTest extends AbstractDistributionTest {
+
+    public EMRApache103DistributionTest() {
+        super(new EMRApache103Distribution());
+    }
 
     private static final String EMPTY = ""; //$NON-NLS-1$
 

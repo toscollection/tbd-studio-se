@@ -100,7 +100,7 @@
 		sqoopOptions_<%=cid%>.setPassword(decryptedPassword_<%=cid%>); // __PASSWORD__
 	<%} else {%>
 		sqoopOptions_<%=cid%>.setPasswordFilePath(<%=(String)ElementParameterParser.getValue(node, "__PASSWORD_FILE__")%>);
-		sqoopOptions_<%=cid%>.setPassword(org.apache.sqoop.util.CredentialsUtil.fetchPassword<%="HDP_2_0".equals(version)?"FromFile":""%>(sqoopOptions_<%=cid%>));
+		sqoopOptions_<%=cid%>.setPassword(org.apache.sqoop.util.CredentialsUtil.fetchPassword<%=sqoopDistrib.doSupportFetchPasswordFromFile()?"FromFile":""%>(sqoopOptions_<%=cid%>));
 	<%}%>
 	
 	<%if(useQuery){%>
@@ -190,7 +190,7 @@
 	
 	java.util.Properties additionalProperties_<%=cid%> = new java.util.Properties();
 	<%
-	if("HDP_2_5".equals(version)){
+	if(sqoopDistrib.isImpactedBySqoop2995()){
 	//TODO, relate with https://issues.apache.org/jira/browse/SQOOP-2995, have to set a init value to the new map type key "customtool.options.jsonmap". But the key hasn't been used
 	%>
 		additionalProperties_<%=cid%>.put("customtool.options.jsonmap", "{\"\":\"\"}");
