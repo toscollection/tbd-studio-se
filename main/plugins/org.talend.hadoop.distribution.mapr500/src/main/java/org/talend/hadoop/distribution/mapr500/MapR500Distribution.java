@@ -270,9 +270,4 @@ public class MapR500Distribution extends AbstractMapRDistribution implements HDF
     public boolean doSupportS3V4() {
         return true;
     }
-
-    @Override
-    public boolean doSupportHDFSEncryption() {
-        return true;
-    }
 }

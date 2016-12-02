@@ -118,7 +118,7 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 MapR520SparkBatchS3NodeModuleGroup.getModuleGroups());
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT), 
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
                 MapR520GraphFramesNodeModuleGroup.getModuleGroups());
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
@@ -389,10 +389,5 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
     @Override
     public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion() {
         return SparkStreamingKafkaVersion.MAPR;
-    }
-
-    @Override
-    public boolean doSupportHDFSEncryption() {
-        return true;
     }
 }
