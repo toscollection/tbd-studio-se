@@ -371,6 +371,8 @@
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="breeze-macros_2.11-0.11.2.jar" name="breeze-macros_2.11-0.11.2.jar" mvn_uri="mvn:org.talend.libraries/breeze-macros_2.11-0.11.2/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="RoaringBitmap-0.5.11.jar" name="RoaringBitmap-0.5.11.jar" mvn_uri="mvn:org.talend.libraries/RoaringBitmap-0.5.11/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="pmml-model-1.2.15.jar" name="pmml-model-1.2.15.jar" mvn_uri="mvn:org.talend.libraries/pmml-model-1.2.15/6.0.0"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="pmml-schema-1.2.15.jar" name="pmml-schema-1.2.15.jar" mvn_uri="mvn:org.talend.libraries/pmml-schema-1.2.15/6.0.0"/>
+
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="spark-streaming_2.11-2.0.0.jar" name="spark-streaming_2.11-2.0.0.jar" mvn_uri="mvn:org.talend.libraries/spark-streaming_2.11-2.0.0/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jetty-6.1.26.jar" name="jetty-6.1.26.jar" mvn_uri="mvn:org.talend.libraries/jetty-6.1.26/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jets3t-0.9.3.jar" name="jets3t-0.9.3.jar" mvn_uri="mvn:org.talend.libraries/jets3t-0.9.3/6.0.0"/>
@@ -959,28 +961,24 @@
 			 <library id="antlr4-runtime-4.5.3.jar"/>
 			 <library id="aopalliance-1.0.jar"/>
 			 <library id="aopalliance-repackaged-2.4.0-b34.jar"/>
-			
 			 <library id="apache-log4j-extras-1.2.17.jar"/>
-			 
 			 <library id="apacheds-i18n-2.0.0-M15.jar"/>
 			 <library id="apacheds-kerberos-codec-2.0.0-M15.jar"/>
 			 <library id="api-asn1-api-1.0.0-M20.jar"/>
 			 <library id="api-util-1.0.0-M20.jar"/>
 			 <library id="arpack_combined_all-0.1.jar"/>
-			  <library id="avro-1.7.4.jar"/> <!--new -->
-			<!-- <library id="avro-1.7.7.jar"/>
+			 <library id="avro-1.7.4.jar"/> <!--new -->
+			 <library id="avro-1.7.7.jar"/>
 			 <library id="avro-ipc-1.7.7.jar"/>
 			 <library id="avro-mapred-1.7.7-hadoop2.jar"/>
-			-->	 
 			 <library id="base64-2.3.8.jar"/>
-	         <!--<library id="bcprov-jdk15on-1.51.jar"/>
+	         <library id="bcprov-jdk15on-1.51.jar"/>
 			 <library id="bonecp-0.8.0.RELEASE.jar"/>
 			 <library id="breeze-macros_2.11-0.11.2.jar"/>
 			 <library id="breeze_2.11-0.11.2.jar"/>
 			 <library id="calcite-avatica-1.2.0-incubating.jar"/>
 			 <library id="calcite-core-1.2.0-incubating.jar"/>
 			 <library id="calcite-linq4j-1.2.0-incubating.jar"/>		 
-			-->
 			 <library id="chill-java-0.8.0.jar"/>
 			 <library id="chill_2.11-0.8.0.jar"/>
 			 <library id="commons-beanutils-1.7.0.jar"/>
@@ -991,7 +989,7 @@
 			 <library id="commons-compiler-2.7.6.jar"/> 
 			 <library id="commons-compress-1.4.1.jar"/>
 			 <library id="commons-configuration-1.6.jar"/>
-			 <!--<library id="commons-dbcp-1.4.jar"/> -->
+			 <library id="commons-dbcp-1.4.jar"/> 
 			 <library id="commons-digester-1.8.jar"/>
 			 <library id="commons-httpclient-3.1.jar"/>
 			 <library id="commons-io-2.4.jar"/>
@@ -999,11 +997,10 @@
 			 <library id="commons-lang3-3.3.2.jar"/>
 			 <library id="commons-logging-1.1.3.jar"/> 
 			 <library id="commons-math3-3.4.1.jar"/>
-			 <library id="commons-net-2.2.jar"/> <!-- TBR with 3.1 -->
-			 <!--<library id="commons-pool-1.5.4.jar"/>
+			 <library id="commons-net-2.2.jar"/>
+			 <library id="commons-pool-1.5.4.jar"/>
 			 <library id="compress-lzf-1.0.3.jar"/>
 			 <library id="core-1.1.2.jar"/>
-			 -->
 			 <library id="curator-client-2.6.0.jar"/> <!-- TBR 2.7.1 -->
 			 <library id="curator-framework-2.6.0.jar"/> <!-- TBR 2.7.1 -->
 			 <library id="curator-recipes-2.6.0.jar"/> <!-- TBR 2.7.1 -->
@@ -1011,15 +1008,11 @@
 			 <library id="datanucleus-core-3.2.10.jar"/>
 			 <library id="datanucleus-rdbms-3.2.9.jar"/>
 			 <library id="derby-10.11.1.1.jar"/>
-			<!--
 			 <library id="eigenbase-properties-1.1.5.jar"/>
-			-->
 			 <library id="gson-2.2.4.jar"/>
-			 <!--<library id="guava-11.0.2.jar"/> --> <!-- replacing -->
-			 <library id="guava-14.0.1.jar"/> <!--replace -->
-			 <!--<library id="guice-3.0.jar"/>
+			 <library id="guava-14.0.1.jar"/> 
+			 <library id="guice-3.0.jar"/>
 			 <library id="guice-servlet-3.0.jar"/>
-			-->
 			 <library id="hadoop-annotations-2.7.2-amzn-3.jar"/>
 			 <library id="hadoop-ant-2.7.2-amzn-3.jar"/> 
 			 <library id="hadoop-auth-emr500-latest"/>
@@ -1038,62 +1031,45 @@
 			 <library id="hadoop-yarn-common-emr500-latest"/>
 			 <library id="hadoop-yarn-server-common-2.7.2-amzn-3.jar"/>
 			 <library id="hadoop-yarn-server-web-proxy-2.7.2-amzn-3.jar"/>
-  		 
-			 <library id="hive-beeline-1.2.1.spark2.jar"/>
+  		 	 <library id="hive-beeline-1.2.1.spark2.jar"/>
 			 <library id="hive-cli-1.2.1.spark2.jar"/>
 			 <library id="hive-exec-1.2.1.spark2.jar"/>
 			 <library id="hive-jdbc-1.2.1.spark2.jar"/>
 			 <library id="hive-metastore-1.2.1.spark2.jar"/>
-			 
-		     
 			 <library id="hk2-api-2.4.0-b34.jar"/>
 			 <library id="hk2-locator-2.4.0-b34.jar"/>
 			 <library id="hk2-utils-2.4.0-b34.jar"/>
-			 
-			 
-			<!--  <library id="hive-common-emr500-latest"/> -->
-			 
+			 <library id="hive-common-emr500-latest"/>
 			 <library id="htrace-core-3.1.0-incubating.jar"/> 
     		 <library id="httpclient-4.5.2.jar"/>
 			 <library id="httpcore-4.4.4.jar"/>
-			 <!--<library id="ivy-2.4.0.jar"/> -->
+			 <library id="ivy-2.4.0.jar"/> 
 			 <library id="jackson-annotations-2.6.5.jar"/>
 			 <library id="jackson-core-2.6.5.jar"/>
 			 <library id="jackson-core-asl-2.6.5.jar"/>
-		
 			 <library id="jackson-jaxrs-1.9.13.jar"/>
 			 <library id="jackson-jaxrs-2.6.5.jar"/>
-		
 			 <library id="jackson-mapper-asl-2.6.5.jar"/>
-		
 			 <library id="jackson-xc-1.9.13.jar"/>
          	 <library id="jackson-xc-2.6.5.jar"/>
-			 	
 			 <library id="jackson-databind-2.6.5.jar"/>
 			 <library id="jackson-module-paranamer-2.6.5.jar"/> 
 			 <library id="jackson-module-scala_2.11-2.6.5.jar"/>
-			 
 			 <library id="janino-2.7.8.jar"/>
 			 <library id="java-xmlbuilder-1.0.jar"/> 
-			 <!--<library id="JavaEWAH-0.3.2.jar"/> -->
+			 <library id="JavaEWAH-0.3.2.jar"/> 
 			 <library id="javassist-3.18.1-GA.jar"/>
 			 <library id="javax.annotation-api-1.2.jar"/>
-			
 			 <library id="javax.inject-1.jar"/>
 			 <library id="javax.inject-2.4.0-b34.jar"/>
-			 
 			 <library id="javax.servlet-api-3.1.0.jar"/>
 			 <library id="javax.ws.rs-api-2.0.1.jar"/>
-		
 			 <library id="javolution-5.5.1.jar"/>
 			 <library id="jaxb-api-2.2.2.jar"/>
-			
 			 <library id="jcl-over-slf4j-1.7.16.jar"/>
 			 <library id="jdo-api-3.0.1.jar"/>
-		
 			 <library id="jersey-client-1.9.jar"/>
 			 <library id="jersey-client-2.22.2.jar"/>
-		
 			 <library id="jersey-common-2.22.2.jar"/>
 			 <library id="jersey-core-1.9.jar"/>
 			 <library id="jersey-container-servlet-2.22.2.jar"/>
@@ -1108,43 +1084,34 @@
 			 <library id="joda-time-2.9.3.jar"/>
 			 <library id="jodd-core-3.5.2.jar"/>
 			 <library id="jpam-1.1.jar"/>
-			
 			 <library id="json-20090211.jar"/>
 			 <library id="json4s-ast_2.11-3.2.11.jar"/>
 			 <library id="json4s-core_2.11-3.2.11.jar"/>
 			 <library id="json4s-jackson_2.11-3.2.11.jar"/>
 			 <library id="jsr305-1.3.9.jar"/>
-			<!-- <library id="jta-1.1.jar"/>
+			 <library id="jta-1.1.jar"/>
 			 <library id="jtransforms-2.4.0.jar"/>
-			--> 
 			 <library id="jul-to-slf4j-1.7.16.jar"/>
-		
 			 <library id="kryo-shaded-3.0.3.jar"/>
 			 <library id="leveldbjni-all-1.8.jar"/>
 			 <library id="libfb303-0.9.2.jar"/>
 			 <library id="libthrift-0.9.2.jar"/>
-			 
 			 <library id="log4j-1.2.17.jar"/>
-			<library id="lz4-1.3.0.jar"/>
-			<!-- <library id="mail-1.4.7.jar"/>
-			--> 
+			 <library id="lz4-1.3.0.jar"/>
+			 <library id="mail-1.4.7.jar"/>
 			 <library id="mesos-0.21.1-shaded-protobuf.jar"/>
 			 <library id="metrics-core-3.1.2.jar"/>
 			 <library id="metrics-graphite-3.1.2.jar"/>
 			 <library id="metrics-json-3.1.2.jar"/>
 			 <library id="metrics-jvm-3.1.2.jar"/>
 			 <library id="minlog-1.3.0.jar"/>
-		 <!--	 
 			 <library id="mx4j-3.0.2.jar"/>
-		  -->	 
 			 <library id="netty-3.8.0.Final.jar"/>
 			 <library id="netty-all-4.0.29.Final.jar"/> 
 			 <library id="objenesis-2.1.jar"/>
 			 <library id="opencsv-2.3.jar"/>
-		<!--	 
 			 <library id="oro-2.0.8.jar"/>
 			 <library id="osgi-resource-locator-1.0.1.jar"/>
-	     -->
 			 <library id="paranamer-2.3.jar"/>
 			 <library id="parquet-column-1.7.0.jar"/>
 			 <library id="parquet-common-1.7.0.jar"/>
@@ -1154,10 +1121,8 @@
 			 <library id="parquet-hadoop-1.7.0.jar"/>
 			 <library id="parquet-hadoop-bundle-1.6.0.jar"/>
 			 <library id="parquet-jackson-1.7.0.jar"/>
-		<!--
 			 <library id="pmml-model-1.2.15.jar"/>
 			 <library id="pmml-schema-1.2.15.jar"/>
-		-->	
 			 <library id="protobuf-java-2.5.0.jar"/>
 			 <library id="py4j-0.10.1.jar"/>
 			 <library id="pyrolite-4.9.jar"/>
@@ -1188,27 +1153,20 @@
 			 <library id="spark-tags_2.11-2.0.0.jar"/> 
 			 <library id="spark-unsafe_2.11-2.0.0.jar"/>
 			 <library id="spark-yarn_2.11-2.0.0.jar"/>
-		<!--	
 			 <library id="spire-macros_2.11-0.7.4.jar"/>
 			 <library id="spire_2.11-0.7.4.jar"/>
 			 <library id="ST4-4.0.4.jar"/>
-		-->
 			 <library id="stax-api-1.0-2.jar"/>
-		<!--
 			 <library id="stream-2.7.0.jar"/>
 			 <library id="stringtemplate-3.2.1.jar"/>
-		-->	 
 			 <library id="super-csv-2.2.0.jar"/>
-		<!--
 			 <library id="univocity-parsers-2.1.1.jar"/>
 			 <library id="validation-api-1.1.0.Final.jar"/>
-		-->	 
 			 <library id="xbean-asm5-shaded-4.4.jar"/>
 			 <library id="xercesImpl-2.9.1.jar"/>
 			 <library id="xmlenc-0.52.jar"/> 
 			 <library id="xz-1.0.jar"/>
 			 <library id="zookeeper-3.4.6.jar"/>
-					 
 			 <library id="tez-api-0.8.4.jar"/>
        		 <library id="tez-common-0.8.4.jar"/>
         	 <library id="tez-dag-0.8.4.jar"/>
@@ -1217,7 +1175,6 @@
              <library id="tez-runtime-library-0.8.4.jar"/>
              <library id="tez-yarn-timeline-history-0.8.4.jar"/>
              <library id="tez-yarn-timeline-history-with-acls-0.8.4.jar"/>
-			 
 		  </libraryNeededGroup>
         
         <!-- Spark group MRREQUIRED -->
