@@ -347,11 +347,6 @@
 				</artifactItem>
 				<artifactItem>
 				  <groupId>${talend.groupid}</groupId>
-				  <artifactId>spark-streaming-kinesis-asl-assembly_2.10-1.6.2</artifactId>
-				  <version>${talend.version.630}</version>
-				</artifactItem>
-				<artifactItem>
-				  <groupId>${talend.groupid}</groupId>
 				  <artifactId>sqoop-1.4.6.2.5.0.0-1245</artifactId>
 				  <version>${talend.version.630}</version>
 				</artifactItem>
