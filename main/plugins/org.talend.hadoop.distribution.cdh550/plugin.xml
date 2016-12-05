@@ -25,6 +25,20 @@
             mvn_uri="mvn:org.talend.libraries/hadoop-auth-2.6.0-cdh5.5.2/6.1.0">
         </libraryNeeded>
         
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh540"
+            id="httpclient-4.2.5.jar"
+            name="httpclient-4.2.5.jar"
+            mvn_uri="mvn:org.talend.libraries/httpclient-4.2.5/6.0.0">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh540"
+            id="httpcore-4.2.5.jar"
+            name="httpcore-4.2.5.jar"
+            mvn_uri="mvn:org.talend.libraries/httpcore-4.2.5/6.0.0">
+        </libraryNeeded>
+        
         <!-- Map/Reduce libraries -->    
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
@@ -556,8 +570,8 @@
              <library id="jersey-core-1.9.jar" />
              <library id="htrace-core4-4.0.1-incubating.jar" />
              <library id="servlet-api-2.5.jar"/>
-             <library id="httpcore-4.3.3.jar"/>
-             <library id="httpclient-4.3.3.jar"/>
+             <library id="httpclient-4.2.5.jar"/>
+             <library id="httpcore-4.2.5.jar"/>
              <library id="jackson-mapper-asl-1.8.8.jar" />
              <library id="jackson-core-asl-1.8.8.jar" />
         </libraryNeededGroup>
