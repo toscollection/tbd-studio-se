@@ -26,17 +26,17 @@
         </libraryNeeded>
         
         <libraryNeeded
-            context="plugin:org.talend.hadoop.distribution.cdh540"
-            id="httpclient-4.2.5.jar"
-            name="httpclient-4.2.5.jar"
-            mvn_uri="mvn:org.talend.libraries/httpclient-4.2.5/6.0.0">
+            context="plugin:org.talend.hadoop.distribution.cdh580"
+            id="httpclient-4.3.3.jar"
+            name="httpclient-4.3.3.jar"
+            mvn_uri="mvn:org.talend.libraries/httpclient-4.3.3/6.0.0">
         </libraryNeeded>
 
         <libraryNeeded
-            context="plugin:org.talend.hadoop.distribution.cdh540"
-            id="httpcore-4.2.5.jar"
-            name="httpcore-4.2.5.jar"
-            mvn_uri="mvn:org.talend.libraries/httpcore-4.2.5/6.0.0">
+            context="plugin:org.talend.hadoop.distribution.cdh580"
+            id="httpcore-4.3.3.jar"
+            name="httpcore-4.3.3.jar"
+            mvn_uri="mvn:org.talend.libraries/httpcore-4.3.3/6.0.0">
         </libraryNeeded>
         
         <!-- HBase libraries -->      
@@ -563,8 +563,8 @@
              <library id="jersey-core-1.9.jar" />
              <library id="htrace-core4-4.0.1-incubating.jar" />
              <library id="servlet-api-2.5.jar"/>
-             <library id="httpclient-4.2.5.jar"/>
-             <library id="httpcore-4.2.5.jar"/>
+             <library id="httpclient-4.3.3.jar"/>
+             <library id="httpcore-4.3.3.jar"/>
              <library id="jackson-mapper-asl-1.8.8.jar" />
              <library id="jackson-core-asl-1.8.8.jar" />
         </libraryNeededGroup>
@@ -812,10 +812,10 @@
                 id="SPARK-S3-LIB-MRREQUIRED-CDH_5_8"
                 name="SPARK-S3-LIB-MRREQUIRED-CDH_5_8">
              <library id="hadoop-aws-cdh5.8.1"/>
-             <library id="aws-java-sdk-1.8.6.jar"/>
+             <library id="aws-java-sdk-1.7.4.jar"/>
              <library id="jets3t-0.9.0" />
-             <library id="httpclient-4.2.5.jar" />
-             <library id="httpcore-4.2.5.jar" />
+             <library id="httpclient-4.3.3.jar" />
+             <library id="httpcore-4.3.3.jar" />
         </libraryNeededGroup>
         
         <!-- Pig S3 group -->
@@ -857,7 +857,7 @@
             <library id="amazon-kinesis-client-1.2.1.jar"/>
             <library id="aws-java-sdk-kinesis-1.9.16.jar"/>
             <library id="aws-java-sdk-core-1.9.16.jar"/>            
-            <library id="aws-java-sdk-dynamodb-1.9.16.jar"/>            
+            <library id="aws-java-sdk-1.7.4.jar"/>            
             <library id="aws-java-sdk-cloudwatch-1.9.16.jar"/>            
             <library id="joda-time-2.7.jar"/>            
         </libraryNeededGroup>
