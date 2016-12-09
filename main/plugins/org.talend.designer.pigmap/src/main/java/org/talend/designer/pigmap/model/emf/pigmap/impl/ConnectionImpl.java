@@ -11,7 +11,8 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-
+import org.talend.designer.core.model.utils.emf.talendfile.ElementParameterType;
+import org.talend.designer.core.model.utils.emf.talendfile.NodeType;
 import org.talend.designer.pigmap.model.emf.pigmap.AbstractNode;
 import org.talend.designer.pigmap.model.emf.pigmap.Connection;
 import org.talend.designer.pigmap.model.emf.pigmap.PigMapData;
@@ -86,7 +87,27 @@ public class ConnectionImpl extends EObjectImpl implements Connection {
      */
     public String getName() {
         if (eContainer() != null && eContainer() instanceof PigMapData) {
-            return "Connection_" + ((PigMapData) eContainer()).getConnections().indexOf(this);
+            PigMapData mapData = (PigMapData) eContainer();
+            String nodeName = "";
+            if (mapData.eContainer() instanceof NodeType) {
+                NodeType nodeType = (NodeType) mapData.eContainer();
+                for (Object objectParam : nodeType.getElementParameter()) {
+                    if (objectParam instanceof ElementParameterType) {
+                        ElementParameterType elemParam = (ElementParameterType) objectParam;
+                        if (elemParam.getValue() != null) {
+                            if ("UNIQUE_NAME".equals(elemParam.getName()) || elemParam.getName() == null) {
+                                // note: after convert to the jobscript, the element parameter name for UNIQUE_NAME is
+                                // lost.
+                                // unique name is then the first parameter usually, and with name = null.
+                                // similar code done in CreateXtextProcessService.checkElementParameterType
+                                nodeName = elemParam.getValue() + "_";
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            return nodeName + "Connection_" + mapData.getConnections().indexOf(this);
         }
         return null;
     }
