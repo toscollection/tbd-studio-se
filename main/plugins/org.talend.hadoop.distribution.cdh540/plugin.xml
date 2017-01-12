@@ -11,9 +11,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh450"
-            id="aws-java-sdk-1.9.16.jar"
-            name="aws-java-sdk-1.9.16.jar"
-            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.9.16/6.0.0">
+            id="aws-java-sdk-1.7.4.jar"
+            name="aws-java-sdk-1.7.4.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.7.4/6.0.0">
         </libraryNeeded>
 
         <libraryNeeded
@@ -106,7 +106,7 @@
                 id="SPARK-S3-LIB-MRREQUIRED-CDH_5_4"
                 name="SPARK-S3-LIB-MRREQUIRED-CDH_5_4"  >
              <library id="hadoop-aws-2.6.0-cdh5.4.0.jar" />
-             <library id="aws-java-sdk-1.9.16.jar" />
+             <library id="aws-java-sdk-1.7.4.jar" />
              <library id="jets3t-0.9.0.jar" />
              <library id="httpclient-4.2.5.jar" />
              <library id="httpcore-4.2.5.jar" />
