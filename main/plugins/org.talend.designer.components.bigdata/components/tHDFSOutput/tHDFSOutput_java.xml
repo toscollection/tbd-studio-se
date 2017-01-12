@@ -248,6 +248,10 @@
             SHOW_IF="((isShow[SET_HADOOP_LOGIN]) AND (SET_HADOOP_LOGIN=='true'))">
             <DEFAULT>"kerberos"</DEFAULT>
         </PARAMETER>
+        
+     	<PARAMETER NAME="SCHEMA_OPT_NUM" FIELD="TEXT" NUM_ROW="100" REQUIRED="true" SHOW="false">
+            <DEFAULT>100</DEFAULT>
+        </PARAMETER>	
 	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
