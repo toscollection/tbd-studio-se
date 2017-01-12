@@ -358,9 +358,7 @@
                 id="SPARK-S3-LIB-MRREQUIRED-HD_INSIGHT_3_4_0"
                 name="SPARK-S3-LIB-MRREQUIRED-HD_INSIGHT_3_4_0">
              <library id="hadoop-aws-hdinsight340"/>
-             <library id="aws-java-sdk-1.9.16"/>
-             <library id="aws-java-sdk-s3-1.9.16"/>
-             <library id="aws-java-sdk-core-1.9.16"/>
+             <library id="aws-java-sdk-1.7.4.jar"/>
              <library id="jets3t-0.9.0" />
              <library id="httpclient-4.2.5.jar" />
              <library id="httpcore-4.2.5.jar" />
