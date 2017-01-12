@@ -406,9 +406,9 @@
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh550"
-            id="aws-java-sdk-1.9.16.jar"
-            name="aws-java-sdk-1.9.16.jar"
-            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.9.16/6.0.0">
+            id="aws-java-sdk-1.7.4.jar"
+            name="aws-java-sdk-1.7.4.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-1.7.4/6.0.0">
         </libraryNeeded>        
                 
         <libraryNeeded
