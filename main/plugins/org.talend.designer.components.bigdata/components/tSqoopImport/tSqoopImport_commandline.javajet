@@ -139,6 +139,7 @@ if(isUseSpeedParallel && isUseAdditionParams){
 <%if(useTarget || useQuery){%>, "--target-dir", <%=target%><%}%>
 <%if(fileFormat.equals("sequencefile")){%>, "--as-sequencefile"<%}%>
 <%if(fileFormat.equals("avrofile")){%>, "--as-avrodatafile"<%}%>
+<%if(fileFormat.equals("parquetfile")){%>, "--as-parquetfile"<%}%>
 <%if(mysqlDelimiters){%>, "--mysql-delimiters"<%}%>
 <%if(useMappers){%>, "--num-mappers", <%=mappers%><%}%>
 <%if(useSplit){%>, "--split-by", <%=split%><%}%>
@@ -219,53 +220,99 @@ for(String parameter_<%=cid%> : cmd_<%=cid %>) {
 }
 log.info("<%=cid%> - execute sqoop command: " + stringBuilder_<%=cid%>.toString());
 <%}%>
-
-Process ps_<%=cid%> = null;
-java.lang.StringBuilder sb_<%=cid%> = null;
-
+Thread normal_<%=cid %> = null;
+Thread error_<%=cid %> = null;
 try {
-	ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
-	byte[] byteArray_<%=cid%> = new byte[1024];
-	int len_<%=cid%> = 0;
-
-	java.io.InputStream errorStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getErrorStream());
-	sb_<%=cid%> = new java.lang.StringBuilder();
-	while ((len_<%=cid%> = errorStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-		String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
-<%
-		if(printLog){
-%>
-	    	System.err.println(line_<%=cid%>);
-<%
-		}
-%>
-		sb_<%=cid%>.append(line_<%=cid%>);
-	}
-	globalMap.put("<%=cid%>_ERROR_MESSAGE", sb_<%=cid%>.toString());
-
-	<%if(isLog4jEnabled) {%>
-		log.error("<%=cid%> - " + sb_<%=cid%>.toString());
+	final Process ps_<%=cid%> = runtime_<%=cid%>.exec(cmd_<%=cid%>);
+	<%if(isLog4jEnabled){%>
+		log.info("<%=cid%> - The command has been executed successfully.");
 	<%}%>
 
-	byteArray_<%=cid%> = new byte[1024];
-	len_<%=cid%> = 0;
-	java.io.InputStream inputStream_<%=cid%> = new java.io.BufferedInputStream(ps_<%=cid%>.getInputStream());
-	sb_<%=cid%> = new java.lang.StringBuilder();
-	while ((len_<%=cid%> = inputStream_<%=cid%>.read(byteArray_<%=cid%>)) != -1) {
-		String line_<%=cid%> = new String(byteArray_<%=cid%>, 0, len_<%=cid%>, "ISO-8859-1");
-<%
-		if(printLog){
-%>
-	    	System.out.println(line_<%=cid%>);
-<%
+	normal_<%=cid %> = new Thread() {
+		public void run() {
+			try {
+				java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(ps_<%=cid %>.getInputStream()));
+				String line = "";
+				java.lang.StringBuilder sb = new StringBuilder();
+				try {
+					while((line = reader.readLine()) != null) {
+						<%if(isLog4jEnabled){%>
+							log.info(line);
+						<%} else {%>
+							System.out.println(line);
+						<%}%>
+						sb.append(line);
+					}
+					globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb.toString());
+				} finally {
+					reader.close();
+				}
+			} catch(java.io.IOException ioe) {
+				<%if(isLog4jEnabled){%>
+					log.error("<%=cid%> - "  + ioe.getMessage());
+				<%} else {%>
+				ioe.printStackTrace();
+				<%}%>
+			}
 		}
+	};
+
+
+	error_<%=cid %> = new Thread() {
+		public void run() {
+			try {
+				java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(ps_<%=cid %>.getErrorStream()));
+				String line = "";
+				java.lang.StringBuilder sb = new StringBuilder();
+				try {
+					while((line = reader.readLine()) != null) {
+						<%if(isLog4jEnabled){%>
+							log.error(line);
+						<%} else {%>
+							System.err.println(line);
+						<%}%>
+						sb.append(line);
+					}
+					globalMap.put("<%=cid%>_ERROR_MESSAGE", sb.toString());
+				} finally {
+					reader.close();
+				}
+			} catch(java.io.IOException ioe) {
+				<%if(isLog4jEnabled){%>
+					log.error("<%=cid%> - "  + ioe.getMessage());
+				<%}%>
+				ioe.printStackTrace();
+			}
+		}
+	};
+	error_<%=cid %>.start();
+	normal_<%=cid %>.start();
+
+	int result_<%=cid%> = ps_<%=cid%>.waitFor();
+	normal_<%=cid %>.join(10000);
+	error_<%=cid %>.join(10000);
+	globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
+
+<%
+	if(dieOnError) {
 %>
-		sb_<%=cid%>.append(line_<%=cid%>);
+		if(ps_<%=cid%>.exitValue()>0) {
+			throw new Exception("The Sqoop import has failed. Please check the logs.");
+		}
+<%
 	}
+%>
+
 } catch (Exception e) {
 <%
 	if(dieOnError) {
 %>
+		if (normal_<%=cid %> != null) {
+			normal_<%=cid %>.join(10000);
+		}
+		if (error_<%=cid %> != null) {
+			error_<%=cid %>.join(10000);
+		}
 		throw e;
 <%		
 	} else {
@@ -276,24 +323,4 @@ try {
 		<%}
 	}
 %>	
-}
-
-	int result_<%=cid%> = ps_<%=cid%>.waitFor();
-	globalMap.put("<%=cid%>_EXIT_CODE", result_<%=cid%>);
-
-<%
-	if(dieOnError) {
-%>
-		if(ps_<%=cid%>.exitValue()>0) {
-			throw new Exception("The Sqoop import has failed. Please check the logs.");
-		}
-<%		
-	}
-%>
-
-if(sb_<%=cid%>!=null) {
-	globalMap.put("<%=cid%>_OUTPUT_MESSAGE", sb_<%=cid%>.toString());
-	<%if(isLog4jEnabled) {%>
-		log.info("<%=cid%> - " + sb_<%=cid%>.toString());
-	<%}%>
 }
