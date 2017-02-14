@@ -272,6 +272,10 @@ public abstract class AbstractDistribution {
         return false;
     }
 
+    public String getSparkYarnJarsPath() {
+        return ""; //$NON-NLS-1$
+    }
+
     public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
         return ""; //$NON-NLS-1$
     }
