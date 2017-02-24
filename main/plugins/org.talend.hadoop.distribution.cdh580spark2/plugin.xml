@@ -550,6 +550,8 @@
         </libraryNeededGroup>       
         
         <!-- Spark2 group -->
+        <!-- All ids in this module group should imperatively equal to jar file names-->
+        <!-- No latest or shortcuts as the jars will be looked up at runtime to construct the real job classpath-->
          <libraryNeededGroup
                 description="The latest Spark libraries for CDH 5.8 spark 2"
                 id="SPARK-LIB-CDH580_SPARK2"

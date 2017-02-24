@@ -14,6 +14,7 @@
 package org.talend.hadoop.distribution.cdh580spark2;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,22 +24,8 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
-/*
- * import org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2HBaseModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2HCatalogModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2HDFSModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2HiveModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2HiveOnSparkModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2ImpalaModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2MapReduceModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2PigModuleGroup; import
- * org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2PigOutputModuleGroup;
- */
 import org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2SparkStreamingModuleGroup;
-// import org.talend.hadoop.distribution.cdh580spark2.modulegroup.CDH580Spark2SqoopModuleGroup;
-// import org.talend.hadoop.distribution.cdh580spark2.modulegroup.node.mr.CDH580Spark2MRS3NodeModuleGroup;
-// import org.talend.hadoop.distribution.cdh580spark2.modulegroup.node.pigoutput.CDH580Spark2PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh580spark2.modulegroup.node.sparkbatch.CDH580Spark2GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh580spark2.modulegroup.node.sparkbatch.CDH580Spark2SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh580spark2.modulegroup.node.sparkbatch.CDH580Spark2SparkBatchS3NodeModuleGroup;
@@ -55,6 +42,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
 @SuppressWarnings("nls")
 public class CDH580Spark2Distribution extends AbstractDistribution implements IClouderaDistribution, SparkBatchComponent,
@@ -65,6 +53,8 @@ public class CDH580Spark2Distribution extends AbstractDistribution implements IC
     public static final String VERSION_DISPLAY = "Cloudera CDH5.8 (Spark 2.0 - YARN mode)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
+
+    private final static String SPARK_MODULE_GROUP_NAME = "SPARK-LIB-CDH580_SPARK2"; //$NON-NLS-1$
 
     private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -84,8 +74,6 @@ public class CDH580Spark2Distribution extends AbstractDistribution implements IC
         moduleGroups.put(ComponentType.SPARKBATCH, CDH580Spark2SparkBatchModuleGroup.getModuleGroups());
         moduleGroups.put(ComponentType.SPARKSTREAMING, CDH580Spark2SparkStreamingModuleGroup.getModuleGroups());
 
-        // moduleGroups.put(ComponentType.SPARKBATCH, CDH580SparkBatchModuleGroup.getModuleGroups());
-
         // Used to add a module group import for a specific node. The given node must have a HADOOP_LIBRARIES parameter.
         nodeModuleGroups = new HashMap<>();
 
@@ -100,7 +88,7 @@ public class CDH580Spark2Distribution extends AbstractDistribution implements IC
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), CDH580Spark2SparkStreamingParquetNodeModuleGroup
-                .getModuleGroups(distribution, version));
+						.getModuleGroups(distribution, version));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT), CDH580Spark2SparkStreamingParquetNodeModuleGroup
                 .getModuleGroups(distribution, version));
@@ -182,6 +170,11 @@ public class CDH580Spark2Distribution extends AbstractDistribution implements IC
     @Override
     public String getYarnApplicationClasspath() {
         return YARN_APPLICATION_CLASSPATH;
+    }
+
+    @Override
+    public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
+        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths, SPARK_MODULE_GROUP_NAME);
     }
 
     @Override
