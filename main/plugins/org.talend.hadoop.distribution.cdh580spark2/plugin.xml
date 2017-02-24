@@ -231,7 +231,7 @@
         <!-- Sqoop libraries -->
         <libraryNeeded
             context="plugin:org.talend.libraries.apache"
-            id="avro-mapred-cdh5.8.1"
+            id="avro-mapred-1.7.6-cdh5.8.1.jar"
             name="avro-mapred-1.7.6-cdh5.8.1.jar"
             mvn_uri="mvn:org.talend.libraries/avro-mapred-1.7.6-cdh5.8.1/6.1.0">
         </libraryNeeded>
@@ -242,7 +242,28 @@
             name="sqoop-1.4.6-cdh5.8.1.jar"
             mvn_uri="mvn:org.talend.libraries/sqoop-1.4.6-cdh5.8.1/6.1.0">
         </libraryNeeded>
-        
+
+
+        <!-- hive -->
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh580"
+            id="hbase-common-cdh5.8.1.jar"
+            name="hbase-common-1.2.0-cdh5.8.1.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-common-1.2.0-cdh5.8.1/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh580"
+            id="hbase-protocol-1.2.0-cdh5.8.1.jar"
+            name="hbase-protocol-1.2.0-cdh5.8.1.jar"
+            mvn_uri="mvn:org.talend.libraries/hbase-protocol-1.2.0-cdh5.8.1/6.1.0">
+        </libraryNeeded>
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh580"
+            id="hive-exec-1.1.0-cdh5.8.1.jar"
+            name="hive-exec-1.1.0-cdh5.8.1.jar"
+            mvn_uri="mvn:org.talend.libraries/hive-exec-1.1.0-cdh5.8.1/6.1.0">
+        </libraryNeeded>
+
         <!-- GraphFrames libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh580spark2"
@@ -254,7 +275,7 @@
         <!-- Third parties libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh580spark2"
-            id="avro-cdh5.8.1"
+            id="avro-1.7.6-cdh5.8.1.jar"
             name="avro-1.7.6-cdh5.8.1.jar"
             mvn_uri="mvn:org.talend.libraries/avro-1.7.6-cdh5.8.1/6.1.0">
         </libraryNeeded>
@@ -399,7 +420,7 @@
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh580spark2"
-            id="avro-ipc-1.7.6-cdh5.8.1"
+            id="avro-ipc-1.7.6-cdh5.8.1.jar"
             name="avro-ipc-1.7.6-cdh5.8.1.jar"
             uripath="platform:/plugin/org.talend.libraries.apache/lib/avro-ipc-1.7.6-cdh5.8.1.jar"
             mvn_uri="mvn:org.talend.libraries/avro-ipc-1.7.6-cdh5.8.1/6.1.0">
@@ -499,14 +520,14 @@
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh580spark2"
-            id="flume-ng-core-1.6.0-cdh5.8.1"
+            id="flume-ng-core-1.6.0-cdh5.8.1.jar"
             name="flume-ng-core-1.6.0-cdh5.8.1.jar"
             mvn_uri="mvn:org.talend.libraries/flume-ng-core-1.6.0-cdh5.8.1/6.1.0">
         </libraryNeeded>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh580spark2"
-            id="flume-ng-sdk-1.6.0-cdh5.8.1"
+            id="flume-ng-sdk-1.6.0-cdh5.8.1.jar"
             name="flume-ng-sdk-1.6.0-cdh5.8.1.jar"
             mvn_uri="mvn:org.talend.libraries/flume-ng-sdk-1.6.0-cdh5.8.1/6.1.0">
         </libraryNeeded>
@@ -565,10 +586,10 @@
              <library id="apache-log4j-extras-1.2.17.jar"/>
              <library id="arpack_combined_all-0.1.jar"/>
 
-             <library id="avro-1.7.6-cdh5.8.1"/>
-             <library id="avro-ipc-1.7.6-cdh5.8.1"/>
+             <library id="avro-1.7.6-cdh5.8.1.jar"/>
+             <library id="avro-ipc-1.7.6-cdh5.8.1.jar"/>
 
-             <library id="avro-mapred-1.7.6-cdh5.8.1"/>
+             <library id="avro-mapred-1.7.6-cdh5.8.1.jar"/>
              <library id="blas-0.8.jar"/>             
              <library id="bonecp-0.7.1.jar"/>
              <library id="breeze_2.11-0.11.2.jar"/>
@@ -604,15 +625,15 @@
              <library id="findbugs-annotations-1.3.9-1.jar"/>
 
              <library id="flume-ng-configuration-1.6.0-cdh5.8.1.jar"/>
-             <library id="flume-ng-core-1.6.0-cdh5.8.1"/>
-             <library id="flume-ng-sdk-1.6.0-cdh5.8.1"/>
+             <library id="flume-ng-core-1.6.0-cdh5.8.1.jar"/>
+             <library id="flume-ng-sdk-1.6.0-cdh5.8.1.jar"/>
 
              <library id="gson-2.2.4.jar"/>
 
              <library id="hbase-annotations-1.2.0-cdh5.8.1.jar"/>
-             <library id="hbase-common-1.2.0-cdh5.8.1"/>
-             <library id="hbase-protocol-1.2.0-cdh5.8.1"/>
-             <library id="hive-exec-1.1.0-cdh5.8.1"/>
+             <library id="hbase-common-1.2.0-cdh5.8.1.jar"/>
+             <library id="hbase-protocol-1.2.0-cdh5.8.1.jar"/>
+             <library id="hive-exec-1.1.0-cdh5.8.1.jar"/>
              <library id="hive-exec-1.2.1.spark2.jar"/>
              <library id="hive-metastore-1.1.0-cdh5.8.1.jar"/>
 
@@ -819,9 +840,9 @@
                 name="SPARK-FLUME-LIB-MRREQUIRED-CDH580_SPARK2">
             <library id="spark-streaming-flume_2.10-1.6.0-cdh5.8.1"/>
             <library id="spark-streaming-flume-sink_2.10-1.6.0-cdh5.8.1"/>
-            <library id="flume-ng-sdk-1.6.0-cdh5.8.1"/>
-            <library id="flume-ng-core-1.6.0-cdh5.8.1"/>            
-            <library id="avro-ipc-1.7.6-cdh5.8.1"/>            
+            <library id="flume-ng-sdk-1.6.0-cdh5.8.1.jar"/>
+            <library id="flume-ng-core-1.6.0-cdh5.8.1.jar"/>
+            <library id="avro-ipc-1.7.6-cdh5.8.1.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Kafka group MRREQUIRED -->
@@ -848,7 +869,7 @@
                 description="Spark Kafka Avro libraries for CDH 5.8 that are MRREQUIRED"
                 id="SPARK-KAFKA-AVRO-LIB-MRREQUIRED-CDH580_SPARK2"
                 name="SPARK-KAFKA-AVRO-LIB-MRREQUIRED-CDH580_SPARK2">
-            <library id="avro-cdh5.8.1"/>
+            <library id="avro-1.7.6-cdh5.8.1.jar"/>
             <library id="jackson-mapper-asl-1.8.8.jar" />
             <library id="jackson-core-asl-1.8.8.jar" />
         </libraryNeededGroup>
