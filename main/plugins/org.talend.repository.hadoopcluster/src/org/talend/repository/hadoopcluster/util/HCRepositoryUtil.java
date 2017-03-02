@@ -181,8 +181,8 @@ public class HCRepositoryUtil {
         if (viewObject != null
                 && repositoryObjectType != null
                 && (repositoryObjectType.equals(ERepositoryObjectType.METADATA_CONNECTIONS)
-                        || repositoryObjectType.equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)
-                        || isHadoopSubItem(repositoryObjectType, node))) {
+                        || repositoryObjectType.equals(HadoopClusterRepositoryNodeType.HADOOPCLUSTER) || isHadoopSubItem(
+                            repositoryObjectType, node))) {
             final Property property = viewObject.getProperty();
             if (property != null) {
                 Item item = property.getItem();
@@ -201,8 +201,7 @@ public class HCRepositoryUtil {
 
     private static boolean isHadoopSubItem(ERepositoryObjectType repType, IRepositoryNode node) {
 
-        if (ERepositoryObjectType.METADATA_CON_TABLE.equals(repType)
-                || ERepositoryObjectType.METADATA_CON_COLUMN.equals(repType)) {
+        if (ERepositoryObjectType.METADATA_CON_TABLE.equals(repType) || ERepositoryObjectType.METADATA_CON_COLUMN.equals(repType)) {
             List<ERepositoryObjectType> allLinkedTypes = getAllLinkedTypes(node);
             if (allLinkedTypes.contains(ERepositoryObjectType.METADATA_CONNECTIONS)
                     || allLinkedTypes.contains(HadoopClusterRepositoryNodeType.HADOOPCLUSTER)) {
@@ -366,6 +365,21 @@ public class HCRepositoryUtil {
             }
         }
 
+        return null;
+    }
+
+    public static Item getRelativeItem(String id) {
+        if (id != null) {
+            IRepositoryViewObject repObj = null;
+            try {
+                repObj = ProxyRepositoryFactory.getInstance().getLastVersion(id);
+            } catch (PersistenceException e) {
+                ExceptionHandler.process(e);
+            }
+            if (repObj != null && repObj.getProperty() != null) {
+                return repObj.getProperty().getItem();
+            }
+        }
         return null;
     }
 
