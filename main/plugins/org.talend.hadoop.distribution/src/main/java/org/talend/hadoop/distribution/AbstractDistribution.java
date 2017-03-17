@@ -280,6 +280,10 @@ public abstract class AbstractDistribution {
         return false;
     }
 
+    public boolean useCloudLauncher() {
+        return false;
+    }
+
     public boolean isGoogleDataprocDistribution() {
         return false;
     }

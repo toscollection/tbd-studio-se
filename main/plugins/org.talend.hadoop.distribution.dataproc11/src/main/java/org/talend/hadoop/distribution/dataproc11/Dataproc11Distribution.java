@@ -24,31 +24,33 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HDFSComponent;
+import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.dataproc.IGoogleDataprocDistribution;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HDFSModuleGroup;
+import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
 public class Dataproc11Distribution extends AbstractDistribution implements HDFSComponent, SparkBatchComponent,
-        SparkStreamingComponent, IGoogleDataprocDistribution {
+        SparkStreamingComponent, HiveOnSparkComponent, IGoogleDataprocDistribution {
 
-    public static final String VERSION = "DATAPROC_1_1"; //$NON-NLS-1$
+    public static final String                                         VERSION                 = "DATAPROC_1_1";               //$NON-NLS-1$
 
-    public static final String VERSION_DISPLAY = "Dataproc 1.1 (Apache 2.7.3)"; //$NON-NLS-1$
+    public static final String                                         VERSION_DISPLAY         = "Dataproc 1.1 (Apache 2.7.3)"; //$NON-NLS-1$
 
-    private final static String SPARK_MODULE_GROUP_NAME = "SPARK2-LIB-DATAPROC_1_1_LATEST"; //$NON-NLS-1$
+    private final static String                                        SPARK_MODULE_GROUP_NAME = "SPARK2-LIB-DATAPROC11";      //$NON-NLS-1$
 
-    protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
+    protected Map<ComponentType, Set<DistributionModuleGroup>>         moduleGroups;
 
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
 
-    protected Map<ComponentType, ComponentCondition> displayConditions;
+    protected Map<ComponentType, ComponentCondition>                   displayConditions;
 
-    protected Map<ComponentType, String> customVersionDisplayNames;
+    protected Map<ComponentType, String>                               customVersionDisplayNames;
 
     public Dataproc11Distribution() {
         displayConditions = buildDisplayConditions();
@@ -71,6 +73,7 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
         result.put(ComponentType.HDFS, Dataproc11HDFSModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKBATCH, Dataproc11SparkBatchModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKSTREAMING, Dataproc11SparkStreamingModuleGroup.getModuleGroups());
+        result.put(ComponentType.HIVEONSPARK, Dataproc11HiveOnSparkModuleGroup.getModuleGroups());
         return result;
     }
 
@@ -94,7 +97,7 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
 
     @Override
     public boolean doSupportUseDatanodeHostname() {
-        return false;
+        return true;
     }
 
     @Override
@@ -180,8 +183,22 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
     }
 
     @Override
+    public boolean useCloudLauncher() {
+        return true;
+    }
+
+    @Override
     public boolean isGoogleDataprocDistribution() {
         return true;
     }
 
+    @Override
+    public boolean doSupportS3() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportOldImportMode() {
+        return false;
+    }
 }

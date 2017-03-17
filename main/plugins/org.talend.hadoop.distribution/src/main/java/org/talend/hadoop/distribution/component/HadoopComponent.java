@@ -156,6 +156,12 @@ public interface HadoopComponent {
 
     /**
      *
+     * @return true if the distribution is compatible with the talend-bigdata-launcher-api
+     */
+    public boolean useCloudLauncher();
+
+    /**
+     *
      * @return true if the distribution is a Google dataproc distribution
      */
     public boolean isGoogleDataprocDistribution();

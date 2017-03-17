@@ -21,19 +21,21 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.dataproc11.Dataproc11Constant;
 
 public class Dataproc11SparkBatchModuleGroup {
 
-    public static final String MODULE_GROUP_NAME = "SPARK2-LIB-DATAPROC_1_1_LATEST"; //$NON-NLS-1$
-
     private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
+                                                              SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ,
+                                                              "false")); //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, false, condition);
-        hs.add(dmg);
+        hs.add(new DistributionModuleGroup(Dataproc11Constant.HDFS_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(Dataproc11Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(Dataproc11Constant.SPARK_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(Dataproc11Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true, condition));
+        hs.add(new DistributionModuleGroup(Dataproc11Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), false, condition));
         return hs;
     }
-
 }

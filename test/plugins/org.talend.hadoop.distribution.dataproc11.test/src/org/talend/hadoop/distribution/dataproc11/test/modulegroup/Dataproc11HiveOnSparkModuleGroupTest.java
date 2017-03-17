@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2015 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -22,21 +22,17 @@ import java.util.Set;
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.Dataproc11Constant;
-import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkBatchModuleGroup;
+import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HiveOnSparkModuleGroup;
 
-public class Dataproc11SparkBatchModuleGroupTest {
+public class Dataproc11HiveOnSparkModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
-        results.put(Dataproc11Constant.HDFS_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(Dataproc11Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(Dataproc11Constant.SPARK_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(Dataproc11Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(Dataproc11Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')");
-        Set<DistributionModuleGroup> moduleGroups = Dataproc11SparkBatchModuleGroup.getModuleGroups();
-        assertEquals(5, moduleGroups.size());
-
+        results.put(Dataproc11Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
+        Set<DistributionModuleGroup> moduleGroups = Dataproc11HiveOnSparkModuleGroup.getModuleGroups();
+        assertEquals(1, moduleGroups.size());
+        moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {

@@ -27,7 +27,7 @@ public class Dataproc11HDFSModuleGroupTest {
         Set<DistributionModuleGroup> moduleGroups = Dataproc11HDFSModuleGroup.getModuleGroups();
         assertEquals(1, moduleGroups.size());
         for (DistributionModuleGroup module : moduleGroups) {
-            assertEquals(Dataproc11HDFSModuleGroup.MODULE_GROUP_NAME, module.getModuleName());
+            assertEquals("HDFS-LIB-DATAPROC11", module.getModuleName()); //$NON-NLS-1$
             assertNull(module.getRequiredIf());
         }
 

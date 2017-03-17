@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -18,11 +18,12 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.Dataproc11Constant;
 
-public class Dataproc11HDFSModuleGroup {
+public class Dataproc11HiveOnSparkModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(Dataproc11Constant.HDFS_MODULE_GROUP.getModuleName());
+        DistributionModuleGroup dmg = new DistributionModuleGroup(
+                Dataproc11Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true, null);
         hs.add(dmg);
         return hs;
     }
