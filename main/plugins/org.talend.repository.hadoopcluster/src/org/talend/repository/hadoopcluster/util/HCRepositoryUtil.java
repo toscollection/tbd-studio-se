@@ -391,6 +391,21 @@ public class HCRepositoryUtil {
         return null;
     }
 
+    public static Item getRelativeItem(String id) {
+        if (id != null) {
+            IRepositoryViewObject repObj = null;
+            try {
+                repObj = ProxyRepositoryFactory.getInstance().getLastVersion(id);
+            } catch (PersistenceException e) {
+                ExceptionHandler.process(e);
+            }
+            if (repObj != null && repObj.getProperty() != null) {
+                return repObj.getProperty().getItem();
+            }
+        }
+        return null;
+    }
+
     /**
      * DOC ycbai Comment method "getSubitemsOfHadoopCluster".
      *
