@@ -500,9 +500,9 @@
          <libraryNeededGroup
                 description="The latest Spark libraries for GOOGLE DATAPROC 1.1"
                 id="SPARK-LIB-DATAPROC11"
-                name="SPARK-LIB-DATAPROC11">  
+                name="SPARK-LIB-DATAPROC11">
              <library id="talend-bigdata-launcher-1.2.0-20170316" />
-			 <library id="scala-reflect-2.11.8"/>
+			 <library id="scala-reflect-2.11.8.jar"/>
              <library id="kryo-shaded-3.0.3"/>
              
              <library id="jodd-core-3.5.2"/>
