@@ -87,6 +87,12 @@ public class HadoopServiceProperties {
 
     private String maprTHadoopLogin;
 
+    private String projectId;
+
+    private String region;
+
+    private String clusterName;
+
     private String getRealValue(String value) {
         if (contextType == null) {
             return value;
@@ -339,4 +345,27 @@ public class HadoopServiceProperties {
         this.maprTHadoopLogin = maprTHadoopLogin;
     }
 
+    public String getProjectId() {
+        return getRealValue(this.projectId);
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
+
+    public String getRegion() {
+        return getRealValue(this.region);
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public String getClusterName() {
+        return getRealValue(this.clusterName);
+    }
+
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
+    }
 }
