@@ -300,7 +300,6 @@ public class GoogleDataprocInfoForm extends AbstractHadoopForm<HadoopClusterConn
     }
 
     private void initCommonProperties(HadoopServiceProperties properties) {
-        properties.setItem(this.connectionItem);
         HadoopClusterConnection connection = getConnection();
         ContextType contextType = null;
         if (getConnection().isContextMode()) {
