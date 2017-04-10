@@ -332,9 +332,11 @@ public class GoogleDataprocInfoForm extends AbstractHadoopForm<HadoopClusterConn
             updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.configuration.jarsBucket")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(pathToCredentialsNameText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.authentication.credentials")); //$NON-NLS-1$
-            return false;
+        if (credentialsBtn.getSelection()) {
+            if (!validText(pathToCredentialsNameText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("GoogleDataprocInfoForm.check.authentication.credentials")); //$NON-NLS-1$
+                return false;
+            }
         }
         checkServicesBtn.setEnabled(true);
         updateStatus(IStatus.OK, null);

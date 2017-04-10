@@ -55,7 +55,8 @@ public class CreateOozieAction extends CreateHadoopNodeAction {
                     || EHadoopVersion4Drivers.PIVOTAL_HD_1_0_1.equals(version4Drivers)) {
                 return true;
             }
-            if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT) {
+            if (distribution == EHadoopDistributions.MICROSOFT_HD_INSIGHT
+                    || distribution == EHadoopDistributions.GOOGLE_CLOUD_DATAPROC) {
                 return true;
             }
         }
