@@ -22,6 +22,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -112,7 +113,7 @@ public class ComponentConditionUtilTest {
         assertNull(ComponentConditionUtil.generateSparkVersionShowIfConditions(null));
 
         Map<ESparkVersion, Set<DistributionVersion>> sparkVersionsMap = new HashMap<>();
-        Set<DistributionVersion> distributionVersions = new HashSet<>();
+        Set<DistributionVersion> distributionVersions = new LinkedHashSet<>();
         distributionVersions.add(new DistributionVersion(null,
                 new DistributionBean(ComponentType.SPARKBATCH, "DISTRIB1", ""), "VERSION1", "")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
         sparkVersionsMap.put(ESparkVersion.SPARK_2_0, distributionVersions);
@@ -127,6 +128,6 @@ public class ComponentConditionUtilTest {
         assertThat(Arrays.asList(showIfs), hasItem("(((DISTRIBUTION=='DISTRIB1') AND (SPARK_VERSION=='VERSION1')))")); //$NON-NLS-1$
         assertThat(
                 Arrays.asList(showIfs),
-                hasItem("(((DISTRIBUTION=='DISTRIB2') AND (SPARK_VERSION=='VERSION2')) OR ((DISTRIBUTION=='DISTRIB3') AND (SPARK_VERSION=='VERSION3')))")); //$NON-NLS-1$
+                hasItem("(((DISTRIBUTION=='DISTRIB3') AND (SPARK_VERSION=='VERSION3')) OR ((DISTRIBUTION=='DISTRIB2') AND (SPARK_VERSION=='VERSION2')))")); //$NON-NLS-1$
     }
 }
