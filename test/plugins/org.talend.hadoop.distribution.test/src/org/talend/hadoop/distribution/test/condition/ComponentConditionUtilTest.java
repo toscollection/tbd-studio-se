@@ -127,6 +127,6 @@ public class ComponentConditionUtilTest {
         assertThat(Arrays.asList(showIfs), hasItem("(((DISTRIBUTION=='DISTRIB1') AND (SPARK_VERSION=='VERSION1')))")); //$NON-NLS-1$
         assertThat(
                 Arrays.asList(showIfs),
-                hasItem("(((DISTRIBUTION=='DISTRIB3') AND (SPARK_VERSION=='VERSION3')) OR ((DISTRIBUTION=='DISTRIB2') AND (SPARK_VERSION=='VERSION2')))")); //$NON-NLS-1$
+                hasItem("(((DISTRIBUTION=='DISTRIB2') AND (SPARK_VERSION=='VERSION2')) OR ((DISTRIBUTION=='DISTRIB3') AND (SPARK_VERSION=='VERSION3')))")); //$NON-NLS-1$
     }
 }
