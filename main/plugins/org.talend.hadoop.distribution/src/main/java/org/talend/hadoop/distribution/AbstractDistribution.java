@@ -275,4 +275,12 @@ public abstract class AbstractDistribution {
     public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
         return ""; //$NON-NLS-1$
     }
+    
+    public boolean doSupportCreateServiceConnection() {
+        return true;
+    }
+
+    public List<String> getNecessaryServiceName() {
+        return null;
+    }
 }

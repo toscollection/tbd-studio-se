@@ -13,6 +13,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.component;
 
+import java.util.List;
 import java.util.Set;
 
 import org.talend.hadoop.distribution.ComponentType;
@@ -146,4 +147,16 @@ public interface HadoopComponent {
      * @return true if the distribution supports HDFS encryption which is supported on Hadoop >= 2.6.0.
      */
     public boolean doSupportHDFSEncryption();
+    
+    /**
+     * 
+     * @return true if current component support create service connection
+     */
+    public boolean doSupportCreateServiceConnection();
+    
+    /**
+     * 
+     * @return only doSupportCreateServiceConnection() return true, return the necessary service name
+     */
+    public List<String> getNecessaryServiceName();
 }

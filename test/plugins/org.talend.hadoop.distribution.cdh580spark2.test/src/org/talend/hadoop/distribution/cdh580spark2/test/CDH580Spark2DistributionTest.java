@@ -68,5 +68,7 @@ public class CDH580Spark2DistributionTest {
         assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
 
         assertTrue(distribution.doSupportHDFSEncryption());
+        assertFalse(distribution.doSupportCreateServiceConnection());
+        assertTrue(distribution.getNecessaryServiceName().size() > 0);
     }
 }

@@ -13,11 +13,13 @@
 
 package org.talend.hadoop.distribution.cdh580spark2;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.talend.core.hadoop.conf.EHadoopConfs;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -285,5 +287,19 @@ public class CDH580Spark2Distribution extends AbstractDistribution implements IC
     @Override
     public boolean doSupportS3V4() {
         return true;
+    }
+    
+     @Override
+    public boolean doSupportCreateServiceConnection() {
+        return false;
+    }
+
+    @Override
+    public List<String> getNecessaryServiceName() {
+        List<String> list = new ArrayList<String>();
+        list.add(EHadoopConfs.HDFS.getName());
+        list.add(EHadoopConfs.YARN.getName());
+        list.add(EHadoopConfs.MAPREDUCE2.getName());
+        return list;
     }
 }

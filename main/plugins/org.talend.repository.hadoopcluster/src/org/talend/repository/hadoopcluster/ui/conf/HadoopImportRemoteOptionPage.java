@@ -15,6 +15,7 @@ import org.eclipse.swt.widgets.Group;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.hadoop.distribution.model.DistributionBean;
+import org.talend.hadoop.distribution.model.DistributionVersion;
 import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.conf.IPropertyConstants;
 import org.talend.repository.hadoopcluster.conf.RetrieveRemoteConfsService;
@@ -31,6 +32,7 @@ import org.talend.repository.hadoopcluster.i18n.Messages;
 public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage implements PropertyChangeListener {
 
     private DistributionBean distribution;
+    private  DistributionVersion distriVersion;
 
     private Combo clustersCombo;
 
@@ -40,10 +42,11 @@ public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage 
 
     private HadoopConfigurator configurator;
 
-    public HadoopImportRemoteOptionPage(DistributionBean distribution) {
-        super("HadoopImportRemoteOptionPage"); //$NON-NLS-1$
+    public HadoopImportRemoteOptionPage(DistributionBean distribution, DistributionVersion distriVersion) {
+        super("HadoopImportRemoteOptionPage", distriVersion); //$NON-NLS-1$
         setTitle(Messages.getString("HadoopImportRemoteOptionPage.title")); //$NON-NLS-1$
         this.distribution = distribution;
+        this.distriVersion = distriVersion;
     }
 
     @Override
@@ -105,7 +108,7 @@ public class HadoopImportRemoteOptionPage extends AbstractHadoopImportConfsPage 
         selectClusterButton.setLayoutData(selectClusterBtnGD);
         selectClusterButton.setText(Messages.getString("HadoopImportRemoteOptionPage.button.fetch")); //$NON-NLS-1$
 
-        servicesTableComp = new HadoopServicesTableComposite(clusterGroup, SWT.NONE);
+        servicesTableComp = new HadoopServicesTableComposite(clusterGroup, SWT.NONE, distriVersion);
         GridData servicesTableGD = new GridData(GridData.FILL_BOTH);
         servicesTableGD.horizontalSpan = 2;
         servicesTableComp.setLayoutData(servicesTableGD);

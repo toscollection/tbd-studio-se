@@ -181,5 +181,13 @@ public class DistributionVersion implements IHDistributionVersion {
     public String toString() {
         return version + ',' + displayVersion;
     }
+    
+    public boolean doSupportCreateServiceConnection() {
+        return hadoopComponent.doSupportCreateServiceConnection();
+    }
+
+    public List<String> getNecessaryServiceName() {
+        return hadoopComponent.getNecessaryServiceName();
+    }
 
 }

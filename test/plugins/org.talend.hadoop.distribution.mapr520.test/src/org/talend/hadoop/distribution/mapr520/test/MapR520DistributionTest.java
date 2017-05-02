@@ -98,6 +98,8 @@ public class MapR520DistributionTest {
         assertTrue(((MapRStreamsComponent) distribution).canCreateMapRStream());
         assertEquals(MapR520Distribution.MAPR_STREAMS_JAR_PATH, ((MapRStreamsComponent) distribution).getMapRStreamsJarPath());
         assertEquals(SparkStreamingKafkaVersion.MAPR, ((SparkStreamingComponent) distribution).getSparkStreamingKafkaVersion());
+        assertTrue(distribution.doSupportCreateServiceConnection());
+        assertTrue((distribution.getNecessaryServiceName() == null ? 0 : distribution.getNecessaryServiceName().size()) == 0);
     }
 
 }
