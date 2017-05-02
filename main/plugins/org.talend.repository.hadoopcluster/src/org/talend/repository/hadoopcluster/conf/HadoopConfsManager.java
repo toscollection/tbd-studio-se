@@ -47,6 +47,8 @@ public class HadoopConfsManager {
     private String hadoopClusterId;
 
     private Map<String, Map<String, String>> confsMap;
+    
+    private boolean isCreateConnectionFromConfs;
 
     private HadoopConfsManager() {
         factory = CoreRuntimePlugin.getInstance().getProxyRepositoryFactory();
@@ -60,15 +62,17 @@ public class HadoopConfsManager {
         if (hadoopClusterId == null || confsMap == null || confsMap.size() == 0) {
             return;
         }
-        List<ConnectionItem> connectionItems = new ArrayList<>();
-        List<IHadoopConnectionCreator> creators = HadoopConnectionCreatorManager.getCreators(hadoopClusterId);
-        for (IHadoopConnectionCreator connectionCreator : creators) {
-            if (confsMap.containsKey(connectionCreator.getTypeName())) {
-                ConnectionItem connectionItem = connectionCreator.create(confsMap);
-                connectionItems.add(connectionItem);
+        if (isCreateConnectionFromConfs) {
+            List<ConnectionItem> connectionItems = new ArrayList<>();
+            List<IHadoopConnectionCreator> creators = HadoopConnectionCreatorManager.getCreators(hadoopClusterId);
+            for (IHadoopConnectionCreator connectionCreator : creators) {
+                if (confsMap.containsKey(connectionCreator.getTypeName())) {
+                    ConnectionItem connectionItem = connectionCreator.create(confsMap);
+                    connectionItems.add(connectionItem);
+                }
             }
+            createConnectionItems(connectionItems);
         }
-        createConnectionItems(connectionItems);
         updateHadoopCluster();
         reset();
     }
@@ -131,6 +135,14 @@ public class HadoopConfsManager {
 
     public void setConfsMap(Map<String, Map<String, String>> confsMap) {
         this.confsMap = confsMap;
+    }
+   
+    public boolean isCreateConnectionFromConfs() {
+        return isCreateConnectionFromConfs;
+    }
+  
+    public void setCreateConnectionFromConfs(boolean isCreateConnectionFromConfs) {
+        this.isCreateConnectionFromConfs = isCreateConnectionFromConfs;
     }
 
 }

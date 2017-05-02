@@ -78,10 +78,12 @@ public class HadoopImportConfsWizard extends Wizard {
         IImportConfsWizardPage currentPage = getCurrentConfPage();
         if (currentPage != null) {
             final IRetrieveConfsService confsService = currentPage.getConfsService();
+            final boolean isCreateConnectionFromConfs = currentPage.isSupportCreateServiceConnection();
             try {
                 if (confsService != null) {
                     currentPage.applyFilter();
-                    List<String> selectedServices = currentPage.getSelectedServices();
+                     
+                    List<String> selectedServices = currentPage.getSelectedServices(); 
                     final String confsDir = confsService.exportConfs(selectedServices);
                     if (confsDir != null) {
                         this.getContainer().run(true, true, new IRunnableWithProgress() {
@@ -111,6 +113,7 @@ public class HadoopImportConfsWizard extends Wizard {
                     HadoopConfsManager confsManager = HadoopConfsManager.getInstance();
                     confsManager.setHadoopClusterId(connectionItem.getProperty().getId());
                     confsManager.setConfsMap(getSelectedConfsMap(selectedServices, confsService.getConfsMap()));
+                    confsManager.setCreateConnectionFromConfs(isCreateConnectionFromConfs);
                 }
                 if (creation) {
                     HadoopConfsUtils.setConnectionParameters(connectionItem, optionPage.getDistribution(),
