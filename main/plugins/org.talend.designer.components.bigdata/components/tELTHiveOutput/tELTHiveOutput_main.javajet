@@ -76,7 +76,7 @@ imports="
     String distribution = null;
 
     //hbase settings
-       String storeByHBase = null;
+    String storeByHBase = null;
     String zookeeperQuorumForHBase = null;
     String zookeeperClientPortForHBase = null;
 
@@ -174,6 +174,16 @@ imports="
             }
 <%
         }
+    } else if(hiveDistrib.isGoogleDataprocDistribution()) {
+        INode nodeBackup = node;
+        node = previousNode;
+        %>
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetDataprocConnection.javajet"%>
+        <%
+        if("false".equals(useExistingConn)) { // This variable is declared and initialized in the GetDataprocConnection.javajet
+            // TODO set the Memory option on GetDataprocConnection.javaje
+        }
+        node = nodeBackup;
     } else {
         boolean useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
 %>
@@ -627,7 +637,7 @@ imports="
             }
         }
         if(jarsToRegister!=null && jars!=null) {
-            if("EMBEDDED".equalsIgnoreCase(connectionMode) || hiveDistrib.isExecutedThroughWebHCat()) {
+            if("EMBEDDED".equalsIgnoreCase(connectionMode) || hiveDistrib.useCloudLauncher()) {
 %>
                 routines.system.GetJarsToRegister getJarsToRegister_<%=cid %> = new GetJarsToRegister();
 <%
@@ -643,7 +653,7 @@ imports="
             }
 
             if(generateAddJarCodeForAll) {
-                if(!hiveDistrib.isExecutedThroughWebHCat()) { // Then we create a SQL statement to add the jars.
+                if(!hiveDistrib.useCloudLauncher()) { // Then we create a SQL statement to add the jars.
 %>
                 java.sql.Statement addJar_<%=cid%> = null;
 <%
@@ -652,7 +662,7 @@ imports="
                     String jarToRegister = jarsToRegister.get(i);
                     for(int j=0; j<jars.size(); j++) {
                         if(jars.get(j).contains(jarToRegister)) {
-                            if(!hiveDistrib.isExecutedThroughWebHCat()) { // Then we use the created SQL statement to add the jars.
+                            if(!hiveDistrib.useCloudLauncher()) { // Then we use the created SQL statement to add the jars.
 %>
                             addJar_<%=cid%> = conn_<%=cid%>.createStatement();
                             try {
@@ -663,11 +673,23 @@ imports="
                                 addJar_<%=cid%>.close();
                             }
 <%
-                            } else {
+                            } else { // cloud distribution
+                                if (hiveDistrib.isExecutedThroughWebHCat()) {
 %>
-                                bw_<%=cid%>.write("ADD JAR " + wasbPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
-                                libjars_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>") + ",");
+                                    bw_<%=cid%>.write("ADD JAR " + wasbPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
+                                    libjars_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>") + ",");
 <%
+                                } else { // dataproc
+                                    if(isLog4jEnabled) {
+%>
+                                        log.debug("Query for <%=cid%>: " + "ADD JAR " + stagingBucketPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
+<%
+                                    }
+%>
+                                    instance_<%=cid%>.addQuery("ADD JAR " + stagingBucketPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
+                                    libjars_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>") + ",");
+<%
+                                }
                             }
                         }
                     }
@@ -675,7 +697,7 @@ imports="
             }
         }
 
-        if(!hiveDistrib.isExecutedThroughWebHCat()) {
+        if(!hiveDistrib.useCloudLauncher()) {
 %>
             java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
             try {
@@ -685,15 +707,26 @@ imports="
             }
 <%
         } else {
+            if (hiveDistrib.isExecutedThroughWebHCat()) {
 %>
-            bw_<%=cid%>.write("SET parquet.compression=<%=compression%>;");
+                bw_<%=cid%>.write("SET parquet.compression=<%=compression%>;");
 <%
+            } else { // dataproc
+                if(isLog4jEnabled) {
+%>
+                    log.debug("Query for <%=cid%>: " + "SET parquet.compression=<%=compression%>;");
+<%
+                }
+%>
+                instance_<%=cid%>.addQuery("SET parquet.compression=<%=compression%>;");
+<%
+            }
         }
     }
         // End of parquet format handling.
 %>
 <%
-    if(!hiveDistrib.isExecutedThroughWebHCat()) {
+    if(!hiveDistrib.useCloudLauncher()) {
 %>
         java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 <%
@@ -745,31 +778,47 @@ if(columnList != null && columnList.size()>0){
 %>
     String insertQuery_<%=cid %> = "INSERT INTO TABLE "+tableName_<%=cid%> + partitionSql_<%=cid%>.toString() + " "+select_query_<%=cid %>;
 <%
-            if(!hiveDistrib.isExecutedThroughWebHCat()) {
+        if (isLog4jEnabled) {
+            %>
+            log.debug("Insert query for <%=cid%>: " + insertQuery_<%=cid %>);
+            <%
+        }
+        if (!hiveDistrib.useCloudLauncher()) {
 %>
-    stmt_<%=cid %>.execute(insertQuery_<%=cid %>);
+            stmt_<%=cid %>.execute(insertQuery_<%=cid %>);
 <%
-            } else {
+        } else if(hiveDistrib.isExecutedThroughWebHCat()) {
 %>
-                bw_<%=cid%>.write(insertQuery_<%=cid %> + ";");
+            bw_<%=cid%>.write(insertQuery_<%=cid %> + ";");
 <%
-            }
-%>
-<%
-    }else if (("OVERWRITE").equals(dataAction)){
+        } else { // dataproc
+            %>
+            instance_<%=cid%>.addQuery(insertQuery_<%=cid %> + ";");
+            <%
+        }
+    } else if (("OVERWRITE").equals(dataAction)){
 %>
     String overwriteQuery_<%=cid %> = "INSERT OVERWRITE TABLE "+tableName_<%=cid%>+ partitionSql_<%=cid%>.toString() + " "+select_query_<%=cid %>;
 <%
-            if(!hiveDistrib.isExecutedThroughWebHCat()) {
+        if (isLog4jEnabled) {
+            %>
+            log.debug("Overwrite query for <%=cid%>: " + overwriteQuery_<%=cid %>);
+            <%
+        }
+        if (!hiveDistrib.useCloudLauncher()) {
 %>
-    stmt_<%=cid %>.execute(overwriteQuery_<%=cid %>);
+            stmt_<%=cid %>.execute(overwriteQuery_<%=cid %>);
 
 <%
-            } else {
+        } else if(hiveDistrib.isExecutedThroughWebHCat()) {
 %>
-                bw_<%=cid%>.write(overwriteQuery_<%=cid %> + ";");
+            bw_<%=cid%>.write(overwriteQuery_<%=cid %> + ";");
 <%
-            }
+        } else { // dataproc
+            %>
+            instance_<%=cid%>.addQuery(overwriteQuery_<%=cid %> + ";");
+            <%
+        }
     }
 }
 
@@ -777,7 +826,7 @@ if(columnList != null && columnList.size()>0){
 
     boolean useExistingConn = ("true").equals(ElementParameterParser.getValue(previousNode, "__USE_EXISTING_CONNECTION__"));
 
-    if(!hiveDistrib.isExecutedThroughWebHCat()) {
+    if(!hiveDistrib.useCloudLauncher()) {
 %>
 stmt_<%=cid %>.close();
 
@@ -811,10 +860,9 @@ if(originalHadoopUsername_<%=cid%>!=null) {
     System.clearProperty("HADOOP_USER_NAME");
 }
 <%
-    } else {
-%>
+    } else if(hiveDistrib.isExecutedThroughWebHCat()) {
+        %>
         bw_<%=cid%>.close();
-
         if(libjars_<%=cid%>.length() > 0) {
             instance_<%=cid%>.setLibJars(libjars_<%=cid%>.toString().substring(0, libjars_<%=cid%>.length()-1));
         }
@@ -824,6 +872,13 @@ if(originalHadoopUsername_<%=cid%>!=null) {
         if(exitCode_<%=cid%> > 0) {
             throw new Exception("The Hive job failed. Please read the logs for more details");
         }
-<%
+        <%
+    } else { // dataproc
+        %>
+            int exitCode_<%=cid%> = instance_<%=cid%>.executeJob();
+            if(exitCode_<%=cid%> > 0) {
+                    throw new Exception("The Hive job failed. Please read the logs for more details");
+            }
+        <%
     }
 %>

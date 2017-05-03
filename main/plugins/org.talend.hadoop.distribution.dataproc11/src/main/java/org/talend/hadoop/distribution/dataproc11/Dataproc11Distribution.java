@@ -25,6 +25,7 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HDFSComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -33,6 +34,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.dataproc.IGoogleDataprocDistribution;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HDFSModuleGroup;
+import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HiveModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkStreamingModuleGroup;
@@ -44,7 +46,7 @@ import org.talend.hadoop.distribution.dataproc11.modulegroup.node.sparkstreaming
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
-public class Dataproc11Distribution extends AbstractDistribution implements HDFSComponent, SparkBatchComponent,
+public class Dataproc11Distribution extends AbstractDistribution implements HDFSComponent, SparkBatchComponent, HiveComponent,
         SparkStreamingComponent, HiveOnSparkComponent, IGoogleDataprocDistribution {
 
     public static final String VERSION = "DATAPROC_1_1"; //$NON-NLS-1$
@@ -80,6 +82,7 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
     protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
         Map<ComponentType, Set<DistributionModuleGroup>> result = new HashMap<>();
         result.put(ComponentType.HDFS, Dataproc11HDFSModuleGroup.getModuleGroups());
+        result.put(ComponentType.HIVE, Dataproc11HiveModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKBATCH, Dataproc11SparkBatchModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKSTREAMING, Dataproc11SparkStreamingModuleGroup.getModuleGroups());
         result.put(ComponentType.HIVEONSPARK, Dataproc11HiveOnSparkModuleGroup.getModuleGroups());
@@ -89,13 +92,13 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution, String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = new HashMap<>();
         // Mapreduce node
-        
+
         // Spark Batch Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
                 Dataproc11SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
                 Dataproc11SparkBatchParquetNodeModuleGroup.getModuleGroups(distribution, version));
-        
+
         // Spark Streaming Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),
                 Dataproc11SparkStreamingParquetNodeModuleGroup.getModuleGroups(distribution, version));
@@ -105,14 +108,14 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT),
                 Dataproc11SparkStreamingParquetNodeModuleGroup.getModuleGroups(distribution, version));
 
-     // Spark Streaming Kafka nodes
+        // Spark Streaming Kafka nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 Dataproc11SparkStreamingKafkaAssemblyModuleGroup.getModuleGroups(distribution, version));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_AVRO_INPUT_COMPONENT),
                 Dataproc11SparkStreamingKafkaAvroModuleGroup.getModuleGroups(distribution, version));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
                 Dataproc11SparkStreamingKafkaClientModuleGroup.getModuleGroups(distribution, version));
-        
+
         return result;
     }
 
@@ -235,7 +238,7 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
     public boolean doSupportOldImportMode() {
         return false;
     }
-    
+
     @Override
     public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion sparkVersion) {
         return SparkStreamingKafkaVersion.KAFKA_0_10;
@@ -244,5 +247,54 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
     @Override
     public boolean doSupportOozie() {
         return false;
+    }
+
+    @Override
+    public boolean doSupportHive1() {
+        return false;
+    }
+
+    @Override
+    public boolean doSupportHive2() {
+        // use rest API
+        return false;
+    }
+
+    @Override
+    public boolean doSupportTezForHive() {
+        // TODO check
+        return false;
+    }
+
+    @Override
+    public boolean doSupportHBaseForHive() {
+        // No Hbase
+        return false;
+    }
+
+    @Override
+    public boolean doSupportSSL() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportORCFormat() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportAvroFormat() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportParquetFormat() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportStoreAsParquet() {
+        // TODO Auto-generated method stub
+        return true;
     }
 }
