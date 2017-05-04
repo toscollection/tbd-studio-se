@@ -481,6 +481,7 @@
 			<library id="jackson-core-2.2.3" />
 			<library id="jackson-core-asl-1.8.8" />
 			<library id="jackson-mapper-asl-1.8.8" />
+			<library id="commons-lang-2.6"/>
         </libraryNeededGroup>
 
         <!-- Hive group -->
