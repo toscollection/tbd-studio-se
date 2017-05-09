@@ -18,14 +18,14 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.hdinsight360.HDInsight36Constant;
 
-public class HDInsight36HiveOnSparkModuleGroup {
+public class HDInsight36HiveModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
+        hs.add(new DistributionModuleGroup(HDInsight36Constant.HIVE_PARQUET_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(HDInsight36Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true, null));
-        hs.add(new DistributionModuleGroup(HDInsight36Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), false, null));
-        hs.add(new DistributionModuleGroup(HDInsight36Constant.SPARK_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), false, null));
-        return hs;
+        hs.add(new DistributionModuleGroup(HDInsight36Constant.HDINSIGHT36COMMON_MODULE_GROUP.getModuleName()));
 
+        return hs;
     }
 }

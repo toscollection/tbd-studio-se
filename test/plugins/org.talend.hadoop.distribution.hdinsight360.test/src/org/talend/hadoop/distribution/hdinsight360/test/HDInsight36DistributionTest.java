@@ -21,8 +21,10 @@ import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
+import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
@@ -58,6 +60,7 @@ public class HDInsight36DistributionTest extends AbstractDistributionTest {
         assertEquals(DEFAULT_YARN_APPLICATION_CLASSPATH, ((MRComponent) distribution).getYarnApplicationClasspath());
         assertFalse(distribution instanceof HBaseComponent);
         assertFalse(distribution instanceof SqoopComponent);
+        // Spark Batch
         assertTrue(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_1));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_0));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_6));
@@ -70,6 +73,7 @@ public class HDInsight36DistributionTest extends AbstractDistributionTest {
         assertFalse(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertFalse(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClusterMode());
+        // Spark Streaming
         assertTrue(((SparkStreamingComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_1));
         assertFalse(((SparkStreamingComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_0));
         assertFalse(((SparkStreamingComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_6));
@@ -84,6 +88,21 @@ public class HDInsight36DistributionTest extends AbstractDistributionTest {
         assertFalse(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClusterMode());
         assertFalse(((SparkStreamingComponent) distribution).doSupportBackpressure());
+        // Hive
+        assertFalse(((HiveComponent) distribution).doSupportHive1());
+        assertFalse(((HiveComponent) distribution).doSupportHive2());
+        assertFalse(((HiveComponent) distribution).doSupportTezForHive());
+        assertFalse(((HiveComponent) distribution).doSupportHBaseForHive());
+        assertFalse(((HiveComponent) distribution).doSupportSSL());
+        assertTrue(((HiveComponent) distribution).doSupportORCFormat());
+        assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
+        assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
+        assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
+        // Pig
+        assertFalse(((PigComponent) distribution).doSupportHBase());
+        assertTrue(((PigComponent) distribution).doSupportHCatalog());
+        assertFalse(((PigComponent) distribution).pigVersionPriorTo_0_12());
+
         assertFalse(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
         assertTrue(distribution.doSupportHDFSEncryption());

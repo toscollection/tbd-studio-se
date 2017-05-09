@@ -32,7 +32,7 @@ public class HDInsight36SparkStreamingModuleGroupTest {
         results.put(HDInsight36Constant.SPARK_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
         results.put(HDInsight36Constant.SPARK_STREAMING_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
         results.put(HDInsight36Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(HDInsight36Constant.HDINSIGHTCOMMON_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
+        results.put(HDInsight36Constant.HDINSIGHT36COMMON_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = HDInsight36SparkStreamingModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
