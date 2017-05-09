@@ -433,5 +433,10 @@ public class HDP260Distribution extends AbstractDistribution implements HDFSComp
             return SparkStreamingKafkaVersion.KAFKA_0_8;
         }
     }
+    
+    @Override
+    public boolean doSupportKerberizedKafka() {
+        return true;
+    }
 
 }

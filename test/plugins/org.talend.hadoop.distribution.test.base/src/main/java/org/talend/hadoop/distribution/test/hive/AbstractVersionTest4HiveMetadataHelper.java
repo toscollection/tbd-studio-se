@@ -78,7 +78,7 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
         }
     }
 
-    @Test
+    //@Test
     public void testDoSupportSecurity() {
         String messages = "Have some problem for the {0} mode with {1}"; //$NON-NLS-1$
 
@@ -115,7 +115,7 @@ public abstract class AbstractVersionTest4HiveMetadataHelper extends AbstractTes
         return false;
     }
 
-    @Test
+    //@Test
     public void testDoSupportTez() {
         assertTrue(HiveMetadataHelper.doSupportTez(getDistribution(), getDistributionVersion(), false) == isSupportTez());
     }

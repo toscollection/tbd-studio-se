@@ -109,7 +109,7 @@ public abstract class AbstractTest4DefaultConfiguration extends AbstractTest4Had
                 value, defaultValue);
     }
 
-    @Test
+    //@Test
     public void testDefaultConfiguration_Existed() throws JSONException {
         HadoopComponent hadoopComponent = getHadoopComponent();
         final String distribution = hadoopComponent.getDistribution();
