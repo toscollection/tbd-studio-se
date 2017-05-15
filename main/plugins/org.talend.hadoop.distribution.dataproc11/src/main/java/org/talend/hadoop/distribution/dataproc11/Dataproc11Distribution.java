@@ -27,6 +27,7 @@ import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
+import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
@@ -36,6 +37,7 @@ import org.talend.hadoop.distribution.constants.dataproc.IGoogleDataprocDistribu
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HDFSModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HiveModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11HiveOnSparkModuleGroup;
+import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11MapReduceModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.Dataproc11SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.dataproc11.modulegroup.node.sparkbatch.Dataproc11SparkBatchParquetNodeModuleGroup;
@@ -46,8 +48,8 @@ import org.talend.hadoop.distribution.dataproc11.modulegroup.node.sparkstreaming
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
-public class Dataproc11Distribution extends AbstractDistribution implements HDFSComponent, SparkBatchComponent, HiveComponent,
-        SparkStreamingComponent, HiveOnSparkComponent, IGoogleDataprocDistribution {
+public class Dataproc11Distribution extends AbstractDistribution implements HDFSComponent, MRComponent, SparkBatchComponent,
+        HiveComponent, SparkStreamingComponent, HiveOnSparkComponent, IGoogleDataprocDistribution {
 
     public static final String VERSION = "DATAPROC_1_1"; //$NON-NLS-1$
 
@@ -84,6 +86,7 @@ public class Dataproc11Distribution extends AbstractDistribution implements HDFS
         result.put(ComponentType.HDFS, Dataproc11HDFSModuleGroup.getModuleGroups());
         result.put(ComponentType.HIVE, Dataproc11HiveModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKBATCH, Dataproc11SparkBatchModuleGroup.getModuleGroups());
+        result.put(ComponentType.MAPREDUCE, Dataproc11MapReduceModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKSTREAMING, Dataproc11SparkStreamingModuleGroup.getModuleGroups());
         result.put(ComponentType.HIVEONSPARK, Dataproc11HiveOnSparkModuleGroup.getModuleGroups());
         return result;
