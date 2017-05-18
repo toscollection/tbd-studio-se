@@ -32,6 +32,7 @@ import org.talend.repository.nosql.exceptions.NoSQLExtractSchemaException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
 import org.talend.repository.nosql.metadata.AbstractMetadataProvider;
+
 import orgomg.cwm.objectmodel.core.CoreFactory;
 import orgomg.cwm.objectmodel.core.TaggedValue;
 
@@ -63,13 +64,15 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
 
     private List<MetadataColumn> extractTheColumns(NoSQLConnection connection, String cypher) throws NoSQLExtractSchemaException {
         List<MetadataColumn> metadataColumns = new ArrayList<MetadataColumn>();
+        Object db = null;
         try {
             ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
-            Object db = Neo4jConnectionUtil.getDB(connection);
+            Neo4jConnectionUtil.closeConnections();
+            db = Neo4jConnectionUtil.getDB(connection);
             if (db == null) {
                 return metadataColumns;
             }
-            Iterator<Map<String, Object>> resultIterator = Neo4jConnectionUtil.getResultIterator(connection, cypher);
+            Iterator<Map<String, Object>> resultIterator = Neo4jConnectionUtil.getResultIterator(connection, cypher, db);
             if (resultIterator == null) {
                 return metadataColumns;
             }
@@ -93,6 +96,10 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
             }
         } catch (Exception e) {
             throw new NoSQLExtractSchemaException(e);
+        } finally {
+            if (db != null) {
+                Neo4jConnectionUtil.shutdownNeo4JDb(db);
+            }
         }
 
         return metadataColumns;
@@ -127,8 +134,8 @@ public class Neo4jMetadataProvider extends AbstractMetadataProvider {
         addMetadataColumn(formalColumnName, javaType.getId(), columnKey, metadataColumns, columnLabels);
     }
 
-    private void addMetadataColumn(String columnName, String columnType, String returnParam,
-            List<MetadataColumn> metadataColumns, List<String> columnLabels) {
+    private void addMetadataColumn(String columnName, String columnType, String returnParam, List<MetadataColumn> metadataColumns,
+            List<String> columnLabels) {
         MetadataColumn metaColumn = ConnectionFactory.eINSTANCE.createMetadataColumn();
         metaColumn.setName(columnName);
         metaColumn.setLabel(columnName);
