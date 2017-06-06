@@ -37,6 +37,7 @@ import org.talend.repository.hadoopcluster.ui.ICheckListener;
 public abstract class AbstractHadoopImportConfsPage extends WizardPage implements IImportConfsWizardPage {
 
     protected IRetrieveConfsService confsService;
+    protected DistributionVersion distriVersion;
 
     protected DistributionVersion distriVersion;
 
