@@ -197,4 +197,11 @@ public interface HadoopComponent {
      * @return only doSupportCreateServiceConnection() return true, return the necessary service name
      */
     public List<String> getNecessaryServiceName();
+
+    /**
+     * Hortonworks specific method.
+     *
+     * @return true if the distribution is Hortonworks
+     */
+    public boolean isHortonworksDistribution();
 }
