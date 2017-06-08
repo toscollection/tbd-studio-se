@@ -282,6 +282,14 @@ public abstract class AbstractDistribution {
         return null;
     }
 
+    public boolean doRequireMetastoreVersionOverride() {
+        return false;
+    }
+	
+    public String getHiveMetastoreVersionForSpark() {
+        return null;
+    }
+
     public boolean isHortonworksDistribution() {
         return false;
     }
