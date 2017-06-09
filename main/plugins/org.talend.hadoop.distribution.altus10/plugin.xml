@@ -6,9 +6,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.altus10"
-            id="talend-bigdata-launcher-1.2.2-20170630.jar"
-            name="talend-bigdata-launcher-1.2.2-20170630.jar"
-            mvn_uri="mvn:org.talend.libraries/talend-bigdata-launcher-1.2.2-20170630/6.0.0">
+            id="talend-bigdata-launcher-1.2.2-20170613.jar"
+            name="talend-bigdata-launcher-1.2.2-20170613.jar"
+            mvn_uri="mvn:org.talend.libraries/talend-bigdata-launcher-1.2.2-20170613/6.0.0">
         </libraryNeeded>
         
         <libraryNeeded
@@ -67,7 +67,7 @@
         	  description="Big Data launcher libraries for Altus 1.0"
               id="BIGDATA-LAUNCHER-LIB-ALTUS10"
               name="BIGDATA-LAUNCHER-LIB-ALTUS10">
-            <library id="talend-bigdata-launcher-1.2.2-20170630.jar"/>
+            <library id="talend-bigdata-launcher-1.2.2-20170613.jar"/>
         </libraryNeededGroup>
         
         <!-- HDFS Spark 1.6 group -->

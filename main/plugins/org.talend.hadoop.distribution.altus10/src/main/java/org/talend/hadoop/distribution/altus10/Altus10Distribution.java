@@ -158,7 +158,7 @@ public class Altus10Distribution extends AbstractDistribution implements SparkBa
 
     @Override
     public boolean doSupportSparkYarnClientMode() {
-        return true;
+        return false;
     }
 
     @Override
@@ -196,9 +196,14 @@ public class Altus10Distribution extends AbstractDistribution implements SparkBa
     public boolean doSupportS3V4() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportOldImportMode() {
         return false;
+    }
+
+    @Override
+    public boolean doSupportSparkYarnClusterMode() {
+        return true;
     }
 }
