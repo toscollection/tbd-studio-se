@@ -191,7 +191,7 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 
-        <PARAMETER NAME="QUERY_TYPE" FIELD="CLOSED_LIST" NUM_ROW="39" GROUP="QUERY_SPECS">
+        <PARAMETER NAME="QUERY_TYPE" FIELD="CLOSED_LIST" NUM_ROW="39" SHOW="false" GROUP="QUERY_SPECS">
             <ITEMS DEFAULT="FIND_QUERY">
                 <ITEM NAME="FIND_QUERY" VALUE="FIND_QUERY"/>
                 <ITEM NAME="AGGREGATION_QUERY" VALUE="AGGREGATION_QUERY"/>
@@ -222,7 +222,7 @@ Note : If you are running on a Sharded Cluster, please make sure to include the 
             NUM_ROW="45"
             NB_LINES="5"
             GROUP="QUERY_SPECS"
-            SHOW_IF="QUERY_TYPE=='AGGREGATION_QUERY'">
+            SHOW="false">
             <ITEMS>
                 <ITEM NAME="AGGREGATION_STAGE" FIELD="TEXT" />
             </ITEMS>
@@ -275,7 +275,7 @@ Note : If you are running on a Sharded Cluster, please make sure to include the 
         </PARAMETER>
 
         <PARAMETER FIELD="CHECK" NAME="EXTERNAL_SORT_AGGREGATION"
-            NUM_ROW="50" GROUP="ADVANCED_AGGREGATION_OPTIONS" SHOW_IF="QUERY_TYPE=='AGGREGATION_QUERY'">
+            NUM_ROW="50" GROUP="ADVANCED_AGGREGATION_OPTIONS" SHOW="false">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
     </ADVANCED_PARAMETERS>
