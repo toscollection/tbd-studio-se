@@ -39,8 +39,8 @@
 		
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
-  	List<IMetadataTable> metadatas = node.getMetadataList();
-  	List<IMetadataColumn> columnList = null;
+  	List<IMetadataTable> outputMetadatas = node.getMetadataList();
+  	List<IMetadataColumn> outPutColumns = null;
   	List<? extends IConnection> outputs = node.getOutgoingSortedConnections();
   	String firstConnName = "";
   	if (outputs.size() > 0){
@@ -53,8 +53,8 @@
 	int nb_line_<%=cid %> = 0;
 	
 	<%
-  	if(metadatas != null && metadatas.size() > 0){
-      	IMetadataTable metadata = metadatas.get(0);
+  	if(outputMetadatas != null && outputMetadatas.size() > 0){
+      	IMetadataTable metadata = outputMetadatas.get(0);
       	if(metadata != null){
 			if ("INSERT".equalsIgnoreCase(dataAction)) {
 		%>
@@ -116,11 +116,11 @@
 				}
 				
 				<%
-				columnList = metadata.getListColumns();
-				int sizeColumns = columnList.size();
+				outPutColumns = metadata.getListColumns();
+				int sizeColumns = outPutColumns.size();
 				
 				for (int i = 0; i < sizeColumns; i++) {
-					IMetadataColumn column = columnList.get(i);
+					IMetadataColumn column = outPutColumns.get(i);
 					if(column.isKey()){				
 						String type = column.getTalendType();
 						if(type.toUpperCase().indexOf("STRING") >=0)
@@ -129,7 +129,7 @@
 							attributeDefinitionList_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.S));
 					<%	
 						}
-						else if(type.toUpperCase().indexOf("INTEGER") >=0)
+						else if(type.toUpperCase().indexOf("INTEGER") >= 0 || type.toUpperCase().indexOf("LONG") >= 0 )
 						{
 					%>		
 							attributeDefinitionList_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.AttributeDefinition("<%=column.getLabel()%>", com.amazonaws.services.dynamodbv2.model.ScalarAttributeType.N));			
