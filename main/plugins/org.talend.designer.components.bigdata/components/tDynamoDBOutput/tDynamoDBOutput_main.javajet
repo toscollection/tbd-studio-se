@@ -26,6 +26,7 @@
 	
 	List<Map<String, String>> nameMap = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__NAME_MAPPING__");
 	
+		
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
 	
@@ -33,13 +34,18 @@
 		inConn = inConns.get(0);
 		metadata = inConn.getMetadataTable();
 	}
+	
+	List<IMetadataColumn> outPutColumns = null;
+	if( node.getMetadataList() != null && !node.getMetadataList().isEmpty()){
+		outPutColumns = node.getMetadataList().get(0).getListColumns();
+	}
 
-	if (metadata!=null) {
+	if (metadata!=null && outPutColumns!=null && !outPutColumns.isEmpty()) {
 		List< ? extends IConnection> conns = node.getIncomingConnections();
 		for (IConnection conn : conns) {
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-				List<IMetadataColumn> columnList = metadata.getListColumns();
-				int sizeColumns = columnList.size();
+				
+				int sizeColumns = outPutColumns.size();
 
 				if(!"INSERT".equalsIgnoreCase(dataAction)){
 				%>
@@ -55,12 +61,12 @@
 					item_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.Item();
 					<%
 					for (int i = 0; i < sizeColumns; i++) {
-						IMetadataColumn column = columnList.get(i);
-
+						IMetadataColumn column = outPutColumns.get(i);
 						%>				
-						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {  				
+						if (<%=conn.getName() %>.<%=column.getLabel() %> != null 
+							&& (!((Object) <%=conn.getName() %>.<%=column.getLabel() %> instanceof String) || !(String.valueOf(<%=conn.getName() %>.<%=column.getLabel() %>)).isEmpty())) {  				
 						<%
-							
+						
 							if(column.isKey())
 							{	
 								%>							
@@ -82,7 +88,6 @@
 							}	
 							%>
 						}
-						
 					<%			
 					}
 					
@@ -124,7 +129,7 @@
 					updateExpressionBuffer_<%=cid%>.append("set ");
 					<%
 					for (int i = 0; i < sizeColumns; i++) {
-						IMetadataColumn column = columnList.get(i);
+						IMetadataColumn column = outPutColumns.get(i);
 						
 						if(column.isKey()) 
 						{		
@@ -189,7 +194,7 @@
 					
 					<%
 					for (int i = 0; i < sizeColumns; i++) {
-						IMetadataColumn column = columnList.get(i);
+						IMetadataColumn column = outPutColumns.get(i);
 
 						%>
 						if (<%=conn.getName() %>.<%=column.getLabel() %> != null) {
