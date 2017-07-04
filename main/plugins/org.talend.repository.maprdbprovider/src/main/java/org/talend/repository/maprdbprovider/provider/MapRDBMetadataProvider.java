@@ -31,9 +31,11 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.GlobalServiceRegister;
+import org.talend.core.ICoreService;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.model.metadata.IMetadataConnection;
+import org.talend.core.model.metadata.MetadataToolHelper;
 import org.talend.core.model.metadata.builder.connection.DatabaseConnection;
 import org.talend.core.model.metadata.builder.connection.MetadataColumn;
 import org.talend.core.model.metadata.builder.connection.MetadataTable;
@@ -43,6 +45,7 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.model.connection.ConnectionStatus;
 import org.talend.core.repository.model.provider.AbstractMetadataExtractorViewProvider;
 import org.talend.core.repository.model.provider.IDBMetadataProvider;
+import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.utils.ReflectionUtils;
 import org.talend.cwm.helper.CatalogHelper;
 import org.talend.cwm.helper.ConnectionHelper;
@@ -53,6 +56,7 @@ import org.talend.cwm.relational.TdColumn;
 import org.talend.cwm.relational.TdTable;
 import org.talend.designer.core.IDesignerCoreService;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
+import org.talend.metadata.managment.utils.ManagementTextUtils;
 import org.talend.repository.maprdbprovider.Activator;
 import org.talend.repository.maprdbprovider.util.MapRDBClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
@@ -577,9 +581,12 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
                                         new Object[] { qualifier });
                                 if (columnName != null && columnName.equals(columnNode.getValue())
                                         && !columnNameExsit.contains(columnName)) {
+                                    String originalColumnName = columnName;
+                                    columnName = getUniqueColumnName(getColumnLabels(metadataTable),  columnName);
                                     TdColumn column = RelationalFactory.eINSTANCE.createTdColumn();
                                     column.setLabel(columnName);
-                                    column.setName(columnName);
+                                    column.setName(originalColumnName);
+                                    column.setOriginalField(originalColumnName);
                                     column.setTalendType("id_String"); //$NON-NLS-1$
                                     TaggedValue tv = TaggedValueHelper.createTaggedValue(COLUMN_FAMILY, columnFamilyName);
                                     column.getTaggedValue().add(tv);
@@ -633,6 +640,31 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
         } finally {
             Thread.currentThread().setContextClassLoader(oldClassLoaderLoader);
         }
+    }
+    
+    private List<String> getColumnLabels(MetadataTable metadataTable){
+        List<String> columnLabels = new ArrayList<String>();
+        List<MetadataColumn> columns = metadataTable.getColumns();
+        for(MetadataColumn column : columns){
+            columnLabels.add(column.getLabel());
+        }
+        return columnLabels;
+    }
+    
+    public String getUniqueColumnName(List<String> columnLabels, String columnName){
+        columnName = ManagementTextUtils.filterSpecialChar(columnName);
+        ICoreService coreService = CoreRuntimePlugin.getInstance().getCoreService();
+        if (coreService != null && coreService.isKeyword(columnName)) {
+            columnName = "_" + columnName; //$NON-NLS-1$
+        }
+        int index = 0;
+        for(String columnLabel : columnLabels){
+            if(columnLabel.equals(columnName)){
+                index = index + 1;
+            } 
+        }
+        columnName = MetadataToolHelper.validateColumnName(columnName, index, columnLabels);
+        return columnName;
     }
 
     @Override
