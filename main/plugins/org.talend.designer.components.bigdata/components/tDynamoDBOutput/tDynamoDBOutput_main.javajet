@@ -107,7 +107,7 @@ java.util.Map<String, Object> mapValues_<%=cid%> = new java.util.HashMap<>();
 if ("INSERT".equalsIgnoreCase(dataAction)) {	
 		
 		// Add resolved Primary keys to the Item
-		if(sortKey !=null && !sortKey.isEmpty()) { %>	
+		if(sortKey !=null && !sortKey.isEmpty() && !sortKey.equals("\"\"")) { %>	
 				item_<%=cid%> = item_<%=cid%>.withPrimaryKey(<%=partitionKey%>, partitionKeyValue_<%=cid%>, 
 															 <%=sortKey%>, sortKeyValue_<%=cid%>);	
 		<% } else { %>
@@ -127,7 +127,7 @@ if ("INSERT".equalsIgnoreCase(dataAction)) {
 		
 <% } else if ("UPDATE".equalsIgnoreCase(dataAction)) {	%>
 
-		<% if(sortKey !=null && !sortKey.isEmpty()){	%>				
+		<% if(sortKey !=null && !sortKey.isEmpty() && !sortKey.equals("\"\"")){	%>				
 			updateItemSpec_<%=cid%> = updateItemSpec_<%=cid%>.withPrimaryKey(<%=partitionKey%>, partitionKeyValue_<%=cid%>,
 																			 <%=sortKey%>, sortKeyValue_<%=cid%>);				
 		<% } else { %>
@@ -182,7 +182,7 @@ if ("INSERT".equalsIgnoreCase(dataAction)) {
 
 <% } else if ("DELETE".equalsIgnoreCase(dataAction)) { 	%>
 		
-		<% if(sortKey !=null && !sortKey.isEmpty()){	%>				
+		<% if(sortKey !=null && !sortKey.isEmpty() && !sortKey.equals("\"\"")){	%>				
 			deleteItemSpec_<%=cid%> = deleteItemSpec_<%=cid%>.withPrimaryKey(<%=partitionKey%>, partitionKeyValue_<%=cid%>, 
 																			 <%=sortKey%>, sortKeyValue_<%=cid%>);				
 		<% }else { %>

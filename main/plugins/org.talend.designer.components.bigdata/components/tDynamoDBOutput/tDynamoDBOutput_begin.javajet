@@ -68,7 +68,7 @@ com.amazonaws.services.dynamodbv2.document.Table table_<%=cid%> = dynamoDB_<%=ci
 		
 		keySchemaElements_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=partitionKey%>, com.amazonaws.services.dynamodbv2.model.KeyType.HASH));
 		
-		<% if(sortKey != null && !sortKey.isEmpty()) { %>
+		<% if(sortKey != null && !sortKey.isEmpty() && !sortKey.equals("\"\"")) { %>
 			keySchemaElements_<%=cid%>.add(new com.amazonaws.services.dynamodbv2.model.KeySchemaElement(<%=sortKey%>, com.amazonaws.services.dynamodbv2.model.KeyType.RANGE));
 		<% } %>
 		
