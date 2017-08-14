@@ -65,6 +65,12 @@ public class DistributionBean implements IHDistribution {
         }
     }
 
+    public void removeVersion(DistributionVersion v) {
+        if (v != null) {
+            versions.remove(v);
+        }
+    }
+
     public DistributionVersion[] getVersions() {
         // DESC
         Collections.sort(versions, new Comparator<DistributionVersion>() {
