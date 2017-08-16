@@ -56,6 +56,7 @@ public final class DistributionsManager implements IDistributionsManager {
         super();
         this.serviceName = serviceName;
         this.componentType = componentType;
+        this.distributionsMap = new HashMap<String, DistributionBean>();
         this.serviceListener = new ServiceListener() {
 
             @Override
@@ -63,24 +64,24 @@ public final class DistributionsManager implements IDistributionsManager {
                 if (event.getType() == ServiceEvent.REGISTERED) {
                     ServiceReference<? extends Object> sr = event.getServiceReference();
                     if (sr != null) {
-                            BundleContext bc = getBundleContext();
-                            Object obj = bc.getService(sr);
-                            if (obj instanceof HadoopComponent) {
-                                addDistribution(bc, distributionsMap, componentType,
-                                        (ServiceReference<? extends HadoopComponent>) sr);
-                            }
+                        BundleContext bc = getBundleContext();
+                        Object obj = bc.getService(sr);
+                        if (obj instanceof HadoopComponent) {
+                            addDistribution(bc, distributionsMap, componentType,
+                                    (ServiceReference<? extends HadoopComponent>) sr);
+                        }
                     }
                 } else if (event.getType() == ServiceEvent.UNREGISTERING) {
                     ServiceReference<? extends Object> sr = event.getServiceReference();
                     if (sr != null) {
-                            BundleContext bc = getBundleContext();
-                            Object obj = bc.getService(sr);
-                            if (obj instanceof HadoopComponent) {
-                                removeDistribution(bc, distributionsMap, componentType,
-                                        (ServiceReference<? extends HadoopComponent>) sr);
-                            }
+                        BundleContext bc = getBundleContext();
+                        Object obj = bc.getService(sr);
+                        if (obj instanceof HadoopComponent) {
+                            removeDistribution(bc, distributionsMap, componentType,
+                                    (ServiceReference<? extends HadoopComponent>) sr);
                         }
                     }
+                }
             }
         };
         try {
@@ -126,9 +127,9 @@ public final class DistributionsManager implements IDistributionsManager {
     @Override
     public DistributionBean[] getDistributions() {
         if (distributionsCache == null) {
-            if (distributionsMap == null) {
+            if (distributionsMap.isEmpty()) {
                 synchronized (DistributionsManager.class) {
-                    if (distributionsMap == null) {
+                    if (distributionsMap.isEmpty()) {
                         distributionsMap = getDistributionsDelegate();
                     }
                 }
