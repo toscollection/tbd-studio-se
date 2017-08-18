@@ -75,7 +75,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
         implements IClouderaDistribution, HDFSComponent, HBaseComponent, HCatalogComponent, PigComponent, MRComponent,
         HiveComponent, HiveOnSparkComponent, ImpalaComponent, SqoopComponent, SparkBatchComponent, SparkStreamingComponent {
 
-    public final static String VERSION = "Cloudera_CDH5_X";
+    public final static String VERSION = "Cloudera_CDH5_{0}";
 
     public static final String VERSION_DISPLAY = "Cloudera CDH5.X(YARN mode)";
 
@@ -220,7 +220,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String getVersion() {
-        return VERSION;
+        return VERSION.replaceAll("{0}", getId());
     }
 
     @Override

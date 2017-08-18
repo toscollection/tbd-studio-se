@@ -1,9 +1,20 @@
 package org.talend.hadoop.distribution.cdh5x;
 
+import java.io.File;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
+import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.DynamicServiceUtil;
+import org.talend.core.runtime.dynamic.IDynamicConfiguration;
+import org.talend.core.runtime.dynamic.IDynamicExtension;
+import org.talend.core.runtime.dynamic.IDynamicPlugin;
+import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
@@ -35,14 +46,34 @@ public class CDH5xPlugin extends Plugin {
     public void start(BundleContext bundleContext) throws Exception {
         super.start(bundleContext);
         CDH5xPlugin.context = bundleContext;
+        URL resourceURL = getBundle().getEntry("resources/cdh5x.json");
+        String cdh5xPath = FileLocator.toFileURL(resourceURL).getPath();
+        String xmlJsonString = DynamicServiceUtil.readFile(new File(cdh5xPath));
+        IDynamicPlugin plugin = DynamicFactory.getInstance().createPluginFromJson(xmlJsonString);
+
+        List<IDynamicExtension> allExtensions = plugin.getAllExtensions();
+        IDynamicPluginConfiguration pluginConfiguration = plugin.getPluginConfiguration();
+        String id = "test1";
+        pluginConfiguration.setId(id);
+        for (IDynamicExtension extension : allExtensions) {
+            String extensionId = extension.getExtensionPoint() + "." + id;
+            extension.setExtensionId(extensionId);
+
+        }
+
         dynamic = DynamicServiceUtil.registOSGiService(bundleContext,
                 new String[] { HadoopComponent.class.getName(), HDFSComponent.class.getName(), HBaseComponent.class.getName(),
                         HCatalogComponent.class.getName(), HiveComponent.class.getName(), HiveOnSparkComponent.class.getName(),
                         ImpalaComponent.class.getName(), MRComponent.class.getName(), PigComponent.class.getName(),
                         SqoopComponent.class.getName(), SparkBatchComponent.class.getName(),
                         SparkStreamingComponent.class.getName() },
-                new CDH5xDistributionTemplate("1") {
+                new CDH5xDistributionTemplate("test1") {
                 }, null);
+    }
+
+    private void resolve(IDynamicConfiguration dynamicConfiguration) {
+        Map<String, Object> attributeMap = dynamicConfiguration.getAttributes();
+
     }
 
 	/*

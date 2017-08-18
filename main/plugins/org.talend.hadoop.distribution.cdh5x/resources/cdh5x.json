@@ -6420,7 +6420,7 @@
       "name" : "SPARK-LIB-CDH_5_10_SPARK2",
       "tagName" : "libraryNeededGroup",
       "template_description" : "The latest Spark libraries for CDH 5.10 spark 2",
-      "template_id" : "SPARK-LIB_CDH5_{0}",
+      "template_id" : "SPARK-LIB_SPARK2_CDH5_{0}",
       "template_name" : "SPARK-LIB.*"
     }, {
       "childNodes" : [ ],
@@ -7038,7 +7038,7 @@
       "name" : "TALEND_CLOUDERA_CDH_5_10_NAVIGATOR",
       "tagName" : "libraryNeededGroup",
       "template_description" : "Talend cloudera 5.10 navigator API.",
-      "template_id" : "TALEND_CLOUDERA_CDH_CDH5_{0}",
+      "template_id" : "TALEND_CLOUDERA_CDH5_NAVIGATOR_{0}",
       "template_name" : "TALEND_CLOUDERA_CDH.*"
     }, {
       "childNodes" : [ {
@@ -7101,7 +7101,7 @@
       "index" : "HIVE:CLOUDERA:Cloudera_CDH5_10:EMBEDDED",
       "libraries" : "antlr-runtime-3.4.jar;avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-httpclient-3.0.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;curator-client-2.6.0.jar;curator-framework-2.6.0.jar;datanucleus-api-jdo-3.2.6.jar;datanucleus-core-3.2.10.jar;datanucleus-rdbms-3.2.9.jar;derby-10.11.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.10.1.jar;hadoop-yarn-api-2.6.0-cdh5.10.1.jar;hadoop-yarn-client-2.6.0-cdh5.10.1.jar;hadoop-yarn-common-2.6.0-cdh5.10.1.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.10.1.jar;hbase-client-1.2.0-cdh5.10.1.jar;hbase-common-1.2.0-cdh5.10.1.jar;hbase-hadoop-compat-1.2.0-cdh5.10.1.jar;hbase-protocol-1.2.0-cdh5.10.1.jar;hbase-server-1.2.0-cdh5.10.1.jar;high-scale-lib-1.1.1.jar;hive-exec-1.1.0-cdh5.10.1.jar;hive-hbase-handler-1.1.0-cdh5.10.1.jar;hive-jdbc-1.1.0-cdh5.10.1.jar;hive-metastore-1.1.0-cdh5.10.1.jar;hive-service-1.1.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;httpclient-4.3.3.jar;httpcore-4.3.3.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jdo-api-3.0.1.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;libfb303-0.9.3.jar;libthrift-0.9.2.jar;log4j-1.2.17.jar;netty-all-4.0.29.Final.jar;parquet-avro-1.5.0-cdh5.10.1.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;zookeeper-3.4.5-cdh5.10.1.jar",
       "tagName" : "classloader",
-      "template_index" : "HIVE:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HIVE:CLOUDERA:Cloudera_CDH5_{0}:EMBEDDED",
       "template_libraries" : "antlr-runtime.*"
     }, {
       "childNodes" : [ ],
@@ -7110,7 +7110,7 @@
       "index" : "HIVE:CLOUDERA:Cloudera_CDH5_10:STANDALONE",
       "libraries" : "antlr-runtime-3.4.jar;avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-httpclient-3.0.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;curator-client-2.6.0.jar;curator-framework-2.6.0.jar;datanucleus-api-jdo-3.2.6.jar;datanucleus-core-3.2.10.jar;datanucleus-rdbms-3.2.9.jar;derby-10.11.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.10.1.jar;hadoop-yarn-api-2.6.0-cdh5.10.1.jar;hadoop-yarn-client-2.6.0-cdh5.10.1.jar;hadoop-yarn-common-2.6.0-cdh5.10.1.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.10.1.jar;hbase-client-1.2.0-cdh5.10.1.jar;hbase-common-1.2.0-cdh5.10.1.jar;hbase-hadoop-compat-1.2.0-cdh5.10.1.jar;hbase-protocol-1.2.0-cdh5.10.1.jar;hbase-server-1.2.0-cdh5.10.1.jar;high-scale-lib-1.1.1.jar;hive-exec-1.1.0-cdh5.10.1.jar;hive-hbase-handler-1.1.0-cdh5.10.1.jar;hive-jdbc-1.1.0-cdh5.10.1.jar;hive-metastore-1.1.0-cdh5.10.1.jar;hive-service-1.1.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;httpclient-4.3.3.jar;httpcore-4.3.3.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jdo-api-3.0.1.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;libfb303-0.9.3.jar;libthrift-0.9.2.jar;log4j-1.2.17.jar;netty-all-4.0.29.Final.jar;parquet-avro-1.5.0-cdh5.10.1.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;zookeeper-3.4.5-cdh5.10.1.jar",
       "tagName" : "classloader",
-      "template_index" : "HIVE:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HIVE:CLOUDERA:Cloudera_CDH5_{0}:STANDALONE",
       "template_libraries" : "antlr-runtime.*"
     }, {
       "childNodes" : [ ],
@@ -7119,7 +7119,7 @@
       "index" : "HIVE2:CLOUDERA:Cloudera_CDH5_10:EMBEDDED",
       "libraries" : "antlr-runtime-3.4.jar;avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-httpclient-3.0.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;curator-client-2.6.0.jar;curator-framework-2.6.0.jar;datanucleus-api-jdo-3.2.6.jar;datanucleus-core-3.2.10.jar;datanucleus-rdbms-3.2.9.jar;derby-10.11.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.10.1.jar;hadoop-yarn-api-2.6.0-cdh5.10.1.jar;hadoop-yarn-client-2.6.0-cdh5.10.1.jar;hadoop-yarn-common-2.6.0-cdh5.10.1.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.10.1.jar;hbase-client-1.2.0-cdh5.10.1.jar;hbase-common-1.2.0-cdh5.10.1.jar;hbase-hadoop-compat-1.2.0-cdh5.10.1.jar;hbase-protocol-1.2.0-cdh5.10.1.jar;hbase-server-1.2.0-cdh5.10.1.jar;high-scale-lib-1.1.1.jar;hive-exec-1.1.0-cdh5.10.1.jar;hive-hbase-handler-1.1.0-cdh5.10.1.jar;hive-jdbc-1.1.0-cdh5.10.1.jar;hive-metastore-1.1.0-cdh5.10.1.jar;hive-service-1.1.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;httpclient-4.3.3.jar;httpcore-4.3.3.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jdo-api-3.0.1.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;libfb303-0.9.3.jar;libthrift-0.9.2.jar;log4j-1.2.17.jar;netty-all-4.0.29.Final.jar;parquet-avro-1.5.0-cdh5.10.1.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;zookeeper-3.4.5-cdh5.10.1.jar",
       "tagName" : "classloader",
-      "template_index" : "HIVE2:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HIVE2:CLOUDERA:Cloudera_CDH5_{0}:EMBEDDED",
       "template_libraries" : "antlr-runtime.*"
     }, {
       "childNodes" : [ ],
@@ -7128,7 +7128,7 @@
       "index" : "HIVE2:CLOUDERA:Cloudera_CDH5_10:STANDALONE",
       "libraries" : "antlr-runtime-3.4.jar;avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-httpclient-3.0.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;curator-client-2.6.0.jar;curator-framework-2.6.0.jar;datanucleus-api-jdo-3.2.6.jar;datanucleus-core-3.2.10.jar;datanucleus-rdbms-3.2.9.jar;derby-10.11.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.10.1.jar;hadoop-yarn-api-2.6.0-cdh5.10.1.jar;hadoop-yarn-client-2.6.0-cdh5.10.1.jar;hadoop-yarn-common-2.6.0-cdh5.10.1.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.10.1.jar;hbase-client-1.2.0-cdh5.10.1.jar;hbase-common-1.2.0-cdh5.10.1.jar;hbase-hadoop-compat-1.2.0-cdh5.10.1.jar;hbase-protocol-1.2.0-cdh5.10.1.jar;hbase-server-1.2.0-cdh5.10.1.jar;high-scale-lib-1.1.1.jar;hive-exec-1.1.0-cdh5.10.1.jar;hive-hbase-handler-1.1.0-cdh5.10.1.jar;hive-jdbc-1.1.0-cdh5.10.1.jar;hive-metastore-1.1.0-cdh5.10.1.jar;hive-service-1.1.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;httpclient-4.3.3.jar;httpcore-4.3.3.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jdo-api-3.0.1.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;libfb303-0.9.3.jar;libthrift-0.9.2.jar;log4j-1.2.17.jar;netty-all-4.0.29.Final.jar;parquet-avro-1.5.0-cdh5.10.1.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;zookeeper-3.4.5-cdh5.10.1.jar",
       "tagName" : "classloader",
-      "template_index" : "HIVE2:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HIVE2:CLOUDERA:Cloudera_CDH5_{0}:STANDALONE",
       "template_libraries" : "antlr-runtime.*"
     }, {
       "childNodes" : [ ],
@@ -7137,7 +7137,7 @@
       "index" : "HBASE:CLOUDERA:Cloudera_CDH5_10",
       "libraries" : "commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hbase-client-1.2.0-cdh5.10.1.jar;hbase-common-1.2.0-cdh5.10.1.jar;hbase-protocol-1.2.0-cdh5.10.1.jar;hbase-server-1.2.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;jackson-core-asl-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;log4j-1.2.17.jar;metrics-core-2.2.0.jar;netty-all-4.0.29.Final.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;zookeeper-3.4.5-cdh5.10.1.jar",
       "tagName" : "classloader",
-      "template_index" : "HBASE:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HBASE:CLOUDERA:Cloudera_CDH5_{0}",
       "template_libraries" : "commons-cli.*"
     }, {
       "childNodes" : [ ],
@@ -7146,7 +7146,7 @@
       "index" : "MAP_REDUCE:CLOUDERA:Cloudera_CDH5_10",
       "libraries" : "avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-httpclient-3.0.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.10.1.jar;hadoop-yarn-api-2.6.0-cdh5.10.1.jar;hadoop-yarn-client-2.6.0-cdh5.10.1.jar;hadoop-yarn-common-2.6.0-cdh5.10.1.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;jodd-core-3.5.2.jar;log4j-1.2.17.jar;parquet-hadoop-bundle-1.5.0-cdh5.10.1.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;snappy-java-1.0.4.1.jar",
       "tagName" : "classloader",
-      "template_index" : "MAP_REDUCE:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "MAP_REDUCE:CLOUDERA:Cloudera_CDH5_{0}",
       "template_libraries" : "avro.*"
     }, {
       "childNodes" : [ ],
@@ -7155,7 +7155,7 @@
       "index" : "HDFS:CLOUDERA:Cloudera_CDH5_10",
       "libraries" : "avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;htrace-core4-4.0.1-incubating.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jersey-core-1.9.jar;log4j-1.2.17.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar",
       "tagName" : "classloader",
-      "template_index" : "HDFS:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HDFS:CLOUDERA:Cloudera_CDH5_{0}",
       "template_libraries" : "avro.*"
     }, {
       "childNodes" : [ ],
@@ -7164,7 +7164,7 @@
       "index" : "HDFS:CLOUDERA:Cloudera_CDH5_10?USE_KRB",
       "libraries" : "avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;htrace-core4-4.0.1-incubating.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jersey-core-1.9.jar;log4j-1.2.17.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;hadoop-conf-kerberos.jar",
       "tagName" : "classloader",
-      "template_index" : "HDFS:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "HDFS:CLOUDERA:Cloudera_CDH5_{0}?USE_KRB",
       "template_libraries" : "avro.*"
     }, {
       "childNodes" : [ ],
@@ -7173,7 +7173,7 @@
       "index" : "IMPALA:CLOUDERA:Cloudera_CDH5_10?USE_KRB",
       "libraries" : "antlr-runtime-3.4.jar;avro-1.7.6-cdh5.10.1.jar;commons-cli-1.2.jar;commons-codec-1.9.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-httpclient-3.0.1.jar;commons-io-2.4.jar;commons-lang-2.6.jar;commons-logging-1.2.jar;curator-client-2.6.0.jar;curator-framework-2.6.0.jar;datanucleus-api-jdo-3.2.6.jar;datanucleus-core-3.2.10.jar;datanucleus-rdbms-3.2.9.jar;derby-10.11.1.1.jar;guava-12.0.1.jar;hadoop-auth-2.6.0-cdh5.10.1.jar;hadoop-common-2.6.0-cdh5.10.1.jar;hadoop-hdfs-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-common-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-core-2.6.0-cdh5.10.1.jar;hadoop-mapreduce-client-jobclient-2.6.0-cdh5.10.1.jar;hadoop-yarn-api-2.6.0-cdh5.10.1.jar;hadoop-yarn-client-2.6.0-cdh5.10.1.jar;hadoop-yarn-common-2.6.0-cdh5.10.1.jar;hadoop-yarn-server-web-proxy-2.6.0-cdh5.10.1.jar;hbase-client-1.2.0-cdh5.10.1.jar;hbase-common-1.2.0-cdh5.10.1.jar;hbase-hadoop-compat-1.2.0-cdh5.10.1.jar;hbase-protocol-1.2.0-cdh5.10.1.jar;hbase-server-1.2.0-cdh5.10.1.jar;high-scale-lib-1.1.1.jar;hive-exec-1.1.0-cdh5.10.1.jar;hive-hbase-handler-1.1.0-cdh5.10.1.jar;hive-jdbc-1.1.0-cdh5.10.1.jar;hive-metastore-1.1.0-cdh5.10.1.jar;hive-service-1.1.0-cdh5.10.1.jar;htrace-core-3.2.0-incubating.jar;htrace-core4-4.0.1-incubating.jar;httpclient-4.3.3.jar;httpcore-4.3.3.jar;jackson-core-asl-1.8.8.jar;jackson-jaxrs-1.8.8.jar;jackson-mapper-asl-1.8.8.jar;jackson-xc-1.8.8.jar;jdo-api-3.0.1.jar;jersey-client-1.9.jar;jersey-core-1.9.jar;libfb303-0.9.3.jar;libthrift-0.9.2.jar;log4j-1.2.17.jar;netty-all-4.0.29.Final.jar;parquet-avro-1.5.0-cdh5.10.1.jar;protobuf-java-2.5.0.jar;servlet-api-2.5.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;zookeeper-3.4.5-cdh5.10.1.jar;hadoop-conf-kerberos.jar",
       "tagName" : "classloader",
-      "template_index" : "IMPALA:CLOUDERA:Cloudera_CDH5.*",
+      "template_index" : "IMPALA:CLOUDERA:Cloudera_CDH5_{0}?USE_KRB",
       "template_libraries" : "antlr-runtime.*"
     } ],
     "default_point" : "org.talend.core.runtime.classloader_provider",
