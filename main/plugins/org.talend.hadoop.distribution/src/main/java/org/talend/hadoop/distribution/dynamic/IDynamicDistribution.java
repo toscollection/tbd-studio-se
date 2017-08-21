@@ -16,6 +16,10 @@ package org.talend.hadoop.distribution.dynamic;
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public class DynamicAdapter {
+public interface IDynamicDistribution {
+
+    public void regist() throws Exception;
+
+    public void unregist() throws Exception;
 
 }

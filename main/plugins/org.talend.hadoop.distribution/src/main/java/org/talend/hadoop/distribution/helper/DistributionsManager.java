@@ -29,11 +29,13 @@ import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
 import org.talend.commons.exception.CommonExceptionHandler;
+import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.runtime.hd.IDistributionsManager;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.dynamic.IDynamicDistribution;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
 
@@ -48,6 +50,26 @@ public final class DistributionsManager implements IDistributionsManager {
     private DistributionBean[] distributionsCache;
 
     private ServiceListener serviceListener;
+
+    static {
+        try {
+            BundleContext bc = getBundleContext();
+            Collection<ServiceReference<IDynamicDistribution>> serviceReferences = bc
+                    .getServiceReferences(IDynamicDistribution.class, null);
+            if (serviceReferences != null && !serviceReferences.isEmpty()) {
+                for (ServiceReference<IDynamicDistribution> sr : serviceReferences) {
+                    IDynamicDistribution service = bc.getService(sr);
+                    try {
+                        service.regist();
+                    } catch (Exception e) {
+                        ExceptionHandler.process(e);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+    }
 
     /**
      * Service can't be null. if the service is HadoopComponent directly, the componentType will be null.
@@ -182,7 +204,7 @@ public final class DistributionsManager implements IDistributionsManager {
         return disctributionsMap;
     }
 
-    private BundleContext getBundleContext() {
+    private static BundleContext getBundleContext() {
         return FrameworkUtil.getBundle(DistributionFactory.class).getBundleContext();
     }
 

@@ -7090,8 +7090,10 @@
       "template_name" : "SQOOP-PARQUET-LIB.*"
     } ],
     "default_point" : "org.talend.core.runtime.librariesNeeded",
+    "id" : "org.talend.core.runtime.librariesNeeded.needToChange",
     "point" : "org.talend.core.runtime.librariesNeeded",
     "tagName" : "extension",
+    "template_id" : "org.talend.core.runtime.librariesNeeded.{0}",
     "template_point" : "org.talend.core.runtime.librariesNeeded"
   }, {
     "childNodes" : [ {
@@ -7177,8 +7179,10 @@
       "template_libraries" : "antlr-runtime.*"
     } ],
     "default_point" : "org.talend.core.runtime.classloader_provider",
+    "id" : "org.talend.core.runtime.classloader_provider.needToChange",
     "point" : "org.talend.core.runtime.classloader_provider",
     "tagName" : "extension",
+    "template_id" : "org.talend.core.runtime.classloader_provider.{0}",
     "template_point" : "org.talend.core.runtime.classloader_provider"
   } ],
   "tagName" : "plugin"

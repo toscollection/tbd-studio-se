@@ -70,7 +70,7 @@ public enum CDH5xConstant {
         String moduleName = this.prefix;
         for (int i = 0; i < ids.length; ++i) {
             String id = ids[i];
-            String key = "{" + i + "}"; //$NON-NLS-1$ //$NON-NLS-2$
+            String key = "\\{" + i + "\\}"; //$NON-NLS-1$ //$NON-NLS-2$
             moduleName = moduleName.replaceAll(key, id);
         }
         return moduleName;

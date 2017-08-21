@@ -10,12 +10,15 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.cdh5x;
+package org.talend.hadoop.distribution.dynamic;
 
+import org.talend.core.runtime.dynamic.IDynamicAttribute;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public class DynamicPluginAdapter {
+public interface IAdapterCreator<T extends AbstractDynamicAdapter> {
+
+    public T create(IDynamicAttribute attr, String dynamicId);
 
 }

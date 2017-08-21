@@ -19,43 +19,38 @@ import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
+public class DynamicLibraryAdapter extends AbstractDynamicAdapter {
 
-    public static final String TAG_NAME = "libraryNeededGroup"; //$NON-NLS-1$
-
-    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+    public static final String TAG_NAME = "library"; //$NON-NLS-1$
 
     public static final String ATTR_ID = "id"; //$NON-NLS-1$
 
-    public static final String ATTR_NAME = "name"; //$NON-NLS-1$
-
-    public DynamicModuleGroupAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
+    public DynamicLibraryAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
         super(dynamicConfiguration, id);
         if (!TAG_NAME.equals(dynamicConfiguration.getTagName())) {
             throw new RuntimeException("The input configuration is not an instance of " + TAG_NAME); //$NON-NLS-1$
         }
     }
 
-    public IDynamicConfiguration getDynamicLibraryNeeded() {
+    public IDynamicConfiguration getDynamicConfiguration() {
         return (IDynamicConfiguration) getDynamicAttribute();
     }
 
     @Override
     public void adapt() {
-        IDynamicConfiguration dynamicModuleGroup = getDynamicLibraryNeeded();
 
-        dynamicModuleGroup.setAttribute(ATTR_ID, getNewValueByTemplate(ATTR_ID));
+        IDynamicConfiguration dynamicLibraryNeeded = getDynamicConfiguration();
 
-        dynamicModuleGroup.setAttribute(ATTR_DESCRIPTION, getAttributeDefault(ATTR_DESCRIPTION));
-        dynamicModuleGroup.setAttribute(ATTR_NAME, getAttributeDefault(ATTR_NAME));
+        dynamicLibraryNeeded.setAttribute(ATTR_ID, getNewValueByTemplate(ATTR_ID));
 
-        List<IDynamicConfiguration> childConfigurations = dynamicModuleGroup.getChildConfigurations();
+        List<IDynamicConfiguration> childConfigurations = dynamicLibraryNeeded.getChildConfigurations();
         if (childConfigurations != null && !childConfigurations.isEmpty()) {
             for (IDynamicConfiguration config : childConfigurations) {
                 AbstractDynamicAdapter adapter = DynamicAdapterFactory.getInstance().create(config.getTagName(), config, getDynamicId());
                 adapter.adapt();
             }
         }
+
     }
 
 }
