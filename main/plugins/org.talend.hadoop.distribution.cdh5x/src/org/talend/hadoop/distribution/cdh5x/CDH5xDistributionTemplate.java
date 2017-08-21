@@ -67,6 +67,7 @@ import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
@@ -220,7 +221,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String getVersion() {
-        return VERSION.replaceAll("{0}", getId());
+        return DynamicDistributionUtils.fillTemplate(VERSION, getId());
     }
 
     @Override

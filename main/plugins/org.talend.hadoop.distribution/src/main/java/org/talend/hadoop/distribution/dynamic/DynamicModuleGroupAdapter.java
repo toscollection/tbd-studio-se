@@ -56,6 +56,8 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
                 adapter.adapt();
             }
         }
+
+        super.adapt();
     }
 
 }

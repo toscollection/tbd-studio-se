@@ -53,6 +53,8 @@ public class DynamicClassloaderAdapter extends AbstractDynamicAdapter {
                 adapter.adapt();
             }
         }
+
+        super.adapt();
     }
 
 }

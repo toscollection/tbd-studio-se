@@ -51,6 +51,8 @@ public class DynamicLibraryAdapter extends AbstractDynamicAdapter {
             }
         }
 
+        super.adapt();
+
     }
 
 }

@@ -49,6 +49,7 @@ public class DynamicPluginAdapter extends AbstractDynamicAdapter {
             }
         }
 
+        super.adapt();
     }
 
 }

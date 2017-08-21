@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh5x;
 
+import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -67,12 +68,6 @@ public enum CDH5xConstant {
     }
 
     public String getModuleName(String... ids) {
-        String moduleName = this.prefix;
-        for (int i = 0; i < ids.length; ++i) {
-            String id = ids[i];
-            String key = "\\{" + i + "\\}"; //$NON-NLS-1$ //$NON-NLS-2$
-            moduleName = moduleName.replaceAll(key, id);
-        }
-        return moduleName;
+        return DynamicDistributionUtils.fillTemplate(this.prefix, ids);
     }
 }

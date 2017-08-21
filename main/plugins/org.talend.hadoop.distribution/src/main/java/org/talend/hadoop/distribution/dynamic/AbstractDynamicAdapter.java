@@ -12,7 +12,11 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
+import java.util.Iterator;
+import java.util.Map;
+
 import org.talend.core.runtime.dynamic.IDynamicAttribute;
+import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -52,30 +56,35 @@ public abstract class AbstractDynamicAdapter {
         return dynamicAttribute.getAttribute(getTemplateKey(key));
     }
 
-    public String fillTemplate(String templateString, String... args) {
-        String fullString = templateString;
-        if (args != null && 0 < args.length) {
-            for (int i = 0; i < args.length; ++i) {
-                String arg = args[i];
-                fullString = fullString.replaceAll("\\{" + i + "\\}", arg); //$NON-NLS-1$ //$NON-NLS-2$
-            }
-        }
-        return fullString;
-    }
-
     public String getNewValueByTemplate(String key) {
         String template = getAttributeTemplate(key).toString();
-        return fillTemplate(template, getDynamicId());
+        return DynamicDistributionUtils.fillTemplate(template, getDynamicId());
     }
 
     public String getNewValueByTemplate(String key, String... args) {
         String template = getAttributeTemplate(key).toString();
-        return fillTemplate(template, args);
+        return DynamicDistributionUtils.fillTemplate(template, args);
     }
 
     public IDynamicAttribute getDynamicAttribute() {
         return dynamicAttribute;
     }
 
-    abstract public void adapt();
+    public void adapt() {
+        cleanTemplateAndDefault();
+    }
+
+    public void cleanTemplateAndDefault() {
+        Map<String, Object> attributes = dynamicAttribute.getAttributes();
+        if (attributes != null && !attributes.isEmpty()) {
+            Iterator<Map.Entry<String, Object>> iter = attributes.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry<String, Object> entry = iter.next();
+                String key = entry.getKey();
+                if (key.startsWith(DEFAULT_PREFIX) || key.startsWith(TEMPLATE_PREFIX)) {
+                    iter.remove();
+                }
+            }
+        }
+    }
 }

@@ -50,6 +50,8 @@ public abstract class DynamicExtensionAdapter extends AbstractDynamicAdapter {
                 adapter.adapt();
             }
         }
+
+        super.adapt();
     }
 
 }
