@@ -63,8 +63,9 @@ public class DynamicCDHDistribution implements IDynamicDistribution {
         IDynamicPluginConfiguration pluginConfiguration = runtimePlugin.getPluginConfiguration();
 
         String id = pluginConfiguration.getId();
+        String displayName = pluginConfiguration.getName();
 
-        cdhService = new CDH5xDistributionTemplate(id) {
+        cdhService = new CDH5xDistributionTemplate(id, displayName) {
         };
         AbstractDynamicAdapter adapter = DynamicAdapterFactory.getInstance().create(runtimePlugin.getTagName(), runtimePlugin,
                 id);

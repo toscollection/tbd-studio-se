@@ -67,7 +67,6 @@ import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
-import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
@@ -75,10 +74,6 @@ import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 public abstract class CDH5xDistributionTemplate extends AbstractDistribution
         implements IClouderaDistribution, HDFSComponent, HBaseComponent, HCatalogComponent, PigComponent, MRComponent,
         HiveComponent, HiveOnSparkComponent, ImpalaComponent, SqoopComponent, SparkBatchComponent, SparkStreamingComponent {
-
-    public final static String VERSION = "Cloudera_CDH5_{0}";
-
-    public static final String VERSION_DISPLAY = "Cloudera CDH5.X(YARN mode)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
@@ -90,11 +85,14 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     private String id;
 
-    public CDH5xDistributionTemplate(String id) {
+    private String displayName;
+
+    public CDH5xDistributionTemplate(String id, String displayName) {
         this.id = id;
+        this.displayName = displayName;
+        String version = getVersion();
 
         String distribution = getDistribution();
-        String version = getVersion();
 
         // Used to add a module group import for the components that have a HADOOP_DISTRIBUTION parameter, aka. the
         // components that have the distribution list.
@@ -221,7 +219,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String getVersion() {
-        return DynamicDistributionUtils.fillTemplate(VERSION, getId());
+        return id;
     }
 
     @Override
@@ -236,7 +234,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return VERSION_DISPLAY;
+        return displayName;
     }
 
     @Override
