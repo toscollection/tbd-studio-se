@@ -7032,7 +7032,7 @@
       "name" : "TALEND_CLOUDERA_CDH_5_10_NAVIGATOR",
       "tagName" : "libraryNeededGroup",
       "template_description" : "Talend cloudera 5.10 navigator API.",
-      "template_id" : "TALEND_CLOUDERA_CDH5_NAVIGATOR_{0}",
+      "template_id" : "TALEND_CLOUDERA_NAVIGATOR_Dynamic_{0}",
       "template_name" : "TALEND_CLOUDERA_CDH.*"
     }, {
       "childNodes" : [ {
