@@ -57,13 +57,18 @@ public abstract class AbstractDynamicAdapter {
     }
 
     public String getNewValueByTemplate(String key) {
-        String template = getAttributeTemplate(key).toString();
-        return DynamicDistributionUtils.fillTemplate(template, getDynamicId());
+        return getNewValueByTemplate(key, getDynamicId());
     }
 
     public String getNewValueByTemplate(String key, String... args) {
-        String template = getAttributeTemplate(key).toString();
-        return DynamicDistributionUtils.fillTemplate(template, args);
+        String template = null;
+        Object templateObj = getAttributeTemplate(key);
+        String fillTemplate = null;
+        if (templateObj != null) {
+            template = templateObj.toString();
+            fillTemplate = DynamicDistributionUtils.fillTemplate(template, args);
+        }
+        return fillTemplate;
     }
 
     public IDynamicAttribute getDynamicAttribute() {

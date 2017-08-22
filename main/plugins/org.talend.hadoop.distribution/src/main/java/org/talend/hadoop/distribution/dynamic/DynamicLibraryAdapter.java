@@ -12,9 +12,14 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
+import org.talend.librariesmanager.model.ModulesNeededProvider;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -24,6 +29,28 @@ public class DynamicLibraryAdapter extends AbstractDynamicAdapter {
     public static final String TAG_NAME = "library"; //$NON-NLS-1$
 
     public static final String ATTR_ID = "id"; //$NON-NLS-1$
+
+    private static Map<String, ModuleNeeded> existingModuleMap = new HashMap<>();
+
+    static {
+        try {
+            List<ModuleNeeded> modules = ModulesNeededProvider.getModulesNeededForApplication();
+            if (modules != null && !modules.isEmpty()) {
+                for (ModuleNeeded module : modules) {
+                    String id = module.getId();
+                    if (id != null && !id.isEmpty()) {
+                        existingModuleMap.put(id, module);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+    }
+
+    private static ModuleNeeded getExistingModule(String id) {
+        return existingModuleMap.get(id);
+    }
 
     public DynamicLibraryAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
         super(dynamicConfiguration, id);
@@ -41,7 +68,21 @@ public class DynamicLibraryAdapter extends AbstractDynamicAdapter {
 
         IDynamicConfiguration dynamicLibraryNeeded = getDynamicConfiguration();
 
-        dynamicLibraryNeeded.setAttribute(ATTR_ID, getNewValueByTemplate(ATTR_ID));
+        String id = null;
+
+        Object defaultKeyObj = getAttributeDefault(ATTR_ID);
+        if (defaultKeyObj != null) {
+            String defaultKey = defaultKeyObj.toString();
+            ModuleNeeded existingModule = getExistingModule(defaultKey);
+            if (existingModule != null) {
+                id = existingModule.getId();
+            }
+        }
+        if (id == null) {
+            id = getNewValueByTemplate(ATTR_ID);
+        }
+
+        dynamicLibraryNeeded.setAttribute(ATTR_ID, id);
 
         List<IDynamicConfiguration> childConfigurations = dynamicLibraryNeeded.getChildConfigurations();
         if (childConfigurations != null && !childConfigurations.isEmpty()) {

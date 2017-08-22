@@ -31,6 +31,16 @@ public class DynamicLibraryNeededAdapter extends AbstractDynamicAdapter {
 
     public static final String ATTR_MVN_URI = "mvn_uri"; //$NON-NLS-1$
 
+    public static final String ATTR_URI_PATH = "uripath"; //$NON-NLS-1$
+
+    public static final String ATTR_BUNDLE_ID = "bundleID"; //$NON-NLS-1$
+
+    public static final String ATTR_REQUIRED = "required"; //$NON-NLS-1$
+
+    public static final String ATTR_MESSAGE = "message"; //$NON-NLS-1$
+
+    public static final String ATTR_LANGUAGE = "language"; //$NON-NLS-1$
+
     public DynamicLibraryNeededAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
         super(dynamicConfiguration, id);
         if (!TAG_NAME.equals(dynamicConfiguration.getTagName())) {
@@ -51,6 +61,12 @@ public class DynamicLibraryNeededAdapter extends AbstractDynamicAdapter {
         dynamicLibraryNeeded.setAttribute(ATTR_CONTEXT, getAttributeDefault(ATTR_CONTEXT));
         dynamicLibraryNeeded.setAttribute(ATTR_NAME, getAttributeDefault(ATTR_NAME));
         dynamicLibraryNeeded.setAttribute(ATTR_MVN_URI, getAttributeDefault(ATTR_MVN_URI));
+        dynamicLibraryNeeded.setAttribute(ATTR_URI_PATH, getAttributeDefault(ATTR_URI_PATH));
+
+        dynamicLibraryNeeded.setAttribute(ATTR_BUNDLE_ID, getAttributeDefault(ATTR_BUNDLE_ID));
+        dynamicLibraryNeeded.setAttribute(ATTR_REQUIRED, getAttributeDefault(ATTR_REQUIRED));
+        dynamicLibraryNeeded.setAttribute(ATTR_MESSAGE, getAttributeDefault(ATTR_MESSAGE));
+        dynamicLibraryNeeded.setAttribute(ATTR_LANGUAGE, getAttributeDefault(ATTR_LANGUAGE));
 
         List<IDynamicConfiguration> childConfigurations = dynamicLibraryNeeded.getChildConfigurations();
         if (childConfigurations != null && !childConfigurations.isEmpty()) {

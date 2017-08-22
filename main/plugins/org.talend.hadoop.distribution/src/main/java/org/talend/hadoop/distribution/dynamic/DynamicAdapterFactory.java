@@ -110,11 +110,11 @@ public class DynamicAdapterFactory {
 
         });
 
-        adapterCreatorMap.put(DynamicModuleGroupAdapter.TAG_NAME, new IAdapterCreator<DynamicModuleGroupAdapter>() {
+        adapterCreatorMap.put(DynamicLibraryNeededGroupAdapter.TAG_NAME, new IAdapterCreator<DynamicLibraryNeededGroupAdapter>() {
 
             @Override
-            public DynamicModuleGroupAdapter create(IDynamicAttribute attr, String dynamicId) {
-                return new DynamicModuleGroupAdapter((IDynamicConfiguration) attr, dynamicId);
+            public DynamicLibraryNeededGroupAdapter create(IDynamicAttribute attr, String dynamicId) {
+                return new DynamicLibraryNeededGroupAdapter((IDynamicConfiguration) attr, dynamicId);
             }
 
         });

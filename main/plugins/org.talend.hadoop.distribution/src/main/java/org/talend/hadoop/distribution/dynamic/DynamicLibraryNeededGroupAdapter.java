@@ -19,7 +19,7 @@ import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
+public class DynamicLibraryNeededGroupAdapter extends AbstractDynamicAdapter {
 
     public static final String TAG_NAME = "libraryNeededGroup"; //$NON-NLS-1$
 
@@ -29,7 +29,7 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
 
     public static final String ATTR_NAME = "name"; //$NON-NLS-1$
 
-    public DynamicModuleGroupAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
+    public DynamicLibraryNeededGroupAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
         super(dynamicConfiguration, id);
         if (!TAG_NAME.equals(dynamicConfiguration.getTagName())) {
             throw new RuntimeException("The input configuration is not an instance of " + TAG_NAME); //$NON-NLS-1$
