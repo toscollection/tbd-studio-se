@@ -27,8 +27,6 @@ imports="
 	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
 	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
-    boolean useMapRTicket = ElementParameterParser.getBooleanValue(node, "__USE_MAPRTICKET__");
-    String username = ElementParameterParser.getValue(node, "__USERNAME__");
     List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
     String splitSize = ElementParameterParser.getValue(node, "__SPLIT_SIZE__");
 
@@ -99,23 +97,7 @@ imports="
 		   cmd2_<%=cid%>.add("kerberos");
 		new ExeCMd_<%=cid%>().exec(cmd2_<%=cid%>.toArray(new String[0]));
 		
-    <%}
-            if(useMapRTicket) {
-                String mapRTicketCluster = ElementParameterParser.getValue(node, "__MAPRTICKET_CLUSTER__");
-                String mapRTicketDuration = ElementParameterParser.getValue(node, "__MAPRTICKET_DURATION__");
-            %>
-            com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
-            <%if(useKrb){%>
-            maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=mapRTicketCluster%>, <%=mapRTicketDuration%>);
-            <%
-            }else{
-            String passwordFieldName = "__MAPRTICKET_PASSWORD__";%>
-            <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
-            	maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>);
-            	<%
-            }
-        }
-        %>
+    <%}%>
 
   	int nb_line_<%=cid %>=0;
   	  	com.mapr.db.Admin admin_<%=cid%> = com.mapr.db.MapRDB.newAdmin();
