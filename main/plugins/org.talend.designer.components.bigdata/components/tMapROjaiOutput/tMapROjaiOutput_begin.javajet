@@ -30,39 +30,75 @@ imports="
     boolean useMapRTicket = ElementParameterParser.getBooleanValue(node, "__USE_MAPRTICKET__");
     String username = ElementParameterParser.getValue(node, "__USERNAME__");
     List<? extends IConnection> inConns = node.getIncomingConnections(EConnectionType.FLOW_MAIN);
+    String splitSize = ElementParameterParser.getValue(node, "__SPLIT_SIZE__");
 
     %>
     <%if(useKrb){%>
-        String message_<%=cid%>;
+       		class ExeCMd_<%=cid%>{
+		    private boolean UsePwd = false;
+		    String message;
+		    
+		    public boolean exec(String[] arg0) throws Exception{
+		        boolean result = true;
+		    
+		        Process process = Runtime.getRuntime().exec(arg0);
+		        
+		        if(UsePwd){
+		            java.io.PrintWriter pwout = new java.io.PrintWriter(process.getOutputStream());
+		        <%if(!useKeytab){
+		        String passwordFieldName = "__KERBEROS_PASSWORD__";%>
+		        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+		            pwout.println(decryptedPassword_<%=cid%>); 
+		            pwout.flush();
+		        <%}%>
+		        }
+		    
+		        java.io.BufferedReader bufferedReader = new java.io.BufferedReader(new java.io.InputStreamReader(process.getInputStream()));
+		        while ((message = bufferedReader.readLine()) != null) {
+			        System.out.println(message);
+		        }
+		        java.io.BufferedReader bufferedReader2 = new java.io.BufferedReader(new java.io.InputStreamReader(process.getErrorStream()));
+		        while ((message = bufferedReader2.readLine()) != null) {
+			        System.out.println(message);
+			        result = false;
+		        }
+		        process.waitFor();
+		        return result;
+		    }
+		    
+		    public void setUsePwd(boolean usePwd){
+		       UsePwd = usePwd;
+		    }
+		    
+		}
+		
+		ExeCMd_<%=cid%> exeCMd_<%=cid%> = new ExeCMd_<%=cid%>();
+		
+        
 		java.util.ArrayList<String> cmd_<%=cid%> = new java.util.ArrayList<String>();
-		cmd_<%=cid%>.add("Kinit");
+		cmd_<%=cid%>.add("kinit");
 		
 		<%if(useKeytab){%>
 		cmd_<%=cid%>.add("-t");
 		cmd_<%=cid%>.add(<%=keytabPath%>);
+		<%}else{%>
+		exeCMd_<%=cid%>.setUsePwd(true);
 		<%}%>
 		cmd_<%=cid%>.add(<%=userPrincipal%>);
 		
-		Process process_<%=cid%> = Runtime.getRuntime().exec(cmd_<%=cid%>.toArray(new String[0]));
-		java.io.PrintWriter pwout_<%=cid%> = new java.io.PrintWriter(process_<%=cid%>.getOutputStream());
+		exeCMd_<%=cid%>.exec(cmd_<%=cid%>.toArray(new String[0]));
 		
-		<%if(!useKeytab){
-		String passwordFieldName = "__KERBEROS_PASSWORD__";%>
-		<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+		java.util.ArrayList<String> cmd2_<%=cid%> = new java.util.ArrayList<String>();
 		
-		pwout_<%=cid%>.println(decryptedPassword_<%=cid%>); 
-		pwout_<%=cid%>.flush();
-		<%}%>
-
-		java.io.BufferedReader bufferedReader_<%=cid%> = new java.io.BufferedReader(new java.io.InputStreamReader(process_<%=cid%>.getInputStream()));
-		while ((message_<%=cid%> = bufferedReader_<%=cid%>.readLine()) != null) {
-			System.out.println(message_<%=cid%>);
-		}
-		java.io.BufferedReader bufferedReader2_<%=cid%> = new java.io.BufferedReader(new java.io.InputStreamReader(process_<%=cid%>.getErrorStream()));
-		while ((message_<%=cid%> = bufferedReader2_<%=cid%>.readLine()) != null) {
-			System.err.println(message_<%=cid%>);
-		}
-		process_<%=cid%>.waitFor();
+		String os_<%=cid%> = System.getProperty("os.name");  
+        if(os_<%=cid%>.toLowerCase().startsWith("win")){  
+           cmd2_<%=cid%>.add("maprlogin.bat");
+        }else{
+           cmd2_<%=cid%>.add("maprlogin");
+        }
+		   cmd2_<%=cid%>.add("kerberos");
+		new ExeCMd_<%=cid%>().exec(cmd2_<%=cid%>.toArray(new String[0]));
+		
     <%}
             if(useMapRTicket) {
                 String mapRTicketCluster = ElementParameterParser.getValue(node, "__MAPRTICKET_CLUSTER__");
@@ -87,27 +123,31 @@ imports="
   		tableDescriptor_<%=cid%>.setInsertionOrder(<%=InsertionOrder%>);
   		tableDescriptor_<%=cid%>.setAutoSplit(<%=AutoSplit%>);
   		long bulkWriteSize_<%=cid%> = Long.parseLong(<%=bulkWriteOperationSize%>);
-  		tableDescriptor_<%=cid%>.setSplitSize(bulkWriteSize_<%=cid%>);
+  		long splitSize_<%=cid%> = Long.parseLong(<%=splitSize%>);
+  		tableDescriptor_<%=cid%>.setSplitSize(splitSize_<%=cid%>);
+  		com.mapr.db.Table table_<%=cid%>=null;
   	<%
   		if("NONE".equals(tableAction)){
   		%>
   	
-  	    com.mapr.db.Table table_<%=cid%> = com.mapr.db.MapRDB.getTable(<%=table%>);
+  	    table_<%=cid%> = com.mapr.db.MapRDB.getTable(<%=table%>);
   	
   	    <%
   		}else if("DROP_CREATE".equals(tableAction)){
   		%>
   		com.mapr.db.MapRDB.deleteTable(<%=table%>);
-  		com.mapr.db.Table table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
+  		table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
   		  	<%
   		}else if("CREATE".equals(tableAction)){
   		%>
-  		com.mapr.db.Table table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
+  		table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
   		  	<%
   		}else if("CREATE_IF_NOT_EXISTS".equals(tableAction)){
   		%>
   		if(!com.mapr.db.MapRDB.tableExists(<%=table%>)){
-  		    com.mapr.db.Table table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
+  		    table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
+  		}else{
+  		    table_<%=cid%> = com.mapr.db.MapRDB.getTable(<%=table%>);
   		}
   		
   		  	<%
@@ -117,12 +157,12 @@ imports="
   		if(com.mapr.db.MapRDB.tableExists(<%=table%>)){
   		    com.mapr.db.MapRDB.deleteTable(<%=table%>);
   		}
-  		com.mapr.db.Table table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
+  		table_<%=cid%> = admin_<%=cid%>.createTable(tableDescriptor_<%=cid%>);
   		
   		  	<%
   		}else if("TRUNCATE".equals(tableAction)){
   		%>
-  		com.mapr.db.Table table_<%=cid%> = com.mapr.db.MapRDB.getTable(<%=table%>);
+  		table_<%=cid%> = com.mapr.db.MapRDB.getTable(<%=table%>);
   		  	    // all recordss in the table
 	    org.ojai.DocumentStream rst_<%=cid%> = table_<%=cid%>.find();
         java.util.Iterator<org.ojai.Document> itrst_<%=cid%> = rst_<%=cid%>.iterator();

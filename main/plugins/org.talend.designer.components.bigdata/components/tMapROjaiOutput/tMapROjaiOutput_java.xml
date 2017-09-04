@@ -74,7 +74,7 @@
 		<PARAMETER FIELD="TEXT" NAME="BULK_WRITE_SIZE"
 			REPOSITORY_VALUE="BULK_WRITE_SIZE" NUM_ROW="70" SHOW_IF="SET_BULK_WRITE=='true'"
 			GROUP="BULK_WRITE_GROUP">
-			<DEFAULT>"4096"</DEFAULT>
+			<DEFAULT>"10000"</DEFAULT>
 		</PARAMETER>
 <!-- kerberos -->
 		<PARAMETER NAME="USE_KRB" FIELD="CHECK" NUM_ROW="80"
@@ -164,6 +164,10 @@
 		<PARAMETER FIELD="CHECK" NAME="Auto_Split" NUM_ROW="20"
 			NOT_SHOW_IF="(TABLE_ACTION=='NONE')OR(TABLE_ACTION=='TRUNCATE')">
 			<DEFAULT>true</DEFAULT>
+		</PARAMETER>
+		<PARAMETER FIELD="TEXT" NAME="SPLIT_SIZE"
+			NUM_ROW="30">
+			<DEFAULT>"4096"</DEFAULT>
 		</PARAMETER>
 	</ADVANCED_PARAMETERS>
 
@@ -258,9 +262,9 @@
 				MVN="mvn:org.talend.libraries/hadoop-annotations-2.7.0-mapr-1602/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.mapr/lib/hadoop-annotations-2.7.0-mapr-1602.jar"
 				NAME="hadoop-annotations-2.7.0-mapr-1602.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
-			<IMPORT MODULE="tools-1.7.jar" MVN="mvn:org.talend.libraries/tools-1.7/6.0.0"
+			<!-- IMPORT MODULE="tools-1.7.jar" MVN="mvn:org.talend.libraries/tools-1.7/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.mapr/lib/tools-1.7.jar"
-				NAME="tools-1.7.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
+				NAME="tools-1.7.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" /-->
 			<IMPORT MODULE="commons-cli-1.2.jar" MVN="mvn:org.talend.libraries/commons-cli-1./6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.2.jar"
 				NAME="commons-cli-1.2.jar" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
