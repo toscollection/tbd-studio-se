@@ -84,7 +84,9 @@ imports="
 		<%}%>
 		cmd_<%=cid%>.add(<%=userPrincipal%>);
 		
-		exeCMd_<%=cid%>.exec(cmd_<%=cid%>.toArray(new String[0]));
+		if(!exeCMd_<%=cid%>.exec(cmd_<%=cid%>.toArray(new String[0]))){
+		    throw new RuntimeException("Kerberos Authentication Failed.");
+		}
 		
 		java.util.ArrayList<String> cmd2_<%=cid%> = new java.util.ArrayList<String>();
 		
@@ -95,7 +97,11 @@ imports="
            cmd2_<%=cid%>.add("maprlogin");
         }
 		   cmd2_<%=cid%>.add("kerberos");
-		new ExeCMd_<%=cid%>().exec(cmd2_<%=cid%>.toArray(new String[0]));
+		   
+		boolean loginResult_<%=cid%> = new ExeCMd_<%=cid%>().exec(cmd2_<%=cid%>.toArray(new String[0]));
+		if(!loginResult_<%=cid%>){
+		    throw new RuntimeException("Mapr Login failed. Please see the error log at MAPR_HOME/log for more details");
+		}
 		
     <%}%>
 
