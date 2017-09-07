@@ -12,84 +12,61 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.Map;
 
-import org.talend.core.runtime.dynamic.IDynamicAttribute;
-import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
+import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
 public abstract class AbstractDynamicAdapter {
 
-    public static final String DEFAULT_PREFIX = "default_"; //$NON-NLS-1$
+    private boolean resolved;
 
-    public static final String TEMPLATE_PREFIX = "template_"; //$NON-NLS-1$
+    private TemplateBean templateBean;
 
-    private String dynamicId;
+    private DynamicConfiguration configuration;
 
-    private IDynamicAttribute dynamicAttribute;
+    private Map<String, Object> attributesMap = new HashMap<>();
 
-    public AbstractDynamicAdapter(IDynamicAttribute dynamicAttr, String id) {
-        dynamicAttribute = dynamicAttr;
-        dynamicId = id;
+    public AbstractDynamicAdapter(TemplateBean templateBean, DynamicConfiguration configuration) {
+        this.templateBean = templateBean;
+        this.configuration = configuration;
+        resolved = false;
     }
 
-    public String getDynamicId() {
-        return dynamicId;
+    protected void setAttribute(String key, Object value) {
+        attributesMap.put(key, value);
     }
 
-    public String getDefaultKey(String key) {
-        return DEFAULT_PREFIX + key;
+    protected Object getAttribute(String key) {
+        return attributesMap.get(key);
     }
 
-    public String getTemplateKey(String key) {
-        return TEMPLATE_PREFIX + key;
+    public TemplateBean getTemplateBean() {
+        return templateBean;
     }
 
-    public Object getAttributeDefault(String key) {
-        return dynamicAttribute.getAttribute(getDefaultKey(key));
+    public void setTemplateBean(TemplateBean templateBean) {
+        this.templateBean = templateBean;
     }
 
-    public Object getAttributeTemplate(String key) {
-        return dynamicAttribute.getAttribute(getTemplateKey(key));
+    public DynamicConfiguration getConfiguration() {
+        return this.configuration;
     }
 
-    public String getNewValueByTemplate(String key) {
-        return getNewValueByTemplate(key, getDynamicId());
+    public void setConfiguration(DynamicConfiguration configuration) {
+        this.configuration = configuration;
     }
 
-    public String getNewValueByTemplate(String key, String... args) {
-        String template = null;
-        Object templateObj = getAttributeTemplate(key);
-        String fillTemplate = null;
-        if (templateObj != null) {
-            template = templateObj.toString();
-            fillTemplate = DynamicDistributionUtils.fillTemplate(template, args);
-        }
-        return fillTemplate;
+    public boolean isResolved() {
+        return resolved;
     }
 
-    public IDynamicAttribute getDynamicAttribute() {
-        return dynamicAttribute;
+    public void setResolved(boolean resolved) {
+        this.resolved = resolved;
     }
 
-    public void adapt() {
-        cleanTemplateAndDefault();
-    }
-
-    public void cleanTemplateAndDefault() {
-        Map<String, Object> attributes = dynamicAttribute.getAttributes();
-        if (attributes != null && !attributes.isEmpty()) {
-            Iterator<Map.Entry<String, Object>> iter = attributes.entrySet().iterator();
-            while (iter.hasNext()) {
-                Map.Entry<String, Object> entry = iter.next();
-                String key = entry.getKey();
-                if (key.startsWith(DEFAULT_PREFIX) || key.startsWith(TEMPLATE_PREFIX)) {
-                    iter.remove();
-                }
-            }
-        }
-    }
+    abstract protected void resolve() throws Exception;
 }

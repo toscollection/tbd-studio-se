@@ -35,8 +35,6 @@ import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
-import org.talend.hadoop.distribution.dynamic.AbstractDynamicAdapter;
-import org.talend.hadoop.distribution.dynamic.DynamicAdapterFactory;
 import org.talend.hadoop.distribution.dynamic.IDynamicDistribution;
 
 /**
@@ -52,6 +50,9 @@ public class DynamicCDHDistribution implements IDynamicDistribution {
 
     @Override
     public void regist() throws Exception {
+        if (true) {
+            return;
+        }
         CDH5xPlugin cdh5xPlugin = CDH5xPlugin.getInstance();
 
         Bundle bundle = cdh5xPlugin.getBundle();
@@ -67,9 +68,10 @@ public class DynamicCDHDistribution implements IDynamicDistribution {
 
         cdhService = new CDH5xDistributionTemplate(id, displayName) {
         };
-        AbstractDynamicAdapter adapter = DynamicAdapterFactory.getInstance().create(runtimePlugin.getTagName(), runtimePlugin,
-                id);
-        adapter.adapt();
+        // AbstractDynamicAdapter adapter = DynamicAdapterFactory.getInstance().create(runtimePlugin.getTagName(),
+        // runtimePlugin,
+        // id);
+        // adapter.adapt();
 
         DynamicServiceUtil.addContribution(bundle, runtimePlugin);
 

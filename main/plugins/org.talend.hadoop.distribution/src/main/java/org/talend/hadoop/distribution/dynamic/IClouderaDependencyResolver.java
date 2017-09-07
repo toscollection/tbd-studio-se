@@ -12,13 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
-import org.talend.core.runtime.dynamic.IDynamicAttribute;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public interface IAdapterCreator<T extends AbstractDynamicAdapter> {
+public interface IClouderaDependencyResolver extends IDependencyResolver {
 
-    public T create(IDynamicAttribute attr, String dynamicId);
+    public static final String DISTRIBUTION = "CLOUDERA"; //$NON-NLS-1$
 
 }

@@ -1,0 +1,136 @@
+{
+	"id": "CDH5.X",
+	"name": "Cloudera CDH5.X template",
+	"distribution": "Cloudera",
+	"repository": "http://repository.cloudera.com/cloudera/cdh-releases-rcs",
+	"servicePrefix": "org.talend.hadoop.distribution.component",
+	"services": [
+		"{servicePrefix}.HadoopComponent",
+		"{servicePrefix}.HDFSComponent",
+		"{servicePrefix}.HBaseComponent",
+		"{servicePrefix}.HCatalogComponent",
+		"{servicePrefix}.HiveComponent",
+		"{servicePrefix}.HiveOnSparkComponent",
+		"{servicePrefix}.ImpalaComponent",
+		"{servicePrefix}.MRComponent",
+		"{servicePrefix}.PigComponent",
+		"{servicePrefix}.SqoopComponent",
+		"{servicePrefix}.SparkBatchComponent",
+		"{servicePrefix}.SparkStreamingComponent"
+	],
+	"conditions": [
+		{
+			"id": "condition1",
+			"operator": "==",
+			"left": "a",
+			"right": "b"
+		},
+		{
+			"id": "condition2",
+			"operator": "==",
+			"left": "c",
+			"right": "d"
+		},
+		{
+			"id": "condition3",
+			"operator": "AND",
+			"left": "{condition1}",
+			"right": "{condition2}"
+		}
+	],
+	"modules": [
+		{
+			"id": "id1",
+			"type": "standard",
+			"jarName": "talendConfig.jar",
+			"mvnUri": ""
+		},
+		{
+			"id": "hdfs.base.jar",
+			"type": "base",
+			"groupId": "org.apache.hadoop",
+			"artifactId": "hadoop-client"
+		},
+		{
+			"id": "talendConfig.reference",
+			"type": "reference",
+			"jarName": "hadoop-hdfs-cdh5.10"
+		}
+	],
+	"moduleGroups": [
+		{
+			"id": "module1",
+			"modules": [
+				"id1",
+				"hdfs.base.jar"
+			],
+			"conditions": [
+				"{conditions.condition1}"
+			]
+		},
+		{
+			"id": "module2",
+			"modules": [
+				"talendConfig.reference",
+				"{moduleGroups.module1}"
+			],
+			"conditions": [
+				"{conditions.condition1}",
+				"{conditions.condition2}"
+			]
+		}
+	],
+	"typeMap": [
+		{
+			"type": "HDFS",
+			"moduleGroups": [
+				{
+					"moduleGroup": "module1",
+					"conditions": [
+						"{conditions.condition1}"
+					]
+				}
+			]
+		},
+		{
+			"type": "PIG",
+			"moduleGroups": [
+				{
+					"moduleGroup": "module2",
+					"conditions": [
+						"{conditions.condition1}",
+						"{conditions.condition2}"
+					]
+				}
+			]
+		}
+	],
+	"componentTypeMap": [
+		{
+			"type": "MAPREDUCE",
+			"component": "tS3Input",
+			"moduleGroups": [
+				{
+					"moduleGroup": "module2",
+					"conditions": [
+						"{conditions.condition1}",
+						"{conditions.condition2}"
+					]
+				}
+			]
+		},
+		{
+			"type": "PIG",
+			"component": "tPigStoreResult",
+			"moduleGroups": [
+				{
+					"moduleGroup": "module2",
+					"conditions": [
+						"{conditions.condition1}",
+						"{conditions.condition2}"
+					]
+				}
+			]
+		}
+	]
+}

@@ -10,19 +10,30 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
+package org.talend.hadoop.distribution.dynamic.adapter;
 
-import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
+import java.util.List;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public abstract class DynamicExtensionAdapter extends AbstractDynamicAdapter {
+public interface IDistributionTemplate {
 
-    public static final String ATTR_ID = "id"; //$NON-NLS-1$
+    public String getId();
 
-    public DynamicExtensionAdapter(TemplateBean templateBean, DynamicConfiguration configuration) {
-        super(templateBean, configuration);
-    }
+    public String getName();
 
+    public String getDistribution();
+
+    public String getRepository();
+
+    public String getVariable(String variable);
+
+    public List<String> getServices();
+
+    public List<ConditionBean> getConditionBeans();
+
+    public List<ModuleBean> getModuleBeans();
+
+    public List<ModuleGroupBean> getModuleGroupBeans();
 }

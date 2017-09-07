@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.talend.hadoop.distribution.cdh5x.commands.category"
+            name="Sample Category">
+      </category>
+      <command
+            categoryId="org.talend.hadoop.distribution.cdh5x.commands.category"
+            id="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
+            name="Sample Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.talend.hadoop.distribution.cdh5x.handlers.SampleHandler"
+            commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="org.talend.hadoop.distribution.cdh5x.menus.sampleMenu"
+               label="Sample Menu"
+               mnemonic="M">
+            <command
+                  commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
+                  id="org.talend.hadoop.distribution.cdh5x.menus.sampleCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="org.talend.hadoop.distribution.cdh5x.toolbars.sampleToolbar">
+            <command
+                  commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
+                  icon="icons/sample.png"
+                  id="org.talend.hadoop.distribution.cdh5x.toolbars.sampleCommand"
+                  tooltip="Say hello world">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>

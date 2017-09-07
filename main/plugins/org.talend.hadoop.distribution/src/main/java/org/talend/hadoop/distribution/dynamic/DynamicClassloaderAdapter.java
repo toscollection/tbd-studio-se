@@ -13,8 +13,14 @@
 package org.talend.hadoop.distribution.dynamic;
 
 import java.util.List;
+import java.util.Map;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
+import org.talend.hadoop.distribution.dynamic.adapter.ClassLoaderBean;
+import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
+import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -27,34 +33,63 @@ public class DynamicClassloaderAdapter extends AbstractDynamicAdapter {
 
     public static final String ATTR_LIBRARIES = "libraries"; //$NON-NLS-1$
 
-    public DynamicClassloaderAdapter(IDynamicConfiguration dynamicConfiguration, String id) {
-        super(dynamicConfiguration, id);
-        if (!TAG_NAME.equals(dynamicConfiguration.getTagName())) {
-            throw new RuntimeException("The input configuration is not an instance of " + TAG_NAME); //$NON-NLS-1$
-        }
+    private ClassLoaderBean classLoaderBean;
+
+    private Map<String, DynamicModuleGroupAdapter> moduleGroupBeanAdapterMap;
+
+    public DynamicClassloaderAdapter(TemplateBean templateBean, DynamicConfiguration configuration,
+            ClassLoaderBean classLoaderBean, Map<String, DynamicModuleGroupAdapter> moduleGroupBeanAdapterMap) {
+        super(templateBean, configuration);
+        this.classLoaderBean = classLoaderBean;
+        this.moduleGroupBeanAdapterMap = moduleGroupBeanAdapterMap;
     }
 
-    public IDynamicConfiguration getDynamicClassLoader() {
-        return (IDynamicConfiguration) getDynamicAttribute();
+    public IDynamicConfiguration adapt(IProgressMonitor monitor) throws Exception {
+        resolve();
+
+        IDynamicConfiguration classLoader = DynamicFactory.getInstance().createDynamicConfiguration();
+        classLoader.setConfigurationName(TAG_NAME);
+        classLoader.setAttribute(ATTR_INDEX, classLoaderBean.getIndex());
+
+        String moduleGroupId = classLoaderBean.getModuleGroup();
+        DynamicModuleGroupAdapter dynamicModuleGroupAdapter = moduleGroupBeanAdapterMap.get(moduleGroupId);
+        if (dynamicModuleGroupAdapter == null) {
+            throw new Exception("Can't find module group which id is " + moduleGroupId + ", if it is not mistake, please check "
+                    + DynamicModuleGroupAdapter.class.getName());
+        }
+
+        List<String> runtimeModules = dynamicModuleGroupAdapter.getRuntimeModules();
+        if (runtimeModules != null) {
+            StringBuffer libraries = new StringBuffer();
+            for (String runtimeModule : runtimeModules) {
+                if (0 < libraries.length()) {
+                    libraries.append(";");
+                }
+                libraries.append(runtimeModule);
+            }
+            classLoader.setAttribute(ATTR_LIBRARIES, libraries.toString());
+        }
+
+        return classLoader;
     }
 
     @Override
-    public void adapt() {
-        IDynamicConfiguration dynamicClassLoader = getDynamicClassLoader();
-
-        dynamicClassLoader.setAttribute(ATTR_INDEX, getNewValueByTemplate(ATTR_INDEX));
-
-        dynamicClassLoader.setAttribute(ATTR_LIBRARIES, getAttributeDefault(ATTR_LIBRARIES));
-
-        List<IDynamicConfiguration> childConfigurations = dynamicClassLoader.getChildConfigurations();
-        if (childConfigurations != null && !childConfigurations.isEmpty()) {
-            for (IDynamicConfiguration config : childConfigurations) {
-                AbstractDynamicAdapter adapter = DynamicAdapterFactory.getInstance().create(config.getTagName(), config, getDynamicId());
-                adapter.adapt();
-            }
+    protected void resolve() throws Exception {
+        if (isResolved()) {
+            return;
         }
 
-        super.adapt();
+        TemplateBean templateBean = getTemplateBean();
+
+        String id = (String) DynamicDistributionUtils.calculate(templateBean, classLoaderBean.getId());
+        String index = (String) DynamicDistributionUtils.calculate(templateBean, classLoaderBean.getIndex());
+        String moduleGroup = (String) DynamicDistributionUtils.calculate(templateBean, classLoaderBean.getModuleGroup());
+
+        classLoaderBean.setId(id);
+        classLoaderBean.setIndex(index);
+        classLoaderBean.setModuleGroup(moduleGroup);
+
+        setResolved(true);
     }
 
 }
