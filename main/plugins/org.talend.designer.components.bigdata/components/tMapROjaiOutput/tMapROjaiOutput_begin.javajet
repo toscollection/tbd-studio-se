@@ -32,7 +32,7 @@ imports="
 
     %>
     <%if(useKrb){%>
-       		class ExeCMd_<%=cid%>{
+        class ExeCMd_<%=cid%>{
 		    private boolean UsePwd = false;
 		    String message;
 		    
@@ -57,7 +57,7 @@ imports="
 		        }
 		        java.io.BufferedReader bufferedReader2 = new java.io.BufferedReader(new java.io.InputStreamReader(process.getErrorStream()));
 		        while ((message = bufferedReader2.readLine()) != null) {
-			        System.out.println(message);
+			        System.err.println(message);
 			        result = false;
 		        }
 		        process.waitFor();
@@ -84,7 +84,9 @@ imports="
 		<%}%>
 		cmd_<%=cid%>.add(<%=userPrincipal%>);
 		
-		exeCMd_<%=cid%>.exec(cmd_<%=cid%>.toArray(new String[0]));
+		if(!exeCMd_<%=cid%>.exec(cmd_<%=cid%>.toArray(new String[0]))){
+		    throw new RuntimeException("Kerberos Authentication Failed.");
+		}
 		
 		java.util.ArrayList<String> cmd2_<%=cid%> = new java.util.ArrayList<String>();
 		
@@ -95,11 +97,17 @@ imports="
            cmd2_<%=cid%>.add("maprlogin");
         }
 		   cmd2_<%=cid%>.add("kerberos");
-		new ExeCMd_<%=cid%>().exec(cmd2_<%=cid%>.toArray(new String[0]));
+		   
+		boolean loginResult_<%=cid%> = new ExeCMd_<%=cid%>().exec(cmd2_<%=cid%>.toArray(new String[0]));
+		if(!loginResult_<%=cid%>){
+		    throw new RuntimeException("Mapr Login failed. Please see the error log at MAPR_HOME/log for more details");
+		}
 		
     <%}%>
 
-  	int nb_line_<%=cid %>=0;
+  	    int nb_line_<%=cid %>=0;
+  	    int rejectedCount_<%=cid%>=0;
+  	    boolean whetherReject_<%=cid%> = false;
   	  	com.mapr.db.Admin admin_<%=cid%> = com.mapr.db.MapRDB.newAdmin();
   		com.mapr.db.TableDescriptor tableDescriptor_<%=cid%> = com.mapr.db.MapRDB.newTableDescriptor(<%=table%>);
   		tableDescriptor_<%=cid%>.setInsertionOrder(<%=InsertionOrder%>);

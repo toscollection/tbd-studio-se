@@ -12,6 +12,7 @@ imports="
 		java.util.List
 		java.util.Map" 
 %>
+
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <% 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
@@ -24,7 +25,34 @@ imports="
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	boolean setBulkWrite = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_BULK_WRITE__"));
     String bulkWriteType = ElementParameterParser.getValue(node, "__BULK_WRITE_TYPE__");
-  	%>
+    
+    String incomingConnName = null;
+    List<IMetadataColumn> columnList =null;
+
+    String rejectConnName = null;
+    List<? extends IConnection> rejectConns = node.getOutgoingConnections("REJECT");
+
+    IMetadataTable metadataTable = null;
+    if(rejectConns != null && rejectConns.size() > 0) {
+        IConnection rejectConn = rejectConns.get(0);
+        rejectConnName = rejectConn.getName();
+        metadataTable = rejectConn.getMetadataTable();
+    }
+    List<IMetadataColumn> rejectColumnList = null;
+    // IMetadataTable metadataTable = node.getMetadataFromConnector("REJECT");
+    if(metadataTable != null) {
+        rejectColumnList = metadataTable.getListColumns();
+    }
+
+    List<? extends IConnection> outgoingConns = node.getOutgoingSortedConnections();
+    for(IConnection conn : outgoingConns) {
+        if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+%>
+            <%=conn.getName() %> = null;
+<%
+        }
+    }
+    %>
 
 <%
 		IConnection inConn = null;
@@ -52,7 +80,8 @@ imports="
 		List< ? extends IConnection> conns = node.getIncomingConnections();
 		for (IConnection conn : conns) {
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
-				List<IMetadataColumn> columnList = metadata.getListColumns();
+				columnList = metadata.getListColumns();
+				incomingConnName = conn.getName();
 				int sizeColumns = columnList.size();
 
 				// Create the BasicDBObject
@@ -160,20 +189,58 @@ imports="
 		
 		<%}%>
 				}catch(Exception e_<%=cid%>){
+				whetherReject_<%=cid%> = true;
 				    <%if(dieOnError){%>
-				    throw e_<%=cid%>;
-				    <%}else{
-				        							if(isLog4jEnabled){
-							%>
-								log.error(e_<%=cid%>.getLocalizedMessage());
-							<%
-							}
-							%>
-							System.err.println(e_<%=cid%>.getLocalizedMessage());
+				        throw e_<%=cid%>;
+				    <%}else{%>
+				        whetherReject_<%=cid%> = true;
 				    <%
+                        if(rejectConnName != null && rejectColumnList != null && rejectColumnList.size() > 0) {%>
+                            <%=rejectConnName %> = new <%=rejectConnName %>Struct();
+                            <%
+                            for(IMetadataColumn column : columnList) {
+                                %>
+                                <%=rejectConnName%>.<%=column.getLabel()%> = <%=incomingConnName%>.<%=column.getLabel()%>;
+                                <%
+                            }
+                            %>
+                            rejectedCount_<%=cid%> =  rejectedCount_<%=cid%>+ 1;
+                            <%=rejectConnName%>.errorMessage = e_<%=cid%>.getMessage() + " - Line: " + tos_count_<%=node.getUniqueName() %>;
+                            <%
+                        } else {
+                            %>
+                            System.err.print(e_<%=cid%>.getMessage());
+                            <%
+                        }
 				    }
 				    %>
 				  
 				}
+				
+			<%
+		    if(outgoingConns != null && outgoingConns.size() > 0) {
+            %>
+            if(!whetherReject_<%=cid%>) {
+            <%
+                for(IConnection outgoingConn : outgoingConns) {
+                    if(rejectConnName == null || (rejectConnName != null && !outgoingConn.getName().equals(rejectConnName))) {
+                        if(outgoingConn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
+
+                            %>
+                            <%=outgoingConn.getName()%> = new <%=outgoingConn.getName()%>Struct();
+                            <%
+                            for(IMetadataColumn column : columnList) {
+                                %>
+                                <%=outgoingConn.getName()%>.<%=column.getLabel()%> = <%=incomingConnName%>.<%=column.getLabel()%>;
+                                <%
+                            }
+                        }
+                    }
+                }
+            %>
+            }
+            <%
+        }
+        %>
 				nb_line_<%=cid %> ++;
 				
