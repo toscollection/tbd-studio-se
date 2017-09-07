@@ -476,4 +476,5 @@ public class CDH5100Distribution extends AbstractDistribution implements ICloude
     public boolean doImportDynamoDBDependencies() {
         return true;
     }
+
 }
