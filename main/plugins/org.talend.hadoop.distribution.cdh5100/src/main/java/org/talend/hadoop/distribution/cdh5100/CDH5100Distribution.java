@@ -41,6 +41,7 @@ import org.talend.hadoop.distribution.cdh5100.modulegroup.node.mr.CDH5100MRS3Nod
 import org.talend.hadoop.distribution.cdh5100.modulegroup.node.pigoutput.CDH5100PigOutputNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5100.modulegroup.node.spark.CDH5100SparkDynamoDBNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5100.modulegroup.node.sparkbatch.CDH5100GraphFramesNodeModuleGroup;
+import org.talend.hadoop.distribution.cdh5100.modulegroup.node.sparkbatch.CDH5100SparkBatchAzureNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5100.modulegroup.node.sparkbatch.CDH5100SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5100.modulegroup.node.sparkbatch.CDH5100SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5100.modulegroup.node.sparkstreaming.CDH5100SparkStreamingFlumeNodeModuleGroup;
@@ -127,6 +128,14 @@ public class CDH5100Distribution extends AbstractDistribution implements ICloude
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
                 CDH5100GraphFramesNodeModuleGroup.getModuleGroups(distribution, version));
 
+        // Azure
+        nodeModuleGroups.put(
+                new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.AZURE_CONFIGURATION_COMPONENT),
+                CDH5100SparkBatchAzureNodeModuleGroup.getModuleGroups(distribution, version));
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.AZURE_CONFIGURATION_COMPONENT), 
+                CDH5100SparkBatchAzureNodeModuleGroup.getModuleGroups(distribution, version));
+
+        // Parquet
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.PARQUET_INPUT_COMPONENT), CDH5100SparkStreamingParquetNodeModuleGroup.getModuleGroups(
                 distribution, version));
@@ -458,5 +467,15 @@ public class CDH5100Distribution extends AbstractDistribution implements ICloude
     @Override
     public boolean doImportDynamoDBDependencies() {
         return true;
+    }
+    
+    @Override
+    public boolean doSupportAzureBlobStorage() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportAzureDataLakeStorage() {
+        return false;
     }
 }

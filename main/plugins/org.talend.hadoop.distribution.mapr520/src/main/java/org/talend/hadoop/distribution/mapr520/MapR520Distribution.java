@@ -393,4 +393,19 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
     public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion sparkVersion) {
         return SparkStreamingKafkaVersion.MAPR;
     }
+
+    // Note :
+    // Azure Blob & Datalake support have been disabled for now on this distribution
+    // New versions of this distribution should be tested for Azure support and
+    // the changes backported to all earlier versions
+    @Override
+    public boolean doSupportAzureBlobStorage() {
+        return false;
+    }
+
+    @Override
+    public boolean doSupportAzureDataLakeStorage() {
+        return false;
+    }
+    // End
 }
