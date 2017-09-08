@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2016 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -43,6 +43,12 @@ public final class SparkBatchConstant {
     public static final String DYNAMODB_OUTPUT_COMPONENT = "tDynamoDBOutput"; //$NON-NLS-1$
 
     public static final String DYNAMODB_INPUT_COMPONENT = "tDynamoDBInput"; //$NON-NLS-1$
+
+    public static final String KUDU_CONFIGURATION_COMPONENT = "tKuduConfiguration"; //$NON-NLS-1$
+
+    public static final String KUDU_OUTPUT_COMPONENT = "tKuduOutput"; //$NON-NLS-1$
+
+    public static final String KUDU_INPUT_COMPONENT = "tKuduInput"; //$NON-NLS-1$
 
     public static final String MATCH_PREDICT_COMPONENT = "tMatchPredict";//$NON-NLS-1$
 
