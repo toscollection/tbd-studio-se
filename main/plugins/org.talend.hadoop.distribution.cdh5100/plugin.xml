@@ -95,6 +95,22 @@
             name="hbase-hadoop-compat-1.2.0-cdh5.10.1.jar"
             mvn_uri="mvn:org.talend.libraries/hbase-hadoop-compat-1.2.0-cdh5.10.1/6.1.0">
         </libraryNeeded>
+        
+        <!-- Azure libraries -->
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh5100"
+            id="azure-storage-2.2.0"
+            name="azure-storage-2.2.0.jar"
+            mvn_uri="mvn:org.talend.libraries/azure-storage-2.2.0/6.1.0">
+        </libraryNeeded>
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh5100"
+            id="hadoop-azure-2.7.4"
+            name="hadoop-azure-2.7.4.jar"
+            mvn_uri="mvn:org.talend.libraries/hadoop-azure-2.7.4/6.1.0">
+        </libraryNeeded>
+        <!-- Azure libraries -->
 
         <!-- Map/Reduce libraries -->
         <libraryNeeded
@@ -1433,6 +1449,16 @@
              <library id="aws-java-sdk-s3-1.10.6.jar"/>
              <library id="aws-java-sdk-sts-1.10.6.jar"/>
              <library id="jets3t-0.9.0" />
+        </libraryNeededGroup>
+        
+        <!-- Spark Azure group MRREQUIRED -->
+        <libraryNeededGroup
+                description="Spark Azure libraries for CDH 5.10 that are MRREQUIRED"
+                id="SPARK-AZURE-LIB-MRREQUIRED-CDH_5_10"
+                name="SPARK-AZURE-LIB-MRREQUIRED-CDH_5_10">
+                <library id="azure-storage-2.2.0"/>
+                <library id="hadoop-azure-2.7.4"/>
+                <library id="jetty-util-6.1.26.cloudera.2.jar"/>
         </libraryNeededGroup>
 
         <!-- Pig S3 group -->

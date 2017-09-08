@@ -297,4 +297,12 @@ public abstract class AbstractDistribution {
     public boolean doImportDynamoDBDependencies() {
         return false;
     }
+
+    public boolean doSupportAzureBlobStorage() {
+        return false;
+    }
+
+    public boolean doSupportAzureDataLakeStorage() {
+        return false;
+    }
 }
