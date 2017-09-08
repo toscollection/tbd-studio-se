@@ -20,17 +20,24 @@ import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
 import org.talend.hadoop.distribution.condition.common.MRLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.MRConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xMRS3NodeModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xMRS3NodeModuleGroup(String id) {
-        super(id);
+    public CDH5xMRS3NodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(
-                CDH5xConstant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
+
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkS3MrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName());
+        checkRuntimeId(sparkS3MrRequiredRuntimeId);
+
+        DistributionModuleGroup dmg = new DistributionModuleGroup(sparkS3MrRequiredRuntimeId, true,
                 new MRLinkedNodeCondition(distribution, version, MRConstant.MR_MRCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         return hs;

@@ -20,9 +20,21 @@ public class DynamicConfiguration {
 
     private String distribution;
 
+    private String id;
+
     private String version;
 
+    private String name;
+
     private String remoteRepositoryUrl;
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getDistribution() {
         return this.distribution;
@@ -38,6 +50,14 @@ public class DynamicConfiguration {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getRemoteRepositoryUrl() {

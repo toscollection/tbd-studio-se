@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
 import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
@@ -67,6 +69,7 @@ import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
@@ -83,68 +86,71 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     private static Map<ComponentType, ComponentCondition> displayConditions;
 
-    private String id;
+    private DynamicPluginAdapter pluginAdapter;
 
-    private String displayName;
+    private String versionId;
 
-    public CDH5xDistributionTemplate(String id, String displayName) {
-        this.id = id;
-        this.displayName = displayName;
-        String version = getVersion();
+    private String versionDisplay;
+
+    public CDH5xDistributionTemplate(DynamicPluginAdapter pluginAdapter) throws Exception {
+        this.pluginAdapter = pluginAdapter;
+        IDynamicPluginConfiguration configuration = pluginAdapter.getPluginConfiguration();
+        versionId = configuration.getId();
+        versionDisplay = configuration.getName();
 
         String distribution = getDistribution();
 
         // Used to add a module group import for the components that have a HADOOP_DISTRIBUTION parameter, aka. the
         // components that have the distribution list.
         moduleGroups = new HashMap<>();
-        moduleGroups.put(ComponentType.HDFS, new CDH5xHDFSModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.HBASE, new CDH5xHBaseModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.HCATALOG, new CDH5xHCatalogModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.MAPREDUCE, new CDH5xMapReduceModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.PIG, new CDH5xPigModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.PIGOUTPUT, new CDH5xPigOutputModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.SQOOP, new CDH5xSqoopModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.HIVE, new CDH5xHiveModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.IMPALA, new CDH5xImpalaModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.SPARKBATCH, new CDH5xSparkBatchModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.SPARKSTREAMING, new CDH5xSparkStreamingModuleGroup(getId()).getModuleGroups());
-        moduleGroups.put(ComponentType.HIVEONSPARK, new CDH5xHiveOnSparkModuleGroup(getId()).getModuleGroups());
+        moduleGroups.put(ComponentType.HDFS, new CDH5xHDFSModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.HBASE, new CDH5xHBaseModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.HCATALOG, new CDH5xHCatalogModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.MAPREDUCE, new CDH5xMapReduceModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.PIG, new CDH5xPigModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.PIGOUTPUT, new CDH5xPigOutputModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.SQOOP, new CDH5xSqoopModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.HIVE, new CDH5xHiveModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.IMPALA, new CDH5xImpalaModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.SPARKBATCH, new CDH5xSparkBatchModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.SPARKSTREAMING, new CDH5xSparkStreamingModuleGroup(pluginAdapter).getModuleGroups());
+        moduleGroups.put(ComponentType.HIVEONSPARK, new CDH5xHiveOnSparkModuleGroup(pluginAdapter).getModuleGroups());
 
         // Used to add a module group import for a specific node. The given node must have a HADOOP_LIBRARIES parameter.
         nodeModuleGroups = new HashMap<>();
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_INPUT_COMPONENT),
-                new CDH5xMRS3NodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xMRS3NodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE, MRConstant.S3_OUTPUT_COMPONENT),
-                new CDH5xMRS3NodeModuleGroup((getId())).getModuleGroups(distribution, version));
+                new CDH5xMRS3NodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.PIG, PigOutputConstant.PIGSTORE_COMPONENT),
-                new CDH5xPigOutputNodeModuleGroup((getId())).getModuleGroups(distribution, version));
+                new CDH5xPigOutputNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
 
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
-                new CDH5xSparkBatchParquetNodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkBatchParquetNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
-                new CDH5xSparkBatchParquetNodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkBatchParquetNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
-                new CDH5xSparkBatchS3NodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkBatchS3NodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
-                new CDH5xGraphFramesNodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xGraphFramesNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
 
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),
-                new CDH5xSparkStreamingParquetNodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkStreamingParquetNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT),
-                new CDH5xSparkStreamingParquetNodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkStreamingParquetNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT),
-                new CDH5xSparkStreamingParquetNodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkStreamingParquetNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.S3_CONFIGURATION_COMPONENT),
-                new CDH5xSparkStreamingS3NodeModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkStreamingS3NodeModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
 
         // Kinesis
-        Set<DistributionModuleGroup> kinesisNodeModuleGroups = new CDH5xSparkStreamingKinesisNodeModuleGroup(getId())
-                .getModuleGroups(distribution, version);
+        Set<DistributionModuleGroup> kinesisNodeModuleGroups = new CDH5xSparkStreamingKinesisNodeModuleGroup(pluginAdapter)
+                .getModuleGroups(distribution, versionId);
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT),
                 kinesisNodeModuleGroups);
@@ -156,8 +162,8 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
                 kinesisNodeModuleGroups);
 
         // Flume
-        Set<DistributionModuleGroup> flumeNodeModuleGroups = new CDH5xSparkStreamingFlumeNodeModuleGroup(getId())
-                .getModuleGroups(distribution, version);
+        Set<DistributionModuleGroup> flumeNodeModuleGroups = new CDH5xSparkStreamingFlumeNodeModuleGroup(pluginAdapter)
+                .getModuleGroups(distribution, versionId);
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_INPUT_COMPONENT),
                 flumeNodeModuleGroups);
@@ -166,10 +172,10 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
                 flumeNodeModuleGroups);
 
         // Kafka
-        Set<DistributionModuleGroup> kafkaAssemblyModuleGroups = new CDH5xSparkStreamingKafkaAssemblyModuleGroup(getId())
-                .getModuleGroups(distribution, version);
-        Set<DistributionModuleGroup> kafkaAvroModuleGroups = new CDH5xSparkStreamingKafkaAvroModuleGroup(getId())
-                .getModuleGroups(distribution, version);
+        Set<DistributionModuleGroup> kafkaAssemblyModuleGroups = new CDH5xSparkStreamingKafkaAssemblyModuleGroup(pluginAdapter)
+                .getModuleGroups(distribution, versionId);
+        Set<DistributionModuleGroup> kafkaAvroModuleGroups = new CDH5xSparkStreamingKafkaAvroModuleGroup(pluginAdapter)
+                .getModuleGroups(distribution, versionId);
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_INPUT_COMPONENT),
                 kafkaAssemblyModuleGroups);
@@ -178,13 +184,13 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
                 kafkaAvroModuleGroups);
         nodeModuleGroups.put(
                 new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
-                new CDH5xSparkStreamingKafkaClientModuleGroup(getId()).getModuleGroups(distribution, version));
+                new CDH5xSparkStreamingKafkaClientModuleGroup(pluginAdapter).getModuleGroups(distribution, versionId));
 
         // DynamoDB ...
-        Set<DistributionModuleGroup> dynamoDBNodeModuleGroups = new CDH5xSparkDynamoDBNodeModuleGroup(getId())
-                .getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'");
-        Set<DistributionModuleGroup> dynamoDBConfigurationModuleGroups = new CDH5xSparkDynamoDBNodeModuleGroup(getId())
-                .getModuleGroups(distribution, version, null);
+        Set<DistributionModuleGroup> dynamoDBNodeModuleGroups = new CDH5xSparkDynamoDBNodeModuleGroup(pluginAdapter)
+                .getModuleGroups(distribution, versionId, "USE_EXISTING_CONNECTION == 'false'");
+        Set<DistributionModuleGroup> dynamoDBConfigurationModuleGroups = new CDH5xSparkDynamoDBNodeModuleGroup(pluginAdapter)
+                .getModuleGroups(distribution, versionId, null);
         // ... in Spark batch
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DYNAMODB_INPUT_COMPONENT),
                 dynamoDBNodeModuleGroups);
@@ -219,7 +225,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String getVersion() {
-        return id;
+        return versionId;
     }
 
     @Override
@@ -234,7 +240,7 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String getVersionName(ComponentType componentType) {
-        return displayName;
+        return versionDisplay;
     }
 
     @Override
@@ -314,8 +320,12 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
 
     @Override
     public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
-        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths,
-                CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName(getId()));
+        String spark2RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName());
+        if (StringUtils.isEmpty(spark2RuntimeId)) {
+            throw new RuntimeException("Can't find configuration for " + CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName());
+        }
+        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths, spark2RuntimeId);
     }
 
     @Override
@@ -469,10 +479,6 @@ public abstract class CDH5xDistributionTemplate extends AbstractDistribution
     @Override
     public boolean doImportDynamoDBDependencies() {
         return true;
-    }
-
-    protected String getId() {
-        return this.id;
     }
 
 }

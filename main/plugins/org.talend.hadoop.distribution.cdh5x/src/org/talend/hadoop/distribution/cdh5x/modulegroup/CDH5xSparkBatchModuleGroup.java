@@ -25,11 +25,12 @@ import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSparkBatchModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xSparkBatchModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkBatchModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
     private final static ComponentCondition condition = new MultiComponentCondition(
@@ -40,26 +41,49 @@ public class CDH5xSparkBatchModuleGroup extends AbstractModuleGroup {
             new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), BooleanOperator.AND, //$NON-NLS-1$
             new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_1.getSparkVersion())); //$NON-NLS-1$
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SPARK_MODULE_GROUP.getModuleName(getId()), false, condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName(getId()), false, conditionSpark2_1));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true, condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
-                conditionSpark2_1));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_SPARK1_6.getModuleName(getId()), false, condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_SPARK2_1.getModuleName(getId()), false,
-                conditionSpark2_1));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_COMMON.getModuleName(getId()), false, condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_COMMON.getModuleName(getId()), false,
-                conditionSpark2_1));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId()), false, condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId()), false,
-                conditionSpark2_1));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_MODULE_GROUP.getModuleName());
+        String spark2RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName());
+        String sparkMrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName());
+        String hdfsSpark1_6RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP_SPARK1_6.getModuleName());
+        String hdfsSpark2_1RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP_SPARK2_1.getModuleName());
+        String hdfsCommonRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP_COMMON.getModuleName());
+        String mrRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName());
+        String talendClouderaNaviRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.TALEND_CLOUDERA_CDH_5_X_NAVIGATOR.getModuleName());
+
+        checkRuntimeId(sparkRuntimeId);
+        checkRuntimeId(spark2RuntimeId);
+        checkRuntimeId(sparkMrRequiredRuntimeId);
+        checkRuntimeId(hdfsSpark1_6RuntimeId);
+        checkRuntimeId(hdfsSpark2_1RuntimeId);
+        checkRuntimeId(hdfsCommonRuntimeId);
+        checkRuntimeId(mrRuntimeId);
+        checkRuntimeId(talendClouderaNaviRuntimeId);
+
+        hs.add(new DistributionModuleGroup(sparkRuntimeId, false, condition));
+        hs.add(new DistributionModuleGroup(spark2RuntimeId, false, conditionSpark2_1));
+        hs.add(new DistributionModuleGroup(sparkMrRequiredRuntimeId, true, condition));
+        hs.add(new DistributionModuleGroup(sparkMrRequiredRuntimeId, true, conditionSpark2_1));
+        hs.add(new DistributionModuleGroup(hdfsSpark1_6RuntimeId, false, condition));
+        hs.add(new DistributionModuleGroup(hdfsSpark2_1RuntimeId, false, conditionSpark2_1));
+        hs.add(new DistributionModuleGroup(hdfsCommonRuntimeId, false, condition));
+        hs.add(new DistributionModuleGroup(hdfsCommonRuntimeId, false, conditionSpark2_1));
+        hs.add(new DistributionModuleGroup(mrRuntimeId, false, condition));
+        hs.add(new DistributionModuleGroup(mrRuntimeId, false, conditionSpark2_1));
         ComponentCondition conditionUseNavigator = new SimpleComponentCondition(
                 new BasicExpression(SparkBatchConstant.USE_CLOUDERA_NAVIGATOR));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.TALEND_CLOUDERA_CDH_5_X_NAVIGATOR.getModuleName(getId()), true,
-                conditionUseNavigator));
+        hs.add(new DistributionModuleGroup(talendClouderaNaviRuntimeId, true, conditionUseNavigator));
         return hs;
     }
 

@@ -28,11 +28,12 @@ import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSparkStreamingKinesisNodeModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xSparkStreamingKinesisNodeModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkStreamingKinesisNodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
     private final static ComponentCondition spark16Condition = new SimpleComponentCondition(
@@ -45,17 +46,26 @@ public class CDH5xSparkStreamingKinesisNodeModuleGroup extends AbstractNodeModul
                     "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
                     ESparkVersion.SPARK_2_1.getSparkVersion()));
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmgSpark16 = new DistributionModuleGroup(
-                CDH5xConstant.SPARK_KINESIS_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
+
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkKinesisMrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_KINESIS_MRREQUIRED_MODULE_GROUP.getModuleName());
+        String spark2KinesisMrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK2_KINESIS_MRREQUIRED_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(sparkKinesisMrRequiredRuntimeId);
+        checkRuntimeId(spark2KinesisMrRequiredRuntimeId);
+
+        DistributionModuleGroup dmgSpark16 = new DistributionModuleGroup(sparkKinesisMrRequiredRuntimeId, true,
                 new NestedComponentCondition(
                         new MultiComponentCondition(new SparkStreamingLinkedNodeCondition(distribution, version).getCondition(),
                                 BooleanOperator.AND, spark16Condition)));
         hs.add(dmgSpark16);
 
-        DistributionModuleGroup dmgSpark21 = new DistributionModuleGroup(
-                CDH5xConstant.SPARK2_KINESIS_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
+        DistributionModuleGroup dmgSpark21 = new DistributionModuleGroup(spark2KinesisMrRequiredRuntimeId, true,
                 new NestedComponentCondition(
                         new MultiComponentCondition(new SparkStreamingLinkedNodeCondition(distribution, version).getCondition(),
                                 BooleanOperator.AND, spark21Condition)));

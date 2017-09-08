@@ -20,22 +20,28 @@ import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSparkStreamingKafkaAvroModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xSparkStreamingKafkaAvroModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkStreamingKafkaAvroModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(
-                CDH5xConstant.SPARK_KAFKA_AVRO_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkKafkaAvroMrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_KAFKA_AVRO_MRREQUIRED_MODULE_GROUP.getModuleName());
+        checkRuntimeId(sparkKafkaAvroMrRequiredRuntimeId);
+
+        DistributionModuleGroup dmg = new DistributionModuleGroup(sparkKafkaAvroMrRequiredRuntimeId, true,
                 new SparkStreamingLinkedNodeCondition(distribution, version,
                         SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);
         // Add Spark Streaming Kafka dependencies as well
-        hs.addAll(new CDH5xSparkStreamingKafkaAssemblyModuleGroup(getId()).getModuleGroups(distribution, version));
+        hs.addAll(new CDH5xSparkStreamingKafkaAssemblyModuleGroup(pluginAdapter).getModuleGroups(distribution, version));
         return hs;
     }
 }

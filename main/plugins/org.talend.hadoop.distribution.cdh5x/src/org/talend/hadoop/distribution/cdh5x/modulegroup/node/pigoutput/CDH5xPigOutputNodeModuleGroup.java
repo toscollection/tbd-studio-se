@@ -26,14 +26,15 @@ import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.LinkedNodeExpression;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xPigOutputNodeModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xPigOutputNodeModuleGroup(String id) {
-        super(id);
+    public CDH5xPigOutputNodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
 
         ComponentCondition condition = new MultiComponentCondition( //
                 new LinkedNodeExpression(PigOutputConstant.PIGSTORE_COMPONENT_LINKEDPARAMETER,
@@ -54,8 +55,18 @@ public class CDH5xPigOutputNodeModuleGroup extends AbstractNodeModuleGroup {
                         new BasicExpression(PigOutputConstant.PIGSTORE_STORE, EqualityOperator.NOT_EQ, "HBASESTORAGE"))); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_PARQUET_MODULE_GROUP.getModuleName(getId()), false, condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_S3_MODULE_GROUP.getModuleName(getId()), false, s3condition));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String pigParquetRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_PARQUET_MODULE_GROUP.getModuleName());
+        String pigS3RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_S3_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(pigParquetRuntimeId);
+        checkRuntimeId(pigS3RuntimeId);
+
+        hs.add(new DistributionModuleGroup(pigParquetRuntimeId, false, condition));
+        hs.add(new DistributionModuleGroup(pigS3RuntimeId, false, s3condition));
         return hs;
     }
 

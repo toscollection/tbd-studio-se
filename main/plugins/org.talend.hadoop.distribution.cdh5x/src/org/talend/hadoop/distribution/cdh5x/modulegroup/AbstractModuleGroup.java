@@ -12,20 +12,32 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh5x.modulegroup;
 
+import org.apache.commons.lang.StringUtils;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
 public abstract class AbstractModuleGroup {
 
-    private String id;
+    private DynamicPluginAdapter pluginAdapter;
 
-    public AbstractModuleGroup(String id) {
-        this.id = id;
+    public AbstractModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        this.pluginAdapter = pluginAdapter;
     }
 
-    protected String getId() {
-        return this.id;
+
+    public DynamicPluginAdapter getPluginAdapter() {
+        return this.pluginAdapter;
     }
 
+    public void setPluginAdapter(DynamicPluginAdapter pluginAdapter) {
+        this.pluginAdapter = pluginAdapter;
+    }
+
+    protected void checkRuntimeId(String id) throws Exception {
+        if (StringUtils.isEmpty(id)) {
+            throw new Exception("Can't find runtime id for " + id);
+        }
+    }
 }

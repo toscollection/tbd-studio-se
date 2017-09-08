@@ -55,14 +55,13 @@ public enum CDH5xConstant {
     SPARK_FLUME_MRREQUIRED_MODULE_GROUP("SPARK-FLUME-LIB-MRREQUIRED_DYNAMIC"), //$NON-NLS-1$
     SQOOP_PARQUET_MODULE_GROUP("SQOOP-PARQUET-LIB_DYNAMIC"); //$NON-NLS-1$
 
-    private String prefix;
+    private String mModuleName;
 
-    private CDH5xConstant(String prefix) {
-        this.prefix = prefix;
+    CDH5xConstant(String moduleName) {
+        this.mModuleName = moduleName;
     }
 
-    public String getPrefix() {
-        return this.prefix;
+    public String getModuleName() {
+        return this.mModuleName;
     }
-
 }

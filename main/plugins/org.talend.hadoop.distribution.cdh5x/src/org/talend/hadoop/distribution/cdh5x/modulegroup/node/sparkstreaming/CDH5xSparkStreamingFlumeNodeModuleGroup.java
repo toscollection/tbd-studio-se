@@ -20,17 +20,23 @@ import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSparkStreamingFlumeNodeModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xSparkStreamingFlumeNodeModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkStreamingFlumeNodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(
-                CDH5xConstant.SPARK_FLUME_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkFlumeMrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_FLUME_MRREQUIRED_MODULE_GROUP.getModuleName());
+        checkRuntimeId(sparkFlumeMrRequiredRuntimeId);
+
+        DistributionModuleGroup dmg = new DistributionModuleGroup(sparkFlumeMrRequiredRuntimeId, true,
                 new SparkStreamingLinkedNodeCondition(distribution, version,
                         SparkStreamingConstant.FLUME_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);

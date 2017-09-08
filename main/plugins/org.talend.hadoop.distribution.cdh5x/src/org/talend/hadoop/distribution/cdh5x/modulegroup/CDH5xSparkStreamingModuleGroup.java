@@ -24,11 +24,12 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSparkStreamingModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xSparkStreamingModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkStreamingModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
     private final static ComponentCondition spark16Condition = new MultiComponentCondition(
@@ -41,20 +42,38 @@ public class CDH5xSparkStreamingModuleGroup extends AbstractModuleGroup {
             BooleanOperator.AND,
             new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_1.getSparkVersion())); //$NON-NLS-1$
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SPARK_MODULE_GROUP.getModuleName(getId()), false, spark16Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName(getId()), false, spark21Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_SPARK1_6.getModuleName(getId()), false,
-                spark16Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_SPARK2_1.getModuleName(getId()), false,
-                spark21Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_COMMON.getModuleName(getId()), false,
-                spark16Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP_COMMON.getModuleName(getId()), false,
-                spark21Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId()), false, spark16Condition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId()), false, spark21Condition));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_MODULE_GROUP.getModuleName());
+        String spark2RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK2_MODULE_GROUP.getModuleName());
+        String hdfsSpark1_6RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP_SPARK1_6.getModuleName());
+        String hdfsSpark2_1RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP_SPARK2_1.getModuleName());
+        String hdfsCommonRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP_COMMON.getModuleName());
+        String mrRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(sparkRuntimeId);
+        checkRuntimeId(spark2RuntimeId);
+        checkRuntimeId(hdfsSpark1_6RuntimeId);
+        checkRuntimeId(hdfsSpark2_1RuntimeId);
+        checkRuntimeId(hdfsCommonRuntimeId);
+        checkRuntimeId(mrRuntimeId);
+
+        hs.add(new DistributionModuleGroup(sparkRuntimeId, false, spark16Condition));
+        hs.add(new DistributionModuleGroup(spark2RuntimeId, false, spark21Condition));
+        hs.add(new DistributionModuleGroup(hdfsSpark1_6RuntimeId, false, spark16Condition));
+        hs.add(new DistributionModuleGroup(hdfsSpark2_1RuntimeId, false, spark21Condition));
+        hs.add(new DistributionModuleGroup(hdfsCommonRuntimeId, false, spark16Condition));
+        hs.add(new DistributionModuleGroup(hdfsCommonRuntimeId, false, spark21Condition));
+        hs.add(new DistributionModuleGroup(mrRuntimeId, false, spark16Condition));
+        hs.add(new DistributionModuleGroup(mrRuntimeId, false, spark21Condition));
         return hs;
     }
 

@@ -17,17 +17,23 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xHiveOnSparkModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xHiveOnSparkModuleGroup(String id) {
-        super(id);
+    public CDH5xHiveOnSparkModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(
-                CDH5xConstant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true, null);
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkHiveRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName());
+        checkRuntimeId(sparkHiveRuntimeId);
+
+        DistributionModuleGroup dmg = new DistributionModuleGroup(sparkHiveRuntimeId, true, null);
         hs.add(dmg);
         return hs;
     }

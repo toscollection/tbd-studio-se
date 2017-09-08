@@ -12,12 +12,13 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
 public interface IClouderaDependencyResolver extends IDependencyResolver {
 
-    public static final String DISTRIBUTION = "CLOUDERA"; //$NON-NLS-1$
+    public static final String DISTRIBUTION = IClouderaDistribution.DISTRIBUTION_NAME;
 
 }

@@ -17,17 +17,25 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 import org.talend.hadoop.distribution.utils.dynamodb.SparkDynamoDBNodeModuleGroupUtil;
 
 public class CDH5xSparkDynamoDBNodeModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xSparkDynamoDBNodeModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkDynamoDBNodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version, String condition) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version, String condition) throws Exception {
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkDynamoDBMrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_DYNAMODB_MRREQUIRED_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(sparkDynamoDBMrRequiredRuntimeId);
+
         return SparkDynamoDBNodeModuleGroupUtil.getModuleGroups(distribution, version, condition,
-                CDH5xConstant.SPARK_DYNAMODB_MRREQUIRED_MODULE_GROUP.getModuleName(getId()));
+                sparkDynamoDBMrRequiredRuntimeId);
     }
 
 }

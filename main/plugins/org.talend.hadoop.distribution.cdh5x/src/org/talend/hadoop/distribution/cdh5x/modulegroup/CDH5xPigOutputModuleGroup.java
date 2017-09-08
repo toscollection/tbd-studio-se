@@ -22,14 +22,15 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.PigOutputConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xPigOutputModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xPigOutputModuleGroup(String id) {
-        super(id);
+    public CDH5xPigOutputModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         ComponentCondition hbaseStorerCondition = new SimpleComponentCondition(new BasicExpression(
                 PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.HBASE_STORER_VALUE));
         ComponentCondition hcatStorerCondition = new SimpleComponentCondition(new BasicExpression(
@@ -42,17 +43,34 @@ public class CDH5xPigOutputModuleGroup extends AbstractModuleGroup {
                 PigOutputConstant.STORER_PARAMETER, EqualityOperator.EQ, PigOutputConstant.SEQUENCEFILE_STORER_VALUE));
 
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_HCATALOG_MODULE_GROUP.getModuleName(getId()), false,
-                hcatStorerCondition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HBASE_MODULE_GROUP.getModuleName(getId()), false, hbaseStorerCondition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_HBASE_MODULE_GROUP.getModuleName(getId()), false,
-                hbaseStorerCondition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_AVRO_MODULE_GROUP.getModuleName(getId()), false,
-                avroStorerCondition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_RCFILE_MODULE_GROUP.getModuleName(getId()), false,
-                rcfileStorerCondition));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName(getId()), false,
-                sequencefileStorerCondition));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String pigHCatRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_HCATALOG_MODULE_GROUP.getModuleName());
+        String hbaseRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HBASE_MODULE_GROUP.getModuleName());
+        String pigHBaseRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_HBASE_MODULE_GROUP.getModuleName());
+        String pigAvroRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_AVRO_MODULE_GROUP.getModuleName());
+        String pigRcfileRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_RCFILE_MODULE_GROUP.getModuleName());
+        String pigSequenceRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.PIG_SEQUENCEFILE_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(pigHCatRuntimeId);
+        checkRuntimeId(hbaseRuntimeId);
+        checkRuntimeId(pigHBaseRuntimeId);
+        checkRuntimeId(pigAvroRuntimeId);
+        checkRuntimeId(pigRcfileRuntimeId);
+        checkRuntimeId(pigSequenceRuntimeId);
+
+        hs.add(new DistributionModuleGroup(pigHCatRuntimeId, false, hcatStorerCondition));
+        hs.add(new DistributionModuleGroup(hbaseRuntimeId, false, hbaseStorerCondition));
+        hs.add(new DistributionModuleGroup(pigHBaseRuntimeId, false, hbaseStorerCondition));
+        hs.add(new DistributionModuleGroup(pigAvroRuntimeId, false, avroStorerCondition));
+        hs.add(new DistributionModuleGroup(pigRcfileRuntimeId, false, rcfileStorerCondition));
+        hs.add(new DistributionModuleGroup(pigSequenceRuntimeId, false, sequencefileStorerCondition));
         return hs;
     }
 

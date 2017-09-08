@@ -22,22 +22,37 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SqoopConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSqoopModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xSqoopModuleGroup(String id) {
-        super(id);
+    public CDH5xSqoopModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SQOOP_MODULE_GROUP.getModuleName(getId())));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP.getModuleName(getId())));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId())));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sqoopRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SQOOP_MODULE_GROUP.getModuleName());
+        String hdfsRuntimeId = pluginAdapter.getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP.getModuleName());
+        String mrRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName());
+        String sqoopParquetRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SQOOP_PARQUET_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(sqoopRuntimeId);
+        checkRuntimeId(hdfsRuntimeId);
+        checkRuntimeId(mrRuntimeId);
+        checkRuntimeId(sqoopParquetRuntimeId);
+
+        hs.add(new DistributionModuleGroup(sqoopRuntimeId));
+        hs.add(new DistributionModuleGroup(hdfsRuntimeId));
+        hs.add(new DistributionModuleGroup(mrRuntimeId));
         ComponentCondition parquetOutputCondition = new SimpleComponentCondition(
                 new BasicExpression(SqoopConstant.FILE_FORMAT, EqualityOperator.EQ, SqoopConstant.PAQUET_OUTPUT_FORMAT));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.SQOOP_PARQUET_MODULE_GROUP.getModuleName(getId()), true,
-                parquetOutputCondition));
+        hs.add(new DistributionModuleGroup(sqoopParquetRuntimeId, true, parquetOutputCondition));
         return hs;
     }
 

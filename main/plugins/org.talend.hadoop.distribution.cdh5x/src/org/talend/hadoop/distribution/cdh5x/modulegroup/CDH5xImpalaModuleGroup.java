@@ -17,18 +17,30 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xImpalaModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xImpalaModuleGroup(String id) {
-        super(id);
+    public CDH5xImpalaModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HIVE_MODULE_GROUP.getModuleName(getId())));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP.getModuleName(getId())));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId())));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String hiveRuntimeId = pluginAdapter.getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HIVE_MODULE_GROUP.getModuleName());
+        String hdfsRuntimeId = pluginAdapter.getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP.getModuleName());
+        String mrRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(hiveRuntimeId);
+        checkRuntimeId(hdfsRuntimeId);
+        checkRuntimeId(mrRuntimeId);
+
+        hs.add(new DistributionModuleGroup(hiveRuntimeId));
+        hs.add(new DistributionModuleGroup(hdfsRuntimeId));
+        hs.add(new DistributionModuleGroup(mrRuntimeId));
         return hs;
     }
 

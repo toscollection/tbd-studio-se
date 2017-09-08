@@ -24,28 +24,42 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.ShowExpression;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.HiveConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xHiveModuleGroup extends AbstractModuleGroup {
 
-    public CDH5xHiveModuleGroup(String id) {
-        super(id);
+    public CDH5xHiveModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups() {
+    public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HIVE_MODULE_GROUP.getModuleName(getId())));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HDFS_MODULE_GROUP.getModuleName(getId())));
-        hs.add(new DistributionModuleGroup(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName(getId())));
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String hiveRuntimeId = pluginAdapter.getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HIVE_MODULE_GROUP.getModuleName());
+        String hdfsRuntimeId = pluginAdapter.getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HDFS_MODULE_GROUP.getModuleName());
+        String mrRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.MAPREDUCE_MODULE_GROUP.getModuleName());
+        String hiveHBaseRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.HIVE_HBASE_MODULE_GROUP.getModuleName());
+
+        checkRuntimeId(hiveRuntimeId);
+        checkRuntimeId(hdfsRuntimeId);
+        checkRuntimeId(mrRuntimeId);
+        checkRuntimeId(hiveHBaseRuntimeId);
+
+        hs.add(new DistributionModuleGroup(hiveRuntimeId));
+        hs.add(new DistributionModuleGroup(hdfsRuntimeId));
+        hs.add(new DistributionModuleGroup(mrRuntimeId));
 
         // The following condition instance stands for:
         // (isShow[STORE_BY_HBASE] AND STORE_BY_HBASE=='true')
-        ComponentCondition hbaseLoaderCondition = new MultiComponentCondition(new SimpleComponentCondition(new BasicExpression(
-                HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER)), //
+        ComponentCondition hbaseLoaderCondition = new MultiComponentCondition(
+                new SimpleComponentCondition(new BasicExpression(HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER)), //
                 BooleanOperator.AND, //
                 new SimpleComponentCondition(new ShowExpression(HiveConstant.HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER)));
         // The Hive components need to import some hbase libraries if the "Use HBase storage" is checked.
-        hs.add(new DistributionModuleGroup(CDH5xConstant.HIVE_HBASE_MODULE_GROUP.getModuleName(getId()), false,
-                hbaseLoaderCondition));
+        hs.add(new DistributionModuleGroup(hiveHBaseRuntimeId, false, hbaseLoaderCondition));
 
         return hs;
     }

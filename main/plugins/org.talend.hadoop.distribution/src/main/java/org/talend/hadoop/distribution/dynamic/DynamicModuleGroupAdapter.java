@@ -36,6 +36,8 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
 
     public static final String ATTR_ID = "id"; //$NON-NLS-1$
 
+    public static final String ATTR_GROUP_TEMPLATE_ID = "templateId"; //$NON-NLS-1$
+
     public static final String ATTR_NAME = "name"; //$NON-NLS-1$
 
     public static final String TAG_LIBRARY_NAME = "library"; //$NON-NLS-1$
@@ -72,6 +74,7 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
 
         dynamicModuleGroup.setConfigurationName(TAG_NAME);
         dynamicModuleGroup.setAttribute(ATTR_ID, runtimeId);
+        dynamicModuleGroup.setAttribute(ATTR_GROUP_TEMPLATE_ID, id);
         dynamicModuleGroup.setAttribute(ATTR_DESCRIPTION, description);
         
         List<String> modules = moduleGroupBean.getModules();

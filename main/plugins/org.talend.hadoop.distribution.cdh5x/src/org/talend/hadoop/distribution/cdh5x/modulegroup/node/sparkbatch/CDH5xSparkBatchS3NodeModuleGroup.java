@@ -20,17 +20,24 @@ import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkBatchLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 
 public class CDH5xSparkBatchS3NodeModuleGroup extends AbstractNodeModuleGroup {
 
-    public CDH5xSparkBatchS3NodeModuleGroup(String id) {
-        super(id);
+    public CDH5xSparkBatchS3NodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
+        super(pluginAdapter);
     }
 
-    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(
-                CDH5xConstant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(getId()), true,
+
+        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+
+        String sparkS3MrRequiredRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(CDH5xConstant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName());
+        checkRuntimeId(sparkS3MrRequiredRuntimeId);
+
+        DistributionModuleGroup dmg = new DistributionModuleGroup(sparkS3MrRequiredRuntimeId, true,
                 new SparkBatchLinkedNodeCondition(distribution, version,
                         SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition());
         hs.add(dmg);

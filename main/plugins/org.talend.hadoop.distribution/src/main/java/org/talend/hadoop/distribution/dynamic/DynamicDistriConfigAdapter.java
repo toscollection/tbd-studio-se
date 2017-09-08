@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
@@ -27,30 +28,33 @@ public class DynamicDistriConfigAdapter extends AbstractDynamicAdapter {
     }
 
     public IDynamicPluginConfiguration adapt(IProgressMonitor monitor) throws Exception {
+        resolve();
+
         IDynamicPluginConfiguration pluginConfiguration = DynamicFactory.getInstance().createDynamicPluginConfiguration();
 
         TemplateBean templateBean = getTemplateBean();
         DynamicConfiguration configuration = getConfiguration();
 
-        String id = templateBean.getId();
-        String name = templateBean.getName();
         String description = templateBean.getDescription();
         String distribution = templateBean.getDistribution();
         String repository = templateBean.getRepository();
 
-        pluginConfiguration.setId(id);
-        pluginConfiguration.setName(name);
+        if (!StringUtils.equals(distribution, configuration.getDistribution())) {
+            throw new Exception("Different distribution: " + distribution + "<>" + configuration.getDistribution());
+        }
+
+        pluginConfiguration.setId(configuration.getId());
+        pluginConfiguration.setName(configuration.getName());
         pluginConfiguration.setDescription(description);
         pluginConfiguration.setDistribution(distribution);
         pluginConfiguration.setRepository(repository);
-        pluginConfiguration.setVersion(configuration.getVersion());
 
         return pluginConfiguration;
     }
 
     @Override
     protected void resolve() throws Exception {
-        // nothing to do
+        setResolved(true);
     }
 
 }

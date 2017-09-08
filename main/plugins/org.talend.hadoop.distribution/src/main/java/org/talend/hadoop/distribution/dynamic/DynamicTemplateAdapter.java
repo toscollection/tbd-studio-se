@@ -70,10 +70,10 @@ public class DynamicTemplateAdapter extends AbstractDynamicAdapter {
 
     }
 
-    public String getRuntimeModuleGroupId(String id) throws Exception {
+    public String getRuntimeModuleGroupId(String id) {
         DynamicModuleGroupAdapter dynamicModuleGroupAdapter = moduleGroupBeanAdapterMap.get(id);
         if (dynamicModuleGroupAdapter == null) {
-            throw new Exception(id + " is not configured in template file");
+            return null;
         }
         return dynamicModuleGroupAdapter.getRuntimeId();
     }
