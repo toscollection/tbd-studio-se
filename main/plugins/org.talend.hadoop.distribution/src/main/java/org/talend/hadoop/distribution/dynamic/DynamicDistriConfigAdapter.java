@@ -45,6 +45,7 @@ public class DynamicDistriConfigAdapter extends AbstractDynamicAdapter {
 
         pluginConfiguration.setId(configuration.getId());
         pluginConfiguration.setName(configuration.getName());
+        pluginConfiguration.setVersion(configuration.getVersion());
         pluginConfiguration.setDescription(description);
         pluginConfiguration.setDistribution(distribution);
         pluginConfiguration.setRepository(repository);

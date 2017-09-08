@@ -57,6 +57,7 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
         super(templateBean, configuration);
         this.moduleGroupBean = moduleGroupBean;
         this.moduleBeanAdapterMap = moduleBeanAdapterMap;
+        runtimeModules = new ArrayList<>();
     }
 
     public IDynamicConfiguration adapt(IProgressMonitor monitor) throws Exception {
@@ -78,30 +79,32 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
         dynamicModuleGroup.setAttribute(ATTR_DESCRIPTION, description);
         
         List<String> modules = moduleGroupBean.getModules();
-        Set<String> runtimeModules = new HashSet<>();
+        Set<String> runtimeModulesSet = new HashSet<>();
         if (modules != null) {
             for (String module : modules) {
                 DynamicModuleAdapter moduleAdapter = moduleBeanAdapterMap.get(module);
                 if (moduleAdapter == null) {
                     throw new Exception(
-                            "Something wrong when collecting dependencies in " + DynamicModuleAdapter.class.getName());
+                            "Something wrong when collecting dependencies of " + module + " in "
+                                    + DynamicModuleAdapter.class.getName());
                 }
                 List<String> runtimeIds = moduleAdapter.getRuntimeIds();
                 if (runtimeIds == null || runtimeIds.isEmpty()) {
                     // means it is using existing modules of studio
-                    runtimeModules.add(module);
+                    runtimeModulesSet.add(module);
                 } else {
-                    runtimeModules.addAll(runtimeIds);
+                    runtimeModulesSet.addAll(runtimeIds);
                 }
             }
-            if (runtimeModules != null) {
-                for (String runtimeModule : runtimeModules) {
+            if (runtimeModulesSet != null) {
+                for (String runtimeModule : runtimeModulesSet) {
                     IDynamicConfiguration createDynamicLibrary = createDynamicLibrary(runtimeModule);
                     dynamicModuleGroup.addChildConfiguration(createDynamicLibrary);
                 }
             }
         }
-        return null;
+        this.runtimeModules.addAll(runtimeModulesSet);
+        return dynamicModuleGroup;
     }
 
     @Override

@@ -1,27 +1,27 @@
-HDFS-LIB-CDH_5_10: 
+HDFS-LIB-DYNAMIC: 
   <groupId>org.apache.hadoop</groupId>
   <artifactId>hadoop-client</artifactId>
   <version>2.6.0-cdh5.10.1</version>
 
   
-HDFS-COMMON-LIB-CDH_5_10
+HDFS-COMMON-LIB-DYNAMIC
   <groupId>org.apache.hadoop</groupId>
   <artifactId>hadoop-client</artifactId>
   <version>2.6.0-cdh5.10.1</version>
 
 
-HDFS-SPARK1_6-LIB-CDH_5_10
+HDFS-SPARK1_6-LIB-DYNAMIC
   <groupId>org.apache.spark</groupId>
   <artifactId>spark-core_2.10</artifactId>
   <version>1.6.0-cdh5.10.1</version>
 
 
-HDFS-SPARK2_1-LIB-CDH_5_10
+HDFS-SPARK2_1-LIB-DYNAMIC
   <groupId>org.apache.spark</groupId>
   <artifactId>spark-core_2.10</artifactId>
 
 
-MAPREDUCE-LIB-CDH_5_10
+MAPREDUCE-LIB-DYNAMIC
   <groupId>org.apache.hadoop</groupId>
   <artifactId>hadoop-mapreduce-client-app</artifactId>
   <version>2.6.0-cdh5.10.1</version>
@@ -39,13 +39,13 @@ MAPREDUCE-LIB-CDH_5_10
   <version>3.2.0-incubating</version>
   
 
-HBASE-LIB-CDH_5_10
+HBASE-LIB-DYNAMIC
   <groupId>org.apache.hbase</groupId>
   <artifactId>hbase-client</artifactId>
   <version>1.2.0-cdh5.10.1</version>
 
 
-PIG-LIB-CDH_5_10
+PIG-LIB-DYNAMIC
   <groupId>com.linkedin.datafu</groupId>
   <artifactId>datafu</artifactId>
   <version>1.1.0-cdh5.10.1</version>
@@ -60,7 +60,7 @@ PIG-LIB-CDH_5_10
   <version>0.12.0-cdh5.10.1</version>
 
 
-HIVE-LIB-CDH_5_10
+HIVE-LIB-DYNAMIC
   <groupId>org.apache.hive</groupId>
   <artifactId>hive-jdbc</artifactId>
   <version>1.1.0-cdh5.10.1</version>
@@ -70,7 +70,7 @@ HIVE-LIB-CDH_5_10
   <version>1.1.0-cdh5.10.1</version>
 
 
-SQOOP-LIB-CDH_5_10
+SQOOP-LIB-DYNAMIC
   <groupId>org.apache.sqoop</groupId>
   <artifactId>sqoop</artifactId>
   <version>1.4.6-cdh5.10.1</version>
@@ -83,15 +83,15 @@ SQOOP-LIB-CDH_5_10
   json-20080701.jar
 
 
-SPARK-LIB-CDH_5_10
+SPARK-LIB-DYNAMIC
     talend-spark-assembly-1.6.0-hadoop2.6.0-cdh5.10.1-with-hive-6.4.0
 
 
-SPARK-LIB-CDH_5_10_SPARK2
+SPARK-LIB-DYNAMIC_SPARK2
 
 
 
-HIVE-HBASE-LIB-CDH_5_10
+HIVE-HBASE-LIB-DYNAMIC
   <groupId>org.apache.hbase</groupId>
   <artifactId>hbase-server</artifactId>
   <version>1.2.0-cdh5.10.1</version>
@@ -109,7 +109,7 @@ HIVE-HBASE-LIB-CDH_5_10
   <version>1.5.0-cdh5.10.1</version>
 
 
-MAPREDUCE-PARQUET-LIB-CDH_5_10
+MAPREDUCE-PARQUET-LIB-DYNAMIC
   <groupId>com.twitter</groupId>
   <artifactId>parquet-hadoop-bundle</artifactId>
   <version>1.5.0-cdh5.10.1</version>
@@ -117,17 +117,17 @@ MAPREDUCE-PARQUET-LIB-CDH_5_10
   snappy-java-1.0.4.1.jar
 
 
-MAPREDUCE-PARQUET-LIB-MRREQUIRED-CDH_5_10
+MAPREDUCE-PARQUET-LIB-MRREQUIRED-DYNAMIC
   jodd-core-3.5.2.jar
 
 
-PIG-AVRO-LIB-CDH_5_10
+PIG-AVRO-LIB-DYNAMIC
   <groupId>org.apache.pig</groupId>
   <artifactId>piggybank</artifactId>
   <version>0.12.0-cdh5.10.1</version>
 
 
-PIG-HBASE-LIB-CDH_5_10
+PIG-HBASE-LIB-DYNAMIC
   <groupId>org.apache.hbase</groupId>
   <artifactId>hbase-hadoop-compat</artifactId>
   <version>1.2.0-cdh5.10.1</version>
@@ -137,7 +137,7 @@ PIG-HBASE-LIB-CDH_5_10
   <version>1.2.0-cdh5.10.1</version>
 
 
-PIG-HCATALOG-LIB-CDH_5_10
+PIG-HCATALOG-LIB-DYNAMIC
   <groupId>org.apache.hive</groupId>
   <artifactId>hive-exec</artifactId>
   <version>1.1.0-cdh5.10.1</version>
@@ -151,13 +151,13 @@ PIG-HCATALOG-LIB-CDH_5_10
   <version>0.12.0</version>
   
 
-PIG-PARQUET-LIB-CDH_5_10
+PIG-PARQUET-LIB-DYNAMIC
   <groupId>com.twitter</groupId>
   <artifactId>parquet-pig-bundle</artifactId>
   <version>1.5.0-cdh5.10.1</version>
 
 
-PIG-RCFILE-LIB-CDH_5_10
+PIG-RCFILE-LIB-DYNAMIC
   <groupId>org.apache.hive</groupId>
   <artifactId>hive-exec</artifactId>
   <version>1.1.0-cdh5.10.1</version>
@@ -175,7 +175,7 @@ PIG-RCFILE-LIB-CDH_5_10
   <version>4.9</version>
 
 
-PIG-SEQUENCEFILE-LIB-CDH_5_10
+PIG-SEQUENCEFILE-LIB-DYNAMIC
   <groupId>com.twitter.elephantbird</groupId>
   <artifactId>elephant-bird-hadoop-compat</artifactId>
   <version>4.9</version>
@@ -187,11 +187,11 @@ PIG-SEQUENCEFILE-LIB-CDH_5_10
   pigutil.jar ==> created by talend?
 
 
-SPARK-LIB-MRREQUIRED-CDH_5_10
+SPARK-LIB-MRREQUIRED-DYNAMIC
   snappy-java-1.0.4.1.jar
 
 
-SPARK-DYNAMODB-LIB-MRREQUIRED-CDH_5_10
+SPARK-DYNAMODB-LIB-MRREQUIRED-DYNAMIC
   aws-java-sdk-core-1.10.6.jar
   aws-java-sdk-dynamodb-1.10.6.jar
   emr-core-2.4.0.jar
@@ -199,7 +199,7 @@ SPARK-DYNAMODB-LIB-MRREQUIRED-CDH_5_10
   commons-pool2-2.4.2.jar
 
 
-SPARK-PARQUET-LIB-MRREQUIRED-CDH_5_10
+SPARK-PARQUET-LIB-MRREQUIRED-DYNAMIC
   <groupId>com.twitter</groupId>
   <artifactId>parquet-avro</artifactId>
   <version>1.5.0-cdh5.10.1</version>

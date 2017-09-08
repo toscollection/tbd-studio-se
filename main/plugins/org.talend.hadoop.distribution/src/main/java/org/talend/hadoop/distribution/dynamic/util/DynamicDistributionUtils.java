@@ -101,19 +101,24 @@ public class DynamicDistributionUtils {
         if (StringUtils.isEmpty(rootVariable)) {
             throw new UnsupportedOperationException("No root variable found!");
         }
-        String childExpression = expression.substring(rootVariable.length() + 1).trim();
+        String childExpression = null;
+        if (rootVariable.length() < expression.length()) {
+            childExpression = expression.substring(rootVariable.length() + 1).trim();
+        }
         rootVariable = (String) calculate(root, rootVariable);
         Object value = currentVariable.getVariableValue(rootVariable);
-        if (value == null || expression.equals(rootVariable)) {
-            value = null;
-        } else if (value instanceof List) {
-            value = getVariable(root, new ListVariable((List) value), childExpression, visitedObjects);
-        } else if (value instanceof Map) {
-            value = getVariable(root, new MapVariable((Map) value), childExpression, visitedObjects);
-        } else if (!(value instanceof IVariable)) {
-            value = null;
-        } else {
-            value = getVariable(root, (IVariable) value, childExpression, visitedObjects);
+        if (childExpression != null) {
+            if (value == null) {
+                value = null;
+            } else if (value instanceof List) {
+                value = getVariable(root, new ListVariable((List) value), childExpression, visitedObjects);
+            } else if (value instanceof Map) {
+                value = getVariable(root, new MapVariable((Map) value), childExpression, visitedObjects);
+            } else if (!(value instanceof IVariable)) {
+                value = null;
+            } else {
+                value = getVariable(root, (IVariable) value, childExpression, visitedObjects);
+            }
         }
         return value;
     }
@@ -156,8 +161,11 @@ public class DynamicDistributionUtils {
     }
 
     public static String getMvnUrl(DependencyNode node) {
-        return MavenUrlHelper.generateMvnUrl(node.getGroupId(), node.getArtifactId(), node.getVersion(), null,
-                node.getClassifier());
+        String classifier = node.getClassifier();
+        if (StringUtils.isEmpty(classifier)) {
+            classifier = null;
+        }
+        return MavenUrlHelper.generateMvnUrl(node.getGroupId(), node.getArtifactId(), node.getVersion(), null, classifier);
     }
 
     private static class MapVariable implements IVariable {

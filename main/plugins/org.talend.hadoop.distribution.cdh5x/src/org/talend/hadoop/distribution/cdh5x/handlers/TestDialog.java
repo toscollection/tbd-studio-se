@@ -160,6 +160,7 @@ public class TestDialog extends Dialog {
                     DynamicConfiguration configuration = new DynamicConfiguration();
                     configuration.setDistribution(IClouderaDistribution.DISTRIBUTION_NAME);
                     configuration.setVersion(hadoopVersionText.getText());
+                    configuration.setId(hadoopVersionText.getText());
                     configuration.setName(hadoopVersionDisplayText.getText());
                     DynamicTemplateAdapter templateAdapter = new DynamicTemplateAdapter(bean, configuration);
                     templateAdapter.adapt(new NullProgressMonitor());

@@ -1,136 +1,377 @@
 {
-	"id": "CDH5.X",
-	"name": "Cloudera CDH5.X template",
-	"distribution": "Cloudera",
-	"repository": "http://repository.cloudera.com/cloudera/cdh-releases-rcs",
-	"servicePrefix": "org.talend.hadoop.distribution.component",
-	"services": [
-		"{servicePrefix}.HadoopComponent",
-		"{servicePrefix}.HDFSComponent",
-		"{servicePrefix}.HBaseComponent",
-		"{servicePrefix}.HCatalogComponent",
-		"{servicePrefix}.HiveComponent",
-		"{servicePrefix}.HiveOnSparkComponent",
-		"{servicePrefix}.ImpalaComponent",
-		"{servicePrefix}.MRComponent",
-		"{servicePrefix}.PigComponent",
-		"{servicePrefix}.SqoopComponent",
-		"{servicePrefix}.SparkBatchComponent",
-		"{servicePrefix}.SparkStreamingComponent"
-	],
-	"conditions": [
-		{
-			"id": "condition1",
-			"operator": "==",
-			"left": "a",
-			"right": "b"
-		},
-		{
-			"id": "condition2",
-			"operator": "==",
-			"left": "c",
-			"right": "d"
-		},
-		{
-			"id": "condition3",
-			"operator": "AND",
-			"left": "{condition1}",
-			"right": "{condition2}"
-		}
-	],
-	"modules": [
-		{
-			"id": "id1",
-			"type": "standard",
-			"jarName": "talendConfig.jar",
-			"mvnUri": ""
-		},
-		{
-			"id": "hdfs.base.jar",
-			"type": "base",
-			"groupId": "org.apache.hadoop",
-			"artifactId": "hadoop-client"
-		},
-		{
-			"id": "talendConfig.reference",
-			"type": "reference",
-			"jarName": "hadoop-hdfs-cdh5.10"
-		}
-	],
-	"moduleGroups": [
-		{
-			"id": "module1",
-			"modules": [
-				"id1",
-				"hdfs.base.jar"
-			],
-			"conditions": [
-				"{conditions.condition1}"
-			]
-		},
-		{
-			"id": "module2",
-			"modules": [
-				"talendConfig.reference",
-				"{moduleGroups.module1}"
-			],
-			"conditions": [
-				"{conditions.condition1}",
-				"{conditions.condition2}"
-			]
-		}
-	],
-	"typeMap": [
-		{
-			"type": "HDFS",
-			"moduleGroups": [
-				{
-					"moduleGroup": "module1",
-					"conditions": [
-						"{conditions.condition1}"
-					]
-				}
-			]
-		},
-		{
-			"type": "PIG",
-			"moduleGroups": [
-				{
-					"moduleGroup": "module2",
-					"conditions": [
-						"{conditions.condition1}",
-						"{conditions.condition2}"
-					]
-				}
-			]
-		}
-	],
-	"componentTypeMap": [
-		{
-			"type": "MAPREDUCE",
-			"component": "tS3Input",
-			"moduleGroups": [
-				{
-					"moduleGroup": "module2",
-					"conditions": [
-						"{conditions.condition1}",
-						"{conditions.condition2}"
-					]
-				}
-			]
-		},
-		{
-			"type": "PIG",
-			"component": "tPigStoreResult",
-			"moduleGroups": [
-				{
-					"moduleGroup": "module2",
-					"conditions": [
-						"{conditions.condition1}",
-						"{conditions.condition2}"
-					]
-				}
-			]
-		}
-	]
+    "id": "CDH5.X",
+    "name": "Cloudera CDH5.X template",
+    "distribution": "CLOUDERA",
+    "baseVersion":"2.6.0-mr1-cdh5.10.0",
+    "topVersion":"",
+    "dynamicVersion":"will be filled during runtime",
+    "repository": "http://localhost:8081/nexus/content/repositories/central",
+    "modules": [
+        {
+            "id": "commons-httpclient-3.1-dynamic",
+            "type": "STANDARD",
+            "jarName": "commons-httpclient-3.1.jar",
+            "mvnUri": "mvn:org.talend.libraries/commons-httpclient-3.1/6.0.0"
+        },
+        {
+            "id": "hadoop-client",
+            "type": "BASE",
+            "groupId": "org.apache.hadoop",
+            "artifactId": "hadoop-client",
+            "classifier": ""
+        },
+        {
+            "id": "spark-core_2.10",
+            "type": "BASE",
+            "groupId": "org.apache.spark",
+            "artifactId": "spark-core_2.10",
+            "classifier": ""
+        },
+        {
+            "id": "hadoop-mapreduce-client-app",
+            "type": "BASE",
+            "groupId": "org.apache.hadoop",
+            "artifactId": "hadoop-mapreduce-client-app",
+            "classifier": ""
+        },
+        {
+            "id": "hadoop-mapreduce-client-jobclient",
+            "type": "BASE",
+            "groupId": "org.apache.hadoop",
+            "artifactId": "hadoop-mapreduce-client-jobclient",
+            "classifier": ""
+        },
+        {
+            "id": "htrace-core",
+            "type": "BASE",
+            "groupId": "org.apache.htrace",
+            "artifactId": "htrace-core",
+            "version": "3.2.0-incubating",
+            "classifier": ""
+        },
+        {
+            "id": "hbase-client",
+            "type": "BASE",
+            "groupId": "org.apache.hbase",
+            "artifactId": "hbase-client",
+            "classifier": ""
+        },
+        {
+            "id": "datafu",
+            "type": "BASE",
+            "groupId": "com.linkedin.datafu",
+            "artifactId": "datafu",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-pig",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-pig",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-pig",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-pig",
+            "classifier": ""
+        },
+        {
+            "id": "hive-jdbc",
+            "type": "BASE",
+            "groupId": "org.apache.hive",
+            "artifactId": "hive-jdbc",
+            "classifier": ""
+        },
+        {
+            "id": "hive-exec",
+            "type": "BASE",
+            "groupId": "org.apache.hive",
+            "artifactId": "hive-exec",
+            "classifier": ""
+        },
+        {
+            "id": "sqoop",
+            "type": "BASE",
+            "groupId": "org.apache.sqoop",
+            "artifactId": "sqoop",
+            "classifier": ""
+        },
+        {
+            "id": "avro-mapred",
+            "type": "BASE",
+            "groupId": "org.apache.avro",
+            "artifactId": "avro-mapred",
+            "classifier": "hadoop2"
+        },
+        {
+            "id": "hbase-server",
+            "type": "BASE",
+            "groupId": "org.apache.hbase",
+            "artifactId": "hbase-server",
+            "classifier": ""
+        },
+        {
+            "id": "hbase-hadoop-compat",
+            "type": "BASE",
+            "groupId": "org.apache.hbase",
+            "artifactId": "hbase-hadoop-compat",
+            "classifier": ""
+        },
+        {
+            "id": "hive-hbase-handler",
+            "type": "BASE",
+            "groupId": "org.apache.hive",
+            "artifactId": "hive-hbase-handler",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-avro",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-avro",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-hadoop-bundle",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-hadoop-bundle",
+            "classifier": ""
+        },
+        {
+            "id": "piggybank",
+            "type": "BASE",
+            "groupId": "org.apache.pig",
+            "artifactId": "piggybank",
+            "classifier": ""
+        },
+        {
+            "id": "hbase-hadoop-compat",
+            "type": "BASE",
+            "groupId": "org.apache.hbase",
+            "artifactId": "hbase-hadoop-compat",
+            "classifier": ""
+        },
+        {
+            "id": "hbase-server",
+            "type": "BASE",
+            "groupId": "org.apache.hbase",
+            "artifactId": "hbase-server",
+            "classifier": ""
+        },
+        {
+            "id": "hcatalog-server-extensions",
+            "type": "BASE",
+            "groupId": "org.apache.hive.hcatalog",
+            "artifactId": "hcatalog-server-extensions",
+            "version": "0.12.0",
+            "classifier": ""
+        },
+        {
+            "id": "hcatalog-pig-adapter",
+            "type": "BASE",
+            "groupId": "org.apache.hive.hcatalog",
+            "artifactId": "hcatalog-pig-adapter",
+            "version": "0.12.0",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-pig-bundle",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-pig-bundle",
+            "classifier": ""
+        },
+        {
+            "id": "hive-serde",
+            "type": "BASE",
+            "groupId": "org.apache.hive",
+            "artifactId": "hive-serde",
+            "classifier": ""
+        },
+        {
+            "id": "elephant-bird-hadoop-compat",
+            "type": "BASE",
+            "groupId": "com.twitter.elephantbird",
+            "artifactId": "elephant-bird-hadoop-compat",
+            "version": "4.9",
+            "classifier": ""
+        },
+        {
+            "id": "elephant-bird-pig",
+            "type": "BASE",
+            "groupId": "com.twitter.elephantbird",
+            "artifactId": "elephant-bird-pig",
+            "version": "4.9",
+            "classifier": ""
+        },
+        {
+            "id": "MODULE_COMMONS_CODEC",
+            "type": "REFERENCE",
+            "jarName": "commons-codec-1.10.jar"
+        }
+    ],
+    "moduleGroups": [
+        {
+            "id": "HDFS-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "HDFS-COMMON-LIB-DYNAMIC",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "HDFS-SPARK1_6-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "HDFS-SPARK1_6-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "spark-core_2.10"
+            ]
+        },
+        {
+            "id": "HDFS-SPARK2_1-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "spark-core_2.10"
+            ]
+        },
+        {
+            "id": "MAPREDUCE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-mapreduce-client-app",
+                "hadoop-mapreduce-client-jobclient",
+                "commons-httpclient-3.1-dynamic",
+                "htrace-core"
+            ]
+        },
+        {
+            "id": "HBASE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hbase-client"
+            ]
+        },
+        {
+            "id": "PIG-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "datafu",
+                "parquet-pig"
+            ]
+        },
+        {
+            "id": "HIVE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hive-jdbc",
+                "hive-exec"
+            ]
+        },
+        {
+            "id": "SQOOP-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "sqoop",
+                "avro-mapred"
+            ]
+        },
+        {
+            "id": "HIVE-HBASE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hbase-server",
+                "hbase-hadoop-compat",
+                "hive-hbase-handler",
+                "parquet-avro"
+            ]
+        },
+        {
+            "id": "MAPREDUCE-PARQUET-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "parquet-hadoop-bundle"
+            ]
+        },
+        {
+            "id": "PIG-AVRO-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "piggybank"
+            ]
+        },
+        {
+            "id": "PIG-HBASE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hbase-hadoop-compat",
+                "hbase-server"
+            ]
+        },
+        {
+            "id": "PIG-HCATALOG-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hive-exec",
+                "hcatalog-server-extensions",
+                "hcatalog-pig-adapter"
+            ]
+        },
+        {
+            "id": "PIG-PARQUET-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "parquet-pig-bundle"
+            ]
+        },
+        {
+            "id": "PIG-RCFILE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hive-exec",
+                "hive-serde",
+                "elephant-bird-hadoop-compat"
+            ]
+        },
+        {
+            "id": "PIG-SEQUENCEFILE-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "elephant-bird-hadoop-compat",
+                "elephant-bird-pig"
+            ]
+        },
+        {
+            "id": "SPARK-PARQUET-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "parquet-avro"
+            ]
+        }
+    ],
+    "classLoaders":[
+       {
+           "id":"hadoop-hdfs",
+           "index":"HDFS:CLOUDERA:{dynamicVersion}",
+           "moduleGroup":"HDFS-LIB-DYNAMIC"
+       },
+       {
+           "id":"hadoop-hdfs-with-krb",
+           "index":"HDFS:CLOUDERA:{dynamicVersion}?USE_KRB",
+           "moduleGroup":"HDFS-LIB-DYNAMIC"
+       }
+    ]
 }

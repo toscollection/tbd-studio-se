@@ -1,0 +1,221 @@
+{
+    "id": "CDH5.X",
+    "name": "Cloudera CDH5.X template",
+    "distribution": "CLOUDERA",
+    "baseVersion":"2.6.0-mr1-cdh5.10.0",
+    "topVersion":"",
+    "dynamicVersion":"will be filled during runtime",
+    "repository": "https://repository.cloudera.com/cloudera/cdh-releases-rcs",
+    "properties": {
+        "servicePrefix": "org.talend.hadoop.distribution.component",
+        "repository1": "https://repository.cloudera.com/cloudera/cdh-releases-rcs",
+        "repository2": "http://localhost:8081/nexus/content/repositories/central"
+    },
+    "services": [
+        "{properties.servicePrefix}.HadoopComponent",
+        "{properties.servicePrefix}.HDFSComponent",
+        "{properties.servicePrefix}.HBaseComponent",
+        "{properties.servicePrefix}.HCatalogComponent",
+        "{properties.servicePrefix}.HiveComponent",
+        "{properties.servicePrefix}.HiveOnSparkComponent",
+        "{properties.servicePrefix}.ImpalaComponent",
+        "{properties.servicePrefix}.MRComponent",
+        "{properties.servicePrefix}.PigComponent",
+        "{properties.servicePrefix}.SqoopComponent",
+        "{properties.servicePrefix}.SparkBatchComponent",
+        "{properties.servicePrefix}.SparkStreamingComponent"
+    ],
+    "conditions": [
+        {
+            "id": "condition1",
+            "operator": "==",
+            "left": "a",
+            "right": "b"
+        },
+        {
+            "id": "condition2",
+            "operator": "==",
+            "left": "c",
+            "right": "d"
+        },
+        {
+            "id": "condition3",
+            "operator": "AND",
+            "left": "conditions.condition1",
+            "right": "conditions.condition2"
+        }
+    ],
+    "modules": [
+        {
+            "id": "commons-httpclient-3.1-dynamic",
+            "type": "STANDARD",
+            "jarName": "commons-httpclient-3.1.jar",
+            "mvnUri": "mvn:org.talend.libraries/commons-httpclient-3.1/6.0.0"
+        },
+        {
+            "id": "hadoop-client",
+            "type": "BASE",
+            "groupId": "org.apache.hadoop",
+            "artifactId": "hadoop-client",
+            "classifier": ""
+        },
+        {
+            "id": "spark-core_2_10",
+            "type": "BASE",
+            "groupId": "org.apache.spark",
+            "artifactId": "spark-core_2.10",
+            "classifier": ""
+        },
+        {
+            "id": "hadoop-mapreduce-client-app",
+            "type": "BASE",
+            "groupId": "org.apache.hadoop",
+            "artifactId": "hadoop-mapreduce-client-app",
+            "classifier": ""
+        },
+        {
+            "id": "hadoop-mapreduce-client-jobclient",
+            "type": "BASE",
+            "groupId": "org.apache.hadoop",
+            "artifactId": "hadoop-mapreduce-client-jobclient",
+            "classifier": ""
+        },
+        {
+            "id": "htrace-core",
+            "type": "BASE",
+            "groupId": "org.apache.htrace",
+            "artifactId": "htrace-core",
+            "version": "3.2.0-incubating",
+            "classifier": ""
+        },
+        {
+            "id": "hbase-client",
+            "type": "BASE",
+            "groupId": "org.apache.hbase",
+            "artifactId": "hbase-client",
+            "classifier": ""
+        },
+        {
+            "id": "datafu",
+            "type": "BASE",
+            "groupId": "com.linkedin.datafu",
+            "artifactId": "datafu",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-pig",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-pig",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-pig",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-pig",
+            "classifier": ""
+        },
+        {
+            "id": "parquet-pig",
+            "type": "BASE",
+            "groupId": "com.twitter",
+            "artifactId": "parquet-pig",
+            "classifier": ""
+        },
+        {
+            "id": "MODULE_COMMONS_CODEC",
+            "type": "REFERENCE",
+            "jarName": "commons-codec-1.10.jar"
+        }
+    ],
+    "moduleGroups": [
+        {
+            "id": "module1",
+            "description": "",
+            "modules": [
+                "id1",
+                "hdfs.base.jar"
+            ],
+            "conditions": [
+                "conditions.condition1"
+            ]
+        },
+        {
+            "id": "module2",
+            "modules": [
+                "talendConfig.reference",
+                "moduleGroups.module1"
+            ],
+            "conditions": [
+                "conditions.condition1",
+                "conditions.condition2"
+            ]
+        }
+    ],
+    "typeMap": [
+        {
+            "type": "HDFS",
+            "moduleGroups": [
+                {
+                    "moduleGroup": "module1",
+                    "conditions": [
+                        "conditions.condition1"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "PIG",
+            "moduleGroups": [
+                {
+                    "moduleGroup": "module2",
+                    "conditions": [
+                        "conditions.condition1",
+                        "conditions.condition2"
+                    ]
+                }
+            ]
+        }
+    ],
+    "componentTypeMap": [
+        {
+            "type": "MAPREDUCE",
+            "component": "tS3Input",
+            "moduleGroups": [
+                {
+                    "moduleGroup": "module2",
+                    "conditions": [
+                        "conditions.condition1",
+                        "conditions.condition2"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "PIG",
+            "component": "tPigStoreResult",
+            "moduleGroups": [
+                {
+                    "moduleGroup": "module2",
+                    "conditions": [
+                        "conditions.condition1",
+                        "conditions.condition2"
+                    ]
+                }
+            ]
+        }
+    ],
+    "classLoaders":[
+       {
+           "id":"",
+           "index":"HIVE:CLOUDERA:{dynamicVersion}:EMBEDDED",
+           "moduleGroup":""
+       },
+       {
+           "id":"",
+           "index":"HIVE:CLOUDERA:{dynamicVersion}:STANDALONE",
+           "moduleGroup":""
+       }
+    ]
+}

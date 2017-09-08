@@ -109,7 +109,7 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
             if (moduleNeeded == null) {
                 throw new UnsupportedOperationException("can't find existing library: " + jarName);
             }
-
+            runtimeIds.add(moduleNeeded.getId());
         } else if (ModuleBean.TYPE_STANDARD.equalsIgnoreCase(type)) {
             String id = moduleBean.getId();
             String jarName = moduleBean.getJarName();

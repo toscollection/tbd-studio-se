@@ -10,7 +10,7 @@
       <command
             categoryId="org.talend.hadoop.distribution.cdh5x.commands.category"
             id="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
-            name="Sample Command">
+            name="Open Test Dialog">
       </command>
    </extension>
    <extension
@@ -35,7 +35,7 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                id="org.talend.hadoop.distribution.cdh5x.menus.sampleMenu"
-               label="Sample Menu"
+               label="Dynamic Distribution Test"
                mnemonic="M">
             <command
                   commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
@@ -52,7 +52,7 @@
                   commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
                   icon="icons/sample.png"
                   id="org.talend.hadoop.distribution.cdh5x.toolbars.sampleCommand"
-                  tooltip="Say hello world">
+                  tooltip="Test dynamic distirbution">
             </command>
          </toolbar>
       </menuContribution>
