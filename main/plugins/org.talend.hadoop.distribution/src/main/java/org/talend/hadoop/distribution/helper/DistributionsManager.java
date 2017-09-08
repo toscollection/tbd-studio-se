@@ -268,6 +268,7 @@ public final class DistributionsManager implements IDistributionsManager {
         // special condition for current version
         versionBean.displayCondition = hc.getDisplayCondition(type);
         distributionBean.removeVersion(versionBean);
+        distributionBean.setDefaultVersion(null);
 
         DistributionVersion[] versions = distributionBean.getVersions();
         if (versions == null || versions.length <= 0) {

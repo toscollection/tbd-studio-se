@@ -231,13 +231,6 @@
             "id": "HDFS-SPARK1_6-LIB-DYNAMIC",
             "description": "",
             "modules": [
-                "hadoop-client"
-            ]
-        },
-        {
-            "id": "HDFS-SPARK1_6-LIB-DYNAMIC",
-            "description": "",
-            "modules": [
                 "spark-core_2.10"
             ]
         },
@@ -359,6 +352,139 @@
             "description": "",
             "modules": [
                 "parquet-avro"
+            ]
+        },
+        {
+            "id": "SPARK-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-LIB-SPARK2-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "MAPREDUCE-PARQUET-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-DYNAMODB-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-KINESIS-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK2-KINESIS-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK2-KAFKA-ASSEMBLY-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-KAFKA-AVRO-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-KAFKA-CLIENT-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK2-KAFKA-CLIENT-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-S3-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "PIG-S3-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-GRAPHFRAMES-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-HIVE-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "TALEND_CLOUDERA_NAVIGATOR-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SPARK-FLUME-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
+            ]
+        },
+        {
+            "id": "SQOOP-PARQUET-LIB-DYNAMIC",
+            "description": "",
+            "modules": [
+                "hadoop-client"
             ]
         }
     ],

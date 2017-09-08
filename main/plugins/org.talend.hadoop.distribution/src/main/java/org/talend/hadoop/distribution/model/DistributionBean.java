@@ -139,10 +139,8 @@ public class DistributionBean implements IHDistribution {
      */
     private DistributionVersion defaultVersion;
 
-    private void setDefaultVersion(DistributionVersion v) {
-        if (v != null) {
-            defaultVersion = v;
-        }
+    public void setDefaultVersion(DistributionVersion v) {
+        defaultVersion = v;
     }
 
     @Override

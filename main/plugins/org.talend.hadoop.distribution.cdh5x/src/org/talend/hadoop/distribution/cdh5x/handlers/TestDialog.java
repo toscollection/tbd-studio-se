@@ -14,9 +14,12 @@ package org.talend.hadoop.distribution.cdh5x.handlers;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -31,11 +34,31 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceRegistration;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.DynamicServiceUtil;
 import org.talend.core.runtime.dynamic.IDynamicPlugin;
+import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
+import org.talend.hadoop.distribution.cdh5x.CDH5xDistributionTemplate;
+import org.talend.hadoop.distribution.cdh5x.CDH5xPlugin;
+import org.talend.hadoop.distribution.component.HBaseComponent;
+import org.talend.hadoop.distribution.component.HCatalogComponent;
+import org.talend.hadoop.distribution.component.HDFSComponent;
+import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
+import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
+import org.talend.hadoop.distribution.component.ImpalaComponent;
+import org.talend.hadoop.distribution.component.MRComponent;
+import org.talend.hadoop.distribution.component.PigComponent;
+import org.talend.hadoop.distribution.component.SparkBatchComponent;
+import org.talend.hadoop.distribution.component.SparkStreamingComponent;
+import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
+import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
 import org.talend.hadoop.distribution.dynamic.DynamicTemplateAdapter;
 import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
 
@@ -57,10 +80,16 @@ public class TestDialog extends Dialog {
 
     private Button generateButton;
 
+    private Text jsonLocationText;
+
+    private Button registButton;
+
+    private static Map<String, IDynamicPlugin> registedPluginMap = new HashMap<>();
+
+    private static Map<String, ServiceRegistration> registedOsgiServiceMap = new HashMap<>();
+
     protected TestDialog(Shell parentShell) {
         super(parentShell);
-
-        // this.getShell().setText("Test Dialog");
     }
 
     @Override
@@ -70,8 +99,18 @@ public class TestDialog extends Dialog {
         composite.setLayout(new FormLayout());
         composite.setLayoutData(new GridData(GridData.FILL_BOTH));
 
+        Composite generateFromTemplate = createGenereateFromTemplate(composite);
+
+        Composite registFromJson = createRegistFromJson(composite, generateFromTemplate);
+
+        applyDialogFont(composite);
+        addListeners();
+        return composite;
+    }
+
+    private Composite createGenereateFromTemplate(Composite composite) {
         Group group = new Group(composite, SWT.NONE);
-        group.setText("Load from template:");
+        group.setText("Generate json from template:");
         group.setLayout(new FormLayout());
         FormData groupFormData = new FormData();
         groupFormData.left = new FormAttachment(0, 10);
@@ -143,11 +182,45 @@ public class TestDialog extends Dialog {
         generateButtonFD.bottom = new FormAttachment(100, -10);
         generateButton.setLayoutData(generateButtonFD);
 
-        applyDialogFont(composite);
-        addListeners();
-        return composite;
+        return group;
     }
     
+    private Composite createRegistFromJson(Composite composite, Composite generateFromTemplate) {
+
+        Group group = new Group(composite, SWT.NONE);
+        group.setText("Regist service from json:");
+        group.setLayout(new FormLayout());
+        FormData groupFormData = new FormData();
+        groupFormData.left = new FormAttachment(generateFromTemplate, 0, SWT.LEFT);
+        groupFormData.right = new FormAttachment(generateFromTemplate, 0, SWT.RIGHT);
+        groupFormData.top = new FormAttachment(generateFromTemplate, 10, SWT.BOTTOM);
+        group.setLayoutData(groupFormData);
+
+        Label jsonLocationLabel = new Label(group, SWT.NONE);
+        jsonLocationLabel.setText("Json location:");
+        FormData jsonLocationLabelFD = new FormData();
+        jsonLocationLabelFD.top = new FormAttachment(0, 10);
+        jsonLocationLabelFD.left = new FormAttachment(0, 10);
+        jsonLocationLabel.setLayoutData(jsonLocationLabelFD);
+
+        jsonLocationText = new Text(group, SWT.BORDER);
+        FormData templateTextFD = new FormData();
+        templateTextFD.top = new FormAttachment(jsonLocationLabel, 0, SWT.CENTER);
+        templateTextFD.left = new FormAttachment(jsonLocationLabel, 10, SWT.RIGHT);
+        templateTextFD.right = new FormAttachment(100, -10);
+        jsonLocationText.setLayoutData(templateTextFD);
+
+        registButton = new Button(group, SWT.PUSH);
+        registButton.setText("Regist");
+        FormData generateButtonFD = new FormData();
+        generateButtonFD.top = new FormAttachment(jsonLocationLabel, 10, SWT.BOTTOM);
+        generateButtonFD.left = new FormAttachment(jsonLocationLabel, 0, SWT.LEFT);
+        generateButtonFD.bottom = new FormAttachment(100, -10);
+        registButton.setLayoutData(generateButtonFD);
+
+        return group;
+    }
+
     protected void addListeners() {
         generateButton.addSelectionListener(new SelectionListener() {
             
@@ -170,8 +243,10 @@ public class TestDialog extends Dialog {
                     outStream = new FileOutputStream(outFile);
                     outStream.write(content.getBytes("UTF-8"));
                     outStream.flush();
+                    MessageDialog.openInformation(getShell(), "Succeed", "Json file generated at " + generatedText.getText());
                 } catch (Exception ex) {
                     ExceptionHandler.process(ex);
+                    MessageDialog.openError(getShell(), "Failed", "Generate failed, please check error log.");
                 } finally {
                     if (outStream != null) {
                         try {
@@ -188,12 +263,66 @@ public class TestDialog extends Dialog {
                 // nothing to do
             }
         });
+
+        registButton.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    String jsonContent = DynamicServiceUtil.readFile(new File(jsonLocationText.getText()));
+                    IDynamicPlugin dynamicPlugin = DynamicFactory.getInstance().createPluginFromJson(jsonContent);
+                    DynamicPluginAdapter pluginAdapter = new DynamicPluginAdapter(dynamicPlugin);
+                    pluginAdapter.adapt();
+                    CDH5xDistributionTemplate cdhService = new CDH5xDistributionTemplate(pluginAdapter);
+
+                    CDH5xPlugin cdh5xPlugin = CDH5xPlugin.getInstance();
+
+                    Bundle bundle = cdh5xPlugin.getBundle();
+
+                    IDynamicPluginConfiguration pluginConfiguration = dynamicPlugin.getPluginConfiguration();
+                    String id = pluginConfiguration.getId();
+
+                    IDynamicPlugin registedPlugin = registedPluginMap.get(id);
+                    if (registedPlugin != null) {
+                        DynamicServiceUtil.removeContribution(registedPlugin);
+                    }
+                    ServiceRegistration registedOsgiService = registedOsgiServiceMap.get(id);
+                    if (registedOsgiService != null) {
+                        DynamicServiceUtil.unregistOSGiService(registedOsgiService);
+                    }
+
+                    DynamicServiceUtil.addContribution(bundle, dynamicPlugin);
+                    registedPluginMap.put(id, dynamicPlugin);
+
+                    BundleContext context = bundle.getBundleContext();
+                    ServiceRegistration osgiService = DynamicServiceUtil.registOSGiService(context,
+                            new String[] { HadoopComponent.class.getName(), HDFSComponent.class.getName(),
+                                    HBaseComponent.class.getName(), HCatalogComponent.class.getName(),
+                                    HiveComponent.class.getName(), HiveOnSparkComponent.class.getName(),
+                                    ImpalaComponent.class.getName(), MRComponent.class.getName(), PigComponent.class.getName(),
+                                    SqoopComponent.class.getName(), SparkBatchComponent.class.getName(),
+                                    SparkStreamingComponent.class.getName() },
+                            cdhService, null);
+                    registedOsgiServiceMap.put(id, osgiService);
+
+                    MessageDialog.openInformation(getShell(), "Succeed", "Service regist successfully!");
+                } catch (Exception ex) {
+                    ExceptionHandler.process(ex);
+                    MessageDialog.openError(getShell(), "Failed", "Regist service failed, please check error log.");
+                }
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // nothing to do
+            }
+        });
     }
 
     @Override
     protected void configureShell(Shell shell) {
         super.configureShell(shell);
         shell.setText("Test Dialog");
-        shell.setSize(300, 300);
+        shell.setSize(600, 600);
     }
 }

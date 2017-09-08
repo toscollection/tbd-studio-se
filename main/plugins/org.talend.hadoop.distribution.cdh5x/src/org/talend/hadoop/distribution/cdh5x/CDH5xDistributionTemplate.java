@@ -74,7 +74,7 @@ import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
 @SuppressWarnings("nls")
-public abstract class CDH5xDistributionTemplate extends AbstractDistribution
+public class CDH5xDistributionTemplate extends AbstractDistribution
         implements IClouderaDistribution, HDFSComponent, HBaseComponent, HCatalogComponent, PigComponent, MRComponent,
         HiveComponent, HiveOnSparkComponent, ImpalaComponent, SqoopComponent, SparkBatchComponent, SparkStreamingComponent {
 

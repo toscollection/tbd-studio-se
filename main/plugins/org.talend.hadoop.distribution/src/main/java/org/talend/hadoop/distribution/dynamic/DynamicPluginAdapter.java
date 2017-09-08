@@ -40,6 +40,11 @@ public class DynamicPluginAdapter {
         return plugin.getPluginConfiguration();
     }
 
+    /**
+     * Build related informations, and remove attributes not needed
+     * 
+     * @throws Exception
+     */
     public void adapt() throws Exception {
         List<IDynamicExtension> allExtensions = plugin.getAllExtensions();
         IDynamicExtension libNeededExtension = null;
@@ -57,7 +62,7 @@ public class DynamicPluginAdapter {
             throw new Exception("No libraryModuelGroup configured");
         }
         for (IDynamicConfiguration configuration : configurations) {
-            if (DynamicModuleGroupAdapter.ATTR_NAME.equals(configuration.getTagName())) {
+            if (DynamicModuleGroupAdapter.TAG_NAME.equals(configuration.getTagName())) {
                 String templateId = (String) configuration.getAttribute(DynamicModuleGroupAdapter.ATTR_GROUP_TEMPLATE_ID);
                 if (StringUtils.isEmpty(templateId)) {
                     throw new Exception("Template id is not configured!");
