@@ -10,19 +10,13 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
-
-import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
+package org.talend.hadoop.distribution.dynamic.bean;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public abstract class DynamicExtensionAdapter extends AbstractDynamicAdapter {
+public interface IVariable {
 
-    public static final String ATTR_ID = "id"; //$NON-NLS-1$
-
-    public DynamicExtensionAdapter(TemplateBean templateBean, DynamicConfiguration configuration) {
-        super(templateBean, configuration);
-    }
+    public Object getVariableValue(String variable) throws Exception;
 
 }

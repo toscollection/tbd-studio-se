@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic.adapter;
+package org.talend.hadoop.distribution.dynamic.bean;
 
 /**
  * DOC cmeng class global comment. Detailled comment

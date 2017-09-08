@@ -13,7 +13,7 @@
 package org.talend.hadoop.distribution.cdh5x.modulegroup.node;
 
 import org.talend.hadoop.distribution.cdh5x.modulegroup.AbstractModuleGroup;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 
 /**

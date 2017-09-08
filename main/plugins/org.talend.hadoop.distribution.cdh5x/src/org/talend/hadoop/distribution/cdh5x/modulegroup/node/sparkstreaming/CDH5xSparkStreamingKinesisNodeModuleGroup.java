@@ -28,7 +28,7 @@ import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 public class CDH5xSparkStreamingKinesisNodeModuleGroup extends AbstractNodeModuleGroup {
 

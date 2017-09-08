@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
+package org.talend.hadoop.distribution.dynamic.adapter;
 
 import java.util.HashMap;
 import java.util.List;

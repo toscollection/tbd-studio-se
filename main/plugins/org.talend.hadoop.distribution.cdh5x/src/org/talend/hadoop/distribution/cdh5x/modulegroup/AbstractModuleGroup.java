@@ -13,7 +13,7 @@
 package org.talend.hadoop.distribution.cdh5x.modulegroup;
 
 import org.apache.commons.lang.StringUtils;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

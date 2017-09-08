@@ -22,7 +22,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SqoopConstant;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 public class CDH5xSqoopModuleGroup extends AbstractModuleGroup {
 

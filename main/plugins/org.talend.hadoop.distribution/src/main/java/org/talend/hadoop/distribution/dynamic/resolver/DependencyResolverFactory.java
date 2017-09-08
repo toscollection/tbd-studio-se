@@ -10,8 +10,9 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
+package org.talend.hadoop.distribution.dynamic.resolver;
 
+import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

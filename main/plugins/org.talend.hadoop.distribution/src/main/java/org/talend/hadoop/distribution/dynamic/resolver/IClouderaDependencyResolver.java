@@ -10,13 +10,15 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic.adapter;
+package org.talend.hadoop.distribution.dynamic.resolver;
+
+import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public interface IVariable {
+public interface IClouderaDependencyResolver extends IDependencyResolver {
 
-    public Object getVariableValue(String variable) throws Exception;
+    public static final String DISTRIBUTION = IClouderaDistribution.DISTRIBUTION_NAME;
 
 }

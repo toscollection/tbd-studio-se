@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
+package org.talend.hadoop.distribution.dynamic.resolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.maven.aether.DynamicDistributionAetherUtils;
 
 /**

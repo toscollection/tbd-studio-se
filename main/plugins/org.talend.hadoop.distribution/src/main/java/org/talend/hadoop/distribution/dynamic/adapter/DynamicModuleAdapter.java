@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
+package org.talend.hadoop.distribution.dynamic.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +22,10 @@ import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 import org.talend.hadoop.distribution.HadoopDistributionPlugin;
-import org.talend.hadoop.distribution.dynamic.adapter.ModuleBean;
-import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
+import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
+import org.talend.hadoop.distribution.dynamic.bean.ModuleBean;
+import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
+import org.talend.hadoop.distribution.dynamic.resolver.IDependencyResolver;
 import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 import org.talend.maven.aether.DependencyNode;
 

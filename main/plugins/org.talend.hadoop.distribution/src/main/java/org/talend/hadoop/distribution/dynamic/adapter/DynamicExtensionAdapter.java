@@ -10,15 +10,20 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic;
+package org.talend.hadoop.distribution.dynamic.adapter;
 
-import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
+import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
+import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
  */
-public interface IClouderaDependencyResolver extends IDependencyResolver {
+public abstract class DynamicExtensionAdapter extends AbstractDynamicAdapter {
 
-    public static final String DISTRIBUTION = IClouderaDistribution.DISTRIBUTION_NAME;
+    public static final String ATTR_ID = "id"; //$NON-NLS-1$
+
+    public DynamicExtensionAdapter(TemplateBean templateBean, DynamicConfiguration configuration) {
+        super(templateBean, configuration);
+    }
 
 }

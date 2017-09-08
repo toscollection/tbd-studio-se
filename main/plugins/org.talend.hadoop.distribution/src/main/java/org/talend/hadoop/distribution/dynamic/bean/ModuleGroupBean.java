@@ -10,29 +10,53 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic.adapter;
+package org.talend.hadoop.distribution.dynamic.bean;
 
 import java.util.List;
 
 /**
  * DOC cmeng class global comment. Detailled comment
  */
-public class GroupWithConditionBean implements IVariable {
+public class ModuleGroupBean implements IVariable {
 
-    public static final String ATTR_MODULE_GROUP = "moduleGroup"; //$NON-NLS-1$
+    public static final String ATTR_ID = "id"; //$NON-NLS-1$
+
+    public static final String ATTR_MODULES = "modules"; //$NON-NLS-1$
 
     public static final String ATTR_CONDITIONS = "conditions"; //$NON-NLS-1$
 
-    private String moduleGroup;
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
+    private String id;
+
+    private String description;
+
+    private List<String> modules;
 
     private List<String> conditions;
 
-    public String getModuleGroup() {
-        return this.moduleGroup;
+    public String getId() {
+        return this.id;
     }
 
-    public void setModuleGroup(String moduleGroup) {
-        this.moduleGroup = moduleGroup;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<String> getModules() {
+        return this.modules;
+    }
+
+    public void setModules(List<String> modules) {
+        this.modules = modules;
     }
 
     public List<String> getConditions() {
@@ -46,17 +70,25 @@ public class GroupWithConditionBean implements IVariable {
     @Override
     public Object getVariableValue(String variable) throws Exception {
         Object value = null;
+        
         switch (variable) {
         case ATTR_CONDITIONS:
             value = getConditions();
             break;
-        case ATTR_MODULE_GROUP:
-            value = getModuleGroup();
+        case ATTR_DESCRIPTION:
+            value = getDescription();
+            break;
+        case ATTR_ID:
+            value = getId();
+            break;
+        case ATTR_MODULES:
+            value = getModules();
             break;
         default:
             throw new UnsupportedOperationException(
                     "Currently don't support to get " + variable + ", please implement it if needed.");
         }
+        
         return value;
     }
 

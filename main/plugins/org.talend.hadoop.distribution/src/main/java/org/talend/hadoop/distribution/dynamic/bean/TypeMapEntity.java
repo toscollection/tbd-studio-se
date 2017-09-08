@@ -10,24 +10,20 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.dynamic.adapter;
+package org.talend.hadoop.distribution.dynamic.bean;
 
 import java.util.List;
 
 /**
  * DOC cmeng class global comment. Detailled comment
  */
-public class ComponentTypeMapEntity implements IVariable {
+public class TypeMapEntity implements IVariable {
 
     public static final String ATTR_TYPE = "type"; //$NON-NLS-1$
-
-    public static final String ATTR_COMPONENT = "component"; //$NON-NLS-1$
 
     public static final String ATTR_MODULE_GROUPS = "moduleGroups"; //$NON-NLS-1$
 
     private String type;
-
-    private String component;
 
     private List<GroupWithConditionBean> moduleGroups;
 
@@ -37,14 +33,6 @@ public class ComponentTypeMapEntity implements IVariable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getComponent() {
-        return this.component;
-    }
-
-    public void setComponent(String component) {
-        this.component = component;
     }
 
     public List<GroupWithConditionBean> getModuleGroups() {
@@ -59,9 +47,6 @@ public class ComponentTypeMapEntity implements IVariable {
     public Object getVariableValue(String variable) throws Exception {
         Object value = null;
         switch (variable) {
-        case ATTR_COMPONENT:
-            value = getComponent();
-            break;
         case ATTR_MODULE_GROUPS:
             value = getModuleGroups();
             break;
@@ -70,7 +55,7 @@ public class ComponentTypeMapEntity implements IVariable {
             break;
         default:
             throw new UnsupportedOperationException(
-                    "Currently don't support to get " + variable + ", please implement it if needed.");
+                    "Currently don't support to get variable from " + variable + ", you can implement to support it.");
         }
         return value;
     }

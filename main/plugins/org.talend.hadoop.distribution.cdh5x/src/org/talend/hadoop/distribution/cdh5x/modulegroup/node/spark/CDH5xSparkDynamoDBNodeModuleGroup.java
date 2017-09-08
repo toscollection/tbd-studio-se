@@ -17,8 +17,8 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
-import org.talend.hadoop.distribution.utils.dynamodb.SparkDynamoDBNodeModuleGroupUtil;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 public class CDH5xSparkDynamoDBNodeModuleGroup extends AbstractNodeModuleGroup {
 
@@ -34,8 +34,7 @@ public class CDH5xSparkDynamoDBNodeModuleGroup extends AbstractNodeModuleGroup {
 
         checkRuntimeId(sparkDynamoDBMrRequiredRuntimeId);
 
-        return SparkDynamoDBNodeModuleGroupUtil.getModuleGroups(distribution, version, condition,
-                sparkDynamoDBMrRequiredRuntimeId);
+        return ModuleGroupsUtils.getModuleGroups(distribution, version, condition, sparkDynamoDBMrRequiredRuntimeId, true);
     }
 
 }

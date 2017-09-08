@@ -24,7 +24,7 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.ShowExpression;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.HiveConstant;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 public class CDH5xHiveModuleGroup extends AbstractModuleGroup {
 

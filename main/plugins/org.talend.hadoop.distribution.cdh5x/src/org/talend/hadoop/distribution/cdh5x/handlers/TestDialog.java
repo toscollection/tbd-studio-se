@@ -58,9 +58,9 @@ import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
-import org.talend.hadoop.distribution.dynamic.DynamicTemplateAdapter;
-import org.talend.hadoop.distribution.dynamic.adapter.TemplateBean;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicTemplateAdapter;
+import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

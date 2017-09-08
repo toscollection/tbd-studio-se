@@ -20,7 +20,7 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.runtime.maven.MavenUrlHelper;
-import org.talend.hadoop.distribution.dynamic.adapter.IVariable;
+import org.talend.hadoop.distribution.dynamic.bean.IVariable;
 import org.talend.maven.aether.DependencyNode;
 
 /**

@@ -19,7 +19,7 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.cdh5x.CDH5xConstant;
 import org.talend.hadoop.distribution.cdh5x.modulegroup.node.AbstractNodeModuleGroup;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
-import org.talend.hadoop.distribution.dynamic.DynamicPluginAdapter;
+import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 public class CDH5xSparkStreamingParquetNodeModuleGroup extends AbstractNodeModuleGroup {
 
