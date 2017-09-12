@@ -6,6 +6,7 @@
     "topVersion":"",
     "dynamicVersion":"will be filled during runtime",
     "repository": "http://localhost:8081/nexus/content/repositories/central",
+    "addRepositoryInMvnUri":"true",
     "modules": [
         {
             "id": "commons-httpclient-3.1-dynamic",
@@ -216,7 +217,7 @@
     "moduleGroups": [
         {
             "id": "HDFS-LIB-DYNAMIC",
-            "description": "",
+            "description": "jars for hdfs, only module.id permitted",
             "modules": [
                 "hadoop-client"
             ]
@@ -497,6 +498,41 @@
        {
            "id":"hadoop-hdfs-with-krb",
            "index":"HDFS:CLOUDERA:{dynamicVersion}?USE_KRB",
+           "moduleGroup":"HDFS-LIB-DYNAMIC"
+       },
+       {
+           "id":"hive-embedded",
+           "index":"HIVE:CLOUDERA:{dynamicVersion}:EMBEDDED",
+           "moduleGroup":"HIVE-LIB-DYNAMIC"
+       },
+       {
+           "id":"hive-standalone",
+           "index":"HIVE:CLOUDERA:{dynamicVersion}:STANDALONE",
+           "moduleGroup":"HIVE-LIB-DYNAMIC"
+       },
+       {
+           "id":"hive2-embedded",
+           "index":"HIVE2:CLOUDERA:{dynamicVersion}:EMBEDDED",
+           "moduleGroup":"HIVE-LIB-DYNAMIC"
+       },
+       {
+           "id":"hive2-standalone",
+           "index":"HIVE2:CLOUDERA:{dynamicVersion}:STANDALONE",
+           "moduleGroup":"HIVE-LIB-DYNAMIC"
+       },
+       {
+           "id":"hbase",
+           "index":"HBASE:CLOUDERA:{dynamicVersion}",
+           "moduleGroup":"HBASE-LIB-DYNAMIC"
+       },
+       {
+           "id":"mapreduce",
+           "index":"MAP_REDUCE:CLOUDERA:{dynamicVersion}",
+           "moduleGroup":"MAPREDUCE-LIB-DYNAMIC"
+       },
+       {
+           "id":"impala",
+           "index":"IMPALA:CLOUDERA:{dynamicVersion}?USE_KRB",
            "moduleGroup":"HDFS-LIB-DYNAMIC"
        }
     ]

@@ -75,44 +75,59 @@ public final class DistributionsManager implements IDistributionsManager {
      * Service can't be null. if the service is HadoopComponent directly, the componentType will be null.
      */
     public DistributionsManager(String serviceName, ComponentType componentType) {
+        this(serviceName, componentType, false);
+    }
+
+    public DistributionsManager(String serviceName, ComponentType componentType, boolean registListener) {
         super();
         this.serviceName = serviceName;
         this.componentType = componentType;
         this.distributionsMap = new HashMap<String, DistributionBean>();
-        this.serviceListener = new ServiceListener() {
+        if (registListener) {
+            this.serviceListener = new ServiceListener() {
 
-            @Override
-            public void serviceChanged(ServiceEvent event) {
-                if (event.getType() == ServiceEvent.REGISTERED) {
-                    ServiceReference<? extends Object> sr = event.getServiceReference();
-                    if (sr != null) {
-                        BundleContext bc = getBundleContext();
-                        Object obj = bc.getService(sr);
-                        if (obj instanceof HadoopComponent) {
-                            addDistribution(bc, distributionsMap, componentType,
-                                    (ServiceReference<? extends HadoopComponent>) sr);
+                @Override
+                public void serviceChanged(ServiceEvent event) {
+                    if (event.getType() == ServiceEvent.REGISTERED) {
+                        ServiceReference<? extends Object> sr = event.getServiceReference();
+                        if (sr != null) {
+                            BundleContext bc = getBundleContext();
+                            Object obj = bc.getService(sr);
+                            if (obj instanceof HadoopComponent) {
+                                Map<String, DistributionBean> map;
+                                if (distributionsMap.isEmpty()) {
+                                    map = new HashMap<>();
+                                } else {
+                                    map = distributionsMap;
+                                }
+                                addDistribution(bc, map, componentType, (ServiceReference<? extends HadoopComponent>) sr);
+                            }
                         }
-                    }
-                } else if (event.getType() == ServiceEvent.UNREGISTERING) {
-                    ServiceReference<? extends Object> sr = event.getServiceReference();
-                    if (sr != null) {
-                        BundleContext bc = getBundleContext();
-                        Object obj = bc.getService(sr);
-                        if (obj instanceof HadoopComponent) {
-                            removeDistribution(bc, distributionsMap, componentType,
-                                    (ServiceReference<? extends HadoopComponent>) sr);
+                    } else if (event.getType() == ServiceEvent.UNREGISTERING) {
+                        ServiceReference<? extends Object> sr = event.getServiceReference();
+                        if (sr != null) {
+                            BundleContext bc = getBundleContext();
+                            Object obj = bc.getService(sr);
+                            if (obj instanceof HadoopComponent) {
+                                Map<String, DistributionBean> map;
+                                if (distributionsMap.isEmpty()) {
+                                    map = new HashMap<>();
+                                } else {
+                                    map = distributionsMap;
+                                }
+                                removeDistribution(bc, map, componentType, (ServiceReference<? extends HadoopComponent>) sr);
+                            }
                         }
                     }
                 }
+            };
+            try {
+                getBundleContext().addServiceListener(this.serviceListener, "(" //$NON-NLS-1$
+                        + Constants.OBJECTCLASS + "=" //$NON-NLS-1$
+                        + serviceName + ")"); //$NON-NLS-1$
+            } catch (InvalidSyntaxException e) {
+                ExceptionHandler.process(e);
             }
-        };
-        try {
-            getBundleContext().addServiceListener(this.serviceListener, "(" //$NON-NLS-1$
-                    + Constants.OBJECTCLASS + "=" //$NON-NLS-1$
-                    + serviceName + ")"); //$NON-NLS-1$
-        } catch (InvalidSyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
@@ -125,7 +140,9 @@ public final class DistributionsManager implements IDistributionsManager {
     }
 
     public void dispose() {
-        getBundleContext().removeServiceListener(this.serviceListener);
+        if (this.serviceListener != null) {
+            getBundleContext().removeServiceListener(this.serviceListener);
+        }
     }
 
     private String getServiceName() {

@@ -157,15 +157,18 @@ public class DynamicDistributionUtils {
     }
 
     public static String getPluginKey(String distri, String version, String module) {
-        return "Dynamic_" + distri + "_" + version + "_" + module;
+        String key = "Dynamic_" + distri + "_" + version + "_" + module;
+        key = key.replaceAll("\\.", "_");
+        return key;
     }
 
-    public static String getMvnUrl(DependencyNode node) {
+    public static String getMvnUrl(DependencyNode node, String repositoryUri) {
         String classifier = node.getClassifier();
         if (StringUtils.isEmpty(classifier)) {
             classifier = null;
         }
-        return MavenUrlHelper.generateMvnUrl(node.getGroupId(), node.getArtifactId(), node.getVersion(), null, classifier);
+        return MavenUrlHelper.generateMvnUrl(repositoryUri, node.getGroupId(), node.getArtifactId(), node.getVersion(), null,
+                classifier);
     }
 
     private static class MapVariable implements IVariable {

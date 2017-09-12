@@ -52,6 +52,8 @@ public class TemplateBean implements IVariable {
 
     public static final String ATTR_DYNAMIC_VERSION = "dynamicVersion"; //$NON-NLS-1$
 
+    public static final String ATTR_ADD_REPOSITORY_IN_MVNURI = "addRepositoryInMvnUri"; //$NON-NLS-1$
+
     private String id;
 
     private String name;
@@ -67,6 +69,8 @@ public class TemplateBean implements IVariable {
     private String baseVersion;
 
     private String topVersion;
+
+    private String addRepositoryInMvnUri;
 
     private Map<String, String> properties;
 
@@ -138,6 +142,14 @@ public class TemplateBean implements IVariable {
 
     public void setTopVersion(String topVersion) {
         this.topVersion = topVersion;
+    }
+
+    public String getAddRepositoryInMvnUri() {
+        return this.addRepositoryInMvnUri;
+    }
+
+    public void setAddRepositoryInMvnUri(String addRepositoryInMvnUri) {
+        this.addRepositoryInMvnUri = addRepositoryInMvnUri;
     }
 
     public Map<String, String> getProperties() {
@@ -216,6 +228,9 @@ public class TemplateBean implements IVariable {
     public Object getVariableValue(String variable) throws Exception {
         Object value = null;
         switch (variable) {
+        case ATTR_ADD_REPOSITORY_IN_MVNURI:
+            value = getAddRepositoryInMvnUri();
+            break;
         case ATTR_BASE_VERSION:
             value = getBaseVersion();
             break;

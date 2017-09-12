@@ -48,8 +48,10 @@ public class DynamicTemplateAdapter extends AbstractDynamicAdapter {
 
         TemplateBean templateBean = getTemplateBean();
         DynamicConfiguration configuration = getConfiguration();
-        templateBean.setDynamicVersion(configuration.getVersion());
         
+        // use id instead of version
+        templateBean.setDynamicVersion(configuration.getId());
+
         IDependencyResolver dependencyResolver = DependencyResolverFactory.getInstance().getDependencyResolver(configuration);
 
         dynamicPlugin = DynamicFactory.getInstance().createDynamicPlugin();
@@ -89,6 +91,8 @@ public class DynamicTemplateAdapter extends AbstractDynamicAdapter {
 
         TemplateBean templateBean = getTemplateBean();
 
+        String addRepositoryInMvnUri = (String) DynamicDistributionUtils.calculate(templateBean,
+                templateBean.getAddRepositoryInMvnUri());
         String id = (String) DynamicDistributionUtils.calculate(templateBean, templateBean.getId());
         String name = (String) DynamicDistributionUtils.calculate(templateBean, templateBean.getName());
         String description = (String) DynamicDistributionUtils.calculate(templateBean, templateBean.getDescription());
@@ -97,6 +101,7 @@ public class DynamicTemplateAdapter extends AbstractDynamicAdapter {
         String baseVersion = (String) DynamicDistributionUtils.calculate(templateBean, templateBean.getBaseVersion());
         String topVersion = (String) DynamicDistributionUtils.calculate(templateBean, templateBean.getTopVersion());
 
+        templateBean.setAddRepositoryInMvnUri(addRepositoryInMvnUri);
         templateBean.setId(id);
         templateBean.setName(name);
         templateBean.setDescription(description);

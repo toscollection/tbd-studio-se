@@ -90,6 +90,10 @@ public class TestDialog extends Dialog {
 
     protected TestDialog(Shell parentShell) {
         super(parentShell);
+        int style = getShellStyle();
+        style = style ^ SWT.APPLICATION_MODAL;
+        style = style | SWT.MIN;
+        setShellStyle(style);
     }
 
     @Override
@@ -233,7 +237,11 @@ public class TestDialog extends Dialog {
                     DynamicConfiguration configuration = new DynamicConfiguration();
                     configuration.setDistribution(IClouderaDistribution.DISTRIBUTION_NAME);
                     configuration.setVersion(hadoopVersionText.getText());
-                    configuration.setId(hadoopVersionText.getText());
+                    String id = hadoopVersionText.getText();
+                    id = id.replaceAll("\\.", "_");
+                    id = id.toUpperCase();
+                    id = "Cloudera_CDH5_X_" + id;
+                    configuration.setId(id);
                     configuration.setName(hadoopVersionDisplayText.getText());
                     DynamicTemplateAdapter templateAdapter = new DynamicTemplateAdapter(bean, configuration);
                     templateAdapter.adapt(new NullProgressMonitor());
@@ -273,6 +281,7 @@ public class TestDialog extends Dialog {
                     IDynamicPlugin dynamicPlugin = DynamicFactory.getInstance().createPluginFromJson(jsonContent);
                     DynamicPluginAdapter pluginAdapter = new DynamicPluginAdapter(dynamicPlugin);
                     pluginAdapter.adapt();
+                    // System.out.println(dynamicPlugin.toXmlString());
                     CDH5xDistributionTemplate cdhService = new CDH5xDistributionTemplate(pluginAdapter);
 
                     CDH5xPlugin cdh5xPlugin = CDH5xPlugin.getInstance();
@@ -293,7 +302,7 @@ public class TestDialog extends Dialog {
 
                     DynamicServiceUtil.addContribution(bundle, dynamicPlugin);
                     registedPluginMap.put(id, dynamicPlugin);
-
+                    
                     BundleContext context = bundle.getBundleContext();
                     ServiceRegistration osgiService = DynamicServiceUtil.registOSGiService(context,
                             new String[] { HadoopComponent.class.getName(), HDFSComponent.class.getName(),

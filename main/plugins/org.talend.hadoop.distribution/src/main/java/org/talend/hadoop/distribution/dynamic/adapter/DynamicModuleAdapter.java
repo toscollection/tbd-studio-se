@@ -77,6 +77,7 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
     public List<IDynamicConfiguration> adapt(IProgressMonitor monitor) throws Exception {
         resolve();
         
+        TemplateBean templateBean = getTemplateBean();
         DynamicConfiguration configuration = getConfiguration();
         String distribution = configuration.getDistribution();
         String hadoopVersion = configuration.getVersion();
@@ -103,7 +104,8 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
                     dependencyNode = dependencyResolver.collectDependencies(groupId, artifactId, moduleVersion, scope, classifier,
                             monitor);
                 }
-                librariesNeeded = createLibrariesNeeded(dependencyNode, distribution, hadoopVersion, moduleBean, runtimeIds);
+                librariesNeeded = createLibrariesNeeded(dependencyNode, distribution, hadoopVersion, moduleBean, runtimeIds,
+                        templateBean);
             }
         } else if (ModuleBean.TYPE_REFERENCE.equalsIgnoreCase(type)) {
             String jarName = moduleBean.getJarName();
@@ -138,7 +140,7 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
     }
 
     private List<IDynamicConfiguration> createLibrariesNeeded(DependencyNode node, String distribution, String version,
-            ModuleBean bean, List<String> runtimeIds) {
+            ModuleBean bean, List<String> runtimeIds, TemplateBean templateBean) {
         List<IDynamicConfiguration> librariesNeeded = new ArrayList<>();
         if (node == null) {
             return librariesNeeded;
@@ -159,7 +161,7 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
                 runtimeId = moduleNeeded.getId();
             } else {
                 runtimeId = DynamicDistributionUtils.getPluginKey(distribution, version, node.getJarName());
-                IDynamicConfiguration libraryNeeded = createLibraryNeeded(node);
+                IDynamicConfiguration libraryNeeded = createLibraryNeeded(node, templateBean);
                 libraryNeeded.setAttribute(ATTR_CONTEXT, bean.getContext());
                 libraryNeeded.setAttribute(ATTR_ID, runtimeId);
                 librariesNeeded.add(libraryNeeded);
@@ -171,7 +173,7 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
             if (dependencies != null) {
                 for (DependencyNode dependency : dependencies) {
                     List<IDynamicConfiguration> childLibrariesNeeded = createLibrariesNeeded(dependency, distribution, version,
-                            bean, registedRuntimeIds);
+                            bean, registedRuntimeIds, templateBean);
                     librariesNeeded.addAll(childLibrariesNeeded);
                 }
             }
@@ -182,14 +184,19 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
         return librariesNeeded;
     }
 
-    private IDynamicConfiguration createLibraryNeeded(DependencyNode node) {
+    private IDynamicConfiguration createLibraryNeeded(DependencyNode node, TemplateBean templateBean) {
         IDynamicConfiguration libraryNeeded = null;
 
         libraryNeeded = DynamicFactory.getInstance().createDynamicConfiguration();
         libraryNeeded.setConfigurationName(TAG_NAME);
 
         String jarname = node.getJarName();
-        String mvnUri = DynamicDistributionUtils.getMvnUrl(node);
+        String repositoryUri = null;
+        String addRepositoryUri = templateBean.getAddRepositoryInMvnUri();
+        if (Boolean.valueOf(addRepositoryUri)) {
+            repositoryUri = templateBean.getRepository();
+        }
+        String mvnUri = DynamicDistributionUtils.getMvnUrl(node, repositoryUri);
 
         libraryNeeded.setAttribute(ATTR_NAME, jarname);
         libraryNeeded.setAttribute(ATTR_MVN_URI, mvnUri);

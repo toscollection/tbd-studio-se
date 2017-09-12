@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.resolver;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
@@ -29,6 +30,10 @@ public abstract class AbstractDependencyResolver implements IDependencyResolver 
     public DependencyNode collectDependencies(String groupId, String artifactId, String scope, String classifier,
             IProgressMonitor monitor) throws Exception {
         String version = getDependencyVersionByHadoopVersion(groupId, artifactId, monitor);
+
+        if (StringUtils.isEmpty(version)) {
+            throw new Exception("Can't find version of " + groupId + ", " + artifactId);
+        }
 
         DependencyNode node = collectDependencies(groupId, artifactId, version, scope, classifier, monitor);
         return node;
