@@ -156,7 +156,10 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
 
             String runtimeId = null;
             String jarName = node.getJarName();
-            ModuleNeeded moduleNeeded = existingModuleMap.get(jarName);
+            ModuleNeeded moduleNeeded = null;
+            if (reuseExistingJars()) {
+                moduleNeeded = existingModuleMap.get(jarName);
+            }
             if (moduleNeeded != null) {
                 runtimeId = moduleNeeded.getId();
             } else {
@@ -293,4 +296,26 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
         this.runtimeIds = runtimeIds;
     }
 
+    /**
+     * Seems can't use existing jars, for example: <br/>
+     * If we want to reuse jackson-jaxrs-1.8.8.jar, the existing mvn uri for it is:<br/>
+     * mvn_uri="mvn:org.talend.libraries/jackson-jaxrs-1.8.8/6.0.0", <br/>
+     * The following dependency will be added into pom.xml:<br/>
+     * groupId: org.talend.libraries<br/>
+     * artifactId: jackson-jaxrs<br/>
+     * version: 1.8.8<br/>
+     * <br>
+     * While jackson-jaxrs-1.8.8.jar may be also used by other artifact. so the official dependency of
+     * jackson-jaxrs-1.8.8.jar will be also added into pom.xml:<br>
+     * groupId: org.codehaus.jackson<br/>
+     * artifactId: jackson-jaxrs<br/>
+     * version: 1.8.8<br/>
+     * <br>
+     * If in this case, studio can't get jar of org.codehaus.jackson/jackson-jaxrs<br/>
+     * <br/>
+     * So we need to forbid to reuse existing jars, Unless we disable offline option in studio maven configuration.
+     */
+    private boolean reuseExistingJars() {
+        return false;
+    }
 }
