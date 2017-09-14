@@ -7,16 +7,21 @@
     "dynamicVersion":"will be filled during runtime",
     "repository": "http://localhost:8081/nexus/content/repositories/central",
     "addRepositoryInMvnUri":"true",
+    "properties": {
+        "context": "plugin:org.talend.hadoop.distribution.cdh5x"
+    },
     "modules": [
         {
             "id": "commons-httpclient-3.1-dynamic",
             "type": "STANDARD",
+            "context": "{properties.context}",
             "jarName": "commons-httpclient-3.1.jar",
             "mvnUri": "mvn:org.talend.libraries/commons-httpclient-3.1/6.0.0"
         },
         {
             "id": "hadoop-client",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hadoop",
             "artifactId": "hadoop-client",
             "classifier": ""
@@ -24,6 +29,7 @@
         {
             "id": "spark-core_2.10",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.spark",
             "artifactId": "spark-core_2.10",
             "classifier": ""
@@ -31,6 +37,7 @@
         {
             "id": "hadoop-mapreduce-client-app",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hadoop",
             "artifactId": "hadoop-mapreduce-client-app",
             "classifier": ""
@@ -38,6 +45,7 @@
         {
             "id": "hadoop-mapreduce-client-jobclient",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hadoop",
             "artifactId": "hadoop-mapreduce-client-jobclient",
             "classifier": ""
@@ -45,6 +53,7 @@
         {
             "id": "htrace-core",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.htrace",
             "artifactId": "htrace-core",
             "version": "3.2.0-incubating",
@@ -53,6 +62,7 @@
         {
             "id": "hbase-client",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hbase",
             "artifactId": "hbase-client",
             "classifier": ""
@@ -60,6 +70,7 @@
         {
             "id": "datafu",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.linkedin.datafu",
             "artifactId": "datafu",
             "classifier": ""
@@ -67,6 +78,7 @@
         {
             "id": "parquet-pig",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter",
             "artifactId": "parquet-pig",
             "classifier": ""
@@ -74,6 +86,7 @@
         {
             "id": "parquet-pig",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter",
             "artifactId": "parquet-pig",
             "classifier": ""
@@ -81,6 +94,7 @@
         {
             "id": "hive-jdbc",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hive",
             "artifactId": "hive-jdbc",
             "classifier": ""
@@ -88,6 +102,7 @@
         {
             "id": "hive-exec",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hive",
             "artifactId": "hive-exec",
             "classifier": ""
@@ -95,6 +110,7 @@
         {
             "id": "sqoop",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.sqoop",
             "artifactId": "sqoop",
             "classifier": ""
@@ -102,6 +118,7 @@
         {
             "id": "avro-mapred",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.avro",
             "artifactId": "avro-mapred",
             "classifier": "hadoop2"
@@ -109,6 +126,7 @@
         {
             "id": "hbase-server",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hbase",
             "artifactId": "hbase-server",
             "classifier": ""
@@ -116,6 +134,7 @@
         {
             "id": "hbase-hadoop-compat",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hbase",
             "artifactId": "hbase-hadoop-compat",
             "classifier": ""
@@ -123,6 +142,7 @@
         {
             "id": "hive-hbase-handler",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hive",
             "artifactId": "hive-hbase-handler",
             "classifier": ""
@@ -130,6 +150,7 @@
         {
             "id": "parquet-avro",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter",
             "artifactId": "parquet-avro",
             "classifier": ""
@@ -137,6 +158,7 @@
         {
             "id": "parquet-hadoop-bundle",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter",
             "artifactId": "parquet-hadoop-bundle",
             "classifier": ""
@@ -144,6 +166,7 @@
         {
             "id": "piggybank",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.pig",
             "artifactId": "piggybank",
             "classifier": ""
@@ -151,6 +174,7 @@
         {
             "id": "hbase-hadoop-compat",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hbase",
             "artifactId": "hbase-hadoop-compat",
             "classifier": ""
@@ -158,6 +182,7 @@
         {
             "id": "hbase-server",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hbase",
             "artifactId": "hbase-server",
             "classifier": ""
@@ -165,6 +190,7 @@
         {
             "id": "hcatalog-server-extensions",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hive.hcatalog",
             "artifactId": "hcatalog-server-extensions",
             "version": "0.12.0",
@@ -173,6 +199,7 @@
         {
             "id": "hcatalog-pig-adapter",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hive.hcatalog",
             "artifactId": "hcatalog-pig-adapter",
             "version": "0.12.0",
@@ -181,6 +208,7 @@
         {
             "id": "parquet-pig-bundle",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter",
             "artifactId": "parquet-pig-bundle",
             "classifier": ""
@@ -188,6 +216,7 @@
         {
             "id": "hive-serde",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "org.apache.hive",
             "artifactId": "hive-serde",
             "classifier": ""
@@ -195,6 +224,7 @@
         {
             "id": "elephant-bird-hadoop-compat",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter.elephantbird",
             "artifactId": "elephant-bird-hadoop-compat",
             "version": "4.9",
@@ -203,6 +233,7 @@
         {
             "id": "elephant-bird-pig",
             "type": "BASE",
+            "context": "{properties.context}",
             "groupId": "com.twitter.elephantbird",
             "artifactId": "elephant-bird-pig",
             "version": "4.9",
@@ -211,6 +242,7 @@
         {
             "id": "MODULE_COMMONS_CODEC",
             "type": "REFERENCE",
+            "context": "{properties.context}",
             "jarName": "commons-codec-1.10.jar"
         }
     ],
