@@ -110,7 +110,7 @@ public class TestDialog extends Dialog {
 
         Composite registFromJson = createRegistFromJson(composite, generateFromTemplate);
 
-        // createUtilsGroup(composite, registFromJson);
+        createUtilsGroup(composite, registFromJson);
 
         applyDialogFont(composite);
         addListeners();
@@ -276,6 +276,7 @@ public class TestDialog extends Dialog {
         String version = "2.6.0-cdh5.12.1";
         String classifier = "";
         String scope = "compile";
+        // String scope = "runtime";
         IDynamicMonitor monitor = new IDynamicMonitor() {
 
             @Override
@@ -332,6 +333,7 @@ public class TestDialog extends Dialog {
                             try {
                                 // bos.write(message.getBytes("UTF-8"));
                                 // bos.write("\n".getBytes("UTF-8"));
+                                System.out.println(message);
                             } catch (Exception e) {
                                 ExceptionHandler.process(e);
                             }
