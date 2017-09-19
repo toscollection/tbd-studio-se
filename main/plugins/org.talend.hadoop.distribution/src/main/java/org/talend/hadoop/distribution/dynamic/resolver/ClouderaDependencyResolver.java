@@ -17,10 +17,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -30,7 +30,7 @@ public class ClouderaDependencyResolver extends AbstractDependencyResolver imple
     private Pattern clouderaDistributionPattern;
 
     @Override
-    public String getDependencyVersionByHadoopVersion(String groupId, String artifactId, IProgressMonitor monitor)
+    public String getDependencyVersionByHadoopVersion(String groupId, String artifactId, IDynamicMonitor monitor)
             throws Exception {
         DynamicConfiguration configuration = getConfiguration();
         String distributionVersion = configuration.getVersion();
@@ -46,7 +46,7 @@ public class ClouderaDependencyResolver extends AbstractDependencyResolver imple
     }
 
     @Override
-    public List<String> listHadoopVersions(String baseVersion, String topVersion, IProgressMonitor monitor) throws Exception {
+    public List<String> listHadoopVersions(String baseVersion, String topVersion, IDynamicMonitor monitor) throws Exception {
         String groupId = "org.apache.hadoop"; //$NON-NLS-1$
         String artifactId = "hadoop-client"; //$NON-NLS-1$
         DynamicConfiguration configuration = getConfiguration();

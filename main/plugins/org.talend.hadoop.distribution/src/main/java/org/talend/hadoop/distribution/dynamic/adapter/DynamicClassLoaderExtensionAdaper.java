@@ -15,7 +15,6 @@ package org.talend.hadoop.distribution.dynamic.adapter;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 import org.talend.core.runtime.dynamic.IDynamicExtension;
@@ -23,6 +22,7 @@ import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.bean.ClassLoaderBean;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
 import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
+import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -41,7 +41,7 @@ public class DynamicClassLoaderExtensionAdaper extends DynamicExtensionAdapter {
         this.moduleGroupBeanAdapterMap = moduleGroupBeanAdapterMap;
     }
 
-    public IDynamicExtension adapt(IProgressMonitor monitor) throws Exception {
+    public IDynamicExtension adapt(IDynamicMonitor monitor) throws Exception {
         resolve();
 
         TemplateBean templateBean = getTemplateBean();

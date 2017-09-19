@@ -18,13 +18,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.bean.ModuleGroupBean;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
 import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
+import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -61,7 +61,7 @@ public class DynamicModuleGroupAdapter extends AbstractDynamicAdapter {
         runtimeModules = new ArrayList<>();
     }
 
-    public IDynamicConfiguration adapt(IProgressMonitor monitor) throws Exception {
+    public IDynamicConfiguration adapt(IDynamicMonitor monitor) throws Exception {
         resolve();
 
         DynamicConfiguration configuration = getConfiguration();

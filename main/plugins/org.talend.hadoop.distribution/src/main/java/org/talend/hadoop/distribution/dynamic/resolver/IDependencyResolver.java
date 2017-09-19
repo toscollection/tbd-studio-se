@@ -14,8 +14,8 @@ package org.talend.hadoop.distribution.dynamic.resolver;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.maven.aether.DependencyNode;
+import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment
@@ -23,14 +23,14 @@ import org.talend.maven.aether.DependencyNode;
 public interface IDependencyResolver {
 
     public DependencyNode collectDependencies(String groupId, String artifactId, String version, String scope, String classifier,
-            IProgressMonitor monitor) throws Exception;
+            IDynamicMonitor monitor) throws Exception;
 
     public DependencyNode collectDependencies(String groupId, String artifactId, String scope, String classifier,
-            IProgressMonitor monitor) throws Exception;
+            IDynamicMonitor monitor) throws Exception;
 
-    public String getDependencyVersionByHadoopVersion(String groupId, String artifactId, IProgressMonitor monitor)
+    public String getDependencyVersionByHadoopVersion(String groupId, String artifactId, IDynamicMonitor monitor)
             throws Exception;
 
-    public List<String> listHadoopVersions(String baseVersion, String topVersion, IProgressMonitor monitor) throws Exception;
+    public List<String> listHadoopVersions(String baseVersion, String topVersion, IDynamicMonitor monitor) throws Exception;
 
 }

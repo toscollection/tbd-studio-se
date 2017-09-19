@@ -13,11 +13,11 @@
 package org.talend.hadoop.distribution.dynamic.resolver;
 
 import org.apache.commons.lang.StringUtils;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.m2e.core.MavenPlugin;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.maven.aether.DependencyNode;
 import org.talend.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng class global comment. Detailled comment
@@ -28,7 +28,7 @@ public abstract class AbstractDependencyResolver implements IDependencyResolver 
 
     @Override
     public DependencyNode collectDependencies(String groupId, String artifactId, String scope, String classifier,
-            IProgressMonitor monitor) throws Exception {
+            IDynamicMonitor monitor) throws Exception {
         String version = getDependencyVersionByHadoopVersion(groupId, artifactId, monitor);
 
         if (StringUtils.isEmpty(version)) {
@@ -41,7 +41,7 @@ public abstract class AbstractDependencyResolver implements IDependencyResolver 
 
     @Override
     public DependencyNode collectDependencies(String groupId, String artifactId, String version, String scope, String classifier,
-            IProgressMonitor monitor) throws Exception {
+            IDynamicMonitor monitor) throws Exception {
         String remoteRepositoryUrl = configuration.getRemoteRepositoryUrl();
         String localRepositoryPath = getLocalRepositoryPath();
         DependencyNode node = DynamicDistributionAetherUtils.collectDepencencies(remoteRepositoryUrl, localRepositoryPath,

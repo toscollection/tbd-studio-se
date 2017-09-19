@@ -12,12 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution.cdh5x.handlers;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -61,6 +61,9 @@ import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicTemplateAdapter;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
+import org.talend.maven.aether.DependencyNode;
+import org.talend.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.maven.aether.IDynamicMonitor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -106,6 +109,8 @@ public class TestDialog extends Dialog {
         Composite generateFromTemplate = createGenereateFromTemplate(composite);
 
         Composite registFromJson = createRegistFromJson(composite, generateFromTemplate);
+
+        // createUtilsGroup(composite, registFromJson);
 
         applyDialogFont(composite);
         addListeners();
@@ -225,12 +230,83 @@ public class TestDialog extends Dialog {
         return group;
     }
 
+    private Composite createUtilsGroup(Composite composite, Composite topComposite) {
+
+        Group group = new Group(composite, SWT.NONE);
+        group.setText("Utils");
+        group.setLayout(new FormLayout());
+        FormData groupFormData = new FormData();
+        groupFormData.left = new FormAttachment(topComposite, 0, SWT.LEFT);
+        groupFormData.right = new FormAttachment(topComposite, 0, SWT.RIGHT);
+        groupFormData.top = new FormAttachment(topComposite, 10, SWT.BOTTOM);
+        group.setLayoutData(groupFormData);
+
+        Button collectDependenciesBtn = new Button(group, SWT.PUSH);
+        collectDependenciesBtn.setText("Collect Dependencies");
+        FormData collectDependenciesBtnFD = new FormData();
+        collectDependenciesBtnFD.top = new FormAttachment(0, 10);
+        collectDependenciesBtnFD.left = new FormAttachment(0, 10);
+        collectDependenciesBtnFD.bottom = new FormAttachment(100, -10);
+        collectDependenciesBtn.setLayoutData(collectDependenciesBtnFD);
+        collectDependenciesBtn.addSelectionListener(new SelectionListener() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                btnPushed(e);
+            }
+
+            @Override
+            public void widgetDefaultSelected(SelectionEvent e) {
+            }
+        });
+
+        return group;
+
+    }
+
+    private void btnPushed(SelectionEvent e) {
+        collectDependencis(e);
+    }
+
+    private void collectDependencis(SelectionEvent e) {
+        String remoteUrl = "http://localhost:8081/nexus/content/repositories/central";
+        String localPath = "C:/Users/cmeng/.m2/repository";
+        String groupId = "org.apache.hadoop";
+        String artifactId = "hadoop-auth";
+        String version = "2.6.0-cdh5.12.1";
+        String classifier = "";
+        String scope = "compile";
+        IDynamicMonitor monitor = new IDynamicMonitor() {
+
+            @Override
+            public void writeMessage(String message) {
+                try {
+                    // bos.write(message.getBytes("UTF-8"));
+                    // bos.write("\n".getBytes("UTF-8"));
+                } catch (Exception e) {
+                    ExceptionHandler.process(e);
+                }
+            }
+        };
+
+        try {
+            DependencyNode node = DynamicDistributionAetherUtils.collectDepencencies(remoteUrl, localPath, groupId, artifactId,
+                    version, classifier, scope, monitor);
+            node.getDependencies();
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
+
+    }
+
     protected void addListeners() {
         generateButton.addSelectionListener(new SelectionListener() {
             
             @Override
             public void widgetSelected(SelectionEvent e) {
                 FileOutputStream outStream = null;
+                FileOutputStream logStream = null;
+                BufferedOutputStream bufferedLogStream = null;
                 try {
                     ObjectMapper om = new ObjectMapper();
                     TemplateBean bean = om.readValue(new File(templateText.getText()), TemplateBean.class);
@@ -244,7 +320,25 @@ public class TestDialog extends Dialog {
                     configuration.setId(id);
                     configuration.setName(hadoopVersionDisplayText.getText());
                     DynamicTemplateAdapter templateAdapter = new DynamicTemplateAdapter(bean, configuration);
-                    templateAdapter.adapt(new NullProgressMonitor());
+
+                    // logStream = new FileOutputStream(new File(generatedText.getText() + ".log"));
+                    // bufferedLogStream = new BufferedOutputStream(logStream);
+                    final BufferedOutputStream bos = bufferedLogStream;
+
+                    IDynamicMonitor monitor = new IDynamicMonitor() {
+
+                        @Override
+                        public void writeMessage(String message) {
+                            try {
+                                // bos.write(message.getBytes("UTF-8"));
+                                // bos.write("\n".getBytes("UTF-8"));
+                            } catch (Exception e) {
+                                ExceptionHandler.process(e);
+                            }
+                        }
+                    };
+
+                    templateAdapter.adapt(monitor);
                     IDynamicPlugin dynamicPlugin = templateAdapter.getDynamicPlugin();
                     String content = DynamicServiceUtil.formatJsonString(dynamicPlugin.toXmlJson().toString());
                     File outFile = new File(generatedText.getText());
@@ -259,6 +353,20 @@ public class TestDialog extends Dialog {
                     if (outStream != null) {
                         try {
                             outStream.close();
+                        } catch (Exception e1) {
+                            ExceptionHandler.process(e1);
+                        }
+                    }
+                    if (logStream != null) {
+                        try {
+                            logStream.close();
+                        } catch (Exception e1) {
+                            ExceptionHandler.process(e1);
+                        }
+                    }
+                    if (bufferedLogStream != null) {
+                        try {
+                            bufferedLogStream.close();
                         } catch (Exception e1) {
                             ExceptionHandler.process(e1);
                         }
