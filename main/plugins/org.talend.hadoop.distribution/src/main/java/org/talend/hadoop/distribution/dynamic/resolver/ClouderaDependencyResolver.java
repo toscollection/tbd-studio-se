@@ -18,9 +18,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.designer.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
-import org.talend.maven.aether.DynamicDistributionAetherUtils;
-import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

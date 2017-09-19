@@ -14,10 +14,10 @@ package org.talend.hadoop.distribution.dynamic.resolver;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.m2e.core.MavenPlugin;
+import org.talend.designer.maven.aether.DependencyNode;
+import org.talend.designer.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
-import org.talend.maven.aether.DependencyNode;
-import org.talend.maven.aether.DynamicDistributionAetherUtils;
-import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng class global comment. Detailled comment

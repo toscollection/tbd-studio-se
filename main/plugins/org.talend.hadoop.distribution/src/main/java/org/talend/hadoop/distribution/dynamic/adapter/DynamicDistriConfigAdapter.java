@@ -15,9 +15,9 @@ package org.talend.hadoop.distribution.dynamic.adapter;
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
+import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
-import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

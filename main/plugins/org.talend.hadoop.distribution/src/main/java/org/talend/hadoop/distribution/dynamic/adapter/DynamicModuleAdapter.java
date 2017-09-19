@@ -20,14 +20,14 @@ import org.apache.commons.lang.StringUtils;
 import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
+import org.talend.designer.maven.aether.DependencyNode;
+import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.HadoopDistributionPlugin;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.bean.ModuleBean;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
 import org.talend.hadoop.distribution.dynamic.resolver.IDependencyResolver;
 import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
-import org.talend.maven.aether.DependencyNode;
-import org.talend.maven.aether.IDynamicMonitor;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

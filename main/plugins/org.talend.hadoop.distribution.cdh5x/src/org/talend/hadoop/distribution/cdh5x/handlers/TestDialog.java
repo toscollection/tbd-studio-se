@@ -42,6 +42,9 @@ import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.DynamicServiceUtil;
 import org.talend.core.runtime.dynamic.IDynamicPlugin;
 import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
+import org.talend.designer.maven.aether.DependencyNode;
+import org.talend.designer.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.cdh5x.CDH5xDistributionTemplate;
 import org.talend.hadoop.distribution.cdh5x.CDH5xPlugin;
 import org.talend.hadoop.distribution.component.HBaseComponent;
@@ -61,9 +64,6 @@ import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicTemplateAdapter;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
-import org.talend.maven.aether.DependencyNode;
-import org.talend.maven.aether.DynamicDistributionAetherUtils;
-import org.talend.maven.aether.IDynamicMonitor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -110,7 +110,7 @@ public class TestDialog extends Dialog {
 
         Composite registFromJson = createRegistFromJson(composite, generateFromTemplate);
 
-        createUtilsGroup(composite, registFromJson);
+        // createUtilsGroup(composite, registFromJson);
 
         applyDialogFont(composite);
         addListeners();
@@ -333,7 +333,7 @@ public class TestDialog extends Dialog {
                             try {
                                 // bos.write(message.getBytes("UTF-8"));
                                 // bos.write("\n".getBytes("UTF-8"));
-                                System.out.println(message);
+                                System.out.print(message);
                             } catch (Exception e) {
                                 ExceptionHandler.process(e);
                             }

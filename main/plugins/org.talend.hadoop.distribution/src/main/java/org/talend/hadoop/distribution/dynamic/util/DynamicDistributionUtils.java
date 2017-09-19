@@ -20,8 +20,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.core.runtime.maven.MavenUrlHelper;
+import org.talend.designer.maven.aether.DependencyNode;
 import org.talend.hadoop.distribution.dynamic.bean.IVariable;
-import org.talend.maven.aether.DependencyNode;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

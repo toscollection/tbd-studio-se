@@ -9,7 +9,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.core.runtime,
  org.talend.librariesmanager,
  org.talend.libraries.jackson,
- org.talend.maven.aether,
+ org.talend.designer.maven.aether,
  org.eclipse.m2e.core
 Export-Package: org.talend.hadoop.distribution,
  org.talend.hadoop.distribution.component,
