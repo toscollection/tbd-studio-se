@@ -94,8 +94,8 @@ public class TestDialog extends Dialog {
     protected TestDialog(Shell parentShell) {
         super(parentShell);
         int style = getShellStyle();
-        style = style ^ SWT.APPLICATION_MODAL;
-        style = style | SWT.MIN;
+        // style = style ^ SWT.APPLICATION_MODAL;
+        // style = style | SWT.MIN;
         setShellStyle(style);
     }
 

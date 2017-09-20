@@ -29,33 +29,5 @@
             sequence="M1+6">
       </key>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               id="org.talend.hadoop.distribution.cdh5x.menus.sampleMenu"
-               label="Dynamic Distribution Test"
-               mnemonic="M">
-            <command
-                  commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
-                  id="org.talend.hadoop.distribution.cdh5x.menus.sampleCommand"
-                  mnemonic="S">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="org.talend.hadoop.distribution.cdh5x.toolbars.sampleToolbar">
-            <command
-                  commandId="org.talend.hadoop.distribution.cdh5x.commands.sampleCommand"
-                  icon="icons/sample.png"
-                  id="org.talend.hadoop.distribution.cdh5x.toolbars.sampleCommand"
-                  tooltip="Test dynamic distirbution">
-            </command>
-         </toolbar>
-      </menuContribution>
-   </extension>
 
 </plugin>
