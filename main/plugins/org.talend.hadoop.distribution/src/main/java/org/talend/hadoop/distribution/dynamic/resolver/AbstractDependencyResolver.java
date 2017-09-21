@@ -27,25 +27,22 @@ public abstract class AbstractDependencyResolver implements IDependencyResolver 
     private DynamicConfiguration configuration;
 
     @Override
-    public DependencyNode collectDependencies(String groupId, String artifactId, String scope, String classifier,
-            IDynamicMonitor monitor) throws Exception {
-        String version = getDependencyVersionByHadoopVersion(groupId, artifactId, monitor);
-
+    public DependencyNode collectDependencies(DependencyNode baseNode, IDynamicMonitor monitor) throws Exception {
+        String version = baseNode.getVersion();
         if (StringUtils.isEmpty(version)) {
-            throw new Exception("Can't find version of " + groupId + ", " + artifactId);
+            String groupId = baseNode.getGroupId();
+            String artifactId = baseNode.getArtifactId();
+            version = getDependencyVersionByHadoopVersion(groupId, artifactId, monitor);
+            if (StringUtils.isEmpty(version)) {
+                throw new Exception("Can't find version of " + groupId + ", " + artifactId);
+            }
+            baseNode.setVersion(version);
         }
 
-        DependencyNode node = collectDependencies(groupId, artifactId, version, scope, classifier, monitor);
-        return node;
-    }
-
-    @Override
-    public DependencyNode collectDependencies(String groupId, String artifactId, String version, String scope, String classifier,
-            IDynamicMonitor monitor) throws Exception {
         String remoteRepositoryUrl = configuration.getRemoteRepositoryUrl();
         String localRepositoryPath = getLocalRepositoryPath();
         DependencyNode node = DynamicDistributionAetherUtils.collectDepencencies(remoteRepositoryUrl, localRepositoryPath,
-                groupId, artifactId, version, classifier, scope, monitor);
+                baseNode, monitor);
         return node;
     }
 

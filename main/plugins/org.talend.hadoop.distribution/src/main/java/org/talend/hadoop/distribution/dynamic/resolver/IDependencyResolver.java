@@ -22,11 +22,7 @@ import org.talend.designer.maven.aether.IDynamicMonitor;
  */
 public interface IDependencyResolver {
 
-    public DependencyNode collectDependencies(String groupId, String artifactId, String version, String scope, String classifier,
-            IDynamicMonitor monitor) throws Exception;
-
-    public DependencyNode collectDependencies(String groupId, String artifactId, String scope, String classifier,
-            IDynamicMonitor monitor) throws Exception;
+    public DependencyNode collectDependencies(DependencyNode baseNode, IDynamicMonitor monitor) throws Exception;
 
     public String getDependencyVersionByHadoopVersion(String groupId, String artifactId, IDynamicMonitor monitor)
             throws Exception;

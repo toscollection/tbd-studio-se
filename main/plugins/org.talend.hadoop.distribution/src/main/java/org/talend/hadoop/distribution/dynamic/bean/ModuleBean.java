@@ -47,6 +47,8 @@ public class ModuleBean implements IVariable {
 
     public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
 
+    public static final String ATTR_EXCLUDE_DEPENDENCIES = "excludeDependencies"; //$NON-NLS-1$
+
     public static final String TYPE_STANDARD = "STANDARD"; //$NON-NLS-1$
 
     public static final String TYPE_BASE = "BASE"; //$NON-NLS-1$
@@ -82,6 +84,8 @@ public class ModuleBean implements IVariable {
     private String message;
 
     private String language;
+
+    private String excludeDependencies;
 
     public String getId() {
         return this.id;
@@ -203,6 +207,14 @@ public class ModuleBean implements IVariable {
         this.language = language;
     }
 
+    public String getExcludeDependencies() {
+        return this.excludeDependencies;
+    }
+
+    public void setExcludeDependencies(String excludeDependencies) {
+        this.excludeDependencies = excludeDependencies;
+    }
+
     @Override
     public Object getVariableValue(String variable) throws Exception {
         String value = null;
@@ -218,6 +230,9 @@ public class ModuleBean implements IVariable {
             break;
         case ATTR_CLASSIFIER:
             value = getClassifier();
+            break;
+        case ATTR_EXCLUDE_DEPENDENCIES:
+            value = getExcludeDependencies();
             break;
         case ATTR_GROUP_ID:
             value = getGroupId();

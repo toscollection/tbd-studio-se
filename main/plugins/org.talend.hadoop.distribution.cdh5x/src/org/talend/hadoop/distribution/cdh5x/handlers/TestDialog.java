@@ -15,7 +15,9 @@ package org.talend.hadoop.distribution.cdh5x.handlers;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -44,6 +46,7 @@ import org.talend.core.runtime.dynamic.IDynamicPlugin;
 import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
 import org.talend.designer.maven.aether.DependencyNode;
 import org.talend.designer.maven.aether.DynamicDistributionAetherUtils;
+import org.talend.designer.maven.aether.ExclusionNode;
 import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.cdh5x.CDH5xDistributionTemplate;
 import org.talend.hadoop.distribution.cdh5x.CDH5xPlugin;
@@ -282,17 +285,29 @@ public class TestDialog extends Dialog {
             @Override
             public void writeMessage(String message) {
                 try {
-                    // bos.write(message.getBytes("UTF-8"));
-                    // bos.write("\n".getBytes("UTF-8"));
+                    System.out.print(message);
                 } catch (Exception e) {
                     ExceptionHandler.process(e);
                 }
             }
         };
 
+        List<ExclusionNode> exclusionNodes = new ArrayList<>();
+
+        ExclusionNode exclusion1 = new ExclusionNode();
+        exclusion1.setGroupId("org.slf4j");
+        exclusion1.setArtifactId("slf4j-api");
+        exclusionNodes.add(exclusion1);
+
         try {
-            DependencyNode node = DynamicDistributionAetherUtils.collectDepencencies(remoteUrl, localPath, groupId, artifactId,
-                    version, classifier, scope, monitor);
+            DependencyNode baseNode = new DependencyNode();
+            baseNode.setGroupId(groupId);
+            baseNode.setArtifactId(artifactId);
+            baseNode.setClassifier(classifier);
+            baseNode.setScope(scope);
+            baseNode.setVersion(version);
+            baseNode.setExclusions(exclusionNodes);
+            DependencyNode node = DynamicDistributionAetherUtils.collectDepencencies(remoteUrl, localPath, baseNode, monitor);
             node.getDependencies();
         } catch (Exception e1) {
             e1.printStackTrace();
