@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.bean;
 
+import java.util.List;
+
 /**
  * DOC cmeng class global comment. Detailled comment
  */
@@ -46,6 +48,8 @@ public class ModuleBean implements IVariable {
     public static final String ATTR_LANGUAGE = "language"; //$NON-NLS-1$
 
     public static final String ATTR_SCOPE = "scope"; //$NON-NLS-1$
+
+    public static final String ATTR_EXCLUSIONS = "exclusions"; //$NON-NLS-1$
 
     public static final String ATTR_EXCLUDE_DEPENDENCIES = "excludeDependencies"; //$NON-NLS-1$
 
@@ -86,6 +90,8 @@ public class ModuleBean implements IVariable {
     private String language;
 
     private String excludeDependencies;
+
+    private List<ExclusionBean> exclusions;
 
     public String getId() {
         return this.id;
@@ -215,9 +221,17 @@ public class ModuleBean implements IVariable {
         this.excludeDependencies = excludeDependencies;
     }
 
+    public List<ExclusionBean> getExclusions() {
+        return this.exclusions;
+    }
+
+    public void setExclusions(List<ExclusionBean> exclusions) {
+        this.exclusions = exclusions;
+    }
+
     @Override
     public Object getVariableValue(String variable) throws Exception {
-        String value = null;
+        Object value = null;
         switch (variable) {
         case ATTR_ARTIFACT_ID:
             value = getArtifactId();
@@ -233,6 +247,9 @@ public class ModuleBean implements IVariable {
             break;
         case ATTR_EXCLUDE_DEPENDENCIES:
             value = getExcludeDependencies();
+            break;
+        case ATTR_EXCLUSIONS:
+            value = getExclusions();
             break;
         case ATTR_GROUP_ID:
             value = getGroupId();

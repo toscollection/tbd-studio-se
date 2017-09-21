@@ -21,9 +21,11 @@ import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 import org.talend.designer.maven.aether.DependencyNode;
+import org.talend.designer.maven.aether.ExclusionNode;
 import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.hadoop.distribution.HadoopDistributionPlugin;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
+import org.talend.hadoop.distribution.dynamic.bean.ExclusionBean;
 import org.talend.hadoop.distribution.dynamic.bean.ModuleBean;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;
 import org.talend.hadoop.distribution.dynamic.resolver.IDependencyResolver;
@@ -99,6 +101,11 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
             if (registedRuntimeIds != null) {
                 runtimeIds.addAll(registedRuntimeIds);
             } else {
+                List<ExclusionBean> exclusionBeans = moduleBean.getExclusions();
+                List<ExclusionNode> exclusions = null;
+                if (exclusionBeans != null && !exclusionBeans.isEmpty()) {
+                    exclusions = adaptExclusions(exclusionBeans, monitor);
+                }
                 DependencyNode dependencyNode = null;
                 DependencyNode baseNode = new DependencyNode();
                 baseNode.setGroupId(groupId);
@@ -106,6 +113,9 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
                 baseNode.setClassifier(classifier);
                 baseNode.setScope(scope);
                 baseNode.setVersion(moduleVersion);
+                if (exclusions != null && !exclusions.isEmpty()) {
+                    baseNode.setExclusions(exclusions);
+                }
                 dependencyNode = dependencyResolver.collectDependencies(baseNode, monitor);
                 librariesNeeded = createLibrariesNeeded(dependencyNode, distribution, hadoopVersion, moduleBean, runtimeIds,
                         templateBean);
@@ -246,6 +256,22 @@ public class DynamicModuleAdapter extends AbstractDynamicAdapter {
         }
 
         return libraryNeeded;
+    }
+
+    private List<ExclusionNode> adaptExclusions(List<ExclusionBean> exclusionBeans, IDynamicMonitor monitor) throws Exception {
+        List<ExclusionNode> exclusionNodes = new ArrayList<>();
+
+        if (exclusionBeans != null && !exclusionBeans.isEmpty()) {
+            TemplateBean templBean = getTemplateBean();
+            DynamicConfiguration dynamicConfiguration = getConfiguration();
+            for (ExclusionBean exclusionBean : exclusionBeans) {
+                DynamicExclusionAdapter adapter = new DynamicExclusionAdapter(templBean, dynamicConfiguration, exclusionBean);
+                adapter.adapt(monitor);
+                exclusionNodes.add(adapter.getExclusionNode());
+            }
+        }
+
+        return exclusionNodes;
     }
 
     @Override

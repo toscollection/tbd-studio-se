@@ -24,7 +24,27 @@
             "context": "{properties.context}",
             "groupId": "org.apache.hadoop",
             "artifactId": "hadoop-client",
-            "classifier": ""
+            "classifier": "",
+            "exclusions": [
+                {
+                    "groupId": "org.slf4j",
+                    "artifactId": "slf4j-api",
+                    "classifier": "",
+                    "extension": ""
+                },
+                {
+                    "groupId": "org.slf4j",
+                    "artifactId": "^slf[\\d]j-api",
+                    "classifier": "",
+                    "extension": ""
+                },
+                {
+                    "groupId": "org.slf4j",
+                    "artifactId": "*",
+                    "classifier": "",
+                    "extension": ""
+                }
+            ]
         },
         {
             "id": "spark-core_2.10",
