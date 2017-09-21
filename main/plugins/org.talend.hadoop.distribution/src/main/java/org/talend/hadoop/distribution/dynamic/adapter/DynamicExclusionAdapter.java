@@ -12,8 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.adapter;
 
-import org.talend.designer.maven.aether.ExclusionNode;
 import org.talend.designer.maven.aether.IDynamicMonitor;
+import org.talend.designer.maven.aether.node.ExclusionNode;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 import org.talend.hadoop.distribution.dynamic.bean.ExclusionBean;
 import org.talend.hadoop.distribution.dynamic.bean.TemplateBean;

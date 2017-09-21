@@ -14,8 +14,8 @@ package org.talend.hadoop.distribution.dynamic.resolver;
 
 import java.util.List;
 
-import org.talend.designer.maven.aether.DependencyNode;
 import org.talend.designer.maven.aether.IDynamicMonitor;
+import org.talend.designer.maven.aether.node.DependencyNode;
 
 /**
  * DOC cmeng  class global comment. Detailled comment

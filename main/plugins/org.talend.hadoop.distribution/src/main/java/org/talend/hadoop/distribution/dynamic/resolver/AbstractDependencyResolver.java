@@ -14,9 +14,9 @@ package org.talend.hadoop.distribution.dynamic.resolver;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.m2e.core.MavenPlugin;
-import org.talend.designer.maven.aether.DependencyNode;
-import org.talend.designer.maven.aether.DynamicDistributionAetherUtils;
 import org.talend.designer.maven.aether.IDynamicMonitor;
+import org.talend.designer.maven.aether.node.DependencyNode;
+import org.talend.designer.maven.aether.util.DynamicDistributionAetherUtils;
 import org.talend.hadoop.distribution.dynamic.DynamicConfiguration;
 
 /**

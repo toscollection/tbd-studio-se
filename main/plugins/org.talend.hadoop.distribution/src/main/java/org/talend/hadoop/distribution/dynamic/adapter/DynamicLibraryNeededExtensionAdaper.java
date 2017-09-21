@@ -12,9 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.adapter;
 
-import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.talend.core.runtime.dynamic.DynamicFactory;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
@@ -69,10 +70,10 @@ public class DynamicLibraryNeededExtensionAdaper extends DynamicExtensionAdapter
         List<ModuleBean> modules = templateBean.getModules();
 
         if (modules != null) {
-            Map<String, List<String>> registedModulesMap = new HashMap<>();
+            Set<String> registedModules = new LinkedHashSet<>();
             for (ModuleBean moduleBean : modules) {
                 DynamicModuleAdapter dynamicModuleAdapter = new DynamicModuleAdapter(templateBean, configuration, moduleBean,
-                        dependencyResolver, registedModulesMap);
+                        dependencyResolver, registedModules);
                 List<IDynamicConfiguration> librariesNeeded = dynamicModuleAdapter.adapt(monitor);
                 if (librariesNeeded != null && !librariesNeeded.isEmpty()) {
                     addDynamicConfigurations(libNeededExtension, librariesNeeded);
