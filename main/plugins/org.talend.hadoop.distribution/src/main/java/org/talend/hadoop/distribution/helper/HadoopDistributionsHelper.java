@@ -115,11 +115,14 @@ public class HadoopDistributionsHelper {
      */
     public static final DistributionsManager IMPALA = new DistributionsManager(ImpalaComponent.class.getName(), null, true);
 
+    private static String cacheVersion = "Initial Cache Version"; //$NON-NLS-1$
+
     static {
         ServiceListener serviceListener = new ServiceListener() {
 
             @Override
             public void serviceChanged(ServiceEvent event) {
+                cacheVersion = String.valueOf(System.currentTimeMillis());
                 if (event.getType() == ServiceEvent.REGISTERED) {
                     ServiceReference<? extends Object> sr = event.getServiceReference();
                     if (sr != null) {
@@ -193,5 +196,9 @@ public class HadoopDistributionsHelper {
 
     private static BundleContext getBundleContext() {
         return FrameworkUtil.getBundle(DistributionFactory.class).getBundleContext();
+    }
+
+    public static String getCacheVersion() {
+        return cacheVersion;
     }
 }
