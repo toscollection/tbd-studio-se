@@ -180,7 +180,6 @@ imports="
 		
 		<%}%>
 				}catch(Exception e_<%=cid%>){
-				whetherReject_<%=cid%> = true;
 				    <%if(dieOnError){%>
 				        throw e_<%=cid%>;
 				    <%}else{%>
@@ -230,6 +229,8 @@ imports="
                     }
                 }
             %>
+            }else{
+                whetherReject_<%=cid%> = false;
             }
             <%
         }
