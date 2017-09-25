@@ -23,7 +23,11 @@ public class GroupWithConditionBean implements IVariable {
 
     public static final String ATTR_CONDITIONS = "conditions"; //$NON-NLS-1$
 
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     private String moduleGroup;
+
+    private String description;
 
     private List<String> conditions;
 
@@ -33,6 +37,14 @@ public class GroupWithConditionBean implements IVariable {
 
     public void setModuleGroup(String moduleGroup) {
         this.moduleGroup = moduleGroup;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getConditions() {
@@ -49,6 +61,9 @@ public class GroupWithConditionBean implements IVariable {
         switch (variable) {
         case ATTR_CONDITIONS:
             value = getConditions();
+            break;
+        case ATTR_DESCRIPTION:
+            value = getDescription();
             break;
         case ATTR_MODULE_GROUP:
             value = getModuleGroup();

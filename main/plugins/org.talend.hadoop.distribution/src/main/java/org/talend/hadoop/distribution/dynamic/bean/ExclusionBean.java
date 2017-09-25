@@ -26,6 +26,10 @@ public class ExclusionBean implements IVariable {
 
     public static final String ATTR_EXTENSION = "extension"; //$NON-NLS-1$
 
+    public static final String ATTR_VERSION = "version"; //$NON-NLS-1$
+
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     private String groupId;
 
     private String artifactId;
@@ -33,6 +37,10 @@ public class ExclusionBean implements IVariable {
     private String classifier;
 
     private String extension;
+
+    private String version;
+
+    private String description;
 
     public String getGroupId() {
         return this.groupId;
@@ -66,6 +74,22 @@ public class ExclusionBean implements IVariable {
         this.extension = extension;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getVersion() {
+        return this.version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
     @Override
     public Object getVariableValue(String variable) throws Exception {
         Object result = null;
@@ -76,11 +100,17 @@ public class ExclusionBean implements IVariable {
         case ATTR_CLASSIFIER:
             result = getClassifier();
             break;
+        case ATTR_DESCRIPTION:
+            result = getDescription();
+            break;
         case ATTR_EXTENSION:
             result = getExtension();
             break;
         case ATTR_GROUP_ID:
             result = getGroupId();
+            break;
+        case ATTR_VERSION:
+            result = getVersion();
             break;
         default:
             throw new UnsupportedOperationException(

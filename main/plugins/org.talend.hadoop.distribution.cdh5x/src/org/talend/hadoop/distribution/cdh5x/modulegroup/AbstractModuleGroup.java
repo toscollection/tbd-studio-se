@@ -13,6 +13,9 @@
 package org.talend.hadoop.distribution.cdh5x.modulegroup;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 /**
@@ -37,7 +40,15 @@ public abstract class AbstractModuleGroup {
 
     protected void checkRuntimeId(String id) throws Exception {
         if (StringUtils.isEmpty(id)) {
-            throw new Exception("Can't find runtime id for " + id);
+            String message = this.getClass().getSimpleName()
+                    + ": Can't find runtime id, please make sure that your generated json is not broken and your template has already been configured correctly.";
+            Level level = LogManager.getRootLogger().getLevel();
+            if (level != null) {
+                if (level.getSyslogEquivalent() < Level.INFO_INT) {
+                    System.out.println(message);
+                }
+            }
+            CommonExceptionHandler.warn(message);
         }
     }
 }

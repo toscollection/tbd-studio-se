@@ -24,11 +24,15 @@ public class ClassLoaderBean implements IVariable {
 
     public static final String ATTR_MODULE_GROUP = "moduleGroup"; //$NON-NLS-1$
 
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     private String id;
 
     private String index;
 
     private String moduleGroup;
+
+    private String description;
 
     public String getId() {
         return this.id;
@@ -54,10 +58,21 @@ public class ClassLoaderBean implements IVariable {
         this.moduleGroup = moduleGroup;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public Object getVariableValue(String variable) throws Exception {
         Object result = null;
         switch (variable) {
+        case ATTR_DESCRIPTION:
+            result = getDescription();
+            break;
         case ATTR_ID:
             result = getId();
             break;

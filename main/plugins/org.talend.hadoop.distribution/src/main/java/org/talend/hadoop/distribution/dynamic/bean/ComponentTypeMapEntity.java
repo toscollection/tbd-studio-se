@@ -25,9 +25,13 @@ public class ComponentTypeMapEntity implements IVariable {
 
     public static final String ATTR_MODULE_GROUPS = "moduleGroups"; //$NON-NLS-1$
 
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     private String type;
 
     private String component;
+
+    private String description;
 
     private List<GroupWithConditionBean> moduleGroups;
 
@@ -47,6 +51,14 @@ public class ComponentTypeMapEntity implements IVariable {
         this.component = component;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<GroupWithConditionBean> getModuleGroups() {
         return this.moduleGroups;
     }
@@ -61,6 +73,9 @@ public class ComponentTypeMapEntity implements IVariable {
         switch (variable) {
         case ATTR_COMPONENT:
             value = getComponent();
+            break;
+        case ATTR_DESCRIPTION:
+            value = getDescription();
             break;
         case ATTR_MODULE_GROUPS:
             value = getModuleGroups();

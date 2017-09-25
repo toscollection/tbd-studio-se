@@ -53,6 +53,8 @@ public class ModuleBean implements IVariable {
 
     public static final String ATTR_EXCLUDE_DEPENDENCIES = "excludeDependencies"; //$NON-NLS-1$
 
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     public static final String TYPE_STANDARD = "STANDARD"; //$NON-NLS-1$
 
     public static final String TYPE_BASE = "BASE"; //$NON-NLS-1$
@@ -90,6 +92,8 @@ public class ModuleBean implements IVariable {
     private String language;
 
     private String excludeDependencies;
+
+    private String description;
 
     private List<ExclusionBean> exclusions;
 
@@ -221,6 +225,14 @@ public class ModuleBean implements IVariable {
         this.excludeDependencies = excludeDependencies;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public List<ExclusionBean> getExclusions() {
         return this.exclusions;
     }
@@ -244,6 +256,9 @@ public class ModuleBean implements IVariable {
             break;
         case ATTR_CLASSIFIER:
             value = getClassifier();
+            break;
+        case ATTR_DESCRIPTION:
+            value = getDescription();
             break;
         case ATTR_EXCLUDE_DEPENDENCIES:
             value = getExcludeDependencies();

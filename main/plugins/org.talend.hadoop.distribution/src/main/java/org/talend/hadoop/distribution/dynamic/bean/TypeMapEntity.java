@@ -23,7 +23,11 @@ public class TypeMapEntity implements IVariable {
 
     public static final String ATTR_MODULE_GROUPS = "moduleGroups"; //$NON-NLS-1$
 
+    public static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     private String type;
+
+    private String description;
 
     private List<GroupWithConditionBean> moduleGroups;
 
@@ -33,6 +37,14 @@ public class TypeMapEntity implements IVariable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<GroupWithConditionBean> getModuleGroups() {
@@ -47,6 +59,9 @@ public class TypeMapEntity implements IVariable {
     public Object getVariableValue(String variable) throws Exception {
         Object value = null;
         switch (variable) {
+        case ATTR_DESCRIPTION:
+            value = getDescription();
+            break;
         case ATTR_MODULE_GROUPS:
             value = getModuleGroups();
             break;

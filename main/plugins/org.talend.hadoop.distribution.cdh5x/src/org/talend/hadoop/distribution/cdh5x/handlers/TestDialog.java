@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
@@ -348,7 +350,15 @@ public class TestDialog extends Dialog {
                             try {
                                 // bos.write(message.getBytes("UTF-8"));
                                 // bos.write("\n".getBytes("UTF-8"));
-                                System.out.print(message);
+                                Level level = LogManager.getRootLogger().getLevel();
+                                if (level != null) {
+                                    if (level.getSyslogEquivalent() < Level.INFO_INT) {
+                                        System.out.print(message);
+                                    }
+                                } else {
+                                    System.out.print(message);
+                                }
+                                ExceptionHandler.log(message);
                             } catch (Exception e) {
                                 ExceptionHandler.process(e);
                             }

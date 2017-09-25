@@ -25,6 +25,8 @@ public class ConditionBean implements IVariable {
 
     private static final String ATTR_RIGHT = "right"; //$NON-NLS-1$
 
+    private static final String ATTR_DESCRIPTION = "description"; //$NON-NLS-1$
+
     private String id;
 
     private String operator;
@@ -32,6 +34,8 @@ public class ConditionBean implements IVariable {
     private String left;
 
     private String right;
+
+    private String description;
 
     public ConditionBean() {
         // nothing to do
@@ -76,10 +80,21 @@ public class ConditionBean implements IVariable {
         this.right = right;
     }
 
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public Object getVariableValue(String variable) throws Exception {
         Object value = null;
         switch (variable) {
+        case ATTR_DESCRIPTION:
+            value = getDescription();
+            break;
         case ATTR_ID:
             value = getId();
             break;
