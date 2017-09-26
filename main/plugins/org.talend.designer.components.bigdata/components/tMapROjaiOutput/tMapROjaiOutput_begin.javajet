@@ -12,6 +12,7 @@ imports="
 		java.util.List
 		java.util.Map" 
 %>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <% 
 	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
 	INode node = (INode)codeGenArgument.getArgument();
@@ -40,7 +41,7 @@ imports="
 		        boolean result = true;
 		    
 		        Process process = Runtime.getRuntime().exec(arg0);
-		        
+				log.debug("Commend: " + java.util.Arrays.asList(arg0).toString());
 		        if(UsePwd){
 		            java.io.PrintWriter pwout = new java.io.PrintWriter(process.getOutputStream());
 		        <%if(!useKeytab){
@@ -77,6 +78,7 @@ imports="
 		cmd_<%=cid%>.add("kinit");
 		
 		<%if(useKeytab){%>
+		cmd_<%=cid%>.add("-k");
 		cmd_<%=cid%>.add("-t");
 		cmd_<%=cid%>.add(<%=keytabPath%>);
 		<%}else{%>
