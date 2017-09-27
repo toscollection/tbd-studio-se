@@ -65,7 +65,7 @@ imports="
 	
 	  		java.util.Map<String, String> pathMap = new java.util.HashMap<String, String>();
 			for (int i=0;i<mappings.size();i++) {
-				String path = mappings.get(i).get("PARENT_NODE_PATH");
+				String path = mappings.get(i).get("PARENT_FIELD_PATH");
 				if(path==null || "".equals(path)){
 					path="";
 				}
