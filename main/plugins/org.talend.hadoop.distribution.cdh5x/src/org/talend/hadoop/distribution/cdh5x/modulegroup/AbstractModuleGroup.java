@@ -19,7 +19,7 @@ import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 /**
- * DOC cmeng  class global comment. Detailled comment
+ * abstract module group for all cdh5x module group classes, defines all common methods
  */
 public abstract class AbstractModuleGroup {
 

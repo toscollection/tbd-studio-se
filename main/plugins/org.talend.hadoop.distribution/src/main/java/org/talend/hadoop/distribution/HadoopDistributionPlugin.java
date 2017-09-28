@@ -10,11 +10,14 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.general.ModuleNeeded;
 import org.talend.librariesmanager.model.ModulesNeededProvider;
 
-
 public class HadoopDistributionPlugin extends Plugin {
 
     public static final String PLUGIN_ID = "org.talend.hadoop.distribution"; //$NON-NLS-1$
 
+    /**
+     * Recording all defined standard modules, not include modules defined in dynamic hadoop distribution versions;<br>
+     * These modules will be used by dynamic hadoop distribution if needed.
+     */
     private Map<String, ModuleNeeded> existingModuleMap = new HashMap<>();
 
     private static HadoopDistributionPlugin instance;
