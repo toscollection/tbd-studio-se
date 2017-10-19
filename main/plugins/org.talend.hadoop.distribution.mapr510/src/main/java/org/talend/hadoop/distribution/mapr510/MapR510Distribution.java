@@ -42,6 +42,7 @@ import org.talend.hadoop.distribution.constants.PigOutputConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.mapr.IMapRDistribution;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HBaseModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HCatalogModuleGroup;
 import org.talend.hadoop.distribution.mapr510.modulegroup.MapR510HDFSModuleGroup;
@@ -370,4 +371,24 @@ public class MapR510Distribution extends AbstractMapRDistribution implements HDF
     public String getMapRStreamsJarPath() {
         return MAPR_STREAMS_JAR_PATH;
     }
+    
+    @Override
+    public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion sparkVersion) {
+        return SparkStreamingKafkaVersion.MAPR_5X0_KAFKA;
+    }
+
+    // Note :
+    // Azure Blob & Datalake support have been disabled for now on this distribution
+    // New versions of this distribution should be tested for Azure support and
+    // the changes backported to all earlier versions
+    @Override
+    public boolean doSupportAzureBlobStorage() {
+        return false;
+    }
+
+    @Override
+    public boolean doSupportAzureDataLakeStorage() {
+        return false;
+    }
+    // End
 }
