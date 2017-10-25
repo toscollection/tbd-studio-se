@@ -51,4 +51,4 @@ imports="
 		table_<%=cid%>.close();     
 		     
 globalMap.put("<%=cid%>_NB_LINE",nb_line_<%=cid %>);
-globalMap.put("<%=cid%>_REJECT_LINE",rejectedCount_<%=cid%>);
+globalMap.put("<%=cid%>_NB_LINE_REJECTED",rejectedCount_<%=cid%>);
