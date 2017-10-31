@@ -110,19 +110,19 @@
                 MVN="mvn:com.marklogic/marklogic-client-api-4.0.3/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="okhttp-3.9.0"
                 MODULE="okhttp-3.9.0.jar"
                 MVN="mvn:com.squareup.okhttp3/okhttp-3.9.0/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="logging-interceptor-3.9.0"
                 MODULE="logging-interceptor-3.9.0.jar"
                 MVN="mvn:com.squareup.okhttp3/logging-interceptor-3.9.0/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="okhttp-digest-1.15"
                 MODULE="okhttp-digest-1.15.jar"
                 MVN="mvn:com.burgstaller/okhttp-digest-1.15/6.0.0"
@@ -134,7 +134,7 @@
                 MVN="mvn:org.slf4j/slf4j-api-1.7.25/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="slf4j-log4j12-1.7.25"
                 MODULE="slf4j-log4j12-1.7.25.jar"
                 MVN="mvn:org.slf4j/slf4j-log4j12-1.7.25/6.0.0"
@@ -158,25 +158,25 @@
                 MVN="mvn:com.fasterxml.jackson.core/jackson-annotations-2.9.1/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="javax.mail-1.6.0"
                 MODULE="javax.mail-1.6.0.jar"
                 MVN="mvn:com.sun.mail/javax.mail-1.6.0/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="javax.ws.rs-api-2.1"
                 MODULE="javax.ws.rs-api-2.1.jar"
                 MVN="mvn:javax.ws.rs/javax.ws.rs-api-2.1/6.0.0"
                 REQUIRED="true"
             />
-			<IMPORT
+            <IMPORT
                 NAME="okio-1.13.0"
                 MODULE="okio-1.13.0.jar"
                 MVN="mvn:com.squareup.okio/okio-1.13.0/6.0.0"
                 REQUIRED="true"
             />
-		</IMPORTS>
+        </IMPORTS>
     </CODEGENERATION>
 
     <RETURNS>
