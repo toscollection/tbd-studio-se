@@ -1543,6 +1543,7 @@
             <library id="jackson-core-asl-1.8.8.jar" />
         </libraryNeededGroup>
 
+
         <!-- group of cloudera navigator libraries -->
         <libraryNeededGroup
                 description="Talend cloudera 5.10 navigator API."
