@@ -151,11 +151,11 @@ public class HadoopConfsUtils {
                 connection.setConfFile(confFileByteArray);
             }
             if (GlobalServiceRegister.getDefault().isServiceRegistered(ILibrariesService.class)) {
-                ILibrariesService service = (ILibrariesService) GlobalServiceRegister.getDefault()
-                        .getService(ILibrariesService.class);
+                ILibrariesService service = (ILibrariesService) GlobalServiceRegister.getDefault().getService(
+                        ILibrariesService.class);
                 if (service != null) {
                     // Only deploy a new jar, no need to reset all
-                    service.deployLibrary(jarFile.toURI().toURL(), false);
+                    service.deployLibrary(jarFile.toURI().toURL());
                     addToDeployedCache(connectionItem, jarName);
                 }
             }
@@ -201,8 +201,8 @@ public class HadoopConfsUtils {
             if (contextItem != null) {
                 EList<ContextType> contexts = contextItem.getContext();
                 for (ContextType contextType : contexts) {
-                    jarNames.add(
-                            HadoopConfsUtils.getConfsJarDefaultName(connectionItem, createJarIfNotExist, contextType.getName()));
+                    jarNames.add(HadoopConfsUtils.getConfsJarDefaultName(connectionItem, createJarIfNotExist,
+                            contextType.getName()));
                 }
             }
         } else {
@@ -297,15 +297,15 @@ public class HadoopConfsUtils {
             File confFile = new File(confsTempFolder, confJarName);
             FileUtils.writeByteArrayToFile(confFile, confFileBA);
             if (GlobalServiceRegister.getDefault().isServiceRegistered(ILibraryManagerService.class)) {
-                ILibraryManagerService libService = (ILibraryManagerService) GlobalServiceRegister.getDefault()
-                        .getService(ILibraryManagerService.class);
+                ILibraryManagerService libService = (ILibraryManagerService) GlobalServiceRegister.getDefault().getService(
+                        ILibraryManagerService.class);
                 if (libService != null && libService.isJarNeedToBeDeployed(confFile)) {
                     if (GlobalServiceRegister.getDefault().isServiceRegistered(ILibrariesService.class)) {
-                        ILibrariesService service = (ILibrariesService) GlobalServiceRegister.getDefault()
-                                .getService(ILibrariesService.class);
+                        ILibrariesService service = (ILibrariesService) GlobalServiceRegister.getDefault().getService(
+                                ILibrariesService.class);
                         if (service != null) {
                             // Only deploy a new jar, no need to reset all
-                            service.deployLibrary(confFile.toURI().toURL(), false);
+                            service.deployLibrary(confFile.toURI().toURL());
                             addToDeployedCache(connectionItem, confJarName);
                         }
                     }

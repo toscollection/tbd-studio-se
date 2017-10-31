@@ -13,7 +13,6 @@
 package org.talend.designer.hdfsbrowse.service;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.talend.core.classloader.DynamicClassLoader;
@@ -68,7 +67,7 @@ public class HadoopService implements IHadoopService {
     public Set<String> getMissingLibraries(String distribution, String version) {
         Set<String> jars = new HashSet<String>();
         Set<String> set = getHadoopLibraries(distribution, version, false);
-        List jarsNeed = ModulesNeededProvider.getModulesNeeded();
+        Set jarsNeed = ModulesNeededProvider.getModulesNeeded();
         for (Object jar : jarsNeed) {
             if (jar instanceof ModuleNeeded) {
                 String jarName = ((ModuleNeeded) jar).getModuleName();

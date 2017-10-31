@@ -26,7 +26,6 @@ import org.talend.commons.ui.runtime.exception.MessageBoxExceptionHandler;
 import org.talend.commons.ui.runtime.image.ECoreImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.runtime.image.OverlayImageProvider;
-import org.talend.core.CorePlugin;
 import org.talend.core.model.repository.ERepositoryObjectType;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.repository.ProjectManager;
@@ -83,8 +82,6 @@ public class CreatePigudfAction extends AbstractRoutineAction {
 
             try {
                 openRoutineEditor(routineWizard.getPigudf(), false);
-
-                CorePlugin.getDefault().getLibrariesService().checkLibraries();
             } catch (PartInitException e) {
                 MessageBoxExceptionHandler.process(e);
             } catch (SystemException e) {

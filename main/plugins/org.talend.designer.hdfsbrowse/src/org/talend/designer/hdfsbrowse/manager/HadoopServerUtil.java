@@ -418,7 +418,7 @@ public class HadoopServerUtil {
         if (classLoader instanceof DynamicClassLoader) {
             set.addAll(((DynamicClassLoader) classLoader).getLibraries());
         }
-        List jarsNeed = ModulesNeededProvider.getModulesNeeded();
+        Set jarsNeed = ModulesNeededProvider.getModulesNeeded();
         for (Object jar : jarsNeed) {
             if (jar instanceof ModuleNeeded) {
                 String jarName = ((ModuleNeeded) jar).getModuleName();
