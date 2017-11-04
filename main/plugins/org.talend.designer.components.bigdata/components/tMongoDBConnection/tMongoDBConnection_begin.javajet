@@ -34,11 +34,19 @@
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
     boolean queryOptionNoTimeOut = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERYOPTION_NOTIMEOUT__"));
+    boolean version_3_5_X = "MONGODB_3_5_X".equals(dbversion);
     
     String mongoDbDriver = "com.mongodb.MongoClient";
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-
+    
+    %>
+    <%if(isLog4jEnabled){%>
+			java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(java.util.logging.Level.OFF);
+			<%}else{%>
+			java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(java.util.logging.Level.SEVERE);
+    <%
+		    }
     // Client options
     %>
     // Empty client options
@@ -73,7 +81,7 @@
             <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
             <%
             if(authenticationMechanism.equals("NEGOTIATE_MEC")){
-                if(dbversion.equals("MONGODB_3_0_X") || dbversion.equals("MONGODB_3_2_X")) {
+                if(dbversion.equals("MONGODB_3_0_X") || dbversion.equals("MONGODB_3_2_X") || version_3_5_X) {
 %>
                     mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createCredential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 <%                    
@@ -115,32 +123,35 @@
         <%
         }
         %>
-        com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddressList_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
+			com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddressList_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
         <%
     }else{
         %>
         com.mongodb.ServerAddress serverAddress_<%=cid%> = new com.mongodb.ServerAddress(<%=dbhost%>, <%=dbport%>);
-        com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddress_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
+		com.mongodb.Mongo mongo_<%=cid%> = new <%=mongoDbDriver%>(serverAddress_<%=cid%>, mongoCredentialList_<%=cid%>, clientOptions_<%=cid%>);
+        
         <%
     }
 
     %>
     mongo_<%=cid%>.getAddress() ;
-    com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+    <%if(version_3_5_X) {%>
+		com.mongodb.client.MongoDatabase db_<%=cid%> = ((<%=mongoDbDriver%>)mongo_<%=cid%>).getDatabase(<%=dbname%>);
+	<%} else {%>
+		com.mongodb.DB db_<%=cid%> = mongo_<%=cid%>.getDB(<%=dbname%>);
+	<%}%>
+    
     <%
-
     if(isLog4jEnabled){
     %>
         log.info("<%=cid%> - Connecting to " + mongo_<%=cid%>.getServerAddressList() + ".");
     <%
     }
-
-    if(queryOptionNoTimeOut){
+    if(queryOptionNoTimeOut&&!version_3_5_X){
         %>
             mongo_<%=cid%>.addOption(com.mongodb.Bytes.QUERYOPTION_NOTIMEOUT);
         <%
     }
-
     %>
     globalMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
     globalMap.put("db_<%=cid%>", db_<%=cid%>);
