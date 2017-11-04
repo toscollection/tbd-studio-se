@@ -33,11 +33,12 @@
        <PARAMETER NAME="PROPERTY" FIELD="PROPERTY_TYPE" NUM_ROW="1" REPOSITORY_VALUE="NOSQL:MONGODB"/>
 
        <PARAMETER NAME="DB_VERSION" FIELD="CLOSED_LIST" REPOSITORY_VALUE="DB_VERSION" NUM_ROW="2" GROUP="CONNECTION">
-                   <ITEMS DEFAULT="MONGODB_3_2_X">
+                   <ITEMS DEFAULT="MONGODB_3_5_X">
                 <ITEM NAME="MONGODB_2_5_X" VALUE="MONGODB_2_5_X"/>
                 <ITEM NAME="MONGODB_2_6_X" VALUE="MONGODB_2_6_X"/>
                 <ITEM NAME="MONGODB_3_0_X" VALUE="MONGODB_3_0_X"/>
                 <ITEM NAME="MONGODB_3_2_X" VALUE="MONGODB_3_2_X"/>
+                <ITEM NAME="MONGODB_3_5_X" VALUE="MONGODB_3_5_X"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER FIELD="CHECK" NAME="USE_REPLICA_SET" REPOSITORY_VALUE="USE_REPLICA_SET" NUM_ROW="3" GROUP="CONNECTION">
@@ -70,10 +71,10 @@
         </PARAMETER>
 
         <PARAMETER NAME="AUTHENTICATION_MECHANISM" REPOSITORY_VALUE="AUTHENTICATION_MECHANISM" FIELD="CLOSED_LIST" NUM_ROW="16" SHOW_IF="REQUIRED_AUTHENTICATION == 'true'" GROUP="AUTHENTICATION">
-            <ITEMS DEFAULT="NEGOTIATE_MEC">
+            <ITEMS DEFAULT="SCRAMSHA1_MEC">
                 <ITEM NAME="NEGOTIATE_MEC" VALUE="NEGOTIATE_MEC"  SHOW_IF="(DB_VERSION!='INVALID'"/>
                 <ITEM NAME="PLAIN_MEC" VALUE="PLAIN_MEC" SHOW_IF="(DB_VERSION!='MONGODB_2_5_X')"/>
-                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC" SHOW_IF="(DB_VERSION=='MONGODB_3_0_X') OR (DB_VERSION=='MONGODB_3_2_X')" />
+                <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC" SHOW_IF="(DB_VERSION=='MONGODB_3_0_X') OR (DB_VERSION=='MONGODB_3_2_X') OR (DB_VERSION=='MONGODB_3_5_X')" />
                 <ITEM NAME="KERBEROS_MEC" VALUE="KERBEROS_MEC" SHOW_IF="(DB_VERSION!='INVALID')"/>
             </ITEMS>
         </PARAMETER>
@@ -125,7 +126,7 @@
     <CODEGENERATION>
         <IMPORTS>
 
-            <IMPORT MODULE="mongo-java-driver-2.14.1.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-2.14.1/6.0.0"  NAME="mongo-java-driver-2.14.1" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-2.14.1.jar" REQUIRED_IF="true" />
+            <IMPORT MODULE="mongo-java-driver-3.5.0.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-3.5.0/6.0.0"  NAME="mongo-java-driver-3.5.0" UrlPath="platform:/plugin/org.talend.libraries.mongo/lib/mongo-java-driver-3.5.0.jar" REQUIRED_IF="true" />
 
         </IMPORTS>
     </CODEGENERATION>
