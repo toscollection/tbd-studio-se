@@ -57,7 +57,6 @@ import org.talend.repository.maprdbprovider.Activator;
 import org.talend.repository.maprdbprovider.util.MapRDBClassLoaderFactory;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.ui.wizards.metadata.table.database.SelectorTreeViewerProvider;
-
 import orgomg.cwm.objectmodel.core.TaggedValue;
 import orgomg.cwm.resource.relational.Catalog;
 
@@ -563,6 +562,14 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
                 Object table = ReflectionUtils.newInstance("org.apache.hadoop.hbase.client.HTable", classLoader, new Object[] { //$NON-NLS-1$
                         config, tableName });
                 ReflectionUtils.invokeMethod(scan, "addFamily", new Object[] { columnFamilyName.getBytes() }); //$NON-NLS-1$
+                // Limit
+                int count = 0;
+                int limit = -1;
+                if (GlobalServiceRegister.getDefault().isServiceRegistered(IDesignerCoreService.class)) {
+                    IDesignerCoreService designerService = (IDesignerCoreService) GlobalServiceRegister.getDefault().getService(
+                            IDesignerCoreService.class);
+                    limit = designerService.getHBaseOrMaprDBScanLimit();
+                }
                 List<String> columnNameExsit = new ArrayList<String>();
                 Object resultSetscanner = ReflectionUtils.invokeMethod(table, "getScanner", new Object[] { scan }); //$NON-NLS-1$
                 Object result = ReflectionUtils.invokeMethod(resultSetscanner, "next", new Object[0]); //$NON-NLS-1$
@@ -627,6 +634,10 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
                                 }
                             }
                         }
+                    }
+                    count++;
+                    if (count == limit) {
+                        break;
                     }
                     result = ReflectionUtils.invokeMethod(resultSetscanner, "next", new Object[0]); //$NON-NLS-1$
                 }
@@ -804,8 +815,8 @@ public class MapRDBMetadataProvider implements IDBMetadataProvider {
             int count = 0;
             int limit = -1;
             if (GlobalServiceRegister.getDefault().isServiceRegistered(IDesignerCoreService.class)) {
-                IDesignerCoreService designerService = (IDesignerCoreService) GlobalServiceRegister.getDefault()
-                        .getService(IDesignerCoreService.class);
+                IDesignerCoreService designerService = (IDesignerCoreService) GlobalServiceRegister.getDefault().getService(
+                        IDesignerCoreService.class);
                 limit = designerService.getHBaseOrMaprDBScanLimit();
             }
             List<String> columnExsit = new ArrayList<String>();
