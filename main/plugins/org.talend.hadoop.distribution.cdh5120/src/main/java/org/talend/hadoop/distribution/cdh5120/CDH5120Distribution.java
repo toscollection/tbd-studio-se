@@ -42,7 +42,6 @@ import org.talend.hadoop.distribution.cdh5120.modulegroup.node.pigoutput.CDH5120
 import org.talend.hadoop.distribution.cdh5120.modulegroup.node.spark.CDH5120SparkDynamoDBNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5120.modulegroup.node.sparkbatch.CDH5120GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5120.modulegroup.node.sparkbatch.CDH5120SparkBatchAzureNodeModuleGroup;
-import org.talend.hadoop.distribution.cdh5120.modulegroup.node.sparkbatch.CDH5120SparkBatchKuduNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5120.modulegroup.node.sparkbatch.CDH5120SparkBatchParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5120.modulegroup.node.sparkbatch.CDH5120SparkBatchS3NodeModuleGroup;
 import org.talend.hadoop.distribution.cdh5120.modulegroup.node.sparkstreaming.CDH5120SparkStreamingFlumeNodeModuleGroup;
@@ -136,19 +135,6 @@ public class CDH5120Distribution extends AbstractDistribution implements ICloude
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.AZURE_CONFIGURATION_COMPONENT), CDH5120SparkBatchAzureNodeModuleGroup.getModuleGroups(
                 distribution, version));
-
-        // Kudu
-        Set<DistributionModuleGroup> kuduNodeModuleGroups = CDH5120SparkBatchKuduNodeModuleGroup.getModuleGroups(distribution,
-                version, "USE_EXISTING_CONNECTION == 'false'");
-        Set<DistributionModuleGroup> kuduConfigurationNodeModuleGroups = CDH5120SparkBatchKuduNodeModuleGroup.getModuleGroups(
-                distribution, version, null);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.KUDU_INPUT_COMPONENT),
-                kuduNodeModuleGroups);
-        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.KUDU_OUTPUT_COMPONENT),
-                kuduNodeModuleGroups);
-        nodeModuleGroups.put(
-                new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.KUDU_CONFIGURATION_COMPONENT),
-                kuduConfigurationNodeModuleGroups);
 
         // Parquet
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
