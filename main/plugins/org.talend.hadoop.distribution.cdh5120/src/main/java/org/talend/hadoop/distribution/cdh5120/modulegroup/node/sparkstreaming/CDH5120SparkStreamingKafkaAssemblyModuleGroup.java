@@ -18,7 +18,6 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.cdh5120.CDH5120Constant;
-import org.talend.hadoop.distribution.cdh5120.CDH5120Distribution;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
@@ -28,7 +27,6 @@ import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
-import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 
 public class CDH5120SparkStreamingKafkaAssemblyModuleGroup {
 
