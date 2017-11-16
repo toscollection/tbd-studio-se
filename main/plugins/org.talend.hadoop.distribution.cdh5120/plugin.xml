@@ -914,7 +914,9 @@
              <library id="hbase-protocol-1.2.0-cdh5.12.1.jar" />
              <library id="hadoop-common-2.6.0-cdh5.12.1.jar" />
              <library id="hadoop-auth-2.6.0-cdh5.12.1.jar" />
+             <library id="hadoop-hdfs-2.6.0-cdh5.12.1.jar" />
              <library id="commons-logging-1.2.jar" />
+             <library id="commons-cli-1.2.jar" />
              <library id="commons-codec-1.9.jar" />
              <library id="commons-configuration-1.6.jar" />
              <library id="commons-lang-2.6.jar" />
