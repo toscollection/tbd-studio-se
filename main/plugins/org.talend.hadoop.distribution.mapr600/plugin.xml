@@ -564,6 +564,7 @@
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.mapr.6.0.0" id="hadoop-aws-2.7.3.jar" name="hadoop-aws-2.7.3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-aws-2.7.3/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.mapr.6.0.0" id="jets3t-0.9.3.jar" name="jets3t-0.9.3.jar" mvn_uri="mvn:org.talend.libraries/jets3t-0.9.3/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.mapr.6.0.0" id="avro-1.7.7.jar" name="avro-1.7.7.jar" mvn_uri="mvn:org.talend.libraries/avro-1.7.7/6.0.0"/>
+		<libraryNeeded context="plugin:org.talend.hadoop.distribution.mapr.6.0.0" id="aws-java-sdk-dynamodb-1.10.20.jar" name="aws-java-sdk-dynamodb-1.10.20.jar" mvn_uri="mvn:org.talend.libraries/aws-java-sdk-dynamodb-1.10.20/6.0.0"/>
 
         <libraryNeededGroup
                 description="S3 libraries for MapR 6.0.0"
@@ -703,8 +704,8 @@
                 description="Spark DynamoDB libraries for MapR 6.0.0 that are MRREQUIRED"
                 id="SPARK-DYNAMODB-LIB-MRREQUIRED-MAPR600"
                 name="SPARK-DYNAMODB-LIB-MRREQUIRED-MAPR600">
-             <library id="aws-java-sdk-dynamodb-1.9.16.jar"/>
-             <library id="aws-java-sdk-core-1.9.16.jar"/>
+             <library id="aws-java-sdk-dynamodb-1.10.20.jar"/>
+             <library id="aws-java-sdk-core-1.10.20.jar"/>
              <library id="emr-dynamodb-hadoop-4.2.0.jar"/>
              <library id="commons-pool2-2.4.2.jar"/>
         </libraryNeededGroup>
@@ -1086,10 +1087,10 @@
                 name="SPARK-KINESIS-LIB-MRREQUIRED-MAPR600">
             <library id="spark-streaming-kinesis-asl_2.11-2.1.0.jar"/>
             <library id="amazon-kinesis-client-1.2.1.jar"/>
-            <library id="aws-java-sdk-kinesis-1.9.16.jar"/>
-            <library id="aws-java-sdk-core-1.9.16.jar"/>            
-            <library id="aws-java-sdk-dynamodb-1.9.16.jar"/>            
-            <library id="aws-java-sdk-cloudwatch-1.9.16.jar"/>            
+            <library id="aws-java-sdk-kinesis-1.10.20.jar"/>
+            <library id="aws-java-sdk-core-1.10.20.jar"/>            
+            <library id="aws-java-sdk-dynamodb-1.10.20.jar"/>            
+            <library id="aws-java-sdk-cloudwatch-1.10.20.jar"/>            
             <library id="joda-time-2.9.9.jar"/>            
         </libraryNeededGroup>
         
