@@ -27,6 +27,7 @@ import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.MapRStreamsComponent;
 import org.talend.hadoop.distribution.component.PigComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
+import org.talend.hadoop.distribution.component.SparkComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
@@ -52,7 +53,7 @@ public class MapR600DistributionTest {
         assertTrue(distribution.doSupportKerberos());
         assertFalse(distribution.doSupportUseDatanodeHostname());
         assertTrue(distribution.doSupportGroup());
-        assertTrue(distribution.doSupportOldImportMode());
+        assertFalse(distribution.doSupportOldImportMode());
         assertTrue(((HDFSComponent) distribution).doSupportSequenceFileShortType());
         assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
         assertTrue(((MRComponent) distribution).doSupportCrossPlatformSubmission());
@@ -88,7 +89,6 @@ public class MapR600DistributionTest {
         assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
-        assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClusterMode());
         assertTrue(distribution instanceof SparkStreamingComponent);
         assertTrue(((SparkStreamingComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_1));
         assertFalse(((SparkStreamingComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_0));
@@ -98,7 +98,6 @@ public class MapR600DistributionTest {
         assertFalse(((SparkStreamingComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_3));
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkStandaloneMode());
         assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClientMode());
-        assertTrue(((SparkStreamingComponent) distribution).doSupportSparkYarnClusterMode());
         // assertTrue(distribution instanceof HCatalogComponent);
         // assertTrue(distribution instanceof ImpalaComponent);
         assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
@@ -110,6 +109,7 @@ public class MapR600DistributionTest {
                 ((SparkStreamingComponent) distribution).getSparkStreamingKafkaVersion(ESparkVersion.SPARK_2_1));
         assertTrue(distribution.doSupportCreateServiceConnection());
         assertTrue((distribution.getNecessaryServiceName() == null ? 0 : distribution.getNecessaryServiceName().size()) == 0);
+        assertTrue(((SparkComponent) distribution).doImportSparkHiveContextDependencies());
     }
 
 }
