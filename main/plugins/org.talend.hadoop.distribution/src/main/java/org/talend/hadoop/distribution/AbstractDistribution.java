@@ -297,4 +297,8 @@ public abstract class AbstractDistribution {
     public boolean doImportDynamoDBDependencies() {
         return false;
     }
+    
+    public boolean doImportSparkHiveContextDependencies() {
+        return false;
+    }
 }
