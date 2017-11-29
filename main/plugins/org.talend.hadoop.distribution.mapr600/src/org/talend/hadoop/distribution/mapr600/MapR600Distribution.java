@@ -464,4 +464,10 @@ public class MapR600Distribution extends AbstractMapRDistribution implements HDF
         return false;
     }
     // End
+    
+    @Override
+    public boolean doImportSparkHiveContextDependencies() {
+        return true;
+    }
+    
 }
