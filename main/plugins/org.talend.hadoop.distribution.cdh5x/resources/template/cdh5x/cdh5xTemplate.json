@@ -264,7 +264,17 @@
 			"groupId": "org.apache.hadoop",
 			"artifactId": "hadoop-mapreduce-client-core",
 			"classifier": "",
-			"description": ""
+			"description": "",
+			"exclusions": 
+			[
+				{
+					"groupId": "io.netty",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				}
+			]
 		},
 
 		{
@@ -298,7 +308,23 @@
 			"exclusions": 
 			[
 				{
+					"groupId": "org.apache.hadoop",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+
+				{
 					"groupId": "xerces",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				
+				{
+					"groupId": "io.netty",
 					"artifactId": "*",
 					"classifier": "",
 					"extension": "",
@@ -419,6 +445,14 @@
 					"classifier": "",
 					"extension": "",
 					"description": ""
+				},
+
+				{
+					"groupId": "io.netty",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
 				}
 			]
 		},
@@ -445,6 +479,14 @@
 			[
 				{
 					"groupId": "xerces",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+
+				{
+					"groupId": "io.netty",
 					"artifactId": "*",
 					"classifier": "",
 					"extension": "",
@@ -682,6 +724,15 @@
 			"artifactId": "jodd-core",
 			"version": "3.5.2",
 			"classifier": "",
+			"description": ""
+		},
+
+		{
+			"id": "netty-4.0.29.Final",
+			"type": "STANDARD",
+			"context": "{properties.context}",
+			"jarName": "netty-all-4.0.29.Final.jar",
+			"mvnUri": "mvn:io.netty/netty-all/4.0.29.Final",
 			"description": ""
 		},
 
@@ -956,7 +1007,9 @@
 			"description": "",
 			"modules": 
 			[
-				"hbase-client"
+				"hadoop-client",
+				"hbase-client",
+				"netty-4.0.29.Final"
 			]
 		},
 
@@ -998,7 +1051,8 @@
 				"hbase-server",
 				"hbase-hadoop-compat",
 				"hive-hbase-handler",
-				"parquet-avro"
+				"parquet-avro",
+				"netty-4.0.29.Final"
 			]
 		},
 
