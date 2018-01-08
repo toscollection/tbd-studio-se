@@ -1024,6 +1024,17 @@
 		},
 
 		{
+			"id": "IMPALA-LIB-DYNAMIC",
+			"description": "",
+			"modules": 
+			[
+				"hadoop-client",
+				"hive-jdbc",
+				"hive-exec"
+			]
+		},
+
+		{
 			"id": "HIVE-LIB-DYNAMIC",
 			"description": "",
 			"modules": 
@@ -1389,8 +1400,15 @@
 
 		{
 			"id": "impala",
+			"index": "IMPALA:CLOUDERA:{dynamicVersion}",
+			"moduleGroup": "IMPALA-LIB-DYNAMIC",
+			"description": ""
+		},
+
+		{
+			"id": "impala-krb",
 			"index": "IMPALA:CLOUDERA:{dynamicVersion}?USE_KRB",
-			"moduleGroup": "HDFS-LIB-DYNAMIC",
+			"moduleGroup": "IMPALA-LIB-DYNAMIC",
 			"description": ""
 		}
 	]
