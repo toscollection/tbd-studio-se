@@ -31,10 +31,10 @@ public class Altus10SparkStreamingModuleGroup {
                                                               SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ,
                                                               "false")); //$NON-NLS-1$
     private final static ComponentCondition awsCondition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.ALTUS_CLOUD_PROVIDER, EqualityOperator.EQ, "ALTUS_AWS_CLOUD"));
+            SparkBatchConstant.ALTUS_CLOUD_PROVIDER, EqualityOperator.EQ, "\"AWS\""));
 
     private final static ComponentCondition azureCondition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.ALTUS_CLOUD_PROVIDER, EqualityOperator.EQ, "ALTUS_AZURE_CLOUD"));
+            SparkBatchConstant.ALTUS_CLOUD_PROVIDER, EqualityOperator.EQ, "\"Azure\""));
 
     private final static ComponentCondition kinesisCondition = new MultiComponentCondition(nonSparkLocalCondition,
             BooleanOperator.AND, awsCondition);
@@ -47,6 +47,7 @@ public class Altus10SparkStreamingModuleGroup {
         hs.add(new DistributionModuleGroup(Altus10Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true, nonSparkLocalCondition));
         hs.add(new DistributionModuleGroup(Altus10Constant.SPARK_KINESIS_MRREQUIRED_MODULE_GROUP.getModuleName(), true,
                 kinesisCondition));
+        hs.add(new DistributionModuleGroup(Altus10Constant.SPARK_S3_MRREQUIRED_MODULE_GROUP.getModuleName(), true, awsCondition));
         hs.add(new DistributionModuleGroup(Altus10Constant.SPARK_AZURE_MRREQUIRED_MODULE_GROUP.getModuleName(), true,
                 azureCondition));
         return hs;

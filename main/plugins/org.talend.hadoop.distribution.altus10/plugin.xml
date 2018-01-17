@@ -53,7 +53,14 @@
             name="azure-data-lake-store-sdk-2.2.3.jar"
             mvn_uri="mvn:org.talend.libraries/azure-data-lake-store-sdk-2.2.3/6.0.0">
         </libraryNeeded>
-
+        
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.altus10"
+            id="aws-java-sdk-cloudwatch-1.11.132.jar"
+            name="aws-java-sdk-cloudwatch-1.11.132.jar"
+            mvn_uri="mvn:org.talend.libraries/aws-java-sdk-cloudwatch-1.11.132/6.0.0">
+        </libraryNeeded>
+       
         <!-- HDFS common group -->
         <libraryNeededGroup
                 description="HDFS libraries for Altus 1.0"
@@ -90,7 +97,6 @@
                 description="HDFS libraries for Altus 1.0"
                 id="SPARK-LIB-ALTUS10"
                 name="SPARK-LIB-ALTUS10" >
-            <!-- <group id="SPARK-S3-LIB-MRREQUIRED-ALTUS10"/> -->
         	<library id="httpclient-4.5.2.jar"/>
             <library id="httpcore-4.4.4.jar"/>
             <library id="guava-14.0.1.jar" />
@@ -320,7 +326,7 @@
             <library id="spark-streaming-kinesis-asl_2.11-2.1.0.jar"/>
             <!--this is for tKinesisInput, because aws-java-sdk version is 1.10.6 in CDH5.11 , use this version is better-->
             <library id="amazon-kinesis-client-1.6.0.jar"/>
-            <library id="aws-java-sdk-cloudwatch-1.10.6.jar"/>
+            <library id="aws-java-sdk-cloudwatch-1.11.132.jar"/>
             
             <!--to make tKinesisOutput working, in CDH5.11 aws-java-sdk version is 1.10.6-->
             <library id="aws-java-sdk-kinesis-1.10.6.jar"/>
