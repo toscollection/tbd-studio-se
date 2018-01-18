@@ -3,7 +3,7 @@
 	"name": "Cloudera CDH5.X.2 template",
 	"distribution": "CLOUDERA",
 	"templateId": "CDH5xDistributionTemplate",
-	"baseVersion": "5.13.0",
+	"baseVersion": "5.11.0",
 	"topVersion": "6.0.0",
 	"dynamicVersion": "will be filled during runtime",
 	"properties": 
@@ -41,6 +41,17 @@
 				}
 			]
 		},
+		
+		{
+			"id": "commons-pool2",
+			"type": "BASE",
+			"context": "{properties.context}",
+			"groupId": "org.apache.commons",
+			"artifactId": "commons-pool2",
+			"version": "2.4.2",
+			"classifier": "",
+			"description": ""
+		},
 
 		{
 			"id": "hadoop-azure",
@@ -55,6 +66,14 @@
 				{
 					"groupId": "com.fasterxml.jackson.core",
 					"artifactId": "jackson-core",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				
+				{
+					"groupId": "xerces",
+					"artifactId": "*",
 					"classifier": "",
 					"extension": "",
 					"description": ""
@@ -75,6 +94,14 @@
 				{
 					"groupId": "com.fasterxml.jackson.core",
 					"artifactId": "jackson-core",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				
+				{
+					"groupId": "xerces",
+					"artifactId": "*",
 					"classifier": "",
 					"extension": "",
 					"description": ""
@@ -106,6 +133,24 @@
 			"context": "{properties.context}",
 			"jarName": "emr-ddb-hadoop-3.0.0.jar",
 			"mvnUri": "mvn:org.talend.libraries/emr-ddb-hadoop-3.0.0/6.0.0",
+			"description": ""
+		},
+		
+		{
+			"id": "httpclient-4.5.2",
+			"type": "STANDARD",
+			"context": "{properties.context}",
+			"jarName": "httpclient-4.5.2.jar",
+			"mvnUri": "mvn:org.talend.libraries/httpclient-4.5.2/6.0.0",
+			"description": ""
+		},
+		
+		{
+			"id": "httpcore-4.4.3",
+			"type": "STANDARD",
+			"context": "{properties.context}",
+			"jarName": "httpcore-4.4.3.jar",
+			"mvnUri": "mvn:org.talend.libraries/httpcore-4.4.3/6.0.0",
 			"description": ""
 		},
 
@@ -247,6 +292,14 @@
 					"extension": "",
 					"description": ""
 				},
+				
+				{
+					"groupId": "org.apache.httpcomponents",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
 
 				{
 					"groupId": "io.netty",
@@ -318,7 +371,7 @@
 			[
 				{
 					"groupId": "org.apache.hadoop",
-					"artifactId": "*",
+					"artifactId": "hadoop-core",
 					"classifier": "",
 					"extension": "",
 					"description": ""
@@ -735,6 +788,27 @@
 			"classifier": "",
 			"description": ""
 		},
+		
+		{
+			"id": "kafka-clients",
+			"type": "BASE",
+			"context": "{properties.context}",
+			"groupId": "org.apache.kafka",
+			"artifactId": "kafka-clients",
+			"version": "0.10.0-kafka-2.1.2",
+			"classifier": "",
+			"description": ""
+		},
+
+		{
+			"id": "kudu-spark2_2.11",
+			"type": "BASE",
+			"context": "{properties.context}",
+			"groupId": "org.apache.kudu",
+			"artifactId": "kudu-spark2_2.11",
+			"classifier": "",
+			"description": ""
+		},
 
 		{
 			"id": "netty-4.0.29.Final",
@@ -910,6 +984,67 @@
 				}
 			]
 		},
+		
+		{
+			"id": "spark-streaming-kinesis-asl_2.11",
+			"type": "BASE",
+			"context": "{properties.context}",
+			"groupId": "org.apache.spark",
+			"artifactId": "spark-streaming-kinesis-asl_2.11",
+			"version": "2.2.0",
+			"classifier": "",
+			"description": "",
+			"exclusions": 
+			[
+				{
+					"groupId": "org.apache.hadoop",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+
+				{
+					"groupId": "xerces",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				}
+			]
+		},
+		
+		{
+			"id": "spark-streaming-flume",
+			"type": "BASE",
+			"context": "{properties.context}",
+			"groupId": "org.apache.spark",
+			"artifactId": "spark-streaming-flume_2.11",
+			"version": "2.2.0.cloudera1",
+			"classifier": "",
+			"description": ""
+		},
+
+		{
+			"id": "spark-streaming-kafka",
+			"type": "BASE",
+			"context": "{properties.context}",
+			"groupId": "org.apache.spark",
+			"artifactId": "spark-streaming-kafka-0-10_2.11",
+			"version": "2.2.0.cloudera1",
+			"classifier": "",
+			"description": "",
+			"exclusions": 
+			[
+				{
+					"groupId": "xerces",
+					"artifactId": "*",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				}
+			]
+		},
 
 		{
 			"id": "sqoop",
@@ -971,7 +1106,9 @@
 			"description": "jars for hdfs, only module.id permitted",
 			"modules": 
 			[
-				"hadoop-client"
+				"hadoop-client",
+				"httpclient-4.5.2",
+				"httpcore-4.4.3"
 			]
 		},
 
@@ -979,7 +1116,9 @@
 			"id": "HDFS-COMMON-LIB-DYNAMIC",
 			"modules": 
 			[
-				"hadoop-client"
+				"hadoop-client",
+				"httpclient-4.5.2",
+				"httpcore-4.4.3"
 			]
 		},
 
@@ -1204,6 +1343,7 @@
 			"description": "",
 			"modules": 
 			[
+				"commons-pool2",
 				"emr-core-2.4.0",
 				"emr-ddb-hadoop-3.0.0",
 				"hadoop-client"
@@ -1215,7 +1355,8 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"hadoop-client",
+				"spark-streaming-kinesis-asl_2.11"
 			]
 		},
 
@@ -1224,7 +1365,8 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"hadoop-client",
+				"spark-streaming-kinesis-asl_2.11"
 			]
 		},
 
@@ -1233,7 +1375,7 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"spark-streaming-kafka"
 			]
 		},
 
@@ -1242,7 +1384,7 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"spark-streaming-kafka"
 			]
 		},
 
@@ -1260,7 +1402,7 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"kafka-clients"
 			]
 		},
 
@@ -1269,7 +1411,7 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"kafka-clients"
 			]
 		},
 
@@ -1335,7 +1477,7 @@
 			"description": "",
 			"modules": 
 			[
-				"hadoop-client"
+				"spark-streaming-flume"
 			]
 		},
 
@@ -1345,6 +1487,15 @@
 			"modules": 
 			[
 				"hadoop-client"
+			]
+		},
+		
+		{
+			"id": "SPARK2-KUDU-LIB-MRREQUIRED-DYNAMIC",
+			"description": "",
+			"modules": 
+			[
+				"kudu-spark2_2.11"
 			]
 		}
 	],
@@ -1415,7 +1566,7 @@
 		},
 
 		{
-			"id": "impala-krb",
+			"id": "impala-with-krb",
 			"index": "IMPALA:CLOUDERA:{dynamicVersion}?USE_KRB",
 			"moduleGroup": "IMPALA-LIB-DYNAMIC",
 			"description": ""
