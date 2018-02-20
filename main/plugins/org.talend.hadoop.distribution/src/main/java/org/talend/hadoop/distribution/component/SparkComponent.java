@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2017 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -90,4 +90,10 @@ public interface SparkComponent extends MRComponent {
      * false, the components themselves are going to import a default version of the dependencies
      */
     public boolean doImportDynamoDBDependencies();
+    
+    /**
+     * @return true if the distribution implementation is responsible for importing the spark hive context dependencies.
+     * If false, the components themselves are going to import the default version of dependencies on tSqlRow with module name SPARK-HIVECONTEXT-LIB-ALL_LATEST
+     */
+    public boolean doImportSparkHiveContextDependencies();
 }
