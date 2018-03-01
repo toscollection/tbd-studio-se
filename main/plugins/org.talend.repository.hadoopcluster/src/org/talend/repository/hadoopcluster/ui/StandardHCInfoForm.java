@@ -1517,7 +1517,7 @@ public class StandardHCInfoForm extends AbstractHadoopForm<HadoopClusterConnecti
     @Override
     protected void collectConParameters() {
         collectConFieldContextParameters(
-                isCurrentHadoopVersionSupportYarn() || (getConnection().isUseCustomConfs() && getConnection().isUseYarn()));
+                isCurrentHadoopVersionSupportYarn() || getConnection().isUseYarn());
         collectAuthFieldContextParameters(kerberosBtn.getSelection());
         collectKeyTabContextParameters(kerberosBtn.getSelection() && keytabBtn.getSelection());
         collectAuthMaprTFieldContextParameters(maprTBtn.getSelection());
