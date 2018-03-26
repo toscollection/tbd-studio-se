@@ -28,14 +28,14 @@ public class HadoopDistributionsHelperTest {
     public void testGetHadoopDistributionsDisplay_Sorted() {
         String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(false);
         Assert.assertArrayEquals(new String[] { "Amazon EMR", "Cloudera", "Google Cloud Dataproc",
-                "HortonWorks", "MapR", "Microsoft HD Insight", "Pivotal HD" }, hadoopDistributionsDisplay);
+                "HortonWorks", "MapR", "Microsoft HD Insight" }, hadoopDistributionsDisplay);
     }
 
     @Test
     public void testGetHadoopDistributionsDisplay_withCustom__Sorted() {
         String[] hadoopDistributionsDisplay = HadoopDistributionsHelper.HADOOP.getDistributionsDisplay(true);
         Assert.assertArrayEquals(new String[] { "Amazon EMR", "Cloudera", "Google Cloud Dataproc",
-                "HortonWorks", "MapR", "Microsoft HD Insight", "Pivotal HD", "Custom - Unsupported" },
+                "HortonWorks", "MapR", "Microsoft HD Insight", "Custom - Unsupported" },
                 hadoopDistributionsDisplay);
     }
 
@@ -60,8 +60,8 @@ public class HadoopDistributionsHelperTest {
     @Test
     public void testAmazonEMRDistribution() {
         testDistributionOnly("AMAZON_EMR", "Amazon EMR", new String[][] {
-//                { "EMR_5_8_0", "EMR 5.8.0 (Apache 2.7.2)", "HADOOP_2" },
-//                { "EMR_5_5_0", "EMR 5.5.0 (Apache 2.7.2)", "HADOOP_2" },
+                { "EMR_5_8_0", "EMR 5.8.0 (Apache 2.7.3)", "HADOOP_2" },
+                { "EMR_5_5_0", "EMR 5.5.0 (Apache 2.7.3)", "HADOOP_2" },
                 { "EMR_5_0_0", "EMR 5.0.0 (Apache 2.7.2)", "HADOOP_2" },
                 { "EMR_4_6_0", "EMR 4.6.0 (Apache 2.7.2)", "HADOOP_2" },
                 { "EMR_4_5_0", "EMR 4.5.0 (Apache 2.7.2)", "HADOOP_2" }});
@@ -75,8 +75,7 @@ public class HadoopDistributionsHelperTest {
                 { "Cloudera_CDH5_8", "Cloudera CDH5.8(YARN mode)", "HADOOP_2" },
                 { "Cloudera_CDH5_7", "Cloudera CDH5.7(YARN mode)", "HADOOP_2" },
                 { "Cloudera_CDH5_6", "Cloudera CDH5.6(YARN mode)", "HADOOP_2" },
-                { "Cloudera_CDH5_5", "Cloudera CDH5.5(YARN mode)", "HADOOP_2" },
-                { "Cloudera_CDH5_4", "Cloudera CDH5.4(YARN mode)", "HADOOP_2" }});
+                { "Cloudera_CDH5_5", "Cloudera CDH5.5(YARN mode)", "HADOOP_2" }});
     }
 
     @Test
@@ -122,7 +121,7 @@ public class HadoopDistributionsHelperTest {
                 String versionDisplay = supportVersion[1];
                 String hadoopVersion = supportVersion[2];
                 DistributionVersion version = TestUtils.getDistributionVersion(distribution, versionDisplay);
-                Assert.assertNotNull("Now, Don't support the version : " + versionDisplay, version);
+                Assert.assertNotNull("No support of version : " + versionDisplay, version);
 
                 Assert.assertEquals(versionName, version.version);
                 Assert.assertEquals(versionDisplay, TestUtils.getVersionDisplayDeprecatedSuffixRemoved(version.displayVersion));
