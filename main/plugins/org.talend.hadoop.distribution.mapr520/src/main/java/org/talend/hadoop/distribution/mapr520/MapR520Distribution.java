@@ -414,5 +414,9 @@ public class MapR520Distribution extends AbstractMapRDistribution implements HDF
     public boolean doImportSparkHiveContextDependencies() {
         return true;
     }
-
+    
+    @Override
+    public boolean doSupportWebHDFS(){
+        return false;
+    }
 }

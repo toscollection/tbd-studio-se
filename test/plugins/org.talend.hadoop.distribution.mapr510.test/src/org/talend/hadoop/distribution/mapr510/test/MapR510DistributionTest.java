@@ -110,6 +110,8 @@ public class MapR510DistributionTest extends AbstractDistributionTest {
         assertEquals(SparkStreamingKafkaVersion.MAPR_5X0_KAFKA, ((SparkStreamingComponent) distribution).getSparkStreamingKafkaVersion(ESparkVersion.SPARK_1_5));
         assertTrue(distribution.doSupportCreateServiceConnection());
         assertTrue((distribution.getNecessaryServiceName() == null ? 0 : distribution.getNecessaryServiceName().size()) == 0);
+        assertFalse(distribution.doSupportWebHDFS());
+        assertFalse(distribution.doSupportAzureDataLakeStorage());
     }
 
 }

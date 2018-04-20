@@ -465,4 +465,8 @@ public class MapR600Distribution extends AbstractMapRDistribution implements HDF
         return true;
     }
     
+    @Override
+    public boolean doSupportWebHDFS(){
+        return false;
+    }
 }

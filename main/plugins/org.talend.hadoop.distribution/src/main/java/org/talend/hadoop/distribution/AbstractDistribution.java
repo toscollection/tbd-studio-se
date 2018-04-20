@@ -334,6 +334,10 @@ public abstract class AbstractDistribution {
         return false;
     }
     
+    public boolean doSupportWebHDFS(){
+        return true;
+    }
+    
     public boolean useOldAWSAPI() {
         return true;
     }

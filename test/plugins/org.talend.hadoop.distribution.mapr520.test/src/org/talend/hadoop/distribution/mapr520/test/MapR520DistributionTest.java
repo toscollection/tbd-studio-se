@@ -107,6 +107,8 @@ public class MapR520DistributionTest {
         assertTrue(distribution.doSupportCreateServiceConnection());
         assertTrue((distribution.getNecessaryServiceName() == null ? 0 : distribution.getNecessaryServiceName().size()) == 0);
         assertTrue(((SparkComponent) distribution).doImportSparkHiveContextDependencies());
+        assertFalse(distribution.doSupportWebHDFS());
+        assertFalse(distribution.doSupportAzureDataLakeStorage());
     }
 
 }
