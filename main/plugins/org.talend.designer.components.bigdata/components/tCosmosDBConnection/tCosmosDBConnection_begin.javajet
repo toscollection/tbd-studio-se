@@ -41,21 +41,21 @@
     // Client options
     %>
     // Empty client options
-    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().build();
+    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName("Talend").build();
 
     <%
 
     // Client Credentials
     %>
     // Empty client credentials list
-    java.util.List<com.mongodb.MongoCredential> mongoCredentialList_<%=cid%> = new java.util.ArrayList<com.mongodb.MongoCredential>();
+    java.util.List<com.mongodb.MongoCredential> mongoCredentialList_<%=cid%> = new java.util.ArrayList<>();
 
     <%
 
     // SSL
     if (useSSL) {
         %>
-        clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder()
+        clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName("Talend")
         .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
         .build();
         <%

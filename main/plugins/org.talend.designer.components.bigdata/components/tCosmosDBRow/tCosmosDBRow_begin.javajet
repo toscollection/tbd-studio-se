@@ -54,7 +54,7 @@
 
         %>
         // Empty client options
-        com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().build();
+        com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName("Talend").build();
         <%
         if (useSSL) {
             %>
