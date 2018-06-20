@@ -40,8 +40,9 @@
 
     // Client options
     %>
+	<%@ include file="../templates/CosmosDB/ApplicationName.javajet"%>
     // Empty client options
-    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName("Talend").build();
+    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName(applicationName_<%=cid %>).build();
 
     <%
 
@@ -55,7 +56,7 @@
     // SSL
     if (useSSL) {
         %>
-        clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName("Talend")
+        clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName(applicationName_<%=cid %>)
         .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
         .build();
         <%
