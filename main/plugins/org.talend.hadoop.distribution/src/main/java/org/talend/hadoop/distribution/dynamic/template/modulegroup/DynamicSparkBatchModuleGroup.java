@@ -46,12 +46,24 @@ public class DynamicSparkBatchModuleGroup extends AbstractModuleGroup {
         conditionSpark2 = new MultiComponentCondition(
                 new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"),
                 BooleanOperator.AND,
-                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_1.getSparkVersion())); //$NON-NLS-1$
+                new MultiComponentCondition(
+                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_0.getSparkVersion()), //$NON-NLS-1$
+                        BooleanOperator.OR,
+                        new MultiComponentCondition(
+                                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_1.getSparkVersion()), //$NON-NLS-1$
+                                BooleanOperator.OR,
+                                new MultiComponentCondition(
+                                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
+                                        BooleanOperator.OR,
+                                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion()) //$NON-NLS-1$
+                                )
+                        )
+                ));
     }
 
     @Override
     public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
-        Set<DistributionModuleGroup> hs = new HashSet<>();
+        Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         DynamicPluginAdapter pluginAdapter = getPluginAdapter();
 
         String sparkRuntimeId = pluginAdapter
@@ -63,13 +75,13 @@ public class DynamicSparkBatchModuleGroup extends AbstractModuleGroup {
         checkRuntimeId(spark2RuntimeId);
 
         if (StringUtils.isNotBlank(sparkRuntimeId)) {
-            hs.add(new DistributionModuleGroup(sparkRuntimeId, false, conditionSpark1));
+            moduleGroups.add(new DistributionModuleGroup(sparkRuntimeId, false, conditionSpark1));
         }
         if (StringUtils.isNotBlank(spark2RuntimeId)) {
-            hs.add(new DistributionModuleGroup(spark2RuntimeId, false, conditionSpark2));
+            moduleGroups.add(new DistributionModuleGroup(spark2RuntimeId, false, conditionSpark2));
         }
 
-        return hs;
+        return moduleGroups;
     }
 
 }

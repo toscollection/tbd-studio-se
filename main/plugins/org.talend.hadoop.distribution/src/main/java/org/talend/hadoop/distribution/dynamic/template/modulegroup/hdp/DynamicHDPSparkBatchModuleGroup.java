@@ -45,7 +45,9 @@ public class DynamicHDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
             moduleGroups.addAll(moduleGroupsFromSuper);
         }
         DynamicPluginAdapter pluginAdapter = getPluginAdapter();
-
+        
+        String spark2RuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.SPARK2_MODULE_GROUP.getModuleName());
         String sparkMRRequiredRuntimeId = pluginAdapter
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName());
         String hdfsRuntimeId = pluginAdapter
@@ -57,6 +59,7 @@ public class DynamicHDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
         String atlasSpark2RuntimeId = pluginAdapter
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.ATLAS_SPARK_2_MODULE_GROUP.getModuleName());
 
+        checkRuntimeId(spark2RuntimeId);
         checkRuntimeId(sparkMRRequiredRuntimeId);
         checkRuntimeId(hdfsRuntimeId);
         checkRuntimeId(mapReduceRuntimeId);
