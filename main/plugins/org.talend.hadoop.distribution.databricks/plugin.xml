@@ -39,7 +39,7 @@
             context="plugin:org.talend.hadoop.distribution.databricks"
             id="commons-logging-1.2.jar"
             name="commons-logging-1.2.jar"
-            mvn_uri="mvn:commons-logging/commons-logging/1.1.3">
+            mvn_uri="mvn:commons-logging/commons-logging/1.2">
         </libraryNeeded>
         
         <libraryNeeded
