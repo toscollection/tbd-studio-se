@@ -41,14 +41,7 @@
     String mongoDbDriver = "com.mongodb.MongoClient";
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-    
-    
-    
-    
-    
-    
-    
-    
+
     List<String> intAttrisList = Arrays.asList(
 		"CONNECTIONSPERHOST","CONNECTTIMEOUT","HEARTBEATCONNECTTIMEOUT",
 		"HEARTBEATFREQUENCY","HEARTBEATSOCKETTIMEOUT","LOCALTHRESHOLD",
@@ -76,19 +69,6 @@
         
 		attrisMap.put(attriName, attriValue);
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
     // Client options
     %>
 	<%@ include file="../templates/CosmosDB/ApplicationName.javajet"%>

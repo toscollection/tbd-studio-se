@@ -101,11 +101,7 @@
             NUM_ROW="50" GROUP="ADVANCED_QUERY_OPTIONS">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
-        
-        
-        
-        
-        
+
         <PARAMETER 
           NAME="APPLY_OPTIONAL_ATTRIBUTES" 
           FIELD="CHECK" 
@@ -148,9 +144,6 @@
             <ITEM NAME="OPTIONAL_ATTRIBUTES_VALUE" FIELD="TEXT" />
           </ITEMS>
         </PARAMETER>
-        
-        
-        
     </ADVANCED_PARAMETERS>
     <CODEGENERATION>
         <IMPORTS>
