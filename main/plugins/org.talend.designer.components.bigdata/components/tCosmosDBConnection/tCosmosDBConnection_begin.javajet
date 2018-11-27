@@ -6,6 +6,9 @@
         
         java.util.Map
         java.util.List
+        java.util.Arrays
+        java.util.Set
+        java.util.HashMap
     " 
 %>
 <%
@@ -33,17 +36,158 @@
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
     boolean queryOptionNoTimeOut = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__QUERYOPTION_NOTIMEOUT__"));
+    boolean applyOptionalAttributes = "true".equals(ElementParameterParser.getValue(node, "__APPLY_OPTIONAL_ATTRIBUTES__"));
     
     String mongoDbDriver = "com.mongodb.MongoClient";
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    
+    
+    
+    
+    
+    
+    
+    
+    List<String> intAttrisList = Arrays.asList(
+		"CONNECTIONSPERHOST","CONNECTTIMEOUT","HEARTBEATCONNECTTIMEOUT",
+		"HEARTBEATFREQUENCY","HEARTBEATSOCKETTIMEOUT","LOCALTHRESHOLD",
+		"MAXCONNECTIONIDLETIME","MAXCONNECTIONLIFETIME","MAXWAITTIME",
+		"MINCONNECTIONSPERHOST","MINHEARTBEATFREQUENCY",
+        "SERVERSELECTIONTIMEOUT","SOCKETTIMEOUT","THREADSALLOWEDTOBLOCKFORCONNECTIONMULTIPLIER"
+		);
+    
+    List<String> booleanAttrisList = Arrays.asList(
+		"ALWAYSUSEMBEANS","CURSORFINALIZERENABLED","SOCKETKEEPALIVE",
+		"SSLINVALIDHOSTNAMEALLOWED"
+		);
+        
+    List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__OPTIONAL_ATTRIBUTES__");
+    Map<String,String> attrisMap = new HashMap<String,String>();
+
+	for(Map<String,String> map : additionalList){
+		String attriName = map.get("OPTIONAL_ATTRIBUTES_NAME");
+		String attriValue = map.get("OPTIONAL_ATTRIBUTES_VALUE");
+        
+        //DOIT FOR SSL
+		//if("WORKINGDATABASE".equalsIgnoreCase(attriName)){
+		//	dbname = attriValue;
+		//}
+        
+		attrisMap.put(attriName, attriValue);
+	}
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // Client options
     %>
 	<%@ include file="../templates/CosmosDB/ApplicationName.javajet"%>
+    
     // Empty client options
-    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName(applicationName_<%=cid %>).build();
-
+    com.mongodb.MongoClientOptions clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder()
+                    .applicationName(applicationName_<%=cid %>)
+<%
+    if(applyOptionalAttributes){
+        Set<String> attrisKeySet = attrisMap.keySet();
+        for(String key : attrisKeySet){
+            String value = attrisMap.get(key);
+            boolean isIntType = intAttrisList.contains(key);
+            boolean isBooleanType = booleanAttrisList.contains(key);
+            if (isIntType || isBooleanType) {
+                value = value.replaceAll("\"","");
+            } 
+            
+            if ("ALWAYSUSEMBEANS".equals(key)) {
+            %>
+                    .alwaysUseMBeans(Boolean.getBoolean("<%=value%>"))
+            <%
+            } else if ("CONNECTIONSPERHOST".equals(key)){
+            %>
+                    .connectionsPerHost(<%=value%>)
+            <%
+            } else if ("CONNECTTIMEOUT".equals(key)){
+            %>
+                    .connectTimeout(<%=value%>)
+            <%
+            } else if ("CURSORFINALIZERENABLED".equals(key)){
+            %>
+                    .cursorFinalizerEnabled(<%=value%>)
+            <%
+            } else if ("HEARTBEATCONNECTTIMEOUT".equals(key)){
+            %>
+                    .heartbeatConnectTimeout(<%=value%>)
+            <%
+            } else if ("HEARTBEATFREQUENCY".equals(key)){
+            %>
+                    .heartbeatFrequency(<%=value%>)
+            <%
+            } else if ("HEARTBEATSOCKETTIMEOUT".equals(key)){
+            %>
+                    .heartbeatSocketTimeout(<%=value%>)
+            <%
+            } else if ("LOCALTHRESHOLD".equals(key)){
+            %>
+                    .localThreshold(<%=value%>)
+            <%
+            } else if ("MAXCONNECTIONIDLETIME".equals(key)){
+            %>
+                    .maxConnectionIdleTime(<%=value%>)
+            <%
+            } else if ("MAXCONNECTIONLIFETIME".equals(key)){
+            %>
+                    .maxConnectionLifeTime(<%=value%>)
+            <%
+            } else if ("MAXWAITTIME".equals(key)){
+            %>
+                    .maxWaitTime(<%=value%>)
+            <%
+            } else if ("MINCONNECTIONSPERHOST".equals(key)){
+            %>
+                    .minConnectionsPerHost(<%=value%>)
+            <%
+            } else if ("minHeartbeatFrequency".equals(key)){
+            %>
+                    .xxxxxxx(<%=value%>)
+            <%
+            } else if ("REQUIREDREPLICASETNAME".equals(key)){
+            %>
+                    .requiredReplicaSetName(<%=value%>)
+            <%
+            } else if ("SERVERSELECTIONTIMEOUT".equals(key)){
+            %>
+                    .serverSelectionTimeout(<%=value%>)
+            <%
+            } else if ("SOCKETKEEPALIVE".equals(key)){
+            %>
+                    .socketKeepAlive(<%=value%>)
+            <%
+            } else if ("SOCKETTIMEOUT".equals(key)){
+            %>
+                    .socketTimeout(<%=value%>)
+            <%
+            } else if ("SSLINVALIDHOSTNAMEALLOWED".equals(key)){
+            %>
+                    .sslInvalidHostNameAllowed(<%=value%>)
+            <%
+            } else if ("THREADSALLOWEDTOBLOCKFORCONNECTIONMULTIPLIER".equals(key)){
+            %>
+                    .threadsAllowedToBlockForConnectionMultiplier(<%=value%>)
+            <%
+            }
+        }
+    }
+%>
+                    .build();
     <%
 
     // Client Credentials
