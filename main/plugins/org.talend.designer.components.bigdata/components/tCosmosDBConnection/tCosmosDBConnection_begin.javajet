@@ -61,12 +61,6 @@
 	for(Map<String,String> map : additionalList){
 		String attriName = map.get("OPTIONAL_ATTRIBUTES_NAME");
 		String attriValue = map.get("OPTIONAL_ATTRIBUTES_VALUE");
-        
-        //DOIT FOR SSL
-		//if("WORKINGDATABASE".equalsIgnoreCase(attriName)){
-		//	dbname = attriValue;
-		//}
-        
 		attrisMap.put(attriName, attriValue);
 	}
     // Client options
@@ -137,7 +131,7 @@
             <%
             } else if ("minHeartbeatFrequency".equals(key)){
             %>
-                    .xxxxxxx(<%=value%>)
+                    .minHeartbeatFrequency(<%=value%>)
             <%
             } else if ("REQUIREDREPLICASETNAME".equals(key)){
             %>
@@ -166,26 +160,23 @@
             }
         }
     }
-%>
-                    .build();
-    <%
-
-    // Client Credentials
-    %>
-    // Empty client credentials list
-    java.util.List<com.mongodb.MongoCredential> mongoCredentialList_<%=cid%> = new java.util.ArrayList<>();
-
-    <%
 
     // SSL
     if (useSSL) {
         %>
-        clientOptions_<%=cid%> = new com.mongodb.MongoClientOptions.Builder().applicationName(applicationName_<%=cid %>)
-        .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
-        .build();
+                    .socketFactory(javax.net.ssl.SSLSocketFactory.getDefault())
         <%
     }
+%>
 
+                    .build();
+<%
+
+    // Client Credentials
+%>
+    // Empty client credentials list
+    java.util.List<com.mongodb.MongoCredential> mongoCredentialList_<%=cid%> = new java.util.ArrayList<>();
+<%
     // Authentication
     if (authentication){
         %>
