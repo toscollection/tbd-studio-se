@@ -554,4 +554,9 @@ public class CDH5xDistributionTemplate extends AbstractDistribution
     public boolean doSupportAvroDeflateProperties() {
         return true;
     }
+    
+    @Override
+    public boolean useOldAWSAPI() {
+        return false;
+    }
 }
