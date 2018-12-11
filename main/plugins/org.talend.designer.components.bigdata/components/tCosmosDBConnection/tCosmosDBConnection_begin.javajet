@@ -43,16 +43,16 @@
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
     List<String> intAttributes = Arrays.asList(
-		"CONNECTIONSPERHOST","CONNECTTIMEOUT","HEARTBEATCONNECTTIMEOUT",
-		"HEARTBEATFREQUENCY","HEARTBEATSOCKETTIMEOUT","LOCALTHRESHOLD",
-		"MAXCONNECTIONIDLETIME","MAXCONNECTIONLIFETIME","MAXWAITTIME",
-		"MINCONNECTIONSPERHOST","MINHEARTBEATFREQUENCY",
-        "SERVERSELECTIONTIMEOUT","SOCKETTIMEOUT","THREADSALLOWEDTOBLOCKFORCONNECTIONMULTIPLIER"
+		"CONNECTIONS_PER_HOST","CONNECT_TIMEOUT","HEARTBEAT_CONNECT_TIMEOUT",
+		"HEARTBEAT_FREQUENCY","HEARTBEAT_SOCKET_TIMEOUT","LOCAL_THRESHOLD",
+		"MAX_CONNECTION_IDLE_TIME","MAX_CONNECTION_LIFE_TIME","MAX_WAIT_TIME",
+		"MIN_CONNECTIONS_PER_HOST","MIN_HEARTBEAT_FREQUENCY",
+        "SERVER_SELECTION_TIMEOUT","SOCKET_TIMEOUT","THREADS_ALLOWED_TO_BLOCK_FOR_CONNECTION_MULTIPLIER"
 		);
     
     List<String> booleanAttributes = Arrays.asList(
-		"ALWAYSUSEMBEANS","CURSORFINALIZERENABLED","SOCKETKEEPALIVE",
-		"SSLINVALIDHOSTNAMEALLOWED"
+		"ALWAYS_USE_MBEANS","CURSOR_FINALIZER_ENABLED","SOCKET_KEEP_ALIVE",
+		"SSL_INVALID_HOSTNAME_ALLOWED"
 		);
         
     List<Map<String,String>> optionalConnectionAttributes = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__OPTIONAL_ATTRIBUTES__");
@@ -82,13 +82,13 @@
             
             if ("ALWAYS_USE_MBEANS".equals(key)) {
             %>
-                    .alwaysUseMBeans(Boolean.getBoolean("<%=value%>"))
+                    .alwaysUseMBeans(<%=value%>)
             <%
             } else if ("CONNECTIONS_PER_HOST".equals(key)){
             %>
                     .connectionsPerHost(<%=value%>)
             <%
-            } else if ("CONNECT_TIME_OUT".equals(key)){
+            } else if ("CONNECT_TIMEOUT".equals(key)){
             %>
                     .connectTimeout(<%=value%>)
             <%
@@ -144,7 +144,7 @@
             %>
                     .socketKeepAlive(<%=value%>)
             <%
-            } else if ("SOCKET_TIME_OUT".equals(key)){
+            } else if ("SOCKET_TIMEOUT".equals(key)){
             %>
                     .socketTimeout(<%=value%>)
             <%
@@ -168,10 +168,7 @@
     }
 %>
                     .build();
-<%
-
-    // Client Credentials
-%>
+                    
     // Empty client credentials list
     java.util.List<com.mongodb.MongoCredential> mongoCredentialList_<%=cid%> = new java.util.ArrayList<>();
 <%
