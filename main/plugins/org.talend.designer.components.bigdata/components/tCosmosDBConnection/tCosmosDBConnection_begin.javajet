@@ -42,7 +42,7 @@
     
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
-    List<String> intAttrisList = Arrays.asList(
+    List<String> intAttributes = Arrays.asList(
 		"CONNECTIONSPERHOST","CONNECTTIMEOUT","HEARTBEATCONNECTTIMEOUT",
 		"HEARTBEATFREQUENCY","HEARTBEATSOCKETTIMEOUT","LOCALTHRESHOLD",
 		"MAXCONNECTIONIDLETIME","MAXCONNECTIONLIFETIME","MAXWAITTIME",
@@ -50,18 +50,18 @@
         "SERVERSELECTIONTIMEOUT","SOCKETTIMEOUT","THREADSALLOWEDTOBLOCKFORCONNECTIONMULTIPLIER"
 		);
     
-    List<String> booleanAttrisList = Arrays.asList(
+    List<String> booleanAttributes = Arrays.asList(
 		"ALWAYSUSEMBEANS","CURSORFINALIZERENABLED","SOCKETKEEPALIVE",
 		"SSLINVALIDHOSTNAMEALLOWED"
 		);
         
-    List<Map<String,String>> additionalList = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__OPTIONAL_ATTRIBUTES__");
-    Map<String,String> attrisMap = new HashMap<String,String>();
+    List<Map<String,String>> optionalConnectionAttributes = (List<Map<String, String>>)ElementParameterParser.getObjectValue(node,"__OPTIONAL_ATTRIBUTES__");
+    Map<String,String> optionalConnectionAttributesMap = new HashMap<String,String>();
 
-	for(Map<String,String> map : additionalList){
-		String attriName = map.get("OPTIONAL_ATTRIBUTES_NAME");
-		String attriValue = map.get("OPTIONAL_ATTRIBUTES_VALUE");
-		attrisMap.put(attriName, attriValue);
+	for(Map<String,String> map : optionalConnectionAttributes){
+		String attributeName = map.get("OPTIONAL_ATTRIBUTES_NAME");
+		String attributeValue = map.get("OPTIONAL_ATTRIBUTES_VALUE");
+		optionalConnectionAttributesMap.put(attributeName, attributeValue);
 	}
     // Client options
     %>
@@ -72,88 +72,87 @@
                     .applicationName(applicationName_<%=cid %>)
 <%
     if(applyOptionalAttributes){
-        Set<String> attrisKeySet = attrisMap.keySet();
-        for(String key : attrisKeySet){
-            String value = attrisMap.get(key);
-            boolean isIntType = intAttrisList.contains(key);
-            boolean isBooleanType = booleanAttrisList.contains(key);
+        for(String key : optionalConnectionAttributesMap.keySet()){
+            String value = optionalConnectionAttributesMap.get(key);
+            boolean isIntType = intAttributes.contains(key);
+            boolean isBooleanType = booleanAttributes.contains(key);
             if (isIntType || isBooleanType) {
                 value = value.replaceAll("\"","");
             } 
             
-            if ("ALWAYSUSEMBEANS".equals(key)) {
+            if ("ALWAYS_USE_MBEANS".equals(key)) {
             %>
                     .alwaysUseMBeans(Boolean.getBoolean("<%=value%>"))
             <%
-            } else if ("CONNECTIONSPERHOST".equals(key)){
+            } else if ("CONNECTIONS_PER_HOST".equals(key)){
             %>
                     .connectionsPerHost(<%=value%>)
             <%
-            } else if ("CONNECTTIMEOUT".equals(key)){
+            } else if ("CONNECT_TIME_OUT".equals(key)){
             %>
                     .connectTimeout(<%=value%>)
             <%
-            } else if ("CURSORFINALIZERENABLED".equals(key)){
+            } else if ("CURSOR_FINALIZER_ENABLED".equals(key)){
             %>
                     .cursorFinalizerEnabled(<%=value%>)
             <%
-            } else if ("HEARTBEATCONNECTTIMEOUT".equals(key)){
+            } else if ("HEARTBEAT_CONNECT_TIMEOUT".equals(key)){
             %>
                     .heartbeatConnectTimeout(<%=value%>)
             <%
-            } else if ("HEARTBEATFREQUENCY".equals(key)){
+            } else if ("HEARTBEAT_FREQUENCY".equals(key)){
             %>
                     .heartbeatFrequency(<%=value%>)
             <%
-            } else if ("HEARTBEATSOCKETTIMEOUT".equals(key)){
+            } else if ("HEARTBEAT_SOCKET_TIMEOUT".equals(key)){
             %>
                     .heartbeatSocketTimeout(<%=value%>)
             <%
-            } else if ("LOCALTHRESHOLD".equals(key)){
+            } else if ("LOCAL_THRESHOLD".equals(key)){
             %>
                     .localThreshold(<%=value%>)
             <%
-            } else if ("MAXCONNECTIONIDLETIME".equals(key)){
+            } else if ("MAX_CONNECTION_IDLE_TIME".equals(key)){
             %>
                     .maxConnectionIdleTime(<%=value%>)
             <%
-            } else if ("MAXCONNECTIONLIFETIME".equals(key)){
+            } else if ("MAX_CONNECTION_LIFE_TIME".equals(key)){
             %>
                     .maxConnectionLifeTime(<%=value%>)
             <%
-            } else if ("MAXWAITTIME".equals(key)){
+            } else if ("MAX_WAIT_TIME".equals(key)){
             %>
                     .maxWaitTime(<%=value%>)
             <%
-            } else if ("MINCONNECTIONSPERHOST".equals(key)){
+            } else if ("MIN_CONNECTIONS_PER_HOST".equals(key)){
             %>
                     .minConnectionsPerHost(<%=value%>)
             <%
-            } else if ("minHeartbeatFrequency".equals(key)){
+            } else if ("MIN_HEARTBEAT_FREQUENCY".equals(key)){
             %>
                     .minHeartbeatFrequency(<%=value%>)
             <%
-            } else if ("REQUIREDREPLICASETNAME".equals(key)){
+            } else if ("REQUIRED_REPLICA_SET_NAME".equals(key)){
             %>
                     .requiredReplicaSetName(<%=value%>)
             <%
-            } else if ("SERVERSELECTIONTIMEOUT".equals(key)){
+            } else if ("SERVER_SELECTION_TIMEOUT".equals(key)){
             %>
                     .serverSelectionTimeout(<%=value%>)
             <%
-            } else if ("SOCKETKEEPALIVE".equals(key)){
+            } else if ("SOCKET_KEEP_ALIVE".equals(key)){
             %>
                     .socketKeepAlive(<%=value%>)
             <%
-            } else if ("SOCKETTIMEOUT".equals(key)){
+            } else if ("SOCKET_TIME_OUT".equals(key)){
             %>
                     .socketTimeout(<%=value%>)
             <%
-            } else if ("SSLINVALIDHOSTNAMEALLOWED".equals(key)){
+            } else if ("SSL_INVALID_HOSTNAME_ALLOWED".equals(key)){
             %>
                     .sslInvalidHostNameAllowed(<%=value%>)
             <%
-            } else if ("THREADSALLOWEDTOBLOCKFORCONNECTIONMULTIPLIER".equals(key)){
+            } else if ("THREADS_ALLOWED_TO_BLOCK_FOR_CONNECTION_MULTIPLIER".equals(key)){
             %>
                     .threadsAllowedToBlockForConnectionMultiplier(<%=value%>)
             <%
@@ -168,7 +167,6 @@
         <%
     }
 %>
-
                     .build();
 <%
 
