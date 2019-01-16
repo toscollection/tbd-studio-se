@@ -39,6 +39,7 @@ import org.talend.repository.nosql.reflection.NoSQLReflection;
 import org.talend.utils.json.JSONArray;
 import org.talend.utils.json.JSONException;
 import org.talend.utils.json.JSONObject;
+import org.talend.utils.security.CryptoHelper;
 
 public class MongoDBConnectionUtil {
 
