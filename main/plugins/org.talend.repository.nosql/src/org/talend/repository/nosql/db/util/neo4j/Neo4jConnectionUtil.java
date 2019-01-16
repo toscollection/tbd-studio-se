@@ -32,6 +32,7 @@ import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
 import org.talend.repository.nosql.i18n.Messages;
 import org.talend.repository.nosql.reflection.NoSQLReflection;
+import org.talend.utils.security.CryptoHelper;
 
 /**
  *
