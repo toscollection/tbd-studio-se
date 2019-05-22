@@ -55,7 +55,11 @@ public class DynamicSparkStreamingModuleGroup extends AbstractModuleGroup {
                                 new MultiComponentCondition(
                                         new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
                                         BooleanOperator.OR,
-                                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion()) //$NON-NLS-1$
+                                        new MultiComponentCondition(
+                                                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion()), //$NON-NLS-1$
+                                                BooleanOperator.OR,
+                                                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+                                        )
                                 )
                         )
                 ));
