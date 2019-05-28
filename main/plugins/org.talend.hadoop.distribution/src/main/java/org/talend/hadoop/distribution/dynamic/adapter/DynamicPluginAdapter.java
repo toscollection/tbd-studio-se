@@ -21,6 +21,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
@@ -38,6 +39,8 @@ import org.talend.hadoop.distribution.dynamic.pref.IDynamicDistributionPreferenc
  * DOC cmeng  class global comment. Detailled comment
  */
 public class DynamicPluginAdapter {
+
+    private static final String TYPE_POM = "pom";
 
     private IDynamicPlugin plugin;
 
@@ -131,7 +134,7 @@ public class DynamicPluginAdapter {
                         try {
                             MavenArtifact ma = MavenUrlHelper.parseMvnUrl(mvnUri);
                             if (name.endsWith(".pom")) {
-                            	ma.setType("pom");
+                            	ma.setType(TYPE_POM);
                             }
                             if (StringUtils.isEmpty(ma.getRepositoryUrl())) {
                                 String newMvnUri = MavenUrlHelper.generateMvnUrl(username, password, repository, ma.getGroupId(),
@@ -205,14 +208,20 @@ public class DynamicPluginAdapter {
                                     String curVersion = curMa.getVersion();
                                     String storedMvnUri = getMvnUri(storedId);
                                     MavenArtifact storedMa = MavenUrlHelper.parseMvnUrl(storedMvnUri);
-                                    String storedVersion = storedMa.getVersion();
-                                    if (0 < versionComparator.compare(curVersion, storedVersion)) {
-                                        curUsedModules.remove(storedId);
+                                    String type = storedMa.getType();
+                                    boolean isPom = TYPE_POM.equalsIgnoreCase(type);
+                                    if (isPom) {
                                         curUsedModules.add(libraryId);
-                                        oldVersionModuleConfigs.add(storedConfig);
-                                        latestGaIdMap.put(key, childConfig);
                                     } else {
-                                        libraryIter.remove();
+                                        String storedVersion = storedMa.getVersion();
+                                        if (0 < versionComparator.compare(curVersion, storedVersion)) {
+                                            curUsedModules.remove(storedId);
+                                            curUsedModules.add(libraryId);
+                                            oldVersionModuleConfigs.add(storedConfig);
+                                            latestGaIdMap.put(key, childConfig);
+                                        } else {
+                                            libraryIter.remove();
+                                        }
                                     }
                                 }
                             } else {
@@ -320,9 +329,11 @@ public class DynamicPluginAdapter {
             }
         }
         if (!oldVersionModuleIdSet.isEmpty()) {
+            Set<String> keepIds = new HashSet<>();
             for (IDynamicConfiguration moduleGroup : moduleGroupTemplateMap.values()) {
                 List<IDynamicConfiguration> childConfigurations = moduleGroup.getChildConfigurations();
                 Iterator<IDynamicConfiguration> libraryIter = childConfigurations.iterator();
+                Set<String> newAddedConfigIds = new HashSet<>();
                 while (libraryIter.hasNext()) {
                     IDynamicConfiguration childConfig = libraryIter.next();
                     String libraryId = (String) childConfig.getAttribute(DynamicModuleGroupAdapter.ATTR_LIBRARY_ID);
@@ -339,13 +350,27 @@ public class DynamicPluginAdapter {
                             throw new Exception("Can't find latest module");
                         }
                         String latestModuleId = (String) latestModule.getAttribute(DynamicModuleAdapter.ATTR_ID);
-                        childConfig.setAttribute(DynamicModuleGroupAdapter.ATTR_LIBRARY_ID, latestModuleId);
+                        if (TYPE_POM.equalsIgnoreCase(ma.getType())) {
+                            // keep all poms
+                            newAddedConfigIds.add(latestModuleId);
+                            keepIds.add(libraryId);
+                        } else {
+                            childConfig.setAttribute(DynamicModuleGroupAdapter.ATTR_LIBRARY_ID, latestModuleId);
+                        }
                     }
                 }
+                for (String id : newAddedConfigIds) {
+                    IDynamicConfiguration createDynamicLibrary = DynamicModuleGroupAdapter.createDynamicLibrary(id);
+                    moduleGroup.addChildConfiguration(createDynamicLibrary);
+                }
             }
+            oldVersionModuleIdSet.removeAll(keepIds);
             moduleMap.keySet().removeAll(oldVersionModuleIdSet);
             IDynamicExtension libNeededExtension = getLibraryNeededExtension(plugin);
             List<IDynamicConfiguration> configurations = libNeededExtension.getConfigurations();
+            oldVersionModuleSet = oldVersionModuleSet.stream()
+                    .filter(module -> !keepIds.contains((String) module.getAttribute(DynamicModuleAdapter.ATTR_ID)))
+                    .collect(Collectors.toSet());
             configurations.removeAll(oldVersionModuleSet);
             Collections.sort(configurations, new DynamicAttributeComparator());
         }
