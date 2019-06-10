@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2019 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -111,10 +111,10 @@ public final class DistributionHelper {
         }
         return method;
     }
-    
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     private static Method findDefaultMethod(Class baseClazz, String methodName) {
-        Method method = null;     
+        Method method = null;
         for (Class anInterface : baseClazz.getInterfaces()) {
             try {
                 method = anInterface.getDeclaredMethod(methodName);
@@ -122,7 +122,7 @@ public final class DistributionHelper {
                 //if yes return it else continue the loop
                 if (method != null && method.isDefault()) {
                     return method;
-                }                
+                }
             } catch (NoSuchMethodException | SecurityException e) {
                 //SECOND CASE: we did not found the method. so we look for parent interfaces if any.
                 //look for parent interfaces
@@ -130,9 +130,9 @@ public final class DistributionHelper {
                 //return the method if found else continue the loop
                 if (method!=null) {
                     return method;
-                }                
+                }
             }
         }
-        return method;        
+        return method;
     }
 }

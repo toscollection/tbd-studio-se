@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2018 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2019 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -84,8 +84,8 @@ HCatalogComponent, PigComponent, MRComponent, HiveComponent, ImpalaComponent, Sq
     public boolean doSupportSSL() {
         return true;
     }
-    
-    @Override 
+
+    @Override
     /**
      * Added in Studio 7.2.1 for CDH 6.x
      */
@@ -162,12 +162,12 @@ HCatalogComponent, PigComponent, MRComponent, HiveComponent, ImpalaComponent, Sq
     public short orderingWeight() {
         return 15;
     }
-    
+
     @Override
     public String getSqoopPackageName() {
         return ESqoopPackageName.ORG_APACHE_SQOOP.toString();
     }
-    
+
     @Override
     public boolean doSupportSSLwithKerberos() {
         return true;
