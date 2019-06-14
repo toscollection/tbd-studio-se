@@ -46,9 +46,16 @@ public class DynamicSparkStreamingKafkaAssemblyModuleGroup extends AbstractNodeM
         spark1Condition = new SimpleComponentCondition(new LinkedNodeExpression(
                 SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER, "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
                 ESparkVersion.SPARK_1_6.getSparkVersion()));
-        spark2Condition = new SimpleComponentCondition(new LinkedNodeExpression(
-                SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER, "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-                ESparkVersion.SPARK_2_2.getSparkVersion()));
+        
+        spark2Condition = new MultiComponentCondition(
+        		new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
+                        ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
+                BooleanOperator.OR,
+                new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
+                        ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+        		);
     }
 
     @Override

@@ -49,7 +49,11 @@ public class DynamicCDHSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
         conditionSpark2 = new MultiComponentCondition(
                 new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
                 BooleanOperator.AND,
-                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion())); //$NON-NLS-1$
+                new MultiComponentCondition(
+                		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
+                        BooleanOperator.OR,
+                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion())) //$NON-NLS-1$
+        		);
     }
 
     @Override

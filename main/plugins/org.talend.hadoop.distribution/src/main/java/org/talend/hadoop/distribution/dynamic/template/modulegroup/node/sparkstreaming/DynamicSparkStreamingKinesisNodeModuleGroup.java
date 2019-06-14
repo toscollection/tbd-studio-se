@@ -18,6 +18,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.ESparkVersion;
+import org.talend.hadoop.distribution.condition.BasicExpression;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
@@ -26,6 +27,7 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.NestedComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.condition.common.SparkStreamingLinkedNodeCondition;
+import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 import org.talend.hadoop.distribution.dynamic.template.modulegroup.DynamicModuleGroupConstant;
@@ -34,6 +36,7 @@ import org.talend.hadoop.distribution.dynamic.template.modulegroup.node.Abstract
 public class DynamicSparkStreamingKinesisNodeModuleGroup extends AbstractNodeModuleGroup {
 
     protected ComponentCondition spark2Condition;
+    
 
     public DynamicSparkStreamingKinesisNodeModuleGroup(DynamicPluginAdapter pluginAdapter) {
         super(pluginAdapter);
@@ -41,10 +44,15 @@ public class DynamicSparkStreamingKinesisNodeModuleGroup extends AbstractNodeMod
     }
 
     protected void init() {
-        spark2Condition = new SimpleComponentCondition(
+        spark2Condition = new MultiComponentCondition(
+        		new LinkedNodeExpression(SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
+                        ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
+                BooleanOperator.OR,
                 new LinkedNodeExpression(SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
                         "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-                        ESparkVersion.SPARK_2_2.getSparkVersion()));
+                        ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+        		);
     }
 
     @Override
