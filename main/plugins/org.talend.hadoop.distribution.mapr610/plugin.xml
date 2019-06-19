@@ -575,7 +575,7 @@
             context="plugin:org.talend.libraries.hadoop.mapr.6.1.0" 
             id="curator-recipes-2.7.1.jar" 
             name="curator-recipes-2.7.1.jar"
-            mvn_uri="mvn:org.apache.curator/curator-recipes/2.7.1">
+            mvn_uri="mvn:org.talend.libraries/curator-recipes-2.7.1/6.0.0">
         </libraryNeeded> 
         <libraryNeeded 
             context="plugin:org.talend.libraries.hadoop.mapr.6.1.0" 
