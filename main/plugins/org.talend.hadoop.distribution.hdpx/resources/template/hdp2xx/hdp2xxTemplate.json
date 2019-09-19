@@ -879,8 +879,8 @@
          "id":"jettison-1.3.4.jar",
          "type":"STANDARD",
          "context":"{properties.context}",
-         "jarName":"jettison-1.3.4.jar.jar",
-         "mvnUri":"mvn:org.talend.libraries/jettison-1.3.4.jar/6.0.0",
+         "jarName":"jettison-1.3.4.jar",
+         "mvnUri":"mvn:org.talend.libraries/jettison-1.3.4/6.0.0",
          "useStudioRepository":"true",
          "description":""
       },
