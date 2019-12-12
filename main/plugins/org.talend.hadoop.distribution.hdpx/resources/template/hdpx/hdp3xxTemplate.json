@@ -2553,7 +2553,8 @@
         "hadoop-client",
         "hbase-client",
         "avro-mapred-1.8.2",
-        "avatica"
+        "avatica",
+        "hbase-server"
       ]
     },
     {
