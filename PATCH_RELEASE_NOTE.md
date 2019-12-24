@@ -44,15 +44,9 @@ Consider the following requirements for your system:
 
 ### Installing the patch using Talend Studio
 
-1) Shut down Talend studio if it is opened.
+1) Create a folder named "patches" under your studio installer directory and copy the patch .zip file to this folder.
 
-2) Extract the zip.
-
-3) Merge the folder "plugins"  and its content to "{studio}/plugins"  and overwrite the existing files.
-
-4) Start the Talend studio.
-
-5) Rebuild your jobs.
+2) Restart your studio: a window pops up, then click OK to install the patch, or restart the commandline and the patch will be installed automatically.
 
 ### Installing the patch using Commandline
 
