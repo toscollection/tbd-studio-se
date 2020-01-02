@@ -12,9 +12,7 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -138,8 +136,7 @@ public class HadoopClusterServiceTest {
         hadoopClusterConnection.setContextMode(true);
         hadoopClusterConnection.setContextId(contextItem.getProperty().getId());
         hadoopClusterConnection.setContextName("DEV"); //$NON-NLS-1$
-        String jarName = service.getCustomConfsJar(hadoopClusterItem, false, true).map(b -> b.getCustomConfJarName())
-                .orElse(null);
+        String jarName = service.getCustomConfsJarName(hadoopClusterItem, false, true);
         assertTrue(jarName.contains(clusterLabel + "_" + contextItem.getDefaultContext())); //$NON-NLS-1$
         ClusterTestUtil.deleteItem(contextItem);
     }

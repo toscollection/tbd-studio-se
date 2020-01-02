@@ -17,9 +17,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IPath;
@@ -28,7 +26,6 @@ import org.talend.commons.exception.BusinessException;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.exception.PersistenceException;
 import org.talend.core.database.conn.ConnParameterKeys;
-import org.talend.core.hadoop.HadoopConfJarBean;
 import org.talend.core.hadoop.HadoopConstants;
 import org.talend.core.hadoop.IHadoopClusterService;
 import org.talend.core.model.general.ModuleNeeded;
@@ -56,7 +53,6 @@ import org.talend.repository.hadoopcluster.node.model.HadoopClusterRepositoryNod
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubMultiRepTypeProcessor;
 import org.talend.repository.hadoopcluster.ui.viewer.HadoopSubnodeRepositoryContentManager;
 import org.talend.repository.hadoopcluster.ui.viewer.handler.IHadoopSubnodeRepositoryContentHandler;
-import org.talend.repository.hadoopcluster.util.HCParameterUtil;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.IProxyRepositoryFactory;
 import org.talend.repository.model.IRepositoryNode;
@@ -321,46 +317,39 @@ public class HadoopClusterService implements IHadoopClusterService {
     }
 
     @Override
-    public Optional<HadoopConfJarBean> getCustomConfsJar(String id) {
-        return getCustomConfsJar(id, true, true);
+    public String getCustomConfsJarName(String id) {
+        return getCustomConfsJarName(id, true, true);
     }
 
     @Override
-    public Optional<HadoopConfJarBean> getCustomConfsJar(String id, boolean createJarIfNotExist, boolean addExtraIds) {
+    public String getCustomConfsJarName(String id, boolean createJarIfNotExist, boolean addExtraIds) {
         HadoopClusterConnectionItem connectionItem = (HadoopClusterConnectionItem) getHadoopClusterItemById(id);
         if (connectionItem != null) {
-            return getCustomConfsJar(connectionItem, createJarIfNotExist, addExtraIds);
+            return getCustomConfsJarName(connectionItem, createJarIfNotExist, addExtraIds);
         }
-        return Optional.ofNullable(null);
+        return null;
     }
 
     @Override
-    public Optional<HadoopConfJarBean> getCustomConfsJar(ConnectionItem connectionItem, boolean createJarIfNotExist,
-            boolean addExtraIds) {
+    public String getCustomConfsJarName(ConnectionItem connectionItem, boolean createJarIfNotExist, boolean addExtraIds) {
         if (connectionItem instanceof HadoopClusterConnectionItem) {
             HadoopClusterConnectionItem item = (HadoopClusterConnectionItem) connectionItem;
             HadoopClusterConnection connection = (HadoopClusterConnection) item.getConnection();
             if (connection != null && connection.isUseCustomConfs()) {
                 String extraIds = null;
-                boolean isContextMode = connection.isContextMode();
-                if (addExtraIds && isContextMode) {
+                if (addExtraIds && connection.isContextMode()) {
                     ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection, true);
                     extraIds = contextType.getName();
                 }
-                String defaultName = null;
                 if (extraIds == null) {
-                    defaultName = HadoopConfsUtils.getConfsJarDefaultName(item, createJarIfNotExist);
+                    return HadoopConfsUtils.getConfsJarDefaultName(item, createJarIfNotExist);
                 } else {
-                    defaultName = HadoopConfsUtils.getConfsJarDefaultName(item, createJarIfNotExist, extraIds);
+                    return HadoopConfsUtils.getConfsJarDefaultName(item, createJarIfNotExist, extraIds);
                 }
-                return Optional.of(new HadoopConfJarBean(isContextMode,
-                        connection.isUseCustomConfs() && HCParameterUtil.isOverrideHadoopConfs(connection),
-                        HCParameterUtil.getHadoopConfSpecificJar(connection, false),
-                        HCParameterUtil.getHadoopConfSpecificJar(connection, true), defaultName));
             }
         }
 
-        return Optional.ofNullable(null);
+        return null;
     }
 
     @Override
@@ -371,14 +360,8 @@ public class HadoopClusterService implements IHadoopClusterService {
             HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
             if (connection.isUseCustomConfs()) {
                 Set<String> confsJarNames = HadoopConfsUtils.getConfsJarDefaultNames(connectionItem, true);
-                Consumer<String> action = null;
-                if (HCParameterUtil.isOverrideHadoopConfs(connection)) {
-                    action = (confsJarName) -> removeHadoopConfJar(modulesNeeded, confsJarName);
-                } else {
-                    action = (confsJarName) -> addConfsModule(modulesNeeded, connection, confsJarName);
-                }
                 for (String confsJarName : confsJarNames) {
-                    action.accept(confsJarName);
+                    addConfsModule(modulesNeeded, connection, confsJarName);
                 }
             }
         }
@@ -387,14 +370,6 @@ public class HadoopClusterService implements IHadoopClusterService {
     private void addConfsModule(List<ModuleNeeded> modulesNeeded, HadoopClusterConnection connection, String customConfsJarName) {
         String context = customConfsJarName.substring(0, customConfsJarName.lastIndexOf(".")); //$NON-NLS-1$
         ModuleNeeded customConfsModule = new ModuleNeeded(context, customConfsJarName, null, true);
-        removeHadoopConfJar(modulesNeeded, customConfsJarName);
-        if (connection.isContextMode()) {
-            customConfsModule.getExtraAttributes().put(HadoopConstants.IS_DYNAMIC_JAR, true);
-        }
-        modulesNeeded.add(customConfsModule);
-    }
-
-    private void removeHadoopConfJar(List<ModuleNeeded> modulesNeeded, String customConfsJarName) {
         Iterator<ModuleNeeded> moduleIterator = modulesNeeded.iterator();
         while (moduleIterator.hasNext()) {
             ModuleNeeded module = moduleIterator.next();
@@ -404,6 +379,10 @@ public class HadoopClusterService implements IHadoopClusterService {
                 moduleIterator.remove();
             }
         }
+        if (connection.isContextMode()) {
+            customConfsModule.getExtraAttributes().put(HadoopConstants.IS_DYNAMIC_JAR, true);
+        }
+        modulesNeeded.add(customConfsModule);
     }
 
     @Override

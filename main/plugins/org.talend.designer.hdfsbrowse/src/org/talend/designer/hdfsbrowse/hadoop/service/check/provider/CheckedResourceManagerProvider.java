@@ -59,12 +59,8 @@ public class CheckedResourceManagerProvider extends AbstractCheckedServiceProvid
     protected ClassLoader getClassLoader(HadoopServiceProperties serviceProperties) {
         ClassLoader loader = null;
         if (serviceProperties.isCustom()) {
-            String clusterId = null;
-            if (serviceProperties.isUseCustomConfs() && serviceProperties.isSetHadoopConf()) {
-                clusterId = serviceProperties.getRelativeHadoopClusterId();
-            }
-            loader = HadoopClassLoaderFactory2.getHadoopCustomClassLoader(serviceProperties.getUid(), clusterId,
-                    EHadoopCategory.MAP_REDUCE, serviceProperties.getCustomJars(), serviceProperties.isUseKrb());
+            loader = HadoopClassLoaderFactory2.getHadoopCustomClassLoader(serviceProperties.getUid(),
+                    serviceProperties.getCustomJars());
         } else {
             loader = HadoopClassLoaderFactory2.getMRClassLoader(serviceProperties.getRelativeHadoopClusterId(),
                     serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb());
