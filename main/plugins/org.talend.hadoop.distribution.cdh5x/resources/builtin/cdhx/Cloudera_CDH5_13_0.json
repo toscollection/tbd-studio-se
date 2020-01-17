@@ -13189,8 +13189,8 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH5_13_0_talend_lineage_api",
-      "mvn_uri" : "mvn:org.talend.libraries/talend-lineage-api-0.2.0/6.0.0",
-      "name" : "talend-lineage-api-0.2.0.jar",
+      "mvn_uri" : "mvn:org.talend.libraries/talend-lineage-api-0.2.1/6.0.0",
+      "name" : "talend-lineage-api-0.2.1.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
     }, {
