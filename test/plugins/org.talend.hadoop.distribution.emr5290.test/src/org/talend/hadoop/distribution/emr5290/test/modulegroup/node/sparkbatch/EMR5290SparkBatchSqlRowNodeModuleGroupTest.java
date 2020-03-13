@@ -33,7 +33,7 @@ public class EMR5290SparkBatchSqlRowNodeModuleGroupTest {
         Map<String, String> results = new HashMap<>();
         results.put(
                 emr5290Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "(((#LINK@NODE.SPARK_CONFIGURATION.DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION=='EMR_5_15_0')) AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_MODE=='false')) AND (SQL_CONTEXT=='HiveContext')"); //$NON-NLS-1$
+                "(((#LINK@NODE.SPARK_CONFIGURATION.DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION=='EMR_5_29_0')) AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_MODE=='false')) AND (SQL_CONTEXT=='HiveContext')"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = emr5290SparkBatchSqlRowHiveNodeModuleGroup.getModuleGroups(emr5290Distribution.DISTRIBUTION_NAME, emr5290Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());

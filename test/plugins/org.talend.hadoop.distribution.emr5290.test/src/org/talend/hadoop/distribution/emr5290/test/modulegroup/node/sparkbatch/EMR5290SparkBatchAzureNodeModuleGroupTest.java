@@ -32,7 +32,7 @@ public class EMR5290SparkBatchAzureNodeModuleGroupTest {
         Map<String, String> results = new HashMap<>();
         results.put(
                 emr5290Constant.SPARK_AZURE_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "((#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER+".DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_VERSION=='EMR_5_15_0')) AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
+                "((#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER+".DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_VERSION=='EMR_5_29_0')) AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = emr5290SparkBatchAzureNodeModuleGroup.getModuleGroups(emr5290Distribution.DISTRIBUTION_NAME, emr5290Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());
