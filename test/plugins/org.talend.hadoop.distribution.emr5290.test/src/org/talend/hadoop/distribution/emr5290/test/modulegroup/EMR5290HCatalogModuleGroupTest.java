@@ -20,18 +20,18 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.EMR5290.EMR5290Constant;
-import org.talend.hadoop.distribution.EMR5290.modulegroup.EMR5290HDFSModuleGroup;
+import org.talend.hadoop.distribution.emr5290.EMR5290Constant;
+import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290HCatalogModuleGroup;
 
-public class EMR5290HDFSModuleGroupTest {
+public class EMR5290HCatalogModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
         results.put(EMR5290Constant.HDFS_MODULE_GROUP.getModuleName(), null);
-
-        Set<DistributionModuleGroup> moduleGroups = EMR5290HDFSModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> moduleGroups = EMR5290HCatalogModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
+        moduleGroups.iterator();
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {

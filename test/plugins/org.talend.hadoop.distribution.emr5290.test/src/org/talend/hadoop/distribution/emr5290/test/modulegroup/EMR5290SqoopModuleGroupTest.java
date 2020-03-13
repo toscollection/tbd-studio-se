@@ -20,21 +20,22 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.EMR5290.EMR5290Constant;
-import org.talend.hadoop.distribution.EMR5290.modulegroup.EMR5290HiveModuleGroup;
+import org.talend.hadoop.distribution.emr5290.EMR5290Constant;
+import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290SqoopModuleGroup;
 
-public class EMR529HiveModuleGroupTest {
+public class EMR5290SqoopModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
-        results.put(EMR5290Constant.HIVE_MODULE_GROUP.getModuleName(), null);
-        results.put(EMR5290Constant.HIVE_HBASE_MODULE_GROUP.getModuleName(), null);
-        results.put(EMR5290Constant.HDFS_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.SQOOP_MODULE_GROUP.getModuleName(), null);
         results.put(EMR5290Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.HDFS_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.SQOOP_PARQUET_MODULE_GROUP.getModuleName(), null);
 
-        Set<DistributionModuleGroup> moduleGroups = EMR5290HiveModuleGroup.getModuleGroups();
+        Set<DistributionModuleGroup> moduleGroups = EMR5290SqoopModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
+
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {

@@ -15,9 +15,9 @@ package org.talend.hadoop.distribution.emr5290.test.modulegroup.node.sparkbatch;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.emr5290.emr5290Constant;
-import org.talend.hadoop.distribution.emr5290.emr5290Distribution;
-import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.emr5290SparkBatchSqlRowHiveNodeModuleGroup;
+import org.talend.hadoop.distribution.emr5290.EMR5290Constant;
+import org.talend.hadoop.distribution.emr5290.EMR5290Distribution;
+import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.EMR5290SparkBatchSqlRowHiveNodeModuleGroup;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,10 +32,10 @@ public class EMR5290SparkBatchSqlRowNodeModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
         results.put(
-                emr5290Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(),
+                EMR5290Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(),
                 "(((#LINK@NODE.SPARK_CONFIGURATION.DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION=='EMR_5_29_0')) AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_MODE=='false')) AND (SQL_CONTEXT=='HiveContext')"); //$NON-NLS-1$
 
-        Set<DistributionModuleGroup> moduleGroups = emr5290SparkBatchSqlRowHiveNodeModuleGroup.getModuleGroups(emr5290Distribution.DISTRIBUTION_NAME, emr5290Distribution.VERSION);
+        Set<DistributionModuleGroup> moduleGroups = EMR5290SparkBatchSqlRowHiveNodeModuleGroup.getModuleGroups(EMR5290Distribution.DISTRIBUTION_NAME, EMR5290Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$

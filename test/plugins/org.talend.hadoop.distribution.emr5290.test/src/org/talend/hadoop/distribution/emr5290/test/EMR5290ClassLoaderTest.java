@@ -18,7 +18,7 @@ import org.talend.core.hadoop.EHadoopCategory;
 import org.talend.core.model.metadata.connection.hive.HiveModeInfo;
 import org.talend.core.model.metadata.connection.hive.HiveServerVersionInfo;
 import org.talend.hadoop.distribution.component.HadoopComponent;
-import org.talend.hadoop.distribution.emr5290.emr5290Distribution;
+import org.talend.hadoop.distribution.emr5290.EMR5290Distribution;
 import org.talend.hadoop.distribution.test.classloader.AbstractTest4ClassLoaderProvider;
 
 @Ignore
@@ -26,7 +26,7 @@ public class EMR5290ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
 
     @Override
     protected Class<? extends HadoopComponent> getHadoopComponentClass() {
-        return emr5290Distribution.class;
+        return EMR5290Distribution.class;
     }
 
     @Test

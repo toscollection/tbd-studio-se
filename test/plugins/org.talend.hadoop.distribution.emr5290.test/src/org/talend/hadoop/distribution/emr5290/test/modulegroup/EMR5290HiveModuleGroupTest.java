@@ -12,8 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.emr5290.test.modulegroup;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,26 +20,21 @@ import java.util.Set;
 
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.EMR5290.EMR5290Constant;
-import org.talend.hadoop.distribution.EMR5290.EMR5290Distribution;
-import org.talend.hadoop.distribution.EMR5290.modulegroup.EMR5290WebHDFSModuleGroup;
+import org.talend.hadoop.distribution.emr5290.EMR5290Constant;
+import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290HiveModuleGroup;
 
-
-public class EMR529WebHDFSModuleGroupTest {
+public class EMR5290HiveModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
+        results.put(EMR5290Constant.HIVE_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.HIVE_HBASE_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.HDFS_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), null);
 
-        results.put(EMR5290Constant.WEBHDFS_MODULE_GROUP.getModuleName(), null);
-
-        Set<DistributionModuleGroup> moduleGroups =
-                EMR5290WebHDFSModuleGroup.getModuleGroups(EMR5290Distribution.DISTRIBUTION_NAME,
-                        EMR5290Distribution.VERSION);
+        Set<DistributionModuleGroup> moduleGroups = EMR5290HiveModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
-
-        moduleGroups.iterator();
-
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
             if (results.get(module.getModuleName()) == null) {

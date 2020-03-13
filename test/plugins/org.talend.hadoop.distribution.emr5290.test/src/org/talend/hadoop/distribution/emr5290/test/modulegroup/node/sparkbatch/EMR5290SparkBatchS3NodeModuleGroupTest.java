@@ -21,9 +21,9 @@ import java.util.Set;
 import org.junit.Test;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
-import org.talend.hadoop.distribution.emr5290.emr5290Constant;
-import org.talend.hadoop.distribution.emr5290.emr5290Distribution;
-import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.emr5290SparkBatchS3NodeModuleGroup;
+import org.talend.hadoop.distribution.emr5290.EMR5290Constant;
+import org.talend.hadoop.distribution.emr5290.EMR5290Distribution;
+import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.EMR5290SparkBatchS3NodeModuleGroup;
 
 public class EMR5290SparkBatchS3NodeModuleGroupTest {
 
@@ -31,10 +31,10 @@ public class EMR5290SparkBatchS3NodeModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
         results.put(
-                emr5290Constant.S3_MODULE_GROUP.getModuleName(),
+                EMR5290Constant.S3_MODULE_GROUP.getModuleName(),
                 "((#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_VERSION=='EMR_5_29_0')) AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
 
-        Set<DistributionModuleGroup> moduleGroups = emr5290SparkBatchS3NodeModuleGroup.getModuleGroups(emr5290Distribution.DISTRIBUTION_NAME, emr5290Distribution.VERSION);
+        Set<DistributionModuleGroup> moduleGroups = EMR5290SparkBatchS3NodeModuleGroup.getModuleGroups(EMR5290Distribution.DISTRIBUTION_NAME, EMR5290Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());
         for (DistributionModuleGroup module : moduleGroups) {
             assertTrue("Should contain module " + module.getModuleName(), results.containsKey(module.getModuleName())); //$NON-NLS-1$
