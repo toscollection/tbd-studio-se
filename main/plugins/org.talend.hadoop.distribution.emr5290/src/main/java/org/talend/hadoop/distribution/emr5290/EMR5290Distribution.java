@@ -372,7 +372,7 @@ public class EMR5290Distribution extends AbstractDistribution implements HBaseCo
 	@Override
     public Set<ESparkVersion> getSparkVersions() {
         Set<ESparkVersion> version = new HashSet<>();
-        version.add(ESparkVersion.SPARK_2_3);
+        version.add(ESparkVersion.SPARK_2_4);
         return version;
     }
 
