@@ -45,12 +45,10 @@ import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290HCatalogModuleG
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290HDFSModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290HiveModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290HiveOnSparkModuleGroup;
-import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290MapReduceModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290SqoopModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.EMR5290WebHDFSModuleGroup;
-import org.talend.hadoop.distribution.emr5290.modulegroup.node.mr.EMR5290MRS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.spark.EMR5290SparkDynamoDBNodeModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.EMR5290GraphFramesNodeModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.EMR5290SparkBatchAzureNodeModuleGroup;
@@ -117,8 +115,6 @@ public class EMR5290Distribution extends AbstractDistribution implements HBaseCo
 		result.put(ComponentType.HDFS, EMR5290HDFSModuleGroup.getModuleGroups());
 		result.put(ComponentType.HIVE, EMR5290HiveModuleGroup.getModuleGroups());
         result.put(ComponentType.HIVEONSPARK, EMR5290HiveOnSparkModuleGroup.getModuleGroups());
-		result.put(ComponentType.MAPREDUCE,
-				EMR5290MapReduceModuleGroup.getModuleGroups());
 		result.put(ComponentType.SQOOP,
 				EMR5290SqoopModuleGroup.getModuleGroups());
 		result.put(ComponentType.HBASE,
@@ -138,14 +134,6 @@ public class EMR5290Distribution extends AbstractDistribution implements HBaseCo
         for(String hdfsComponent : HDFSConstant.hdfsComponents) {
             result.put(new NodeComponentTypeBean(ComponentType.HDFS, hdfsComponent), webHDFSNodeModuleGroups);
         }
-
-		// Mapreduce nodes
-		result.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE,
-				MRConstant.S3_INPUT_COMPONENT), EMR5290MRS3NodeModuleGroup
-				.getModuleGroups(distribution, version));
-		result.put(new NodeComponentTypeBean(ComponentType.MAPREDUCE,
-				MRConstant.S3_OUTPUT_COMPONENT), EMR5290MRS3NodeModuleGroup
-				.getModuleGroups(distribution, version));
 		
 		// Spark Batch Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
