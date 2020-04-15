@@ -5,24 +5,22 @@
     <parent>
         <groupId>org.talend.studio</groupId>
         <artifactId>parent-pom</artifactId>
-        <version>7.3.1-SNAPSHOT</version>
+        <version>7.4.1-SNAPSHOT</version>
         <relativePath/>
     </parent>
     <artifactId>tbd-studio-se</artifactId>
     <packaging>pom</packaging>
-    <version>7.3.1-SNAPSHOT</version>
+
     <modules>
         <module>i18n/plugins/org.talend.demo.bigdata.ce.nl</module>
         <module>i18n/plugins/org.talend.designer.hdfsbrowse.nl</module>
-        <module>i18n/plugins/org.talend.designer.pigmap.nl</module>
         <module>i18n/plugins/org.talend.oozie.scheduler.nl</module>
         <module>i18n/plugins/org.talend.repository.hadoopcluster.nl</module>
         <module>i18n/plugins/org.talend.repository.hcatalog.nl</module>
         <module>i18n/plugins/org.talend.repository.hdfs.nl</module>
         <module>i18n/plugins/org.talend.repository.nosql.nl</module>
         <module>i18n/plugins/org.talend.repository.oozie.nl</module>
-        <module>i18n/plugins/org.talend.repository.pigudf.nl</module>
-
+        <module>main/features/org.talend.help.bd.feature</module>
         <module>main/features/org.talend.rcp.branding.tos.bigdata.feature</module>
         <module>main/features/org.talend.tos.bigdata.feature</module>
         <module>main/features/org.talend.tos.bigdata.libraries.feature</module>
@@ -43,7 +41,7 @@
         <module>main/plugins/org.talend.hadoop.distribution.dataproc11</module>
         <module>main/plugins/org.talend.hadoop.distribution.dataproc14</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr350</module>
-        <module>main/plugins/org.talend.hadoop.distribution.dbr540</module>
+        <module>main/plugins/org.talend.hadoop.distribution.dbr550</module>
         <module>main/plugins/org.talend.hadoop.distribution.emr450</module>
         <module>main/plugins/org.talend.hadoop.distribution.emr500</module>
         <module>main/plugins/org.talend.hadoop.distribution.emr550</module>
@@ -67,17 +65,13 @@
         <module>main/plugins/org.talend.designer.components.bigdata</module>
         <module>main/plugins/org.talend.designer.hdfsbrowse</module>
         <module>main/plugins/org.talend.designer.neo4j</module>
-        <module>main/plugins/org.talend.designer.pigmap</module>
         <module>main/plugins/org.talend.libraries.apache.kafka</module>
         <module>main/plugins/org.talend.libraries.couchbase</module>
         <module>main/plugins/org.talend.libraries.couchdb</module>
         <module>main/plugins/org.talend.libraries.hadoop</module>
-        <module>main/plugins/org.talend.libraries.hadoop.mapr.5.0.0.jars</module>
         <module>main/plugins/org.talend.libraries.hcatalog</module>
         <module>main/plugins/org.talend.libraries.mongo</module>
         <module>main/plugins/org.talend.libraries.neo4j</module>
-        <module>main/plugins/org.talend.libraries.pig</module>
-        <module>main/plugins/org.talend.libraries.s3</module>
         <module>main/plugins/org.talend.libraries.sdsulib</module>
         <module>main/plugins/org.talend.libraries.sqoop</module>
         <module>main/plugins/org.talend.libraries.zookeeper</module>
@@ -91,7 +85,6 @@
         <module>main/plugins/org.talend.repository.hdfs</module>
         <module>main/plugins/org.talend.repository.nosql</module>
         <module>main/plugins/org.talend.repository.oozie</module>
-        <module>main/plugins/org.talend.repository.pigudf</module>
 
         <module>test/features/org.talend.bigdata.se.test.feature</module>
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
@@ -108,7 +101,7 @@
         <module>test/plugins/org.talend.hadoop.distribution.dataproc11.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dataproc14.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr350.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.dbr540.test</module>
+        <module>test/plugins/org.talend.hadoop.distribution.dbr550.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.emr450.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.emr500.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.emr550.test</module>
@@ -130,7 +123,6 @@
         <module>test/plugins/org.talend.hadoop.distribution.qubole.test</module>
         <module>test/plugins/org.talend.oozie.scheduler.test</module>
         <module>test/plugins/org.talend.repository.nosql.test</module>
-        <module>test/plugins/org.talend.designer.pigmap.test</module>
         <module>test/plugins/org.talend.repository.maprdbprovider.test</module>
         <module>test/plugins/org.talend.repository.hadoopcluster.configurator.test</module>
         <module>test/plugins/org.talend.repository.hadoopcluster.test</module>

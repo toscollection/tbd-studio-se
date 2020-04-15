@@ -257,7 +257,6 @@
 				MVN="mvn:commons-io/commons-io/2.4"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-io-2.4.jar"
 				REQUIRED="true" />
-
 			<!-- MAPR500 -->
 			<IMPORT MODULE_GROUP="HDFS-LIB-MAPR50X_LASTEST"
 				REQUIRED_IF="(DB_VERSION=='MAPR500') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM')" />

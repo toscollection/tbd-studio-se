@@ -599,6 +599,13 @@ public class HCRepositoryUtil {
                 parameters.put(ConnParameterKeys.CONN_PARA_KEY_KEYTAB, hcConnection.getKeytab());
             }
         }
+        if (hcConnection.isUseWebHDFSSSL()) {
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_USE_WEBHDFS_SSL, String.valueOf(hcConnection.isUseWebHDFSSSL()));
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_WEBHDFS_SSL_TRUST_STORE_PATH,
+                    hcConnection.getWebHDFSSSLTrustStorePath());
+            parameters.put(ConnParameterKeys.CONN_PARA_KEY_WEBHDFS_SSL_TRUST_STORE_PASSWORD,
+                    hcConnection.getWebHDFSSSLTrustStorePassword());
+        }
         // hbase/hive/maprdb
         parameters.put(ConnParameterKeys.CONN_PARA_KEY_HBASE_AUTHENTICATION_USE_MAPRTICKET,
                 String.valueOf(hcConnection.isEnableMaprT()));
@@ -714,7 +721,7 @@ public class HCRepositoryUtil {
         }
         IHadoopDistributionService hadoopDistributionService = null;
         if (GlobalServiceRegister.getDefault().isServiceRegistered(IHadoopDistributionService.class)) {
-            hadoopDistributionService = (IHadoopDistributionService) GlobalServiceRegister.getDefault().getService(
+            hadoopDistributionService = GlobalServiceRegister.getDefault().getService(
                     IHadoopDistributionService.class);
         }
         if (hadoopDistributionService == null) {
@@ -934,6 +941,11 @@ public class HCRepositoryUtil {
         String dataBricksEndpoint = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.DATABRICKS_ENDPOINT.getName());
         if (dataBricksEndpoint != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT, dataBricksEndpoint);
+        }
+        String dataBricksCloudProvider = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.DATABRICKS_CLOUD_PROVIDER.getName());
+        if (dataBricksCloudProvider != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER, dataBricksCloudProvider);
         }
         String dataBricksClusterID = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.DATABRICKS_CLUSTER_ID.getName());
