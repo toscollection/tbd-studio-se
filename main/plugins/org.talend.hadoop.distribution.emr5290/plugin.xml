@@ -2247,8 +2247,6 @@
 			<library id="spark-catalyst_2.11-2.3.0.jar"/>
 			<library id="spark-core_2.11-2.3.0.jar"/>
 			<library id="spark-graphx_2.11-2.3.0.jar"/>
-			<library id="spark-hive-thriftserver_2.11-2.3.0.jar"/>
-			<library id="spark-hive_2.11-2.3.0.jar"/>
 			<library id="spark-kvstore_2.11-2.3.0.jar"/>
 			<library id="spark-launcher_2.11-2.3.0.jar"/>
 			<library id="spark-mllib-local_2.11-2.3.0.jar"/>
@@ -2310,12 +2308,7 @@
                 description="Spark Hive libraries for EMR 5.29.0"
                 id="SPARK-HIVE-LIB-MRREQUIRED-EMR_5_29_0_LATEST"
                 name="SPARK-HIVE-LIB-MRREQUIRED-EMR_5_29_0_LATEST">
-            <library id="jdo-api-3.0.1.jar"/>
-            <library id="hive-beeline-1.2.1-spark2-amzn-0.jar"/>
-            <library id="hive-cli-1.2.1-spark2-amzn-0.jar"/>
-            <library id="hive-exec-1.2.1-spark2-amzn-0.jar"/>
-            <library id="hive-jdbc-1.2.1-spark2-amzn-0.jar"/>
-            <library id="hive-metastore-1.2.1-spark2-amzn-0.jar"/>
+
         </libraryNeededGroup>
         
         <!-- Spark Azure group MRREQUIRED -->
