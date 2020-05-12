@@ -1022,9 +1022,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="json4s-ast_2.11-3.2.11.jar"
-            name="json4s-ast_2.11-3.2.11.jar"
-            mvn_uri="mvn:org.json4s/json4s-ast_2.11/3.2.11"/>
+            id="json4s-ast_2.11-3.5.3.jar"
+            name="json4s-ast_2.11-3.5.3.jar"
+            mvn_uri="mvn:org.json4s/json4s-ast_2.11/3.5.3"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1165,9 +1165,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="json4s-jackson_2.11-3.2.11.jar"
-            name="json4s-jackson_2.11-3.2.11.jar"
-            mvn_uri="mvn:org.json4s/json4s-jackson_2.11/3.2.11"/>
+            id="json4s-jackson_2.11-3.5.3.jar"
+            name="json4s-jackson_2.11-3.5.3.jar"
+            mvn_uri="mvn:org.json4s/json4s-jackson_2.11/3.5.3"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1243,9 +1243,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="json4s-core_2.11-3.2.11.jar"
-            name="json4s-core_2.11-3.2.11.jar"
-            mvn_uri="mvn:org.json4s/json4s-core_2.11/3.2.11"/>
+            id="json4s-core_2.11-3.5.3.jar"
+            name="json4s-core_2.11-3.5.3.jar"
+            mvn_uri="mvn:org.json4s/json4s-core_2.11/3.5.3"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -2197,9 +2197,9 @@
 			<library id="joda-time-2.9.9.jar"/>
 			<library id="jpam-1.1.jar"/>
 			<library id="jsch-0.1.51.jar"/>
-			<library id="json4s-ast_2.11-3.2.11.jar"/>
-			<library id="json4s-core_2.11-3.2.11.jar"/>
-			<library id="json4s-jackson_2.11-3.2.11.jar"/>
+			<library id="json4s-ast_2.11-3.5.3.jar"/>
+			<library id="json4s-core_2.11-3.5.3.jar"/>
+			<library id="json4s-jackson_2.11-3.5.3.jar"/>
 			<library id="jsr305-1.3.9.jar"/>
 			<library id="jta-1.1.jar"/>
 			<library id="jtransforms-2.4.0.jar"/>
