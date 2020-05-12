@@ -228,9 +228,9 @@
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="hive-exec-1.2.1-spark2-amzn-0.jar"
-            name="hive-exec-1.2.1-spark2-amzn-0.jar"
-            mvn_uri="mvn:org.apache.hive/hive-exec-1.2.1-spark2-amzn-0/6.0.0"/>   
+            id="hive-exec-1.2.1-spark2-amzn-1.jar"
+            name="hive-exec-1.2.1-spark2-amzn-1.jar"
+            mvn_uri="mvn:org.apache.hive/hive-exec/1.2.1-spark2-amzn-1"/>   
          
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -240,10 +240,9 @@
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="hive-metastore-1.2.1-spark2-amzn-0.jar"
-            name="hive-metastore-1.2.1-spark2-amzn-0.jar"
-            mvn_uri="mvn:org.apache.hive/hive-metastore-1.2.1-spark2-amzn-0/6.0.0"/>
-
+            id="hive-metastore-1.2.1-spark2-amzn-1.jar"
+            name="hive-metastore-1.2.1-spark2-amzn-1.jar"
+            mvn_uri="mvn:org.apache.hive/hive-metastore/1.2.1-spark2-amzn-1"/>
        
         <!-- S3 libraries -->
 
@@ -373,9 +372,9 @@
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-common-1.6.0.jar"
-            name="parquet-common-1.6.0.jar"
-            mvn_uri="mvn:com.twitter/parquet-common/1.6.0">
+            id="parquet-common-1.10.1-spark-amzn-1.jar"
+            name="parquet-common-1.10.1-spark-amzn-1.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-common/1.10.1-spark-amzn-1">
         </libraryNeeded>
         
         <libraryNeeded
@@ -528,15 +527,15 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-graphx_2.11-2.3.0.jar"
-            name="spark-graphx_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-graphx_2.11/2.3.0"/>
+            id="spark-graphx_2.11-2.4.4.jar"
+            name="spark-graphx_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-graphx_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-tags_2.11-2.3.0.jar"
-            name="spark-tags_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-tags_2.11/2.3.0"/>
+            id="spark-tags_2.11-2.4.4.jar"
+            name="spark-tags_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-tags_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -546,9 +545,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="xbean-asm5-shaded-4.4.jar"
-            name="xbean-asm5-shaded-4.4.jar"
-            mvn_uri="mvn:org.apache.xbean/xbean-asm5-shaded/4.4"/>
+            id="xbean-asm6-shaded-4.8.jar"
+            name="xbean-asm6-shaded-4.8.jar"
+            mvn_uri="mvn:org.apache.xbean/xbean-asm6-shaded/4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -611,9 +610,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-launcher_2.11-2.3.0.jar"
-            name="spark-launcher_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-launcher_2.11/2.3.0"/>
+            id="spark-launcher_2.11-2.4.4.jar"
+            name="spark-launcher_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-launcher_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -652,15 +651,15 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-catalyst_2.11-2.3.0.jar"
-            name="spark-catalyst_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-catalyst_2.11/2.3.0"/>
+            id="spark-catalyst_2.11-2.4.4.jar"
+            name="spark-catalyst_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-catalyst_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-network-shuffle_2.11-2.3.0.jar"
-            name="spark-network-shuffle_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.11/2.3.0"/>
+            id="spark-network-shuffle_2.11-2.4.4.jar"
+            name="spark-network-shuffle_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -736,9 +735,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-streaming_2.11-2.3.0.jar"
-            name="spark-streaming_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-streaming_2.11/2.3.0"/>
+            id="spark-streaming_2.11-2.4.4.jar"
+            name="spark-streaming_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-streaming_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -790,9 +789,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-sql_2.11-2.3.0.jar"
-            name="spark-sql_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-sql_2.11/2.3.0"/>
+            id="spark-sql_2.11-2.4.4.jar"
+            name="spark-sql_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-sql_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -898,9 +897,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-mllib_2.11-2.3.0.jar"
-            name="spark-mllib_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-mllib_2.11/2.3.0"/>
+            id="spark-mllib_2.11-2.4.4.jar"
+            name="spark-mllib_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-mllib_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -933,9 +932,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-sketch_2.11-2.3.0.jar"
-            name="spark-sketch_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-sketch_2.11/2.3.0"/>
+            id="spark-sketch_2.11-2.4.4.jar"
+            name="spark-sketch_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-sketch_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1011,15 +1010,15 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-hive_2.11-2.3.0.jar"
-            name="spark-hive_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-hive_2.11/2.3.0"/>
+            id="spark-hive_2.11-2.4.4.jar"
+            name="spark-hive_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-hive_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-mllib-local_2.11-2.3.0.jar"
-            name="spark-mllib-local_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.11/2.3.0"/>
+            id="spark-mllib-local_2.11-2.4.4.jar"
+            name="spark-mllib-local_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1053,9 +1052,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-core_2.11-2.3.0.jar"
-            name="spark-core_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-core_2.11/2.3.0"/>
+            id="spark-core_2.11-2.4.4.jar"
+            name="spark-core_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-core_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1232,9 +1231,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-unsafe_2.11-2.3.0.jar"
-            name="spark-unsafe_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-unsafe_2.11/2.3.0"/>
+            id="spark-unsafe_2.11-2.4.4.jar"
+            name="spark-unsafe_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-unsafe_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1559,9 +1558,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-network-common_2.11-2.3.0.jar"
-            name="spark-network-common_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-network-common_2.11/2.3.0"/>
+            id="spark-network-common_2.11-2.4.4.jar"
+            name="spark-network-common_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-network-common_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1588,9 +1587,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-hive-thriftserver_2.11-2.3.0.jar"
-            name="spark-hive-thriftserver_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_2.11/2.3.0"/>
+            id="spark-hive-thriftserver_2.11-2.4.4.jar"
+            name="spark-hive-thriftserver_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1612,15 +1611,15 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-repl_2.11-2.3.0.jar"
-            name="spark-repl_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-repl_2.11/2.3.0"/>
+            id="spark-repl_2.11-2.4.4.jar"
+            name="spark-repl_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-repl_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-yarn_2.11-2.3.0.jar"
-            name="spark-yarn_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-yarn_2.11/2.3.0"/>
+            id="spark-yarn_2.11-2.4.4.jar"
+            name="spark-yarn_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-yarn_2.11/2.4.4"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1648,39 +1647,45 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-jackson-1.8.2.jar"
-            name="parquet-jackson-1.8.2.jar"
-            mvn_uri="mvn:org.apache.parquet/parquet-jackson/1.8.2"/>
+            id="parquet-jackson-1.10.1-spark-amzn-1.jar"
+            name="parquet-jackson-1.10.1-spark-amzn-1.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-jackson/1.10.1-spark-amzn-1"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-column-1.8.2.jar"
-            name="parquet-column-1.8.2.jar"
-            mvn_uri="mvn:org.apache.parquet/parquet-column/1.8.2"/>
+            id="parquet-column-1.10.1-spark-amzn-1.jar"
+            name="parquet-column-1.10.1-spark-amzn-1.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-column/1.10.1-spark-amzn-1"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-common-1.8.2.jar"
-            name="parquet-common-1.8.2.jar"
-            mvn_uri="mvn:org.apache.parquet/parquet-common/1.8.2"/>
+            id="parquet-common-1.6.0.jar"
+            name="parquet-common-1.6.0.jar"
+            mvn_uri="mvn:com.twitter/parquet-common/1.6.0"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-encoding-1.8.2.jar"
-            name="parquet-encoding-1.8.2.jar"
-            mvn_uri="mvn:org.apache.parquet/parquet-encoding/1.8.2"/>
+            id="parquet-encoding-1.10.1-spark-amzn-1.jar"
+            name="parquet-encoding-1.10.1-spark-amzn-1.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-encoding/1.10.1-spark-amzn-1"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-format-2.3.1.jar"
-            name="parquet-format-2.3.1.jar"
-            mvn_uri="mvn:org.apache.parquet/parquet-format/2.3.1"/>
+            id="parquet-format-2.4.0.jar"
+            name="parquet-format-2.4.0.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-format/2.4.0"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="parquet-hadoop-1.8.2.jar"
-            name="parquet-hadoop-1.8.2.jar"
-            mvn_uri="mvn:org.apache.parquet/parquet-hadoop/1.8.2"/>
+            id="parquet-hadoop-1.10.1.jar"
+            name="parquet-hadoop-1.10.1.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-hadoop/1.10.1"/>
+
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr5290"
+            id="parquet-hadoop-1.10.1-spark-amzn-1.jar"
+            name="parquet-hadoop-1.10.1-spark-amzn-1.jar"
+            mvn_uri="mvn:org.apache.parquet/parquet-hadoop/1.10.1-spark-amzn-1"/>
                         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1744,9 +1749,9 @@
 		
 		<libraryNeeded 
 			context="plugin:org.talend.hadoop.distribution.emr5290" 
-			id="spark-kvstore_2.11-2.3.0.jar" 
-			name="spark-kvstore_2.11-2.3.0.jar"
-			mvn_uri="mvn:org.apache.spark/spark-kvstore_2.11/2.3.0"/>
+			id="spark-kvstore_2.11-2.4.4.jar" 
+			name="spark-kvstore_2.11-2.4.4.jar"
+			mvn_uri="mvn:org.apache.spark/spark-kvstore_2.11/2.4.4"/>
 		
 		<libraryNeeded 
 			context="plugin:org.talend.hadoop.distribution.emr5290" 
@@ -1809,24 +1814,24 @@
         
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-streaming-kinesis-asl_2.11-2.3.0.jar"
-            name="spark-streaming-kinesis-asl_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.11/2.3.0"/>
+            id="spark-streaming-kinesis-asl_2.11-2.4.4.jar"
+            name="spark-streaming-kinesis-asl_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.11/2.4.4"/>
 
 		<!-- Kafka libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-streaming-kafka-0-10-assembly_2.11-2.3.0.jar"
-            name="spark-streaming-kafka-0-10-assembly_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10-assembly_2.11/2.3.0">
+            id="spark-streaming-kafka-0-10-assembly_2.11-2.4.4.jar"
+            name="spark-streaming-kafka-0-10-assembly_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10-assembly_2.11/2.4.4">
         </libraryNeeded>
 
 		<!-- Flume libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="spark-streaming-flume-assembly_2.11-2.3.0.jar"
-            name="spark-streaming-flume-assembly_2.11-2.3.0.jar"
-            mvn_uri="mvn:org.apache.spark/spark-streaming-flume-assembly_2.11/2.3.0">
+            id="spark-streaming-flume-assembly_2.11-2.4.4.jar"
+            name="spark-streaming-flume-assembly_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-streaming-flume-assembly_2.11/2.4.4">
         </libraryNeeded>
 
         <!-- Groups -->
@@ -2030,7 +2035,7 @@
                 description="Spark Kafka assembly libraries for EMR 5.29.0 that are MRREQUIRED"
                 id="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_5_29_0_LATEST"
                 name="SPARK-KAFKA-ASSEMBLY-LIB-MRREQUIRED-EMR_5_29_0_LATEST">
-            <library id="spark-streaming-kafka-0-10-assembly_2.11-2.3.0.jar"/>
+            <library id="spark-streaming-kafka-0-10-assembly_2.11-2.4.4.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Kafka Avro group MRREQUIRED -->
@@ -2056,7 +2061,7 @@
                 description="Spark Flume libraries for EMR 5.29.0  that are MRREQUIRED"
                 id="SPARK-FLUME-LIB-MRREQUIRED-EMR_5_29_0_LATEST"
                 name="SPARK-FLUME-LIB-MRREQUIRED-EMR_5_29_0_LATEST">
-            <library id="spark-streaming-flume-assembly_2.11-2.3.0.jar"/>
+            <library id="spark-streaming-flume-assembly_2.11-2.4.4.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark2 group -->
@@ -2220,13 +2225,12 @@
 			<library id="oro-2.0.8.jar"/>
 			<library id="osgi-resource-locator-1.0.1.jar"/>
 			<library id="paranamer-2.8.jar"/>
-			<library id="parquet-column-1.8.2.jar"/>
-			<library id="parquet-common-1.8.2.jar"/>
-			<library id="parquet-encoding-1.8.2.jar"/>
-			<library id="parquet-format-2.3.1.jar"/>
-			<library id="parquet-hadoop-1.8.2.jar"/>
-			<library id="parquet-hadoop-bundle-1.6.0.jar"/>
-			<library id="parquet-jackson-1.8.2.jar"/>
+			<library id="parquet-column-1.10.1-spark-amzn-1.jar"/>
+			<library id="parquet-common-1.10.1-spark-amzn-1.jar"/>
+			<library id="parquet-encoding-1.10.1-spark-amzn-1.jar"/>
+			<library id="parquet-format-2.4.0.jar"/>
+			<library id="parquet-jackson-1.10.1-spark-amzn-1.jar"/>
+			<library id="parquet-hadoop-1.10.1-spark-amzn-1.jar"/>
 			<library id="pmml-model-1.2.15.jar"/>
 			<library id="pmml-schema-1.2.15.jar"/>
 			<library id="protobuf-java-2.5.0.jar"/>
@@ -2244,22 +2248,22 @@
 			<library id="slf4j-log4j12-1.7.16.jar"/>
 			<library id="snappy-0.2.jar"/>
 			<library id="snappy-java-1.1.2.6.jar"/>
-			<library id="spark-catalyst_2.11-2.3.0.jar"/>
-			<library id="spark-core_2.11-2.3.0.jar"/>
-			<library id="spark-graphx_2.11-2.3.0.jar"/>
-			<library id="spark-kvstore_2.11-2.3.0.jar"/>
-			<library id="spark-launcher_2.11-2.3.0.jar"/>
-			<library id="spark-mllib-local_2.11-2.3.0.jar"/>
-			<library id="spark-mllib_2.11-2.3.0.jar"/>
-			<library id="spark-network-common_2.11-2.3.0.jar"/>
-			<library id="spark-network-shuffle_2.11-2.3.0.jar"/>
-			<library id="spark-repl_2.11-2.3.0.jar"/>
-			<library id="spark-sketch_2.11-2.3.0.jar"/>
-			<library id="spark-sql_2.11-2.3.0.jar"/>
-			<library id="spark-streaming_2.11-2.3.0.jar"/>
-			<library id="spark-tags_2.11-2.3.0.jar"/>
-			<library id="spark-unsafe_2.11-2.3.0.jar"/>
-			<library id="spark-yarn_2.11-2.3.0.jar"/>
+			<library id="spark-catalyst_2.11-2.4.4.jar"/>
+			<library id="spark-core_2.11-2.4.4.jar"/>
+			<library id="spark-graphx_2.11-2.4.4.jar"/>
+			<library id="spark-kvstore_2.11-2.4.4.jar"/>
+			<library id="spark-launcher_2.11-2.4.4.jar"/>
+			<library id="spark-mllib-local_2.11-2.4.4.jar"/>
+			<library id="spark-mllib_2.11-2.4.4.jar"/>
+			<library id="spark-network-common_2.11-2.4.4.jar"/>
+			<library id="spark-network-shuffle_2.11-2.4.4.jar"/>
+			<library id="spark-repl_2.11-2.4.4.jar"/>
+			<library id="spark-sketch_2.11-2.4.4.jar"/>
+			<library id="spark-sql_2.11-2.4.4.jar"/>
+			<library id="spark-streaming_2.11-2.4.4.jar"/>
+			<library id="spark-tags_2.11-2.4.4.jar"/>
+			<library id="spark-unsafe_2.11-2.4.4.jar"/>
+			<library id="spark-yarn_2.11-2.4.4.jar"/>
 			<library id="spire-macros_2.11-0.13.0.jar"/>
 			<library id="spire_2.11-0.13.0.jar"/>
 			<library id="ST4-4.0.4.jar"/>
@@ -2270,7 +2274,7 @@
 			<library id="univocity-parsers-2.5.9.jar"/>
 			<library id="validation-api-1.1.0.Final.jar"/>
 			<library id="velocity-1.7.jar"/>
-			<library id="xbean-asm5-shaded-4.4.jar"/>
+			<library id="xbean-asm6-shaded-4.8.jar"/>
 			<library id="xercesImpl-2.9.1.jar"/>
 			<library id="xmlenc-0.52.jar"/>
 			<library id="xz-1.0.jar"/>
@@ -2297,7 +2301,7 @@
                 description="Spark Kinesis libraries for EMR 5.29.0 that are MRREQUIRED"
                 id="SPARK-KINESIS-LIB-MRREQUIRED-EMR_5_29_0_LATEST"
                 name="SPARK-KINESIS-LIB-MRREQUIRED-EMR_5_29_0_LATEST">
-             <library id="spark-streaming-kinesis-asl_2.11-2.3.0.jar"/>
+             <library id="spark-streaming-kinesis-asl_2.11-2.4.4.jar"/>
             <library id="amazon-kinesis-client-1.8.1.jar"/>
             <library id="aws-java-sdk-kinesis-1.11.682.jar"/>
             <library id="aws-java-sdk-cloudwatch-1.11.682.jar"/>
@@ -2308,7 +2312,10 @@
                 description="Spark Hive libraries for EMR 5.29.0"
                 id="SPARK-HIVE-LIB-MRREQUIRED-EMR_5_29_0_LATEST"
                 name="SPARK-HIVE-LIB-MRREQUIRED-EMR_5_29_0_LATEST">
-
+                <library id="spark-hive_2.11-2.4.4.jar"/>
+                <library id="hive-metastore-1.2.1-spark2-amzn-1.jar"/>
+                <library id="hive-exec-1.2.1-spark2-amzn-1.jar"/>
+                <library id="parquet-hadoop-bundle-1.6.0.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Azure group MRREQUIRED -->
