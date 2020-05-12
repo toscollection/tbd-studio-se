@@ -248,7 +248,7 @@
             context="plugin:org.talend.hadoop.distribution.emr5290"
             id="orc-mapreduce-1.5.5-nohive.jar"
             name="orc-mapreduce-1.5.5-nohive.jar"
-            mvn_uri="mvn:org.apache.orc/1.5.5-nohive/1.5.5-nohive"/>
+            mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.5.5-nohive"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
