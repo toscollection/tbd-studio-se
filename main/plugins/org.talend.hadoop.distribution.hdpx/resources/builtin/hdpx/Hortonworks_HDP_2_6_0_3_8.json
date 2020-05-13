@@ -5,7 +5,7 @@
       "distribution": "HORTONWORKS",
       "id": "HDP_2_6_0_3_8",
       "name": "Hortonworks Data Platform V2.6.0.3-8",
-      "projectTechnicalName": "LOCAL_PROJECT",
+      
       "repository": "https://talend-update.talend.com/nexus/content/groups/dynamicdistribution/",
       "selectedSparkVersions": [
         "SPARK_2_1"
@@ -738,12 +738,7 @@
               "childNodes": [],
               "id": "DYNAMIC_HDP_2_6_0_3_8_commons_lang3_3_5_jar",
               "tagName": "library"
-            },
-            {
-              "childNodes": [],
-              "id": "DYNAMIC_HDP_2_6_0_3_8_commons_lang3_3_5_jar",
-              "tagName": "library"
-            },
+            },         
             {
               "childNodes": [],
               "id": "DYNAMIC_HDP_2_6_0_3_8_commons_lang_2_6_jar",
@@ -8070,6 +8065,11 @@
             },
             {
               "childNodes": [],
+              "id": "DYNAMIC_HDP_2_6_0_3_8_avro_mapred_1_8_2_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
               "id": "DYNAMIC_HDP_2_6_0_3_8_aws_java_sdk_core_1_11_160_jar",
               "tagName": "library"
             },
@@ -8390,6 +8390,21 @@
             },
             {
               "childNodes": [],
+              "id": "DYNAMIC_HDP_2_6_0_3_8_kite-data-core-1.0.0_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_2_6_0_3_8_kite-data-mapreduce-1.0.0_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_2_6_0_3_8_kite-hadoop-compatibility-1.0.0_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
               "id": "DYNAMIC_HDP_2_6_0_3_8_leveldbjni_all_1_8_jar",
               "tagName": "library"
             },
@@ -8426,6 +8441,16 @@
             {
               "childNodes": [],
               "id": "DYNAMIC_HDP_2_6_0_3_8_paranamer_2_7_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_2_6_0_3_8_parquet_hadoop_bundle_1_6_0_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_2_6_0_3_8_parquet_hadoop_1_8_1_jar",
               "tagName": "library"
             },
             {
@@ -9333,7 +9358,7 @@
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
           "id": "DYNAMIC_HDP_2_6_0_3_8_avro_mapred_1_7_7_hadoop2_jar",
-          "mvn_uri": "mvn:org.apache.avro/avro-mapred/1.7.7//hadoop2",
+          "mvn_uri": "mvn:org.apache.avro/avro-mapred/1.7.7/hadoop2",
           "name": "avro-mapred-1.7.7-hadoop2.jar",
           "tagName": "libraryNeeded"
         },
@@ -11747,6 +11772,33 @@
           "childNodes": [],
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_2_6_0_3_8_kite-data-core-1.0.0_jar",
+          "mvn_uri": "mvn:org.kitesdk/kite-data-core/1.0.0",
+          "name": "kite-data-core-1.0.0.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_2_6_0_3_8_kite-data-mapreduce-1.0.0_jar",
+          "mvn_uri": "mvn:org.kitesdk/kite-data-mapreduce/1.0.0",
+          "name": "kite-data-mapreduce-1.0.0.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_2_6_0_3_8_kite-hadoop-compatibility-1.0.0_jar",
+          "mvn_uri": "mvn:org.kitesdk/kite-hadoop-compatibility/1.0.0",
+          "name": "kite-hadoop-compatibility-1.0.0.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
           "id": "DYNAMIC_HDP_2_6_0_3_8_parquet_jackson_1_8_1_jar",
           "mvn_uri": "mvn:org.apache.parquet/parquet-jackson/1.8.1",
           "name": "parquet-jackson-1.8.1.jar",
@@ -12274,16 +12326,6 @@
           "childNodes": [],
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
-          "id": "DYNAMIC_HDP_2_6_0_3_8_stax_api_1_0_1_jar",
-          "mvn_uri": "mvn:org.talend.libraries/stax-api-1.0.1/6.0.0",
-          "name": "stax-api-1.0.1.jar",
-          "tagName": "libraryNeeded",
-          "useStudioRepository": "true"
-        },
-        {
-          "childNodes": [],
-          "context": "plugin:org.talend.hadoop.distribution.hdpx",
-          "excludeDependencies": "true",
           "id": "DYNAMIC_HDP_2_6_0_3_8_stax_api_1_0_2_jar",
           "mvn_uri": "mvn:javax.xml.stream/stax-api/1.0-2",
           "name": "stax-api-1.0-2.jar",
@@ -12598,5 +12640,5 @@
       "tagName": "extension"
     }
   ],
-  "tagName": "plugin"
+  "tagName": "plugin" 
 }
