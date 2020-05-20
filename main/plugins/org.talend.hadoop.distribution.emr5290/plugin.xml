@@ -1079,7 +1079,13 @@
             id="javax.inject-2.4.0.jar"
             name="javax.inject-2.4.0.jar"
             mvn_uri="mvn:org.glassfish.hk2.external/javax.inject/2.4.0"/>
-
+            
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr5290"
+            id="spark-avro_2.11-2.4.4.jar"
+            name="spark-avro_2.11-2.4.4.jar"
+            mvn_uri="mvn:org.apache.spark/spark-avro_2.11/2.4.4"/>
+            
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
             id="spark-core_2.11-2.4.4.jar"
@@ -2277,6 +2283,7 @@
 			<library id="snappy-0.2.jar"/>
 			<library id="snappy-java-1.1.2.6.jar"/>
 			<library id="spark-catalyst_2.11-2.4.4.jar"/>
+			<library id="spark-avro_2.11-2.4.4.jar"/>
 			<library id="spark-core_2.11-2.4.4.jar"/>
 			<library id="spark-graphx_2.11-2.4.4.jar"/>
 			<library id="spark-kvstore_2.11-2.4.4.jar"/>
