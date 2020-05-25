@@ -861,6 +861,11 @@
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
+            id="jackson-module-jaxb-annotations-2.10.2.jar"
+            name="jackson-module-jaxb-annotations-2.10.2.jar"
+            mvn_uri="mvn:com.fasterxml.jackson.core/jackson-module-jaxb-annotations/2.10.2"/>             
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr5290"
             id="jackson-databind-2.10.2.jar"
             name="jackson-databind-2.10.2.jar"
             mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.10.2"/>
