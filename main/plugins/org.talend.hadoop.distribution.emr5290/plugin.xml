@@ -1675,7 +1675,13 @@
             id="parquet-jackson-1.10.1-spark-amzn-1.jar"
             name="parquet-jackson-1.10.1-spark-amzn-1.jar"
             mvn_uri="mvn:org.apache.parquet/parquet-jackson/1.10.1-spark-amzn-1"/>
-            
+	    
+	<libraryNeeded	
+            context="plugin:org.talend.hadoop.distribution.emr5290"	
+            id="jackson-mapper-asl-1.9.14-TALEND.jar"	
+            name="jackson-mapper-asl-1.9.14-TALEND.jar"	
+            mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.14-TALEND"/>	
+
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
             id="parquet-column-1.10.1-spark-amzn-1.jar"
