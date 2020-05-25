@@ -566,6 +566,13 @@
             id="spark-tags_2.11-2.4.4.jar"
             name="spark-tags_2.11-2.4.4.jar"
             mvn_uri="mvn:org.apache.spark/spark-tags_2.11/2.4.4"/>
+	    
+	 <libraryNeeded	
+            context="plugin:org.talend.hadoop.distribution.emr5290"	
+            id="jackson-core-asl-1.9.14-TALEND.jar"	
+            name="jackson-core-asl-1.9.14-TALEND.jar"	
+            mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.14-TALEND"/>	
+
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
