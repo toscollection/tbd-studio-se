@@ -451,6 +451,13 @@
 			"description": "",
 			"exclusions": [
 				{
+					"groupId": "org.apache.hive",
+					"artifactId": "hive-exec",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				{
 					"groupId": "xerces",
 					"artifactId": "*",
 					"classifier": "",
@@ -589,6 +596,15 @@
 			"description": ""
 		},
 		{
+			"id": "hive-exec-1.2.1-talend",
+			"type": "STANDARD",
+			"context": "{properties.context}",
+			"jarName": "hive-exec-1.2.1-talend.jar",
+			"mvnUri": "mvn:org.talend.libraries/hive-exec-1.1.1-talend/6.0.0",
+			"useStudioRepository": "true",
+			"description": ""
+		},
+		{
 			"id": "hive-exec-spark",
 			"type": "BASE",
 			"context": "{properties.context}",			
@@ -598,7 +614,16 @@
 			"jarName": "hive-exec-1.2.1.spark2.jar",
 			"classifier": "",
 			"mvnUri": "mvn:org.spark-project.hive/hive-exec/1.2.1.spark2",
-			"description": ""
+			"description": "",
+			"exclusions": [
+				{
+					"groupId": "org.apache.hive",
+					"artifactId": "hive-exec",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				}
+			]
 		},
 		{
 			"id": "hive-hbase-handler",
@@ -1272,6 +1297,13 @@
 			"description": "",
 			"exclusions": [
 				{
+					"groupId": "org.apache.hive",
+					"artifactId": "hive-exec",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				{
 					"groupId": "org.apache.hadoop",
 					"artifactId": "*",
 					"classifier": "",
@@ -1326,6 +1358,13 @@
 			"description": "",
 			"exclusions": [
 				{
+					"groupId": "org.apache.hive",
+					"artifactId": "hive-exec",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				{
 					"groupId": "org.apache.hadoop",
 					"artifactId": "*",
 					"classifier": "",
@@ -1365,6 +1404,13 @@
 			"description": "",
 			"exclusions": [
 				{
+					"groupId": "org.apache.hive",
+					"artifactId": "hive-exec",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
+				{
 					"groupId": "org.apache.hadoop",
 					"artifactId": "*",
 					"classifier": "",
@@ -1396,6 +1442,13 @@
             "classifier": "",
             "description": "",
             "exclusions": [
+				{
+					"groupId": "org.apache.hive",
+					"artifactId": "hive-exec",
+					"classifier": "",
+					"extension": "",
+					"description": ""
+				},
                 {
                     "groupId": "*",
                     "artifactId": "*",
@@ -1817,6 +1870,7 @@
 				"hadoop-mapreduce-client-core",
 				"hadoop-yarn-server-web-proxy",				
 				"hive-exec",
+				"hive-exec-1.2.1-talend",
 				"spark-hive_2.11",
 				"hive-exec-spark",
 				"spark-mllib_2.11",
