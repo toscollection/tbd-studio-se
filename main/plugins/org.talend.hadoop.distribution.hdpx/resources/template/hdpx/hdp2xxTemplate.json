@@ -105,6 +105,10 @@
           "classifier": "",
           "extension": "",
           "description": ""
+        },
+        {
+          "groupId": "com.fasterxml.jackson.core",
+          "artifactId": "jackson-core"
         }
       ]
     },
@@ -140,6 +144,24 @@
         },
         {
           "groupId": "jdk.tools",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "hive-metastore",
+      "type": "BASE",
+      "context": "{properties.context}",
+      "groupId": "org.apache.hive",
+      "artifactId": "hive-metastore",
+      "classifier": "",
+      "description": "",
+      "exclusions": [
+        {
+          "groupId": "*",
           "artifactId": "*",
           "classifier": "",
           "extension": "",
@@ -545,6 +567,10 @@
           "classifier": "",
           "extension": "",
           "description": ""
+        },
+        {
+          "groupId": "com.fasterxml.jackson.core",
+          "artifactId": "jackson-core"
         }
       ]
     },
@@ -570,6 +596,10 @@
           "classifier": "",
           "extension": "",
           "description": ""
+        },
+        {
+          "groupId": "com.fasterxml.jackson.core",
+          "artifactId": "jackson-core"
         }
       ]
     },
@@ -1187,6 +1217,13 @@
       ]
     },
     {
+      "id": "HDFS-NOT-SPARK-1-6-LIB-DYNAMIC",
+      "description": "Hdfs libraries for every execution engine except Spark 1.6",
+      "modules": [
+      	"jackson-core-2.6.6"
+      ]
+    },
+    {
       "id": "HIVE-LIB-DYNAMIC",
       "description": "",
       "modules": [
@@ -1327,6 +1364,13 @@
           "version": "2.6.6",
           "description": ""
         },
+      ]
+    },
+    {
+      "id": "TEZ-NOT-SPARK-1-6-LIB-DYNAMIC",
+      "description": "",
+      "modules": [
+        "jackson-core-2.6.6"
       ]
     },
     {
