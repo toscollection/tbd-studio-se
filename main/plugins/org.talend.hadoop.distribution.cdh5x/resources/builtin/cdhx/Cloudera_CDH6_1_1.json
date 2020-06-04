@@ -3386,10 +3386,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_httpcore_4_4_10_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_jackson_annotations_2_9_5_jar",
         "tagName" : "library"
       }, {
@@ -12612,14 +12608,6 @@
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
       "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_1_1_guava_11_0_1_jar",
-      "mvn_uri" : "mvn:com.google.guava/guava/11.0.1/jar",
-      "name" : "guava-11.0.1.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
-      "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_guava_14_0_1_jar",
       "mvn_uri" : "mvn:com.google.guava/guava/14.0.1/jar",
       "name" : "guava-14.0.1.jar",
@@ -12862,7 +12850,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_hbase_client_2_1_0_cdh6_1_1_jar",
-      "mvn_uri" : "mvn:org.apache.hbase/hbase-client/2.1.0-cdh6.1.1",
+      "mvn_uri" : "mvn:org.apache.hbase/hbase-client/2.1.0-cdh6.1.1/jar",
       "name" : "hbase-client-2.1.0-cdh6.1.1.jar",
       "tagName" : "libraryNeeded"
     }, {
@@ -13038,17 +13026,8 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_hive_exec",
-      "mvn_uri" : "mvn:org.talend.libraries/hive-exec-shade-2.1.1-cdh6.1.1/6.0.0",
-      "name" : "hive-exec-shade-2.1.1-cdh6.1.1.jar",
-      "tagName" : "libraryNeeded",
-      "useStudioRepository" : "true"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_1_1_hive_exec_spark",
-      "mvn_uri" : "mvn:org.spark-project.hive/hive-exec/1.2.1.spark2",
-      "name" : "hive-exec-1.2.1.spark2.jar",
+      "mvn_uri" : "mvn:org.talend.libraries/hive-exec-shade-2.1.1-cdh6.1.1-talend/6.0.0",
+      "name" : "hive-exec-shade-2.1.1-cdh6.1.1-talend.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
     }, {
