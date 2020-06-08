@@ -4,7 +4,6 @@
    <extension
          point="org.talend.core.runtime.librariesNeeded">
 
-
 		<libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
             id="azure-data-lake-store-sdk-2.3.1.jar"

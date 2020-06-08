@@ -1148,29 +1148,37 @@
       "description": ""
     },
     {
-      "id": "kite-data-core-1.0.0",
+      "id": "kite-data-core-1.1.0",
       "type": "STANDARD",
       "context": "{properties.context}",
-      "jarName": "kite-data-core-1.0.0.jar",
-      "mvnUri": "mvn:org.kitesdk/kite-data-core/1.0.0",
+      "jarName": "kite-data-core-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-data-core/1.1.0",
       "description": ""
     },
     {
-      "id": "kite-data-mapreduce-1.0.0",
+      "id": "kite-data-mapreduce-1.1.0",
       "type": "STANDARD",
       "context": "{properties.context}",
-      "jarName": "kite-data-mapreduce-1.0.0.jar",
-      "mvnUri": "mvn:org.kitesdk/kite-data-mapreduce/1.0.0",
+      "jarName": "kite-data-mapreduce-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-data-mapreduce/1.1.0",
       "description": ""
     },
     {
-      "id": "kite-hadoop-compatibility-1.0.0",
+      "id": "kite-hadoop-compatibility-1.1.0",
       "type": "STANDARD",
       "context": "{properties.context}",
-      "jarName": "kite-hadoop-compatibility-1.0.0.jar",
-      "mvnUri": "mvn:org.kitesdk/kite-hadoop-compatibility/1.0.0",
+      "jarName": "kite-hadoop-compatibility-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-hadoop-compatibility/1.1.0",
       "description": ""
     },
+	{
+      "id": "kite-data-hive-1.1.0",
+      "type": "STANDARD",
+      "context": "{properties.context}",
+      "jarName": "kite-data-hive-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-data-hive/1.1.0",
+      "description": ""
+    },  
     {
       "id": "parquet-avro-1.4.1",
       "type": "STANDARD",
@@ -1207,6 +1215,13 @@
           "extension": "",
           "description": ""
         },
+      ]
+    },
+    {
+      "id": "HDFS-NOT-SPARK-1-6-LIB-DYNAMIC",
+      "description": "Hdfs libraries for every execution engine except Spark 1.6",
+      "modules": [
+      	"jackson-core-2.6.6"
       ]
     },
     {
@@ -1281,13 +1296,28 @@
         "avro-1.8.0",
         "avro-mapred",
         "sqoop",
-        "kite-data-core-1.0.0",
-        "kite-data-mapreduce-1.0.0",
-        "kite-hadoop-compatibility-1.0.0",
+        "kite-data-core-1.1.0",
+        "kite-data-mapreduce-1.1.0",
+        "kite-hadoop-compatibility-1.1.0"
+      ]
+    },
+    {
+      "id": "SQOOP-PARQUET-LIB-DYNAMIC",
+      "description": "",
+      "modules": [
         "parquet-avro-1.8.2",
         "parquet-hadoop-bundle",
         "parquet-hadoop-1.8.2",
         "parquet-avro-1.4.1"
+      ]
+    },
+    {
+      "id": "SQOOP-HIVE-LIB-DYNAMIC",
+      "description": "",
+      "modules": [
+        "kite-data-hive-1.1.0",
+        "hive-metastore",
+        "hive-exec"
       ]
     },
     {
@@ -1364,6 +1394,13 @@
           "version": "2.6.6",
           "description": ""
         },
+      ]
+    },
+    {
+      "id": "TEZ-NOT-SPARK-1-6-LIB-DYNAMIC",
+      "description": "",
+      "modules": [
+        "jackson-core-2.6.6"
       ]
     },
     {

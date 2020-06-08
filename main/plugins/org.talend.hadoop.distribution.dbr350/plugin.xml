@@ -16,7 +16,7 @@
             name="talend-bigdata-launcher-databricks-2.0.6.jar"
             mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-databricks/2.0.6">
         </libraryNeeded>
-                           
+
 		 <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr350"
             id="avro-mapred-1.7.7-hadoop2.jar"
@@ -229,7 +229,6 @@
                 name="BIGDATA-LAUNCHER-LIB-DBR350"  >
 			<library id="talend-bigdata-launcher" />
 			<library id="talend-bigdata-launcher-databricks" />
-			<library id="gson-2.3.jar" />
 			<library id="gson-2.3.jar" />
 			<library id="jackson-core-2.8.9.jar" />
 			<library id="jackson-databind-2.8.9.jar" />
