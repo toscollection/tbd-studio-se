@@ -314,6 +314,12 @@
             name="avro-sqoop-uber.jar"
             mvn_uri="mvn:org.talend.libraries/avro-sqoop-uber/6.0.0"/>
 
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr5150"
+            id="avro-sqoop-uber.jar"
+            name="avro-sqoop-uber.jar"
+            mvn_uri="mvn:org.talend.libraries/avro-sqoop-uber/6.0.0"/>
+
         <!-- Tez -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5150"
