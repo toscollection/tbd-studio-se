@@ -3,10 +3,14 @@ package org.talend.repository.hadoopcluster.action.common;
 import org.eclipse.jface.wizard.IWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.talend.commons.exception.ExceptionHandler;
+import org.talend.commons.exception.PersistenceException;
 import org.talend.commons.runtime.model.repository.ERepositoryStatus;
 import org.talend.commons.ui.runtime.image.IImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
+import org.talend.core.model.properties.ConnectionItem;
 import org.talend.core.model.repository.ERepositoryObjectType;
+import org.talend.core.model.update.RepositoryUpdateManager;
 import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.repository.ui.actions.metadata.AbstractCreateAction;
 import org.talend.repository.ProjectManager;
@@ -56,7 +60,14 @@ public abstract class CreateHadoopNodeAction extends AbstractCreateAction {
             if (repositoryNode == null) {
                 repositoryNode = getRepositoryNodeForDefault(getNodeType());
             }
-
+        }
+        if (!creation) {
+            ConnectionItem conntectionItem = (ConnectionItem) repositoryNode.getObject().getProperty().getItem();
+            try {
+                RepositoryUpdateManager.updateConnectionContextParam(conntectionItem);
+            } catch (PersistenceException ex) {
+                ExceptionHandler.process(ex);
+            }
         }
 
         IWizard wizard = getWizard(PlatformUI.getWorkbench(), creation, repositoryNode, getExistingNames());
