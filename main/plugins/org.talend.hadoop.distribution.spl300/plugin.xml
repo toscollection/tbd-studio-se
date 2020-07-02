@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.core.runtime.librariesNeeded">
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-core_2.12-3.0.0.jar" name="spark-core_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-sql_2.12-3.0.0.jar" name="spark-sql_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-mllib_2.12-3.0.0.jar" name="spark-mllib_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-mllib-local_2.12-3.0.0.jar" name="spark-mllib-local_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="hadoop-common-3.2.1.jar" name="hadoop-common-3.2.1.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.1"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="hadoop-mapreduce-client-core-3.2.1.jar" name="hadoop-mapreduce-client-core-3.2.1.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.2.1"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar"
+             mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"/>
+
+        <!-- Spark group -->
+        <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP" name="SPARK_BATCH_MODULE_GROUP">
+            <library id="spark-core_2.12-3.0.0.jar"/>
+            <library id="spark-sql_2.12-3.0.0.jar"/>
+            <library id="spark-mllib_2.12-3.0.0.jar"/>
+            <library id="spark-mllib-local_2.12-3.0.0.jar"/>
+            <library id="hadoop-common-3.2.1.jar"/>
+            <library id="hadoop-mapreduce-client-core-3.2.1.jar"/>
+            <library id="kryo-shaded-4.0.2.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Spark Streaming group TODO-->
+        <libraryNeededGroup
+                description="SPARK libraries for spl300"
+                id="SPARK-STREAMING-LIB-MRREQUIRED-spl300"
+                name="SPARK-STREAMING-LIB-MRREQUIRED-spl300">
+        </libraryNeededGroup>
+        
+        <!-- Spark Streaming Kinesis group -->
+        <libraryNeededGroup
+                description="SPARK libraries for spl300"
+                id="SPARK-STREAMING-LIB-KINESIS-spl300"
+                name="SPARK-STREAMING-LIB-KINESIS-spl300">
+        </libraryNeededGroup>
+
+        <!-- HiveOnSpark group -->
+        <libraryNeededGroup
+                description="Hive On SPARK libraries for spl300"
+                id="HIVEONSPARK-LIB-MRREQUIRED-spl300"
+                name="HIVEONSPARK-LIB-MRREQUIRED-spl300">
+        </libraryNeededGroup>
+   </extension>
+   <extension
+         point="org.talend.core.runtime.classloader_provider">
+   </extension>
+
+</plugin>

@@ -373,4 +373,11 @@ public boolean isQuboleDistribution() {
     public String getSuffixParquetPackage() {
         return "";
     }
+    
+    /**
+     * The distribution runs in Spark local.
+     */
+    public boolean isSparkLocal() {
+        return false;
+    };
 }
