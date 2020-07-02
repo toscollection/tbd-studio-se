@@ -1,0 +1,186 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<plugin>
+    <extension point="org.talend.core.runtime.librariesNeeded">
+        <libraryNeeded id="amazon-kinesis-client-1.8.10.jar" name="amazon-kinesis-client-1.8.10.jar"
+                       mvn_uri="mvn:com.amazonaws/amazon-kinesis-client/1.8.10"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="avro-compiler-1.8.2.jar" name="avro-compiler-1.8.2.jar"
+                       mvn_uri="mvn:org.apache.avro/avro-compiler/1.8.2"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="avro-mapred-1.8.2-hadoop2.jar" name="avro-mapred-1.8.2-hadoop2.jar"
+                       mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2-hadoop2"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="aws-java-sdk-core-1.11.655.jar" name="aws-java-sdk-core-1.11.655.jar"
+                       mvn_uri="mvn:com.amazonaws/aws-java-sdk-core/1.11.655"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="aws-java-sdk-kinesis-1.11.655.jar" name="aws-java-sdk-kinesis-1.11.655.jar"
+                       mvn_uri="mvn:com.amazonaws/aws-java-sdk-kinesis/1.11.655"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="azure-data-lake-store-sdk-2.2.8.jar" name="azure-data-lake-store-sdk-2.2.8.jar"
+                       mvn_uri="mvn:com.microsoft.azure/azure-data-lake-store-sdk/2.2.8"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="azure-storage-5.2.0.jar" name="azure-storage-5.2.0.jar"
+                       mvn_uri="mvn:com.microsoft.azure/azure-storage/5.2.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="commons-codec-1.10.jar" name="commons-codec-1.10.jar"
+                       mvn_uri="mvn:commons-codec/commons-codec/1.10"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="commons-lang-2.6.jar" name="commons-lang-2.6.jar" mvn_uri="mvn:commons-lang/commons-lang/2.6"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="commons-lang3-3.9.jar" name="commons-lang3-3.9.jar"
+                       mvn_uri="mvn:org.apache.commons/commons-lang3/3.9"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="commons-logging-1.1.3.jar" name="commons-logging-1.1.3.jar"
+                       mvn_uri="mvn:commons-logging/commons-logging/1.1.3"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="gson-2.7.jar" name="gson-2.7.jar" mvn_uri="mvn:com.google.code.gson/gson/2.7"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="hadoop-azure-datalake-2.7.4.jar" name="hadoop-azure-datalake-2.7.4.jar"
+                       mvn_uri="mvn:com.microsoft.azure/hadoop-azure-datalake/2.7.4"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="hadoop-common-2.7.4.jar" name="hadoop-common-2.7.4.jar"
+                       mvn_uri="mvn:org.apache.hadoop/hadoop-common/2.7.4"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="hadoop-mapreduce-client-core-2.7.4.jar" name="hadoop-mapreduce-client-core-2.7.4.jar"
+                       mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/2.7.4"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="jackson-core-2.10.0.jar" name="jackson-core-2.10.0.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.10.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="jackson-databind-2.10.0.jar" name="jackson-databind-2.10.0.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.10.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="jakarta.ws.rs-api-2.1.6.jar" name="jakarta.ws.rs-api-2.1.6.jar"
+                       mvn_uri="mvn:jakarta.ws.rs/jakarta.ws.rs-api/2.1.6"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="json_simple-1.1.jar" name="json_simple-1.1.jar"
+                       mvn_uri="mvn:org.talend.libraries/json_simple-1.1/6.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar"
+                       mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="parquet-hadoop-bundle-1.6.0.jar" name="parquet-hadoop-bundle-1.6.0.jar"
+                       mvn_uri="mvn:com.twitter/parquet-hadoop-bundle/1.6.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="scala-library-2.12.10.jar" name="scala-library-2.12.10.jar"
+                       mvn_uri="mvn:org.scala-lang/scala-library/2.12.10"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="scala-reflect-2.12.10.jar" name="scala-reflect-2.12.10.jar"
+                       mvn_uri="mvn:org.scala-lang/scala-reflect/2.12.10"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="slf4j-api-1.7.16.jar" name="slf4j-api-1.7.16.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.16"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="slf4j-log4j12-1.7.16.jar" name="slf4j-log4j12-1.7.16.jar"
+                       mvn_uri="mvn:org.slf4j/slf4j-log4j12/1.7.16"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-catalyst_2.12-3.0.0.jar" name="spark-catalyst_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-core_2.12-3.0.0.jar" name="spark-core_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-graphx_2.12-3.0.0.jar" name="spark-graphx_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-graphx_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-hive_2.12-3.0.0.jar" name="spark-hive_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-mllib-local_2.12-3.0.0.jar" name="spark-mllib-local_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-mllib_2.12-3.0.0.jar" name="spark-mllib_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-network-common_2.12-3.0.0.jar" name="spark-network-common_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-sql_2.12-3.0.0.jar" name="spark-sql_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-streaming-kinesis-asl_2.12-3.0.0.jar" name="spark-streaming-kinesis-asl_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-streaming_2.12-3.0.0.jar" name="spark-streaming_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="spark-unsafe_2.12-3.0.0.jar" name="spark-unsafe_2.12-3.0.0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.0"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="talend-bigdata-launcher-core-2.0.6.jar" name="talend-bigdata-launcher-core-2.0.6.jar"
+                       mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.0.6"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="talend-bigdata-launcher-databricks-2.0.7.jar"
+                       name="talend-bigdata-launcher-databricks-2.0.7.jar"
+                       mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-databricks/2.0.7"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeeded id="wsdl4j-1.6.3.jar" name="wsdl4j-1.6.3.jar" mvn_uri="mvn:wsdl4j/wsdl4j/1.6.3"
+                       context="plugin:org.talend.hadoop.distribution.dbr700"/>
+        <libraryNeededGroup id="BIGDATA-LAUNCHER-LIB-DBR700" name="BIGDATA-LAUNCHER-LIB-DBR700"
+                            description="Big Data launcher libraries for DBR700">
+            <library id="gson-2.7.jar"/>
+            <library id="jackson-annotations-2.10.0.jar"/>
+            <library id="jackson-core-2.10.0.jar"/>
+            <library id="jackson-databind-2.10.0.jar"/>
+            <library id="talend-bigdata-launcher-core-2.0.6.jar"/>
+            <library id="talend-bigdata-launcher-databricks-2.0.7.jar"/>
+        </libraryNeededGroup>
+        <libraryNeededGroup id="HIVEONSPARK-LIB-MRREQUIRED-DBR700" name="HIVEONSPARK-LIB-MRREQUIRED-DBR700"
+                            description="Hive On SPARK libraries for DBR700">
+            <library id="spark-hive_2.12-3.0.0.jar"/>
+        </libraryNeededGroup>
+        <libraryNeededGroup id="SPARK-AZURE-LIB-MRREQUIRED-DBR700" name="SPARK-AZURE-LIB-MRREQUIRED-DBR700"
+                            description="Hive On SPARK libraries for DBR700">
+            <library id="azure-data-lake-store-sdk-2.2.8.jar"/>
+            <library id="hadoop-azure-datalake-2.7.4.jar"/>
+        </libraryNeededGroup>
+        <libraryNeededGroup id="SPARK-LIB-MRREQUIRED-DBR700" name="SPARK-LIB-MRREQUIRED-DBR700"
+                            description="SPARK libraries for DBR700">
+            <library id="avro-1.8.2.jar"/>
+            <library id="avro-compiler-1.8.2.jar"/>
+            <library id="avro-mapred-1.8.2-hadoop2.jar"/>
+            <library id="azure-storage-5.2.0.jar"/>
+            <library id="commons-codec-1.10.jar"/>
+            <library id="commons-lang-2.6.jar"/>
+            <library id="commons-lang3-3.9.jar"/>
+            <library id="commons-logging-1.1.3.jar"/>
+            <library id="hadoop-common-2.7.4.jar"/>
+            <library id="hadoop-mapreduce-client-core-2.7.4.jar"/>
+            <library id="jackson-core-2.10.0.jar"/>
+            <library id="jakarta.ws.rs-api-2.1.6.jar"/>
+            <library id="json_simple-1.1.jar"/>
+            <library id="kryo-shaded-4.0.2.jar"/>
+            <library id="parquet-hadoop-bundle-1.6.0.jar"/>
+            <library id="scala-library-2.12.10.jar"/>
+            <library id="scala-reflect-2.12.10.jar"/>
+            <library id="slf4j-api-1.7.16.jar"/>
+            <library id="slf4j-log4j12-1.7.16.jar"/>
+            <library id="spark-catalyst_2.12-3.0.0.jar"/>
+            <library id="spark-core_2.12-3.0.0.jar"/>
+            <library id="spark-graphx_2.12-3.0.0.jar"/>
+            <library id="spark-mllib-local_2.12-3.0.0.jar"/>
+            <library id="spark-mllib_2.12-3.0.0.jar"/>
+            <library id="spark-network-common_2.12-3.0.0.jar"/>
+            <library id="spark-sql_2.12-3.0.0.jar"/>
+            <library id="spark-streaming_2.12-3.0.0.jar"/>
+            <library id="spark-unsafe_2.12-3.0.0.jar"/>
+            <library id="wsdl4j-1.6.3.jar"/>
+        </libraryNeededGroup>
+        <libraryNeededGroup id="SPARK-STREAMING-LIB-KINESIS-DBR700" name="SPARK-STREAMING-LIB-KINESIS-DBR700"
+                            description="SPARK libraries for DBR700">
+            <library id="amazon-kinesis-client-1.8.10.jar"/>
+            <library id="aws-java-sdk-core-1.11.655.jar"/>
+            <library id="aws-java-sdk-kinesis-1.11.655.jar"/>
+            <library id="spark-streaming-kinesis-asl_2.12-3.0.0.jar"/>
+        </libraryNeededGroup>
+        <libraryNeededGroup id="SPARK-STREAMING-LIB-MRREQUIRED-DBR700" name="SPARK-STREAMING-LIB-MRREQUIRED-DBR700"
+                            description="SPARK libraries for DBR700">
+            <library id="spark-streaming_2.12-3.0.0.jar"/>
+        </libraryNeededGroup>
+    </extension>
+    <extension point="org.talend.core.runtime.classloader_provider"/>
+</plugin>
