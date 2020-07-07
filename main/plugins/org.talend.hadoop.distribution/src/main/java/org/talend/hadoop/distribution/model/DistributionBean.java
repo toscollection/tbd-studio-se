@@ -36,12 +36,15 @@ public class DistributionBean implements IHDistribution {
      * Distribution name and display name.
      */
     public final String name, displayName;
+    
+    private final boolean isSparkLocal;
 
-    public DistributionBean(ComponentType componentType, String name, String displayName) {
+    public DistributionBean(ComponentType componentType, String name, String displayName, boolean isSparkLocal) {
         super();
         this.componentType = componentType;
         this.name = name;
         this.displayName = displayName;
+        this.isSparkLocal = isSparkLocal;
     }
 
     @Override
@@ -222,6 +225,11 @@ public class DistributionBean implements IHDistribution {
     @Override
     public String toString() {
         return name + ',' + displayName;
+    }
+
+    @Override
+    public boolean isSparkLocal() {
+        return isSparkLocal;
     }
 
 }

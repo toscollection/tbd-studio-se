@@ -232,7 +232,7 @@ public class HadoopDistributionsHelper {
     }
 
     public static String getCacheVersion() {
-        return cacheVersion;
+        return String.valueOf(System.currentTimeMillis());
     }
 
     /**

@@ -21,6 +21,18 @@
              mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.0.0"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-network-common_2.12-3.0.0.jar" name="spark-network-common_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-unsafe_2.12-3.0.0.jar" name="spark-unsafe_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-catalyst_2.12-3.0.0.jar" name="spark-catalyst_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
              id="hadoop-common-3.2.1.jar" name="hadoop-common-3.2.1.jar"
              mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.1"/>
 
@@ -32,15 +44,37 @@
              id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar"
              mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"/>
 
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="scala-library-2.12.10.jar" name="scala-library-2.12.10.jar"
+             mvn_uri="mvn:org.scala-lang/scala-library/2.12.10"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="commons-lang3-3.9.jar" name="commons-lang3-3.9.jar"
+             mvn_uri="mvn:org.apache.commons/commons-lang3/3.9"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="scala-library-2.12.10.jar" name="scala-library-2.12.10.jar"
+             mvn_uri="mvn:org.scala-lang/scala-library/2.12.10"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="scala-reflect-2.12.10.jar" name="scala-reflect-2.12.10.jar"
+             mvn_uri="mvn:org.scala-lang/scala-reflect/2.12.10"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP" name="SPARK_BATCH_MODULE_GROUP">
             <library id="spark-core_2.12-3.0.0.jar"/>
             <library id="spark-sql_2.12-3.0.0.jar"/>
+            <library id="spark-network-common_2.12-3.0.0.jar"/>
+            <library id="spark-unsafe_2.12-3.0.0.jar"/>
+            <library id="spark-catalyst_2.12-3.0.0.jar"/>
             <library id="spark-mllib_2.12-3.0.0.jar"/>
             <library id="spark-mllib-local_2.12-3.0.0.jar"/>
             <library id="hadoop-common-3.2.1.jar"/>
             <library id="hadoop-mapreduce-client-core-3.2.1.jar"/>
             <library id="kryo-shaded-4.0.2.jar"/>
+            <library id="commons-lang3-3.9.jar"/>
+            <library id="scala-library-2.12.10.jar"/>
+            <library id="scala-reflect-2.12.10.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming group TODO-->

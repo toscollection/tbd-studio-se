@@ -26,7 +26,9 @@ import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
+import org.talend.hadoop.distribution.condition.BooleanExpression;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.spl.ISparkLocalDistribution;
 import org.talend.hadoop.distribution.spl300.modulegroup.SPL300HiveOnSparkModuleGroup;
@@ -36,9 +38,9 @@ import org.talend.hadoop.distribution.spl300.modulegroup.node.sparkstreaming.SPL
 
 public class SPL300Distribution extends AbstractDistribution implements ISparkLocalDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
 
-    public final static String VERSION = "Spark_3_3_0";
+    public final static String VERSION = ESparkVersion.SPARK_3_0.getSparkVersion();
 
-    public static final String VERSION_DISPLAY = "3.0.0";
+    public static final String VERSION_DISPLAY = ESparkVersion.SPARK_3_0.getVersionLabel();
 
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -88,6 +90,11 @@ public class SPL300Distribution extends AbstractDistribution implements ISparkLo
         return DISTRIBUTION_NAME;
 	}
 
+    @Override
+    public ComponentCondition getDisplayCondition(ComponentType componentType) {
+        return new SimpleComponentCondition(new BooleanExpression(false));
+    }
+	
 	@Override
 	public String getVersion() {
         return VERSION;
@@ -131,7 +138,7 @@ public class SPL300Distribution extends AbstractDistribution implements ISparkLo
 	@Override
 	public Set<ESparkVersion> getSparkVersions() {
 		Set<ESparkVersion> version = new HashSet<>();
-		version.add(ESparkVersion.SPARK_3_3);
+		version.add(ESparkVersion.SPARK_3_0);
         return version;
     }
 
