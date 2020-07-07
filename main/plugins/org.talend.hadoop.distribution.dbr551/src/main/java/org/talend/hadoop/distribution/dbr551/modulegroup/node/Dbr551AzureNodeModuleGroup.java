@@ -23,9 +23,11 @@ public class Dbr551AzureNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
-        moduleGroups.add(new DistributionModuleGroup(Dbr551Constant.SPARK_AZURE_LIB_MRREQUIRED_DBR551.getModuleName(),
+        moduleGroups.add(new DistributionModuleGroup(
+                Dbr551Constant.SPARK_AZURE_LIB_MRREQUIRED_DBR551.getModuleName(),
                 true,
-                null));
+                null
+        ));
         return moduleGroups;
     }
 }

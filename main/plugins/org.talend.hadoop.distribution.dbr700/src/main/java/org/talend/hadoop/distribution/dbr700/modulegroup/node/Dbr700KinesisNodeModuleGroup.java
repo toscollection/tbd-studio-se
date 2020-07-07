@@ -23,9 +23,11 @@ public class Dbr700KinesisNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
-        moduleGroups.add(new DistributionModuleGroup(Dbr700Constant.SPARK_STREAMING_LIB_KINESIS_DBR700.getModuleName(),
+        moduleGroups.add(new DistributionModuleGroup(
+                Dbr700Constant.SPARK_STREAMING_LIB_KINESIS_DBR700.getModuleName(),
                 true,
-                null));
+                null
+        ));
         return moduleGroups;
     }
 }

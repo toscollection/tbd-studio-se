@@ -40,16 +40,16 @@ import org.talend.hadoop.distribution.dbr551.modulegroup.node.Dbr551KinesisNodeM
 public class Dbr551Distribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
         SparkStreamingComponent, HiveOnSparkComponent {
 
-    public final static String VERSION = "Databricks_5_5" ;
+    public final static String VERSION = "Databricks_5_5_1";
 
-    public static final String VERSION_DISPLAY = "5.5 LTS (includes Apache Spark 2.4.3, Scala 2.11)" ;
+    public static final String VERSION_DISPLAY = "5.5.1 LTS (includes Apache Spark 2.4.3, Scala 2.11)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*," +
             "$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*," +
             "$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*," +
             "$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*," +
             "$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*," +
-            "$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ; //$NON-NLS-1$
+            "$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*"; //$NON-NLS-1$
 
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -251,6 +251,6 @@ public class Dbr551Distribution extends AbstractDatabricksDistribution implement
 
     @Override
     public String getTransientClusterSparkVersion() {
-        return "5.5.x-scala2.11" ;
+        return "5.5.x-scala2.11";
     }
 }

@@ -38,7 +38,7 @@
         <libraryNeeded id="gson-2.2.4.jar" name="gson-2.2.4.jar" mvn_uri="mvn:com.google.code.gson/gson/2.2.4"
                        context="plugin:org.talend.hadoop.distribution.dbr551"/>
         <libraryNeeded id="hadoop-azure-datalake-2.7.3.jar" name="hadoop-azure-datalake-2.7.3.jar"
-                       mvn_uri="mvn:com.microsoft.azure/hadoop-azure-datalake/2.7.3"
+                       mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/2.7.3"
                        context="plugin:org.talend.hadoop.distribution.dbr551"/>
         <libraryNeeded id="hadoop-common-2.7.3.jar" name="hadoop-common-2.7.3.jar"
                        mvn_uri="mvn:org.apache.hadoop/hadoop-common/2.7.3"
@@ -58,8 +58,8 @@
         <libraryNeeded id="javax.ws.rs-api-2.0.1.jar" name="javax.ws.rs-api-2.0.1.jar"
                        mvn_uri="mvn:javax.ws.rs/javax.ws.rs-api/2.0.1"
                        context="plugin:org.talend.hadoop.distribution.dbr551"/>
-        <libraryNeeded id="json_simple-1.1.jar" name="json_simple-1.1.jar"
-                       mvn_uri="mvn:org.talend.libraries/json_simple-1.1/6.0.0"
+        <libraryNeeded id="json-simple-1.1.1.jar" name="json-simple-1.1.1.jar"
+                       mvn_uri="mvn:com.googlecode.json-simple/json-simple/1.1.1"
                        context="plugin:org.talend.hadoop.distribution.dbr551"/>
         <libraryNeeded id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar"
                        mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"
@@ -152,7 +152,7 @@
             <library id="hadoop-mapreduce-client-core-2.7.3.jar"/>
             <library id="jackson-core-2.6.7.jar"/>
             <library id="javax.ws.rs-api-2.0.1.jar"/>
-            <library id="json_simple-1.1.jar"/>
+            <library id="json-simple-1.1.1.jar"/>
             <library id="kryo-shaded-4.0.2.jar"/>
             <library id="parquet-hadoop-bundle-1.6.0.jar"/>
             <library id="scala-library-2.11.12.jar"/>
