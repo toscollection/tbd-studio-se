@@ -52,6 +52,7 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 			+ DEFAULT_LIB_ROOT + "/hadoop-yarn/*" + SEPARATOR 
 			+ DEFAULT_LIB_ROOT + "/hadoop-yarn/lib/*" + SEPARATOR 
 			+ DEFAULT_LIB_ROOT + "/avro/*" + SEPARATOR 
+			+ DEFAULT_LIB_ROOT + "/hive_warehouse_connector/*" + SEPARATOR 
 			+ DEFAULT_LIB_ROOT + "/hadoop/lib/*";
 
 	public CDP7xDistributionTemplate(DynamicPluginAdapter pluginAdapter) throws Exception {
