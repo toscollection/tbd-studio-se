@@ -65,6 +65,7 @@ public class Dbr700Distribution extends AbstractDatabricksDistribution implement
         moduleGroups = buildModuleGroups();
         nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());
     }
+    
 
     protected Map<ComponentType, ComponentCondition> buildDisplayConditions() {
         return new HashMap<>();
@@ -160,7 +161,7 @@ public class Dbr700Distribution extends AbstractDatabricksDistribution implement
     @Override
     public Set<ESparkVersion> getSparkVersions() {
         Set<ESparkVersion> version = new HashSet<>();
-        version.add(ESparkVersion.SPARK_2_4);
+        version.add(ESparkVersion.SPARK_3_0);
         return version;
     }
 
@@ -253,4 +254,7 @@ public class Dbr700Distribution extends AbstractDatabricksDistribution implement
     public String getTransientClusterSparkVersion() {
         return "7.0.x-scala2.12" ;
     }
+
+
+
 }
