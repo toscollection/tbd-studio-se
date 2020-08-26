@@ -1247,9 +1247,11 @@
                 description="Sqoop Parquet libraries for MapR 6.1.0"
                 id="SQOOP-PARQUET-LIB-MAPR610"
                 name="SQOOP-PARQUET-LIB-MAPR610">
-            <library id="kite-data-core-1.0.0.jar"/>
-            <library id="kite-data-mapreduce-1.0.0.jar"/>
-            <library id="kite-hadoop-compatibility-1.0.0.jar"/>
+            <library id="kite-data-core-1.1.0.jar"/>
+			<library id="kite-data-hive-1.1.0.jar"/>
+			<library id="kite-data-mapreduce-1.1.0.jar"/>
+			<library id="kite-data-maprfs-1.1.0.jar"/>
+			<library id="kite-hadoop-compatibility-1.1.0.jar"/>
             <library id="jackson-databind-2.6.7.1.jar"/><!--2.3.1-->
             <library id="jackson-core-2.6.7.jar"/>
             <library id="parquet-hadoop-bundle-1.6.0.jar" />
