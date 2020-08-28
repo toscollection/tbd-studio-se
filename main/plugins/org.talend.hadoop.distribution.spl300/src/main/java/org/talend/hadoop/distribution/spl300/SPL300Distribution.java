@@ -29,12 +29,10 @@ import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.BooleanExpression;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
-import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.spl.ISparkLocalDistribution;
-import org.talend.hadoop.distribution.spl300.modulegroup.SPL300HiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.spl300.modulegroup.SPL300SparkBatchModuleGroup;
-import org.talend.hadoop.distribution.spl300.modulegroup.SPL300SparkStreamingModuleGroup;
-import org.talend.hadoop.distribution.spl300.modulegroup.node.sparkstreaming.SPL300SparkStreamingKinesisNodeModuleGroup;
+import org.talend.hadoop.distribution.spl300.modulegroup.node.sparkbatch.SPL300SparkBatchParquetNodeModuleGroup;
 
 public class SPL300Distribution extends AbstractDistribution implements ISparkLocalDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
 
@@ -77,6 +75,12 @@ public class SPL300Distribution extends AbstractDistribution implements ISparkLo
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution, String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = new HashMap<>();
 
+        // Spark Batch Parquet
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
+                SPL300SparkBatchParquetNodeModuleGroup.getModuleGroups());
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
+                SPL300SparkBatchParquetNodeModuleGroup.getModuleGroups());        
+        
         // Kinesis
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));

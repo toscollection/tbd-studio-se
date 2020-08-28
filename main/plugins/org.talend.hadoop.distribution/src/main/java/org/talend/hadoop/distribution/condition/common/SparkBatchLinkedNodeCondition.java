@@ -13,6 +13,7 @@
 package org.talend.hadoop.distribution.condition.common;
 
 import org.talend.hadoop.distribution.ComponentType;
+import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
@@ -54,6 +55,27 @@ public class SparkBatchLinkedNodeCondition {
         this.mCondition = new MultiComponentCondition(isCurrentDistribution, BooleanOperator.AND, isNotLocal);
     }
 
+    /**
+     * Check if linked spark config is Spark local with given Spark version
+     * 
+     * @param sparkLocalVersion
+     */
+    public SparkBatchLinkedNodeCondition(ESparkVersion sparkLocalVersion) {
+        
+        final ComponentCondition isLocal = new SimpleComponentCondition(new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, //
+                EqualityOperator.EQ,//
+                "true")); //$NON-NLS-1$
+
+        final ComponentCondition isCurrentSparkVersion = new SimpleComponentCondition(new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                ComponentType.SPARKBATCH.getVersionParameter(),//
+                EqualityOperator.EQ,//
+                sparkLocalVersion.getSparkVersion()));
+        
+        this.mCondition = new MultiComponentCondition(isCurrentSparkVersion, BooleanOperator.AND, isLocal);
+    }
+    
+    
     public MultiComponentCondition getCondition() {
         return this.mCondition;
     }

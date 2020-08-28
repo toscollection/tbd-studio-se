@@ -19,6 +19,6 @@ public class SPL300SparkStreamingKinesisNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getKinesisModuleGroups(String distribution, String version, String condition) {
         return ModuleGroupsUtils.getModuleGroups(distribution, version, condition,
-        		SPL300Constant.SPARK_STREAMING_KINESIS_MODULE_GROUP.getModuleName(), true);
+        		SPL300Constant.SPARK_STREAMING_KINESIS_LIBS.getModuleName(), true);
     }
 }

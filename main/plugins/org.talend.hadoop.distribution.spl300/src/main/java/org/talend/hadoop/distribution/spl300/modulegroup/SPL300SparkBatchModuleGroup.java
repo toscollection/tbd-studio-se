@@ -27,7 +27,7 @@ public class SPL300SparkBatchModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_BATCH_MODULE_GROUP.getModuleName()));
+        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_BATCH_LIBS.getModuleName()));
         return hs;
     }
 }
