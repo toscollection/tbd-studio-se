@@ -216,6 +216,31 @@
 	      id="lz4-java-1.7.1.jar" name="lz4-java-1.7.1.jar"
 	      mvn_uri="mvn:org.lz4/lz4-java/1.7.1"/>
 
+		<!-- Parquet libs -->
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="jul-to-slf4j-1.7.16.jar" name="jul-to-slf4j-1.7.16.jar"
+	      mvn_uri="mvn:org.slf4j/jul-to-slf4j/1.7.16"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="parquet-column-1.10.1.jar" name="parquet-column-1.10.1.jar"
+	      mvn_uri="mvn:org.apache.parquet/parquet-column/1.10.1"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="parquet-common-1.10.1.jar" name="parquet-common-1.10.1.jar"
+	      mvn_uri="mvn:org.apache.parquet/parquet-common/1.10.1"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="parquet-encoding-1.10.0.jar" name="parquet-encoding-1.10.0.jar"
+	      mvn_uri="mvn:org.apache.parquet/parquet-encoding/1.10.1"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="parquet-format-2.4.0.jar" name="parquet-format-2.4.0.jar"
+	      mvn_uri="mvn:org.apache.parquet/parquet-format/2.4.0"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="parquet-hadoop-1.10.1.jar" name="parquet-hadoop-1.10.1.jar"
+	      mvn_uri="mvn:org.apache.parquet/parquet-hadoop/1.10.1"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP_SPL300" name="SPARK_BATCH_MODULE_GROUP_SPL300">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -273,9 +298,15 @@
             <library id="xbean-asm7-shaded-4.15.jar"/>
         </libraryNeededGroup>
 
-
-SPARKBATCH-PARQUET-SPL300
-
+        <!-- Parquet group -->
+        <libraryNeededGroup description="Parquet libraries for spl300" id="SPARK_BATCH_PARQUET_MODULE_GROUP_SPL300" name="SPARK_BATCH_PARQUET_MODULE_GROUP_SPL300">
+            <library id="jul-to-slf4j-1.7.16.jar"/>
+            <library id="parquet-column-1.10.1.jar"/>
+            <library id="parquet-common-1.10.1.jar"/>
+            <library id="parquet-encoding-1.10.0.jar"/>
+            <library id="parquet-format-2.4.0.jar"/>
+            <library id="parquet-hadoop-1.10.1.jar"/>
+        </libraryNeededGroup>
 
         <!-- Spark Streaming group TODO-->
         <libraryNeededGroup

@@ -39,6 +39,10 @@ public class DistributionBean implements IHDistribution {
     
     private final boolean isSparkLocal;
 
+    public DistributionBean(ComponentType componentType, String name, String displayName) {
+        this(componentType, name, displayName, false);
+    }
+    
     public DistributionBean(ComponentType componentType, String name, String displayName, boolean isSparkLocal) {
         super();
         this.componentType = componentType;
