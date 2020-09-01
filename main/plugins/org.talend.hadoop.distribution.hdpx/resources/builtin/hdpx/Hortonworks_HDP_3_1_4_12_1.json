@@ -3351,14 +3351,8 @@
               "childNodes": [],
               "id": "DYNAMIC_HDP_3_1_4_12_1_zstd_jni_1_3_2_2_jar",
               "tagName": "library"
-            }
-          ],
-          "description": "",
-          "id": "DYNAMIC_HDP_3_1_4_12_1_HIVE_LIB_DYNAMIC",
-          "tagName": "libraryNeededGroup",
-          "templateId": "HIVE-LIB-DYNAMIC"
-        },
-        	{
+            },
+            {
               "childNodes": [],
               "id": "DYNAMIC_HDP_3_1_4_12_1_commons_logging_1_2_jar",
               "tagName": "library"
@@ -3372,7 +3366,13 @@
               "childNodes": [],
               "id": "DYNAMIC_HDP_3_1_4_12_1_jcl_over_slf4j_1_7_28_jar",
               "tagName": "library"
-            },
+            }
+          ],
+          "description": "",
+          "id": "DYNAMIC_HDP_3_1_4_12_1_HIVE_LIB_DYNAMIC",
+          "tagName": "libraryNeededGroup",
+          "templateId": "HIVE-LIB-DYNAMIC"
+        },
         	{
           		"childNodes": [],
           		"context": "plugin:org.talend.hadoop.distribution.hdpx",
