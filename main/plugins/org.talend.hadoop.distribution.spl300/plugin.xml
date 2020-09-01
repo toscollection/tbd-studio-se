@@ -125,8 +125,8 @@
 	      mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
 
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
-	      id="commons-configuration2-2.7.jar" name="commons-configuration2-2.7.jar"
-	      mvn_uri="mvn:org.apache.commons/commons-configuration2/2.7"/>
+	      id="commons-configuration2-2.1.1.jar" name="commons-configuration2-2.1.1.jar"
+	      mvn_uri="mvn:org.apache.commons/commons-configuration2/2.1.1"/>
 
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="guava-27.0-jre.jar" name="guava-27.0-jre.jar"
@@ -249,6 +249,10 @@
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="aws-java-sdk-bundle-1.11.375.jar" name="aws-java-sdk-bundle-1.11.375.jar"
 	      mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.375"/>
+	      
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="commons-text-1.4.jar" name="commons-text-1.4.jar"
+	      mvn_uri="mvn:org.apache.commons/commons-text/1.4/jar"/>
 
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP_SPL300" name="SPARK_BATCH_MODULE_GROUP_SPL300">
@@ -257,7 +261,7 @@
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.16.jar"/>
-            <library id="commons-configuration2-2.7.jar"/>
+            <library id="commons-configuration2-2.1.1.jar"/>
             <library id="commons-io-2.5.jar"/>
             <library id="commons-lang3-3.9.jar"/>
             <library id="commons-logging-1.1.3.jar"/>
@@ -321,6 +325,7 @@
         <libraryNeededGroup description="S3 libraries for spl300" id="SPARK_BATCH_S3_MODULE_GROUP_SPL300" name="SPARK_BATCH_S3_MODULE_GROUP_SPL300">
             <library id="hadoop-aws-3.2.1.jar"/>
             <library id="aws-java-sdk-bundle-1.11.375.jar"/>
+            <library id="commons-text-1.4.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming group TODO-->
