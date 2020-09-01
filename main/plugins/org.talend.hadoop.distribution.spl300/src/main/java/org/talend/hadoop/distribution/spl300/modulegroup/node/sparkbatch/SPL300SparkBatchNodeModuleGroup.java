@@ -8,12 +8,12 @@ import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.condition.common.SparkBatchLocalCondition;
 import org.talend.hadoop.distribution.spl300.SPL300Constant;
 
-public class SPL300SparkBatchParquetNodeModuleGroup {
+public class SPL300SparkBatchNodeModuleGroup {
 
-    public static Set<DistributionModuleGroup> getModuleGroups() {
+    public static Set<DistributionModuleGroup> getModuleGroup(String moduleGroupName, String sparkConfigLinkedParameter, ESparkVersion sparkLocalVersion) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(SPL300Constant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(), false,
-                new SparkBatchLocalCondition(ESparkVersion.SPARK_3_0));
+        DistributionModuleGroup dmg = new DistributionModuleGroup(moduleGroupName, false,
+                new SparkBatchLocalCondition(sparkConfigLinkedParameter, sparkLocalVersion));
         hs.add(dmg);
         return hs;
     }    

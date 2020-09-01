@@ -32,13 +32,15 @@ import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.spl.ISparkLocalDistribution;
 import org.talend.hadoop.distribution.spl300.modulegroup.SPL300SparkBatchModuleGroup;
-import org.talend.hadoop.distribution.spl300.modulegroup.node.sparkbatch.SPL300SparkBatchParquetNodeModuleGroup;
+import org.talend.hadoop.distribution.spl300.modulegroup.node.sparkbatch.SPL300SparkBatchNodeModuleGroup;
 
 public class SPL300Distribution extends AbstractDistribution implements ISparkLocalDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
 
-    public final static String VERSION = ESparkVersion.SPARK_3_0.getSparkVersion();
+    public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_0;
+    
+    public final static String VERSION = SPL300Distribution.SPARK_VERSION.getSparkVersion();
 
-    public static final String VERSION_DISPLAY = ESparkVersion.SPARK_3_0.getVersionLabel();
+    public static final String VERSION_DISPLAY = SPL300Distribution.SPARK_VERSION.getVersionLabel();
 
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -77,11 +79,14 @@ public class SPL300Distribution extends AbstractDistribution implements ISparkLo
 
         // Spark Batch Parquet
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
-                SPL300SparkBatchParquetNodeModuleGroup.getModuleGroups());
+                SPL300SparkBatchNodeModuleGroup.getModuleGroup(SPL300Constant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL300Distribution.SPARK_VERSION ));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
-                SPL300SparkBatchParquetNodeModuleGroup.getModuleGroups());        
+                SPL300SparkBatchNodeModuleGroup.getModuleGroup(SPL300Constant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(), SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL300Distribution.SPARK_VERSION));        
         
-        // Kinesis
+        // Spark Batch S3
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                SPL300SparkBatchNodeModuleGroup.getModuleGroup(SPL300Constant.SPARK_BATCH_S3_MODULE_GROUP.getModuleName(), SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, SPL300Distribution.SPARK_VERSION ));
+        
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));

@@ -241,6 +241,15 @@
 	      id="parquet-hadoop-1.10.1.jar" name="parquet-hadoop-1.10.1.jar"
 	      mvn_uri="mvn:org.apache.parquet/parquet-hadoop/1.10.1"/>
 
+		<!-- S3 libs -->
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="hadoop-aws-3.2.1.jar" name="hadoop-aws-3.2.1.jar"
+	      mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.2.1"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="aws-java-sdk-bundle-1.11.375.jar" name="aws-java-sdk-bundle-1.11.375.jar"
+	      mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.375"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP_SPL300" name="SPARK_BATCH_MODULE_GROUP_SPL300">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -306,6 +315,12 @@
             <library id="parquet-encoding-1.10.0.jar"/>
             <library id="parquet-format-2.4.0.jar"/>
             <library id="parquet-hadoop-1.10.1.jar"/>
+        </libraryNeededGroup>
+
+        <!-- S3 group -->
+        <libraryNeededGroup description="S3 libraries for spl300" id="SPARK_BATCH_S3_MODULE_GROUP_SPL300" name="SPARK_BATCH_S3_MODULE_GROUP_SPL300">
+            <library id="hadoop-aws-3.2.1.jar"/>
+            <library id="aws-java-sdk-bundle-1.11.375.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming group TODO-->
