@@ -110,7 +110,10 @@ pipeline {
                 //last 45min
                 stage("patch build") {
                     when {
-                        expression { isPullRequestBranch(env.BRANCH_NAME) }
+                        allOf {
+                            expression { isPullRequestBranch(env.BRANCH_NAME)   }
+                            expression { isMaintenanceBranch(env.CHANGE_TARGET) }
+                        }
                     }
                     steps {
                         script {
@@ -163,6 +166,11 @@ pipeline {
 @NonCPS
 static def isPullRequestBranch(branch) {
     branch.startsWith('PR-')
+}
+
+@NonCPS
+static def isMaintenanceBranch(branch) {
+    branch.startsWith('maintenance')
 }
 
 //we re not allowed to createStatus from the pullrequest global groovy object. so we use github API directly for
