@@ -721,7 +721,8 @@
             "modules": [
                 "hive-exec",
                 "impala-jdbc",
-                "hive-jdbc"
+                "hive-jdbc",
+                "hive-warehouse-connector"
             ]
         },
         {
@@ -777,6 +778,7 @@
                 "hbase-server",
                 "hive-exec",
                 "hive-jdbc",
+                "hive-warehouse-connector",
                 "kafka-clients",                
                 "kudu-spark2_2.11",
                 "parquet-hadoop-bundle",
