@@ -404,7 +404,13 @@
             "artifactId": "hive-warehouse-connector_2.11",
             "classifier": "",
             "description": "",
-            "exclusions": []
+            "exclusions": [ 
+                { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.curator", "artifactId" : "apache-curator", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
+            ]
         },
         {
             "id" : "httpclient-4.5.3",
