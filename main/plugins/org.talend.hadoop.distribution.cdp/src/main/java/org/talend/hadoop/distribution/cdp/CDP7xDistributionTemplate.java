@@ -59,6 +59,10 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 		super(pluginAdapter);
 	}
 	@Override
+    public boolean isCDPDistribution() {
+        return true;
+    }
+	@Override
 	public boolean doSupportImpalaConnector() {
 		
 		return true;

@@ -313,7 +313,9 @@ public boolean isQuboleDistribution() {
     public boolean isHortonworksDistribution() {
         return false;
     }
-
+    public boolean isCDPDistribution() {
+        return false;
+    }
     public boolean doImportDynamoDBDependencies() {
         return false;
     }
