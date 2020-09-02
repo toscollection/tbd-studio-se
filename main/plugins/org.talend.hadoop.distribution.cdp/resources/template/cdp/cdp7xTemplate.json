@@ -395,6 +395,16 @@
                 { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
             ]
+        }, 
+        {
+            "id": "hive-warehouse-connector",
+            "type": "BASE",
+            "context": "{properties.context}",
+            "groupId": "com.hortonworks.hive",
+            "artifactId": "hive-warehouse-connector_2.11",
+            "classifier": "",
+            "description": "",
+            "exclusions": []
         },
         {
             "id" : "httpclient-4.5.3",
