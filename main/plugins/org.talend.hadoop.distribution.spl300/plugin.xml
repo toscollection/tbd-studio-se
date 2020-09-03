@@ -33,6 +33,14 @@
              mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.0"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="spark-tags_2.12-3.0.0.jar" name="spark-tags_2.12-3.0.0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-tags_2.12/3.0.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+             id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar"
+             mvn_uri="mvn:org.scalanlp/breeze_2.12/1.0"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
              id="hadoop-common-3.2.1.jar" name="hadoop-common-3.2.1.jar"
              mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.1"/>
 
@@ -67,7 +75,11 @@
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="metrics-json-4.1.1.jar" name="metrics-json-4.1.1.jar"
 	      mvn_uri="mvn:io.dropwizard.metrics/metrics-json/4.1.1"/>
-	      
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="minlog-1.3.0.jar" name="minlog-1.3.0.jar"
+	      mvn_uri="mvn:com.esotericsoftware/minlog/1.3.0"/>
+
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="spark-kvstore_2.12-3.0.0.jar" name="spark-kvstore_2.12-3.0.0.jar"
 	      mvn_uri="mvn:org.apache.spark/spark-kvstore_2.12/3.0.0"/>
@@ -85,6 +97,10 @@
 	      mvn_uri="mvn:com.twitter/chill_2.12/0.9.5"/>
 	      
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="chill-java-0.9.5.jar" name="chill-java-0.9.5.jar"
+	      mvn_uri="mvn:com.twitter/chill-java/0.9.5"/>
+	      
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="json4s-ast_2.12-3.6.6.jar" name="json4s-ast_2.12-3.6.6.jar"
 	      mvn_uri="mvn:org.json4s/json4s-ast_2.12/3.6.6"/>
 	      
@@ -95,7 +111,11 @@
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="jersey-container-servlet-core-2.30.jar" name="jersey-container-servlet-core-2.30.jar"
 	      mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.30"/>
-	      
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="objenesis-2.6.jar" name="objenesis-2.6.jar"
+	      mvn_uri="mvn:org.objenesis/objenesis/2.6"/>
+
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="spark-launcher_2.12-3.0.0.jar" name="spark-launcher_2.12-3.0.0.jar"
 	      mvn_uri="mvn:org.apache.spark/spark-launcher_2.12/3.0.0"/>
@@ -215,7 +235,15 @@
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="lz4-java-1.7.1.jar" name="lz4-java-1.7.1.jar"
 	      mvn_uri="mvn:org.lz4/lz4-java/1.7.1"/>
-
+	      
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="re2j-1.1.jar" name="re2j-1.1.jar"
+	      mvn_uri="mvn:com.google.re2j/re2j/1.1"/>
+	      
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="RoaringBitmap-0.7.45.jar" name="RoaringBitmap-0.7.45.jar"
+	      mvn_uri="mvn:org.roaringbitmap/RoaringBitmap/0.7.45"/>
+	      
 		<!-- Parquet libs -->
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="jul-to-slf4j-1.7.16.jar" name="jul-to-slf4j-1.7.16.jar"
@@ -252,13 +280,36 @@
 	      
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
 	      id="commons-text-1.4.jar" name="commons-text-1.4.jar"
-	      mvn_uri="mvn:org.apache.commons/commons-text/1.4/jar"/>
+	      mvn_uri="mvn:org.apache.commons/commons-text/1.4"/>
+	      
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="hadoop-hdfs-client-3.2.1.jar" name="hadoop-hdfs-client-3.2.1.jar"
+	      mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.1"/>
+	     
+	    <!-- Azure libs -->
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="hadoop-azure-3.2.1.jar" name="hadoop-azure-3.2.1.jar"
+	      mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.2.1"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="azure-storage-7.0.0.jar" name="azure-storage-7.0.0.jar"
+	      mvn_uri="mvn:com.microsoft.azure/azure-storage/7.0.0"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="jetty-util-ajax-9.3.24.v20180605.jar" name="jetty-util-ajax-9.3.24.v20180605.jar"
+	      mvn_uri="mvn:org.eclipse.jetty/jetty-util-ajax/9.3.24.v20180605"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="jetty-util-9.3.24.v20180605.jar" name="jetty-util-9.3.24.v20180605.jar"
+	      mvn_uri="mvn:org.eclipse.jetty/jetty-util/9.3.24.v20180605"/>
 
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP_SPL300" name="SPARK_BATCH_MODULE_GROUP_SPL300">
             <library id="antlr4-runtime-4.7.1.jar"/>
             <library id="avro-1.8.2.jar"/>
+            <library id="breeze_2.12-1.0.jar"/>
             <library id="chill_2.12-0.9.5.jar"/>
+            <library id="chill-java-0.9.5.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.16.jar"/>
             <library id="commons-configuration2-2.1.1.jar"/>
@@ -288,8 +339,12 @@
             <library id="lz4-java-1.7.1.jar"/>
             <library id="metrics-core-4.1.1.jar"/>
             <library id="metrics-json-4.1.1.jar"/>
+            <library id="minlog-1.3.0.jar"/>
             <library id="netty-all-4.1.47.Final.jar"/>
+            <library id="objenesis-2.6.jar"/>
             <library id="paranamer-2.8.jar"/>
+            <library id="re2j-1.1.jar"/>
+            <library id="RoaringBitmap-0.7.45.jar"/>
             <library id="scala-library-2.12.10.jar"/>
             <library id="scala-library-2.12.10.jar"/>
             <library id="scala-reflect-2.12.10.jar"/>
@@ -303,6 +358,7 @@
             <library id="spark-network-common_2.12-3.0.0.jar"/>
             <library id="spark-network-shuffle_2.12-3.0.0.jar"/>
             <library id="spark-sql_2.12-3.0.0.jar"/>
+            <library id="spark-tags_2.12-3.0.0.jar"/>
             <library id="spark-unsafe_2.12-3.0.0.jar"/>
             <library id="stax2-api-4.2.1.jar"/>
             <library id="stream-2.9.6.jar"/>
@@ -319,6 +375,7 @@
             <library id="parquet-encoding-1.10.0.jar"/>
             <library id="parquet-format-2.4.0.jar"/>
             <library id="parquet-hadoop-1.10.1.jar"/>
+            <library id="hadoop-hdfs-client-3.2.1.jar"/>
         </libraryNeededGroup>
 
         <!-- S3 group -->
@@ -327,6 +384,17 @@
             <library id="aws-java-sdk-bundle-1.11.375.jar"/>
             <library id="commons-text-1.4.jar"/>
         </libraryNeededGroup>
+
+		<!-- Azure group -->
+		<libraryNeededGroup description="Azure libraries for spl300" id="SPARK_BATCH_AZURE_MODULE_GROUP_SPL300" name="SPARK_BATCH_AZURE_MODULE_GROUP_SPL300">
+			<library id="hadoop-azure-3.2.1.jar"/>
+			<library id="azure-storage-7.0.0.jar"/>
+			<library id="jetty-util-ajax-9.3.24.v20180605.jar"/>
+			<library id="jetty-util-9.3.24.v20180605.jar"/>
+			<library id="hadoop-hdfs-client-3.2.1.jar"/>
+			<library id="parquet-column-1.10.1.jar"/>
+			<library id="parquet-common-1.10.1.jar"/>
+		</libraryNeededGroup>
 
         <!-- Spark Streaming group TODO-->
         <libraryNeededGroup
