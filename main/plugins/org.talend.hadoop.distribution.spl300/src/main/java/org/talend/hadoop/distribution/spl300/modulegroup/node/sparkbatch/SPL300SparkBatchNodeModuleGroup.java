@@ -12,7 +12,7 @@ public class SPL300SparkBatchNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroup(String moduleGroupName, String sparkConfigLinkedParameter, ESparkVersion sparkLocalVersion) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(moduleGroupName, false,
+        DistributionModuleGroup dmg = new DistributionModuleGroup(moduleGroupName, true,
                 new SparkBatchLocalCondition(sparkConfigLinkedParameter, sparkLocalVersion));
         hs.add(dmg);
         return hs;
