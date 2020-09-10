@@ -95,7 +95,11 @@ public class SPL300Distribution extends AbstractDistribution implements ISparkLo
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.GS_CONFIGURATION_COMPONENT),
                 SPL300SparkBatchNodeModuleGroup.getModuleGroup(SPL300Constant.SPARK_BATCH_GS_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL300Distribution.SPARK_VERSION ));
         
-//        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
+        // Spark Batch BigQuery
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.BIGQUERY_CONFIGURATION_COMPONENT),
+                SPL300SparkBatchNodeModuleGroup.getModuleGroup(SPL300Constant.SPARK_BATCH_BIGQUERY_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL300Distribution.SPARK_VERSION ));
+
+        //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), SPL300SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
         return result;

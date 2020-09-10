@@ -46,6 +46,8 @@ public final class SparkBatchConstant {
     
     public static final String GS_CONFIGURATION_COMPONENT = "tGSConfiguration"; //$NON-NLS-1$
 
+    public static final String BIGQUERY_CONFIGURATION_COMPONENT = "tBigQueryConfiguration"; //$NON-NLS-1$
+    
     public static final String DYNAMODB_CONFIGURATION_COMPONENT = "tDynamoDBConfiguration"; //$NON-NLS-1$
 
     public static final String DYNAMODB_OUTPUT_COMPONENT = "tDynamoDBOutput"; //$NON-NLS-1$
