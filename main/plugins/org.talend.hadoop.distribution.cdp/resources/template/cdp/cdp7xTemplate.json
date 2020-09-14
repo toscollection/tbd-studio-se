@@ -23,7 +23,6 @@
             "classifier" : "hadoop2",
             "description" : "",
             "exclusions": [
-                { "groupId" : "org.apache.avro", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.slf4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
             ]
@@ -286,6 +285,7 @@
             "description": "",
             "exclusions": [
                 { "groupId" : "org.apache.hive", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
