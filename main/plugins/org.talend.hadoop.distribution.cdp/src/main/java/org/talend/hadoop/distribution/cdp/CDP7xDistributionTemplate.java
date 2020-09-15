@@ -17,6 +17,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.talend.hadoop.distribution.EParquetPackagePrefix;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.ESqoopPackageName;
 import org.talend.hadoop.distribution.component.CDPSparkBatchComponent;
@@ -41,18 +42,18 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 	public final static String DEFAULT_LIB_ROOT = "/opt/cloudera/parcels/CDH/lib";
 	public final static String TEMPLATE_ID = "CDP7xDistributionTemplate";
 
-	private final static String YARN_APPLICATION_CLASSPATH = 
-			DEFAULT_LIB_ROOT + "/spark/jars/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/hive/lib/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/impala/lib/*" + SEPARATOR 
+	private final static String YARN_APPLICATION_CLASSPATH =
+			DEFAULT_LIB_ROOT + "/spark/jars/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/hive/lib/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/impala/lib/*" + SEPARATOR
 			+ DEFAULT_LIB_ROOT + "/hbase/lib/*" + SEPARATOR
-			+ DEFAULT_LIB_ROOT + "/sqoop/lib/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/kudu/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/hadoop-mapreduce/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/hadoop-yarn/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/hadoop-yarn/lib/*" + SEPARATOR 
-			+ DEFAULT_LIB_ROOT + "/avro/*" + SEPARATOR 
 			+ DEFAULT_LIB_ROOT + "/hive_warehouse_connector/*" + SEPARATOR 
+			+ DEFAULT_LIB_ROOT + "/sqoop/lib/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/kudu/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/hadoop-mapreduce/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/hadoop-yarn/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/hadoop-yarn/lib/*" + SEPARATOR
+			+ DEFAULT_LIB_ROOT + "/avro/*" + SEPARATOR
 			+ DEFAULT_LIB_ROOT + "/hadoop/lib/*";
 
 	public CDP7xDistributionTemplate(DynamicPluginAdapter pluginAdapter) throws Exception {
@@ -64,12 +65,12 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
     }
 	@Override
 	public boolean doSupportImpalaConnector() {
-		
+
 		return true;
 	}
 	@Override
 	public boolean doImpalaSupportSSL() {
-		
+
 		return true;
 	}
 	@Override
@@ -279,9 +280,8 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 		return false;
 	}
 
-	@Override
-	public String getSuffixParquetPackage() {
-		return "org.apache.";
+	public String getParquetPrefixPackageName() {
+		return EParquetPackagePrefix.APACHE.toString();
 	}
 
 	@Override
