@@ -447,6 +447,14 @@
 	      id="oro-2.0.8.jar" name="oro-2.0.8.jar"
 	      mvn_uri="mvn:oro/oro/2.0.8"/>
 
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="delta-core_2.12-0.7.0.jar" name="delta-core_2.12-0.7.0.jar"
+	      mvn_uri="mvn:io.delta/delta-core_2.12/0.7.0"/>
+
+	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl300"
+	      id="jul-to-slf4j-1.7.30.jar" name="jul-to-slf4j-1.7.30.jar"
+	      mvn_uri="mvn:org.slf4j/jul-to-slf4j/1.7.30"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl300" id="SPARK_BATCH_MODULE_GROUP_SPL300" name="SPARK_BATCH_MODULE_GROUP_SPL300">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -586,6 +594,15 @@
             <library id="libfb303-0.9.3.jar"/>
             <library id="libthrift-0.12.0.jar"/>
             <library id="oro-2.0.8.jar"/>
+        </libraryNeededGroup>
+
+        <!-- DeltaLake group -->
+        <libraryNeededGroup description="DeltaLake libraries for spl300" id="SPARK_BATCH_DELTALAKE_MODULE_GROUP_SPL300" name="SPARK_BATCH_DELTALAKE_MODULE_GROUP_SPL300">
+            <library id="delta-core_2.12-0.7.0.jar"/>
+            <library id="jul-to-slf4j-1.7.30.jar"/>
+            <library id="parquet-hadoop-1.10.1.jar"/>
+            <library id="parquet-format-2.4.0.jar"/>
+            <library id="parquet-encoding-1.10.1.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming group TODO-->

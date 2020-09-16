@@ -86,4 +86,7 @@ public final class SparkBatchConstant {
 
     public static final String ALTUS_CLOUD_PROVIDER = "ALTUS_CLOUD_PROVIDER";
 
+    public static final String DELTALAKE_INPUT_COMPONENT = "tDeltaLakeInput";
+    public static final String DELTALAKE_OUTPUT_COMPONENT = "tDeltaLakeOutput";
+
 }
