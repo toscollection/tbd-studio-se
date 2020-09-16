@@ -25,12 +25,9 @@ import org.talend.hadoop.distribution.spl300.SPL300Constant;
 
 public class SPL300HiveOnSparkModuleGroup {
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-//        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
+        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_BATCH_HIVE_MODULE_GROUP.getModuleName(), true));
         return hs;
     }
 }

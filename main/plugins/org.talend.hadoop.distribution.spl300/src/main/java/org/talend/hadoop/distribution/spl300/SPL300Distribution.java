@@ -31,6 +31,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.spl.ISparkLocalDistribution;
+import org.talend.hadoop.distribution.spl300.modulegroup.SPL300HiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.spl300.modulegroup.SPL300SparkBatchModuleGroup;
 import org.talend.hadoop.distribution.spl300.modulegroup.node.sparkbatch.SPL300SparkBatchNodeModuleGroup;
 
@@ -70,7 +71,7 @@ public class SPL300Distribution extends AbstractDistribution implements ISparkLo
         Map<ComponentType, Set<DistributionModuleGroup>> result = new HashMap<>();
         result.put(ComponentType.SPARKBATCH, SPL300SparkBatchModuleGroup.getModuleGroups());
 //        result.put(ComponentType.SPARKSTREAMING, SPL300SparkStreamingModuleGroup.getModuleGroups());
-//        result.put(ComponentType.HIVEONSPARK, SPL300HiveOnSparkModuleGroup.getModuleGroups());
+        result.put(ComponentType.HIVEONSPARK, SPL300HiveOnSparkModuleGroup.getModuleGroups());
         return result;
     }
 
