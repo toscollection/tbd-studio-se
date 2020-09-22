@@ -50,6 +50,8 @@ public final class SparkBatchConstant {
     
     public static final String DYNAMODB_CONFIGURATION_COMPONENT = "tDynamoDBConfiguration"; //$NON-NLS-1$
 
+    public static final String CASSANDRA_CONFIGURATION_COMPONENT = "tCassandraConfiguration"; //$NON-NLS-1$
+    
     public static final String DYNAMODB_OUTPUT_COMPONENT = "tDynamoDBOutput"; //$NON-NLS-1$
 
     public static final String DYNAMODB_INPUT_COMPONENT = "tDynamoDBInput"; //$NON-NLS-1$
