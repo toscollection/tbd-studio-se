@@ -21,17 +21,17 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
-import org.talend.hadoop.distribution.spl30x.SPL300Constant;
+import org.talend.hadoop.distribution.spl30x.SPL30xConstant;
 
-public class SPL300SparkStreamingModuleGroup {
+public class SPL30xSparkStreamingModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         //hs.add(new DistributionModuleGroup(DatabricksConstant.HDFS_MODULE_GROUP.getModuleName(), false, condition));
-//        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
-//        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_STREAMING_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
-//        hs.add(new DistributionModuleGroup(SPL300Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true, condition));
-//        hs.add(new DistributionModuleGroup(SPL300Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
+//        hs.add(new DistributionModuleGroup(SPL30xConstant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
+//        hs.add(new DistributionModuleGroup(SPL30xConstant.SPARK_STREAMING_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
+//        hs.add(new DistributionModuleGroup(SPL30xConstant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true, condition));
+//        hs.add(new DistributionModuleGroup(SPL30xConstant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
         return hs;
     }
 }

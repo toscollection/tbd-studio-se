@@ -6,9 +6,9 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.condition.common.SparkBatchLocalCondition;
-import org.talend.hadoop.distribution.spl30x.SPL300Constant;
+import org.talend.hadoop.distribution.spl30x.SPL30xConstant;
 
-public class SPL300SparkBatchNodeModuleGroup {
+public class SPL30xSparkBatchNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroup(String moduleGroupName, String sparkConfigLinkedParameter, ESparkVersion sparkLocalVersion) {
         Set<DistributionModuleGroup> hs = new HashSet<>();

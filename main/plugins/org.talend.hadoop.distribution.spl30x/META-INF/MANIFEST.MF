@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Spl300
+Bundle-Name: Spl30x
 Bundle-SymbolicName: org.talend.hadoop.distribution.spl30x;singleton:=true
 Bundle-Version: 7.3.1.qualifier
 Bundle-Vendor: .Talend SA.
-Service-Component: OSGI-INF/spl300.xml
+Service-Component: OSGI-INF/spl30x.xml
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.talend.core.runtime,
  org.talend.hadoop.distribution
