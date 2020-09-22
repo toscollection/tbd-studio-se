@@ -13,7 +13,7 @@ public class SparkBatchLocalConditionTest {
     @Test
     public void testGetConditionString() {
         
-        String expected  = "(#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_MODE=='true') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION=='SPARK_3_0_0')";
+        String expected  = "(#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_MODE=='true') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION=='SPARK_3_0_x')";
         SparkBatchLocalCondition condition = new SparkBatchLocalCondition(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, ESparkVersion.SPARK_3_0);
         assertEquals(expected, condition.getConditionString());
     }
