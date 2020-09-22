@@ -5,40 +5,40 @@
          point="org.talend.core.runtime.librariesNeeded">
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-core_2.12-3.0.0.jar" name="spark-core_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.0"/>
+             id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-hive_2.12-3.0.0.jar" name="spark-hive_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.0.0"/>
+             id="spark-hive_2.12-3.0.1.jar" name="spark-hive_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-mllib_2.12-3.0.0.jar" name="spark-mllib_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.0.0"/>
+             id="spark-mllib_2.12-3.0.1.jar" name="spark-mllib_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-mllib-local_2.12-3.0.0.jar" name="spark-mllib-local_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.0.0"/>
+             id="spark-mllib-local_2.12-3.0.1.jar" name="spark-mllib-local_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-network-common_2.12-3.0.0.jar" name="spark-network-common_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.0"/>
+             id="spark-network-common_2.12-3.0.1.jar" name="spark-network-common_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-sql_2.12-3.0.0.jar" name="spark-sql_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.0"/>
+             id="spark-sql_2.12-3.0.1.jar" name="spark-sql_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-unsafe_2.12-3.0.0.jar" name="spark-unsafe_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.0"/>
+             id="spark-unsafe_2.12-3.0.1.jar" name="spark-unsafe_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-catalyst_2.12-3.0.0.jar" name="spark-catalyst_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.0"/>
+             id="spark-catalyst_2.12-3.0.1.jar" name="spark-catalyst_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-             id="spark-tags_2.12-3.0.0.jar" name="spark-tags_2.12-3.0.0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-tags_2.12/3.0.0"/>
+             id="spark-tags_2.12-3.0.1.jar" name="spark-tags_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-tags_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
              id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar"
@@ -85,12 +85,12 @@
 	      mvn_uri="mvn:com.esotericsoftware/minlog/1.3.0"/>
 
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-	      id="spark-kvstore_2.12-3.0.0.jar" name="spark-kvstore_2.12-3.0.0.jar"
-	      mvn_uri="mvn:org.apache.spark/spark-kvstore_2.12/3.0.0"/>
+	      id="spark-kvstore_2.12-3.0.1.jar" name="spark-kvstore_2.12-3.0.1.jar"
+	      mvn_uri="mvn:org.apache.spark/spark-kvstore_2.12/3.0.1"/>
 	      
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-	      id="spark-network-shuffle_2.12-3.0.0.jar" name="spark-network-shuffle_2.12-3.0.0.jar"
-	      mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.12/3.0.0"/>
+	      id="spark-network-shuffle_2.12-3.0.1.jar" name="spark-network-shuffle_2.12-3.0.1.jar"
+	      mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.12/3.0.1"/>
 	      
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
 	      id="netty-all-4.1.47.Final.jar" name="netty-all-4.1.47.Final.jar"
@@ -121,8 +121,8 @@
 	      mvn_uri="mvn:org.objenesis/objenesis/2.6"/>
 
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-	      id="spark-launcher_2.12-3.0.0.jar" name="spark-launcher_2.12-3.0.0.jar"
-	      mvn_uri="mvn:org.apache.spark/spark-launcher_2.12/3.0.0"/>
+	      id="spark-launcher_2.12-3.0.1.jar" name="spark-launcher_2.12-3.0.1.jar"
+	      mvn_uri="mvn:org.apache.spark/spark-launcher_2.12/3.0.1"/>
 
 	    <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
 	      id="stax2-api-4.2.1.jar" name="stax2-api-4.2.1.jar"
@@ -517,17 +517,17 @@
             <library id="scala-library-2.12.10.jar"/>
             <library id="scala-reflect-2.12.10.jar"/>
             <library id="scala-xml_2.12-1.2.0.jar"/>
-            <library id="spark-catalyst_2.12-3.0.0.jar"/>
-            <library id="spark-core_2.12-3.0.0.jar"/>
-            <library id="spark-kvstore_2.12-3.0.0.jar"/>
-            <library id="spark-launcher_2.12-3.0.0.jar"/>
-            <library id="spark-mllib_2.12-3.0.0.jar"/>
-            <library id="spark-mllib-local_2.12-3.0.0.jar"/>
-            <library id="spark-network-common_2.12-3.0.0.jar"/>
-            <library id="spark-network-shuffle_2.12-3.0.0.jar"/>
-            <library id="spark-sql_2.12-3.0.0.jar"/>
-            <library id="spark-tags_2.12-3.0.0.jar"/>
-            <library id="spark-unsafe_2.12-3.0.0.jar"/>
+            <library id="spark-catalyst_2.12-3.0.1.jar"/>
+            <library id="spark-core_2.12-3.0.1.jar"/>
+            <library id="spark-kvstore_2.12-3.0.1.jar"/>
+            <library id="spark-launcher_2.12-3.0.1.jar"/>
+            <library id="spark-mllib_2.12-3.0.1.jar"/>
+            <library id="spark-mllib-local_2.12-3.0.1.jar"/>
+            <library id="spark-network-common_2.12-3.0.1.jar"/>
+            <library id="spark-network-shuffle_2.12-3.0.1.jar"/>
+            <library id="spark-sql_2.12-3.0.1.jar"/>
+            <library id="spark-tags_2.12-3.0.1.jar"/>
+            <library id="spark-unsafe_2.12-3.0.1.jar"/>
             <library id="stax2-api-4.2.1.jar"/>
             <library id="stream-2.9.6.jar"/>
             <library id="univocity-parsers-2.8.3.jar"/>
@@ -592,7 +592,7 @@
 
         <!-- HiveOnSpark group -->
         <libraryNeededGroup description="Hive On SPARK libraries for spl30x" id="SPARK_BATCH_HIVE_MODULE_GROUP_SPL30x" name="SPARK_BATCH_HIVE_MODULE_GROUP_SPL30x">
-        	<library id="spark-hive_2.12-3.0.0.jar"/>
+        	<library id="spark-hive_2.12-3.0.1.jar"/>
             <library id="hive-common-2.3.7.jar"/>
             <library id="hive-exec-2.3.7.jar"/>
             <library id="hive-llap-common-2.3.7.jar"/>
