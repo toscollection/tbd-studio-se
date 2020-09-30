@@ -9,8 +9,8 @@ product:
 
 | Info             | Value |
 | ---------------- | ---------------- |
-| Patch Name       | Patch\_20200929\_TPS-4436\_v1-7.2.1 |
-| Release Date     | 2020-09-29 |
+| Patch Name       | Patch\_20200930\_TPS-4436\_v1-7.2.1 |
+| Release Date     | 2020-09-30 |
 | Target Version   | 20190620\_1446-V7.2.1 |
 | Product affected | Talend Studio |
 
@@ -24,8 +24,8 @@ This is a self-contained patch.
 
 This patch contains the following fixes:
 
-- [7.2.1] [Warn in CosmosDB]: Reduce to Trace "query does not contain any reference an index"
-- [7.2.1] error in  tCosmosdbInput component when Cosmos DB got upgraded from 3.2 to 3.6 version
+- TPS-3951 [7.2.1] [Warn in CosmosDB]: Reduce to Trace "query does not contain any reference an index"(TDI-42659)
+- TPS-4436 [7.2.1] error in  tCosmosdbInput component when Cosmos DB got upgraded from 3.2 to 3.6 version(TDI-44934)
 
 ## Prerequisites
 
