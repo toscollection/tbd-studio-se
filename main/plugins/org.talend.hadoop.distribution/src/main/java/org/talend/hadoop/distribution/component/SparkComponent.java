@@ -110,4 +110,11 @@ public interface SparkComponent extends MRComponent {
      * The distribution supports STS Assume Role.
      */
     public boolean doSupportAssumeRole();
+    
+    /**
+     * This method defines if a distribution supports the checkpointing in Spark Streaming
+     *
+     * @return true if the distribution supports the checkpointing
+     */
+    public boolean doSupportCheckpointing();
 }
