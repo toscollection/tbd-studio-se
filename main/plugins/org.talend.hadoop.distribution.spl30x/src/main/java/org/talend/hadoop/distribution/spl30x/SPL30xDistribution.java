@@ -118,45 +118,45 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
 
     }
 
-	@Override
-	public String getDistribution() {
+    @Override
+    public String getDistribution() {
         return DISTRIBUTION_NAME;
-	}
+    }
 
     @Override
     public ComponentCondition getDisplayCondition(ComponentType componentType) {
         return new SimpleComponentCondition(new BooleanExpression(false));
     }
-	
-	@Override
-	public String getVersion() {
+    
+    @Override
+    public String getVersion() {
         return VERSION;
-	}
+    }
 
-	@Override
-	public EHadoopVersion getHadoopVersion() {
+    @Override
+    public EHadoopVersion getHadoopVersion() {
         return EHadoopVersion.HADOOP_2;
-	}
+    }
 
-	@Override
-	public boolean doSupportKerberos() {
-		return false;
-	}
+    @Override
+    public boolean doSupportKerberos() {
+        return false;
+    }
 
-	@Override
-	public String getDistributionName() {
+    @Override
+    public String getDistributionName() {
         return DISTRIBUTION_DISPLAY_NAME;
-	}
+    }
 
-	@Override
-	public String getVersionName(ComponentType componentType) {
+    @Override
+    public String getVersionName(ComponentType componentType) {
         return VERSION_DISPLAY;
-	}
+    }
 
-	@Override
-	public boolean doSupportUseDatanodeHostname() {
+    @Override
+    public boolean doSupportUseDatanodeHostname() {
         return true;
-	}
+    }
 
     @Override
     public Set<DistributionModuleGroup> getModuleGroups(ComponentType componentType) {
@@ -168,22 +168,22 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
         return nodeModuleGroups.get(new NodeComponentTypeBean(componentType, componentName));
     }
 
-	@Override
-	public Set<ESparkVersion> getSparkVersions() {
-		Set<ESparkVersion> version = new HashSet<>();
-		version.add(ESparkVersion.SPARK_3_0);
+    @Override
+    public Set<ESparkVersion> getSparkVersions() {
+        Set<ESparkVersion> version = new HashSet<>();
+        version.add(ESparkVersion.SPARK_3_0);
         return version;
     }
 
-	@Override
-	public boolean doSupportDynamicMemoryAllocation() {
-		return true;
-	}
+    @Override
+    public boolean doSupportDynamicMemoryAllocation() {
+        return true;
+    }
 
-	@Override
-	public boolean doSupportCrossPlatformSubmission() {
-		return true;
-	}
+    @Override
+    public boolean doSupportCrossPlatformSubmission() {
+        return true;
+    }
 
     @Override
     public boolean doSupportS3() {
