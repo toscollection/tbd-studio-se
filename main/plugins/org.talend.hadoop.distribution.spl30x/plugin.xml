@@ -49,6 +49,10 @@
              mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+             id="hadoop-mapreduce-client-common-3.2.1.jar" name="hadoop-mapreduce-client-common-3.2.1.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-common/3.2.1"/>
+
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
              id="hadoop-mapreduce-client-core-3.2.1.jar" name="hadoop-mapreduce-client-core-3.2.1.jar"
              mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.2.1"/>
 
@@ -475,6 +479,10 @@
           id="commons-codec-1.11.jar" name="commons-codec-1.11.jar"
           mvn_uri="mvn:commons-codec/commons-codec/1.11"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar"
+          mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK_BATCH_MODULE_GROUP_SPL30x" name="SPARK_BATCH_MODULE_GROUP_SPL30x">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -632,6 +640,15 @@
             <library id="spark-cassandra-connector-assembly_2.12-3.0.0-beta.jar"/>
             <library id="jnr-posix-3.1.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Cassandra group -->
+        <libraryNeededGroup description="DynamoDB libraries for spl30x" id="SPARK_BATCH_DYNAMODB_MODULE_GROUP_SPL30x" name="SPARK_BATCH_DYNAMODB_MODULE_GROUP_SPL30x">
+            <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
+            <library id="gson-2.2.4.jar"/>
+            <library id="hadoop-mapreduce-client-common-3.2.1.jar"/>
+            <library id="aws-java-sdk-bundle-1.11.375.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Streaming group TODO-->

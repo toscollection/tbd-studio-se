@@ -155,4 +155,13 @@ public class SparkVersionUtil {
         }
         return null;
     }
+    
+    public static Boolean isSparkLocal(IProcess process) {
+        List<? extends INode> sparkConfigs = process.getNodesOfType("tSparkConfiguration"); //$NON-NLS-1$
+        if (sparkConfigs != null && sparkConfigs.size() > 0) {
+            INode sparkConfiguration = sparkConfigs.get(0);
+            return (Boolean) sparkConfiguration.getElementParameter("SPARK_LOCAL_MODE").getValue();
+        }
+        return null;
+    }
 }
