@@ -113,10 +113,10 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
         // Spark Batch DynamoDB
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DYNAMODB_CONFIGURATION_COMPONENT),
                 SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_DYNAMODB_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
-//        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DYNAMODB_INPUT_COMPONENT),
-//                SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_DYNAMODB_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
-//        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DYNAMODB_OUTPUT_COMPONENT),
-//                SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_DYNAMODB_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DYNAMODB_INPUT_COMPONENT),
+                SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_DYNAMODB_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DYNAMODB_OUTPUT_COMPONENT),
+                SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_DYNAMODB_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
         
         //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));

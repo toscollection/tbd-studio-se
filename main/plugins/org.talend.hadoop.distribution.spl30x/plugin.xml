@@ -483,6 +483,22 @@
           id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar"
           mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="orc-core-1.5.10.jar" name="orc-core-1.5.10.jar"
+          mvn_uri="mvn:org.apache.orc/orc-core/1.5.10"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="orc-mapreduce-1.5.10.jar" name="orc-mapreduce-1.5.10.jar"
+          mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.5.10"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="orc-shims-1.5.10.jar" name="orc-shims-1.5.10.jar"
+          mvn_uri="mvn:org.apache.orc/orc-shims/1.5.10"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="aircompressor-0.10.jar" name="aircompressor-0.10.jar"
+          mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK_BATCH_MODULE_GROUP_SPL30x" name="SPARK_BATCH_MODULE_GROUP_SPL30x">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -624,6 +640,14 @@
             <library id="libfb303-0.9.3.jar"/>
             <library id="libthrift-0.12.0.jar"/>
             <library id="oro-2.0.8.jar"/>
+            <library id="orc-core-1.5.10.jar"/>
+            <library id="orc-mapreduce-1.5.10.jar"/>
+            <library id="orc-shims-1.5.10.jar"/>
+            <library id="aircompressor-0.10.jar"/>
+            <library id="jul-to-slf4j-1.7.16.jar"/>
+            <library id="parquet-encoding-1.10.1.jar"/>
+            <library id="parquet-format-2.4.0.jar"/>
+            <library id="parquet-hadoop-1.10.1.jar"/>
         </libraryNeededGroup>
 
         <!-- DeltaLake group -->
