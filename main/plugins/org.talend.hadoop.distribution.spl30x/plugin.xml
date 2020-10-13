@@ -499,6 +499,18 @@
           id="aircompressor-0.10.jar" name="aircompressor-0.10.jar"
           mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar"
+          mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar"
+          mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.0.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar"
+          mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK_BATCH_MODULE_GROUP_SPL30x" name="SPARK_BATCH_MODULE_GROUP_SPL30x">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -666,13 +678,20 @@
             <library id="joda-time-2.10.5.jar"/>
         </libraryNeededGroup>
         
-        <!-- Cassandra group -->
+        <!-- DynamoDB group -->
         <libraryNeededGroup description="DynamoDB libraries for spl30x" id="SPARK_BATCH_DYNAMODB_MODULE_GROUP_SPL30x" name="SPARK_BATCH_DYNAMODB_MODULE_GROUP_SPL30x">
             <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
             <library id="gson-2.2.4.jar"/>
             <library id="hadoop-mapreduce-client-common-3.2.1.jar"/>
             <library id="aws-java-sdk-bundle-1.11.375.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Redshift group -->
+        <libraryNeededGroup description="Redshift libraries for spl30x" id="SPARK_BATCH_REDSHIFT_MODULE_GROUP_SPL30x" name="SPARK_BATCH_REDSHIFT_MODULE_GROUP_SPL30x">
+            <library id="spark-redshift_2.12-4.2.0.jar"/>
+            <library id="spark-avro_2.12-3.0.1.jar"/>
+            <library id="avro-mapred-1.8.2.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Streaming group TODO-->

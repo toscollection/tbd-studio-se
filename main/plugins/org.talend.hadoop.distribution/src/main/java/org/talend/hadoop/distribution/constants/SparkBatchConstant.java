@@ -90,5 +90,8 @@ public final class SparkBatchConstant {
 
     public static final String DELTALAKE_INPUT_COMPONENT = "tDeltaLakeInput";
     public static final String DELTALAKE_OUTPUT_COMPONENT = "tDeltaLakeOutput";
-
+    
+    public static final String REDSHIFT_CONFIGURATION_COMPONENT = "tRedshiftConfiguration";
+    public static final String REDSHIFT_INPUT_COMPONENT = "tRedshiftInput";
+    public static final String REDSHIFT_OUTPUT_COMPONENT = "tRedshiftOutput";
 }
