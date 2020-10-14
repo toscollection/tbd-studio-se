@@ -511,6 +511,14 @@
           id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar"
           mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="spark-snowflake_2.12-2.8.2-spark_3.0.jar" name="spark-snowflake_2.12-2.8.2-spark_3.0.jar"
+          mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.8.2-spark_3.0"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="snowflake-jdbc-3.12.12.jar" name="snowflake-jdbc-3.12.12.jar"
+          mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.12.12"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK_BATCH_MODULE_GROUP_SPL30x" name="SPARK_BATCH_MODULE_GROUP_SPL30x">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -692,6 +700,12 @@
             <library id="spark-redshift_2.12-4.2.0.jar"/>
             <library id="spark-avro_2.12-3.0.1.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Snowflake group -->
+        <libraryNeededGroup description="Snowflake libraries for spl30x" id="SPARK_BATCH_SNOWFLAKE_MODULE_GROUP_SPL30x" name="SPARK_BATCH_SNOWFLAKE_MODULE_GROUP_SPL30x">
+        	<library id="spark-snowflake_2.12-2.8.2-spark_3.0.jar"/>
+        	<library id="snowflake-jdbc-3.12.12.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Streaming group TODO-->

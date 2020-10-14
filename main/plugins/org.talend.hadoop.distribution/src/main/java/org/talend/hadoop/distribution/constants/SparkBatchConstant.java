@@ -94,4 +94,8 @@ public final class SparkBatchConstant {
     public static final String REDSHIFT_CONFIGURATION_COMPONENT = "tRedshiftConfiguration";
     public static final String REDSHIFT_INPUT_COMPONENT = "tRedshiftInput";
     public static final String REDSHIFT_OUTPUT_COMPONENT = "tRedshiftOutput";
+
+    public static final String SNOWFLAKE_CONFIGURATION_COMPONENT = "tSnowflakeConfiguration";
+    public static final String SNOWFLAKE_INPUT_COMPONENT = "tSnowflakeInput";
+    public static final String SNOWFLAKE_OUTPUT_COMPONENT = "tSnowflakeOutput";
 }
