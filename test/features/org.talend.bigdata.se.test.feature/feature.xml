@@ -69,7 +69,7 @@
          install-size="0"
          version="0.0.0"
          unpack="false"/>
-         
+
    <plugin
          id="org.talend.hadoop.distribution.dataproc14.test"
          download-size="0"
@@ -124,7 +124,7 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
+
    <plugin
          id="org.talend.hadoop.distribution.hdinsight400.test"
          download-size="0"
@@ -132,7 +132,7 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
-         
+
    <plugin
          id="org.talend.oozie.scheduler.test"
          download-size="0"
@@ -251,6 +251,22 @@
          version="0.0.0"
          fragment="true"
          unpack="false"/>
+
+   <plugin
+           id="org.talend.hadoop.distribution.dbr640.test"
+           download-size="0"
+           install-size="0"
+           version="0.0.0"
+           fragment="true"
+           unpack="false"/>
+
+   <plugin
+           id="org.talend.hadoop.distribution.dbr73x.test"
+           download-size="0"
+           install-size="0"
+           version="0.0.0"
+           fragment="true"
+           unpack="false"/>
 
    <plugin
          id="org.talend.hadoop.distribution.qubole.test"

@@ -70,14 +70,15 @@ public final class SparkBatchConstant {
 
     public static final String TMODEL_ENCODER_COMPONENT = "tModelEncoder"; //$NON-NLS-1$
 
-    public static final String TERADATA_OUTPUT_COMPONENT = "tTeradataOutput";
-    public static final String TERADATA_INPUT_COMPONENT = "tTeradataInput";
-    public static final String TERADATA_CONFIG_COMPONENT = "tTeradataConfiguration";
+    public static final String TERADATA_OUTPUT_COMPONENT = "tTeradataOutput";  //$NON-NLS-1$
+    public static final String TERADATA_INPUT_COMPONENT = "tTeradataInput";  //$NON-NLS-1$
+    public static final String TERADATA_CONFIG_COMPONENT = "tTeradataConfiguration";  //$NON-NLS-1$
 
-    public static final String ORACLE_OUTPUT_COMPONENT = "tOracleOutput";
-    public static final String ORACLE_INPUT_COMPONENT = "tOracleInput";
-    public static final String ORACLE_CONFIG_COMPONENT = "tOracleConfiguration";
+    public static final String ORACLE_OUTPUT_COMPONENT = "tOracleOutput";  //$NON-NLS-1$
+    public static final String ORACLE_INPUT_COMPONENT = "tOracleInput";  //$NON-NLS-1$
+    public static final String ORACLE_CONFIG_COMPONENT = "tOracleConfiguration";  //$NON-NLS-1$
 
-    public static final String ALTUS_CLOUD_PROVIDER = "ALTUS_CLOUD_PROVIDER";
+    public static final String ALTUS_CLOUD_PROVIDER = "ALTUS_CLOUD_PROVIDER";  //$NON-NLS-1$
 
+    public static final String TOP_BY_COMPONENT  ="tTopBy"; //$NON-NLS-1$
 }
