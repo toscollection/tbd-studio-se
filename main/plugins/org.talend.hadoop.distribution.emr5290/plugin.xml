@@ -2204,7 +2204,7 @@
 			<library id="jackson-dataformat-cbor-2.10.1"/>
 			<library id="jackson-jaxrs-1.9.13.jar"/>
 			<library id="jackson-mapper-asl-1.9.14-TALEND.jar"/>
-			<library id="jackson-module-paranamer-2.7.9.jar"/>
+			<library id="jackson-module-paranamer-2.10.1.jar"/>
 			<library id="jackson-module-scala_2.11-2.9.9.jar"/>
 			<library id="jackson-xc-1.9.13.jar"/>
 			<library id="janino-3.0.8.jar"/>
