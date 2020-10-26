@@ -519,6 +519,14 @@
           id="snowflake-jdbc-3.12.12.jar" name="snowflake-jdbc-3.12.12.jar"
           mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.12.12"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="spark-streaming_2.12-3.0.1.jar" name="spark-streaming_2.12-3.0.1.jar"
+          mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.0.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="py4j-0.10.9.1.jar" name="py4j-0.10.9.1.jar"
+          mvn_uri="mvn:net.sf.py4j/py4j/0.10.9.1"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK_BATCH_MODULE_GROUP_SPL30x" name="SPARK_BATCH_MODULE_GROUP_SPL30x">
             <library id="antlr4-runtime-4.7.1.jar"/>
@@ -567,7 +575,6 @@
             <library id="protobuf-java-2.5.0.jar"/>
             <library id="re2j-1.1.jar"/>
             <library id="RoaringBitmap-0.7.45.jar"/>
-            <library id="scala-library-2.12.10.jar"/>
             <library id="scala-library-2.12.10.jar"/>
             <library id="scala-reflect-2.12.10.jar"/>
             <library id="scala-xml_2.12-1.2.0.jar"/>
@@ -708,19 +715,13 @@
         	<library id="snowflake-jdbc-3.12.12.jar"/>
         </libraryNeededGroup>
         
-        <!-- Spark Streaming group TODO-->
-        <libraryNeededGroup description="SPARK libraries for spl30x"
-                id="SPARK-STREAMING-LIB-MRREQUIRED-spl30x"
-                name="SPARK-STREAMING-LIB-MRREQUIRED-spl30x">
+        <!-- Spark Streaming group -->
+        <libraryNeededGroup description="Spark streaming libraries for spl30x" id="SPARK_STREAMING_MODULE_GROUP_SPL30x" name="SPARK_STREAMING_MODULE_GROUP_SPL30x">
+        	<library id="spark-streaming_2.12-3.0.1.jar"/>
+        	<group id="SPARK_BATCH_MODULE_GROUP_SPL30x"/>
+        	<library id="py4j-0.10.9.1.jar"/>
         </libraryNeededGroup>
         
-        <!-- Spark Streaming Kinesis group -->
-        <libraryNeededGroup
-                description="SPARK libraries for spl30x"
-                id="SPARK-STREAMING-LIB-KINESIS-spl30x"
-                name="SPARK-STREAMING-LIB-KINESIS-spl30x">
-        </libraryNeededGroup>
-
    </extension>
    <extension
          point="org.talend.core.runtime.classloader_provider">

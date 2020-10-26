@@ -33,6 +33,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.spl.ISparkLocalDistribution;
 import org.talend.hadoop.distribution.spl30x.modulegroup.SPL30xHiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.spl30x.modulegroup.SPL30xSparkBatchModuleGroup;
+import org.talend.hadoop.distribution.spl30x.modulegroup.SPL30xSparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.spl30x.modulegroup.node.sparkbatch.SPL30xSparkBatchNodeModuleGroup;
 
 public class SPL30xDistribution extends AbstractDistribution implements ISparkLocalDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
@@ -70,7 +71,7 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
     protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
         Map<ComponentType, Set<DistributionModuleGroup>> result = new HashMap<>();
         result.put(ComponentType.SPARKBATCH, SPL30xSparkBatchModuleGroup.getModuleGroups());
-//        result.put(ComponentType.SPARKSTREAMING, SPL30xSparkStreamingModuleGroup.getModuleGroups());
+        result.put(ComponentType.SPARKSTREAMING, SPL30xSparkStreamingModuleGroup.getModuleGroups());
         result.put(ComponentType.HIVEONSPARK, SPL30xHiveOnSparkModuleGroup.getModuleGroups());
         return result;
     }
