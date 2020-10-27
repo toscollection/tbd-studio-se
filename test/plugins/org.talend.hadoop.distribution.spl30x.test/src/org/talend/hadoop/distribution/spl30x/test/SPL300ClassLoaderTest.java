@@ -10,23 +10,18 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.hadoop.distribution.condition;
+package org.talend.hadoop.distribution.spl30x.test;
 
-public enum EqualityOperator {
-    EQ("=="), //$NON-NLS-1$
-    NOT_EQ("!="), //$NON-NLS-1
-    GT("gt"),
-    GE("ge"),
-    LT("lt"),
-    LE("le");
-    
-    private String mSymbol;
+import org.talend.hadoop.distribution.component.HadoopComponent;
+import org.talend.hadoop.distribution.spl30x.SPL300Distribution;
+import org.talend.hadoop.distribution.test.classloader.AbstractTest4ClassLoaderProvider;
 
-    EqualityOperator(String symbol) {
-        this.mSymbol = symbol;
+public class SPL300ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
+
+    @Override
+    protected Class<? extends HadoopComponent> getHadoopComponentClass() {
+        return SPL300Distribution.class;
     }
 
-    public String getSymbol() {
-        return this.mSymbol;
-    }
+
 }
