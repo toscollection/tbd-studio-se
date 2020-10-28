@@ -7,7 +7,7 @@
         <version>7.4.1-SNAPSHOT</version>
         <relativePath>../../../</relativePath>
     </parent>
-    <artifactId>org.talend.hadoop.distribution.spl300.test</artifactId>
+    <artifactId>org.talend.hadoop.distribution.spl30x.test</artifactId>
     <packaging>eclipse-test-plugin</packaging>
     <build>
         <sourceDirectory>src</sourceDirectory>
