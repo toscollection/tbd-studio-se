@@ -17,13 +17,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
-import org.talend.hadoop.distribution.spl30x.SPL300Constant;
-import org.talend.hadoop.distribution.spl30x.modulegroup.node.sparkbatch.SPL300SparkBatchNodeModuleGroup;
+import org.talend.hadoop.distribution.spl30x.SPL30xConstant;
+import org.talend.hadoop.distribution.spl30x.modulegroup.node.sparkbatch.SPL30xSparkBatchNodeModuleGroup;
 
 public class SPL300SparkBatchNodeModuleGroupTest {
 
     @Test
     public void testModuleGroups() throws Exception {
-        assertEquals(1, SPL300SparkBatchNodeModuleGroup.getModuleGroup(SPL300Constant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(), SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, ESparkVersion.SPARK_3_0).size());
+        assertEquals(1, SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(), SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, ESparkVersion.SPARK_3_0).size());
     }
 }

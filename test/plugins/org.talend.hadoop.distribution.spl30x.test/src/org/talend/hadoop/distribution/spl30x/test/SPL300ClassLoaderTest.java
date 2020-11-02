@@ -13,14 +13,14 @@
 package org.talend.hadoop.distribution.spl30x.test;
 
 import org.talend.hadoop.distribution.component.HadoopComponent;
-import org.talend.hadoop.distribution.spl30x.SPL300Distribution;
+import org.talend.hadoop.distribution.spl30x.SPL30xDistribution;
 import org.talend.hadoop.distribution.test.classloader.AbstractTest4ClassLoaderProvider;
 
 public class SPL300ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
 
     @Override
     protected Class<? extends HadoopComponent> getHadoopComponentClass() {
-        return SPL300Distribution.class;
+        return SPL30xDistribution.class;
     }
 
 

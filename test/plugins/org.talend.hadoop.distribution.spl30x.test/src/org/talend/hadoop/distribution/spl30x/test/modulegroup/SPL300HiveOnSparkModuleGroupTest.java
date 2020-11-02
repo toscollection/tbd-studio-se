@@ -12,17 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.spl30x.test.modulegroup;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 import org.junit.Test;
-import org.talend.hadoop.distribution.DistributionModuleGroup;
-import org.talend.hadoop.distribution.spl30x.SPL300Constant;
-import org.talend.hadoop.distribution.spl30x.modulegroup.SPL300HiveOnSparkModuleGroup;
 
 public class SPL300HiveOnSparkModuleGroupTest {
 

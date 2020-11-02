@@ -160,7 +160,7 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
 
     @Override
     public EHadoopVersion getHadoopVersion() {
-        return EHadoopVersion.HADOOP_2;
+        return EHadoopVersion.HADOOP_3;
     }
 
     @Override
