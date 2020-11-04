@@ -255,7 +255,7 @@ public abstract class AbstractDistribution {
     }
 
     public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
-        return ""; //$NON-NLS-1$
+    	return generateSparkJarsPaths(commandLineJarsPaths);
     }
     
     public String generateSparkJarsPaths(List<String> commandLineJarsPaths, boolean isLightWeight) {
