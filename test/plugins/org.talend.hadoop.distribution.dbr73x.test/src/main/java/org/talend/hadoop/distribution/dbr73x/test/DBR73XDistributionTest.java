@@ -39,10 +39,7 @@ public class DBR73XDistributionTest {
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
 
-        assertTrue(distribution.doSupportUseDatanodeHostname());
-        assertFalse(distribution.doSupportGroup());
-
-        assertTrue(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_4));
+        assertTrue(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_3_0));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_3));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_2));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_0));
@@ -50,15 +47,20 @@ public class DBR73XDistributionTest {
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_5));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_4));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_3));
-        assertTrue(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
-        assertFalse(((SparkBatchComponent) distribution).isExecutedThroughSparkJobServer());
+
         assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
-        assertFalse(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
-        assertTrue(((SparkStreamingComponent) distribution).doSupportBackpressure());
-        assertTrue(((SparkStreamingComponent) distribution).doSupportCheckpointing());
-        assertTrue(distribution.doSupportCreateServiceConnection());
-        assertTrue((distribution.getNecessaryServiceName() == null ? 0 : distribution.getNecessaryServiceName()
-                .size()) == 0);
-        assertTrue(distribution.doSupportAzureDataLakeStorage());
+        assertTrue(((SparkBatchComponent) distribution).doSupportS3());
+        assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
+        assertTrue(((SparkBatchComponent) distribution).doSupportAzureDataLakeStorage());
+        assertTrue(((SparkBatchComponent) distribution).doSupportKerberos());
+        assertTrue(((SparkBatchComponent) distribution).doSupportS3V4());
+        assertTrue(((SparkBatchComponent) distribution).doSupportAzureDataLakeStorageGen2());
+        assertTrue(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
+        assertTrue(((SparkBatchComponent) distribution).doSupportCheckpointing());
+        assertTrue(((SparkBatchComponent) distribution).doSupportCrossPlatformSubmission());
+        assertTrue(((SparkBatchComponent) distribution).doSupportBackpressure());
+        assertTrue(((SparkBatchComponent) distribution).doSupportAzureBlobStorage());
+        assertTrue(((SparkBatchComponent) distribution).doSupportImpersonation());
+        assertTrue(((SparkBatchComponent) distribution).doSupportUseDatanodeHostname());
     }
 }
