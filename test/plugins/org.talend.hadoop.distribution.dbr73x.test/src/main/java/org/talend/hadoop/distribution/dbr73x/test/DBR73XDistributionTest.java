@@ -50,9 +50,9 @@ public class DBR73XDistributionTest {
 
         assertTrue(distribution.doSupportSparkStandaloneMode());
         assertTrue(distribution.doSupportS3());
-        assertTrue(distribution.doSupportSparkYarnClientMode());
+        assertFalse(distribution.doSupportSparkYarnClientMode());
         assertTrue(distribution.doSupportAzureDataLakeStorage());
-        assertTrue(distribution.doSupportKerberos());
+        assertFalse(distribution.doSupportKerberos());
         assertTrue(distribution.doSupportS3V4());
         assertTrue(distribution.doSupportAzureDataLakeStorageGen2());
         assertTrue(distribution.doSupportDynamicMemoryAllocation());
