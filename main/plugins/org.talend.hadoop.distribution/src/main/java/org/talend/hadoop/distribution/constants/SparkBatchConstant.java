@@ -41,6 +41,8 @@ public final class SparkBatchConstant {
     public static final String S3_CONFIGURATION_COMPONENT = "tS3Configuration"; //$NON-NLS-1$
 
     public static final String AZURE_CONFIGURATION_COMPONENT = "tAzureFSConfiguration"; //$NON-NLS-1$
+    
+    public static final String AZURE_FS_CONFIGURATION_COMPONENT = "tAzureFSConfiguration"; //$NON-NLS-1$
 
     public static final String DYNAMODB_CONFIGURATION_COMPONENT = "tDynamoDBConfiguration"; //$NON-NLS-1$
 
