@@ -30,7 +30,7 @@ public class DBR73XDistributionTest {
 
     @Test
     public void testDatabricksDistribution() throws Exception {
-        HadoopComponent distribution = new DBR73XDistribution();
+        DBR73XDistribution distribution = new DBR73XDistribution();
         assertNotNull(distribution.getDistributionName());
         assertNotNull(distribution.getVersionName(null));
         assertTrue(distribution.doSupportS3());
@@ -39,14 +39,14 @@ public class DBR73XDistributionTest {
         assertEquals(EHadoopVersion.HADOOP_2, distribution.getHadoopVersion());
         assertFalse(distribution.doSupportKerberos());
 
-        assertTrue(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_3_0));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_3));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_2));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_2_0));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_6));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_5));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_4));
-        assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_3));
+        assertTrue(distribution.getSparkVersions().contains(ESparkVersion.SPARK_3_0));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_2_3));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_2_2));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_2_0));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_1_6));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_1_5));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_1_4));
+        assertFalse(distribution.getSparkVersions().contains(ESparkVersion.SPARK_1_3));
 
         assertTrue(distribution.doSupportSparkStandaloneMode());
         assertTrue(distribution.doSupportS3());
