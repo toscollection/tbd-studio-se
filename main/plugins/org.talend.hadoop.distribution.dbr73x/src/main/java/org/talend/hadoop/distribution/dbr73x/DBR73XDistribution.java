@@ -42,7 +42,7 @@ import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73XTopbyNodeMod
 public class DBR73XDistribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
         SparkStreamingComponent, HiveOnSparkComponent {
 
-    public final static String VERSION = "Databricks_7_3" ;
+    public final static String VERSION = "DATABRICKS_7_3" ;
 
     public static final String VERSION_DISPLAY = "7.3 LTS (includes Apache Spark 3.0.1, Scala 2.12)" ;
 

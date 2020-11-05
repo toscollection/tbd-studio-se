@@ -39,7 +39,7 @@ public class DBR73XTopbyNodeModuleGroupTest {
         expected
                 .put(
                         DBR73XConstant.TOPBY_LIB_REQUIRED_DBR73X.getModuleName(),
-                        "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='DATABRICKS') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='Databricks_6_4')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')"
+                        "((#LINK@NODE.STORAGE_CONFIGURATION.DISTRIBUTION=='DATABRICKS') AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_VERSION=='DATABRICKS_7_3')) AND (#LINK@NODE.STORAGE_CONFIGURATION.SPARK_LOCAL_MODE=='false')"
                 ); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups =
