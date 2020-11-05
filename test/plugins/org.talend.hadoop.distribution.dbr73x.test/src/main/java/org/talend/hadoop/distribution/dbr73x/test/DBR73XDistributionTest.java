@@ -48,19 +48,19 @@ public class DBR73XDistributionTest {
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_4));
         assertFalse(((SparkBatchComponent) distribution).getSparkVersions().contains(ESparkVersion.SPARK_1_3));
 
-        assertTrue(((SparkBatchComponent) distribution).doSupportSparkStandaloneMode());
-        assertTrue(((SparkBatchComponent) distribution).doSupportS3());
-        assertTrue(((SparkBatchComponent) distribution).doSupportSparkYarnClientMode());
-        assertTrue(((SparkBatchComponent) distribution).doSupportAzureDataLakeStorage());
-        assertTrue(((SparkBatchComponent) distribution).doSupportKerberos());
-        assertTrue(((SparkBatchComponent) distribution).doSupportS3V4());
-        assertTrue(((SparkBatchComponent) distribution).doSupportAzureDataLakeStorageGen2());
-        assertTrue(((SparkBatchComponent) distribution).doSupportDynamicMemoryAllocation());
-        assertTrue(((SparkBatchComponent) distribution).doSupportCheckpointing());
-        assertTrue(((SparkBatchComponent) distribution).doSupportCrossPlatformSubmission());
-        assertTrue(((SparkBatchComponent) distribution).doSupportBackpressure());
-        assertTrue(((SparkBatchComponent) distribution).doSupportAzureBlobStorage());
-        assertTrue(((SparkBatchComponent) distribution).doSupportImpersonation());
-        assertTrue(((SparkBatchComponent) distribution).doSupportUseDatanodeHostname());
+        assertTrue(distribution.doSupportSparkStandaloneMode());
+        assertTrue(distribution.doSupportS3());
+        assertTrue(distribution.doSupportSparkYarnClientMode());
+        assertTrue(distribution.doSupportAzureDataLakeStorage());
+        assertTrue(distribution.doSupportKerberos());
+        assertTrue(distribution.doSupportS3V4());
+        assertTrue(distribution.doSupportAzureDataLakeStorageGen2());
+        assertTrue(distribution.doSupportDynamicMemoryAllocation());
+        assertTrue(distribution.doSupportCheckpointing());
+        assertTrue(distribution.doSupportCrossPlatformSubmission());
+        assertTrue(distribution.doSupportBackpressure());
+        assertTrue(distribution.doSupportAzureBlobStorage());
+        assertTrue(distribution.doSupportImpersonation());
+        assertTrue(distribution.doSupportUseDatanodeHostname());
     }
 }
