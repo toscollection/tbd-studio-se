@@ -21,6 +21,7 @@ import org.talend.hadoop.distribution.AbstractDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
+import org.talend.hadoop.distribution.EParquetPackagePrefix;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
@@ -30,6 +31,7 @@ import org.talend.hadoop.distribution.condition.BooleanExpression;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.spl.ISparkLocalDistribution;
 import org.talend.hadoop.distribution.spl30x.modulegroup.SPL30xHiveOnSparkModuleGroup;
 import org.talend.hadoop.distribution.spl30x.modulegroup.SPL30xSparkBatchModuleGroup;
@@ -135,6 +137,11 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_OUTPUT_COMPONENT),
                 SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_SNOWFLAKE_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
         
+
+        // Spark Streaming Parquet
+        //TODO 
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT),
+                SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
         
         //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
@@ -254,4 +261,10 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
     public boolean isSparkLocal() {
         return true;
     };
+    
+    @Override
+    public String getParquetPrefixPackageName() {
+        return EParquetPackagePrefix.APACHE.toString();
+    }
+
 }

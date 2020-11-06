@@ -8,6 +8,7 @@ import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.condition.common.SparkBatchLocalCondition;
 import org.talend.hadoop.distribution.spl30x.SPL30xConstant;
 
+// TODO Move this to both Spark and Spark streaming
 public class SPL30xSparkBatchNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroup(String moduleGroupName, String sparkConfigLinkedParameter, ESparkVersion sparkLocalVersion) {
