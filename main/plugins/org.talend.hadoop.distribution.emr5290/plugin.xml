@@ -1358,7 +1358,7 @@
             context="plugin:org.talend.hadoop.distribution.emr5290"
             id="jackson-annotations-2.9.4.jar"
             name="jackson-annotations-2.9.4.jar"
-            mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.9.4"/>
+            mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.1"/>
             
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
