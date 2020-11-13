@@ -98,4 +98,9 @@ public final class SparkBatchConstant {
     public static final String SNOWFLAKE_CONFIGURATION_COMPONENT = "tSnowflakeConfiguration";
     public static final String SNOWFLAKE_INPUT_COMPONENT = "tSnowflakeInput";
     public static final String SNOWFLAKE_OUTPUT_COMPONENT = "tSnowflakeOutput";
+    
+    public static final String HMAP_FILE_COMPONENT = "tHMapFile";
+    public static final String HMAP_INPUT_COMPONENT = "tHMapInput";
+    public static final String HCONVERT_FILE_COMPONENT = "tHConvertFile";
+    public static final String HMAP_RECORD_COMPONENT = "tHMapRecord";
 }

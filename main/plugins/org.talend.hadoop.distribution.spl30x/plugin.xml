@@ -705,6 +705,11 @@
         	<library id="snowflake-jdbc-3.12.12.jar"/>
         </libraryNeededGroup>
         
+        <!-- TDM group -->
+        <libraryNeededGroup description="Snowflake libraries for spl30x" id="SPARK_BATCH_TDM_MODULE_GROUP_SPL30x" name="SPARK_BATCH_TDM_MODULE_GROUP_SPL30x">
+        	<library id="avro-mapred-1.8.2.jar"/>
+        </libraryNeededGroup>
+        
         <!-- Spark Streaming group -->
         <libraryNeededGroup description="Spark streaming libraries for spl30x" id="SPARK_STREAMING_MODULE_GROUP_SPL30x" name="SPARK_STREAMING_MODULE_GROUP_SPL30x">
         	<library id="spark-streaming_2.12-3.0.1.jar"/>
