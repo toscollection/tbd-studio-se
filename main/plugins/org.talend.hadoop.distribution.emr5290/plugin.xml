@@ -349,6 +349,12 @@
             name="sqoop-1.4.7.jar"
             mvn_uri="mvn:org.apache.sqoop/sqoop/1.4.7"/>
 
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.emr5290"
+            id="log4j-1.2-api-2.12.1.jar"
+            name="log4j-1.2-api-2.12.1.jar"
+            mvn_uri="mvn:org.apache.logging.log4j/log4j-1.2-api/2.12.1"/>
+
         <!-- Tez -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -2001,6 +2007,7 @@
             <library id="avro-mapred-1.8.2.jar"/>
             <library id="commons-lang3-3.5.jar"/>
             <library id="avro-1.8.2.jar"/>
+            <library id="log4j-1.2-api-2.12.1.jar"/>
         </libraryNeededGroup>
 
         <!-- Sqoop Parquet group -->
