@@ -115,4 +115,9 @@ public interface SparkComponent extends MRComponent {
      * @return true if the distribution supports the checkpointing
      */
     public boolean doSupportCheckpointing();
+  
+    /**
+     * returns the class path used by lightweight on cluster side
+     */
+    public String getLightWeightClasspath();
 }
