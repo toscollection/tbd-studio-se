@@ -24,8 +24,8 @@ import org.talend.hadoop.distribution.constants.HiveOnSparkConstant;
 import org.talend.hadoop.distribution.constants.ImpalaConstant;
 import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.MapRDBConstant;
-import org.talend.hadoop.distribution.constants.MapRStreamsConstant;
 import org.talend.hadoop.distribution.constants.MapROJAIConstant;
+import org.talend.hadoop.distribution.constants.MapRStreamsConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.SqoopConstant;
@@ -48,21 +48,24 @@ public enum ComponentType {
          HDFSConstant.DISTRIBUTION_REPOSITORYVALUE,
          HDFSConstant.VERSION_PARAMETER,
          HDFSConstant.VERSION_REPOSITORYVALUE,
-         HDFSConstant.HDFS_COMPONENTS),
+         HDFSConstant.HDFS_COMPONENTS,
+         HDFSConstant.CONFIGURATION_COMPONENT),
     HBASE(
           HBaseConstant.SERVICE,
           HBaseConstant.DISTRIBUTION_PARAMETER,
           HBaseConstant.DISTRIBUTION_REPOSITORYVALUE,
           HBaseConstant.VERSION_PARAMETER,
           HBaseConstant.VERSION_REPOSITORYVALUE,
-          HBaseConstant.HBASE_COMPONENTS),
+          HBaseConstant.HBASE_COMPONENTS,
+          HBaseConstant.CONFIGURATION_COMPONENT),
     HIVE(
          HiveConstant.SERVICE,
          HiveConstant.DISTRIBUTION_PARAMETER,
          HiveConstant.DISTRIBUTION_REPOSITORYVALUE,
          HiveConstant.VERSION_PARAMETER,
          HiveConstant.VERSION_REPOSITORYVALUE,
-         HiveConstant.HIVE_COMPONENTS),
+         HiveConstant.HIVE_COMPONENTS,
+         HiveConstant.CONFIGURATION_COMPONENT),
     IMPALA(
            ImpalaConstant.SERVICE,
            ImpalaConstant.DISTRIBUTION_PARAMETER,
@@ -129,6 +132,8 @@ public enum ComponentType {
     private String mVersionRepositoryValueParameter;
     
     private List<String> mComponentList;
+    
+    private String mConfigurationComponent;
 
     /**
      * @param service - the interface of the service
@@ -143,9 +148,16 @@ public enum ComponentType {
             String versionParameter, String versionRepositoryValueParameter) {
         
         this(service,  distributionParameter,  distributionRepositoryValueParameter,
-                 versionParameter,  versionRepositoryValueParameter, new ArrayList<String>());
+                 versionParameter,  versionRepositoryValueParameter, new ArrayList<String>(), null);
     }
 
+    ComponentType(String service, String distributionParameter, String distributionRepositoryValueParameter,
+            String versionParameter, String versionRepositoryValueParameter, String configurationComponent) {
+        
+        this(service,  distributionParameter,  distributionRepositoryValueParameter,
+                 versionParameter,  versionRepositoryValueParameter, new ArrayList<String>(), configurationComponent);
+    }    
+    
     /**
      * @param service - the interface of the service
      * @param distributionParameter - the name of the parameter to create for the distribution on the component side.
@@ -155,15 +167,17 @@ public enum ComponentType {
      * @param versionRepositoryValueParameter - the name of the repository value parameter for the version on the
      * component side.
      * @param componentLists - list of all the components using the enum value
+     * @param configurationComponent - name of the configuration component
      */
     ComponentType(String service, String distributionParameter, String distributionRepositoryValueParameter,
-            String versionParameter, String versionRepositoryValueParameter, List<String> componentLists) {
+            String versionParameter, String versionRepositoryValueParameter, List<String> componentLists, String configurationComponent) {
         this.mService = service;
         this.mDistributionParameter = distributionParameter;
         this.mVersionParameter = versionParameter;
         this.mDistributionRepositoryValueParameter = distributionRepositoryValueParameter;
         this.mVersionRepositoryValueParameter = versionRepositoryValueParameter;
         this.mComponentList = new ArrayList<String>( componentLists );
+        this.mConfigurationComponent = configurationComponent;
     }
   
     public static ComponentType getComponentType(String type) {
@@ -207,5 +221,9 @@ public enum ComponentType {
      */
     public static boolean isSparkComponent(ComponentType ct) {
         return ct == ComponentType.SPARKBATCH || ct == ComponentType.SPARKSTREAMING;
+    }
+    
+    public String getConfigurationComponent() {
+        return this.mConfigurationComponent;
     }
 }
