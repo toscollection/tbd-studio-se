@@ -679,8 +679,7 @@
             "modules": [
                 "hadoop-client",
                 "hadoop-mapreduce-client-core",
-                "hadoop-yarn-server-web-proxy",
-                "parquet-hadoop-bundle"
+                "hadoop-yarn-server-web-proxy"
             ]
         },
         {
@@ -691,8 +690,7 @@
                 "hadoop-client",
                 "jackson-core",
                 "jackson-databind",
-                "jackson-annotations",
-                "parquet-hadoop-bundle"
+                "jackson-annotations"
             ]
         },
         {
@@ -758,7 +756,6 @@
             "id" : "SPARK-LIB-SPARK2-DYNAMIC",
             "description" : "",
             "modules": [
-                "azure-common-1.7.1",
                 "commons-httpclient-3.1",
                 "hadoop-client",
                 "hadoop-mapreduce-client-core",
@@ -769,7 +766,6 @@
                 "hive-jdbc",
                 "kafka-clients",                
                 "kudu-spark2_2.11",
-                "parquet-hadoop-bundle",
                 "spark-avro_2.11",
                 "spark-hive_2.11",
                 "spark-mllib_2.11",
@@ -835,6 +831,7 @@
             "id" : "SPARK-PARQUET-LIB-MRREQUIRED-DYNAMIC",
             "description" : "",
             "modules": [
+                "parquet-hadoop-bundle"
             ]
         },
         {
