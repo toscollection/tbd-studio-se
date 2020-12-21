@@ -26,8 +26,6 @@ public final class HBaseConstant {
     public static final String VERSION_PARAMETER = "HBASE_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "HBASE_VERSION";//$NON-NLS-1$
-    
-    public static final List<String> HBASE_COMPONENTS = Arrays.asList("tHBaseConfiguration","tHBaseConnection", "tHBaseInput", "tHBaseOutput", "tHBaseLookupInput");
-    
-    public static final String CONFIGURATION_COMPONENT = "tHBaseConfiguration";
+
+    public static final List<String> HBASE_COMPONENTS = Arrays.asList("tHBaseConfiguration", "tHBaseConnection", "tHBaseInput", "tHBaseOutput", "tHBaseLookupInput");
 }

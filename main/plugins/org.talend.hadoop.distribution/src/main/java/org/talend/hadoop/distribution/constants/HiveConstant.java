@@ -30,8 +30,6 @@ public final class HiveConstant {
     public static final String HIVE_CONFIGURATION_COMPONENT_HBASEPARAMETER = "STORE_BY_HBASE"; //$NON-NLS-1$
 
     public static final String HIVE_CONFIGURATION_COMPONENT = "tHiveConnection"; //$NON-NLS-1$
-    
-    public static final List<String> HIVE_COMPONENTS = Arrays.asList("tHiveConnection","tHiveConfiguration","tHiveInput","tHiveIn", "tHiveOutput", "tHiveCreateTable", "tHiveLoad", "tHiveRow");
-    
-    public static final String CONFIGURATION_COMPONENT = "tHiveConfiguration";
+
+    public static final List<String> HIVE_COMPONENTS = Arrays.asList("tHiveConnection", "tHiveConfiguration", "tHiveInput", "tHiveIn", "tHiveOutput", "tHiveCreateTable", "tHiveLoad", "tHiveRow");
 }
