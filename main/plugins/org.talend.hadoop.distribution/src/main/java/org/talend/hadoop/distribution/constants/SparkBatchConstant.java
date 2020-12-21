@@ -22,6 +22,8 @@ public final class SparkBatchConstant {
 
     public static final String VERSION_PARAMETER = "SPARK_VERSION";//$NON-NLS-1$
 
+    public static final String SPARK_LOCAL_VERSION_PARAMETER = "SPARK_LOCAL_VERSION";//$NON-NLS-1$
+    
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 
     public static final String SPARK_LOCAL_MODE_PARAMETER = "SPARK_LOCAL_MODE";//$NON-NLS-1$
@@ -41,9 +43,15 @@ public final class SparkBatchConstant {
     public static final String S3_CONFIGURATION_COMPONENT = "tS3Configuration"; //$NON-NLS-1$
 
     public static final String AZURE_CONFIGURATION_COMPONENT = "tAzureFSConfiguration"; //$NON-NLS-1$
+    
+    public static final String GS_CONFIGURATION_COMPONENT = "tGSConfiguration"; //$NON-NLS-1$
 
+    public static final String BIGQUERY_CONFIGURATION_COMPONENT = "tBigQueryConfiguration"; //$NON-NLS-1$
+    
     public static final String DYNAMODB_CONFIGURATION_COMPONENT = "tDynamoDBConfiguration"; //$NON-NLS-1$
 
+    public static final String CASSANDRA_CONFIGURATION_COMPONENT = "tCassandraConfiguration"; //$NON-NLS-1$
+    
     public static final String DYNAMODB_OUTPUT_COMPONENT = "tDynamoDBOutput"; //$NON-NLS-1$
 
     public static final String DYNAMODB_INPUT_COMPONENT = "tDynamoDBInput"; //$NON-NLS-1$
@@ -80,4 +88,19 @@ public final class SparkBatchConstant {
 
     public static final String ALTUS_CLOUD_PROVIDER = "ALTUS_CLOUD_PROVIDER";
 
+    public static final String DELTALAKE_INPUT_COMPONENT = "tDeltaLakeInput";
+    public static final String DELTALAKE_OUTPUT_COMPONENT = "tDeltaLakeOutput";
+    
+    public static final String REDSHIFT_CONFIGURATION_COMPONENT = "tRedshiftConfiguration";
+    public static final String REDSHIFT_INPUT_COMPONENT = "tRedshiftInput";
+    public static final String REDSHIFT_OUTPUT_COMPONENT = "tRedshiftOutput";
+
+    public static final String SNOWFLAKE_CONFIGURATION_COMPONENT = "tSnowflakeConfiguration";
+    public static final String SNOWFLAKE_INPUT_COMPONENT = "tSnowflakeInput";
+    public static final String SNOWFLAKE_OUTPUT_COMPONENT = "tSnowflakeOutput";
+    
+    public static final String HMAP_FILE_COMPONENT = "tHMapFile";
+    public static final String HMAP_INPUT_COMPONENT = "tHMapInput";
+    public static final String HCONVERT_FILE_COMPONENT = "tHConvertFile";
+    public static final String HMAP_RECORD_COMPONENT = "tHMapRecord";
 }
