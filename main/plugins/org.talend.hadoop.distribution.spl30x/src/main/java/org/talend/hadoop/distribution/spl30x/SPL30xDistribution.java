@@ -92,6 +92,12 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
                                 .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         SPL30xDistribution.SPARK_VERSION));
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SVM_MODEL_COMPONENT),
+                        SPL30xSparkBatchNodeModuleGroup
+                                .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
 
         // Spark Batch S3
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
