@@ -25,6 +25,8 @@ public final class SparkStreamingConstant {
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 
     public static final String KAFKA_INPUT_COMPONENT = "tKafkaInput"; //$NON-NLS-1$
+    
+    public static final String KAFKA_COMMIT_COMPONENT = "tKafkaCommit"; //$NON-NLS-1$
 
     public static final String KAFKA_AVRO_INPUT_COMPONENT = "tKafkaInputAvro"; //$NON-NLS-1$
 
