@@ -34,6 +34,8 @@ public final class SparkStreamingConstant {
 
     public static final String PARQUET_OUTPUT_COMPONENT = "tFileOutputParquet"; //$NON-NLS-1$
 
+    public static final String PREDICT_CLUSTER_COMPONENT = "tPredictCluster"; //$NON-NLS-1$
+
     public static final String PARQUET_STREAM_INPUT_COMPONENT = "tFileStreamInputParquet"; //$NON-NLS-1$
 
     public static final String MAPRSTREAMS_SPARKCONFIGURATION_LINKEDPARAMETER = "STORAGE_CONFIGURATION"; //$NON-NLS-1$

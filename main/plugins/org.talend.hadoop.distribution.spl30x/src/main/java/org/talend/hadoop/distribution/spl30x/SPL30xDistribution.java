@@ -98,6 +98,18 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
                                 .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         SPL30xDistribution.SPARK_VERSION));
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.KMEANS_MODEL_COMPONENT),
+                        SPL30xSparkBatchNodeModuleGroup
+                                .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PREDICT_CLUSTER_COMPONENT),
+                        SPL30xSparkBatchNodeModuleGroup
+                                .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
 
         // Spark Batch S3
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
@@ -163,8 +175,18 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
         //TODO mutualise with batch 
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT),
                 SPL30xSparkBatchNodeModuleGroup.getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION ));
-        
-        //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
+
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                        SparkStreamingConstant.PREDICT_CLUSTER_COMPONENT),
+                        SPL30xSparkBatchNodeModuleGroup
+                                .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
+
+        // result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+        // SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT),
+        // SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
 //        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), SPL30xSparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
         return result;
