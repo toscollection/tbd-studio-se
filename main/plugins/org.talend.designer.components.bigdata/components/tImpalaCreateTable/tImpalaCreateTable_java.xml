@@ -65,9 +65,7 @@
 			<ITEMS DEFAULT="HIVE2">
 				<ITEM NAME="HIVE2" VALUE="HIVE2"
 					  SHOW_IF="(HIVE_SERVER == 'HIVE2')" />
-				<ITEM NAME="IMPALA40" VALUE="IMPALA40"
-					  SHOW_IF="(DISTRIBUTION=='CLOUDERA' AND DISTRIB[DISTRIBUTION, IMPALA_VERSION].doSupportImpalaConnector[])" />
-				<ITEM NAME="IMPALA41" VALUE="IMPALA41"
+				<ITEM NAME="IMPALA" VALUE="IMPALA"
 					  SHOW_IF="(DISTRIBUTION=='CLOUDERA' AND DISTRIB[DISTRIBUTION, IMPALA_VERSION].doSupportImpalaConnector[])" />
 			</ITEMS>
 		</PARAMETER>
@@ -339,7 +337,7 @@
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
-				REQUIRED_IF="(USE_EXISTING_CONNECTION=='false' AND DISTRIBUTION!='CUSTOM' AND USE_KRB=='true')" />
+				REQUIRED_IF="(USE_EXISTING_CONNECTION=='false' AND DISTRIBUTION!='CUSTOM' AND USE_KRB=='true')"/>
 		</IMPORTS>
 	</CODEGENERATION>
 

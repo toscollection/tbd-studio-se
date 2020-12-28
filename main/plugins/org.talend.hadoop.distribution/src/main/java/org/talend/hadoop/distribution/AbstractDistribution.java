@@ -47,6 +47,10 @@ public abstract class AbstractDistribution {
         return getHadoopVersion() == EHadoopVersion.HADOOP_2;
     }
 
+    public boolean isHadoop3() {
+        return getHadoopVersion() == EHadoopVersion.HADOOP_3;
+    }
+
     public abstract boolean doSupportKerberos();
 
     /**
@@ -253,6 +257,10 @@ public abstract class AbstractDistribution {
     public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
         return ""; //$NON-NLS-1$
     }
+    
+    public String generateSparkJarsPaths(List<String> commandLineJarsPaths, boolean isLightWeight) {
+        return generateSparkJarsPaths(commandLineJarsPaths);
+    }
 
     public boolean isCloudDistribution() {
         return false;
@@ -334,6 +342,10 @@ public boolean isQuboleDistribution() {
         return false;
     }
 
+    public boolean doSupportExtendedAssumeRole() {
+        return false;
+    }
+
     public boolean doSupportAvroDeflateProperties(){
         return false;
     }
@@ -361,12 +373,20 @@ public boolean isQuboleDistribution() {
     public String getSqoopPackageName() {
         return ESqoopPackageName.COM_CLOUDERA_SQOOP.toString();
     }
-    
+
     public boolean doSupportAzureDataLakeStorageGen2() {
+        return false;
+    }
+
+    public String getParquetPrefixPackageName() {
+        return EParquetPackagePrefix.CLOUDERA.toString();
+    }
+    
+    public boolean doSupportLightWeight() {
     	return false;
     }
     
-    public String getSuffixParquetPackage() {
-        return "";
+    public String getLightWeightClasspath() {
+    	return "";
     }
 }

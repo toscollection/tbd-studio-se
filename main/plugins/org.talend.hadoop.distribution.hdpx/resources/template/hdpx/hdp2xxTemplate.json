@@ -12,7 +12,8 @@
   "description": "",
   "supportedSparkVersions": [
     "SPARK_1_6",
-    "SPARK_2_1"
+    "SPARK_2_1",
+    "SPARK_2_3"
   ],
   "modules": [
     {
@@ -105,6 +106,10 @@
           "classifier": "",
           "extension": "",
           "description": ""
+        },
+        {
+          "groupId": "com.fasterxml.jackson.core",
+          "artifactId": "jackson-core"
         }
       ]
     },
@@ -140,6 +145,24 @@
         },
         {
           "groupId": "jdk.tools",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "hive-metastore",
+      "type": "BASE",
+      "context": "{properties.context}",
+      "groupId": "org.apache.hive",
+      "artifactId": "hive-metastore",
+      "classifier": "",
+      "description": "",
+      "exclusions": [
+        {
+          "groupId": "*",
           "artifactId": "*",
           "classifier": "",
           "extension": "",
@@ -545,6 +568,10 @@
           "classifier": "",
           "extension": "",
           "description": ""
+        },
+        {
+          "groupId": "com.fasterxml.jackson.core",
+          "artifactId": "jackson-core"
         }
       ]
     },
@@ -570,6 +597,10 @@
           "classifier": "",
           "extension": "",
           "description": ""
+        },
+        {
+          "groupId": "com.fasterxml.jackson.core",
+          "artifactId": "jackson-core"
         }
       ]
     },
@@ -903,6 +934,15 @@
       "description": ""
     },
     {
+      "id": "stax-api-1.0.1.jar",
+      "type": "STANDARD",
+      "context": "{properties.context}",
+      "jarName": "stax-api-1.0.1.jar",
+      "mvnUri": "mvn:org.talend.libraries/stax-api-1.0.1/6.0.0",
+      "useStudioRepository": "true",
+      "description": ""
+    },
+    {
       "id": "jline-2.10.4",
       "type": "STANDARD",
       "context": "{properties.context}",
@@ -1118,35 +1158,51 @@
       "description": ""
     },
     {
-      "id": "kite-data-core-1.0.0",
+      "id": "kite-data-core-1.1.0",
       "type": "STANDARD",
       "context": "{properties.context}",
-      "jarName": "kite-data-core-1.0.0.jar",
-      "mvnUri": "mvn:org.kitesdk/kite-data-core/1.0.0",
+      "jarName": "kite-data-core-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-data-core/1.1.0",
       "description": ""
     },
     {
-      "id": "kite-data-mapreduce-1.0.0",
+      "id": "kite-data-mapreduce-1.1.0",
       "type": "STANDARD",
       "context": "{properties.context}",
-      "jarName": "kite-data-mapreduce-1.0.0.jar",
-      "mvnUri": "mvn:org.kitesdk/kite-data-mapreduce/1.0.0",
+      "jarName": "kite-data-mapreduce-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-data-mapreduce/1.1.0",
       "description": ""
     },
     {
-      "id": "kite-hadoop-compatibility-1.0.0",
+      "id": "kite-hadoop-compatibility-1.1.0",
       "type": "STANDARD",
       "context": "{properties.context}",
-      "jarName": "kite-hadoop-compatibility-1.0.0.jar",
-      "mvnUri": "mvn:org.kitesdk/kite-hadoop-compatibility/1.0.0",
+      "jarName": "kite-hadoop-compatibility-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-hadoop-compatibility/1.1.0",
       "description": ""
     },
+	{
+      "id": "kite-data-hive-1.1.0",
+      "type": "STANDARD",
+      "context": "{properties.context}",
+      "jarName": "kite-data-hive-1.1.0.jar",
+      "mvnUri": "mvn:org.kitesdk/kite-data-hive/1.1.0",
+      "description": ""
+    },  
     {
       "id": "parquet-avro-1.4.1",
       "type": "STANDARD",
       "context": "{properties.context}",
       "jarName": "parquet-avro-1.4.1.jar",
       "mvnUri": "mvn:com.twitter/parquet-avro/1.4.1",
+      "description": ""
+    },
+    {
+      "id": "talend-bigdata-aws-lib-1.0.1",
+      "type": "STANDARD",
+      "context": "{properties.context}",
+      "jarName": "talend-bigdata-aws-lib-1.0.1.jar",
+      "mvnUri": "mvn:org.talend.bigdata.libs/talend-bigdata-aws-lib/1.0.1",
       "description": ""
     }
   ],
@@ -1166,17 +1222,14 @@
       "modules": [
         "commons-lang3-3.5",
         "hadoop-client",
-        "hadoop-aws",
-      ],
-      "exclusions": [
-        {
-          "groupId": "com.fasterxml.jackson.core",
-          "artifactId": "jackson-core",
-          "classifier": "",
-          "version": "2.6.6",
-          "extension": "",
-          "description": ""
-        },
+        "hadoop-aws"
+      ]
+    },
+    {
+      "id": "SPARK-S3-LIB-MRREQUIRED-DYNAMIC",
+      "description": "jars for extended-aws-support",
+      "modules": [
+        "talend-bigdata-aws-lib-1.0.1"
       ]
     },
     {
@@ -1244,13 +1297,28 @@
         "avro-1.8.0",
         "avro-mapred",
         "sqoop",
-        "kite-data-core-1.0.0",
-        "kite-data-mapreduce-1.0.0",
-        "kite-hadoop-compatibility-1.0.0",
+        "kite-data-core-1.1.0",
+        "kite-data-mapreduce-1.1.0",
+        "kite-hadoop-compatibility-1.1.0"
+      ]
+    },
+    {
+      "id": "SQOOP-PARQUET-LIB-DYNAMIC",
+      "description": "",
+      "modules": [
         "parquet-avro-1.8.2",
         "parquet-hadoop-bundle",
         "parquet-hadoop-1.8.2",
         "parquet-avro-1.4.1"
+      ]
+    },
+    {
+      "id": "SQOOP-HIVE-LIB-DYNAMIC",
+      "description": "",
+      "modules": [
+        "kite-data-hive-1.1.0",
+        "hive-metastore",
+        "hive-exec"
       ]
     },
     {
@@ -1317,16 +1385,6 @@
       "modules": [
         "tez-dag",
         "tez-mapreduce"
-      ],
-      "exclusions": [
-        {
-          "groupId": "com.fasterxml.jackson.core",
-          "artifactId": "jackson-core",
-          "classifier": "",
-          "extension": "",
-          "version": "2.6.6",
-          "description": ""
-        },
       ]
     },
     {

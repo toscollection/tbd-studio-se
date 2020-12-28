@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.adapter;
 
+import java.io.FileNotFoundException;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -21,6 +22,7 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.talend.commons.utils.threading.TalendCustomThreadPoolExecutor;
 import org.talend.core.runtime.dynamic.DynamicFactory;
@@ -108,6 +110,8 @@ public class DynamicLibraryNeededExtensionAdaper extends DynamicExtensionAdapter
                     DynamicDistributionUtils.checkCancelOrNot(monitor);
                     Runnable runnable = new Runnable() {
 
+                        int count = 0;
+
                         @Override
                         public void run() {
                             try {
@@ -121,7 +125,17 @@ public class DynamicLibraryNeededExtensionAdaper extends DynamicExtensionAdapter
                                 String beanId = moduleBean.getId();
                                 moduleBeanAdapterMap.put(beanId, dynamicModuleAdapter);
                             } catch (Exception e) {
-                                ex[0] = e;
+                                Throwable rootCause = ExceptionUtils.getRootCause(e);
+                                if (e instanceof FileNotFoundException || rootCause instanceof FileNotFoundException) {
+                                    if (count < 5) {
+                                        count++;
+                                        run();
+                                    } else {
+                                        ex[0] = e;
+                                    }
+                                } else {
+                                    ex[0] = e;
+                                }
                             }
                         }
                     };

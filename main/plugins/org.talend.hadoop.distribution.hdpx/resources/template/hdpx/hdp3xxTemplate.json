@@ -94,6 +94,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -168,6 +175,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -249,6 +263,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -304,28 +325,7 @@
           "description": ""
         },
         {
-          "groupId": "org.slf4j",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any slf4j implementation"
-        },
-        {
-          "groupId": "log4j",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any log4j implementation"
-        },
-        {
           "groupId": "apache-logging",
-          "artifactId": "commons-logging",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any commons-logging implementation."
-        },
-        {
-          "groupId": "commons-logging",
           "artifactId": "commons-logging",
           "classifier": "",
           "extension": "",
@@ -339,11 +339,11 @@
           "description": "remove any logback implementation."
         },
         {
-          "groupId": "org.apache.logging.log4j",
+          "groupId": "org.apache.parquet",
           "artifactId": "*",
           "classifier": "",
           "extension": "",
-          "description": "remove any log4j2 implementation."
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -399,34 +399,6 @@
           "description": ""
         },
         {
-          "groupId": "org.slf4j",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any slf4j implementation"
-        },
-        {
-          "groupId": "log4j",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any log4j implementation"
-        },
-        {
-          "groupId": "apache-logging",
-          "artifactId": "commons-logging",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any commons-logging implementation."
-        },
-        {
-          "groupId": "commons-logging",
-          "artifactId": "commons-logging",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any commons-logging implementation."
-        },
-        {
           "groupId": "ch.qos.logback",
           "artifactId": "*",
           "classifier": "",
@@ -434,11 +406,11 @@
           "description": "remove any logback implementation."
         },
         {
-          "groupId": "org.apache.logging.log4j",
+          "groupId": "org.apache.parquet",
           "artifactId": "*",
           "classifier": "",
           "extension": "",
-          "description": "remove any log4j2 implementation."
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -513,6 +485,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -587,6 +566,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -661,6 +647,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -714,6 +707,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -781,6 +781,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -876,6 +883,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -971,6 +985,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1039,6 +1060,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1107,6 +1135,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1175,6 +1210,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1243,6 +1285,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1310,6 +1359,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1319,8 +1375,67 @@
       "context": "{properties.context}",
       "groupId": "org.apache.parquet",
       "artifactId": "parquet-pig-bundle",
+      "version": "1.11.0",
       "classifier": "",
-      "description": ""
+      "description": "",
+      "exclusions": [
+        {
+          "groupId": "org.apache.avro",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        },
+        {
+          "groupId": "junit",
+          "artifactId": "junit",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        },
+        {
+          "groupId": "org.slf4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any slf4j implementation"
+        },
+        {
+          "groupId": "log4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any log4j implementation"
+        },
+        {
+          "groupId": "apache-logging",
+          "artifactId": "commons-logging",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any commons-logging implementation."
+        },
+        {
+          "groupId": "commons-logging",
+          "artifactId": "commons-logging",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any commons-logging implementation."
+        },
+        {
+          "groupId": "ch.qos.logback",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any logback implementation."
+        },
+        {
+          "groupId": "org.apache.logging.log4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any log4j2 implementation."
+        }
+      ]
     },
     {
       "id": "parquet-hadoop-bundle",
@@ -1328,8 +1443,67 @@
       "context": "{properties.context}",
       "groupId": "org.apache.parquet",
       "artifactId": "parquet-hadoop-bundle",
+      "version": "1.11.0",
       "classifier": "",
-      "description": ""
+      "description": "",
+      "exclusions": [
+        {
+          "groupId": "org.apache.avro",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        },
+        {
+          "groupId": "junit",
+          "artifactId": "junit",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        },
+        {
+          "groupId": "org.slf4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any slf4j implementation"
+        },
+        {
+          "groupId": "log4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any log4j implementation"
+        },
+        {
+          "groupId": "apache-logging",
+          "artifactId": "commons-logging",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any commons-logging implementation."
+        },
+        {
+          "groupId": "commons-logging",
+          "artifactId": "commons-logging",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any commons-logging implementation."
+        },
+        {
+          "groupId": "ch.qos.logback",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any logback implementation."
+        },
+        {
+          "groupId": "org.apache.logging.log4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any log4j2 implementation."
+        }
+      ]
     },
     {
       "id": "parquet-hive-bundle",
@@ -1337,8 +1511,67 @@
       "context": "{properties.context}",
       "groupId": "org.apache.parquet",
       "artifactId": "parquet-hive-bundle",
+      "version": "1.11.0",
       "classifier": "",
-      "description": ""
+      "description": "",
+      "exclusions": [
+        {
+          "groupId": "org.apache.avro",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        },
+        {
+          "groupId": "junit",
+          "artifactId": "junit",
+          "classifier": "",
+          "extension": "",
+          "description": ""
+        },
+        {
+          "groupId": "org.slf4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any slf4j implementation"
+        },
+        {
+          "groupId": "log4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any log4j implementation"
+        },
+        {
+          "groupId": "apache-logging",
+          "artifactId": "commons-logging",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any commons-logging implementation."
+        },
+        {
+          "groupId": "commons-logging",
+          "artifactId": "commons-logging",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any commons-logging implementation."
+        },
+        {
+          "groupId": "ch.qos.logback",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any logback implementation."
+        },
+        {
+          "groupId": "org.apache.logging.log4j",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove any log4j2 implementation."
+        }
+      ]
     },
     {
       "id": "tez-dag",
@@ -1411,6 +1644,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1485,6 +1725,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1507,6 +1754,13 @@
       "classifier": "",
       "description": "",
       "exclusions": [
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
+        },
         {
           "groupId": "org.mortbay.jetty",
           "artifactId": "*",
@@ -1562,6 +1816,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1644,6 +1905,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1732,6 +2000,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1744,13 +2019,6 @@
       "classifier": "",
       "description": "",
       "exclusions": [
-        {
-          "groupId": "org.apache.parquet",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove parquet as wrong version imported (1.8.3) instead of hortonworks patched version"
-        },
         {
           "groupId": "org.mortbay.jetty",
           "artifactId": "*",
@@ -1813,6 +2081,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1887,6 +2162,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -1941,6 +2223,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2017,6 +2306,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2084,6 +2380,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2137,6 +2440,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2191,6 +2501,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2254,6 +2571,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2407,6 +2731,13 @@
           "classifier": "",
           "extension": "",
           "description": "remove any log4j2 implementation."
+        },
+        {
+          "groupId": "org.apache.parquet",
+          "artifactId": "*",
+          "classifier": "",
+          "extension": "",
+          "description": "remove parquet as wrong version imported"
         }
       ]
     },
@@ -2459,6 +2790,14 @@
       "description": ""
     },
     {
+      "id": "talend-bigdata-aws-lib-1.0.1",
+      "type": "STANDARD",
+      "context": "{properties.context}",
+      "jarName": "talend-bigdata-aws-lib-1.0.1.jar",
+      "mvnUri": "mvn:org.talend.bigdata.libs/talend-bigdata-aws-lib/1.0.1",
+      "description": ""
+    },
+    {
       "id": "avatica",
       "type": "BASE",
       "context": "{properties.context}",
@@ -2467,28 +2806,7 @@
       "description": "",
       "exclusions": [
         {
-          "groupId": "org.slf4j",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any slf4j implementation"
-        },
-        {
-          "groupId": "log4j",
-          "artifactId": "*",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any log4j implementation"
-        },
-        {
           "groupId": "apache-logging",
-          "artifactId": "commons-logging",
-          "classifier": "",
-          "extension": "",
-          "description": "remove any commons-logging implementation."
-        },
-        {
-          "groupId": "commons-logging",
           "artifactId": "commons-logging",
           "classifier": "",
           "extension": "",
@@ -2502,11 +2820,11 @@
           "description": "remove any logback implementation."
         },
         {
-          "groupId": "org.apache.logging.log4j",
+          "groupId": "org.apache.parquet",
           "artifactId": "*",
           "classifier": "",
           "extension": "",
-          "description": "remove any log4j2 implementation."
+          "description": "remove parquet as wrong version imported"
         }
       ]
     }
@@ -2534,6 +2852,13 @@
         "org-slf4j-log4j12",
         "avro-mapred-1.8.2",
         "hadoop-aws"
+      ]
+    },
+    {
+      "id": "SPARK-S3-LIB-MRREQUIRED-DYNAMIC",
+      "description": "jars for extended AWS feature support",
+      "modules": [
+        "talend-bigdata-aws-lib-1.0.1"
       ]
     },
     {
