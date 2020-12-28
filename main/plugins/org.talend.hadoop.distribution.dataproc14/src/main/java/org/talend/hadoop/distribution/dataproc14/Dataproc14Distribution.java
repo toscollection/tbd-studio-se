@@ -310,6 +310,16 @@ public class Dataproc14Distribution extends AbstractDistribution implements HDFS
     }
 
     @Override
+    public boolean doRequireMetastoreVersionOverride() {
+        return true;
+    }
+
+    @Override
+    public String getHiveMetastoreVersionForSpark() {
+        return "1.2.1";
+    }
+
+    @Override
     public boolean doSupportSparkYarnClusterMode() {
         return false;
     }
@@ -322,21 +332,5 @@ public class Dataproc14Distribution extends AbstractDistribution implements HDFS
     @Override
     public boolean isHiveWizardCheckEnabled() {
         return true;
-    }
-    
-    @Override
-    public boolean doRequireMetastoreVersionOverride() {
-        return true;
-    }
-    
-    @Override
-    public String getHiveMetastoreVersionForSpark() {
-        return "2.3";
-    }
-    
-    @Override
-    public String getHiveMetastoreJars() {
-        return "/usr/lib/hive/lib/*";
-        
     }
 }

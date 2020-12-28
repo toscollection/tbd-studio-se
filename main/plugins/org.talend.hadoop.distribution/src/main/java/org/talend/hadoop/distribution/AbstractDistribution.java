@@ -306,10 +306,6 @@ public boolean isQuboleDistribution() {
         return null;
     }
 
-    public String getHiveMetastoreJars() {
-        return "maven";
-    }
-    
     public boolean isHortonworksDistribution() {
         return false;
     }

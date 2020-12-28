@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 
 /**
  * created by bchen on Jun 2, 2015 Detailled comment
@@ -61,7 +61,7 @@ public class ApiClusterList extends ApiListBase<ApiCluster> {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("href", href).add("items", getClusters()).toString();
+        return Objects.toStringHelper(this).add("href", href).add("items", getClusters()).toString();
     }
 
 }
