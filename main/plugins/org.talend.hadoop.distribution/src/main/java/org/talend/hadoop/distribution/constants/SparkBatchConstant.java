@@ -111,4 +111,7 @@ public final class SparkBatchConstant {
     public static final String HMAP_INPUT_COMPONENT = "tHMapInput";
     public static final String HCONVERT_FILE_COMPONENT = "tHConvertFile";
     public static final String HMAP_RECORD_COMPONENT = "tHMapRecord";
+
+    public static final String LINEAR_REGRESSION_MODEL_COMPONENT = "tLinearRegressionModel";
+    public static final String LOGISTIC_REGRESSION_MODEL_COMPONENT = "tLogisticRegressionModel";
 }
