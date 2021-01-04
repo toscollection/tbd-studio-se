@@ -67,6 +67,20 @@ class TKafkaOutputUtil {
     public String getKafkaTopic() {
         return ElementParameterParser.getValue(node, "__KAFKA_TOPIC__");
     }
+    
+    public Integer getKafkaPartition() {
+    	if ("true".equals(ElementParameterParser.getValue(node, "__DEFINE_PARTITION__"))) {
+        	return Integer.valueOf(ElementParameterParser.getValue(node, "__KAFKA_PARTITION__"));
+        }
+        return null;
+    }
+   
+    public String getKafkaKey() {
+	    if ("true".equals(ElementParameterParser.getValue(node, "__DEFINE_KEY__"))) {
+	        return ElementParameterParser.getValue(node, "__KAFKA_KEY__");
+	    }
+	    return null;
+    }
 
     public String getIncomingColumnName() {
         return this.incomingConnection.getMetadataTable().getListColumns().get(0).getLabel();

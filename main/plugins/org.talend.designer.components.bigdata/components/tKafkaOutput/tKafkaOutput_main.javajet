@@ -18,21 +18,23 @@
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaOutput/tKafkaOutput_util.javajet"%>
 
 <%
-// Parse the inputs to this javajet generator.
-final CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-final INode node = (INode)codeGenArgument.getArgument();
-final TKafkaOutputUtil tKafkaOutputUtil = new TKafkaOutputUtil(node);
-
-final String cid = node.getUniqueName();
-
-final boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
-final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-final boolean isHeaderEnabled = ("true").equals(ElementParameterParser.getValue(node, "__HEADERS__"));
-final boolean isKafkaVersionSupportHeaders = ("KAFKA_2_2_1").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__")) || ("KAFKA_1_1_0").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__"));
-
-
+	// Parse the inputs to this javajet generator.
+	final CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	final INode node = (INode) codeGenArgument.getArgument();
+	final TKafkaOutputUtil tKafkaOutputUtil = new TKafkaOutputUtil(node);
+	
+	final String cid = node.getUniqueName();
+	
+	final boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
+	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	final boolean isHeaderEnabled = ("true").equals(ElementParameterParser.getValue(node, "__HEADERS__"));
+	final boolean isKafkaVersionSupportHeaders = ("KAFKA_2_2_1").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__")) || ("KAFKA_1_1_0").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__"));
 %>
-org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record = new org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]>(<%=tKafkaOutputUtil.getKafkaTopic()%>, <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>);
+	org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record = new org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]>(<%=tKafkaOutputUtil.getKafkaTopic()%>, 
+																																				   (Integer) <%=tKafkaOutputUtil.getKafkaPartition()%>,
+																																				   <%if( tKafkaOutputUtil.getKafkaKey() != null ){%> <%=tKafkaOutputUtil.getKafkaKey()%>.getBytes()
+																																				   <%} else {%> (byte[]) null <%}%>,
+																																				   <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>);
 <%
         if(isHeaderEnabled && isKafkaVersionSupportHeaders){
         List<Map<String, String>> headers = (List<Map<String, String>>) ElementParameterParser
@@ -53,35 +55,35 @@ org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record = new or
             }
         }
 %>
-<%=cid%>_kafkaProducer.send(record, new org.apache.kafka.clients.producer.Callback() {
-	public void onCompletion(org.apache.kafka.clients.producer.RecordMetadata metadata, Exception e) {
-		if (e != null) {
-			<%=cid%>_producerExceptions.add(e);
+	<%=cid%>_kafkaProducer.send(record, new org.apache.kafka.clients.producer.Callback() {
+		public void onCompletion(org.apache.kafka.clients.producer.RecordMetadata metadata, Exception e) {
+			if (e != null) {
+				<%=cid%>_producerExceptions.add(e);
+			}
+			<%=cid%>_counter_rev.getAndIncrement();
 		}
-		<%=cid%>_counter_rev.getAndIncrement();
-	}
-});
-<%=cid%>_counter_send++;
+	});
+	<%=cid%>_counter_send++;
 
-if (!<%=cid%>_producerExceptions.isEmpty()) {
-	Exception e = <%=cid%>_producerExceptions.iterator().next();
-	<%
+	if (!<%=cid%>_producerExceptions.isEmpty()) {
+		Exception e = <%=cid%>_producerExceptions.iterator().next();
+<%
 	if (dieOnError) {
-	%>
+%>
 		throw e;
-	<%
+<%
 	} else {
 	// if DIE_ON_ERROR unchecked, the process stops when there is AuthenticationException, AuthorizationException, UnknownServerException or UnsupportedVersionException
-	%>
-		if (e instanceof org.apache.kafka.common.errors.AuthenticationException || e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException || e instanceof org.apache.kafka.common.errors.UnsupportedVersionException) {
-			throw e;
+%>
+		if (e instanceof org.apache.kafka.common.errors.AuthenticationException ||
+			e instanceof org.apache.kafka.common.errors.AuthorizationException ||
+			e instanceof org.apache.kafka.common.errors.UnknownServerException ||
+			e instanceof org.apache.kafka.common.errors.UnsupportedVersionException) {
+				throw e;
 		} else {
-			<%if(isLog4jEnabled){%>	
-				log.error("<%=cid%> - " + e.getMessage());
-			<%}%>
+			<%if(isLog4jEnabled)%> log.error("<%=cid%> - " + e.getMessage());
 		}
-	<%
+<%
 	}
-	%>
-}
-	
+%>
+	}

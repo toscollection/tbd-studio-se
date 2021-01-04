@@ -6,14 +6,16 @@
 %>
 
 <%
-String outStructName = tKafkaInputUtil.getOutStructName();
+	String outStructName = tKafkaInputUtil.getOutStructName();
 %>
-
-<%=tKafkaInputUtil.getOutgoingConnectionName()%> = <%=cid%>_consumerRecord.value() == null ? new <%=outStructName%>() : <%=cid%>_consumerRecord.value();
+	<%=tKafkaInputUtil.getOutgoingConnectionName()%> = <%=cid%>_consumerRecord.value() == null ? new <%=outStructName%>() : <%=cid%>_consumerRecord.value();
+	<%=tKafkaInputUtil.getOutgoingConnectionName()%>.topic = <%=cid%>_consumerRecord.topic();
+	<%=tKafkaInputUtil.getOutgoingConnectionName()%>.partition = <%=cid%>_consumerRecord.partition();
+	<%=tKafkaInputUtil.getOutgoingConnectionName()%>.key = <%=cid%>_consumerRecord.key();
 <%
-if (ElementParameterParser.getBooleanValue(node, "__SAVE_OFFSET__")) {
-    %>
-    <%=tKafkaInputUtil.getOutgoingConnectionName()%>.offset = <%=cid%>_consumerRecord.offset();
-    <%
-}
+	if (ElementParameterParser.getBooleanValue(node, "__SAVE_OFFSET__")) {
+%>
+	    <%=tKafkaInputUtil.getOutgoingConnectionName()%>.offset = <%=cid%>_consumerRecord.offset();
+<%
+	}
 %>

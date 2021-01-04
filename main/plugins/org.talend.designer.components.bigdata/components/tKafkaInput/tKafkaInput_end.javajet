@@ -17,24 +17,24 @@
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/tKafkaInput_util.javajet"%>
 
 <%
-CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-INode node = (INode)codeGenArgument.getArgument();
-String cid = node.getUniqueName();
-
-TKafkaInputUtil tKafkaInputUtil = new TKafkaInputUtil(node);
-final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-
-if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
+	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+	INode node = (INode)codeGenArgument.getArgument();
+	String cid = node.getUniqueName();
+	
+	TKafkaInputUtil tKafkaInputUtil = new TKafkaInputUtil(node);
+	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+	
+	if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.8.2.x/tKafkaInput_end_0.8.2.x.javajet"%>
 <%
-} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_9_0_1")) {
+	} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_9_0_1")) {
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.9.0.x/tKafkaInput_end_0.9.0.x.javajet"%>
 <%
-} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_10_0_1") || tKafkaInputUtil.isKafkaVersion("KAFKA_1_1_0") || tKafkaInputUtil.isKafkaVersion("KAFKA_2_2_1")) {
+	} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_10_0_1") || tKafkaInputUtil.isKafkaVersion("KAFKA_1_1_0") || tKafkaInputUtil.isKafkaVersion("KAFKA_2_2_1")) {
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.10.0.x/tKafkaInput_end_0.10.0.x.javajet"%>
 <%
-}
+	}
 %>

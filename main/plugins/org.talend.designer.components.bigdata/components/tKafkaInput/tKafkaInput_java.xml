@@ -35,28 +35,33 @@
 
 		<PARAMETER NAME="SCHEMA" FIELD="SCHEMA_TYPE" NUM_ROW="5"
 			REQUIRED="true">
-			<TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'true')"
-				READONLY="true">
-				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
-					CUSTOM="true" />
+			<TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'true')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true" CUSTOM="true" />
 				<COLUMN NAME="offset" TYPE="id_Long" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="topic" TYPE="id_String" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="partition" TYPE="id_Integer" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="key" TYPE="id_byte[]" READONLY="true" CUSTOM="true" />
 			</TABLE>
-			<TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'false')"
-				READONLY="true">
-				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true"
-					CUSTOM="true" />
+			<TABLE IF="(OUTPUT_TYPE == 'BYTES') AND (SAVE_OFFSET == 'false')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_byte[]" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="topic" TYPE="id_String" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="partition" TYPE="id_Integer" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="key" TYPE="id_byte[]" READONLY="true" CUSTOM="true" />
 			</TABLE>
-			<TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'true')"
-				READONLY="true">
-				<COLUMN NAME="payload" TYPE="id_String" READONLY="true"
-					CUSTOM="true" />
+			<TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'true')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_String" READONLY="true" CUSTOM="true" />
 				<COLUMN NAME="offset" TYPE="id_Long" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="topic" TYPE="id_String" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="partition" TYPE="id_Integer" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="key" TYPE="id_byte[]" READONLY="true" CUSTOM="true" />
 			</TABLE>
-			<TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'false')"
-				READONLY="true">
-				<COLUMN NAME="payload" TYPE="id_String" READONLY="true"
-					CUSTOM="true" />
+			<TABLE IF="(OUTPUT_TYPE == 'STRING') AND (SAVE_OFFSET == 'false')" READONLY="true">
+				<COLUMN NAME="payload" TYPE="id_String" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="topic" TYPE="id_String" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="partition" TYPE="id_Integer" READONLY="true" CUSTOM="true" />
+				<COLUMN NAME="key" TYPE="id_byte[]" READONLY="true" CUSTOM="true" />
 			</TABLE>
+			
 		</PARAMETER>
 
 		<PARAMETER NAME="USE_EXISTING_CONNECTION" FIELD="CHECK"
