@@ -40,7 +40,7 @@ public class DistributionVersionModule {
 
     public DistributionModuleGroup moduleGrop;
 
-    private List<ModuleNeeded> modulesNeeded = new ArrayList<ModuleNeeded>();
+    protected List<ModuleNeeded> modulesNeeded = new ArrayList<ModuleNeeded>();
 
     DistributionVersionModule(DistributionVersion distributionVersion) {
         super();
