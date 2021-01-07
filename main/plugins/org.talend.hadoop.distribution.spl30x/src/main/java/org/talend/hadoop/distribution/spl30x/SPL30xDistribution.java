@@ -193,6 +193,12 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         SPL30xDistribution.SPARK_VERSION));
 
+        // Spark Batch Math
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DECISION_TREE_MODEL_COMPONENT), SPL30xSparkBatchNodeModuleGroup
+                .getModuleGroup(SPL30xConstant.SPARK_BATCH_MATH_MODULE_GROUP.getModuleName(), SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION));
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.GRADIENT_BOOSTED_TREE_MODEL), SPL30xSparkBatchNodeModuleGroup
+                .getModuleGroup(SPL30xConstant.SPARK_BATCH_MATH_MODULE_GROUP.getModuleName(), SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION));
+
         // Spark Streaming Parquet
         //TODO mutualise with batch 
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT),
