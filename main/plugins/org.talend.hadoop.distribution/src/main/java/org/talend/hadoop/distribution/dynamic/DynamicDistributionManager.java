@@ -348,7 +348,7 @@ public class DynamicDistributionManager implements IDynamicDistributionManager {
 
         for (IDynamicDistributionsGroup dynDistriGroup : dynDistriGroups) {
             try {
-                dynDistriGroup.unregisterAllBuiltin(monitor);
+                dynDistriGroup.unregisterAllBuiltin(monitor, false);
             } catch (Throwable e) {
                 ExceptionHandler.process(e);
             }
@@ -377,7 +377,7 @@ public class DynamicDistributionManager implements IDynamicDistributionManager {
             for (IDynamicDistributionsGroup dynDistriGroup : dynDistriGroups) {
                 try {
                     if (dynDistriGroup.canRegister(dynamicPlugin, monitor)) {
-                        dynDistriGroup.unregister(dynamicPlugin, monitor);
+                        dynDistriGroup.unregister(dynamicPlugin, monitor, false);
                         registed = true;
                     }
                 } catch (Throwable e) {
