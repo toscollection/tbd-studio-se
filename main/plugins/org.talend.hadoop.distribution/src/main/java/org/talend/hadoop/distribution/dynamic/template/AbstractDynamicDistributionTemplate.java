@@ -269,7 +269,7 @@ public abstract class AbstractDynamicDistributionTemplate extends AbstractDistri
                         if (libService != null) {
                             libService.resetModulesNeeded();
                         }
-                        HadoopDistributionsHelper.updateCacheVersion();
+                        HadoopDistributionsHelper.updatePluginExtensionCacheVersion();
                         return true;
                     } catch (Exception e) {
                         ExceptionHandler.process(e);
@@ -294,7 +294,7 @@ public abstract class AbstractDynamicDistributionTemplate extends AbstractDistri
                         if (libService != null) {
                             libService.resetModulesNeeded();
                         }
-                        HadoopDistributionsHelper.updateCacheVersion();
+                        HadoopDistributionsHelper.updatePluginExtensionCacheVersion();
                         return true;
                     } catch (Exception e) {
                         ExceptionHandler.process(e);
