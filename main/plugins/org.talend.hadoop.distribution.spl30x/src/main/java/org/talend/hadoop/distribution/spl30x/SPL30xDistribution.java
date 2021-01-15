@@ -99,6 +99,12 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         SPL30xDistribution.SPARK_VERSION));
         result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CLASSIFY_SVM_COMPONENT),
+                        SPL30xSparkBatchNodeModuleGroup
+                                .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
+        result
                 .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.KMEANS_MODEL_COMPONENT),
                         SPL30xSparkBatchNodeModuleGroup
                                 .getModuleGroup(SPL30xConstant.SPARK_BATCH_PARQUET_MODULE_GROUP.getModuleName(),
@@ -222,6 +228,13 @@ public class SPL30xDistribution extends AbstractDistribution implements ISparkLo
         result
                 .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                         SparkStreamingConstant.KMEANSSTR_MODEL_COMPONENT),
+                        SPL30xSparkBatchNodeModuleGroup
+                                .getModuleGroup(SPL30xConstant.SPARK_BATCH_ML_MODULE_GROUP.getModuleName(),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                        SparkStreamingConstant.CLASSIFY_SVM_COMPONENT),
                         SPL30xSparkBatchNodeModuleGroup
                                 .getModuleGroup(SPL30xConstant.SPARK_BATCH_ML_MODULE_GROUP.getModuleName(),
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
