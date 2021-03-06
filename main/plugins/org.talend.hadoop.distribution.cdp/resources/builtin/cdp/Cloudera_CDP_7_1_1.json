@@ -1,7 +1,7 @@
 {
   "childNodes" : [ {
     "childNodes" : [ ],
-    "distribution" : "CDP",
+    "distribution" : "CLOUDERA",
     "id" : "Cloudera_CDP7_1_1_0_565",
     "name" : "Cloudera CDP7.1.1.0-565",
     "repository" : "https://talend-update.talend.com/nexus/content/groups/dynamicdistribution/",
@@ -11,6 +11,30 @@
     "version" : "7.1.1.0-565"
   }, {
     "childNodes" : [ {
+      "childNodes" : [ {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_bigquery_connector_hadoop3",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_gcs_connector_hadoop3",
+        "tagName" : "library"
+      } ],
+      "description" : "",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_BIGQUERY_LIB_DYNAMIC",
+      "tagName" : "libraryNeededGroup",
+      "templateId" : "BIGQUERY-LIB-DYNAMIC"
+    }, {
+      "childNodes" : [ {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_gcs_connector_hadoop3",
+        "tagName" : "library"
+      } ],
+      "description" : "",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_GCS_LIB_DYNAMIC",
+      "tagName" : "libraryNeededGroup",
+      "templateId" : "GCS-LIB-DYNAMIC"
+    }, {
       "childNodes" : [ {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_accessors_smart_1_2_jar",
@@ -6240,11 +6264,15 @@
     }, {
       "childNodes" : [ {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_aws_java_sdk_bundle_1_11_563_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_aws_java_sdk_bundle",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_aws_3_1_1_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_talend_bigdata_aws",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -7069,10 +7097,11 @@
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_aws_java_sdk_bundle_1_11_563_jar",
-      "mvn_uri" : "mvn:com.amazonaws/aws-java-sdk-bundle/1.11.563/jar",
-      "name" : "aws-java-sdk-bundle-1.11.563.jar",
-      "tagName" : "libraryNeeded"
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_aws_java_sdk_bundle",
+      "mvn_uri" : "mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760",
+      "name" : "aws-java-sdk-bundle-1.11.760.jar",
+      "tagName" : "libraryNeeded",
+      "useStudioRepository" : "true"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
@@ -7769,7 +7798,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_yarn_server_web_proxy_3_1_1_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-yarn-server-web-proxy/3.1.1.7.1.1.0-565",
+      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-yarn-server-web-proxy/3.1.1.7.1.1.0-565/jar",
       "name" : "hadoop-yarn-server-web-proxy-3.1.1.7.1.1.0-565.jar",
       "tagName" : "libraryNeeded"
     }, {
@@ -7809,7 +7838,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_hadoop_compat_2_2_3_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.hbase/hbase-hadoop-compat/2.2.3.7.1.1.0-565",
+      "mvn_uri" : "mvn:org.apache.hbase/hbase-hadoop-compat/2.2.3.7.1.1.0-565/jar",
       "name" : "hbase-hadoop-compat-2.2.3.7.1.1.0-565.jar",
       "tagName" : "libraryNeeded"
     }, {

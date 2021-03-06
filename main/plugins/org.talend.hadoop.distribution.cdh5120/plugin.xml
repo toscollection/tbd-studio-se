@@ -489,6 +489,13 @@
         </libraryNeeded>
 
         <libraryNeeded
+                context="plugin:org.talend.hadoop.distribution.cdh5120"
+                id="talend-bigdata-aws-1.0.0-20180116.jar"
+                name="talend-bigdata-aws-1.0.0-20180116.jar"
+                mvn_uri="mvn:org.talend.libraries/talend-bigdata-aws-1.0.0-20180116/6.0.0">
+        </libraryNeeded>
+
+        <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.cdh5120"
             id="aws-java-sdk-s3-1.10.6.jar"
             name="aws-java-sdk-s3-1.10.6.jar"
@@ -777,7 +784,24 @@
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="univocity-parsers-2.2.1.jar" name="univocity-parsers-2.2.1.jar" mvn_uri="mvn:org.talend.libraries/univocity-parsers-2.2.1/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="validation-api-1.1.0.Final.jar" name="validation-api-1.1.0.Final.jar" mvn_uri="mvn:javax.validation/validation-api/1.1.0.Final"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="xbean-asm5-shaded-4.4.jar" name="xbean-asm5-shaded-4.4.jar" mvn_uri="mvn:org.apache.xbean/xbean-asm5-shaded/4.4"/>
-		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="xz-1.0.jar" name="xz-1.0.jar" mvn_uri="mvn:org.tukaani/xz/1.0"/><!-- Groups -->
+		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="xz-1.0.jar" name="xz-1.0.jar" mvn_uri="mvn:org.tukaani/xz/1.0"/>
+		
+		<libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh5120"
+            id="gcs-connector-hadoop2-2.1.6-shaded.jar"
+            name="gcs-connector-hadoop2-2.1.6-shaded.jar"
+            mvn_uri="mvn:com.google.cloud.bigdataoss/gcs-connector/hadoop2-2.1.6/jar/shaded">
+        </libraryNeeded>
+
+        <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.cdh5120"
+            id="bigquery-connector-hadoop2-1.1.6-shaded.jar"
+            name="bigquery-connector-hadoop2-1.1.6-shaded.jar"
+            mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop2-1.1.6/jar/shaded">
+        </libraryNeeded>
+		
+		
+		<!-- Groups -->
 
         <!-- HDFS common group -->
         <libraryNeededGroup
@@ -1185,6 +1209,7 @@
                 description="Spark S3 libraries for CDH 5.12 that are MRREQUIRED"
                 id="SPARK-S3-LIB-MRREQUIRED-CDH_5_12"
                 name="SPARK-S3-LIB-MRREQUIRED-CDH_5_12">
+             <library id="talend-bigdata-aws-1.0.0-20180116.jar"/>
              <library id="hadoop-aws-2.6.0-cdh5.12.1.jar"/>
              <library id="aws-java-sdk-core-1.10.6.jar"/>
              <library id="aws-java-sdk-kms-1.10.6.jar"/>
@@ -1328,6 +1353,22 @@
             <library id="commons-io-2.4.jar"/>
             <library id="jersey-client-1.9.jar"/>
         </libraryNeededGroup>
+        
+        <libraryNeededGroup
+                description="Libraries for BigQuery"
+                id="BIGQUERY-GROUP-Cloudera_CDH5_12"
+                name="BIGQUERY-GROUP-Cloudera_CDH5_12">
+            <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
+            <library id="bigquery-connector-hadoop2-1.1.6-shaded.jar"/>
+        </libraryNeededGroup>
+
+        <libraryNeededGroup
+                description="Libraries for GCS"
+                id="GCS-GROUP-Cloudera_CDH5_12"
+                name="GCS-GROUP-Cloudera_CDH5_12">
+            <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
+        </libraryNeededGroup>
+        
     </extension>
     <extension
           point="org.talend.core.runtime.classloader_provider">

@@ -87,6 +87,11 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 	public String getYarnApplicationClasspath() {
 		return YARN_APPLICATION_CLASSPATH;
 	}
+	
+	@Override
+    public String getLightWeightClasspath() {
+        return YARN_APPLICATION_CLASSPATH;
+    }
 
 	@Override
 	public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
@@ -269,6 +274,15 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 	public boolean doSupportAssumeRole() {
 		return true;
 	}
+	@Override
+	public boolean doSupportExtendedAssumeRole() {
+		return true;
+	}
+	
+	@Override
+    public boolean useS3AProperties() {
+        return true;
+    }
 
 	@Override
 	public boolean doSupportAvroDeflateProperties() {
