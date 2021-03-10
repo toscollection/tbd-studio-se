@@ -274,7 +274,7 @@
     <CODEGENERATION>
         <IMPORTS>
 
-            <IMPORT MODULE="mongo-java-driver-3.12.0.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.0"  NAME="mongo-java-driver-3.12.0" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION != 'MONGODB_2_6_X') AND (DB_VERSION != 'MONGODB_2_5_X'))" />
+            <IMPORT MODULE="mongo-java-driver-3.12.0.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.0"  NAME="mongo-java-driver-3.12.0" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')" />
             
         </IMPORTS>
     </CODEGENERATION>
