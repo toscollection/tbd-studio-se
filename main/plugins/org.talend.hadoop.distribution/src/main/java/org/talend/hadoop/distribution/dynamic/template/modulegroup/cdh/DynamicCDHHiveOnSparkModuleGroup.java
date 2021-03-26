@@ -49,22 +49,30 @@ public class DynamicCDHHiveOnSparkModuleGroup extends DynamicHiveOnSparkModuleGr
 
         checkRuntimeId(sparkHiveRuntimeId);
         if (StringUtils.isNotBlank(sparkHiveRuntimeId)) {
-            
+
             ComponentCondition notInSparkLocal = new SimpleComponentCondition(
                     new LinkedNodeExpression(
                             SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER,
                             EqualityOperator.EQ, "false")
                     );
 
-            ComponentCondition sparkLocalVersionLessThan3 = new SimpleComponentCondition(
+            ComponentCondition inSparkLocal = new SimpleComponentCondition(
+                    new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "true"));
+
+            ComponentCondition sparkVersionLessThan3 = new SimpleComponentCondition(
                     new LinkedNodeExpression(
-                            SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SparkBatchConstant.SPARK_LOCAL_VERSION_PARAMETER + "[]",
+                            SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                            SparkBatchConstant.VERSION_PARAMETER + "[]",
                             EqualityOperator.LT, ESparkVersion.SPARK_3_0.toString())
                     );
 
-            // Not in spark local >= 3.0 (spark local = false or spark local version < 3.0 
+            ComponentCondition sparkLocalVersionLessThan3 = new MultiComponentCondition(inSparkLocal, BooleanOperator.AND,
+                    sparkVersionLessThan3);
+
+            // Not in spark local >= 3.0 (spark local = false or spark local < 3.0)
             MultiComponentCondition notInSparkLocalAbove30 = new MultiComponentCondition(notInSparkLocal, BooleanOperator.OR, sparkLocalVersionLessThan3);
-            
+
             moduleGroups.add(new DistributionModuleGroup(sparkHiveRuntimeId, true, notInSparkLocalAbove30));
         }
 
