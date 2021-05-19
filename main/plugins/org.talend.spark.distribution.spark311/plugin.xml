@@ -1,0 +1,740 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.talend.core.runtime.librariesNeeded">
+		
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="HikariCP-2.5.1.jar" name="HikariCP-2.5.1.jar" mvn_uri="mvn:com.zaxxer/HikariCP/2.5.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="JLargeArrays-1.5.jar" name="JLargeArrays-1.5.jar" mvn_uri="mvn:pl.edu.icm/JLargeArrays/1.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="JTransforms-3.1.jar" name="JTransforms-3.1.jar" mvn_uri="mvn:com.github.wendykierp/JTransforms/3.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="RoaringBitmap-0.9.0.jar" name="RoaringBitmap-0.9.0.jar" mvn_uri="mvn:org.roaringbitmap/RoaringBitmap/0.9.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="ST4-4.0.4.jar" name="ST4-4.0.4.jar" mvn_uri="mvn:ST4/4.0.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="accessors-smart-1.2.jar" name="accessors-smart-1.2.jar" mvn_uri="mvn:net.minidev/accessors-smart/1.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="activation-1.1.1.jar" name="activation-1.1.1.jar" mvn_uri="mvn:activation/1.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="aircompressor-0.10.jar" name="aircompressor-0.10.jar" mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="algebra_2.12-2.0.0-M2.jar" name="algebra_2.12-2.0.0-M2.jar" mvn_uri="mvn:org.typelevel/algebra_2.12/2.0.0-M2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="antlr-runtime-3.5.2.jar" name="antlr-runtime-3.5.2.jar" mvn_uri="mvn:antlr-runtime/3.5.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="antlr4-runtime-4.8-1.jar" name="antlr4-runtime-4.8-1.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.8-1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="aopalliance-1.0.jar" name="aopalliance-1.0.jar" mvn_uri="mvn:aopalliance/1.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="aopalliance-repackaged-2.6.1.jar" name="aopalliance-repackaged-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2.external/aopalliance-repackaged/2.6.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="arpack_combined_all-0.1.jar" name="arpack_combined_all-0.1.jar" mvn_uri="mvn:arpack_combined_all/0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="arrow-format-2.0.0.jar" name="arrow-format-2.0.0.jar" mvn_uri="mvn:org.apache.arrow/arrow-format/2.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="arrow-memory-core-2.0.0.jar" name="arrow-memory-core-2.0.0.jar" mvn_uri="mvn:org.apache.arrow/arrow-memory-core/2.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="arrow-memory-netty-2.0.0.jar" name="arrow-memory-netty-2.0.0.jar" mvn_uri="mvn:org.apache.arrow/arrow-memory-netty/2.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="arrow-vector-2.0.0.jar" name="arrow-vector-2.0.0.jar" mvn_uri="mvn:org.apache.arrow/arrow-vector/2.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="audience-annotations-0.5.0.jar" name="audience-annotations-0.5.0.jar" mvn_uri="mvn:org.apache.yetus/audience-annotations/0.5.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="automaton-1.11-8.jar" name="automaton-1.11-8.jar" mvn_uri="mvn:automaton-1.11-8/6.1.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:parquet-avro/1.8.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="avro-ipc-1.8.2.jar" name="avro-ipc-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro-ipc/1.8.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="avro-mapred-1.8.2-hadoop2.jar" name="avro-mapred-1.8.2-hadoop2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="bcpkix-jdk15on-1.68.jar" name="bcpkix-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.68"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="bcprov-jdk15on-1.68.jar" name="bcprov-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.68"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="bonecp-0.8.0.RELEASE.jar" name="bonecp-0.8.0.RELEASE.jar" mvn_uri="mvn:bonecp/0.8.0.RELEASE"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="breeze-macros_2.12-1.0.jar" name="breeze-macros_2.12-1.0.jar" mvn_uri="mvn:org.scalanlp/breeze-macros_2.12/1.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar" mvn_uri="mvn:org.scalanlp/breeze_2.12/1.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="cats-kernel_2.12-2.0.0-M4.jar" name="cats-kernel_2.12-2.0.0-M4.jar" mvn_uri="mvn:org.typelevel/cats-kernel_2.12/2.0.0-M4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="chill-java-0.9.5.jar" name="chill-java-0.9.5.jar" mvn_uri="mvn:com.twitter/chill-java/0.9.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="chill_2.12-0.9.5.jar" name="chill_2.12-0.9.5.jar" mvn_uri="mvn:com.twitter/chill_2.12/0.9.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-beanutils-1.9.4.jar" name="commons-beanutils-1.9.4.jar" mvn_uri="mvn:commons-beanutils/1.9.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-cli-1.2.jar" name="commons-cli-1.2.jar" mvn_uri="mvn:commons-cli/1.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-codec-1.10.jar" name="commons-codec-1.10.jar" mvn_uri="mvn:commons-codec/1.10"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-collections-3.2.2.jar" name="commons-collections-3.2.2.jar" mvn_uri="mvn:commons-collections/3.2.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-compiler-3.0.16.jar" name="commons-compiler-3.0.16.jar" mvn_uri="mvn:org.codehaus.janino/commons-compiler/3.0.16"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-compress-1.20.jar" name="commons-compress-1.20.jar" mvn_uri="mvn:org.apache.commons/commons-compress/1.20"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-configuration2-2.1.1.jar" name="commons-configuration2-2.1.1.jar" mvn_uri="mvn:org.apache.commons/commons-configuration2/2.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-crypto-1.1.0.jar" name="commons-crypto-1.1.0.jar" mvn_uri="mvn:org.apache.commons/commons-crypto/1.1.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-daemon-1.0.13.jar" name="commons-daemon-1.0.13.jar" mvn_uri="mvn:commons-daemon/commons-daemon/1.0.13"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-dbcp-1.4.jar" name="commons-dbcp-1.4.jar" mvn_uri="mvn:commons-dbcp/1.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-httpclient-3.1.jar" name="commons-httpclient-3.1.jar" mvn_uri="mvn:commons-httpclient/3.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-io-2.5.jar" name="commons-io-2.5.jar" mvn_uri="mvn:commons-io/commons-io/2.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-lang-2.6.jar" name="commons-lang-2.6.jar" mvn_uri="mvn:commons-lang/2.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-lang3-3.10.jar" name="commons-lang3-3.10.jar" mvn_uri="mvn:org.apache.commons/commons-lang3/3.10"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-logging-1.1.3.jar" name="commons-logging-1.1.3.jar" mvn_uri="mvn:commons-logging/1.1.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-math3-3.4.1.jar" name="commons-math3-3.4.1.jar" mvn_uri="mvn:commons-math3/3.4.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-net-3.1.jar" name="commons-net-3.1.jar" mvn_uri="mvn:commons-net/3.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-pool-1.5.4.jar" name="commons-pool-1.5.4.jar" mvn_uri="mvn:commons-pool/1.5.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="commons-text-1.6.jar" name="commons-text-1.6.jar" mvn_uri="mvn:org.apache.commons/commons-text/1.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="compress-lzf-1.0.3.jar" name="compress-lzf-1.0.3.jar" mvn_uri="mvn:compress-lzf/1.0.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="core-1.1.2.jar" name="core-1.1.2.jar" mvn_uri="mvn:core/1.1.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="curator-client-2.13.0.jar" name="curator-client-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-client/2.13.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="curator-framework-2.13.0.jar" name="curator-framework-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-framework/2.13.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="curator-recipes-2.13.0.jar" name="curator-recipes-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-recipes/2.13.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="datanucleus-api-jdo-4.2.4.jar" name="datanucleus-api-jdo-4.2.4.jar" mvn_uri="mvn:datanucleus-api-jdo/4.2.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="datanucleus-core-4.1.17.jar" name="datanucleus-core-4.1.17.jar" mvn_uri="mvn:datanucleus-core/4.1.17"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="datanucleus-rdbms-4.1.19.jar" name="datanucleus-rdbms-4.1.19.jar" mvn_uri="mvn:datanucleus-rdbms/4.1.19"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="derby-10.12.1.1.jar" name="derby-10.12.1.1.jar" mvn_uri="mvn:derby/10.12.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="dnsjava-2.1.7.jar" name="dnsjava-2.1.7.jar" mvn_uri="mvn:dnsjava/dnsjava/2.1.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="dropwizard-metrics-hadoop-metrics2-reporter-0.1.2.jar" name="dropwizard-metrics-hadoop-metrics2-reporter-0.1.2.jar" mvn_uri="mvn:com.github.joshelser/dropwizard-metrics-hadoop-metrics2-reporter/0.1.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="ehcache-3.3.1.jar" name="ehcache-3.3.1.jar" mvn_uri="mvn:ehcache/3.3.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="flatbuffers-java-1.9.0.jar" name="flatbuffers-java-1.9.0.jar" mvn_uri="mvn:com.google.flatbuffers/flatbuffers-java/1.9.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="generex-1.0.2.jar" name="generex-1.0.2.jar" mvn_uri="mvn:com.github.mifmif/generex/1.0.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="geronimo-jcache_1.0_spec-1.0-alpha-1.jar" name="geronimo-jcache_1.0_spec-1.0-alpha-1.jar" mvn_uri="mvn:org.apache.geronimo.specs/geronimo-jcache_1.0_spec/1.0-alpha-1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="gson-2.2.4.jar" name="gson-2.2.4.jar" mvn_uri="mvn:gson/2.2.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="guava-14.0.1.jar" name="guava-14.0.1.jar" mvn_uri="mvn:guava/14.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="guice-4.0.jar" name="guice-4.0.jar" mvn_uri="mvn:guice-4.0/6.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="guice-servlet-4.0.jar" name="guice-servlet-4.0.jar" mvn_uri="mvn:com.google.inject.extensions/guice-servlet/4.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-annotations-3.2.0.jar" name="hadoop-annotations-3.2.0.jar" mvn_uri="mvn:hadoop-annotations/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-auth-3.2.0.jar" name="hadoop-auth-3.2.0.jar" mvn_uri="mvn:hadoop-auth/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-client-3.2.0.jar" name="hadoop-client-3.2.0.jar" mvn_uri="mvn:hadoop-client/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-common-3.2.0.jar" name="hadoop-common-3.2.0.jar" mvn_uri="mvn:hadoop-common/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-hdfs-client-3.2.0.jar" name="hadoop-hdfs-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-mapreduce-client-common-3.2.0.jar" name="hadoop-mapreduce-client-common-3.2.0.jar" mvn_uri="mvn:hadoop-mapreduce-client-common/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-mapreduce-client-core-3.2.0.jar" name="hadoop-mapreduce-client-core-3.2.0.jar" mvn_uri="mvn:hadoop-mapreduce-client-core/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-mapreduce-client-jobclient-3.2.0.jar" name="hadoop-mapreduce-client-jobclient-3.2.0.jar" mvn_uri="mvn:hadoop-mapreduce-client-jobclient/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-api-3.2.0.jar" name="hadoop-yarn-api-3.2.0.jar" mvn_uri="mvn:hadoop-yarn-api/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-client-3.2.0.jar" name="hadoop-yarn-client-3.2.0.jar" mvn_uri="mvn:hadoop-yarn-client/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-common-3.2.0.jar" name="hadoop-yarn-common-3.2.0.jar" mvn_uri="mvn:hadoop-yarn-common/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-registry-3.2.0.jar" name="hadoop-yarn-registry-3.2.0.jar" mvn_uri="mvn:hadoop-yarn-registry/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-server-common-3.2.0.jar" name="hadoop-yarn-server-common-3.2.0.jar" mvn_uri="mvn:hadoop-yarn-server-common/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-server-web-proxy-3.2.0.jar" name="hadoop-yarn-server-web-proxy-3.2.0.jar" mvn_uri="mvn:hadoop-yarn-server-web-proxy/3.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-beeline-2.3.7.jar" name="hive-beeline-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-beeline/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-cli-2.3.7.jar" name="hive-cli-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-cli/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-common-2.3.7.jar" name="hive-common-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-common/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-exec-2.3.7-core.jar" name="hive-exec-2.3.7-core.jar" mvn_uri="mvn:org.apache.hive/hive-exec/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-jdbc-2.3.7.jar" name="hive-jdbc-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-jdbc/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-llap-common-2.3.7.jar" name="hive-llap-common-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-llap-common/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-metastore-2.3.7.jar" name="hive-metastore-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-metastore/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-serde-2.3.7.jar" name="hive-serde-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-serde/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-service-rpc-3.1.2.jar" name="hive-service-rpc-3.1.2.jar" mvn_uri="mvn:org.apache.hive/hive-service-rpc/3.1.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-shims-0.23-2.3.7.jar" name="hive-shims-0.23-2.3.7.jar" mvn_uri="mvn:org.apache.hive.shims/hive-shims-0.23/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-shims-2.3.7.jar" name="hive-shims-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-shims/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-shims-common-2.3.7.jar" name="hive-shims-common-2.3.7.jar" mvn_uri="mvn:org.apache.hive.shims/hive-shims-common/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-shims-scheduler-2.3.7.jar" name="hive-shims-scheduler-2.3.7.jar" mvn_uri="mvn:org.apache.hive.shims/hive-shims-scheduler/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-storage-api-2.7.2.jar" name="hive-storage-api-2.7.2.jar" mvn_uri="mvn:org.apache.hive/hive-storage-api/2.7.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hive-vector-code-gen-2.3.7.jar" name="hive-vector-code-gen-2.3.7.jar" mvn_uri="mvn:org.apache.hive/hive-vector-code-gen/2.3.7"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hk2-api-2.6.1.jar" name="hk2-api-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-api/2.6.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hk2-locator-2.6.1.jar" name="hk2-locator-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-locator/2.6.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hk2-utils-2.6.1.jar" name="hk2-utils-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-utils/2.6.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:htrace-core4-4.0.1-incubating/6.1.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="httpclient-4.5.6.jar" name="httpclient-4.5.6.jar" mvn_uri="mvn:httpclient/4.5.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="httpcore-4.4.12.jar" name="httpcore-4.4.12.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="istack-commons-runtime-3.0.8.jar" name="istack-commons-runtime-3.0.8.jar" mvn_uri="mvn:com.sun.istack/istack-commons-runtime/3.0.8"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:ivy/2.4.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-core-2.10.0.jar" name="jackson-core-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:jackson-core-asl/1.9.13"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-databind-2.10.0.jar" name="jackson-databind-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-dataformat-yaml-2.10.0.jar" name="jackson-dataformat-yaml-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-datatype-jsr310-2.11.2.jar" name="jackson-datatype-jsr310-2.11.2.jar" mvn_uri="mvn:com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.11.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-jaxrs-base-2.9.5.jar" name="jackson-jaxrs-base-2.9.5.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.9.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-jaxrs-json-provider-2.9.5.jar" name="jackson-jaxrs-json-provider-2.9.5.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.9.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar" mvn_uri="mvn:jackson-mapper-asl/1.9.13"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-module-jaxb-annotations-2.10.0.jar" name="jackson-module-jaxb-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-module-paranamer-2.10.0.jar" name="jackson-module-paranamer-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-paranamer/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-module-scala_2.12-2.10.0.jar" name="jackson-module-scala_2.12-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-scala_2.12/2.10.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.activation-api-1.2.1.jar" name="jakarta.activation-api-1.2.1.jar" mvn_uri="mvn:jakarta.activation-api/1.2.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.annotation-api-1.3.5.jar" name="jakarta.annotation-api-1.3.5.jar" mvn_uri="mvn:jakarta.annotation/jakarta.annotation-api/1.3.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.inject-2.6.1.jar" name="jakarta.inject-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2.external/jakarta.inject/2.6.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.servlet-api-4.0.3.jar" name="jakarta.servlet-api-4.0.3.jar" mvn_uri="mvn:jakarta.servlet/jakarta.servlet-api/4.0.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.validation-api-2.0.2.jar" name="jakarta.validation-api-2.0.2.jar" mvn_uri="mvn:jakarta.validation/jakarta.validation-api/2.0.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.ws.rs-api-2.1.6.jar" name="jakarta.ws.rs-api-2.1.6.jar" mvn_uri="mvn:jakarta.ws.rs/jakarta.ws.rs-api/2.1.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jakarta.xml.bind-api-2.3.2.jar" name="jakarta.xml.bind-api-2.3.2.jar" mvn_uri="mvn:jakarta.xml.bind/jakarta.xml.bind-api/2.3.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="janino-3.0.16.jar" name="janino-3.0.16.jar" mvn_uri="mvn:org.codehaus.janino/janino/3.0.16"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="javassist-3.25.0-GA.jar" name="javassist-3.25.0-GA.jar" mvn_uri="mvn:org.javassist/javassist/3.25.0-GA"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="javax.inject-1.jar" name="javax.inject-1.jar" mvn_uri="mvn:javax.inject/1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="javax.jdo-3.2.0-m3.jar" name="javax.jdo-3.2.0-m3.jar" mvn_uri="mvn:javax.jdo/3.2.0-m3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="javolution-5.5.1.jar" name="javolution-5.5.1.jar" mvn_uri="mvn:javolution/5.5.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jaxb-api-2.2.11.jar" name="jaxb-api-2.2.11.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.11"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jaxb-runtime-2.3.2.jar" name="jaxb-runtime-2.3.2.jar" mvn_uri="mvn:org.glassfish.jaxb/jaxb-runtime/2.3.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jcip-annotations-1.0-1.jar" name="jcip-annotations-1.0-1.jar" mvn_uri="mvn:org.ow2.util.bundles/jcip-annotations-1.0/1.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jcl-over-slf4j-1.7.30.jar" name="jcl-over-slf4j-1.7.30.jar" mvn_uri="mvn:org.slf4j/jcl-over-slf4j/1.7.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jdo-api-3.0.1.jar" name="jdo-api-3.0.1.jar" mvn_uri="mvn:jdo-api/3.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-client-2.30.jar" name="jersey-client-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-client/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-common-2.30.jar" name="jersey-common-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-common/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-container-servlet-2.30.jar" name="jersey-container-servlet-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-container-servlet-core-2.30.jar" name="jersey-container-servlet-core-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-hk2-2.30.jar" name="jersey-hk2-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.inject/jersey-hk2/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-media-jaxb-2.30.jar" name="jersey-media-jaxb-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.media/jersey-media-jaxb/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jersey-server-2.30.jar" name="jersey-server-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/2.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jline-2.14.6.jar" name="jline-2.14.6.jar" mvn_uri="mvn:jline/jline/2.14.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:jodd-core/3.5.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jpam-1.1.jar" name="jpam-1.1.jar" mvn_uri="mvn:jpam/1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="json-1.8.jar" name="json-1.8.jar" mvn_uri="mvn:com.tdunning/json/1.8"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="json-smart-2.3.jar" name="json-smart-2.3.jar" mvn_uri="mvn:json-smart-action/2.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="json4s-ast_2.12-3.7.0-M5.jar" name="json4s-ast_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-ast_2.12/3.7.0-M11"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="json4s-core_2.12-3.7.0-M5.jar" name="json4s-core_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-core_2.12/3.7.0-M5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="json4s-jackson_2.12-3.7.0-M5.jar" name="json4s-jackson_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-jackson_2.12/3.7.0-M5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="json4s-scalap_2.12-3.7.0-M5.jar" name="json4s-scalap_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-scalap_2.12/3.7.0-M5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jsp-api-2.1.jar" name="jsp-api-2.1.jar" mvn_uri="mvn:org.mortbay.jetty/jsp-api-2.1/7.0.0pre2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jsr305-3.0.0.jar" name="jsr305-3.0.0.jar" mvn_uri="mvn:jsr305-3.0.0/6.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jta-1.1.jar" name="jta-1.1.jar" mvn_uri="mvn:jta/1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jul-to-slf4j-1.7.30.jar" name="jul-to-slf4j-1.7.30.jar" mvn_uri="mvn:org.slf4j/jul-to-slf4j/1.7.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-admin-1.0.1.jar" name="kerb-admin-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-admin/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-client-1.0.1.jar" name="kerb-client-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-client/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-common-1.0.1.jar" name="kerb-common-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-common/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-core-1.0.1.jar" name="kerb-core-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-core/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-crypto-1.0.1.jar" name="kerb-crypto-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-crypto/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-identity-1.0.1.jar" name="kerb-identity-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-identity/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-server-1.0.1.jar" name="kerb-server-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-server/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-simplekdc-1.0.1.jar" name="kerb-simplekdc-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-simplekdc/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerb-util-1.0.1.jar" name="kerb-util-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerb-util/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerby-asn1-1.0.1.jar" name="kerby-asn1-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerby-asn1/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerby-config-1.0.1.jar" name="kerby-config-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerby-config/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerby-pkix-1.0.1.jar" name="kerby-pkix-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerby-pkix/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerby-util-1.0.1.jar" name="kerby-util-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerby-util/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kerby-xdr-1.0.1.jar" name="kerby-xdr-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/kerby-xdr/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar" mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-client-4.12.0.jar" name="kubernetes-client-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-client/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-admissionregistration-4.12.0.jar" name="kubernetes-model-admissionregistration-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-admissionregistration/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-apiextensions-4.12.0.jar" name="kubernetes-model-apiextensions-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apiextensions/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-apps-4.12.0.jar" name="kubernetes-model-apps-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apps/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-autoscaling-4.12.0.jar" name="kubernetes-model-autoscaling-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-autoscaling/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-batch-4.12.0.jar" name="kubernetes-model-batch-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-batch/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-certificates-4.12.0.jar" name="kubernetes-model-certificates-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-certificates/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-common-4.12.0.jar" name="kubernetes-model-common-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-common/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-coordination-4.12.0.jar" name="kubernetes-model-coordination-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-coordination/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-core-4.12.0.jar" name="kubernetes-model-core-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-core/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-discovery-4.12.0.jar" name="kubernetes-model-discovery-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-discovery/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-events-4.12.0.jar" name="kubernetes-model-events-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-events/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-extensions-4.12.0.jar" name="kubernetes-model-extensions-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-extensions/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-metrics-4.12.0.jar" name="kubernetes-model-metrics-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-metrics/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-networking-4.12.0.jar" name="kubernetes-model-networking-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-networking/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-policy-4.12.0.jar" name="kubernetes-model-policy-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-policy/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-rbac-4.12.0.jar" name="kubernetes-model-rbac-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-rbac/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-scheduling-4.12.0.jar" name="kubernetes-model-scheduling-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-scheduling/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-settings-4.12.0.jar" name="kubernetes-model-settings-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-settings/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="kubernetes-model-storageclass-4.12.0.jar" name="kubernetes-model-storageclass-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-storageclass/4.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="leveldbjni-all-1.8.jar" name="leveldbjni-all-1.8.jar" mvn_uri="mvn:leveldbjni-all/1.8"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="libfb303-0.9.3.jar" name="libfb303-0.9.3.jar" mvn_uri="mvn:libfb303/0.9.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="libthrift-0.12.0.jar" name="libthrift-0.12.0.jar" mvn_uri="mvn:org.apache.thrift/libthrift/0.12.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="log4j-1.2.17.jar" name="log4j-1.2.17.jar" mvn_uri="mvn:org.zenframework.z8.dependencies.commons/log4j-1.2.17/2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="logging-interceptor-3.12.12.jar" name="logging-interceptor-3.12.12.jar" mvn_uri="mvn:com.squareup.okhttp3/logging-interceptor/3.12.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="lz4-java-1.7.1.jar" name="lz4-java-1.7.1.jar" mvn_uri="mvn:org.lz4/lz4-java/1.7.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="machinist_2.12-0.6.8.jar" name="machinist_2.12-0.6.8.jar" mvn_uri="mvn:org.typelevel/machinist_2.12/0.6.8"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="macro-compat_2.12-1.1.1.jar" name="macro-compat_2.12-1.1.1.jar" mvn_uri="mvn:org.typelevel/macro-compat_2.12/1.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="mesos-1.4.0-shaded-protobuf.jar" name="mesos-1.4.0-shaded-protobuf.jar" mvn_uri="mvn:mesos/1.4.0-shaded-protobuf"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="metrics-core-4.1.1.jar" name="metrics-core-4.1.1.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-core/4.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="metrics-graphite-4.1.1.jar" name="metrics-graphite-4.1.1.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-graphite/4.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="metrics-jmx-4.1.1.jar" name="metrics-jmx-4.1.1.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-jmx/4.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="metrics-json-4.1.1.jar" name="metrics-json-4.1.1.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-json/4.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="metrics-jvm-4.1.1.jar" name="metrics-jvm-4.1.1.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-jvm/4.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="minlog-1.3.0.jar" name="minlog-1.3.0.jar" mvn_uri="mvn:minlog/1.3.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="netty-all-4.1.51.Final.jar" name="netty-all-4.1.51.Final.jar" mvn_uri="mvn:io.netty/netty-all/4.1.51.Final"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="nimbus-jose-jwt-4.41.1.jar" name="nimbus-jose-jwt-4.41.1.jar" mvn_uri="mvn:com.nimbusds/nimbus-jose-jwt/4.41.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="objenesis-2.6.jar" name="objenesis-2.6.jar" mvn_uri="mvn:org.objenesis/objenesis/2.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="okhttp-2.7.5.jar" name="okhttp-2.7.5.jar" mvn_uri="mvn:com.squareup.okhttp/okhttp/2.7.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="okhttp-3.12.12.jar" name="okhttp-3.12.12.jar" mvn_uri="mvn:com.squareup.okhttp3/okhttp/3.12.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="okio-1.14.0.jar" name="okio-1.14.0.jar" mvn_uri="mvn:com.squareup.okio/okio/1.14.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="opencsv-2.3.jar" name="opencsv-2.3.jar" mvn_uri="mvn:opencsv/2.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="orc-core-1.5.12.jar" name="orc-core-1.5.12.jar" mvn_uri="mvn:org.apache.orc/orc-core/1.5.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="orc-mapreduce-1.5.12.jar" name="orc-mapreduce-1.5.12.jar" mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.5.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="orc-shims-1.5.12.jar" name="orc-shims-1.5.12.jar" mvn_uri="mvn:org.apache.orc/orc-shims/1.5.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="oro-2.0.8.jar" name="oro-2.0.8.jar" mvn_uri="mvn:oro/2.0.8"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="osgi-resource-locator-1.0.3.jar" name="osgi-resource-locator-1.0.3.jar" mvn_uri="mvn:org.glassfish.hk2/osgi-resource-locator/1.0.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="paranamer-2.8.jar" name="paranamer-2.8.jar" mvn_uri="mvn:com.thoughtworks.paranamer/paranamer/2.8"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="parquet-column-1.10.1.jar" name="parquet-column-1.10.1.jar" mvn_uri="mvn:parquet-column/1.10.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="parquet-common-1.10.1.jar" name="parquet-common-1.10.1.jar" mvn_uri="mvn:parquet-common/1.10.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="parquet-encoding-1.10.1.jar" name="parquet-encoding-1.10.1.jar" mvn_uri="mvn:parquet-encoding/1.10.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="parquet-format-2.4.0.jar" name="parquet-format-2.4.0.jar" mvn_uri="mvn:parquet-format/2.4.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="parquet-hadoop-1.10.1.jar" name="parquet-hadoop-1.10.1.jar" mvn_uri="mvn:parquet-hadoop/1.10.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="parquet-jackson-1.10.1.jar" name="parquet-jackson-1.10.1.jar" mvn_uri="mvn:parquet-jackson/1.10.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="protobuf-java-2.5.0.jar" name="protobuf-java-2.5.0.jar" mvn_uri="mvn:protobuf-java/2.5.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="py4j-0.10.9.jar" name="py4j-0.10.9.jar" mvn_uri="mvn:net.sf.py4j/py4j/0.10.9"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="pyrolite-4.30.jar" name="pyrolite-4.30.jar" mvn_uri="mvn:net.razorvine/pyrolite/4.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="re2j-1.1.jar" name="re2j-1.1.jar" mvn_uri="mvn:com.google.re2j/re2j/1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="scala-collection-compat_2.12-2.1.1.jar" name="scala-collection-compat_2.12-2.1.1.jar" mvn_uri="mvn:org.scala-lang.modules/scala-collection-compat_2.12/2.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="scala-compiler-2.12.10.jar" name="scala-compiler-2.12.10.jar" mvn_uri="mvn:org.scala-lang/scala-compiler/2.12.10"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="scala-library-2.12.10.jar" name="scala-library-2.12.10.jar" mvn_uri="mvn:org.scala-lang/scala-library/2.12.10"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="scala-parser-combinators_2.12-1.1.2.jar" name="scala-parser-combinators_2.12-1.1.2.jar" mvn_uri="mvn:org.scala-lang.modules/scala-parser-combinators_2.12/1.1.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="scala-reflect-2.12.10.jar" name="scala-reflect-2.12.10.jar" mvn_uri="mvn:org.scala-lang/scala-reflect/2.12.10"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="scala-xml_2.12-1.2.0.jar" name="scala-xml_2.12-1.2.0.jar" mvn_uri="mvn:org.scala-lang.modules/scala-xml_2.12/1.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="shapeless_2.12-2.3.3.jar" name="shapeless_2.12-2.3.3.jar" mvn_uri="mvn:com.chuusai/shapeless_2.12/2.3.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="shims-0.9.0.jar" name="shims-0.9.0.jar" mvn_uri="mvn:org.roaringbitmap/shims/0.9.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="slf4j-api-1.7.30.jar" name="slf4j-api-1.7.30.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="slf4j-log4j12-1.7.30.jar" name="slf4j-log4j12-1.7.30.jar" mvn_uri="mvn:org.slf4j/slf4j-log4j12/1.7.30"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="snakeyaml-1.24.jar" name="snakeyaml-1.24.jar" mvn_uri="mvn:org.yaml/snakeyaml/1.24"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-catalyst_2.12-3.1.1.jar" name="spark-catalyst_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-core_2.12-3.1.1.jar" name="spark-core_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-graphx_2.12-3.1.1.jar" name="spark-graphx_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-graphx_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-hive-thriftserver_2.12-3.1.1.jar" name="spark-hive-thriftserver_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-hive_2.12-3.1.1.jar" name="spark-hive_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-kubernetes_2.12-3.1.1.jar" name="spark-kubernetes_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-kubernetes_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-kvstore_2.12-3.1.1.jar" name="spark-kvstore_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-kvstore_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-launcher_2.12-3.1.1.jar" name="spark-launcher_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-launcher_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-mesos_2.12-3.1.1.jar" name="spark-mesos_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-mesos_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-mllib-local_2.12-3.1.1.jar" name="spark-mllib-local_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-mllib_2.12-3.1.1.jar" name="spark-mllib_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-network-common_2.12-3.1.1.jar" name="spark-network-common_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-network-shuffle_2.12-3.1.1.jar" name="spark-network-shuffle_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-repl_2.12-3.1.1.jar" name="spark-repl_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-repl_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-sketch_2.12-3.1.1.jar" name="spark-sketch_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-sketch_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-sql_2.12-3.1.1.jar" name="spark-sql_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-streaming_2.12-3.1.1.jar" name="spark-streaming_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-tags_2.12-3.1.1.jar" name="spark-tags_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-tags_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-unsafe_2.12-3.1.1.jar" name="spark-unsafe_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-yarn_2.12-3.1.1.jar" name="spark-yarn_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_2.12/3.1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spire-macros_2.12-0.17.0-M1.jar" name="spire-macros_2.12-0.17.0-M1.jar" mvn_uri="mvn:org.typelevel/spire-macros_2.12/0.17.0-M1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spire-platform_2.12-0.17.0-M1.jar" name="spire-platform_2.12-0.17.0-M1.jar" mvn_uri="mvn:org.typelevel/spire-platform_2.12/0.17.0-M1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spire-util_2.12-0.17.0-M1.jar" name="spire-util_2.12-0.17.0-M1.jar" mvn_uri="mvn:org.typelevel/spire-util_2.12/0.17.0-M1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spire_2.12-0.17.0-M1.jar" name="spire_2.12-0.17.0-M1.jar" mvn_uri="mvn:org.typelevel/spire_2.12/0.17.0-M1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="stax-api-1.0.1.jar" name="stax-api-1.0.1.jar" mvn_uri="mvn:stax-api/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:stax2-api/3.1.4"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="stream-2.9.6.jar" name="stream-2.9.6.jar" mvn_uri="mvn:com.clearspring.analytics/stream/2.9.6"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="super-csv-2.2.0.jar" name="super-csv-2.2.0.jar" mvn_uri="mvn:super-csv/2.2.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="threeten-extra-1.5.0.jar" name="threeten-extra-1.5.0.jar" mvn_uri="mvn:org.threeten/threeten-extra/1.5.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="token-provider-1.0.1.jar" name="token-provider-1.0.1.jar" mvn_uri="mvn:org.apache.kerby/token-provider/1.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="transaction-api-1.1.jar" name="transaction-api-1.1.jar" mvn_uri="mvn:transaction-api/1.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="univocity-parsers-2.9.1.jar" name="univocity-parsers-2.9.1.jar" mvn_uri="mvn:com.univocity/univocity-parsers/2.9.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="velocity-1.5.jar" name="velocity-1.5.jar" mvn_uri="mvn:org.apache.velocity/velocity/1.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="xbean-asm7-shaded-4.15.jar" name="xbean-asm7-shaded-4.15.jar" mvn_uri="mvn:org.apache.xbean/xbean-asm7-shaded/4.15"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="xz-1.5.jar" name="xz-1.5.jar" mvn_uri="mvn:xz/1.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="zjsonpatch-0.3.0.jar" name="zjsonpatch-0.3.0.jar" mvn_uri="mvn:org.zalando.zjsonpatch/zjsonpatch/0.3.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="zookeeper-3.4.14.jar" name="zookeeper-3.4.14.jar" mvn_uri="mvn:zookeeper/3.4.14"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="zstd-jni-1.4.8-1.jar" name="zstd-jni-1.4.8-1.jar" mvn_uri="mvn:com.github.luben/zstd-jni/1.4.8-1"/>
+
+        <!-- Spark group -->
+        <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_1_x" name="SPARK-COMPILE-GROUP-SPARK_3_1_x">
+			<library id="HikariCP-2.5.1.jar"/>
+			<library id="JLargeArrays-1.5.jar"/>
+			<library id="JTransforms-3.1.jar"/>
+			<library id="RoaringBitmap-0.9.0.jar"/>
+			<library id="ST4-4.0.4.jar"/>
+			<library id="accessors-smart-1.2.jar"/>
+			<library id="activation-1.1.1.jar"/>
+			<library id="aircompressor-0.10.jar"/>
+			<library id="algebra_2.12-2.0.0-M2.jar"/>
+			<library id="antlr-runtime-3.5.2.jar"/>
+			<library id="antlr4-runtime-4.8-1.jar"/>
+			<library id="aopalliance-1.0.jar"/>
+			<library id="aopalliance-repackaged-2.6.1.jar"/>
+			<library id="arpack_combined_all-0.1.jar"/>
+			<library id="arrow-format-2.0.0.jar"/>
+			<library id="arrow-memory-core-2.0.0.jar"/>
+			<library id="arrow-memory-netty-2.0.0.jar"/>
+			<library id="arrow-vector-2.0.0.jar"/>
+			<library id="audience-annotations-0.5.0.jar"/>
+			<library id="automaton-1.11-8.jar"/>
+			<library id="avro-1.8.2.jar"/>
+			<library id="avro-ipc-1.8.2.jar"/>
+			<library id="avro-mapred-1.8.2-hadoop2.jar"/>
+			<library id="bcpkix-jdk15on-1.68.jar"/>
+			<library id="bcprov-jdk15on-1.68.jar"/>
+			<library id="bonecp-0.8.0.RELEASE.jar"/>
+			<library id="breeze-macros_2.12-1.0.jar"/>
+			<library id="breeze_2.12-1.0.jar"/>
+			<library id="cats-kernel_2.12-2.0.0-M4.jar"/>
+			<library id="chill-java-0.9.5.jar"/>
+			<library id="chill_2.12-0.9.5.jar"/>
+			<library id="commons-beanutils-1.9.4.jar"/>
+			<library id="commons-cli-1.2.jar"/>
+			<library id="commons-codec-1.10.jar"/>
+			<library id="commons-collections-3.2.2.jar"/>
+			<library id="commons-compiler-3.0.16.jar"/>
+			<library id="commons-compress-1.20.jar"/>
+			<library id="commons-configuration2-2.1.1.jar"/>
+			<library id="commons-crypto-1.1.0.jar"/>
+			<library id="commons-daemon-1.0.13.jar"/>
+			<library id="commons-dbcp-1.4.jar"/>
+			<library id="commons-httpclient-3.1.jar"/>
+			<library id="commons-io-2.5.jar"/>
+			<library id="commons-lang-2.6.jar"/>
+			<library id="commons-lang3-3.10.jar"/>
+			<library id="commons-logging-1.1.3.jar"/>
+			<library id="commons-math3-3.4.1.jar"/>
+			<library id="commons-net-3.1.jar"/>
+			<library id="commons-pool-1.5.4.jar"/>
+			<library id="commons-text-1.6.jar"/>
+			<library id="compress-lzf-1.0.3.jar"/>
+			<library id="core-1.1.2.jar"/>
+			<library id="curator-client-2.13.0.jar"/>
+			<library id="curator-framework-2.13.0.jar"/>
+			<library id="curator-recipes-2.13.0.jar"/>
+			<library id="datanucleus-api-jdo-4.2.4.jar"/>
+			<library id="datanucleus-core-4.1.17.jar"/>
+			<library id="datanucleus-rdbms-4.1.19.jar"/>
+			<library id="derby-10.12.1.1.jar"/>
+			<library id="dnsjava-2.1.7.jar"/>
+			<library id="dropwizard-metrics-hadoop-metrics2-reporter-0.1.2.jar"/>
+			<library id="ehcache-3.3.1.jar"/>
+			<library id="flatbuffers-java-1.9.0.jar"/>
+			<library id="generex-1.0.2.jar"/>
+			<library id="geronimo-jcache_1.0_spec-1.0-alpha-1.jar"/>
+			<library id="gson-2.2.4.jar"/>
+			<library id="guava-14.0.1.jar"/>
+			<library id="guice-4.0.jar"/>
+			<library id="guice-servlet-4.0.jar"/>
+			<library id="hadoop-annotations-3.2.0.jar"/>
+			<library id="hadoop-auth-3.2.0.jar"/>
+			<library id="hadoop-client-3.2.0.jar"/>
+			<library id="hadoop-common-3.2.0.jar"/>
+			<library id="hadoop-hdfs-client-3.2.0.jar"/>
+			<library id="hadoop-mapreduce-client-common-3.2.0.jar"/>
+			<library id="hadoop-mapreduce-client-core-3.2.0.jar"/>
+			<library id="hadoop-mapreduce-client-jobclient-3.2.0.jar"/>
+			<library id="hadoop-yarn-api-3.2.0.jar"/>
+			<library id="hadoop-yarn-client-3.2.0.jar"/>
+			<library id="hadoop-yarn-common-3.2.0.jar"/>
+			<library id="hadoop-yarn-registry-3.2.0.jar"/>
+			<library id="hadoop-yarn-server-common-3.2.0.jar"/>
+			<library id="hadoop-yarn-server-web-proxy-3.2.0.jar"/>
+			<library id="hive-beeline-2.3.7.jar"/>
+			<library id="hive-cli-2.3.7.jar"/>
+			<library id="hive-common-2.3.7.jar"/>
+			<library id="hive-exec-2.3.7-core.jar"/>
+			<library id="hive-jdbc-2.3.7.jar"/>
+			<library id="hive-llap-common-2.3.7.jar"/>
+			<library id="hive-metastore-2.3.7.jar"/>
+			<library id="hive-serde-2.3.7.jar"/>
+			<library id="hive-service-rpc-3.1.2.jar"/>
+			<library id="hive-shims-0.23-2.3.7.jar"/>
+			<library id="hive-shims-2.3.7.jar"/>
+			<library id="hive-shims-common-2.3.7.jar"/>
+			<library id="hive-shims-scheduler-2.3.7.jar"/>
+			<library id="hive-storage-api-2.7.2.jar"/>
+			<library id="hive-vector-code-gen-2.3.7.jar"/>
+			<library id="hk2-api-2.6.1.jar"/>
+			<library id="hk2-locator-2.6.1.jar"/>
+			<library id="hk2-utils-2.6.1.jar"/>
+			<library id="htrace-core4-4.1.0-incubating.jar"/>
+			<library id="httpclient-4.5.6.jar"/>
+			<library id="httpcore-4.4.12.jar"/>
+			<library id="istack-commons-runtime-3.0.8.jar"/>
+			<library id="ivy-2.4.0.jar"/>
+			<library id="jackson-annotations-2.10.0.jar"/>
+			<library id="jackson-core-2.10.0.jar"/>
+			<library id="jackson-core-asl-1.9.13.jar"/>
+			<library id="jackson-databind-2.10.0.jar"/>
+			<library id="jackson-dataformat-yaml-2.10.0.jar"/>
+			<library id="jackson-datatype-jsr310-2.11.2.jar"/>
+			<library id="jackson-jaxrs-base-2.9.5.jar"/>
+			<library id="jackson-jaxrs-json-provider-2.9.5.jar"/>
+			<library id="jackson-mapper-asl-1.9.13.jar"/>
+			<library id="jackson-module-jaxb-annotations-2.10.0.jar"/>
+			<library id="jackson-module-paranamer-2.10.0.jar"/>
+			<library id="jackson-module-scala_2.12-2.10.0.jar"/>
+			<library id="jakarta.activation-api-1.2.1.jar"/>
+			<library id="jakarta.annotation-api-1.3.5.jar"/>
+			<library id="jakarta.inject-2.6.1.jar"/>
+			<library id="jakarta.servlet-api-4.0.3.jar"/>
+			<library id="jakarta.validation-api-2.0.2.jar"/>
+			<library id="jakarta.ws.rs-api-2.1.6.jar"/>
+			<library id="jakarta.xml.bind-api-2.3.2.jar"/>
+			<library id="janino-3.0.16.jar"/>
+			<library id="javassist-3.25.0-GA.jar"/>
+			<library id="javax.inject-1.jar"/>
+			<library id="javax.jdo-3.2.0-m3.jar"/>
+			<library id="javolution-5.5.1.jar"/>
+			<library id="jaxb-api-2.2.11.jar"/>
+			<library id="jaxb-runtime-2.3.2.jar"/>
+			<library id="jcip-annotations-1.0-1.jar"/>
+			<library id="jcl-over-slf4j-1.7.30.jar"/>
+			<library id="jdo-api-3.0.1.jar"/>
+			<library id="jersey-client-2.30.jar"/>
+			<library id="jersey-common-2.30.jar"/>
+			<library id="jersey-container-servlet-2.30.jar"/>
+			<library id="jersey-container-servlet-core-2.30.jar"/>
+			<library id="jersey-hk2-2.30.jar"/>
+			<library id="jersey-media-jaxb-2.30.jar"/>
+			<library id="jersey-server-2.30.jar"/>
+			<library id="jline-2.14.6.jar"/>
+			<library id="joda-time-2.10.5.jar"/>
+			<library id="jodd-core-3.5.2.jar"/>
+			<library id="jpam-1.1.jar"/>
+			<library id="json-1.8.jar"/>
+			<library id="json-smart-2.3.jar"/>
+			<library id="json4s-ast_2.12-3.7.0-M5.jar"/>
+			<library id="json4s-core_2.12-3.7.0-M5.jar"/>
+			<library id="json4s-jackson_2.12-3.7.0-M5.jar"/>
+			<library id="json4s-scalap_2.12-3.7.0-M5.jar"/>
+			<library id="jsp-api-2.1.jar"/>
+			<library id="jsr305-3.0.0.jar"/>
+			<library id="jta-1.1.jar"/>
+			<library id="jul-to-slf4j-1.7.30.jar"/>
+			<library id="kerb-admin-1.0.1.jar"/>
+			<library id="kerb-client-1.0.1.jar"/>
+			<library id="kerb-common-1.0.1.jar"/>
+			<library id="kerb-core-1.0.1.jar"/>
+			<library id="kerb-crypto-1.0.1.jar"/>
+			<library id="kerb-identity-1.0.1.jar"/>
+			<library id="kerb-server-1.0.1.jar"/>
+			<library id="kerb-simplekdc-1.0.1.jar"/>
+			<library id="kerb-util-1.0.1.jar"/>
+			<library id="kerby-asn1-1.0.1.jar"/>
+			<library id="kerby-config-1.0.1.jar"/>
+			<library id="kerby-pkix-1.0.1.jar"/>
+			<library id="kerby-util-1.0.1.jar"/>
+			<library id="kerby-xdr-1.0.1.jar"/>
+			<library id="kryo-shaded-4.0.2.jar"/>
+			<library id="kubernetes-client-4.12.0.jar"/>
+			<library id="kubernetes-model-admissionregistration-4.12.0.jar"/>
+			<library id="kubernetes-model-apiextensions-4.12.0.jar"/>
+			<library id="kubernetes-model-apps-4.12.0.jar"/>
+			<library id="kubernetes-model-autoscaling-4.12.0.jar"/>
+			<library id="kubernetes-model-batch-4.12.0.jar"/>
+			<library id="kubernetes-model-certificates-4.12.0.jar"/>
+			<library id="kubernetes-model-common-4.12.0.jar"/>
+			<library id="kubernetes-model-coordination-4.12.0.jar"/>
+			<library id="kubernetes-model-core-4.12.0.jar"/>
+			<library id="kubernetes-model-discovery-4.12.0.jar"/>
+			<library id="kubernetes-model-events-4.12.0.jar"/>
+			<library id="kubernetes-model-extensions-4.12.0.jar"/>
+			<library id="kubernetes-model-metrics-4.12.0.jar"/>
+			<library id="kubernetes-model-networking-4.12.0.jar"/>
+			<library id="kubernetes-model-policy-4.12.0.jar"/>
+			<library id="kubernetes-model-rbac-4.12.0.jar"/>
+			<library id="kubernetes-model-scheduling-4.12.0.jar"/>
+			<library id="kubernetes-model-settings-4.12.0.jar"/>
+			<library id="kubernetes-model-storageclass-4.12.0.jar"/>
+			<library id="leveldbjni-all-1.8.jar"/>
+			<library id="libfb303-0.9.3.jar"/>
+			<library id="libthrift-0.12.0.jar"/>
+			<library id="log4j-1.2.17.jar"/>
+			<library id="logging-interceptor-3.12.12.jar"/>
+			<library id="lz4-java-1.7.1.jar"/>
+			<library id="machinist_2.12-0.6.8.jar"/>
+			<library id="macro-compat_2.12-1.1.1.jar"/>
+			<library id="mesos-1.4.0-shaded-protobuf.jar"/>
+			<library id="metrics-core-4.1.1.jar"/>
+			<library id="metrics-graphite-4.1.1.jar"/>
+			<library id="metrics-jmx-4.1.1.jar"/>
+			<library id="metrics-json-4.1.1.jar"/>
+			<library id="metrics-jvm-4.1.1.jar"/>
+			<library id="minlog-1.3.0.jar"/>
+			<library id="netty-all-4.1.51.Final.jar"/>
+			<library id="nimbus-jose-jwt-4.41.1.jar"/>
+			<library id="objenesis-2.6.jar"/>
+			<library id="okhttp-2.7.5.jar"/>
+			<library id="okhttp-3.12.12.jar"/>
+			<library id="okio-1.14.0.jar"/>
+			<library id="opencsv-2.3.jar"/>
+			<library id="orc-core-1.5.12.jar"/>
+			<library id="orc-mapreduce-1.5.12.jar"/>
+			<library id="orc-shims-1.5.12.jar"/>
+			<library id="oro-2.0.8.jar"/>
+			<library id="osgi-resource-locator-1.0.3.jar"/>
+			<library id="paranamer-2.8.jar"/>
+			<library id="parquet-column-1.10.1.jar"/>
+			<library id="parquet-common-1.10.1.jar"/>
+			<library id="parquet-encoding-1.10.1.jar"/>
+			<library id="parquet-format-2.4.0.jar"/>
+			<library id="parquet-hadoop-1.10.1.jar"/>
+			<library id="parquet-jackson-1.10.1.jar"/>
+			<library id="protobuf-java-2.5.0.jar"/>
+			<library id="py4j-0.10.9.jar"/>
+			<library id="pyrolite-4.30.jar"/>
+			<library id="re2j-1.1.jar"/>
+			<library id="scala-collection-compat_2.12-2.1.1.jar"/>
+			<library id="scala-compiler-2.12.10.jar"/>
+			<library id="scala-library-2.12.10.jar"/>
+			<library id="scala-parser-combinators_2.12-1.1.2.jar"/>
+			<library id="scala-reflect-2.12.10.jar"/>
+			<library id="scala-xml_2.12-1.2.0.jar"/>
+			<library id="shapeless_2.12-2.3.3.jar"/>
+			<library id="shims-0.9.0.jar"/>
+			<library id="slf4j-api-1.7.30.jar"/>
+			<library id="slf4j-log4j12-1.7.30.jar"/>
+			<library id="snakeyaml-1.24.jar"/>
+			<library id="snappy-java-1.1.8.2.jar"/>
+			<library id="spark-catalyst_2.12-3.1.1.jar"/>
+			<library id="spark-core_2.12-3.1.1.jar"/>
+			<library id="spark-graphx_2.12-3.1.1.jar"/>
+			<library id="spark-hive-thriftserver_2.12-3.1.1.jar"/>
+			<library id="spark-hive_2.12-3.1.1.jar"/>
+			<library id="spark-kubernetes_2.12-3.1.1.jar"/>
+			<library id="spark-kvstore_2.12-3.1.1.jar"/>
+			<library id="spark-launcher_2.12-3.1.1.jar"/>
+			<library id="spark-mesos_2.12-3.1.1.jar"/>
+			<library id="spark-mllib-local_2.12-3.1.1.jar"/>
+			<library id="spark-mllib_2.12-3.1.1.jar"/>
+			<library id="spark-network-common_2.12-3.1.1.jar"/>
+			<library id="spark-network-shuffle_2.12-3.1.1.jar"/>
+			<library id="spark-repl_2.12-3.1.1.jar"/>
+			<library id="spark-sketch_2.12-3.1.1.jar"/>
+			<library id="spark-sql_2.12-3.1.1.jar"/>
+			<library id="spark-streaming_2.12-3.1.1.jar"/>
+			<library id="spark-tags_2.12-3.1.1.jar"/>
+			<library id="spark-unsafe_2.12-3.1.1.jar"/>
+			<library id="spark-yarn_2.12-3.1.1.jar"/>
+			<library id="spire-macros_2.12-0.17.0-M1.jar"/>
+			<library id="spire-platform_2.12-0.17.0-M1.jar"/>
+			<library id="spire-util_2.12-0.17.0-M1.jar"/>
+			<library id="spire_2.12-0.17.0-M1.jar"/>
+			<library id="stax-api-1.0.1.jar"/>
+			<library id="stax2-api-3.1.4.jar"/>
+			<library id="stream-2.9.6.jar"/>
+			<library id="super-csv-2.2.0.jar"/>
+			<library id="threeten-extra-1.5.0.jar"/>
+			<library id="token-provider-1.0.1.jar"/>
+			<library id="transaction-api-1.1.jar"/>
+			<library id="univocity-parsers-2.9.1.jar"/>
+			<library id="velocity-1.5.jar"/>
+			<library id="woodstox-core-5.0.3.jar"/>
+			<library id="xbean-asm7-shaded-4.15.jar"/>
+			<library id="xz-1.5.jar"/>
+			<library id="zjsonpatch-0.3.0.jar"/>
+			<library id="zookeeper-3.4.14.jar"/>
+			<library id="zstd-jni-1.4.8-1.jar"/>
+        </libraryNeededGroup>
+
+        <!-- S3 group -->
+        <libraryNeededGroup description="S3 libraries for spark311" id="S3-GROUP-SPARK_3_1_x" name="S3-GROUP-SPARK_3_1_x">
+            <library id="hadoop-aws-3.2.1.jar"/>
+            <library id="aws-java-sdk-bundle-1.11.375.jar"/>
+            <library id="commons-text-1.4.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Azure group -->
+        <libraryNeededGroup description="Azure libraries for spark311" id="AZURE-GROUP-SPARK_3_1_x" name="AZURE-GROUP-SPARK_3_1_x">
+            <library id="hadoop-azure-3.2.1.jar"/>
+            <library id="azure-storage-7.0.0.jar"/>
+            <library id="jetty-util-ajax-9.3.24.v20180605.jar"/>
+            <library id="jetty-util-9.3.24.v20180605.jar"/>
+            <library id="parquet-column-1.10.1.jar"/>
+            <library id="parquet-common-1.10.1.jar"/>
+            <library id="hadoop-azure-datalake-3.2.1.jar"/>
+            <library id="azure-data-lake-store-sdk-2.2.9.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Google Storage group -->
+        <libraryNeededGroup description="Google Storage libraries for spark311" id="GCS-GROUP-SPARK_3_1_x" name="GCS-GROUP-SPARK_3_1_x">
+            <library id="gcs-connector-hadoop3-2.1.6-shaded"/>
+        </libraryNeededGroup>
+
+        <!-- Google Big Query group -->
+        <libraryNeededGroup description="Google Big Query libraries for spark311" id="BIGQUERY-GROUP-SPARK_3_1_x" name="BIGQUERY-GROUP-SPARK_3_1_x">
+            <library id="gcs-connector-hadoop3-2.1.6-shaded"/>
+            <library id="bigquery-connector-hadoop3-1.1.6-shaded"/>
+            <library id="gson-2.2.4.jar"/>
+        </libraryNeededGroup>
+
+        <!-- HiveOnSpark group -->
+        <libraryNeededGroup description="Hive On SPARK libraries for spark311" id="HIVE-GROUP-SPARK_3_1_x" name="HIVE-GROUP-SPARK_3_1_x">
+            <library id="spark-hive_2.12-3.0.1.jar"/>
+            <library id="hive-common-2.3.7.jar"/>
+            <library id="hive-exec-2.3.7.jar"/>
+            <library id="hive-llap-common-2.3.7.jar"/>
+            <library id="hive-metastore-2.3.7.jar"/>
+            <library id="hive-serde-2.3.7.jar"/>
+            <library id="hive-shims-0.23-2.3.7.jar"/>
+            <library id="hive-shims-common-2.3.7.jar"/>
+            <library id="hive-storage-api-2.7.1.jar"/>
+            <library id="ivy-2.4.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
+            <library id="libfb303-0.9.3.jar"/>
+            <library id="libthrift-0.12.0.jar"/>
+            <library id="oro-2.0.8.jar"/>
+            <library id="orc-core-1.5.10.jar"/>
+            <library id="orc-mapreduce-1.5.10.jar"/>
+            <library id="orc-shims-1.5.10.jar"/>
+            <library id="aircompressor-0.10.jar"/>
+            <library id="jul-to-slf4j-1.7.16.jar"/>
+            <library id="parquet-encoding-1.10.1.jar"/>
+            <library id="parquet-format-2.4.0.jar"/>
+            <library id="parquet-hadoop-1.10.1.jar"/>
+        </libraryNeededGroup>
+
+        <!-- DeltaLake group -->
+        <libraryNeededGroup description="DeltaLake libraries for spark311" id="DELTALAKE-GROUP-SPARK_3_1_x" name="DELTALAKE-GROUP-SPARK_3_1_x">
+            <library id="delta-core_2.12-0.7.0.jar"/>
+            <library id="jul-to-slf4j-1.7.30.jar"/>
+            <library id="parquet-hadoop-1.10.1.jar"/>
+            <library id="parquet-format-2.4.0.jar"/>
+            <library id="parquet-encoding-1.10.1.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Cassandra group -->
+        <libraryNeededGroup description="Cassanda libraries for spark311" id="CASSANDRA-GROUP-SPARK_3_1_x" name="CASSANDRA-GROUP-SPARK_3_1_x">
+            <library id="spark-cassandra-connector-assembly_2.12-3.0.0-beta.jar"/>
+            <library id="jnr-posix-3.1.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- DynamoDB group -->
+        <libraryNeededGroup description="DynamoDB libraries for spark311" id="DYNAMODB-BATCH-GROUP-SPARK_3_1_x" name="DYNAMODB-BATCH-GROUP-SPARK_3_1_x">
+            <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
+            <library id="gson-2.2.4.jar"/>
+            <library id="hadoop-mapreduce-client-common-3.2.1.jar"/>
+            <library id="aws-java-sdk-bundle-1.11.375.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Redshift group -->
+        <libraryNeededGroup description="Redshift libraries for spark311" id="REDSHIFT-BATCH-GROUP-SPARK_3_1_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_1_x">
+            <library id="spark-redshift_2.12-4.2.0.jar"/>
+            <library id="spark-avro_2.12-3.0.1.jar"/><library id="gson-2.2.4.jar"/>
+            <library id="avro-mapred-1.8.2.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Snowflake group -->
+        <libraryNeededGroup description="Snowflake libraries for spark311" id="SNOWFLAKE-GROUP-SPARK_3_1_x" name="SNOWFLAKE-GROUP-SPARK_3_1_x">
+            <library id="spark-snowflake_2.12-2.8.2-spark_3.0.jar"/>
+            <library id="snowflake-jdbc-3.12.12.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- TDM group -->
+        <libraryNeededGroup description="TDM libraries for spark311" id="TDM-GROUP-SPARK_3_1_x" name="TDM-GROUP-SPARK_3_1_x">
+            <library id="avro-mapred-1.8.2.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- spark 3 ML group -->
+        <libraryNeededGroup description="ML libraries for spark311" id="ML-GROUP-SPARK_3_1_x" name="ML-GROUP-SPARK_3_1_x">
+            <library id="spark-mllib_2.12-3.0.1.jar"/>
+            <library id="spark-mllib-local_2.12-3.0.1.jar"/>
+            <library id="arpack_combined_all-0.1.jar"/>
+            <library id="core-1.1.2.jar"/>
+        </libraryNeededGroup>
+
+        <!-- commons math3 group -->
+        <libraryNeededGroup description="commons math3 libraries for spark311" id="MATH-GROUP-SPARK_3_1_x" name="MATH-GROUP-SPARK_3_1_x">
+            <library id="commons-math3-3.4.1.jar"/>
+        </libraryNeededGroup>
+
+        <!-- KMeans -->
+        <libraryNeededGroup description="KMeans libraries for spark311" id="KMEANS-GROUP-SPARK_3_1_x" name="KMEANS-GROUP-SPARK_3_1_x">
+        	<group id="ML-GROUP-SPARK_3_1_x"/>
+            <group id="PARQUET-GROUP-SPARK_3_1_x"/>
+        </libraryNeededGroup>
+
+        <!-- Spark Streaming Kafka group -->
+        <libraryNeededGroup description="Spark streaming Kafka libraries for spark311" id="KAFKA-GROUP-SPARK_3_1_x" name="KAFKA-GROUP-SPARK_3_1_x">
+            <library id="kafka-clients-2.7.0.jar"/>
+            <library id="spark-streaming-kafka-0-10_2.12-3.0.1.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Spark Streaming Kinesis group -->
+        <libraryNeededGroup description="Spark streaming Kinesis libraries for spark311" id="KINESIS-GROUP-SPARK_3_1_x" name="KINESIS-GROUP-SPARK_3_1_x">
+            <library id="spark-streaming-kinesis-asl_2.12-3.0.1.jar"/>
+            <library id="aws-java-sdk-kinesis-1.11.655.jar"/>
+            <library id="aws-java-sdk-core-1.11.655.jar"/>
+            <library id="httpclient-4.5.12.jar"/>
+            <library id="httpcore-4.4.11.jar"/>
+            <library id="jackson-dataformat-cbor-2.10.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
+            <library id="amazon-kinesis-client-1.12.0.jar"/>
+            <library id="aws-java-sdk-cloudwatch-1.11.655.jar"/>
+            <library id="aws-java-sdk-dynamodb-1.11.655.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Spark Streaming Redshift group -->
+        <libraryNeededGroup description="Spark streaming Redshift libraries for spark311" id="REDSHIFT-STREAMING-GROUP-SPARK_3_1_x" name="REDSHIFT-STREAMING-GROUP-SPARK_3_1_x">
+        <!-- To be completed when deps are moved away from the components -->
+        </libraryNeededGroup>
+
+        <!-- Spark Streaming DynamoDB group -->
+        <libraryNeededGroup description="Spark streaming DynamoDB libraries for spark311" id="DYNAMODB-STREAMING-GROUP-SPARK_3_1_x" name="DYNAMODB-STREAMING-GROUP-SPARK_3_1_x">
+            <group id="DYNAMODB-BATCH-GROUP-SPARK_3_1_x" />
+            <library id="commons-pool2-2.9.0.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Spark Streaming Rest group -->
+        <libraryNeededGroup description="Spark streaming Rest libraries for spark311" id="REST-GROUP-SPARK_3_1_x" name="REST-GROUP-SPARK_3_1_x">
+            <library id="hk2-api-2.6.1.jar"/>
+            <library id="hk2-locator-2.6.1.jar"/>
+            <library id="hk2-utils-2.6.1.jar"/>
+            <library id="jakarta.annotation-api-1.3.5.jar"/>
+            <library id="jakarta.inject-2.6.1.jar"/>
+            <library id="jakarta.ws.rs-api-2.1.6.jar"/>
+            <library id="jersey-client-2.30.jar"/>
+            <library id="jersey-common-2.30.jar"/>
+            <library id="jersey-hk2-2.30.jar"/>
+        </libraryNeededGroup>
+
+   </extension>
+   <extension
+         point="org.talend.core.runtime.classloader_provider">
+   </extension>
+
+</plugin>

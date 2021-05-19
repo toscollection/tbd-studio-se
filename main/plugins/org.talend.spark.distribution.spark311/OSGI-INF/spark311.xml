@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<component name="Spark311Distribution">
+  <implementation class="org.talend.spark.distribution.spark311.Spark311Distribution"/>
+  <service>
+    <provide interface="org.talend.hadoop.distribution.component.HadoopComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.HiveOnSparkComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.SparkBatchComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.SparkStreamingComponent"/> 
+  </service>
+</component>
