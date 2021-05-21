@@ -28,8 +28,11 @@ import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.ModuleGroupName;
+import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark311.modulegroup.Spark311SparkCompileModuleGroup;
+import org.talend.spark.distribution.spark311.modulegroup.node.Spark311NodeModuleGroup;
 
 public class Spark311Distribution extends AbstractDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
@@ -74,7 +77,10 @@ public class Spark311Distribution extends AbstractDistribution
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = new HashMap<>();
-
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                Spark311NodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
+                        SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark311Distribution.SPARK_VERSION));
+        				
         return result;
 
     }
@@ -200,5 +206,15 @@ public class Spark311Distribution extends AbstractDistribution
 	public boolean doSupportCrossPlatformSubmission() {
 		return false;
 	}
+	
+	@Override
+	public boolean doSupportOldImportMode() {
+        return false;
+    }
+	
+	@Override
+	public String getS3Packages() {
+    	return "com.amazonaws:aws-java-sdk-bundle:1.11.375,org.apache.hadoop:hadoop-aws:3.2.0";
+    }
 
 }

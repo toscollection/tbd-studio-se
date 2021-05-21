@@ -639,5 +639,11 @@ public abstract class AbstractDistribution {
         return result;
     }
     
+    /**
+     * @return the packages used during spark submit to upload to S3
+     */
+    public String getS3Packages() {
+    	return "";
+    }
     
 }
