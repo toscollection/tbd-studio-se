@@ -50,6 +50,14 @@
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="scala-library-2.12.10.jar" name="scala-library-2.12.10.jar"
              mvn_uri="mvn:org.scala-lang/scala-library/2.12.10"/>
+             
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+             id="scala-library-2.11.10.jar" name="scala-library-2.11.10.jar"
+             mvn_uri="mvn:org.scala-lang/scala-library/2.11.10"/>
+             
+         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+             id="pubsub-uber-1.0.jar" name="pubsub-uber-1.0.jar"
+             mvn_uri="mvn:org.talend.libraries/pubsub-uber-1.0/6.0.0"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="commons-lang3-3.9.jar" name="commons-lang3-3.9.jar"
@@ -100,8 +108,8 @@
           mvn_uri="mvn:org.scala-lang.modules/scala-xml_2.12/1.2.0"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-          id="jersey-container-servlet-core-2.30.jar" name="jersey-container-servlet-core-2.30.jar"
-          mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.30"/>
+          id="jersey-container-servlet-core-2.22.2.jar" name="jersey-container-servlet-core-2.22.2.jar"
+          mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.22.2"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="objenesis-2.6.jar" name="objenesis-2.6.jar"
@@ -148,8 +156,8 @@
           mvn_uri="mvn:javax.servlet/javax.servlet-api/3.1.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-          id="jersey-server-2.30.jar" name="jersey-server-2.30.jar"
-          mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/2.30"/>
+          id="jersey-server-2.22.2.jar" name="jersey-server-2.22.2.jar"
+          mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/2.22.2"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="jackson-annotations-2.10.1.jar" name="jackson-annotations-2.10.1.jar"
@@ -386,6 +394,10 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar"
           mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
+          
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+          id="spark-redshift_2.11-2.0.1.jar" name="spark-redshift_2.11-2.0.1.jar"
+          mvn_uri="mvn:com.databricks/spark-redshift_2.11/2.0.1"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar"
@@ -432,8 +444,8 @@
           mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-          id="jersey-common-2.30.jar" name="jersey-common-2.30.jar" 
-          mvn_uri="mvn:org.glassfish.jersey.core/jersey-common/2.30"/>
+          id="jersey-common-2.22.2.jar" name="jersey-common-2.22.2.jar" 
+          mvn_uri="mvn:org.glassfish.jersey.core/jersey-common/2.22.2"/>
 
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="aws-java-sdk-core-1.11.880.jar" name="aws-java-sdk-core-1.11.880.jar"
@@ -508,8 +520,24 @@
             mvn_uri="mvn:org.apache.hbase/hbase-protocol-shaded/2.2.6-amzn-0"/>
             
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-            id="jersey-client-2.30.jar" name="jersey-client-2.30.jar"
-            mvn_uri="mvn:org.glassfish.jersey.core/jersey-client/2.30"/>
+            id="jersey-client-2.22.2.jar" name="jersey-client-2.22.2.jar"
+            mvn_uri="mvn:org.glassfish.jersey.core/jersey-client/2.22.2"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="jersey-guava-2.22.2.jar" name="jersey-guava-2.22.2.jar"
+            mvn_uri="mvn:org.glassfish.jersey.bundles.repackaged/jersey-guava/2.22.2"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="hk2-api-2.4.0.jar" name="hk2-api-2.4.0.jar"
+            mvn_uri="mvn:org.glassfish.hk2/hk2-api/2.4.0"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="hk2-utils-2.4.0.jar" name="hk2-utils-2.4.0.jar"
+            mvn_uri="mvn:org.glassfish.hk2/hk2-utils/2.4.0"/>
+		
+		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="hk2-locator-2.4.0.jar" name="hk2-locator-2.4.0.jar"
+            mvn_uri="mvn:org.glassfish.hk2/hk2-locator/2.4.0"/>
 		
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="sqoop-1.4.7.jar" name="sqoop-1.4.7.jar"
@@ -732,6 +760,14 @@
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="spark-hive-thriftserver_2.12-3.0.1-amzn-0.jar" name="spark-hive-thriftserver_2.12-3.0.1-amzn-0.jar"
             mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_2.12/3.0.1-amzn-0"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="javax.annotation-api-1.2.jar" name="javax.annotation-api-1.2.jar"
+            mvn_uri="mvn:javax.annotation/javax.annotation-api/1.2"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="validation-api-1.1.0.Final.jar" name="validation-api-1.1.0.Final.jar"
+            mvn_uri="mvn:javax.validation/validation-api/1.1.0.Final"/>
 
 		<!-- Spark Azure group -->
         <libraryNeededGroup description="Spark Azure libraries for emr62x" id="AZURE-GROUP-EMR_62_x" name="AZURE-GROUP-EMR_62_x">
@@ -857,6 +893,9 @@
         <libraryNeededGroup description="The latest Hive libraries for emr62x" id="HIVE-GROUP-EMR_62_x" name="HIVE-GROUP-EMR_62_x">
             <group id="HDFS-GROUP-EMR_62_x"/>
      		<library id="hive-common-3.1.2-amzn-3.jar"/>
+     		<library id="hive-jdbc-3.1.2-amzn-3.jar"/>
+     		<library id="hive-exec-3.1.2-amzn-3.jar"/>
+     		<library id="hive-service-3.1.2-amzn-3.jar"/>
 			<library id="libfb303-0.9.3.jar"/>
 			<library id="spark-hive_2.12-3.0.1.jar"/>
         </libraryNeededGroup>
@@ -890,10 +929,15 @@
             <library id="jul-to-slf4j-1.7.30.jar"/>
         </libraryNeededGroup>
         
-        <!-- Redshift group -->
+        <!-- Redshift batch group -->
         <libraryNeededGroup description="Redshift libraries for emr62x" id="REDSHIFT-BATCH-GROUP-EMR_62_x" name="REDSHIFT-BATCH-GROUP-EMR_62_x">
             <group id="DYNAMODB-STREAMING-GROUP-EMR_62_x" />
             <library id="spark-redshift_2.12-4.2.0.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Redshift streaming group -->
+        <libraryNeededGroup description="Redshift libraries for emr62x" id="REDSHIFT-STREAMING-GROUP-EMR_62_x" name="REDSHIFT-BATCH-GROUP-EMR_62_x">
+            <group id="REDSHIFT-BATCH-GROUP-EMR_62_x"/>
         </libraryNeededGroup>
         
          <!-- Snowflake group -->
@@ -920,12 +964,18 @@
             <library id="chill-java-0.9.5.jar"/>
             <library id="emrfs-hadoop-assembly-2.44.0.jar"/>
             <library id="emrfs-cli-assembly-2.44.0.jar"/>
+            <library id="hk2-api-2.4.0.jar"/>
+			<library id="hk2-locator-2.4.0.jar"/>
+            <library id="hk2-utils-2.4.0.jar"/>
             <library id="janino-3.0.16.jar"/>
+            <library id="javax.annotation-api-1.2.jar"/>
             <library id="javax.servlet-api-3.1.0.jar"/>
             <library id="javax.ws.rs-api-2.1.1.jar"/>
-            <library id="jersey-common-2.30.jar"/>
-            <library id="jersey-container-servlet-core-2.30.jar"/>
-            <library id="jersey-server-2.30.jar"/>
+            <library id="jersey-client-2.22.2.jar"/>
+            <library id="jersey-common-2.22.2.jar"/>
+            <library id="jersey-container-servlet-core-2.22.2.jar"/>
+            <library id="jersey-guava-2.22.2.jar"/>
+            <library id="jersey-server-2.22.2.jar"/>
             <library id="json4s-ast_2.12-3.6.6.jar"/>
             <library id="json4s-core_2.12-3.6.6.jar"/>
             <library id="json4s-jackson_2.12-3.6.6.jar"/>
@@ -957,6 +1007,7 @@
             <library id="spark-yarn_2.12-3.0.1.jar"/>
             <library id="stream-2.9.6.jar"/>
             <library id="univocity-parsers-2.9.1.jar"/>
+            <library id="validation-api-1.1.0.Final.jar"/>
             <library id="xbean-asm7-shaded-4.15.jar"/>
             <library id="zstd-jni-1.4.9-5.jar"/>
         </libraryNeededGroup>
@@ -980,7 +1031,7 @@
 
 		<!-- WebHDFS group -->
         <libraryNeededGroup description="WebHDFS libraries for emr62x" id="WEBHDFS-GROUP-EMR_62_x" name="WEBHDFS-GROUP-EMR_62_x">
-            <library id="jersey-client-2.30.jar"/>
+            
         </libraryNeededGroup>
 
     </extension>
