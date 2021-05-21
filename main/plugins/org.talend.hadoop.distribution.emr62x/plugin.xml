@@ -768,6 +768,10 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="validation-api-1.1.0.Final.jar" name="validation-api-1.1.0.Final.jar"
             mvn_uri="mvn:javax.validation/validation-api/1.1.0.Final"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="javassist-3.18.1-GA.jar" name="javassist-3.18.1-GA.jar"
+            mvn_uri="mvn:org.javassist/javassist/3.18.1-GA"/>
 
 		<!-- Spark Azure group -->
         <libraryNeededGroup description="Spark Azure libraries for emr62x" id="AZURE-GROUP-EMR_62_x" name="AZURE-GROUP-EMR_62_x">
@@ -968,6 +972,7 @@
 			<library id="hk2-locator-2.4.0.jar"/>
             <library id="hk2-utils-2.4.0.jar"/>
             <library id="janino-3.0.16.jar"/>
+            <library id="javassist-3.18.1-GA.jar"/>
             <library id="javax.annotation-api-1.2.jar"/>
             <library id="javax.servlet-api-3.1.0.jar"/>
             <library id="javax.ws.rs-api-2.1.1.jar"/>
