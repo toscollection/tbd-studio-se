@@ -318,7 +318,7 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-common-3.1.2-amzn-3.jar" name="hive-common-3.1.2-amzn-3.jar"
           mvn_uri="mvn:org.apache.hive/hive-common/3.1.2-amzn-3"/>
-
+          
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-exec-3.1.2-amzn-3.jar" name="hive-exec-3.1.2-amzn-3.jar"
           mvn_uri="mvn:org.apache.hive/hive-exec/3.1.2-amzn-3.jar"/>
@@ -884,6 +884,7 @@
             <group id="HDFS-GROUP-EMR_62_x"/>
             <library id="hbase-common-2.2.6-amzn-0.jar" />
             <library id="hbase-client-2.2.6-amzn-0.jar" />
+            <library id="hive-exec-3.1.2-amzn-3.jar"/>
             <library id="hbase-hadoop-compat-2.2.6-amzn-0.jar"/>
             <library id="hbase-protocol-2.2.6-amzn-0.jar" />
             <library id="hbase-server-2.2.6-amzn-0.jar" />
@@ -898,7 +899,6 @@
             <group id="HDFS-GROUP-EMR_62_x"/>
      		<library id="hive-common-3.1.2-amzn-3.jar"/>
      		<library id="hive-jdbc-3.1.2-amzn-3.jar"/>
-     		<library id="hive-exec-3.1.2-amzn-3.jar"/>
      		<library id="hive-service-3.1.2-amzn-3.jar"/>
 			<library id="libfb303-0.9.3.jar"/>
 			<library id="spark-hive_2.12-3.0.1.jar"/>
@@ -960,6 +960,7 @@
 		<!-- Spark batch group -->
         <libraryNeededGroup description="SPARK libraries for emr62x" id="SPARK-BATCH-GROUP-EMR_62_x" name="SPARK-BATCH-GROUP-EMR_62_x">
             <group id="HDFS-GROUP-EMR_62_x"/>
+            <group id="HIVE-GROUP-EMR_62_x"/>
             <library id="aws-java-sdk-bundle-1.11.880.jar"/>
             <library id="antlr4-runtime-4.7.1.jar"/>
             <library id="aopalliance-1.0.jar"/>
