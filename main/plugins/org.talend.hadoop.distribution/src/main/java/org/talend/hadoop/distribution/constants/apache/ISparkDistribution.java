@@ -12,31 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.apache;
 
-import java.util.Arrays;
-import java.util.List;
-
-@SuppressWarnings("nls")
 public interface ISparkDistribution {
-	
-	public enum ESparkRuntime {
-
-	    K8S("K8S");
-
-	    private String runtime;
-
-	    ESparkRuntime(String runtime) {
-	        this.runtime = runtime;
-	    }
-
-	    public String getRuntime() {
-	        return runtime;
-	    }
-
-	}
 
     static final String DISTRIBUTION_NAME = "SPARK";
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Spark";
     
-    static final List<ESparkRuntime> SPARK_RUNTIME = Arrays.asList(ESparkRuntime.values());	
 }
