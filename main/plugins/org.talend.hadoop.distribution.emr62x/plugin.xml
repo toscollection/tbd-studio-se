@@ -4,8 +4,8 @@
     <extension point="org.talend.core.runtime.librariesNeeded">
 		
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-             id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar"
-             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1"/>
+             id="spark-core_2.12-3.0.1-amzn-0.jar" name="spark-core_2.12-3.0.1-amzn-0.jar"
+             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1-amzn-0"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="spark-hive_2.12-3.0.1.jar" name="spark-hive_2.12-3.0.1.jar"
@@ -883,7 +883,6 @@
             <group id="HDFS-GROUP-EMR_62_x"/>
             <library id="hbase-common-2.2.6-amzn-0.jar" />
             <library id="hbase-client-2.2.6-amzn-0.jar" />
-            <library id="hive-exec-3.1.2-amzn-3.jar"/>
             <library id="hbase-hadoop-compat-2.2.6-amzn-0.jar"/>
             <library id="hbase-protocol-2.2.6-amzn-0.jar" />
             <library id="hbase-server-2.2.6-amzn-0.jar" />
@@ -897,6 +896,7 @@
         <libraryNeededGroup description="The latest Hive libraries for emr62x" id="HIVE-GROUP-EMR_62_x" name="HIVE-GROUP-EMR_62_x">
             <group id="HDFS-GROUP-EMR_62_x"/>
      		<library id="hive-common-3.1.2-amzn-3.jar"/>
+            <library id="hive-exec-3.1.2-amzn-3.jar"/>
      		<library id="hive-jdbc-3.1.2-amzn-3.jar"/>
      		<library id="hive-service-3.1.2-amzn-3.jar"/>
 			<library id="libfb303-0.9.3.jar"/>
@@ -1001,7 +1001,7 @@
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="spark-avro_2.12-3.0.1.jar"/>
             <library id="spark-catalyst_2.12-3.0.1.jar"/>
-            <library id="spark-core_2.12-3.0.1.jar"/>
+            <library id="spark-core_2.12-3.0.1-amzn-0.jar"/>
             <library id="spark-kvstore_2.12-3.0.1.jar"/>
             <library id="spark-launcher_2.12-3.0.1.jar"/>
             <library id="spark-mllib_2.12-3.0.1.jar"/>
@@ -1028,12 +1028,13 @@
 		
 		   <!-- Sqoop group -->
         <libraryNeededGroup description="Sqoop libraries for emr62x" id="SQOOP-GROUP-EMR_62_x" name="SQOOP-GROUP-EMR_62_x">
+           <group id="HDFS-GROUP-EMR_62_x"/>
            <library id="sqoop-1.4.7.jar"/>
         </libraryNeededGroup>
         
         <!-- Sqoop Parquet group -->
         <libraryNeededGroup description="Sqoop Parquet libraries for emr62x" id="SQOOP-PARQUET-GROUP-EMR_62_x" name="SQOOP-PARQUET-GROUP-EMR_62_x">
-           
+           <group id="SQOOP-GROUP-EMR_62_x"/>
         </libraryNeededGroup>
 
 		<!-- WebHDFS group -->
