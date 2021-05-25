@@ -4,8 +4,8 @@
     <extension point="org.talend.core.runtime.librariesNeeded">
 		
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-             id="spark-core_2.12-3.0.1-amzn-0.jar" name="spark-core_2.12-3.0.1-amzn-0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1-amzn-0"/>
+             id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="spark-hive_2.12-3.0.1.jar" name="spark-hive_2.12-3.0.1.jar"
@@ -320,8 +320,8 @@
           mvn_uri="mvn:org.apache.hive/hive-common/3.1.2-amzn-3"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-          id="hive-exec-3.1.2-amzn-3.jar" name="hive-exec-3.1.2-amzn-3.jar"
-          mvn_uri="mvn:org.apache.hive/hive-exec/3.1.2-amzn-3.jar"/>
+          id="hive-exec-3.1.2-tlnd-0.jar" name="hive-exec-3.1.2-tlnd-0.jar"
+          mvn_uri="mvn:org.talend.libraries/hive-exec/3.1.2-tlnd-0"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-jdbc-3.1.2-amzn-3.jar" name="hive-jdbc-3.1.2-amzn-3.jar"
@@ -896,7 +896,7 @@
         <libraryNeededGroup description="The latest Hive libraries for emr62x" id="HIVE-GROUP-EMR_62_x" name="HIVE-GROUP-EMR_62_x">
             <group id="HDFS-GROUP-EMR_62_x"/>
      		<library id="hive-common-3.1.2-amzn-3.jar"/>
-            <library id="hive-exec-3.1.2-amzn-3.jar"/>
+            <library id="hive-exec-3.1.2-tlnd-0.jar"/>
      		<library id="hive-jdbc-3.1.2-amzn-3.jar"/>
      		<library id="hive-service-3.1.2-amzn-3.jar"/>
 			<library id="libfb303-0.9.3.jar"/>
@@ -1001,7 +1001,7 @@
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="spark-avro_2.12-3.0.1.jar"/>
             <library id="spark-catalyst_2.12-3.0.1.jar"/>
-            <library id="spark-core_2.12-3.0.1-amzn-0.jar"/>
+            <library id="spark-core_2.12-3.0.1.jar"/>
             <library id="spark-kvstore_2.12-3.0.1.jar"/>
             <library id="spark-launcher_2.12-3.0.1.jar"/>
             <library id="spark-mllib_2.12-3.0.1.jar"/>
