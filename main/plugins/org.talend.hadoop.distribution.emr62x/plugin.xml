@@ -52,14 +52,6 @@
              mvn_uri="mvn:org.scala-lang/scala-library/2.12.10"/>
              
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-             id="scala-library-2.11.10.jar" name="scala-library-2.11.10.jar"
-             mvn_uri="mvn:org.scala-lang/scala-library/2.11.10"/>
-             
-         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-             id="pubsub-uber-1.0.jar" name="pubsub-uber-1.0.jar"
-             mvn_uri="mvn:org.talend.libraries/pubsub-uber-1.0/6.0.0"/>
-
-         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="commons-lang3-3.9.jar" name="commons-lang3-3.9.jar"
              mvn_uri="mvn:org.apache.commons/commons-lang3/3.9"/>
 
@@ -394,10 +386,6 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar"
           mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
-          
-        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-          id="spark-redshift_2.11-2.0.1.jar" name="spark-redshift_2.11-2.0.1.jar"
-          mvn_uri="mvn:com.databricks/spark-redshift_2.11/2.0.1"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar"
