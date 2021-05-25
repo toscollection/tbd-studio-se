@@ -30,8 +30,6 @@
 	boolean isHadoop2 = sqoopDistrib.isHadoop2() || sqoopDistrib.isHadoop3();
 	boolean isKerberosAvailableHadoop1 = !isCustom && sqoopDistrib.isHadoop1() && sqoopDistrib.doSupportKerberos();
 
-	System.out.println("PUEBLA "+isHadoop2);
-
 	if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
 %>
     	configuration_<%=cid%>.set("mapreduce.framework.name", "yarn");
