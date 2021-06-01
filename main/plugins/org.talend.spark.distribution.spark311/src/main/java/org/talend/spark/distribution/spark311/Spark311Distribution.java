@@ -76,11 +76,13 @@ public class Spark311Distribution extends AbstractDistribution
 
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
-        Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = new HashMap<>();
-        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
-                Spark311NodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
-                        SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark311Distribution.SPARK_VERSION));
-        				
+        Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
+        Set<DistributionModuleGroup> s3ModuleGroup = Spark311NodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
+                SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark311Distribution.SPARK_VERSION);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
+        					s3ModuleGroup);	
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
+				s3ModuleGroup);	
         return result;
 
     }

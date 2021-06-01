@@ -16,14 +16,14 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 public class Spark311NodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroup(String moduleGroupName, String sparkConfigLinkedParameter,
-            ESparkVersion sparkLocalVersion) {
+            ESparkVersion sparkVersion) {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(moduleGroupName, true, spark311Condition(sparkConfigLinkedParameter, sparkLocalVersion));
+        DistributionModuleGroup dmg = new DistributionModuleGroup(moduleGroupName, true, spark311Condition(sparkConfigLinkedParameter, sparkVersion));
         hs.add(dmg);
         return hs;
     }
 
-    static ComponentCondition spark311Condition(String sparkConfigLinkedParameter, ESparkVersion sparkLocalVersion) {
+    static ComponentCondition spark311Condition(String sparkConfigLinkedParameter, ESparkVersion sparkVersion) {
         
         return new MultiComponentCondition(new SimpleComponentCondition(new LinkedNodeExpression(sparkConfigLinkedParameter,
                                                                     SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, //
@@ -31,7 +31,7 @@ public class Spark311NodeModuleGroup {
               BooleanOperator.AND, 
               new SimpleComponentCondition(new LinkedNodeExpression(sparkConfigLinkedParameter,
                                                                     SparkBatchConstant.VERSION_PARAMETER,//
-                                                                    EqualityOperator.EQ, sparkLocalVersion.getSparkVersion())));
+                                                                    EqualityOperator.EQ, sparkVersion.getSparkVersion())));
     }
     
 }
