@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.talend.hadoop.distribution.AbstractDistribution;
+import org.talend.hadoop.distribution.AbstractSparkDistribution;
 import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
@@ -31,10 +31,9 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.spark.distribution.spark311.modulegroup.Spark311SparkCompileModuleGroup;
 import org.talend.spark.distribution.spark311.modulegroup.node.Spark311NodeModuleGroup;
 
-public class Spark311Distribution extends AbstractDistribution
+public class Spark311Distribution extends AbstractSparkDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
@@ -67,13 +66,6 @@ public class Spark311Distribution extends AbstractDistribution
         return result;
     }
 
-    protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
-        Map<ComponentType, Set<DistributionModuleGroup>> result = new HashMap<>();
-        result.put(ComponentType.SPARKBATCH, Spark311SparkCompileModuleGroup.getModuleGroups());
-        result.put(ComponentType.SPARKSTREAMING, Spark311SparkCompileModuleGroup.getModuleGroups());
-        return result;
-    }
-
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
@@ -84,7 +76,6 @@ public class Spark311Distribution extends AbstractDistribution
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
 				s3ModuleGroup);	
         return result;
-
     }
 
     @Override
