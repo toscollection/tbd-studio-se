@@ -181,7 +181,12 @@ public class Spark311Distribution extends AbstractSparkDistribution
     }
 
     @Override
-    public boolean doSupportAzureDataLakeStorage() {
+    public boolean doSupportAzureDataLakeStorageGen2() {
+        return true;
+    }
+    
+    @Override
+    public boolean doSupportAzureBlobStorage() {
         return true;
     }
 
@@ -208,6 +213,16 @@ public class Spark311Distribution extends AbstractSparkDistribution
 	@Override
 	public String getS3Packages() {
     	return "com.amazonaws:aws-java-sdk-bundle:1.11.375,org.apache.hadoop:hadoop-aws:3.2.0";
+    }
+	
+	@Override
+	public String getBlobPackages() {
+    	return "org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:7.0.0";
+    }
+	
+	@Override
+	public String getADLS2Packages() {
+    	return "org.apache.hadoop:hadoop-azure-datalake:3.2.1,org.apache.hadoop:hadoop-azure:3.2.1";
     }
 
 }

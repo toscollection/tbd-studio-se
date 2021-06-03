@@ -22,8 +22,11 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-client-3.2.0.jar" name="hadoop-yarn-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-client/3.2.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-yarn-common-3.2.0.jar" name="hadoop-yarn-common-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.2.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="httpclient-4.5.6.jar" name="httpclient-4.5.6.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.6"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="httpcore-4.4.12.jar" name="httpcore-4.4.12.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.12"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-core-2.10.0.jar" name="jackson-core-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-databind-2.10.0.jar" name="jackson-databind-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jackson-dataformat-yaml-2.10.0.jar" name="jackson-dataformat-yaml-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-yaml/2.10.0"/>
@@ -76,6 +79,7 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-unsafe_2.12-3.1.1.jar" name="spark-unsafe_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.1.1"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-yarn_2.12-3.1.1.jar" name="spark-yarn_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_2.12/3.1.1"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/3.1.4"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="wildfly-openssl-java-1.0.4.Final.jar" name="wildfly-openssl-java-1.0.4.Final.jar" mvn_uri="mvn:org.wildfly.openssl/wildfly-openssl-java/1.0.4.Final"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
 			
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="hadoop-aws-3.2.0.jar" name="hadoop-aws-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.2.0"/>
@@ -138,9 +142,12 @@
 			<library id="hadoop-yarn-client-3.2.0.jar"/>
 			<library id="hadoop-yarn-common-3.2.0.jar"/>
 			<library id="htrace-core4-4.1.0-incubating.jar"/>
+			<library id="httpclient-4.5.6.jar"/>
+			<library id="httpcore-4.4.12.jar"/>
 			<library id="ivy-2.4.0.jar"/>
 			<library id="jackson-annotations-2.10.0.jar"/>
 			<library id="jackson-core-2.10.0.jar"/>
+			<library id="jackson-core-asl-1.9.13.jar"/>
 			<library id="jackson-databind-2.10.0.jar"/>
 			<library id="jackson-dataformat-yaml-2.10.0.jar"/>
 			<library id="jackson-datatype-jsr310-2.11.2.jar"/>
@@ -190,6 +197,7 @@
 			<library id="spark-unsafe_2.12-3.1.1.jar"/>
 			<library id="spark-yarn_2.12-3.1.1.jar"/>
 			<library id="stax2-api-3.1.4.jar"/>
+			<library id="wildfly-openssl-java-1.0.4.Final.jar"/>
 			<library id="woodstox-core-5.0.3.jar"/>
         </libraryNeededGroup>
 
@@ -207,6 +215,7 @@
             <library id="jetty-util-9.3.24.v20180605.jar"/>
             <library id="hadoop-azure-datalake-3.2.1.jar"/>
             <library id="azure-data-lake-store-sdk-2.2.9.jar"/>
+            <library id="wildfly-openssl-java-1.0.4.Final.jar"/>
         </libraryNeededGroup>
 
         <!-- Google Storage group -->
