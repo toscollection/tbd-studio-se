@@ -133,4 +133,9 @@ public interface SparkComponent extends MRComponent {
      * @return the packages used during spark submit to upload to adls gen 2
      */
     public String getADLS2Packages();
+    
+    /**
+     * @return if the distribution uses spark submit for yarn
+     */
+    public boolean doSendBySparkSubmit();
 }

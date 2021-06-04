@@ -659,4 +659,11 @@ public abstract class AbstractDistribution {
     public String getADLS2Packages() {
     	return "";
     }
+    
+    /**
+     * @return if the distribution uses spark submit for yarn
+     */
+    public boolean doSendBySparkSubmit() {
+    	return false;
+    }
 }

@@ -28,14 +28,16 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="scala-reflect-2.11.12.jar" name="scala-reflect-2.11.12.jar" mvn_uri="mvn:org.scala-lang/scala-reflect/2.11.12"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-catalyst_2.11-2.4.7.jar" name="spark-catalyst_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-core_2.11-2.4.7.jar" name="spark-core_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-core_2.11/2.4.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-hive_2.11-2.4.7.jar" name="spark-hive_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-hive_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-launcher_2.11-2.4.7.jar" name="spark-launcher_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-launcher_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-mllib-local_2.11-2.4.7.jar" name="spark-mllib-local_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-network-common_2.11-2.4.7.jar" name="spark-network-common_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-sql_2.11-2.4.7.jar" name="spark-sql_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.11/2.4.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-unsafe_2.11-2.4.7.jar" name="spark-unsafe_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-yarn_2.11-2.4.7.jar" name="spark-yarn_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/3.1.4"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="ivy-2.4.7.jar" name="ivy-2.4.7.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
 
 			
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="hadoop-aws-3.0.0.jar" name="hadoop-aws-3.0.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.0.0"/>
@@ -81,15 +83,13 @@
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
 			<library id="avro-1.8.2.jar"/>
-			<library id="bcpkix-jdk15on-1.68.jar"/>
-			<library id="bcprov-jdk15on-1.68.jar"/>
 			<library id="commons-codec-1.11.jar"/>
 			<library id="commons-collections-3.2.2.jar"/>
-			<library id="commons-configuration2-2.1.1.jar"/>
-			<library id="commons-lang3-3.10.jar"/>
+			<library id="commons-configuration2-2.0.jar"/>
+			<library id="commons-lang3-3.5.jar"/>
 			<library id="commons-lang-2.6.jar"/>
 			<library id="commons-logging-1.1.3.jar"/>
-			<library id="guava-14.1.jar"/>
+			<library id="guava-18.0.jar"/>
 			<library id="hadoop-auth-3.0.0.jar"/>
 			<library id="hadoop-common-3.0.0.jar"/>
 			<library id="hadoop-hdfs-client-3.0.0.jar"/>
@@ -97,64 +97,25 @@
 			<library id="hadoop-yarn-api-3.0.0.jar"/>
 			<library id="hadoop-yarn-client-3.0.0.jar"/>
 			<library id="hadoop-yarn-common-3.0.0.jar"/>
-			<library id="htrace-core4-4.1.0-incubating.jar"/>
-			<library id="httpclient-4.5.6.jar"/>
-			<library id="httpcore-4.4.12.jar"/>
-			<library id="ivy-2.4.0.jar"/>
-			<library id="jackson-annotations-2.10.0.jar"/>
-			<library id="jackson-core-2.10.0.jar"/>
-			<library id="jackson-core-asl-1.9.13.jar"/>
-			<library id="jackson-databind-2.10.0.jar"/>
-			<library id="jackson-dataformat-yaml-2.10.0.jar"/>
-			<library id="jackson-datatype-jsr310-2.11.2.jar"/>
-			<library id="jodd-core-3.5.2.jar"/>
-			<library id="json4s-core_2.12-3.7.0-M5.jar"/>
+			<library id="htrace-core4-4.2.0-incubating.jar"/>
 			<library id="kryo-shaded-4.0.2.jar"/>
-			<library id="kubernetes-client-4.12.0.jar"/>
-			<library id="kubernetes-model-admissionregistration-4.12.0.jar"/>
-			<library id="kubernetes-model-apiextensions-4.12.0.jar"/>
-			<library id="kubernetes-model-apps-4.12.0.jar"/>
-			<library id="kubernetes-model-autoscaling-4.12.0.jar"/>
-			<library id="kubernetes-model-batch-4.12.0.jar"/>
-			<library id="kubernetes-model-certificates-4.12.0.jar"/>
-			<library id="kubernetes-model-common-4.12.0.jar"/>
-			<library id="kubernetes-model-coordination-4.12.0.jar"/>
-			<library id="kubernetes-model-core-4.12.0.jar"/>
-			<library id="kubernetes-model-discovery-4.12.0.jar"/>
-			<library id="kubernetes-model-events-4.12.0.jar"/>
-			<library id="kubernetes-model-extensions-4.12.0.jar"/>
-			<library id="kubernetes-model-metrics-4.12.0.jar"/>
-			<library id="kubernetes-model-networking-4.12.0.jar"/>
-			<library id="kubernetes-model-policy-4.12.0.jar"/>
-			<library id="kubernetes-model-rbac-4.12.0.jar"/>
-			<library id="kubernetes-model-scheduling-4.12.0.jar"/>
-			<library id="kubernetes-model-settings-4.12.0.jar"/>
-			<library id="kubernetes-model-storageclass-4.12.0.jar"/>
-			<library id="logging-interceptor-3.12.12.jar"/>
-			<library id="okhttp-3.12.12.jar"/>
-			<library id="okio-1.14.0.jar"/>
-			<library id="oro-2.0.8.jar"/>
-			<library id="parquet-common-1.10.1.jar"/>
-			<library id="parquet-column-1.10.1.jar"/>
-			<library id="parquet-hadoop-1.10.1.jar"/>
-			<library id="protobuf-java-2.5.0.jar"/>
+			<library id="parquet-common-1.10.0.jar"/>
+			<library id="protobuf-java-3.15.8.jar"/>
 			<library id="re2j-1.1.jar"/>
-			<library id="scala-library-2.12.10.jar"/>
-			<library id="scala-reflect-2.12.10.jar"/>
-			<library id="snakeyaml-1.24.jar"/>
-			<library id="spark-catalyst_2.12-3.1.1.jar"/>
-			<library id="spark-core_2.12-3.1.1.jar"/>
-			<library id="spark-kubernetes_2.12-3.1.1.jar"/>
-			<library id="spark-launcher_2.12-3.1.1.jar"/>
-			<library id="spark-mllib-local_2.12-3.1.1.jar"/>
-			<library id="spark-network-common_2.12-3.1.1.jar"/>
-			<library id="spark-sql_2.12-3.1.1.jar"/>
-			<library id="spark-streaming_2.12-3.1.1.jar"/>
-			<library id="spark-unsafe_2.12-3.1.1.jar"/>
-			<library id="spark-yarn_2.12-3.1.1.jar"/>
+			<library id="scala-library-2.11.12.jar"/>
+			<library id="scala-reflect-2.11.12.jar"/>
+			<library id="spark-catalyst_2.11-2.4.7.jar"/>
+			<library id="spark-core_2.11-2.4.7.jar"/>
+			<library id="spark-hive_2.11-2.4.7.jar"/>
+			<library id="spark-launcher_2.11-2.4.7.jar"/>
+			<library id="spark-mllib-local_2.11-2.4.7.jar"/>
+			<library id="spark-network-common_2.11-2.4.7.jar"/>
+			<library id="spark-sql_2.11-2.4.7.jar"/>
+			<library id="spark-unsafe_2.11-2.4.7.jar"/>
+			<library id="spark-yarn_2.11-2.4.7.jar"/>
 			<library id="stax2-api-3.1.4.jar"/>
-			<library id="wildfly-openssl-java-1.0.4.Final.jar"/>
 			<library id="woodstox-core-5.0.3.jar"/>
+			<library id="ivy-2.4.0.jar"/>
         </libraryNeededGroup>
 
         <!-- S3 group -->

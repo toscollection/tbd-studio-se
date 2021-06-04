@@ -209,4 +209,9 @@ public class Spark247Distribution extends AbstractSparkDistribution
 	public boolean doSupportOldImportMode() {
         return false;
     }
+	
+	@Override
+	public boolean doSendBySparkSubmit() {
+		return true;
+	}
 }
