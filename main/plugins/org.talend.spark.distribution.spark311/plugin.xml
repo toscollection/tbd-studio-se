@@ -98,13 +98,13 @@
         	
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="delta-core_2.12-0.7.0.jar" name="delta-core_2.12-0.7.0.jar" mvn_uri="mvn:io.delta/delta-core_2.12/0.7.0"/>
         	
-        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-cassandra-connector-assembly_2.12-3.0.1.jar" name="spark-cassandra-connector-assembly_2.12-3.0.1.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.0.1"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-cassandra-connector-assembly_2.12-3.1.1.jar" name="spark-cassandra-connector-assembly_2.12-3.1.1.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.1.1"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
         	
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
         	
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
-	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.0.1"/>
+	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-avro_2.12-3.1.1.jar" name="spark-avro_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.1.1"/>
 	        
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-snowflake_2.12-2.9.0-spark_3.1.jar" name="spark-snowflake_2.12-2.9.0-spark_3.1.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.9.0-spark_3.1"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="snowflake-jdbc-3.13.13.jar" name="snowflake-jdbc-3.13.13.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.13"/>
@@ -241,7 +241,7 @@
         
         <!-- Cassandra group -->
         <libraryNeededGroup description="Cassanda libraries for spark311" id="CASSANDRA-GROUP-SPARK_3_1_x" name="CASSANDRA-GROUP-SPARK_3_1_x">
-            <library id="spark-cassandra-connector-assembly_2.12-3.0.1.jar"/>
+            <library id="spark-cassandra-connector-assembly_2.12-3.1.1.jar"/>
             <library id="jnr-posix-3.1.0.jar"/>
         </libraryNeededGroup>
         

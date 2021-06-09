@@ -144,6 +144,11 @@ public class Spark311Distribution extends AbstractSparkDistribution
     public boolean useOldAWSAPI() {
         return false;
     }
+    
+    @Override
+    public boolean useS3AProperties() {
+        return true;
+    }
 
     @Override
     public boolean doSupportSparkStandaloneMode() {
@@ -224,5 +229,4 @@ public class Spark311Distribution extends AbstractSparkDistribution
 	public String getADLS2Packages() {
     	return "org.apache.hadoop:hadoop-azure-datalake:3.2.1,org.apache.hadoop:hadoop-azure:3.2.1";
     }
-
 }
