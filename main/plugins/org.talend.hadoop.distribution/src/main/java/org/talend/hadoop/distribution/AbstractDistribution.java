@@ -636,6 +636,12 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.SPARK_SQL_ROW_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, hiveContextCondition, ModuleGroupName.HIVE.get(this.getVersion()), true));
        
+        // delta components in Spark batch
+        Set<DistributionModuleGroup> deltaBatchConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.DELTALAKE.get(this.getVersion()), true);
+        
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DELTALAKE_INPUT_COMPONENT), deltaBatchConfigurationModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DELTALAKE_OUTPUT_COMPONENT), deltaBatchConfigurationModuleGroups);
+        
         return result;
     }
     
