@@ -15,6 +15,7 @@ package org.talend.hadoop.distribution.component;
 import java.util.List;
 import java.util.Set;
 
+import org.talend.core.model.process.INode;
 import org.talend.hadoop.distribution.ESparkVersion;
 
 /**
@@ -143,4 +144,10 @@ public interface SparkComponent extends MRComponent {
      * @return if the distribution uses spark submit for yarn
      */
     public boolean doSendBySparkSubmit();
+    
+    /**
+     * @param nodes og the job
+     * @return the classpath to be set
+     */
+    public String getSparkClasspath(List<? extends INode> nodes);
 }

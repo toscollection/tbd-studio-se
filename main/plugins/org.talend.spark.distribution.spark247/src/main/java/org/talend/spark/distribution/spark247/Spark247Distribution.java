@@ -41,6 +41,10 @@ public class Spark247Distribution extends AbstractSparkDistribution
     public final static String VERSION = Spark247Distribution.SPARK_VERSION.getSparkVersion();
 
     public static final String VERSION_DISPLAY = Spark247Distribution.SPARK_VERSION.getVersionLabel();
+    
+    // we concatenate default classpath of all yarn distribs, the application will use the right one (this can also be overriden in job conf)
+    protected final String SPARK_CLASSPATH = "${HADOOP_HOME}/../spark/jars/*,${HADOOP_HOME}/../spark/hive/*," //CDH classpath
+    												+ "${HADOOP_HOME}/../spark2/jars/*"; //HDP classpath
 
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -91,6 +95,11 @@ public class Spark247Distribution extends AbstractSparkDistribution
     @Override
     public EHadoopVersion getHadoopVersion() {
         return EHadoopVersion.HADOOP_3;
+    }
+    
+    @Override 
+    public String getLightWeightClasspath() {
+    	return this.SPARK_CLASSPATH;
     }
 
     @Override
