@@ -41,8 +41,10 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-mllib-local_2.11-2.4.7.jar" name="spark-mllib-local_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-network-common_2.11-2.4.7.jar" name="spark-network-common_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-sql_2.11-2.4.7.jar" name="spark-sql_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.11/2.4.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-streaming_2.11-2.4.7.jar" name="spark-streaming_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark311" id="spark-unsafe_2.11-2.4.7.jar" name="spark-unsafe_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="spark-yarn_2.11-2.4.7.jar" name="spark-yarn_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_2.11/2.4.7"/>
+			
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/3.1.4"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
@@ -127,6 +129,7 @@
 			<library id="spark-mllib-local_2.11-2.4.7.jar"/>
 			<library id="spark-network-common_2.11-2.4.7.jar"/>
 			<library id="spark-sql_2.11-2.4.7.jar"/>
+			<library id="spark-streaming_2.11-2.4.7.jar"/>
 			<library id="spark-unsafe_2.11-2.4.7.jar"/>
 			<library id="spark-yarn_2.11-2.4.7.jar"/>
 			<library id="stax2-api-3.1.4.jar"/>
