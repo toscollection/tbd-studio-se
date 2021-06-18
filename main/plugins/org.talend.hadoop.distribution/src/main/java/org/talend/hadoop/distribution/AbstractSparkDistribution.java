@@ -34,19 +34,20 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 	@Override
 	public String getSparkClasspath(List<? extends INode> nodes) {
 		String hadoopHome = "${HADOOP_HOME}";
-		String emrHadoopHome = "${HADOOP_COMMON_HOME}";
 		String classpathSeparator = ",";
-		String classpath = hadoopHome + "/../spark/jars/*"//CDH base classpath
+		String classpath = "/opt/cloudera/parcels/CDH/lib/spark/jars/*"//CDH&CDP base classpath
 							+ classpathSeparator + hadoopHome + "/../spark2/jars/*" //HDP base classpath
-							+ classpathSeparator + emrHadoopHome + "/../spark/jars/*" + classpathSeparator + emrHadoopHome + "/../hadoop-lzo/jars/*"; //EMR base classpath
+							+ classpathSeparator + "/usr/lib/spark/jars/*" + classpathSeparator + "/usr/lib/hadoop-lzo/lib/*"; //EMR base classpath
 		if (doesJobContain(nodes, "hive")) {
-			classpath += classpathSeparator + hadoopHome + "/../spark/hive/*"; //CDH hive lib for spark
+			classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/spark/hive/*"; //CDH&CDP hive lib for spark
 		}
 		if (doesJobContain(nodes, "hbase")) {
-			classpath += classpathSeparator + hadoopHome + "/../hbase/lib/*"; //CDH & HDP hbase lib for spark
+			classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/hbase/lib/*"; //CDH&CDP hbase lib for spark
+			classpath += classpathSeparator + hadoopHome + "/../hbase/lib/*"; //HDP hbase lib for spark
 		}
 		if (doesJobContain(nodes, "sqoop")) {
-			classpath += classpathSeparator + hadoopHome + "/../sqoop/*"; //CDH & HDP hbase lib for spark
+			classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/sqoop/*"; //CDH&CDP hbase lib for spark
+			classpath += classpathSeparator + hadoopHome + "/../sqoop/*"; //HDP hbase lib for spark
 		}
 		return classpath;
 	}
