@@ -1,4 +1,4 @@
-package org.talend.spark.distribution.spark311.modulegroup.node;
+package org.talend.spark.distribution.spark31x.modulegroup.node;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +13,7 @@ import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 
-public class Spark311NodeModuleGroup {
+public class Spark31xNodeModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroup(String moduleGroupName, String sparkConfigLinkedParameter,
             ESparkVersion sparkVersion) {
