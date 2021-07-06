@@ -24,6 +24,7 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.EParquetPackagePrefix;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
+import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -34,7 +35,7 @@ import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark247.modulegroup.node.Spark247NodeModuleGroup;
 
 public class Spark247Distribution extends AbstractSparkDistribution
-        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
+        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, HBaseComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_2_4_X;
 
@@ -222,5 +223,15 @@ public class Spark247Distribution extends AbstractSparkDistribution
 	@Override
 	public boolean doSendBySparkSubmit() {
 		return true;
+	}
+	
+	@Override 
+	public boolean doSupportHBase2x() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportNewHBaseAPI() {
+		return false;
 	}
 }
