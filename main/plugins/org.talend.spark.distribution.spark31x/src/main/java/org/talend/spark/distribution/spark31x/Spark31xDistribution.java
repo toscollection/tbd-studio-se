@@ -31,7 +31,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.spark.distribution.spark31x.modulegroup.node.Spark311NodeModuleGroup;
+import org.talend.spark.distribution.spark31x.modulegroup.node.Spark31xNodeModuleGroup;
 
 public class Spark31xDistribution extends AbstractSparkDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
@@ -69,7 +69,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
-        Set<DistributionModuleGroup> s3ModuleGroup = Spark311NodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
+        Set<DistributionModuleGroup> s3ModuleGroup = Spark31xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
                 SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark31xDistribution.SPARK_VERSION);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
         					s3ModuleGroup);	
