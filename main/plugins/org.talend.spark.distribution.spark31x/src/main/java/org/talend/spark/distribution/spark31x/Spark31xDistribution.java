@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.spark.distribution.spark311;
+package org.talend.spark.distribution.spark31x;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,16 +31,16 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.spark.distribution.spark311.modulegroup.node.Spark311NodeModuleGroup;
+import org.talend.spark.distribution.spark31x.modulegroup.node.Spark31xNodeModuleGroup;
 
-public class Spark311Distribution extends AbstractSparkDistribution
+public class Spark31xDistribution extends AbstractSparkDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
-    public final static String VERSION = Spark311Distribution.SPARK_VERSION.getSparkVersion();
+    public final static String VERSION = Spark31xDistribution.SPARK_VERSION.getSparkVersion();
 
-    public static final String VERSION_DISPLAY = Spark311Distribution.SPARK_VERSION.getVersionLabel();
+    public static final String VERSION_DISPLAY = Spark31xDistribution.SPARK_VERSION.getVersionLabel();
 
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -50,7 +50,7 @@ public class Spark311Distribution extends AbstractSparkDistribution
 
     protected Map<ComponentType, String> customVersionDisplayNames;
 
-    public Spark311Distribution() {
+    public Spark31xDistribution() {
         this.displayConditions = buildDisplayConditions();
         this.customVersionDisplayNames = buildCustomVersionDisplayNames();
         this.moduleGroups = buildModuleGroups();
@@ -69,8 +69,8 @@ public class Spark311Distribution extends AbstractSparkDistribution
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
-        Set<DistributionModuleGroup> s3ModuleGroup = Spark311NodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
-                SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark311Distribution.SPARK_VERSION);
+        Set<DistributionModuleGroup> s3ModuleGroup = Spark31xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
+                SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark31xDistribution.SPARK_VERSION);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
         					s3ModuleGroup);	
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
