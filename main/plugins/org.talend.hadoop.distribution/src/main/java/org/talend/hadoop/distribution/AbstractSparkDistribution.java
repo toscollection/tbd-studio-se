@@ -26,6 +26,8 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 	@Override
 	protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
         Map<ComponentType, Set<DistributionModuleGroup>> result = new HashMap<>();
+        result.put(ComponentType.HDFS, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
+        result.put(ComponentType.HIVE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         result.put(ComponentType.SPARKBATCH, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         result.put(ComponentType.SPARKSTREAMING, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         return result;

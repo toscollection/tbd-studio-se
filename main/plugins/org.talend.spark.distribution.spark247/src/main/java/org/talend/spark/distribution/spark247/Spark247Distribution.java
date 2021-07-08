@@ -306,4 +306,9 @@ public class Spark247Distribution extends AbstractSparkDistribution
 	public boolean doSupportSequenceFileShortType() {
 		return true;
 	}
+	
+	@Override
+    public boolean doSupportSSLwithKerberos() {
+        return true;
+    }
 }
