@@ -85,7 +85,7 @@
         <module>main/plugins/org.talend.repository.hdfs</module>
         <module>main/plugins/org.talend.repository.nosql</module>
         <module>main/plugins/org.talend.repository.oozie</module>
-        <module>main/plugins/org.talend.spark.distribution.spark311</module>
+        <module>main/plugins/org.talend.spark.distribution.spark31x</module>
 
         <module>test/features/org.talend.bigdata.se.test.feature</module>
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
