@@ -25,9 +25,15 @@ import org.talend.hadoop.distribution.EParquetPackagePrefix;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HBaseComponent;
+import org.talend.hadoop.distribution.component.HCatalogComponent;
+import org.talend.hadoop.distribution.component.HDFSComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
+import org.talend.hadoop.distribution.component.ImpalaComponent;
+import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
+import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
@@ -35,7 +41,8 @@ import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark247.modulegroup.node.Spark247NodeModuleGroup;
 
 public class Spark247Distribution extends AbstractSparkDistribution
-        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, HBaseComponent {
+        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, HBaseComponent,
+        			HDFSComponent, HCatalogComponent, MRComponent, HiveComponent, ImpalaComponent, SqoopComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_2_4_X;
 
@@ -233,5 +240,70 @@ public class Spark247Distribution extends AbstractSparkDistribution
 	@Override
 	public boolean doSupportNewHBaseAPI() {
 		return false;
+	}
+
+	@Override
+	public boolean doJavaAPISupportStorePasswordInFile() {
+		return true;
+	}
+
+	@Override
+	public boolean doJavaAPISqoopImportSupportDeleteTargetDir() {
+		return true;
+	}
+
+	@Override
+	public boolean doJavaAPISqoopImportAllTablesSupportExcludeTable() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportHive1() {
+		return false;
+	}
+
+	@Override
+	public boolean doSupportHive2() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportTezForHive() {
+		return false;
+	}
+
+	@Override
+	public boolean doSupportHBaseForHive() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportSSL() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportORCFormat() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportAvroFormat() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportParquetFormat() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportStoreAsParquet() {
+		return true;
+	}
+
+	@Override
+	public boolean doSupportSequenceFileShortType() {
+		return true;
 	}
 }
