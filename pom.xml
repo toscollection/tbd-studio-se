@@ -18,7 +18,6 @@
         <module>i18n/plugins/org.talend.repository.hdfs.nl</module>
         <module>i18n/plugins/org.talend.repository.nosql.nl</module>
         <module>i18n/plugins/org.talend.repository.oozie.nl</module>
-        <module>main/features/org.talend.help.bd.feature</module>
         <module>main/features/org.talend.rcp.branding.tos.bigdata.feature</module>
         <module>main/features/org.talend.tos.bigdata.feature</module>
         <module>main/features/org.talend.tos.bigdata.libraries.feature</module>
@@ -86,7 +85,7 @@
         <module>main/plugins/org.talend.repository.nosql</module>
         <module>main/plugins/org.talend.repository.oozie</module>
         <module>main/plugins/org.talend.spark.distribution.spark247</module>
-        <module>main/plugins/org.talend.spark.distribution.spark311</module>
+        <module>main/plugins/org.talend.spark.distribution.spark31x</module>
 
         <module>test/features/org.talend.bigdata.se.test.feature</module>
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
