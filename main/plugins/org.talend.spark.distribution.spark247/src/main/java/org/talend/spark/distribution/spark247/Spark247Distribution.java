@@ -311,4 +311,9 @@ public class Spark247Distribution extends AbstractSparkDistribution
     public boolean doSupportSSLwithKerberos() {
         return true;
     }
+	
+	@Override
+    public boolean useS3AProperties() {
+        return true;
+    }
 }
