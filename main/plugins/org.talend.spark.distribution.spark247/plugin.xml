@@ -32,9 +32,10 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="httpcore-4.4.10.jar" name="httpcore-4.4.10.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.10"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-annotations-2.6.7.jar" name="jackson-annotations-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.6.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-core-2.6.7.jar" name="jackson-core-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.6.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-core-asl-1.9.13.jar" name="jackson-core-2.6.7.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-databind-2.6.7.3.jar" name="jackson-databind-2.6.7.3.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.6.7.3"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-jaxrs-base-2.6.7.jar" name="jackson-jaxrs-base-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.6.7"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-jaxrs-json-provider-2.6.7.jar" name="jackson-jaxrs-json-provider-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.6.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-jaxrs-1.9.13.jar" name="jackson-jaxrs-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-jaxrs/1.9.13"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar" mvn_uri="org.codehaus.jackson/jackson-mapper-asl/1.9.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jackson-module-jaxb-annotations-2.6.7.jar" name="jackson-module-jaxb-annotations-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.6.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="javax.ws.rs-api-2.0.1.jar" name="javax.ws.rs-api-2.0.1.jar" mvn_uri="mvn:javax.ws.rs/javax.ws.rs-api/2.0.1"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark247" id="jaxb-api-2.2.2.jar" name="jaxb-api-2.2.2.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.2"/>
@@ -122,6 +123,8 @@
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
 			<library id="avro-1.8.2.jar"/>
+			<library id="commons-io-2.4.jar"/>
+			<library id="commons-cli-1.2.jar"/>
 			<library id="commons-codec-1.11.jar"/>
 			<library id="commons-collections-3.2.2.jar"/>
 			<library id="commons-configuration-1.6.jar"/>
@@ -139,10 +142,11 @@
 			<library id="htrace-core-3.1.0-incubating.jar"/>
 			<library id="jackson-annotations-2.6.7.jar"/>
 			<library id="jackson-core-2.6.7.jar"/>
+			<library id="jackson-core-asl-1.9.13.jar"/>
 			<library id="jackson-databind-2.6.7.3.jar"/>
-			<library id="jackson-jaxrs-base-2.6.7.jar"/>
-			<library id="jackson-jaxrs-json-provider-2.6.7.jar"/>
+			<library id="jackson-jaxrs-1.9.13.jar"/>
 			<library id="jackson-module-jaxb-annotations-2.6.7.jar"/>
+			<library id="jackson-mapper-asl-1.9.13.jar"/>
 			<library id="javax.ws.rs-api-2.0.1.jar"/>
 			<library id="jaxb-api-2.2.2.jar"/>
 			<library id="kryo-shaded-4.0.2.jar"/>
