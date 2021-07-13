@@ -146,7 +146,7 @@ public interface SparkComponent extends MRComponent {
     public boolean doSendBySparkSubmit();
     
     /**
-     * @param nodes og the job
+     * @param nodes of the job
      * @return the classpath to be set
      */
     public String getSparkClasspath(List<? extends INode> nodes);
