@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Spark247
+Bundle-Name: Spark24x
 Bundle-SymbolicName: org.talend.spark.distribution.spark24x;singleton:=true
 Bundle-Version: 8.0.1.qualifier
 Bundle-Vendor: .Talend SA.

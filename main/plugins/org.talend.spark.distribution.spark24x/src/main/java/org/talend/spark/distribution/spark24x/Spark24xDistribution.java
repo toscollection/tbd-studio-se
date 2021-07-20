@@ -81,8 +81,8 @@ public class Spark24xDistribution extends AbstractSparkDistribution
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
-        Set<DistributionModuleGroup> s3ModuleGroup = Spark247NodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
-                SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark247Distribution.SPARK_VERSION);
+        Set<DistributionModuleGroup> s3ModuleGroup = Spark24xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
+                SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark24xDistribution.SPARK_VERSION);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
         					s3ModuleGroup);	
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
