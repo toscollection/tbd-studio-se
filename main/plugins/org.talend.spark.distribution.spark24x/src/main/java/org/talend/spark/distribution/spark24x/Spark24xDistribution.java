@@ -38,17 +38,17 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.spark.distribution.spark24x.modulegroup.node.Spark247NodeModuleGroup;
+import org.talend.spark.distribution.spark24x.modulegroup.node.Spark24xNodeModuleGroup;
 
-public class Spark247Distribution extends AbstractSparkDistribution
+public class Spark24xDistribution extends AbstractSparkDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, HBaseComponent,
         			HDFSComponent, HCatalogComponent, MRComponent, HiveComponent, ImpalaComponent, SqoopComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_2_4_X;
 
-    public final static String VERSION = Spark247Distribution.SPARK_VERSION.getSparkVersion();
+    public final static String VERSION = Spark24xDistribution.SPARK_VERSION.getSparkVersion();
 
-    public static final String VERSION_DISPLAY = Spark247Distribution.SPARK_VERSION.getVersionLabel();
+    public static final String VERSION_DISPLAY = Spark24xDistribution.SPARK_VERSION.getVersionLabel();
     
     // we concatenate default classpath of all yarn distribs, the application will use the right one (this can also be overriden in job conf)
     protected final String SPARK_CLASSPATH = "${HADOOP_HOME}/../spark/jars/*,${HADOOP_HOME}/../spark/hive/*," //CDH classpath
@@ -62,7 +62,7 @@ public class Spark247Distribution extends AbstractSparkDistribution
 
     protected Map<ComponentType, String> customVersionDisplayNames;
 
-    public Spark247Distribution() {
+    public Spark24xDistribution() {
         this.displayConditions = buildDisplayConditions();
         this.customVersionDisplayNames = buildCustomVersionDisplayNames();
         this.moduleGroups = buildModuleGroups();
