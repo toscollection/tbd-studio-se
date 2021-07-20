@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package org.talend.spark.distribution.spark247;
+package org.talend.spark.distribution.spark24x;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.spark.distribution.spark247.modulegroup.node.Spark247NodeModuleGroup;
+import org.talend.spark.distribution.spark24x.modulegroup.node.Spark247NodeModuleGroup;
 
 public class Spark247Distribution extends AbstractSparkDistribution
         implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, HBaseComponent,

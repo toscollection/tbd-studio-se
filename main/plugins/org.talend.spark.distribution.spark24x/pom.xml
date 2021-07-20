@@ -7,7 +7,7 @@
     <version>8.0.1-SNAPSHOT</version>
     <relativePath>../../../</relativePath>
   </parent>
-  <artifactId>org.talend.spark.distribution.spark247</artifactId>
+  <artifactId>org.talend.spark.distribution.spark24x</artifactId>
   <packaging>eclipse-plugin</packaging>
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>

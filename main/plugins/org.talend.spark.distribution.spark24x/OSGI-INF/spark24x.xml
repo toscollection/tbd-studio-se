@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <component name="Spark247Distribution">
-  <implementation class="org.talend.spark.distribution.spark247.Spark247Distribution"/>
+  <implementation class="org.talend.spark.distribution.spark24x.Spark247Distribution"/>
   <service>
     <provide interface="org.talend.hadoop.distribution.component.HadoopComponent"/>
     <provide interface="org.talend.hadoop.distribution.component.HiveOnSparkComponent"/>
