@@ -751,7 +751,7 @@
             "context": "{properties.context}",
             "groupId" : "org.apache.knox",
             "artifactId" : "gateway-shell",
-            "version" : "1.3",
+            "version" : "1.3.0",
             "classifier" : "",
             "description" : ""
         },
@@ -761,9 +761,17 @@
             "context": "{properties.context}",
             "groupId" : "org.apache.knox",
             "artifactId" : "gateway-i18n",
-            "version" : "1.3",
+            "version" : "1.3.0",
             "classifier" : "",
             "description" : ""
+        },
+        {
+            "id": "wildfly-openssl",
+            "type": "STANDARD",
+            "context": "{properties.context}",
+            "jarName": "wildfly-openssl-1.0.7.Final",
+            "mvnUri": "mvn:org.wildfly.openssl/wildfly-openssl/1.0.7.Final/jar",
+            "useStudioRepository": "true"
         },
         {
             "id": "commons-configuration",
