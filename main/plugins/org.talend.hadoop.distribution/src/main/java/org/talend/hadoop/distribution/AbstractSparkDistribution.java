@@ -12,7 +12,6 @@
 // ============================================================================
 package org.talend.hadoop.distribution;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,9 +24,10 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 
 	@Override
 	protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
-        Map<ComponentType, Set<DistributionModuleGroup>> result = new HashMap<>();
+        Map<ComponentType, Set<DistributionModuleGroup>> result = super.buildModuleGroups();
         result.put(ComponentType.HDFS, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         result.put(ComponentType.HIVE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.HIVE.get(this.getVersion()), false));
+        result.put(ComponentType.HBASE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.HBASE.get(this.getVersion()), false));
         result.put(ComponentType.SPARKBATCH, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         result.put(ComponentType.SPARKSTREAMING, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         return result;

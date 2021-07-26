@@ -1,224 +1,231 @@
 <%@ jet 
 imports="
-		java.util.List
-		java.util.Map
-		org.talend.core.model.process.ElementParameterParser
-		org.talend.core.model.process.INode
-		org.talend.designer.codegen.config.CodeGeneratorArgument
-		"
+        java.util.List
+        java.util.Map
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.core.model.process.INode
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        "
 %>
 
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
-	
+    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+    
 <%
-	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
     String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
-	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
-	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
-	String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+    String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
+    String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
+    String table_name = ElementParameterParser.getValue(node, "__TABLE__");
 
-	boolean setTableNsMapping = "true".equals(ElementParameterParser.getValue(node, "__SET_TABLE_NS_MAPPING__"));
-	String tableNsMapping = ElementParameterParser.getValue(node, "__TABLE_NS_MAPPING__");
-	boolean useTableNsMapping = setTableNsMapping && ((tableNsMapping != null)&&(!tableNsMapping.equals("")));
+    boolean setTableNsMapping = "true".equals(ElementParameterParser.getValue(node, "__SET_TABLE_NS_MAPPING__"));
+    String tableNsMapping = ElementParameterParser.getValue(node, "__TABLE_NS_MAPPING__");
+    boolean useTableNsMapping = setTableNsMapping && ((tableNsMapping != null)&&(!tableNsMapping.equals("")));
 
-	boolean useBatchMode = ElementParameterParser.getBooleanValue(node, "__USE_BATCH_MODE__");
-	
-	String distribution = null;
-	String hbaseVersion = null;
-	boolean isHadoop2 = false;
+    boolean useBatchMode = ElementParameterParser.getBooleanValue(node, "__USE_BATCH_MODE__");
+    
+    String distribution = null;
+    String hbaseVersion = null;
+    boolean isHadoop2 = false;
+    boolean isHBase2x = false;
 
-	if(!"true".equals(useExistingConn)) {
-		distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-		hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
-		isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
-	} else {
-		String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
-		List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
-		for(INode targetNode : nodes){
-			if (targetNode.getUniqueName().equals(connectionSid)) {
-				distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
-				hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-				isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
-				break;
-			}
-		}
-	}
-	
-	log4jFileUtil.componentStartInfo(node);
-	
-	org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
-	try {
-		hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
-	} catch (java.lang.Exception e) {
-		e.printStackTrace();
-		return "";
-	}
-	boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
+    if(!"true".equals(useExistingConn)) {
+        distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
+        hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
+        isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
+        isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"))
+    } else {
+        String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
+        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
+        for(INode targetNode : nodes){
+            if (targetNode.getUniqueName().equals(connectionSid)) {
+                distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
+                hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
+                isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
+                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"))
+                break;
+            }
+        }
+    }
+    
+    log4jFileUtil.componentStartInfo(node);
+    
+    org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
+    try {
+        hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+    } catch (java.lang.Exception e) {
+        e.printStackTrace();
+        return "";
+    }
+    boolean isSparkDistrib = "SPARK".equals(distribution);
+    isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
+    boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
-	class GenerateCode {
+    class GenerateCode {
 
-		private boolean isCustom;
-		private boolean isHadoop2;
-		private org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib;
+        private boolean isCustom;
+        private boolean isHadoop2;
+        private boolean isHBase2x;
+        private org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib;
 
-		public GenerateCode(boolean isCustom, boolean isHadoop2, org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib) {
-			this.isCustom = isCustom;
-			this.isHadoop2 = isHadoop2;
-			this.hbaseDistrib = hbaseDistrib;
-		}
-		
-		public void generateCreateTable(INode node) {
-			List<Map<String,String>> familyParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILY_PARAMETERS__");
-			String table_name = ElementParameterParser.getValue(node, "__TABLE__");
-			String cid = node.getUniqueName();
-			if (!hbaseDistrib.doSupportHBase2x()) {
+        public GenerateCode(boolean isCustom, boolean isHadoop2, org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib, boolean isHBase2x) {
+            this.isCustom = isCustom;
+            this.isHadoop2 = isHadoop2;
+            this.hbaseDistrib = hbaseDistrib;
+            this.isHBase2x = isHBase2x;
+        }
+        
+        public void generateCreateTable(INode node) {
+            List<Map<String,String>> familyParameters = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILY_PARAMETERS__");
+            String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+            String cid = node.getUniqueName();
+            if (!isHBase2x) {
 %>
-                		org.apache.hadoop.hbase.HTableDescriptor tableDes_<%=cid%> = new org.apache.hadoop.hbase.HTableDescriptor(<%=table_name%>);
+                        org.apache.hadoop.hbase.HTableDescriptor tableDes_<%=cid%> = new org.apache.hadoop.hbase.HTableDescriptor(<%=table_name%>);
 <%
-			} else {
+            } else {
 %>			
-                		org.apache.hadoop.hbase.client.TableDescriptorBuilder tableDesBuilder_<%=cid%> = org.apache.hadoop.hbase.client.TableDescriptorBuilder.newBuilder(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
+                        org.apache.hadoop.hbase.client.TableDescriptorBuilder tableDesBuilder_<%=cid%> = org.apache.hadoop.hbase.client.TableDescriptorBuilder.newBuilder(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
 <%
-			}
+            }
 %>
-			org.apache.hadoop.hbase.HColumnDescriptor family_<%=cid%> = null;
+            org.apache.hadoop.hbase.HColumnDescriptor family_<%=cid%> = null;
 <%
-			for(int familyParamNum=0;familyParamNum<familyParameters.size();familyParamNum++){
-				Map<String,String> mapParamLine = familyParameters.get(familyParamNum);
-				String family_name = mapParamLine.get("FAMILY_NAME");
+            for(int familyParamNum=0;familyParamNum<familyParameters.size();familyParamNum++){
+                Map<String,String> mapParamLine = familyParameters.get(familyParamNum);
+                String family_name = mapParamLine.get("FAMILY_NAME");
 %>
-				family_<%=cid%> = new org.apache.hadoop.hbase.HColumnDescriptor(<%=family_name%>);
+                family_<%=cid%> = new org.apache.hadoop.hbase.HColumnDescriptor(<%=family_name%>);
 <%
-				String family_inmemory = mapParamLine.get("FAMILY_INMEMORY");
-				String family_blockcacheenabled = mapParamLine.get("FAMILY_BLOCKCACHEENABLED");
-				String family_bloomfiltertype = mapParamLine.get("FAMILY_BLOOMFILTERTYPE");
-				String family_blocksize = mapParamLine.get("FAMILY_BLOCKSIZE");
-				String family_compactioncompressiontype = mapParamLine.get("FAMILY_COMPACTIONCOMPRESSIONTYPE");
-				String family_compressiontype = mapParamLine.get("FAMILY_COMPRESSIONTYPE");
-				String family_maxversions = mapParamLine.get("FAMILY_MAXVERSIONS");
-				String family_scope = mapParamLine.get("FAMILY_SCOPE");
-				String family_timetolive = mapParamLine.get("FAMILY_TIMETOLIVE");
-				
-				if(family_inmemory!=null&&!"".equals(family_inmemory)){
+                String family_inmemory = mapParamLine.get("FAMILY_INMEMORY");
+                String family_blockcacheenabled = mapParamLine.get("FAMILY_BLOCKCACHEENABLED");
+                String family_bloomfiltertype = mapParamLine.get("FAMILY_BLOOMFILTERTYPE");
+                String family_blocksize = mapParamLine.get("FAMILY_BLOCKSIZE");
+                String family_compactioncompressiontype = mapParamLine.get("FAMILY_COMPACTIONCOMPRESSIONTYPE");
+                String family_compressiontype = mapParamLine.get("FAMILY_COMPRESSIONTYPE");
+                String family_maxversions = mapParamLine.get("FAMILY_MAXVERSIONS");
+                String family_scope = mapParamLine.get("FAMILY_SCOPE");
+                String family_timetolive = mapParamLine.get("FAMILY_TIMETOLIVE");
+                
+                if(family_inmemory!=null&&!"".equals(family_inmemory)){
 %>
-					family_<%=cid%>.setInMemory(<%=family_inmemory%>);
+                    family_<%=cid%>.setInMemory(<%=family_inmemory%>);
 <%
-				}
-				if(family_blockcacheenabled!=null&&!"".equals(family_blockcacheenabled)){
+                }
+                if(family_blockcacheenabled!=null&&!"".equals(family_blockcacheenabled)){
 %>
-					family_<%=cid%>.setBlockCacheEnabled(<%=family_blockcacheenabled%>);
+                    family_<%=cid%>.setBlockCacheEnabled(<%=family_blockcacheenabled%>);
 <%
-				}
-				if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
+                }
+                if(family_bloomfiltertype!=null&&!"".equals(family_bloomfiltertype)){
 %>
-					family_<%=cid%>.setBloomFilterType(
-						<%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
-						org.apache.hadoop.hbase.regionserver.BloomType.<%=family_bloomfiltertype%>
-						<%} else {%>
-						org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>
-						<%}%>
-					);
+                    family_<%=cid%>.setBloomFilterType(
+                        <%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
+                        org.apache.hadoop.hbase.regionserver.BloomType.<%=family_bloomfiltertype%>
+                        <%} else {%>
+                        org.apache.hadoop.hbase.regionserver.StoreFile.BloomType.<%=family_bloomfiltertype%>
+                        <%}%>
+                    );
 <%
-				}
-				if(family_blocksize!=null&&!"".equals(family_blocksize)){
+                }
+                if(family_blocksize!=null&&!"".equals(family_blocksize)){
 %>
-					family_<%=cid%>.setBlocksize(<%=family_blocksize%>);
+                    family_<%=cid%>.setBlocksize(<%=family_blocksize%>);
 <%
-				}
-				if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
+                }
+                if(family_compactioncompressiontype!=null&&!"".equals(family_compactioncompressiontype)){
 %>
-					family_<%=cid%>.setCompactionCompressionType(
-						<%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
-						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compactioncompressiontype%>
-						<%} else {%>
-						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>
-						<%}%>
-					);
+                    family_<%=cid%>.setCompactionCompressionType(
+                        <%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
+                        org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compactioncompressiontype%>
+                        <%} else {%>
+                        org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compactioncompressiontype%>
+                        <%}%>
+                    );
 <%
-				}
-				if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
+                }
+                if(family_compressiontype!=null&&!"".equals(family_compressiontype)){
 %>
-					family_<%=cid%>.setCompressionType(
-						<%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
-						org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compressiontype%>
-						<%} else {%>
-						org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>
-						<%}%>
-					);
+                    family_<%=cid%>.setCompressionType(
+                        <%if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib.doSupportNewHBaseAPI())) {%>
+                        org.apache.hadoop.hbase.io.compress.Compression.Algorithm.<%=family_compressiontype%>
+                        <%} else {%>
+                        org.apache.hadoop.hbase.io.hfile.Compression.Algorithm.<%=family_compressiontype%>
+                        <%}%>
+                    );
 <%
-				}
-				if(family_maxversions!=null&&!"".equals(family_maxversions)){
+                }
+                if(family_maxversions!=null&&!"".equals(family_maxversions)){
 %>
-					family_<%=cid%>.setMaxVersions(<%=family_maxversions%>);
+                    family_<%=cid%>.setMaxVersions(<%=family_maxversions%>);
 <%
-				}
-				if(family_scope!=null&&!"".equals(family_scope)){
+                }
+                if(family_scope!=null&&!"".equals(family_scope)){
 %>
-					family_<%=cid%>.setScope(<%=family_scope%>);
+                    family_<%=cid%>.setScope(<%=family_scope%>);
 <%
-				}
-				if(family_timetolive!=null&&!"".equals(family_timetolive)){
+                }
+                if(family_timetolive!=null&&!"".equals(family_timetolive)){
 %>
-					family_<%=cid%>.setTimeToLive(<%=family_timetolive%>);
+                    family_<%=cid%>.setTimeToLive(<%=family_timetolive%>);
 <%
-				}
-				if (!hbaseDistrib.doSupportHBase2x()) {
+                }
+                if (!isHBase2x) {
 %>
-				    tableDes_<%=cid%>.addFamily(family_<%=cid%>);
+                    tableDes_<%=cid%>.addFamily(family_<%=cid%>);
 <% 
-				} else {
+                } else {
 %>
-				    tableDesBuilder_<%=cid%>.addColumnFamily(family_<%=cid%>);
+                    tableDesBuilder_<%=cid%>.addColumnFamily(family_<%=cid%>);
 <%
-				}
-			}//for(int familyParamNum=0;familyParamNum<familyParameters.size();familyParamNum++)
+                }
+            }//for(int familyParamNum=0;familyParamNum<familyParameters.size();familyParamNum++)
 
 
         // Build table descriptor (HBase 2.x only)
-        if (hbaseDistrib.doSupportHBase2x()) {
+        if (isHBase2x) {
 %>
             org.apache.hadoop.hbase.client.TableDescriptor tableDes_<%=cid%> = tableDesBuilder_<%=cid%>.build();
 <%
         }
 %>
-		admin_<%=cid%>.createTable(tableDes_<%=cid%>);
+        admin_<%=cid%>.createTable(tableDes_<%=cid%>);
 <%
-		}
-		public void generateDropTable(INode node){
-			String cid = node.getUniqueName();
-			String table_name = ElementParameterParser.getValue(node, "__TABLE__");
-			if (!hbaseDistrib.doSupportHBase2x()) {
+        }
+        public void generateDropTable(INode node){
+            String cid = node.getUniqueName();
+            String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+            if (!isHBase2x) {
 %>
-				if(!admin_<%=cid%>.isTableDisabled(<%=table_name%>)){
-					admin_<%=cid%>.disableTable(<%=table_name%>);
-				}
-				admin_<%=cid%>.deleteTable(<%=table_name%>);
+                if(!admin_<%=cid%>.isTableDisabled(<%=table_name%>)){
+                    admin_<%=cid%>.disableTable(<%=table_name%>);
+                }
+                admin_<%=cid%>.deleteTable(<%=table_name%>);
 <%
-			} else {
+            } else {
 %>
-        			if(!admin_<%=cid%>.isTableDisabled(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>))){
-            				admin_<%=cid%>.disableTable(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
-        			}
-            			admin_<%=cid%>.deleteTable(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
+                    if(!admin_<%=cid%>.isTableDisabled(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>))){
+                            admin_<%=cid%>.disableTable(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
+                    }
+                        admin_<%=cid%>.deleteTable(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
 <%
-			}
-		}
-	}
-	GenerateCode generateCode = new GenerateCode(isCustom, isHadoop2, hbaseDistrib);
+            }
+        }
+    }
+    GenerateCode generateCode = new GenerateCode(isCustom, isHadoop2, hbaseDistrib, isHBase2x);
 %>
 int nb_line_<%=cid%> = 0;
 org.apache.hadoop.conf.Configuration conn_<%=cid%>=null;
 <% 
 // not use existing connection
 if(!"true".equals(useExistingConn)){
-	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
-	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
-	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
-	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
-	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
+    boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
+    boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+    String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
+    String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
+    String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
+    String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
 
     boolean useMapRTicket = ElementParameterParser.getBooleanValue(node, "__USE_MAPRTICKET__");
     String username = ElementParameterParser.getValue(node, "__USERNAME__");
@@ -232,21 +239,21 @@ if(!"true".equals(useExistingConn)){
     String mapRHadoopLogin = ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
 
 %>
-	conn_<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
-	resourceMap.put("conn_<%=cid%>", conn_<%=cid%>); 
-	conn_<%=cid%>.clear();
-	conn_<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
-	conn_<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
-	conn_<%=cid%>.set("hbase.cluster.distributed","true"); 
+    conn_<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
+    resourceMap.put("conn_<%=cid%>", conn_<%=cid%>); 
+    conn_<%=cid%>.clear();
+    conn_<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
+    conn_<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
+    conn_<%=cid%>.set("hbase.cluster.distributed","true"); 
 <%
-	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
-	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");		
-	if(setZNodeParent) {
+    boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
+    String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");		
+    if(setZNodeParent) {
 %>
-	conn_<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
+    conn_<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
 <%
-	}
-	if(hbaseDistrib.doSupportKerberos() && useKrb){
+    }
+    if(hbaseDistrib.doSupportKerberos() && useKrb){
         if((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
             %>
             System.setProperty("pname", "MapRLogin");
@@ -256,25 +263,25 @@ if(!"true".equals(useExistingConn)){
             <%
         }
 %>
-		conn_<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
-		conn_<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);
-		conn_<%=cid%>.set("hbase.security.authorization","true");
-		conn_<%=cid%>.set("hbase.security.authentication","kerberos");
+        conn_<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
+        conn_<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);
+        conn_<%=cid%>.set("hbase.security.authorization","true");
+        conn_<%=cid%>.set("hbase.security.authentication","kerberos");
 <%
-		if(useKeytab){
+        if(useKeytab){
 %>
-			org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
+            org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
 <%
-		}
+        }
         if((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
             %>
             com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
             maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=mapRTicketCluster%>, <%=mapRTicketDuration%>);
             <%
         }
-	} else {
+    } else {
         // MapR ticket
-	    if((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
+        if((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
             String passwordFieldName = "__MAPRTICKET_PASSWORD__";
             %>
             System.setProperty("pname", "MapRLogin");
@@ -296,47 +303,47 @@ if(!"true".equals(useExistingConn)){
 
             <%
             if(hbaseDistrib.doSupportMaprTicketV52API()){
-				%>
-            	maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>, "");
-            	<%
+                %>
+                maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>, "");
+                <%
             } else {
-            	%>
-            	maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>);
-            	<%
+                %>
+                maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>);
+                <%
             }
         }
     }
-	List<Map<String, String>> properties =
+    List<Map<String, String>> properties =
         (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
-   	for(int i=0;i<properties.size();i++){
-   		Map<String, String> map = properties.get(i);
-   		String property = map.get("PROPERTY");
-   		String value= map.get("VALUE");
+       for(int i=0;i<properties.size();i++){
+           Map<String, String> map = properties.get(i);
+           String property = map.get("PROPERTY");
+           String value= map.get("VALUE");
 %>
-		conn_<%=cid%>.set(<%=property%>,<%=value%>);
+        conn_<%=cid%>.set(<%=property%>,<%=value%>);
 <%
    }
 }else{// use existing connection
-	String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
-	String conn = "conn_" + connection;
+    String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
+    String conn = "conn_" + connection;
 %>
-	conn_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
-	if(conn_<%=cid%> == null){
-		throw new RuntimeException("<%=cid%>'s connection is null!");
-	}
+    conn_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
+    if(conn_<%=cid%> == null){
+        throw new RuntimeException("<%=cid%>'s connection is null!");
+    }
 <%
 }
 if(hbaseDistrib.doSupportMapRDB() && useTableNsMapping){
 %>
-	conn_<%=cid%>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
+    conn_<%=cid%>.set("hbase.table.namespace.mappings", <%=tableNsMapping%>);
 <%
 }
 
 String table_action = ElementParameterParser.getValue(node, "__TABLE_ACTION__");
 if(!"NONE".equals(table_action)){
-    if (!hbaseDistrib.doSupportHBase2x()){
+    if (!isHBase2x){
 %>
-	org.apache.hadoop.hbase.client.HBaseAdmin admin_<%=cid%> = new org.apache.hadoop.hbase.client.HBaseAdmin(conn_<%=cid%>);
+    org.apache.hadoop.hbase.client.HBaseAdmin admin_<%=cid%> = new org.apache.hadoop.hbase.client.HBaseAdmin(conn_<%=cid%>);
 <%
     } else {
 %>
@@ -346,26 +353,26 @@ if(!"NONE".equals(table_action)){
 }
 if("NONE".equals(table_action)){
 }else if("CREATE".equals(table_action)){
-	generateCode.generateCreateTable(node);
+    generateCode.generateCreateTable(node);
 }else if("DROP_CREATE".equals(table_action)){
-	generateCode.generateDropTable(node);
-	generateCode.generateCreateTable(node);
+    generateCode.generateDropTable(node);
+    generateCode.generateCreateTable(node);
 }else if("CREATE_IF_NOT_EXISTS".equals(table_action)){
-    if (!hbaseDistrib.doSupportHBase2x()){
+    if (!isHBase2x){
 %>
         boolean tableExist_<%=cid%> = admin_<%=cid%>.tableExists(<%=table_name%>);
 <%  } else { %>
         boolean tableExist_<%=cid%> = admin_<%=cid%>.tableExists(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
 
 <%  }%>
-	if(!tableExist_<%=cid%>){
+    if(!tableExist_<%=cid%>){
 <%
-		generateCode.generateCreateTable(node);
+        generateCode.generateCreateTable(node);
 %>
-	}
+    }
 <%
 }else if("DROP_IF_EXISTS_AND_CREATE".equals(table_action)){
-    if (!hbaseDistrib.doSupportHBase2x()){
+    if (!isHBase2x){
 %>
         boolean tableExist_<%=cid%> = admin_<%=cid%>.tableExists(<%=table_name%>);
 <%  } else { %>
@@ -373,15 +380,15 @@ if("NONE".equals(table_action)){
         boolean tableExist_<%=cid%> = admin_<%=cid%>.tableExists(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
 <%  }%>
 
-	if(tableExist_<%=cid%>){
+    if(tableExist_<%=cid%>){
 <%
-		generateCode.generateDropTable(node); 
+        generateCode.generateDropTable(node); 
 %>
-	}
+    }
 <%
-	generateCode.generateCreateTable(node);
+    generateCode.generateCreateTable(node);
 }
-if (!hbaseDistrib.doSupportHBase2x()) {
+if (!isHBase2x) {
 %>
     org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
     table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid%>,<%=table_name%>);
@@ -397,8 +404,8 @@ byte[] temp_<%=cid%> = null;
 
 <%
 if (useBatchMode) {
-	%>
-	java.util.ArrayList<org.apache.hadoop.hbase.client.Put> batchPuts_<%=cid%> = new java.util.ArrayList<org.apache.hadoop.hbase.client.Put>();
-	<%
+    %>
+    java.util.ArrayList<org.apache.hadoop.hbase.client.Put> batchPuts_<%=cid%> = new java.util.ArrayList<org.apache.hadoop.hbase.client.Put>();
+    <%
 }
 %>

@@ -9,7 +9,7 @@ imports="
 <%
 
 if((isCustom && isHadoop2) || (!isCustom && hbaseDistrib != null && hbaseDistrib.doSupportNewHBaseAPI())) {
-    if (!hbaseDistrib.doSupportHBase2x()) {
+    if (!isHBase2x) {
 %>
         org.apache.hadoop.hbase.client.HConnection hConnection_<%=cid%> = org.apache.hadoop.hbase.client.HConnectionManager.getConnection(conn_<%=cid%>);
 <% 
