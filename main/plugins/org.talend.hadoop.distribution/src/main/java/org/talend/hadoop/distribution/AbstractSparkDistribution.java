@@ -12,12 +12,12 @@
 // ============================================================================
 package org.talend.hadoop.distribution;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.talend.core.model.process.INode;
+import org.talend.hadoop.distribution.condition.common.HDFSLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -30,6 +30,8 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
         result.put(ComponentType.HIVE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.HIVE.get(this.getVersion()), false));
         result.put(ComponentType.HBASE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.HBASE.get(this.getVersion()), false));
         result.put(ComponentType.IMPALA, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.IMPALA.get(this.getVersion()), false));
+        HDFSLinkedNodeCondition hDFSLinkedNodeCondition = new HDFSLinkedNodeCondition(this.getDistribution(), this.getVersion());
+        result.put(ComponentType.HDFS, ModuleGroupsUtils.getModuleGroups(hDFSLinkedNodeCondition.getWebHDFSCondition(), ModuleGroupName.WEBHDFS.get(this.getVersion()), false));
         result.put(ComponentType.SPARKBATCH, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         result.put(ComponentType.SPARKSTREAMING, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         return result;

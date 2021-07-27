@@ -349,6 +349,17 @@
 			<library id="hbase-client-2.0.6.jar"/>
 			<library id="hbase-common-2.0.6.jar"/>
         </libraryNeededGroup>
+        
+        <!-- WebHDFS group -->
+        <libraryNeededGroup description="WebHDFS " id="WEBHDFS-GROUP-SPARK_2_4_x" name="WEBHDFS-GROUP-SPARK_2_4_x">
+        	<group id="SPARK-COMPILE-GROUP-SPARK_2_4_x" />
+        	<library id="jersey-bundle-1.19.3.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Parquet group -->
+        <libraryNeededGroup description="Parquet" id="PARQUET-GROUP-SPARK_2_4_x" name="PARQUET-GROUP-SPARK_2_4_x">
+        	<library id="parquet-common-1.10.0.jar"/>
+        </libraryNeededGroup>
 
    </extension>
    <extension
