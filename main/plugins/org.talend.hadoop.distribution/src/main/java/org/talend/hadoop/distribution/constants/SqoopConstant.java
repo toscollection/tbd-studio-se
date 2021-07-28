@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class SqoopConstant {
 
     public static final String SERVICE = "org.talend.hadoop.distribution.component.SqoopComponent";//$NON-NLS-1$
@@ -33,5 +36,7 @@ public final class SqoopConstant {
     public static final String TEXT_OUTPUT_FORMAT = "textfile";//$NON-NLS-1$
 
     public static final String SEQUENCE_OUTPUT_FORMAT = "sequencefile";//$NON-NLS-1$
+    
+    public static final List<String> SQOOP_COMPONENTS = Arrays.asList("tSqoopImport","tSqoopMerge","tSqoopExport","tSqoopImportAllTables");
 
 }

@@ -23,6 +23,7 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.EParquetPackagePrefix;
 import org.talend.hadoop.distribution.ESparkVersion;
+import org.talend.hadoop.distribution.ESqoopPackageName;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
@@ -218,11 +219,6 @@ public class Spark24xDistribution extends AbstractSparkDistribution
 	}
 
 	@Override
-	public boolean doSupportCrossPlatformSubmission() {
-		return false;
-	}
-	
-	@Override
 	public boolean doSupportOldImportMode() {
         return false;
     }
@@ -314,6 +310,19 @@ public class Spark24xDistribution extends AbstractSparkDistribution
 	
 	@Override
     public boolean useS3AProperties() {
+        return true;
+    }
+	
+	@Override
+    /**
+     * sqoop 1.4.7+ is using apache package
+     */
+    public String getSqoopPackageName() {
+        return ESqoopPackageName.ORG_APACHE_SQOOP.toString();
+    }
+	
+	@Override
+    public boolean doSupportCrossPlatformSubmission() {
         return true;
     }
 }

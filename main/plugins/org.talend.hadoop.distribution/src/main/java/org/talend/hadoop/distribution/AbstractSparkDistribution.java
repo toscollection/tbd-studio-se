@@ -26,12 +26,14 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 	@Override
 	protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
         Map<ComponentType, Set<DistributionModuleGroup>> result = super.buildModuleGroups();
-        result.put(ComponentType.HDFS, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
+        HDFSLinkedNodeCondition hDFSLinkedNodeCondition = new HDFSLinkedNodeCondition(this.getDistribution(), this.getVersion());
+        Set<DistributionModuleGroup> hdfsDistributionModuleGroup = ModuleGroupsUtils.getModuleGroups(hDFSLinkedNodeCondition.getWebHDFSCondition(), ModuleGroupName.WEBHDFS.get(this.getVersion()), false);
+        hdfsDistributionModuleGroup.addAll(ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
+        result.put(ComponentType.HDFS, hdfsDistributionModuleGroup);
         result.put(ComponentType.HIVE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.HIVE.get(this.getVersion()), false));
         result.put(ComponentType.HBASE, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.HBASE.get(this.getVersion()), false));
         result.put(ComponentType.IMPALA, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.IMPALA.get(this.getVersion()), false));
-        HDFSLinkedNodeCondition hDFSLinkedNodeCondition = new HDFSLinkedNodeCondition(this.getDistribution(), this.getVersion());
-        result.put(ComponentType.HDFS, ModuleGroupsUtils.getModuleGroups(hDFSLinkedNodeCondition.getWebHDFSCondition(), ModuleGroupName.WEBHDFS.get(this.getVersion()), false));
+        result.put(ComponentType.SQOOP, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SQOOP.get(this.getVersion()), false));
         result.put(ComponentType.SPARKBATCH, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         result.put(ComponentType.SPARKSTREAMING, ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false));
         return result;

@@ -137,7 +137,15 @@
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-cloudwatch-1.11.375.jar" name="aws-java-sdk-cloudwatch-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-cloudwatch/1.11.375"/>
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-dynamodb-1.11.375.jar" name="aws-java-sdk-dynamodb-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.375"/>
 	        
-	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0"/>
+	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-shuffle/2.7.3"/>
+	        
+	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-mapred-1.8.2-hadoop2.jar" name="avro-mapred-1.8.2-hadoop2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-net-3.1.jar" name="commons-net-3.1.jar" mvn_uri="mvn:commons-net/commons-net/3.1"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-client-2.7.3.jar" name="hadoop-client-2.7.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client/2.7.3"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-mapreduce-client-common-2.7.3.jar" name="hadoop-mapreduce-client-common-2.7.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-common/2.7.3"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-mapreduce-client-jobclient-2.7.3.jar" name="hadoop-mapreduce-client-jobclient-2.7.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-jobclient/2.7.3"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-mapreduce-client-shuffle-2.7.3.jar" name="hadoop-mapreduce-client-shuffle-2.7.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-shuffle/2.7.3"/>
           
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
@@ -359,6 +367,20 @@
         <!-- Parquet group -->
         <libraryNeededGroup description="Parquet" id="PARQUET-GROUP-SPARK_2_4_x" name="PARQUET-GROUP-SPARK_2_4_x">
         	<library id="parquet-common-1.10.0.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Sqoop group -->
+        <libraryNeededGroup description="Sqoop" id="SQOOP-GROUP-SPARK_2_4_x" name="SQOOP-GROUP-SPARK_2_4_x">
+        	<group id="SPARK-COMPILE-GROUP-SPARK_2_4_x" />
+        	<library id="avro-mapred-1.8.2-hadoop2.jar"/>
+        	<library id="avro-mapred-1.8.2.jar"/>
+        	<library id="commons-net-3.1.jar"/>
+        	<library id="hadoop-client-2.7.3.jar"/>
+        	<library id="hadoop-mapreduce-client-common-2.7.3.jar"/>
+        	<library id="hadoop-mapreduce-client-jobclient-2.7.3.jar"/>
+        	<library id="hadoop-mapreduce-client-shuffle-2.7.3.jar"/>
+        	<library id="json-1.8.jar"/>
+        	<library id="sqoop-1.4.7.jar"/>
         </libraryNeededGroup>
 
    </extension>

@@ -37,6 +37,7 @@ import org.talend.hadoop.distribution.constants.HiveConstant;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.constants.SqoopConstant;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.modulegroup.SqoopModuleGroup;
 import org.talend.hadoop.distribution.utils.DefaultConfigurationManager;
@@ -628,6 +629,11 @@ public abstract class AbstractDistribution {
         
         for(String hdfsComponent : HDFSConstant.HDFS_COMPONENTS) {
             result.put(new NodeComponentTypeBean(ComponentType.HDFS, hdfsComponent), webHDFSNodeModuleGroups);
+        }
+        
+        //Sqoop 
+        for(String sqoopComponent : SqoopConstant.SQOOP_COMPONENTS) {
+            result.put(new NodeComponentTypeBean(ComponentType.SQOOP, sqoopComponent), ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.SQOOP.get(this.getVersion()), true));
         }
  
         // Spark Batch tSQLRow nodes
