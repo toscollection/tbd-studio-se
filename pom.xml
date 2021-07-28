@@ -44,8 +44,6 @@
         <module>main/plugins/org.talend.hadoop.distribution.hdinsight340</module>
         <module>main/plugins/org.talend.hadoop.distribution.hdinsight360</module>
         <module>main/plugins/org.talend.hadoop.distribution.hdinsight400</module>
-        <module>main/plugins/org.talend.hadoop.distribution.hdp250</module>
-        <module>main/plugins/org.talend.hadoop.distribution.hdp260</module>
         <module>main/plugins/org.talend.hadoop.distribution.hdpx</module>
         <module>main/plugins/org.talend.hadoop.distribution.mapr500</module>
         <module>main/plugins/org.talend.hadoop.distribution.mapr510</module>
@@ -82,6 +80,8 @@
         <module>main/features/org.talend.studio.components.bd.cosmosdb.feature</module>
         <module>main/plugins/org.talend.spark.distribution.spark24x</module>
         <module>main/plugins/org.talend.spark.distribution.spark31x</module>
+      <module>main/plugins/org.talend.studio.components.tcompv0.couchbase</module>
+      <module>main/features/org.talend.studio.components.tcompv0.couchbase.feature</module>
 
         <module>test/features/org.talend.bigdata.se.test.feature</module>
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
@@ -110,8 +110,6 @@
         <module>test/plugins/org.talend.hadoop.distribution.hdinsight340.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.hdinsight360.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.hdinsight400.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.hdp250.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.hdp260.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.mapr500.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.mapr510.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.mapr520.test</module>
