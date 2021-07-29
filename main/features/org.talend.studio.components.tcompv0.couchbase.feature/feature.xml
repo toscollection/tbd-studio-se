@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.talend.studio.components.tcompv0.couchbase.feature"
-      label="COUCHBASE_feature"
+      label="Couchbase"
       version="8.0.1.qualifier">
 
    <description url="http://www.example.com/description">
@@ -21,5 +21,12 @@
          download-size="0"
          install-size="0"
          version="0.0.0"/>
+
+   <plugin
+         id="org.talend.components.couchbase"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
 
 </feature>
