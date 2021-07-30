@@ -666,9 +666,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr550"
-            id="commons-lang3-3.5.jar"
-            name="commons-lang3-3.5.jar"
-            mvn_uri="mvn:org.apache.commons/commons-lang3/3.5"/>
+            id="commons-lang3-3.10.jar"
+            name="commons-lang3-3.10.jar"
+            mvn_uri="mvn:org.apache.commons/commons-lang3/3.10"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr550"
@@ -1078,9 +1078,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr550"
-            id="commons-beanutils-1.7.0.jar"
-            name="commons-beanutils-1.7.0.jar"
-            mvn_uri="mvn:commons-beanutils/commons-beanutils/1.7.0"/>
+            id="commons-beanutils-1.8.0.jar"
+            name="commons-beanutils-1.8.0.jar"
+            mvn_uri="mvn:commons-beanutils/commons-beanutils/1.8.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr550"
@@ -1665,7 +1665,7 @@
              <library id="libthrift-0.9.3.jar"/>
              <library id="libfb303-0.9.3.jar"/>
              <library id="commons-httpclient-3.0.1.jar"/>
-             <library id="commons-lang3-3.5.jar"/>
+             <library id="commons-lang3-3.10.jar"/>
              <library id="datanucleus-api-jdo-4.2.1.jar"/>
              <library id="datanucleus-core-4.1.6.jar"/>
              <library id="datanucleus-rdbms-4.1.7.jar"/>
@@ -1733,7 +1733,7 @@
 			<library id="calcite-linq4j-1.2.0-incubating.jar"/>
 			<library id="chill-java-0.8.0.jar"/>
 			<library id="chill_2.11-0.8.0.jar"/>
-			<library id="commons-beanutils-1.7.0.jar"/>
+			<library id="commons-beanutils-1.8.0.jar"/>
 			<library id="commons-beanutils-core-1.8.0.jar"/>
 			<library id="commons-cli-1.2.jar"/>
 			<library id="commons-codec-1.9.jar"/>
@@ -1746,7 +1746,7 @@
 			<library id="commons-httpclient-3.1.jar"/>
 			<library id="commons-io-2.4.jar"/>
 			<library id="commons-lang-2.6.jar"/>
-			<library id="commons-lang3-3.5.jar"/>
+			<library id="commons-lang3-3.10.jar"/>
 			<library id="commons-logging-1.1.3.jar"/>
 			<library id="commons-math3-3.4.1.jar"/>
 			<library id="commons-net-2.2.jar"/>
