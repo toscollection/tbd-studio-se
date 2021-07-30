@@ -94,7 +94,7 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hbase-shaded-netty-2.1.0.jar" name="hbase-shaded-netty-2.1.0.jar" mvn_uri="mvn:org.apache.hbase.thirdparty/hbase-shaded-netty/2.1.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hbase-shaded-protobuf-2.1.0.jar" name="hbase-shaded-protobuf-2.1.0.jar" mvn_uri="mvn:org.apache.hbase.thirdparty/hbase-shaded-protobuf/2.1.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="htrace-core4-4.2.0-incubating.jar" name="htrace-core4-4.2.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.2.0-incubating"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="metrics-core-3.1.5.jar" name="metrics-core-3.1.5.jar" mvn_uri="io.dropwizard.metrics/metrics-core/3.1.5"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="metrics-core-3.1.5.jar" name="metrics-core-3.1.5.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-core/3.1.5"/>
 			
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/3.1.4"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
