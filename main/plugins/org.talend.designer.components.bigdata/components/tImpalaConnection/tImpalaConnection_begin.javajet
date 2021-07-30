@@ -27,6 +27,8 @@
 	INode connectionNode = (INode)connectionCodeGenArgument.getArgument();
 	String distributionName = ElementParameterParser.getValue(connectionNode, "__DISTRIBUTION__");
 	String impalaVersionName = ElementParameterParser.getValue(connectionNode, "__IMPALA_VERSION__");
+	String impalaDriver = ElementParameterParser.getValue(connectionNode, "__IMPALA_DRIVER__");
+	
 	boolean supportImpalaConnector = false;
 	 // use HiveComponent type to get all necessary methods but there is something to fix about the design on the current typing 
 	org.talend.hadoop.distribution.component.HiveComponent componentDistrib = null;
@@ -43,7 +45,7 @@
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/HelpClass/HelpClass.javajet"%>
 	
 
-<%   if(supportImpalaConnector){%>
+<%   if(supportImpalaConnector && "impala".equalsIgnoreCase(impalaDriver)){%>
          <%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnectionUtilImpalaDriver.javajet"%>
 <%       connUtil = new ConnectionUtilImpala(componentDistrib);
      }else{
