@@ -166,7 +166,7 @@
 
 	if (authentication){
         if((authenticationMechanism.equals("SCRAMSHA1_MEC")) || (authenticationMechanism.equals("MONGODBX509_MEC"))
-                || (authenticationMechanism.equals("MONGODBCR_MEC") || (authenticationMechanism.equals("PLAIN_MEC")))) {
+                || (authenticationMechanism.equals("MONGODBCR_MEC")) || (authenticationMechanism.equals("PLAIN_MEC")) || (authenticationMechanism.equals("SCRAMSHA256_MEC"))) {
             if(dbuser!= null && !"".equals(dbuser)&& !"\"\"".equals(dbuser)){
             %>
                 args_<%=cid%>.add("--username"); 
@@ -212,6 +212,13 @@
                 args_<%=cid%>.add("PLAIN");
                 args_<%=cid%>.add("--authenticationDatabase");
                 args_<%=cid%>.add("'$external'");
+                <%
+            } else if(authenticationMechanism.equals("SCRAMSHA256_MEC")) {
+            	%>
+                args_<%=cid%>.add("--authenticationMechanism");
+                args_<%=cid%>.add("SCRAM-SHA-256");
+                args_<%=cid%>.add("--authenticationDatabase");
+                args_<%=cid%>.add(<%=usedAuthenticationDB%>);
                 <%
             }
         } else { // GSSAPI SASL (KERBEROS)
