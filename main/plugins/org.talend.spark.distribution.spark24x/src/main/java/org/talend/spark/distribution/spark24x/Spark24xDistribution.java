@@ -12,8 +12,10 @@
 // ============================================================================
 package org.talend.spark.distribution.spark24x;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -77,6 +79,22 @@ public class Spark24xDistribution extends AbstractSparkDistribution
     protected Map<ComponentType, String> buildCustomVersionDisplayNames() {
         Map<ComponentType, String> result = new HashMap<>();
         return result;
+    }
+    
+    public List<String> getSupportedHadoopFSVersion() {
+    	List<String> hdfsVersions = new ArrayList<String>();
+    	hdfsVersions.add("Hadoop 2.7");
+    	return hdfsVersions;
+    }
+    
+    public List<String> getSupportedHiveVersion() {
+    	List<String> hiveVersions = new ArrayList<String>();
+    	hiveVersions.add("Hive2");
+    	return hiveVersions;
+    }
+    
+    public List<String> getSupportedHCatalogVersion() {
+    	return null;
     }
 
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
@@ -232,10 +250,15 @@ public class Spark24xDistribution extends AbstractSparkDistribution
 	public boolean doSupportHBase2x() {
 		return true;
 	}
+	
+	@Override 
+	public boolean doSupportHBase1x() {
+		return true;
+	}
 
 	@Override
 	public boolean doSupportNewHBaseAPI() {
-		return false;
+		return true;
 	}
 
 	@Override

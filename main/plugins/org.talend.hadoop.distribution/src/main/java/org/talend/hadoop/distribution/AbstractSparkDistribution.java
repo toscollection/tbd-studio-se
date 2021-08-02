@@ -12,6 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -71,4 +72,16 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 	private boolean doesJobContain(List<? extends INode> nodes, String nodeName) {
 		return nodes.stream().anyMatch(x -> x.getComponent().getName().toLowerCase().contains(nodeName.toLowerCase()));
 	}
+	
+	@Override
+	public List<String> getSupportedHBaseVersion() {
+    	List<String> hBaseVersions = new ArrayList<String>();
+    	if (this.doSupportHBase2x()) {
+    		hBaseVersions.add("HBase2");
+    	}
+    	if (this.doSupportHBase1x()) {
+    		hBaseVersions.add("HBase1");
+    	}
+    	return hBaseVersions;
+    }
 }

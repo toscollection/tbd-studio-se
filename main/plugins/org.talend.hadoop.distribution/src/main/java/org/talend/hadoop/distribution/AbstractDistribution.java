@@ -401,6 +401,10 @@ public abstract class AbstractDistribution {
     public boolean doSupportHBase2x() {
         return false;
     }
+    
+    public boolean doSupportHBase1x() {
+        return false;
+    }
 
     public String getSqoopPackageName() {
         return ESqoopPackageName.COM_CLOUDERA_SQOOP.toString();
@@ -686,5 +690,21 @@ public abstract class AbstractDistribution {
     
     public String getSparkClasspath(List<? extends INode> nodes) {
     	return "";
+    }
+    
+    public List<String> getSupportedHadoopFSVersion() {
+    	return null;
+    }
+    
+    public List<String> getSupportedHiveVersion() {
+    	return null;
+    }
+    
+    public List<String> getSupportedHBaseVersion() {
+    	return null;
+    }
+    
+    public List<String> getSupportedHCatalogVersion() {
+    	return null;
     }
 }

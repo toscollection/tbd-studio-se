@@ -68,8 +68,11 @@ if(!"true".equals(useExistingConn)){
     boolean setMapRHadoopLogin = ElementParameterParser.getBooleanValue(node, "__SET_HADOOP_LOGIN__");
     String mapRHadoopLogin = ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
     boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
-    isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
-
+    try {
+        isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
+    } finally {
+        //NPE if not spark
+    }
     %>
 try{
     conn_<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
@@ -161,7 +164,11 @@ try{
     List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
     for(INode targetNode : nodes){
         if (targetNode.getUniqueName().equals(connection)) {
-            isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"))
+            try {
+                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"));
+            } finally {
+                //NPE if not spark
+            }
             break;
         }
     }

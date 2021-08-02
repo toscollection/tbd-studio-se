@@ -34,7 +34,11 @@ imports="
         distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
         hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
         isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
-        isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"))
+        try {
+            isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
+        } finally {
+            //NPE if not spark
+        }
     } else {
         String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
         List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
@@ -43,7 +47,11 @@ imports="
                 distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
                 hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
                 isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
-                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"))
+                try {
+                    isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"));
+                } finally {
+                    //NPE if not spark
+                }
                 break;
             }
         }
@@ -54,12 +62,13 @@ imports="
     org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
     try {
         hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+        boolean isSparkDistrib = "SPARK".equals(distribution);
+        isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
     } catch (java.lang.Exception e) {
         e.printStackTrace();
         return "";
     }
-    boolean isSparkDistrib = "SPARK".equals(distribution);
-    isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
+    
     boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 
     class GenerateCode {

@@ -38,6 +38,14 @@ public class DistributionBean implements IHDistribution {
     public final String name, displayName;
     
     private final boolean isSparkLocal;
+    
+    private List<String> hadoopFSVersions = new ArrayList<>();
+    
+    private List<String> hiveVersions = new ArrayList<>();
+    
+    private List<String> hBaseVersions = new ArrayList<>();
+    
+    private List<String> hCatalogVersions = new ArrayList<>();
 
     public DistributionBean(ComponentType componentType, String name, String displayName) {
         this(componentType, name, displayName, false);
@@ -235,5 +243,37 @@ public class DistributionBean implements IHDistribution {
     public boolean isSparkLocal() {
         return isSparkLocal;
     }
+
+	public List<String> getHadoopFSVersions() {
+		return hadoopFSVersions;
+	}
+
+	public void setHadoopFSVersions(List<String> hadoopFSVersions) {
+		this.hadoopFSVersions = hadoopFSVersions;
+	}
+
+	public List<String> getHiveVersions() {
+		return hiveVersions;
+	}
+
+	public void setHiveVersions(List<String> hiveVersions) {
+		this.hiveVersions = hiveVersions;
+	}
+
+	public List<String> gethBaseVersions() {
+		return hBaseVersions;
+	}
+
+	public void sethBaseVersions(List<String> hBaseVersions) {
+		this.hBaseVersions = hBaseVersions;
+	}
+
+	public List<String> gethCatalogVersions() {
+		return hCatalogVersions;
+	}
+
+	public void sethCatalogVersions(List<String> hCatalogVersions) {
+		this.hCatalogVersions = hCatalogVersions;
+	}
 
 }
