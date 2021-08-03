@@ -65,11 +65,10 @@ public class DistributionVersionModule {
             Expression distributionVersionSelected = new BasicExpression(componentType.getVersionParameter(),
                                                                          EqualityOperator.EQ, distributionVersion.version);
             Expression distributionShown = new ShowExpression(componentType.getDistributionParameter());
-            Expression distributionVersionShown = new ShowExpression(componentType.getVersionParameter());
 
             condition = new MultiComponentCondition(new SimpleComponentCondition(distributionSelected), BooleanOperator.AND,
-                    new MultiComponentCondition(new SimpleComponentCondition(distributionVersionSelected), BooleanOperator.AND, new MultiComponentCondition(
-                            new SimpleComponentCondition(distributionShown), BooleanOperator.AND, new SimpleComponentCondition(distributionVersionShown))));
+                    new MultiComponentCondition(new SimpleComponentCondition(distributionVersionSelected), BooleanOperator.AND, 
+                            new SimpleComponentCondition(distributionShown)));
         } else {
             // In case of Spark local distribution the import is needed if 
             // - use Spark local is selected and 
