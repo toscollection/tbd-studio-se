@@ -14,9 +14,18 @@
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 			boolean securityIsEnabled = useKrb && (isCustom || this.hiveDistrib.doSupportKerberos());
+			boolean useLDAP = !"".equals(ElementParameterParser.getValue(node, "__PASS__"));
+			
+			if (useLDAP) {
+%>
+				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+";user="+dbUser_<%=cid%>+";password="+dbPwd_<%=cid%> );
+<%
+			} else {
+			
 %>
 			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
-<%
+<%			
+			}
 		}
 
 		public void createURL(INode node) {
@@ -46,6 +55,8 @@
 			boolean useSsl = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
 			String sslTrustStore = ElementParameterParser.getValue(node, "__SSL_TRUST_STORE__");
 			String sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
+			
+			boolean useLDAP = !"".equals(ElementParameterParser.getValue(node, "__PASS__"));
 
 			boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 			boolean storeByHBase = "true".equals(ElementParameterParser.getValue(node, "__STORE_BY_HBASE__"));
@@ -263,6 +274,10 @@
 							}
 %>
 							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
+<%
+						} else if (useLDAP) {
+%>
+							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
 <%
 						} else {
 %>
