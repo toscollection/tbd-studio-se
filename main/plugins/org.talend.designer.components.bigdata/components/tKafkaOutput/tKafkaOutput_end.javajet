@@ -7,6 +7,7 @@
     org.talend.core.model.metadata.IMetadataTable 
     org.talend.core.model.metadata.IMetadataColumn 
     org.talend.designer.codegen.config.CodeGeneratorArgument
+    org.talend.core.model.utils.NodeUtil
     java.util.List
     java.util.Map
     java.util.HashMap
@@ -20,6 +21,17 @@ String cid = node.getUniqueName();
 
 final boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+final boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+String kafkaVersion;
+if(useExistingConnection) {
+	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+	INode connectionNode = NodeUtil.getNodeByUniqueName(node.getProcess(), connection);
+	kafkaVersion = ElementParameterParser.getValue(connectionNode, "__KAFKA_VERSION__");
+} else {
+	kafkaVersion = ElementParameterParser.getValue(node, "__KAFKA_VERSION__");
+}
+boolean isKafka0820Version = "KAFKA_0_8_2_0".equals(kafkaVersion);
+boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
 
 //%cid%_kafkaProducer.close();
 %>
@@ -37,7 +49,15 @@ if (<%=cid%>_counter_send <= <%=cid%>_counter_rev.intValue()) {
 		} else {
 		// if DIE_ON_ERROR unchecked, the process stops when there is AuthenticationException, AuthorizationException, UnknownServerException or UnsupportedVersionException
 		%>
+		<%if(isKafka0820Version) {%>
+			if (e instanceof org.apache.kafka.common.errors.UnknownServerException) {
+			<%
+		} else if(isKafka0901Version) {%>
+			if (e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException) {
+			<%
+		} else {%>
 			if (e instanceof org.apache.kafka.common.errors.AuthenticationException || e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException || e instanceof org.apache.kafka.common.errors.UnsupportedVersionException) {
+		<%}%>
 				throw e;
 			} else {
 				<%if(isLog4jEnabled){%>	
