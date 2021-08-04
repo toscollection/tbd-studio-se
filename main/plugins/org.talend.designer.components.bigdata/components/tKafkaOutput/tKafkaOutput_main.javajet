@@ -7,6 +7,7 @@
     org.talend.core.model.metadata.IMetadataTable 
     org.talend.core.model.metadata.IMetadataColumn 
     org.talend.designer.codegen.config.CodeGeneratorArgument
+    org.talend.core.model.utils.NodeUtil
     java.util.List
     java.util.Map
     java.util.Map.Entry
@@ -28,11 +29,22 @@ final String cid = node.getUniqueName();
 final boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 final boolean isHeaderEnabled = ("true").equals(ElementParameterParser.getValue(node, "__HEADERS__"));
+final boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
+String kafkaVersion;
+if(useExistingConnection) {
+	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+	INode connectionNode = NodeUtil.getNodeByUniqueName(node.getProcess(), connection);
+	kafkaVersion = ElementParameterParser.getValue(connectionNode, "__KAFKA_VERSION__");
+} else {
+	kafkaVersion = ElementParameterParser.getValue(node, "__KAFKA_VERSION__");
+}
+boolean isKafka0820Version = "KAFKA_0_8_2_0".equals(kafkaVersion);
+boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
 final boolean isKafkaVersionSupportHeaders = ("KAFKA_2_2_1").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__")) || ("KAFKA_1_1_0").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__"));
 
 
 %>
-org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record = new org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]>(<%=tKafkaOutputUtil.getKafkaTopic()%>, <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>);
+org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record_<%=cid%> = new org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]>(<%=tKafkaOutputUtil.getKafkaTopic()%>, <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>);
 <%
         if(isHeaderEnabled && isKafkaVersionSupportHeaders){
         List<Map<String, String>> headers = (List<Map<String, String>>) ElementParameterParser
@@ -41,7 +53,7 @@ org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record = new or
             if(headers != null) {
 	            for (Map<String, String> header : headers) {
 %>
-  		            record.headers().add(<%=header.get("KEY")%>, 
+  		            record_<%=cid%>.headers().add(<%=header.get("KEY")%>, 
                     <%if (header.get("VALUE").equals("null")) {%> 
                         (byte[]) null
                     <%} else {%> 
@@ -53,7 +65,7 @@ org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record = new or
             }
         }
 %>
-<%=cid%>_kafkaProducer.send(record, new org.apache.kafka.clients.producer.Callback() {
+<%=cid%>_kafkaProducer.send(record_<%=cid%>, new org.apache.kafka.clients.producer.Callback() {
 	public void onCompletion(org.apache.kafka.clients.producer.RecordMetadata metadata, Exception e) {
 		if (e != null) {
 			<%=cid%>_producerExceptions.add(e);
@@ -73,7 +85,15 @@ if (!<%=cid%>_producerExceptions.isEmpty()) {
 	} else {
 	// if DIE_ON_ERROR unchecked, the process stops when there is AuthenticationException, AuthorizationException, UnknownServerException or UnsupportedVersionException
 	%>
+	<%if(isKafka0820Version) {%>
+		if (e instanceof org.apache.kafka.common.errors.UnknownServerException) {
+		<%
+	} else if(isKafka0901Version) {%>
+		if (e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException) {
+		<%
+	} else {%>
 		if (e instanceof org.apache.kafka.common.errors.AuthenticationException || e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException || e instanceof org.apache.kafka.common.errors.UnsupportedVersionException) {
+	<%}%>
 			throw e;
 		} else {
 			<%if(isLog4jEnabled){%>	

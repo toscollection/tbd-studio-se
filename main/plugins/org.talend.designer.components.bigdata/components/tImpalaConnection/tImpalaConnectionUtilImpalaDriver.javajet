@@ -21,9 +21,18 @@
 		}
 
 		public void createConnection(INode node) {
+			boolean useLDAP = !"".equals(ElementParameterParser.getValue(node, "__PASS__"));
+			
+			if (useLDAP) {
 %>
-			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>);
+				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+";UID="+dbUser_<%=cid%>+";PWD="+dbPwd_<%=cid%> );
 <%
+			} else {
+			
+%>
+			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
+<%			
+			}
 		}
       private String getLevelDebug(INode node){
           String res="0";
@@ -64,7 +73,7 @@
 			boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 			boolean storeByHBase = "true".equals(ElementParameterParser.getValue(node, "__STORE_BY_HBASE__"));
 
-			
+			boolean useLDAP = !"".equals(ElementParameterParser.getValue(node, "__PASS__"));
 
           	// When configuring from the classpath we do not set the variables using System.setProperty
           	// We set them directly on the Hadoop Configuration object
@@ -280,6 +289,10 @@
 							}
 %>
 							String url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>"+ ";ssl=1"+";UID=" + <%=userName%> +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
+<%
+						} else if (useLDAP) {
+%>
+							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+";AuthMech=3";
 <%
 						} else {
 %>
