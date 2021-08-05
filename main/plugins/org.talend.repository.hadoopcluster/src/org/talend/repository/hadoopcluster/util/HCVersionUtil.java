@@ -151,22 +151,6 @@ public class HCVersionUtil {
         return false;
     }
 
-    public static boolean isQubole(HadoopClusterConnection connection) {
-        if (connection != null) {
-            HadoopComponent hadoopComponent;
-            try {
-                hadoopComponent = HadoopDistributionsHelper.buildDistribution(connection.getDistribution(),
-                        connection.getDfVersion());
-                if (hadoopComponent != null && hadoopComponent.isQuboleDistribution()) {
-                    return true;
-                }
-            } catch (Exception e) {
-                ExceptionHandler.process(e);
-            }
-        }
-        return false;
-    }
-
     public static boolean isDataBricks(HadoopClusterConnection connection) {
         if (connection != null) {
             HadoopComponent hadoopComponent;

@@ -16,21 +16,10 @@
         <module>main/features/org.talend.hadoop.distribution.feature</module>
         <module>main/plugins/org.talend.hadoop.distribution</module>
         <module>main/plugins/org.talend.hadoop.distribution.apache100</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh510mr1</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh510mr2</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh550</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh570</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh580</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh580spark2</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh5100</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh5120</module>
-        <module>main/plugins/org.talend.hadoop.distribution.cdh5x</module>
+        <module>main/plugins/org.talend.hadoop.distribution.cdh6x</module>
         <module>main/plugins/org.talend.hadoop.distribution.cdp</module>
-        <module>main/plugins/org.talend.hadoop.distribution.altus10</module>
         <module>main/plugins/org.talend.hadoop.distribution.custom</module>
-        <module>main/plugins/org.talend.hadoop.distribution.dataproc11</module>
         <module>main/plugins/org.talend.hadoop.distribution.dataproc14</module>
-        <module>main/plugins/org.talend.hadoop.distribution.dbr350</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr550</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr640</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr73x</module>
@@ -50,7 +39,6 @@
         <module>main/plugins/org.talend.hadoop.distribution.mapr601</module>
         <module>main/plugins/org.talend.hadoop.distribution.mapr610</module>
         <module>main/plugins/org.talend.hadoop.distribution.mapr611</module>
-        <module>main/plugins/org.talend.hadoop.distribution.qubole</module>
         <module>main/plugins/org.talend.hadoop.distribution.spl30x</module>
         <module>main/plugins/org.talend.demo.bigdata.ce</module>
         <module>main/plugins/org.talend.designer.components.bigdata</module>
@@ -80,18 +68,8 @@
         <module>test/features/org.talend.bigdata.se.test.feature</module>
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
         <module>test/plugins/org.talend.hadoop.distribution.apache100.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh510mr1.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh510mr2.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh550.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh570.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh580.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh580spark2.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh5100.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.cdh5120.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.custom.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.dataproc11.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dataproc14.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.dbr350.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr550.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr640.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr73x.test</module>
@@ -109,7 +87,6 @@
         <module>test/plugins/org.talend.hadoop.distribution.mapr601.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.test.base</module>
         <module>test/plugins/org.talend.hadoop.distribution.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.qubole.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.spl30x.test</module>
         <module>test/plugins/org.talend.oozie.scheduler.test</module>
         <module>test/plugins/org.talend.repository.nosql.test</module>

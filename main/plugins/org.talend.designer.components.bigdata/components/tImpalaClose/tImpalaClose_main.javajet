@@ -49,18 +49,4 @@ imports="
 		}
 <%
 	}
-	if (impalaDistrib != null && impalaDistrib.isQuboleDistribution()) {
-	%>
-		org.talend.bigdata.launcher.qubole.QuboleHiveClient client_<%=cid%> = (org.talend.bigdata.launcher.qubole.QuboleHiveClient) globalMap.get("<%=conn%>");
-		try {
-			client_<%=cid%>.close();
-		} catch (java.lang.Exception e) {
-			e.printStackTrace();
-		}		
-
-		<% if(isLog4jEnabled) { %>
-			log.info("<%=cid%> - <%=connection%> closed.");
-		<% } %>
-	<%
-	}
 %>

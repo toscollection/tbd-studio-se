@@ -8,24 +8,13 @@
     <discovery label="Talend web site" url="http://www.talend.com"/>
   </url>
   <plugin id="org.talend.hadoop.distribution" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.altus10" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.apache100" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh5100" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh510mr1" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh510mr2" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh5120" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh550" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh570" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh580" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh580spark2" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.cdh5x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+  <plugin id="org.talend.hadoop.distribution.cdh6x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.cdp" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.custom" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.dbr350" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.dbr550" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.dbr640" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.dbr73x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.dataproc11" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.dataproc14" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.emr450" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.emr500" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -43,7 +32,6 @@
   <plugin id="org.talend.hadoop.distribution.mapr601" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.mapr610" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.mapr611" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-  <plugin id="org.talend.hadoop.distribution.qubole" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.spl30x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.spark.distribution.spark31x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 </feature>

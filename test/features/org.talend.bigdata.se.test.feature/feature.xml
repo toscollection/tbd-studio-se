@@ -25,8 +25,6 @@
 
    <plugin id="org.talend.hadoop.distribution.mapr600.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
-   <plugin id="org.talend.hadoop.distribution.dataproc11.test" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
-         
    <plugin id="org.talend.hadoop.distribution.dataproc14.test" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
    <plugin id="org.talend.hadoop.distribution.emr450.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
@@ -43,14 +41,6 @@
 
    <plugin id="org.talend.repository.nosql.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
-   <plugin id="org.talend.hadoop.distribution.cdh550.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.cdh570.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.cdh580.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.cdh580spark2.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
    <plugin id="org.talend.hadoop.distribution.custom.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.repository.hadoopcluster.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
@@ -61,13 +51,9 @@
 
    <plugin id="org.talend.repository.hdfs.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
-   <plugin id="org.talend.hadoop.distribution.dbr350.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
    <plugin id="org.talend.hadoop.distribution.dbr550.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
    
    <plugin id="org.talend.hadoop.distribution.dbr73x.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.qubole.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.hadoop.distribution.spl30x.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 

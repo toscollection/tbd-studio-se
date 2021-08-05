@@ -106,8 +106,6 @@ imports="
     String defineRegisterJar = null;
     List<Map<String, String>> registerJarForHBase = null;
 
-	String quboleClusterLabel = null;
-	String quboleEndpoint = null;
 	String encryptedToken = null;
 
     if(previousNode != null) {
@@ -144,21 +142,9 @@ imports="
                     theDistribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
                     theVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
                     connectionInformationNode = pNode;
-					if (ElementParameterParser.getBooleanValue(pNode, "__QUBOLE_CLUSTER__")) {
-						quboleClusterLabel = ElementParameterParser.getValue(pNode, "__QUBOLE_CLUSTER_LABEL__");
-					}
                 }
             }
-    	} else {
-		    // without connection
-		    encryptedToken = ElementParameterParser.getEncryptedValue(previousNode, "__QUBOLE_API_TOKEN__");
-			if (ElementParameterParser.getBooleanValue(previousNode, "__QUBOLE_ENDPOINT__")) {
-				quboleEndpoint = ElementParameterParser.getValue(previousNode, "__QUBOLE_ENDPOINT_URL__");
-			}
-			if (ElementParameterParser.getBooleanValue(previousNode, "__QUBOLE_CLUSTER__")) {
-				quboleClusterLabel = ElementParameterParser.getValue(previousNode, "__QUBOLE_CLUSTER_LABEL__");
-			}
-		}
+    	}
 
         try {
             hiveDistrib = (org.talend.hadoop.distribution.component.HiveComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(theDistribution, theVersion);
@@ -204,13 +190,6 @@ imports="
             }
 <%
         }
-    } else if (hiveDistrib.isQuboleDistribution()) {
-        INode nodeBackup = node;
-        node = previousNode;
-        %>
-        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetQuboleConnection.javajet"%>
-        <%
-        node = nodeBackup;
     } else if (hiveDistrib.isGoogleDataprocDistribution()) {
         INode nodeBackup = node;
         node = previousNode;
@@ -698,10 +677,6 @@ imports="
                                     bw_<%=cid%>.write("ADD JAR " + wasbPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
                                     libjars_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>") + ",");
 <%
-                                } else if (hiveDistrib.isQuboleDistribution()) {
-                                %>
-                                	// Qubole hive 1.2 supports parquet by default.
-                                <%
                                 } else { // dataproc
                                     if(isLog4jEnabled) {
 %>
@@ -734,10 +709,6 @@ imports="
 %>
                 bw_<%=cid%>.write("SET parquet.compression=<%=compression%>;");
 <%
-            } else if (hiveDistrib.isQuboleDistribution()) {
-            %>
-            	// parquet will not be supported as it's not added.
-            <%
             } else { // dataproc
                 if(isLog4jEnabled) {
 %>
@@ -819,10 +790,6 @@ if(columnList != null && columnList.size()>0){
 %>
             bw_<%=cid%>.write(insertQuery_<%=cid %> + ";");
 <%
-        } else if (hiveDistrib.isQuboleDistribution()) {
-        %>
-        	String queries_<%=cid%> = insertQuery_<%=cid %> + ";";
-        <%
         } else { // dataproc
             %>
             instance_<%=cid%>.addQuery(insertQuery_<%=cid %> + ";");
@@ -847,10 +814,6 @@ if(columnList != null && columnList.size()>0){
 %>
             bw_<%=cid%>.write(overwriteQuery_<%=cid %> + ";");
 <%
-        } else if (hiveDistrib.isQuboleDistribution()) {
-        %>
-        	String queries_<%=cid%> = overwriteQuery_<%=cid %>;
-		<%
         } else { // dataproc
             %>
             instance_<%=cid%>.addQuery(overwriteQuery_<%=cid %> + ";");
@@ -910,21 +873,6 @@ if(originalHadoopUsername_<%=cid%>!=null) {
             throw new Exception("The Hive job failed. Please read the logs for more details");
         }
         <%
-    } else if (hiveDistrib.isQuboleDistribution()) {
-%>
-		org.talend.bigdata.launcher.qubole.QuboleHiveClient.Job job_<%=cid%> =
-			new org.talend.bigdata.launcher.qubole.QuboleHiveClient.Job(queries_<%=cid%>);
-		job_<%=cid%>.setJobName("<%=cid%>");
-		job_<%=cid%>.setUserAgent(routines.system.Constant.getUserAgent("<%=studioVersion%>"));
-<%
-		if (quboleClusterLabel != null) {
-%>
-		job_<%=cid%>.setClusterLabel(<%=quboleClusterLabel%>);
-<%
-		}
-%>
-		String execution_result_<%=cid%> = instance_<%=cid%>.execute(job_<%=cid%>);
-<%
     } else { // dataproc
         %>
             int exitCode_<%=cid%> = instance_<%=cid%>.executeJob();

@@ -135,13 +135,6 @@ public class HadoopSubMultiRepTypeProcessor extends MultiTypesProcessor {
             HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(node.getId());
             if (hcConnection != null) {
                 IElement elem = (IElement) attributesMap.get(ELEMENT);
-                if ((elem != null) && (elem instanceof org.talend.designer.core.ui.editor.process.Process)) {
-                    if ((ComponentCategory.CATEGORY_4_MAPREDUCE.getName()
-                            .equals(((org.talend.designer.core.ui.editor.process.Process) elem).getComponentsType()))
-                            && "Cloudera_CDH580_Spark2".equals(hcConnection.getDfVersion())) {
-                        return false;
-                    }
-                }
                 DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP
                         .getDistribution(hcConnection.getDistribution(), false);
 
