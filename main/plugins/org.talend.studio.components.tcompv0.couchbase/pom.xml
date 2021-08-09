@@ -13,6 +13,41 @@
 		<compGroup>org.talend.components</compGroup>
 		<compArtifact>components-couchbase</compArtifact>
 	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.sun.mail</groupId>
+				<artifactId>javax.mail</artifactId>
+				<version>1.6.0</version>
+			</dependency>
+			<dependency>
+				<groupId>org.json</groupId>
+				<artifactId>json</artifactId>
+				<version>20140107</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.dataformat</groupId>
+				<artifactId>jackson-dataformat-cbor</artifactId>
+				<version>${m2.fasterxml.jackson.version}</version>
+			</dependency>
+			<!-- It fixes provided dependency scope to compile, because maven-dependency-plugin is setup to include
+		 only compile and runtime scopes, but provided is also required. It's not possible to setup plugin to
+		 include all: compile, runtime and provided dependencies -->
+			<dependency>
+				<groupId>biz.aQute.bnd</groupId>
+				<artifactId>annotation</artifactId>
+				<version>2.4.0</version>
+				<scope>compile</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.talend.components</groupId>
+				<artifactId>components-bom</artifactId>
+				<version>${components.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>${compGroup}</groupId>
@@ -54,12 +89,12 @@
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
-                            <directory>${project.basedir}/tmp</directory>
-                            <includes>
-                                <include>**/*</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
+							<directory>${project.basedir}/tmp</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
 					</filesets>
 				</configuration>
 			</plugin>
@@ -121,8 +156,8 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							<tasks>
-								<zip destfile="${project.basedir}/repository/maven_repository.zip" basedir="${project.basedir}/tmp/"/>
-								<delete dir="${project.basedir}/tmp/"/>
+								<zip destfile="${project.basedir}/repository/maven_repository.zip" basedir="${project.basedir}/tmp/" />
+								<delete dir="${project.basedir}/tmp/" />
 							</tasks>
 						</configuration>
 						<goals>
