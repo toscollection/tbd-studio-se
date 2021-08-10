@@ -11,13 +11,14 @@
 	    RELEASE_DATE="20130911A"
 	    STARTABLE="true"
 	    LOG4J_ENABLED="true"
+	    
+	    VISIBLE="false"
   	>
     	<SIGNATURE/>
   	</HEADER>
 
   	<FAMILIES>
-  		<FAMILY>Databases NoSQL/Riak</FAMILY>
-    	<FAMILY>Big Data/Riak</FAMILY>
+  		<FAMILY>Deprecated</FAMILY>
   	</FAMILIES>
 
   	<DOCUMENTATION>
