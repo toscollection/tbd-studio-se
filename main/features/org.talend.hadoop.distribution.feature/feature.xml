@@ -35,6 +35,7 @@
   <plugin id="org.talend.hadoop.distribution.emr550" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.emr580" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.emr62x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+  <plugin id="org.talend.hadoop.distribution.synapse" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.hdinsight340" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.hdinsight360" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.hdinsight400" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
@@ -52,4 +53,5 @@
   <plugin id="org.talend.hadoop.distribution.piv200" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.qubole" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.spl30x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+  <plugin id="org.talend.hadoop.distribution.synapse" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 </feature>
