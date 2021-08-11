@@ -75,7 +75,7 @@ public class MapR611Distribution extends AbstractMapRDistribution implements HDF
 
     public final static String VERSION = "MAPR611"; //$NON-NLS-1$
 
-    public static final String VERSION_DISPLAY = "MapR 6.1.0 - MEP 6.1.1 (YARN mode)"; //$NON-NLS-1$
+    public static final String VERSION_DISPLAY = "MapR 6.1.0 - MEP 6.1.1 (YARN mode) (Deprecated)"; //$NON-NLS-1$
 
     private final static String YARN_APPLICATION_CLASSPATH =
             "/opt/mapr/spark/spark-2.3.3/jars/*:/opt/mapr/hadoop/hadoop-2.7.0/etc/hadoop:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/common/lib/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/common/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/hdfs:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/hdfs/lib/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/hdfs/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/yarn/lib/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/yarn/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/mapreduce/lib/*:/opt/mapr/hadoop/hadoop-2.7.0/share/hadoop/mapreduce/*"; //$NON-NLS-1$
