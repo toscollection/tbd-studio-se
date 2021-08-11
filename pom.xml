@@ -19,7 +19,6 @@
         <module>main/plugins/org.talend.hadoop.distribution.cdh6x</module>
         <module>main/plugins/org.talend.hadoop.distribution.cdp</module>
         <module>main/plugins/org.talend.hadoop.distribution.custom</module>
-        <module>main/plugins/org.talend.hadoop.distribution.dataproc14</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr550</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr640</module>
         <module>main/plugins/org.talend.hadoop.distribution.dbr73x</module>
@@ -67,7 +66,6 @@
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
         <module>test/plugins/org.talend.hadoop.distribution.apache100.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.custom.test</module>
-        <module>test/plugins/org.talend.hadoop.distribution.dataproc14.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr550.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr640.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.dbr73x.test</module>
