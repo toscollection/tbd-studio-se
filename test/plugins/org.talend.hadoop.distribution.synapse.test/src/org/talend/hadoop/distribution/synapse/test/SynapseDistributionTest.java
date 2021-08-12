@@ -32,7 +32,8 @@ import org.talend.hadoop.distribution.synapse.SynapseDistribution;
  */
 public class SynapseDistributionTest {
 
-    private final static String String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ; //$NON-NLS-1$
+    
+ private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ;
 
     @Test
     public void testSynapseDistribution() throws Exception {
@@ -52,7 +53,7 @@ public class SynapseDistributionTest {
         assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
         assertTrue(((MRComponent) distribution).doSupportCrossPlatformSubmission());
         assertFalse(((MRComponent) distribution).doSupportImpersonation());
-        assertEquals(((MRComponent) distribution).getYarnApplicationClasspath(), DEFAULT_YARN_APPLICATION_CLASSPATH);
+        assertEquals(((MRComponent) distribution).getYarnApplicationClasspath(), YARN_APPLICATION_CLASSPATH);
         assertFalse(distribution instanceof HBaseComponent);
         assertFalse(distribution instanceof SqoopComponent);
         assertFalse(((HiveComponent) distribution).doSupportEmbeddedMode());
@@ -73,7 +74,6 @@ public class SynapseDistributionTest {
         assertFalse(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
         assertFalse(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
         assertFalse(((HBaseComponent) distribution).doSupportNewHBaseAPI());
-        assertFalse(distribution.doSupportAzureBlobStorage());
         assertTrue(distribution.doSupportAzureDataLakeStorage());
         assertTrue(distribution.doSupportWebHDFS());
     }

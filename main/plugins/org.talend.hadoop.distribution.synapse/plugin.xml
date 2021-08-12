@@ -620,8 +620,8 @@
         
          <!-- Bigdata launcher group -->
         <libraryNeededGroup description="Bigdata launcher libraries for synapse" id="BIGDATA-LAUNCHER-LIB-SYNAPSE" name="BIGDATA-LAUNCHER-LIB-SYNAPSE">
-        	<library id="talend-bigdata-launcher-synapse-2.2.0"/>            
-            <library id="talend-bigdata-launcher-core-2.2.0"/>
+        	<library id="talend-bigdata-launcher-synapse-2.3.0"/>
+            <library id="talend-bigdata-launcher-core-2.3.0"/>
             <library id="logback-classic-1.2.3"/>
             <library id="commons-logging-1.2"/>
         </libraryNeededGroup>
