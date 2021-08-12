@@ -43,7 +43,9 @@
 
    <plugin id="org.talend.repository.hadoopcluster.configurator.test" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin id="org.talend.repository.maprdbprovider.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
+	<plugin id="org.talend.repository.maprdbprovider.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
+	
+   <plugin id="org.talend.hadoop.distribution.synapse.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.repository.hdfs.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
@@ -53,6 +55,5 @@
 
    <plugin id="org.talend.hadoop.distribution.spl30x.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
-   <plugin id="org.talend.bigdata.se.test.base" download-size="0" install-size="0" version="0.0.0"/>
-
+	<plugin id="org.talend.bigdata.se.test.base" download-size="0" install-size="0" version="0.0.0"/>
 </feature>

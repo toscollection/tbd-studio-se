@@ -304,6 +304,10 @@ public abstract class AbstractDistribution {
         return false;
     }
 
+    public boolean isSynapseDistribution() {
+		return false;
+	}
+
     public boolean doSupportOozie() {
         return true;
     }

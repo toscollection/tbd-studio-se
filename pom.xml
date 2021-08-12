@@ -39,6 +39,7 @@
         <module>main/plugins/org.talend.hadoop.distribution.mapr610</module>
         <module>main/plugins/org.talend.hadoop.distribution.mapr611</module>
         <module>main/plugins/org.talend.hadoop.distribution.spl30x</module>
+        <module>main/plugins/org.talend.hadoop.distribution.synapse</module>
         <module>main/plugins/org.talend.demo.bigdata.ce</module>
         <module>main/plugins/org.talend.designer.components.bigdata</module>
         <module>main/plugins/org.talend.designer.hdfsbrowse</module>
@@ -59,9 +60,8 @@
         <module>main/plugins/org.talend.studio.components.bd.cosmosdb</module>
         <module>main/features/org.talend.studio.components.bd.cosmosdb.feature</module>
         <module>main/plugins/org.talend.spark.distribution.spark31x</module>
-      <module>main/plugins/org.talend.studio.components.tcompv0.couchbase</module>
-      <module>main/features/org.talend.studio.components.tcompv0.couchbase.feature</module>
-
+      	<module>main/plugins/org.talend.studio.components.tcompv0.couchbase</module>
+	      <module>main/features/org.talend.studio.components.tcompv0.couchbase.feature</module>
         <module>test/features/org.talend.bigdata.se.test.feature</module>
         <module>test/plugins/org.talend.bigdata.se.test.base</module>
         <module>test/plugins/org.talend.hadoop.distribution.apache100.test</module>
@@ -84,6 +84,7 @@
         <module>test/plugins/org.talend.hadoop.distribution.test.base</module>
         <module>test/plugins/org.talend.hadoop.distribution.test</module>
         <module>test/plugins/org.talend.hadoop.distribution.spl30x.test</module>
+        <module>test/plugins/org.talend.hadoop.distribution.synapse.test</module>
         <module>test/plugins/org.talend.repository.nosql.test</module>
         <module>test/plugins/org.talend.repository.maprdbprovider.test</module>
         <module>test/plugins/org.talend.repository.hadoopcluster.configurator.test</module>

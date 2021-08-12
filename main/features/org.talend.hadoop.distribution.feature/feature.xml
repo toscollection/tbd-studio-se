@@ -22,6 +22,7 @@
   <plugin id="org.talend.hadoop.distribution.emr550" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.emr580" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.emr62x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+  <plugin id="org.talend.hadoop.distribution.synapse" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.hdinsight400" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.hdpx" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
   <plugin id="org.talend.hadoop.distribution.mapr500" download-size="0" install-size="0" version="0.0.0" unpack="false"/>

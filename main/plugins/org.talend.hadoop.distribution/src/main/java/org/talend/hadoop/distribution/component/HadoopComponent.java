@@ -183,6 +183,10 @@ public interface HadoopComponent {
     */
    public boolean isDatabricksDistribution();
 
+   /**
+    * @return true if the distribution is Azure Synapse Analytics
+     */
+    public boolean isSynapseDistribution();
     /**
      * @return a weight for the distribution, which will be used to sort the distributions in the components drop down
      * list.
