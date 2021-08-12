@@ -741,8 +741,8 @@
             "id": "gateway-cloud-bindings",
             "type": "BASE",
             "context": "{properties.context}",
-            "jarName": "gateway-cloud-bindings-1.3.0.7.2.10.0-148.jar",
-            "mvnUri": "mvn:org.apache.knox/gateway-cloud-bindings/1.3.0.7.2.10.0-148/jar",
+            "jarName": "gateway-cloud-bindings-1.3.0.7.2.9.0-203.jar",
+            "mvnUri": "mvn:org.apache.knox/gateway-cloud-bindings/1.3.0.7.2.9.0-203/jar",
             "useStudioRepository": "true"
         },
         {
@@ -751,7 +751,7 @@
             "context": "{properties.context}",
             "groupId" : "org.apache.knox",
             "artifactId" : "gateway-shell",
-            "version" : "1.3.0",
+            "version" : "1.3.0.7.2.9.0-203",
             "classifier" : "",
             "description" : ""
         },
@@ -761,7 +761,7 @@
             "context": "{properties.context}",
             "groupId" : "org.apache.knox",
             "artifactId" : "gateway-i18n",
-            "version" : "1.3.0",
+            "version" : "1.3.0.7.2.9.0-203",
             "classifier" : "",
             "description" : ""
         },
