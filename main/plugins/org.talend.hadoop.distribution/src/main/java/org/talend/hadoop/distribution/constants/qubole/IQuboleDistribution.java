@@ -20,5 +20,5 @@ public interface IQuboleDistribution {
 
     static final String DISTRIBUTION_NAME = "QUBOLE";
 
-    static final String DISTRIBUTION_DISPLAY_NAME = "Qubole";
+    static final String DISTRIBUTION_DISPLAY_NAME = "Qubole (Deprecated)";
 }
