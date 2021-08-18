@@ -1022,35 +1022,7 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "hadoop-common",
-                "impala-jdbc",
-                "guava-28.1-jre"
-            ]
-        },
-        {
-            "id" : "HDFS-LIB-DYNAMIC-KNOX",
-            "description" : "jars for hdfs with knox, only module.id permitted",
-            "modules": [
-                "commons-httpclient-3.1",
-                "httpcore",
-                "httpclient",
-                "hadoop-client",
-                "commons-configuration",
-                "commons-configuration2",
-                "commons-collections",
-                "woodstox-core",
-                "stax2-api",
-                "jackson-core",
-                "jackson-databind",
-                "jackson-annotations",
-                "hadoop-common",
-                "impala-jdbc",
-                "guava-28.1-jre",
-                "talend-bigdata-launcher-knox",
-                "talend-bigdata-launcher-livy",
-                "talend-bigdata-launcher-core",
-                "gateway-i18n",
-                "gateway-shell"
+                "parquet-hadoop-bundle"
             ]
         },
         {
@@ -1157,6 +1129,17 @@
                 "spark-streaming-kafka",
                 "fluent-hc",
                 "netty-all"
+            ]
+        },{
+            "id" : "KNOX-LIB-MRREQUIRED-DYNAMIC",
+            "description" : "",
+            "modules": [
+                "talend-bigdata-launcher-core",
+				"talend-bigdata-launcher-livy",
+				"talend-bigdata-launcher-knox",
+				"gateway-cloud-bindings",
+				"gateway-shell",
+				"gateway-i18n"
             ]
         },
         {

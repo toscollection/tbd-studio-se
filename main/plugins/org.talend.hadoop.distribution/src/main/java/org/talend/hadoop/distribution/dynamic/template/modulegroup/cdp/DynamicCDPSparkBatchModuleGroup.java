@@ -34,6 +34,8 @@ import org.talend.hadoop.distribution.dynamic.template.modulegroup.DynamicSparkB
  */
 public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGroup {
 
+    ComponentCondition knoxCondition;
+    
     public DynamicCDPSparkBatchModuleGroup(DynamicPluginAdapter pluginAdapter) {
         super(pluginAdapter);
     }
@@ -44,6 +46,11 @@ public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
                 new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
                 BooleanOperator.AND, new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
                         ESparkVersion.SPARK_2_4.getSparkVersion()));
+        
+        knoxCondition = new MultiComponentCondition(
+                new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"),
+                BooleanOperator.AND,
+                new BasicExpression(SparkBatchConstant.USE_KNOX_PARAMETER, EqualityOperator.EQ, "true")); //$NON-NLS-1$
     }
 
     @Override
@@ -63,14 +70,17 @@ public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.HDFS_MODULE_GROUP_COMMON.getModuleName());
         String mrRuntimeId = pluginAdapter
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.MAPREDUCE_MODULE_GROUP.getModuleName());
-        String talendClouderaNaviRuntimeId = pluginAdapter.getRuntimeModuleGroupIdByTemplateId(
-                DynamicCDPModuleGroupConstant.TALEND_CLOUDERA_CDP_NAVIGATOR.getModuleName());
+        String talendClouderaNaviRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(DynamicCDPModuleGroupConstant.TALEND_CLOUDERA_CDP_NAVIGATOR.getModuleName());
+        String knoxRuntimeId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.KNOX_MODULE_GROUP.getModuleName());
 
         checkRuntimeId(sparkMrRequiredRuntimeId);
         checkRuntimeId(hdfsSpark2_1RuntimeId);
         checkRuntimeId(hdfsCommonRuntimeId);
         checkRuntimeId(mrRuntimeId);
         checkRuntimeId(talendClouderaNaviRuntimeId);
+        checkRuntimeId(knoxRuntimeId);
 
         if (StringUtils.isNotBlank(sparkMrRequiredRuntimeId)) {
             moduleGroups.add(new DistributionModuleGroup(sparkMrRequiredRuntimeId, true, conditionSpark2));
@@ -88,6 +98,10 @@ public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
             ComponentCondition conditionUseNavigator = new SimpleComponentCondition(
                     new BasicExpression(SparkBatchConstant.USE_CLOUDERA_NAVIGATOR));
             moduleGroups.add(new DistributionModuleGroup(talendClouderaNaviRuntimeId, true, conditionUseNavigator));
+        }
+        
+        if (StringUtils.isNotBlank(knoxRuntimeId)) {
+            moduleGroups.add(new DistributionModuleGroup(knoxRuntimeId, true, knoxCondition));
         }
 
         return moduleGroups;

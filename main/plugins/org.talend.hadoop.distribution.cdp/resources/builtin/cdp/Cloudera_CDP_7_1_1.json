@@ -8362,6 +8362,36 @@
       "tagName" : "libraryNeededGroup",
       "templateId" : "SPARK-LIB-SPARK2-DYNAMIC"
     }, {
+      "childNodes" : [{
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_talend_bigdata_launcher_livy_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_talend_bigdata_launcher_core_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_talend_bigdata_launcher_knox_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_gateway_cloud_bindings_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_gateway_shell_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_gateway_i18n_jar",
+        "tagName" : "library"
+      }],
+      "description" : "",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_KNOX_LIB_DYNAMIC",
+      "tagName" : "libraryNeededGroup",
+      "templateId" : "KNOX-LIB-MRREQUIRED-DYNAMIC"
+    }, {
       "childNodes" : [ ],
       "description" : "",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_SPARK_PARQUET_LIB_MRREQUIRED_DYNAMIC",
