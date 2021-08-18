@@ -821,7 +821,13 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "parquet-hadoop-bundle"
+                "parquet-hadoop-bundle",
+                "talend-bigdata-launcher-core",
+				"talend-bigdata-launcher-livy",
+				"talend-bigdata-launcher-knox",
+				"gateway-cloud-bindings",
+				"gateway-shell",
+				"gateway-i18n"
             ]
         },
         {
@@ -905,6 +911,17 @@
                 "spark-yarn_2.11",
                 "spark-streaming-kafka",
                 "fluent-hc"
+            ]
+        },{
+            "id" : "KNOX-LIB-MRREQUIRED-DYNAMIC",
+            "description" : "",
+            "modules": [
+                "talend-bigdata-launcher-core",
+				"talend-bigdata-launcher-livy",
+				"talend-bigdata-launcher-knox",
+				"gateway-cloud-bindings",
+				"gateway-shell",
+				"gateway-i18n"
             ]
         },
         {
