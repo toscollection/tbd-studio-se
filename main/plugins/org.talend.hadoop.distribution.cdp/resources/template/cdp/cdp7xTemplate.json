@@ -133,7 +133,7 @@
             "classifier" : "",
             "description" : "",
             "exclusions": [
-            	{ "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -236,7 +236,7 @@
             "classifier" : "",
             "description" : "",
             "exclusions": [
-            	{ "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
@@ -823,11 +823,11 @@
                 "jackson-annotations",
                 "parquet-hadoop-bundle",
                 "talend-bigdata-launcher-core",
-				"talend-bigdata-launcher-livy",
-				"talend-bigdata-launcher-knox",
-				"gateway-cloud-bindings",
-				"gateway-shell",
-				"gateway-i18n"
+                "talend-bigdata-launcher-livy",
+                "talend-bigdata-launcher-knox",
+                "gateway-cloud-bindings",
+                "gateway-shell",
+                "gateway-i18n"
             ]
         },
         {
@@ -917,11 +917,11 @@
             "description" : "",
             "modules": [
                 "talend-bigdata-launcher-core",
-				"talend-bigdata-launcher-livy",
-				"talend-bigdata-launcher-knox",
-				"gateway-cloud-bindings",
-				"gateway-shell",
-				"gateway-i18n"
+                "talend-bigdata-launcher-livy",
+                "talend-bigdata-launcher-knox",
+                "gateway-cloud-bindings",
+                "gateway-shell",
+                "gateway-i18n"
             ]
         },
         {
@@ -1014,8 +1014,8 @@
             "id" : "SQOOP-PARQUET-LIB-DYNAMIC",
             "description" : "",
             "modules": [
-				
-			]
+                
+            ]
         },
         {
             "id" : "TALEND_CLOUDERA_NAVIGATOR-DYNAMIC",
