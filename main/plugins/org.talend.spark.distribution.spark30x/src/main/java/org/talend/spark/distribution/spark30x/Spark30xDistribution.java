@@ -198,7 +198,17 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
     }
 
     @Override
+    public boolean doSupportAzureBlobStorage() {
+        return true;
+    }
+    
+    @Override
     public boolean doSupportAzureDataLakeStorage() {
+        return true;
+    }
+    
+    @Override
+    public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
     }
 

@@ -217,12 +217,17 @@ public class Spark24xDistribution extends AbstractSparkDistribution
     }
 
     @Override
-    public boolean doSupportAzureDataLakeStorageGen2() {
+    public boolean doSupportAzureBlobStorage() {
         return true;
     }
     
     @Override
-    public boolean doSupportAzureBlobStorage() {
+    public boolean doSupportAzureDataLakeStorage() {
+        return true;
+    }
+    
+    @Override
+    public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
     }
 
