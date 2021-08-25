@@ -25,9 +25,7 @@ public class DBR640AzureNodeModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         moduleGroups.add(new DistributionModuleGroup(
                 DBR640Constant.SPARK_AZURE_LIB_MRREQUIRED_DBR640.getModuleName(),
-                true,
-                null
-        ));
+                true));
         return moduleGroups;
     }
 }

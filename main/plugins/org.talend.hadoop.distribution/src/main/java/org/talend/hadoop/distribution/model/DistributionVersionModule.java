@@ -54,40 +54,20 @@ public class DistributionVersionModule {
 
     public ComponentCondition getModuleRequiredIf() {
         ComponentCondition condition;
-        if ( !distributionVersion.distribution.isSparkLocal()) {
-            // The import is needed only if the good version and the good distribution are selected, and
-            // if the Distribution and Version parameters are shown. The second condition to take the
-            // USE_EXISTING_CONNECTIOn into account.
+        // The import is needed only if the good version and the good distribution are selected, and
+        // if the Distribution is shown. The second condition to take the
+        // USE_EXISTING_CONNECTIOn into account.
 
-            final ComponentType componentType = distributionVersion.distribution.componentType;
-            Expression distributionSelected = new BasicExpression(componentType.getDistributionParameter(), 
-                                                                  EqualityOperator.EQ, distributionVersion.distribution.name);
-            Expression distributionVersionSelected = new BasicExpression(componentType.getVersionParameter(),
-                                                                         EqualityOperator.EQ, distributionVersion.version);
-            Expression distributionShown = new ShowExpression(componentType.getDistributionParameter());
-            Expression distributionVersionShown = new ShowExpression(componentType.getVersionParameter());
+        final ComponentType componentType = distributionVersion.distribution.componentType;
+        Expression distributionSelected = new BasicExpression(componentType.getDistributionParameter(), 
+                                                              EqualityOperator.EQ, distributionVersion.distribution.name);
+        Expression distributionVersionSelected = new BasicExpression(componentType.getVersionParameter(),
+                                                                     EqualityOperator.EQ, distributionVersion.version);
+        Expression distributionShown = new ShowExpression(componentType.getDistributionParameter());
 
-            condition = new MultiComponentCondition(new SimpleComponentCondition(distributionSelected), BooleanOperator.AND,
-                    new MultiComponentCondition(new SimpleComponentCondition(distributionVersionSelected), BooleanOperator.AND, new MultiComponentCondition(
-                            new SimpleComponentCondition(distributionShown), BooleanOperator.AND, new SimpleComponentCondition(distributionVersionShown))));
-        } else {
-            // In case of Spark local distribution the import is needed if 
-            // - use Spark local is selected and 
-            // - spark versions from UI and distribution match 
-            // either on node itself (Spark config) or linked Spark Config (tHiveConfig, tHDFSConfig ...)
-            Expression useSparkLocal = new BasicExpression(HadoopConstants.SPARK_LOCAL_MODE);
-            Expression sameSparkVersions = new BasicExpression(HadoopConstants.SPARK_LOCAL_VERSION, EqualityOperator.EQ, distributionVersion.version);
-            ComponentCondition sparkConfigCondition = new MultiComponentCondition(useSparkLocal, BooleanOperator.AND, sameSparkVersions);
-        
-            Expression useSparkLocalLinked = new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, HadoopConstants.SPARK_LOCAL_MODE, EqualityOperator.EQ, "true");
-            Expression sameSparkVersionsLinked = new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, HadoopConstants.SPARK_LOCAL_VERSION, EqualityOperator.EQ, distributionVersion.version);            
-            ComponentCondition linkedSparkConfigCondition = new MultiComponentCondition(useSparkLocalLinked, BooleanOperator.AND, sameSparkVersionsLinked);
-            
-            condition = new MultiComponentCondition(
-                    new NestedComponentCondition(sparkConfigCondition),
-                    BooleanOperator.OR, 
-                    new NestedComponentCondition(linkedSparkConfigCondition));
-        }
+        condition = new MultiComponentCondition(new SimpleComponentCondition(distributionSelected), BooleanOperator.AND,
+                new MultiComponentCondition(new SimpleComponentCondition(distributionVersionSelected), BooleanOperator.AND, 
+                        new SimpleComponentCondition(distributionShown)));
             
         if (moduleGroup.getRequiredIf() != null) {
             condition = new MultiComponentCondition(condition, BooleanOperator.AND, new NestedComponentCondition(

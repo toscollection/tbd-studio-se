@@ -24,9 +24,7 @@ public class DBR73xKinesisNodeModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         moduleGroups.add(new DistributionModuleGroup(
                 DBR73xConstant.SPARK_STREAMING_LIB_KINESIS_DBR73X.getModuleName(),
-                true,
-                null
-        ));
+                true));
         return moduleGroups;
     }
 }

@@ -34,9 +34,9 @@ import org.talend.hadoop.distribution.dynamic.template.modulegroup.DynamicModule
  */
 public class DynamicHDPHiveOnSparkModuleGroup extends DynamicHiveOnSparkModuleGroup {
 
-    private ComponentCondition spark1Condition;
+    private LinkedNodeExpression spark1Condition;
 
-    private ComponentCondition spark2Condition;
+    private LinkedNodeExpression spark2Condition;
 
     public DynamicHDPHiveOnSparkModuleGroup(DynamicPluginAdapter pluginAdapter) {
         super(pluginAdapter);
@@ -44,17 +44,11 @@ public class DynamicHDPHiveOnSparkModuleGroup extends DynamicHiveOnSparkModuleGr
     }
 
     protected void init() {
-        spark1Condition = new MultiComponentCondition(
-                new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                        SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-                BooleanOperator.AND, new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_1_6.getSparkVersion())); //$NON-NLS-1$
+        spark1Condition = new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_1_6.getSparkVersion()); //$NON-NLS-1$
 
-        spark2Condition = new MultiComponentCondition(
-                new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                        SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-                BooleanOperator.AND, new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_1.getSparkVersion())); //$NON-NLS-1$
+        spark2Condition = new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_1.getSparkVersion()); //$NON-NLS-1$
     }
 
     @Override
@@ -74,7 +68,7 @@ public class DynamicHDPHiveOnSparkModuleGroup extends DynamicHiveOnSparkModuleGr
         checkRuntimeId(spark2HiveRuntimeId);
 
         if (StringUtils.isNotBlank(tezRuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(tezRuntimeId, false, null));
+            moduleGroups.add(new DistributionModuleGroup(tezRuntimeId, false));
         }
         if (StringUtils.isNotBlank(sparkHiveRuntimeId)) {
             moduleGroups.add(new DistributionModuleGroup(sparkHiveRuntimeId, true, spark1Condition));

@@ -13,7 +13,7 @@ public class DBR550SparkStreamingKinesisNodeModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         moduleGroups.add(new DistributionModuleGroup(DBR550Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName()));
         moduleGroups.add(new DistributionModuleGroup(DBR550Constant.SPARK_STREAMING_MRREQUIRED_MODULE_GROUP.getModuleName()));
-        moduleGroups.add(new DistributionModuleGroup(DBR550Constant.SPARK_STREAMING_KINESIS_MODULE_GROUP.getModuleName(), true, null));
+        moduleGroups.add(new DistributionModuleGroup(DBR550Constant.SPARK_STREAMING_KINESIS_MODULE_GROUP.getModuleName(), true));
         return moduleGroups;
     }
 

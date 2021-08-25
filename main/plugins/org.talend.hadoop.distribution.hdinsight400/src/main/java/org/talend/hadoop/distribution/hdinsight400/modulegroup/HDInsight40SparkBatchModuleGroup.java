@@ -18,27 +18,17 @@ import java.util.Set;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.condition.BasicExpression;
-import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
-import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
-import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.hdinsight400.HDInsight40Constant;
 
 public class HDInsight40SparkBatchModuleGroup {
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
-    private final static ComponentCondition conditionSpark2_3 = new MultiComponentCondition(
-            new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-            BooleanOperator.AND,
+    private final static ComponentCondition conditionSpark2_3 = new SimpleComponentCondition(
             new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion())); //$NON-NLS-1$
 
-    private final static ComponentCondition conditionSpark2_4 = new MultiComponentCondition(
-            new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-            BooleanOperator.AND,
+    private final static ComponentCondition conditionSpark2_4 = new SimpleComponentCondition(
             new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion())); //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
@@ -46,8 +36,8 @@ public class HDInsight40SparkBatchModuleGroup {
         hs.add(new DistributionModuleGroup(HDInsight40Constant.SPARK23_MODULE_GROUP.getModuleName(), false, conditionSpark2_3));
         hs.add(new DistributionModuleGroup(HDInsight40Constant.SPARK24_MODULE_GROUP.getModuleName(), false, conditionSpark2_4));
         //should be true because job is using FileSystem
-        hs.add(new DistributionModuleGroup(HDInsight40Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true, condition));
-        hs.add(new DistributionModuleGroup(HDInsight40Constant.HDINSIGHT400COMMON_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(HDInsight40Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), true));
+        hs.add(new DistributionModuleGroup(HDInsight40Constant.HDINSIGHT400COMMON_MODULE_GROUP.getModuleName(), false));
         return hs;
     }
 

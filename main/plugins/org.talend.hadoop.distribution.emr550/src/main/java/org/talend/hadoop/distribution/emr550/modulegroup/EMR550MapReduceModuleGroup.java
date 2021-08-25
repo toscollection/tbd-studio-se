@@ -31,8 +31,8 @@ public class EMR550MapReduceModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(HDFS_GROUP_NAME));
         hs.add(new DistributionModuleGroup(MAPREDUCE_GROUP_NAME));
-        hs.add(new DistributionModuleGroup(MAPREDUCE_PARQUET_MRREQUIRED_GROUP_NAME, true, null));
-        hs.add(new DistributionModuleGroup(MAPREDUCE_AVRO_MRREQUIRED_GROUP_NAME, true, null));
+        hs.add(new DistributionModuleGroup(MAPREDUCE_PARQUET_MRREQUIRED_GROUP_NAME, true));
+        hs.add(new DistributionModuleGroup(MAPREDUCE_AVRO_MRREQUIRED_GROUP_NAME, true));
         return hs;
     }
 }

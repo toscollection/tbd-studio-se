@@ -42,9 +42,12 @@ public class MultiComponentCondition implements ComponentCondition {
         this.mRightCondition = rightCondition;
         this.mBooleanOperator = booleanOperator;
     }
-
-    public MultiComponentCondition(Expression leftExpression, BooleanOperator booleanOperator, ComponentCondition rightCondition) {
-        this(new SimpleComponentCondition(leftExpression), booleanOperator, rightCondition);
+    
+    public MultiComponentCondition(BasicExpression leftCondition, BooleanOperator booleanOperator,
+            ComponentCondition rightCondition) {
+        this.mLeftCondition = new SimpleComponentCondition(leftCondition);
+        this.mRightCondition = rightCondition;
+        this.mBooleanOperator = booleanOperator;
     }
 
     public MultiComponentCondition(ComponentCondition leftCondition, BooleanOperator booleanOperator, Expression rightExpression) {
@@ -59,6 +62,10 @@ public class MultiComponentCondition implements ComponentCondition {
     public String getConditionString() {
         return this.mLeftCondition.getConditionString()
                 + " " + mBooleanOperator.name() + " " + this.mRightCondition.getConditionString(); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+    
+    public String getCondition() {
+    	return this.getConditionString();
     }
 
 }

@@ -41,19 +41,13 @@ public class DynamicCDHSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
 
     @Override
     protected void initConditions() {
-        conditionSpark1 = new MultiComponentCondition(
-                new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-                BooleanOperator.AND,
-                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_1_6.getSparkVersion())); //$NON-NLS-1$
+        conditionSpark1 = new SimpleComponentCondition(new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_1_6.getSparkVersion())); //$NON-NLS-1$
 
         conditionSpark2 = new MultiComponentCondition(
-                new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-                BooleanOperator.AND,
-                new MultiComponentCondition(
-                		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
-                        BooleanOperator.OR,
-                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion())) //$NON-NLS-1$
-        		);
+        		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
+                BooleanOperator.OR,
+                new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+    			);
     }
 
     @Override

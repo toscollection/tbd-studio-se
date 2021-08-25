@@ -136,7 +136,7 @@ public class DynamicHDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
             moduleGroups.add(new DistributionModuleGroup(hBaseRuntimeId, true, conditionSpark2));
         }
         if (StringUtils.isNotBlank(sparkS3RuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(sparkS3RuntimeId, true, null));
+            moduleGroups.add(new DistributionModuleGroup(sparkS3RuntimeId, true));
         }
         return moduleGroups;
     }

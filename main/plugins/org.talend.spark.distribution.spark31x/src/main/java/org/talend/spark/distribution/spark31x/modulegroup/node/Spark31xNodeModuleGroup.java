@@ -5,11 +5,9 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.ESparkVersion;
-import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.LinkedNodeExpression;
-import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 
@@ -25,13 +23,9 @@ public class Spark31xNodeModuleGroup {
 
     static ComponentCondition spark311Condition(String sparkConfigLinkedParameter, ESparkVersion sparkVersion) {
         
-        return new MultiComponentCondition(new SimpleComponentCondition(new LinkedNodeExpression(sparkConfigLinkedParameter,
-                                                                    SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, //
-                                                                    EqualityOperator.EQ, "false")), 
-              BooleanOperator.AND, 
-              new SimpleComponentCondition(new LinkedNodeExpression(sparkConfigLinkedParameter,
+        return new SimpleComponentCondition(new LinkedNodeExpression(sparkConfigLinkedParameter,
                                                                     SparkBatchConstant.VERSION_PARAMETER,//
-                                                                    EqualityOperator.EQ, sparkVersion.getSparkVersion())));
+                                                                    EqualityOperator.EQ, sparkVersion.getSparkVersion()));
     }
     
 }

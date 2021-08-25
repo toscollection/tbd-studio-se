@@ -33,7 +33,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jackson-datatype-jsr310-2.11.2.jar" name="jackson-datatype-jsr310-2.11.2.jar" mvn_uri="mvn:com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.11.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-core_2.12-3.7.0-M5.jar" name="json4s-core_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-core_2.12/3.7.0-M5"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar" mvn_uri="mvn:com.eseotericsoftware/kryo-shaded/4.0.2"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar" mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kubernetes-client-4.12.0.jar" name="kubernetes-client-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-client/4.12.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kubernetes-model-admissionregistration-4.12.0.jar" name="kubernetes-model-admissionregistration-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-admissionregistration/4.12.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kubernetes-model-apiextensions-4.12.0.jar" name="kubernetes-model-apiextensions-4.12.0.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apiextensions/4.12.0"/>

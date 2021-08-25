@@ -24,7 +24,7 @@ public class EMR550HBaseModuleGroup {
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         // The DistributionModuleGroup is mrrequired for the M/R components. It's not used for the DI components.
-        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, true, null);
+        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, true);
         hs.add(dmg);
         return hs;
     }

@@ -60,7 +60,7 @@ public class DynamicHDPSparkStreamingModuleGroup extends DynamicSparkStreamingMo
             moduleGroups.add(new DistributionModuleGroup(mapreduceRuntimeId, false, spark2Condition));
         }
         if (StringUtils.isNotBlank(sparkS3RuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(sparkS3RuntimeId, true, null));
+            moduleGroups.add(new DistributionModuleGroup(sparkS3RuntimeId, true));
         }
         return moduleGroups;
     }

@@ -13,6 +13,8 @@
 package org.talend.hadoop.distribution;
 
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.condition.LinkedNodeExpression;
+import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 
 /**
  * Bean class representing a module group and its property.
@@ -39,6 +41,12 @@ public class DistributionModuleGroup {
         this.mModuleName = moduleName;
         this.mIsMRRequired = isMRRequired;
         this.mRequiredIf = requiredIf;
+    }
+    
+    public DistributionModuleGroup(String moduleName, boolean isMRRequired, LinkedNodeExpression requiredIf) {
+        this.mModuleName = moduleName;
+        this.mIsMRRequired = isMRRequired;
+        this.mRequiredIf = new SimpleComponentCondition(requiredIf);
     }
 
     public String getModuleName() {

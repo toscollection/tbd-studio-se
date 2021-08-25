@@ -25,18 +25,15 @@ import org.talend.hadoop.distribution.mapr610.MapR610Constant;
 
 public class MapR610SparkBatchModuleGroup {
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(MapR610Constant.SPARK_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(MapR610Constant.SPARK_MODULE_GROUP.getModuleName(), false));
         // can be used for parquet, need to check
         // hs.add(new DistributionModuleGroup(MapR510Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), true,
         // condition));
-        hs.add(new DistributionModuleGroup(MapR610Constant.SPARK_YARN_CLUSTER_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
-        hs.add(new DistributionModuleGroup(MapR610Constant.HDFS_MODULE_GROUP.getModuleName(), false, condition));
-        hs.add(new DistributionModuleGroup(MapR610Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(MapR610Constant.SPARK_YARN_CLUSTER_MRREQUIRED_MODULE_GROUP.getModuleName(), true));
+        hs.add(new DistributionModuleGroup(MapR610Constant.HDFS_MODULE_GROUP.getModuleName(), false));
+        hs.add(new DistributionModuleGroup(MapR610Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false));
         return hs;
     }
 

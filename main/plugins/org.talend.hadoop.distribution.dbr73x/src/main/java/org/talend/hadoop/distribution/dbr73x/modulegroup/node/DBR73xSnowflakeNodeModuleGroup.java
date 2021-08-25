@@ -12,9 +12,7 @@ public class DBR73xSnowflakeNodeModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         moduleGroups.add(new DistributionModuleGroup(
                 DBR73xConstant.SNOWFLAKE_GROUP_DBR73x.getModuleName(),
-                true,
-                null
-        ));
+                true));
         return moduleGroups;
     }
 }

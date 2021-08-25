@@ -22,8 +22,7 @@ public class EMR5150HiveOnSparkModuleGroup {
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(EMR5150Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true,
-                null));
+        hs.add(new DistributionModuleGroup(EMR5150Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true));
         return hs;
     }
 }

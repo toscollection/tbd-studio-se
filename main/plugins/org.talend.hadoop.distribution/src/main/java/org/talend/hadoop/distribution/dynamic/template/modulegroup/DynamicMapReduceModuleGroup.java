@@ -59,10 +59,10 @@ public class DynamicMapReduceModuleGroup extends AbstractModuleGroup {
             hs.add(new DistributionModuleGroup(mrParquetId));
         }
         if (StringUtils.isNotBlank(mrParquetRequired)) {
-            hs.add(new DistributionModuleGroup(mrParquetRequired, true, null));
+            hs.add(new DistributionModuleGroup(mrParquetRequired, true));
         }
         if (StringUtils.isNotBlank(mrAvroRequired)) {
-            hs.add(new DistributionModuleGroup(mrAvroRequired, true, null));
+            hs.add(new DistributionModuleGroup(mrAvroRequired, true));
         }
 
         return hs;

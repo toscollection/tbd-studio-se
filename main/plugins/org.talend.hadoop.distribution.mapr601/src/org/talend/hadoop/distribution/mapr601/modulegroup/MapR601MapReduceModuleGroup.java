@@ -24,8 +24,8 @@ public class MapR601MapReduceModuleGroup {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(MapR601Constant.HDFS_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_MODULE_GROUP.getModuleName()));
-        hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_PARQUET_MODULE_GROUP.getModuleName(), true, null));
-        hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_AVRO_MODULE_GROUP.getModuleName(), true, null));
+        hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_PARQUET_MODULE_GROUP.getModuleName(), true));
+        hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_AVRO_MODULE_GROUP.getModuleName(), true));
         return hs;
     }
 }

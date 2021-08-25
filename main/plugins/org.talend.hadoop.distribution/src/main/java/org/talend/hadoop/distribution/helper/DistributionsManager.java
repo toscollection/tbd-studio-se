@@ -37,6 +37,7 @@ import org.talend.hadoop.distribution.ComponentType;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.constants.Constant;
+import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.hadoop.distribution.dynamic.DynamicDistributionManager;
 import org.talend.hadoop.distribution.dynamic.template.AbstractDynamicDistributionTemplate;
 import org.talend.hadoop.distribution.model.DistributionBean;
@@ -223,6 +224,12 @@ public final class DistributionsManager implements IDistributionsManager {
             if (distributionBean == null) {
                 distributionBean = new DistributionBean(type, distribution, distributionName,
                         ((AbstractDistribution) hc).isSparkLocal());
+                if (ISparkDistribution.DISTRIBUTION_NAME.equals(distribution)) {
+                	distributionBean.setHadoopFSVersions(((AbstractDistribution) hc).getSupportedHadoopFSVersion());
+                	distributionBean.setHiveVersions(((AbstractDistribution) hc).getSupportedHiveVersion());
+                	distributionBean.sethBaseVersions(((AbstractDistribution) hc).getSupportedHBaseVersion());
+                	distributionBean.sethCatalogVersions(((AbstractDistribution) hc).getSupportedHCatalogVersion());
+                }
                 disctributionsMap.put(key, distributionBean);
             } else {// check the name and displayName
                 if (!distribution.equals(distributionBean.name) || !distributionName.equals(distributionBean.displayName)) {

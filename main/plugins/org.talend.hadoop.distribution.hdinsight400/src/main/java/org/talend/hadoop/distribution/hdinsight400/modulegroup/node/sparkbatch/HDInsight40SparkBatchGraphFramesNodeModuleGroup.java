@@ -22,19 +22,16 @@ import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
 import org.talend.hadoop.distribution.condition.MultiComponentCondition;
+import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.hdinsight400.HDInsight40Constant;
 
 public class HDInsight40SparkBatchGraphFramesNodeModuleGroup {
 
-    private final static ComponentCondition conditionSpark2_3 = new MultiComponentCondition(
-            new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-            BooleanOperator.AND,
+    private final static ComponentCondition conditionSpark2_3 = new SimpleComponentCondition(
             new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion())); //$NON-NLS-1$
 
-    private final static ComponentCondition conditionSpark2_4 = new MultiComponentCondition(
-            new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-            BooleanOperator.AND,
+    private final static ComponentCondition conditionSpark2_4 = new SimpleComponentCondition(
             new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion())); //$NON-NLS-1$
     
     public static Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) {

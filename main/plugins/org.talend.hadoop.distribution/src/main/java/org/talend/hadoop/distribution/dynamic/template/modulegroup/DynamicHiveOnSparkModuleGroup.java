@@ -35,7 +35,7 @@ public class DynamicHiveOnSparkModuleGroup extends AbstractModuleGroup {
         checkRuntimeId(sparkHiveRuntimeId);
 
         if (StringUtils.isNotBlank(sparkHiveRuntimeId)) {
-            DistributionModuleGroup dmg = new DistributionModuleGroup(sparkHiveRuntimeId, true, null);
+            DistributionModuleGroup dmg = new DistributionModuleGroup(sparkHiveRuntimeId, true);
             hs.add(dmg);
         }
         return hs;

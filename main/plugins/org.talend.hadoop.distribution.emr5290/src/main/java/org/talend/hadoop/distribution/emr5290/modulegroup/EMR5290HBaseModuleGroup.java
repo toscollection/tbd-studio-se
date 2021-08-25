@@ -23,7 +23,7 @@ public class EMR5290HBaseModuleGroup {
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         // The DistributionModuleGroup is mrrequired for the M/R components. It's not used for the DI components.
-        hs.add(new DistributionModuleGroup(EMR5290Constant.HBASE_MODULE_GROUP.getModuleName(), true, null));
+        hs.add(new DistributionModuleGroup(EMR5290Constant.HBASE_MODULE_GROUP.getModuleName(), true));
         hs.addAll(EMR5290HDFSModuleGroup.getModuleGroups());
         return hs;
     }

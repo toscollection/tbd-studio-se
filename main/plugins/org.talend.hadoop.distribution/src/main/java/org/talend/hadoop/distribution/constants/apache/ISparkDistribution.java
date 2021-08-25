@@ -16,6 +16,6 @@ public interface ISparkDistribution {
 
     static final String DISTRIBUTION_NAME = "SPARK";
 
-    static final String DISTRIBUTION_DISPLAY_NAME = "Spark";
+    static final String DISTRIBUTION_DISPLAY_NAME = "Universal";
     
 }

@@ -70,10 +70,15 @@
 			configuration_<%=cid%>.set("mapreduce.application.classpath", "<%=sqoopDistrib.getCustomMRApplicationCP()%>");
 <%
 		}
-
+		if(!"SPARK".equals(sqoopDistrib.getDistribution())) {
 %>
 		configuration_<%=cid%>.set("yarn.application.classpath", "<%=sqoopDistrib.getYarnApplicationClasspath()%>");
 <%
+		} else {
+			%>
+			configuration_<%=cid%>.set("yarn.application.classpath", "<%=((org.talend.hadoop.distribution.AbstractDistribution) sqoopDistrib).getSparkClasspath(node.getProcess().getGeneratingNodes())%>");
+			<%
+		}
 
 		boolean setMemory = "true".equals(ElementParameterParser.getValue(node, "__SET_MEMORY__"));
 		if(setMemory) {

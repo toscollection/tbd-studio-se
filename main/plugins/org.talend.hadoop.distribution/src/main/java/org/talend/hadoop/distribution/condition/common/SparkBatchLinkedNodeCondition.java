@@ -28,7 +28,7 @@ import org.talend.hadoop.distribution.constants.SparkBatchConstant;
  */
 public class SparkBatchLinkedNodeCondition {
 
-    private MultiComponentCondition mCondition = null;
+    private ComponentCondition mCondition = null;
 
     public SparkBatchLinkedNodeCondition(String distribution, String version) {
         this(distribution, version, SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER);
@@ -46,15 +46,10 @@ public class SparkBatchLinkedNodeCondition {
                         EqualityOperator.EQ,//
                         version))));
 
-        final ComponentCondition isNotLocal = new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter,
-                SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, //
-                EqualityOperator.EQ,//
-                "false")); //$NON-NLS-1$
-
-        this.mCondition = new MultiComponentCondition(isCurrentDistribution, BooleanOperator.AND, isNotLocal);
+        this.mCondition = isCurrentDistribution;
     }
 
-    public MultiComponentCondition getCondition() {
+    public ComponentCondition getCondition() {
         return this.mCondition;
     }
 }

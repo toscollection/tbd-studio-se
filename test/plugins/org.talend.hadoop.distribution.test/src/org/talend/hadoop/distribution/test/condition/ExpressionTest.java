@@ -51,8 +51,8 @@ public class ExpressionTest {
         assertEquals(e1.getExpressionString(), LEFT_PAR + PARAM_1 + NEQ + SINGLE_QUOTE + VALUE_1 + SINGLE_QUOTE + RIGHT_PAR);
 
         e1 = new LinkedNodeExpression(SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                SparkBatchConstant.SPARK_LOCAL_VERSION_PARAMETER, EqualityOperator.GE, ESparkVersion.SPARK_3_0.getSparkVersion());
-        assertEquals("(#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_VERSION ge 'SPARK_3_0_x')", e1.getExpressionString()); //$NON-NLS-1$
+                SparkBatchConstant.SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER, EqualityOperator.GE, ESparkVersion.SPARK_3_0.getSparkVersion());
+        assertEquals("(#LINK@NODE.SPARK_CONFIGURATION.STORAGE_CONFIGURATION ge 'SPARK_3_0_x')", e1.getExpressionString()); //$NON-NLS-1$
     }
 
 }

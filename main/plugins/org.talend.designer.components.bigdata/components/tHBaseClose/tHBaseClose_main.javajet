@@ -25,6 +25,7 @@ imports="
     org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
     boolean isCustom = false;
     boolean isHadoop2 = false;
+    boolean isHBase2x = false;
 	List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
     for(INode targetNode : nodes){
 		if (targetNode.getUniqueName().equals(connection)) {
@@ -32,7 +33,14 @@ imports="
         	hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
             isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
             try {
+                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
+            } finally {
+                //NPE if not spark
+            }
+            try {
                 hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
+                boolean isSparkDistrib = "SPARK".equals(distribution);
+                isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
             } catch (java.lang.Exception e) {
                 e.printStackTrace();
                 return "";

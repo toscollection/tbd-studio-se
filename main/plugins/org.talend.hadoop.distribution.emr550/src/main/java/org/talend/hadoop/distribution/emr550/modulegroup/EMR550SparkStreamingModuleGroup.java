@@ -26,12 +26,9 @@ public class EMR550SparkStreamingModuleGroup {
 
     public static final String MODULE_GROUP_NAME = "SPARK2-LIB-EMR_5_5_0_LATEST"; //$NON-NLS-1$
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, false, condition);
+        DistributionModuleGroup dmg = new DistributionModuleGroup(MODULE_GROUP_NAME, false);
         hs.add(dmg);
         return hs;
     }

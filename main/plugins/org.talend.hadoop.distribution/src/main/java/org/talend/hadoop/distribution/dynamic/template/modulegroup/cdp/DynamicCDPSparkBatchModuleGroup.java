@@ -19,10 +19,8 @@ import org.apache.commons.lang.StringUtils;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.condition.BasicExpression;
-import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.condition.EqualityOperator;
-import org.talend.hadoop.distribution.condition.MultiComponentCondition;
 import org.talend.hadoop.distribution.condition.SimpleComponentCondition;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
@@ -40,9 +38,7 @@ public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
 
     @Override
     protected void initConditions() {
-        conditionSpark2 = new MultiComponentCondition(
-                new BasicExpression(SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false"), //$NON-NLS-1$
-                BooleanOperator.AND, new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
+        conditionSpark2 = new SimpleComponentCondition(new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
                         ESparkVersion.SPARK_2_4.getSparkVersion()));
     }
 

@@ -74,8 +74,7 @@ public class HDInsight40HiveOnSparkModuleGroup {
 		Set<DistributionModuleGroup> hs = new HashSet<>();
 		hs.add(new DistributionModuleGroup(
 				HDInsight40Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(),
-				true,
-				null
+				true
 		));
 		hs.add(new DistributionModuleGroup(
 				HDInsight40Constant.SPARK23_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(),

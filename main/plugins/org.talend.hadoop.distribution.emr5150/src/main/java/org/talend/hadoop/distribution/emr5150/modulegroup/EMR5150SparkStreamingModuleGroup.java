@@ -25,13 +25,10 @@ import org.talend.hadoop.distribution.emr5150.EMR5150Constant;
 
 public class EMR5150SparkStreamingModuleGroup {
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg =
-                new DistributionModuleGroup(EMR5150Constant.SPARK_MODULE_GROUP.getModuleName(), false, condition);
+                new DistributionModuleGroup(EMR5150Constant.SPARK_MODULE_GROUP.getModuleName(), false);
         hs.add(dmg);
         return hs;
     }

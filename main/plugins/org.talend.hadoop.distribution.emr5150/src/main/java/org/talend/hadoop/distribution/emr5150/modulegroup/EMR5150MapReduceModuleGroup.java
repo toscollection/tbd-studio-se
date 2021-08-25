@@ -25,9 +25,9 @@ public class EMR5150MapReduceModuleGroup {
         hs.add(new DistributionModuleGroup(EMR5150Constant.HDFS_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(EMR5150Constant.MAPREDUCE_MODULE_GROUP.getModuleName()));
         hs.add(new DistributionModuleGroup(EMR5150Constant.MAPREDUCE_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                true, null));
+                true));
         hs.add(new DistributionModuleGroup(EMR5150Constant.MAPREDUCE_AVRO_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                true, null));
+                true));
         return hs;
     }
 }

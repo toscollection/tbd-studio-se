@@ -13,6 +13,7 @@ public enum ModuleGroupName {
     HDFS("HDFS-GROUP"), //$NON-NLS-1$
     HBASE("HBASE-GROUP"), //$NON-NLS-1$
     HIVE("HIVE-GROUP"), //$NON-NLS-1$
+    IMPALA("IMPALA-GROUP"), //$NON-NLS-1$
     KAFKA("KAFKA-GROUP"), //$NON-NLS-1$
     KINESIS("KINESIS-GROUP"), //$NON-NLS-1$
     KMEANS("KMEANS-GROUP"), //$NON-NLS-1$

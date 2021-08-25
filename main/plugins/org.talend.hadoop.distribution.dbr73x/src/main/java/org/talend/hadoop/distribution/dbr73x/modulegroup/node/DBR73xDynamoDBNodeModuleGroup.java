@@ -12,9 +12,7 @@ public class DBR73xDynamoDBNodeModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         moduleGroups.add(new DistributionModuleGroup(
                 DBR73xConstant.DYNAMODB_GROUP_DBR73x.getModuleName(),
-                true,
-                null
-        ));
+                true));
         return moduleGroups;
     }
 }

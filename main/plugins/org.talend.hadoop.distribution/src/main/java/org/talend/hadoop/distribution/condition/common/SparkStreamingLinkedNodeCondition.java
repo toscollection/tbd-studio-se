@@ -29,7 +29,7 @@ import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
  */
 public class SparkStreamingLinkedNodeCondition {
 
-    private MultiComponentCondition mCondition = null;
+    private ComponentCondition mCondition = null;
 
     public SparkStreamingLinkedNodeCondition(String distribution, String version) {
         this(distribution, version, SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER);
@@ -43,13 +43,10 @@ public class SparkStreamingLinkedNodeCondition {
                 new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter, //
                         ComponentType.SPARKSTREAMING.getVersionParameter(), EqualityOperator.EQ, version))));
 
-        final ComponentCondition isNotLocal = new SimpleComponentCondition(new LinkedNodeExpression(linkedParameter,
-                SparkBatchConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
-        this.mCondition = new MultiComponentCondition(isCurrentDistribution, BooleanOperator.AND, isNotLocal);
+        this.mCondition = isCurrentDistribution;
     }
 
-    public MultiComponentCondition getCondition() {
+    public ComponentCondition getCondition() {
         return this.mCondition;
     }
 }

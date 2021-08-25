@@ -24,9 +24,7 @@ public class DBR73xTopByNodeModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         moduleGroups.add(new DistributionModuleGroup(
                 DBR73xConstant.TOPBY_LIB_REQUIRED_DBR73X.getModuleName(),
-                true,
-                null
-        ));
+                true));
         return moduleGroups;
     }
 }

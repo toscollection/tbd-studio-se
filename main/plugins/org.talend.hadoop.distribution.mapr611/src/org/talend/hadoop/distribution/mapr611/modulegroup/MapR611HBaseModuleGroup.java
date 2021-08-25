@@ -23,7 +23,7 @@ public class MapR611HBaseModuleGroup {
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         // The DistributionModuleGroup is mrrequired for the M/R components. It's not used for the DI components.
-        DistributionModuleGroup dmg = new DistributionModuleGroup(MapR611Constant.HBASE_MODULE_GROUP.getModuleName(), true, null);
+        DistributionModuleGroup dmg = new DistributionModuleGroup(MapR611Constant.HBASE_MODULE_GROUP.getModuleName(), true);
         hs.add(dmg);
         return hs;
     }

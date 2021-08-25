@@ -25,13 +25,10 @@ import org.talend.hadoop.distribution.emr5290.EMR5290Constant;
 
 public class EMR5290SparkBatchModuleGroup {
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg =
-                new DistributionModuleGroup(EMR5290Constant.SPARK_MODULE_GROUP.getModuleName(), false, condition);
+                new DistributionModuleGroup(EMR5290Constant.SPARK_MODULE_GROUP.getModuleName(), false);
         hs.add(dmg);
         return hs;
     }

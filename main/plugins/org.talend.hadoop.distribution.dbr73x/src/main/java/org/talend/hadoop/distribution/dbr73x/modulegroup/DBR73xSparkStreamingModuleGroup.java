@@ -25,35 +25,27 @@ import org.talend.hadoop.distribution.dbr73x.DBR73xConstant;
 
 public class DBR73xSparkStreamingModuleGroup {
 
-    private final static ComponentCondition notSparkLocal = new SimpleComponentCondition(new BasicExpression(
-            SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         hs.add(new DistributionModuleGroup(
                 DBR73xConstant.SPARK_STREAMING_LIB_MRREQUIRED_DBR73X.getModuleName(),
-                true,
-                notSparkLocal
+                true
         ));
         hs.add(new DistributionModuleGroup(
                 DBR73xConstant.HIVEONSPARK_LIB_MRREQUIRED_DBR73X.getModuleName(),
-                true,
-                notSparkLocal
+                true
         ));
         hs.add(new DistributionModuleGroup(
                 DBR73xConstant.SPARK_LIB_MRREQUIRED_DBR73X.getModuleName(),
-                true,
-                notSparkLocal
+                true
         ));
         hs.add(new DistributionModuleGroup(
                 DBR73xConstant.BIGDATA_LAUNCHER_LIB_DBR73X.getModuleName(),
-                true,
-                notSparkLocal
+                true
         ));
         hs.add(new DistributionModuleGroup(
                 DBR73xConstant.DYNAMODB_GROUP_DBR73x.getModuleName(),
-                true,
-                notSparkLocal
+                true
         ));
         return hs;
     }

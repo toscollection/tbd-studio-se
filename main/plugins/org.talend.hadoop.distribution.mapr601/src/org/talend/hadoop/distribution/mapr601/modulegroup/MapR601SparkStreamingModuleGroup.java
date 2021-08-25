@@ -25,15 +25,12 @@ import org.talend.hadoop.distribution.mapr601.MapR601Constant;
 
 public class MapR601SparkStreamingModuleGroup {
 
-    private final static ComponentCondition condition = new SimpleComponentCondition(new BasicExpression(
-            SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
-
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
-        hs.add(new DistributionModuleGroup(MapR601Constant.SPARK_MODULE_GROUP.getModuleName(), false, condition));
-        hs.add(new DistributionModuleGroup(MapR601Constant.SPARK_YARN_CLUSTER_MRREQUIRED_MODULE_GROUP.getModuleName(), true, condition));
-        hs.add(new DistributionModuleGroup(MapR601Constant.HDFS_MODULE_GROUP.getModuleName(), false, condition));
-        hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false, condition));
+        hs.add(new DistributionModuleGroup(MapR601Constant.SPARK_MODULE_GROUP.getModuleName(), false));
+        hs.add(new DistributionModuleGroup(MapR601Constant.SPARK_YARN_CLUSTER_MRREQUIRED_MODULE_GROUP.getModuleName(), true));
+        hs.add(new DistributionModuleGroup(MapR601Constant.HDFS_MODULE_GROUP.getModuleName(), false));
+        hs.add(new DistributionModuleGroup(MapR601Constant.MAPREDUCE_MODULE_GROUP.getModuleName(), false));
         return hs;
     }
 

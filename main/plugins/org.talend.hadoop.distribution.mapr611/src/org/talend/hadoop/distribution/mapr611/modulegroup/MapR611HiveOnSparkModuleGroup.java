@@ -23,7 +23,7 @@ public class MapR611HiveOnSparkModuleGroup {
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
         DistributionModuleGroup dmg = new DistributionModuleGroup(
-                MapR611Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true, null);
+                MapR611Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), true);
         hs.add(dmg);
         return hs;
     }

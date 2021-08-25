@@ -41,7 +41,7 @@ public class DynamicCDPHiveOnSparkModuleGroup extends DynamicHiveOnSparkModuleGr
 
         checkRuntimeId(sparkHiveRuntimeId);
         if (StringUtils.isNotBlank(sparkHiveRuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(sparkHiveRuntimeId, true, null));
+            moduleGroups.add(new DistributionModuleGroup(sparkHiveRuntimeId, true));
         }
 
         return moduleGroups;

@@ -21,6 +21,7 @@ import java.util.Set;
 import org.apache.commons.collections.map.MultiKeyMap;
 import org.apache.commons.lang.ArrayUtils;
 import org.talend.commons.utils.platform.PluginChecker;
+import org.talend.core.model.process.INode;
 import org.talend.hadoop.distribution.condition.BasicExpression;
 import org.talend.hadoop.distribution.condition.BooleanOperator;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
@@ -36,6 +37,7 @@ import org.talend.hadoop.distribution.constants.HiveConstant;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
+import org.talend.hadoop.distribution.constants.SqoopConstant;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.modulegroup.SqoopModuleGroup;
 import org.talend.hadoop.distribution.utils.DefaultConfigurationManager;
@@ -395,6 +397,10 @@ public abstract class AbstractDistribution {
     public boolean doSupportHBase2x() {
         return false;
     }
+    
+    public boolean doSupportHBase1x() {
+        return false;
+    }
 
     public String getSqoopPackageName() {
         return ESqoopPackageName.COM_CLOUDERA_SQOOP.toString();
@@ -462,26 +468,14 @@ public abstract class AbstractDistribution {
         result.put(ComponentType.SQOOP, SqoopModuleGroup.getModuleGroups(this.getVersion()));
 
         
-        // Spark Batch
-        ComponentCondition sparkBatchCondition = new SimpleComponentCondition(new BasicExpression( 
-                SparkBatchConstant.SPARK_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
         
-        result.put(ComponentType.SPARKBATCH, ModuleGroupsUtils.getModuleGroups(sparkBatchCondition, 
+        result.put(ComponentType.SPARKBATCH, ModuleGroupsUtils.getModuleGroups(null, 
                 ModuleGroupName.SPARK_BATCH.get(this.getVersion()), true));
         
-        // Spark Streaming
-        ComponentCondition sparkStreamingCondition = new SimpleComponentCondition(new BasicExpression(
-                SparkStreamingConstant.SPARKCONFIGURATION_IS_LOCAL_MODE_PARAMETER, EqualityOperator.EQ, "false")); //$NON-NLS-1$
         
-        result.put(ComponentType.SPARKSTREAMING, ModuleGroupsUtils.getModuleGroups(sparkStreamingCondition,
+        result.put(ComponentType.SPARKSTREAMING, ModuleGroupsUtils.getModuleGroups(null,
                 ModuleGroupName.SPARK_STREAMING.get(this.getVersion()), true));
         
-        
-       
-        
-       
-        
-       
         return result;
     }
     
@@ -563,18 +557,18 @@ public abstract class AbstractDistribution {
         
         // Spark Batch Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
-                    ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), true));
+                    ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
         
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
-                    ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), true));
+                    ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
 
         // Spark Streaming Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), true));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), true));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), true));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
         
         // Redshift nodes ...
         Set<DistributionModuleGroup> redshiftBatchNodeModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'", ModuleGroupName.REDSHIFT_BATCH.get(this.getVersion()), true );
@@ -624,6 +618,11 @@ public abstract class AbstractDistribution {
         for(String hdfsComponent : HDFSConstant.HDFS_COMPONENTS) {
             result.put(new NodeComponentTypeBean(ComponentType.HDFS, hdfsComponent), webHDFSNodeModuleGroups);
         }
+        
+        //Sqoop 
+        for(String sqoopComponent : SqoopConstant.SQOOP_COMPONENTS) {
+            result.put(new NodeComponentTypeBean(ComponentType.SQOOP, sqoopComponent), ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.SQOOP.get(this.getVersion()), true));
+        }
  
         // Spark Batch tSQLRow nodes
         ComponentCondition hiveContextCondition = new SimpleComponentCondition(new BasicExpression(
@@ -664,5 +663,36 @@ public abstract class AbstractDistribution {
      */
     public String getADLS2Packages() {
     	return "";
+    }
+    
+    /**
+     * @return if the distribution uses spark submit for yarn
+     */
+    public boolean doSendBySparkSubmit() {
+    	return false;
+    }
+    
+    public String getSparkClasspath(List<? extends INode> nodes) {
+    	return "";
+    }
+    
+    public boolean doSupportUniversalLocalMode() {
+    	return false;
+    }
+
+    public List<String> getSupportedHadoopFSVersion() {
+    	return null;
+    }
+    
+    public List<String> getSupportedHiveVersion() {
+    	return null;
+    }
+    
+    public List<String> getSupportedHBaseVersion() {
+    	return null;
+    }
+    
+    public List<String> getSupportedHCatalogVersion() {
+    	return null;
     }
 }
