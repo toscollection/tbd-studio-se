@@ -33,7 +33,7 @@ imports="
         	hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
             isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
             try {
-                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
+                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"));
             } finally {
                 //NPE if not spark
             }

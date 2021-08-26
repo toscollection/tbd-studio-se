@@ -244,7 +244,7 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
 	
 	@Override 
 	public boolean doSupportHBase1x() {
-		return true;
+		return false;
 	}
 
 	@Override

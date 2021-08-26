@@ -258,7 +258,7 @@ public class Spark24xDistribution extends AbstractSparkDistribution
 	
 	@Override 
 	public boolean doSupportHBase1x() {
-		return true;
+		return false;
 	}
 
 	@Override
