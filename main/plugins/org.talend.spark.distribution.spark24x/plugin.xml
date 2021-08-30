@@ -41,7 +41,7 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="httpcore-4.4.10.jar" name="httpcore-4.4.10.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.10"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-annotations-2.6.7.jar" name="jackson-annotations-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.6.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-2.6.7.jar" name="jackson-core-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.6.7"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-2.6.7.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-databind-2.6.7.3.jar" name="jackson-databind-2.6.7.3.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.6.7.3"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-1.9.13.jar" name="jackson-jaxrs-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-jaxrs/1.9.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13"/>
