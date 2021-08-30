@@ -641,6 +641,7 @@
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK-COMPILE-GROUP-SPARK_3_0_x" name="SPARK-BATCH-GROUP-SPARK_3_0_x">
             <library id="antlr4-runtime-4.7.1.jar"/>
             <library id="avro-1.8.2.jar"/>
+            <library id="avro-mapred-1.8.2.jar"/>
             <library id="breeze_2.12-1.0.jar"/>
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="chill-java-0.9.5.jar"/>

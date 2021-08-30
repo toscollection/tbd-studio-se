@@ -197,6 +197,7 @@
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
 			<library id="antlr4-runtime-4.7.jar"/>
 			<library id="avro-1.8.2.jar"/>
+			<library id="avro-mapred-1.8.2.jar"/>
 			<library id="breeze_2.11-0.13.2.jar"/>
 			<library id="chill_2.11-0.9.3.jar"/>
 			<library id="chill-java-0.9.3.jar"/>

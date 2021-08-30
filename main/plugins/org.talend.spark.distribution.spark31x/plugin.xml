@@ -125,6 +125,7 @@
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_1_x" name="SPARK-COMPILE-GROUP-SPARK_3_1_x">
             <library id="avro-1.8.2.jar"/>
+            <library id="avro-mapred-1.8.2.jar"/>
             <library id="bcpkix-jdk15on-1.68.jar"/>
             <library id="bcprov-jdk15on-1.68.jar"/>
             <library id="commons-codec-1.11.jar"/>
