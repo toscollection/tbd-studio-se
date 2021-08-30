@@ -733,6 +733,7 @@
         <!-- S3 group -->
         <libraryNeededGroup description="S3 libraries for spl30x" id="S3-GROUP-SPARK_3_0_x" name="S3-GROUP-SPARK_3_0_x">
             <library id="hadoop-aws-3.2.1.jar"/>
+            <library id="guava-27.0-jre.jar"/>
             <library id="aws-java-sdk-bundle-1.11.760.jar"/>
             <library id="commons-text-1.4.jar"/>
             <library id="talend-bigdata-aws-lib-1.1.0.jar"/>
