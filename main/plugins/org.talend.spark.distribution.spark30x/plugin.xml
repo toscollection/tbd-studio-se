@@ -840,6 +840,12 @@
             <group id="PARQUET-GROUP-SPARK_3_0_x"/>
         </libraryNeededGroup>
 
+        <!-- ModelEncoder -->
+        <libraryNeededGroup description="ModelEncoder libraries for spl30x" id="MODEL-ENCODER-GROUP-SPARK_3_0_x" name="MODEL-ENCODER-GROUP-SPARK_3_0_x">
+        	<group id="ML-GROUP-SPARK_3_0_x"/>
+            <group id="MATH-GROUP-SPARK_3_0_x"/>
+        </libraryNeededGroup>
+
         <!-- Spark Streaming Kafka group -->
         <libraryNeededGroup description="Spark streaming Kafka libraries for spl30x" id="KAFKA-GROUP-SPARK_3_0_x" name="KAFKA-GROUP-SPARK_3_0_x">
             <library id="kafka-clients-2.7.0.jar"/>

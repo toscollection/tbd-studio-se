@@ -40,6 +40,7 @@ import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark30x.modulegroup.node.Spark30xNodeModuleGroup;
 
@@ -106,6 +107,30 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
         					s3ModuleGroup);	
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
 				s3ModuleGroup);	
+
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
+                        Spark30xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.PARQUET.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark30xDistribution.SPARK_VERSION));
+
+        // spark model encoder
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
+                        Spark30xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.MODEL_ENCODER.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark30xDistribution.SPARK_VERSION));
+
+        // spark Streaming model encoder
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                        SparkStreamingConstant.TMODEL_ENCODER_COMPONENT),
+                        Spark30xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.MODEL_ENCODER.get(getVersion()),
+                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark30xDistribution.SPARK_VERSION));
         return result;
 
     }
