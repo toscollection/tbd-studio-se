@@ -1,7 +1,5 @@
 package org.talend.repository.hadoopcluster.ui.conf;
 
-import java.util.List;
-
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.swt.SWT;

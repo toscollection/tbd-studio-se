@@ -14,13 +14,19 @@ import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.ImageProvider;
+import org.talend.core.database.conn.ConnParameterKeys;
+import org.talend.core.runtime.maven.MavenArtifact;
+import org.talend.core.runtime.maven.MavenConstants;
+import org.talend.designer.maven.utils.PomUtil;
 import org.talend.repository.hadoopcluster.conf.HadoopConfsManager;
 import org.talend.repository.hadoopcluster.conf.HadoopConfsUtils;
 import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.service.IRetrieveConfsService;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopForm;
 import org.talend.repository.hadoopcluster.util.EHadoopClusterImage;
+import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
+import org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl;
 
 /**
  *
@@ -118,6 +124,15 @@ public class HadoopImportConfsWizard extends Wizard {
                 if (creation) {
                     HadoopConfsUtils.setConnectionParameters(connectionItem, optionPage.getDistribution(),
                             optionPage.getVersion(), confsService);
+                    if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+                    	MavenArtifact artifact = new MavenArtifact();
+                		artifact.setGroupId("org.talend.libraries");
+                        artifact.setArtifactId(confJarName.split(".jar")[0]);
+                        artifact.setVersion("6.0.0-SNAPSHOT");
+                        artifact.setType(MavenConstants.TYPE_JAR);
+                        HadoopClusterConnection connection = (HadoopClusterConnection) connectionItem.getConnection();
+                        connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HADOOP_CONF_SPECIFIC_JAR, PomUtil.getArtifactFullPath(artifact));
+                    }
                     if (parentForm != null) {
                         parentForm.reload();
                     }

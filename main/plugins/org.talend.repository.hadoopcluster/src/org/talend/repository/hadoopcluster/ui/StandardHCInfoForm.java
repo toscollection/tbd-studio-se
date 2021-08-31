@@ -86,6 +86,7 @@ import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
+import org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl;
 
 /**
  *
@@ -316,6 +317,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
         onUseCustomConfBtnSelected(null);
         onOverrideHadoopConfBtnSelected(null);
+        
+        if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+        	useCustomConfBtn.setEnabled(false);
+        	useCustomConfBtn.setSelection(true);
+        	setHadoopConfBtn.setEnabled(false);
+        	setHadoopConfBtn.setSelection(true);
+        	hadoopConfSpecificJarText.setEditable(true);
+        }
     }
 
     @Override
@@ -357,7 +366,13 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         useWebHDFSSSLEncryptionBtn.setEnabled(!readOnly);
         webHDFSSSLTrustStorePath.setReadOnly(readOnly);
         webHDFSSSLTrustStorePassword.setReadOnly(readOnly);
-
+        if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+        	useCustomConfBtn.setEnabled(false);
+        	useCustomConfBtn.setSelection(true);
+        	setHadoopConfBtn.setEnabled(false);
+        	setHadoopConfBtn.setSelection(true);
+        	hadoopConfSpecificJarText.setEditable(true);
+        }
     }
 
     @Override
@@ -826,7 +841,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         formData.top = new FormAttachment(setHadoopConfBtn, 0, SWT.CENTER);
         formData.right = new FormAttachment(browseHadoopConfBtn, -5, SWT.LEFT);
         hadoopConfSpecificJarText.setLayoutData(formData);
-
     }
 
     private void addCheckFields() {

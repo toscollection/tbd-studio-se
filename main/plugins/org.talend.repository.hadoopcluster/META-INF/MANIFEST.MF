@@ -59,4 +59,5 @@ Export-Package: org.talend.repository.hadoopcluster.action,
 Bundle-Activator: org.talend.repository.hadoopcluster.HadoopClusterPlugin
 Import-Package: org.talend.core.ui.context.model.table,
  org.talend.core.ui.token,
+ org.talend.designer.maven.utils,
  org.talend.repository.hadoopcluster.configurator
