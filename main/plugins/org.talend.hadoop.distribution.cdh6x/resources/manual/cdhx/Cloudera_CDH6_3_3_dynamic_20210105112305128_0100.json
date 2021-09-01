@@ -10009,7 +10009,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_univocity_parsers_2_7_3_jar",
+        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_univocity_parsers_2_8_3_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -10034,6 +10034,10 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_zookeeper_3_4_6_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_hive_common_2_1_1_cdh6_3_3_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -10803,7 +10807,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_univocity_parsers_2_7_3_jar",
+        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_univocity_parsers_2_8_3_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -12798,8 +12802,8 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_hive_exec",
-      "mvn_uri" : "mvn:org.talend.bigdata.libs/hive-exec-shade-2.1.1-cdh6.3.3-talend/1.0",
-      "name" : "hive-exec-shade-2.1.1-cdh6.3.3-talend-1.0.jar",
+      "mvn_uri" : "mvn:org.talend.bigdata.libs/hive-exec-shade-2.1.1-cdh6.3.3-talend/1.1",
+      "name" : "hive-exec-shade-2.1.1-cdh6.3.3-talend-1.1.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
     }, {
@@ -14851,9 +14855,9 @@
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_univocity_parsers_2_7_3_jar",
-      "mvn_uri" : "mvn:com.univocity/univocity-parsers/2.7.3/jar",
-      "name" : "univocity-parsers-2.7.3.jar",
+      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_univocity_parsers_2_8_3_jar",
+      "mvn_uri" : "mvn:com.univocity/univocity-parsers/2.8.3/jar",
+      "name" : "univocity-parsers-2.8.3.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
