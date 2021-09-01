@@ -23,6 +23,7 @@ public interface IAmazonEMRDistribution {
     
     public String getVersion();
     
+    //should be true if hadoop2.8+
     public boolean doSupportMultiBucket();
     
 }
