@@ -487,4 +487,9 @@ public class EMR5290Distribution extends EMRDistribution implements HBaseCompone
     public boolean doSupportEMRFS() {
         return true;
     }
+    
+    @Override
+	public boolean doSupportMultiBucket() {
+		return true;
+	}
 }

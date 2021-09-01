@@ -22,4 +22,7 @@ public interface IAmazonEMRDistribution {
     public boolean doSupportEMRFS();
     
     public String getVersion();
+    
+    public boolean doSupportMultiBucket();
+    
 }
