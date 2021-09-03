@@ -123,11 +123,9 @@ boolean use_batch = ("true").equals(ElementParameterParser.getValue(node, "__USE
 
 if ("INSERT".equalsIgnoreCase(dataAction)) {
 
-		if(use_batch) {
 		%>
 		com.amazonaws.services.dynamodbv2.document.Item item_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.Item();
 		<%
-		}
 
 		// Add resolved Primary keys to the Item
 		if(sortKey !=null && !sortKey.isEmpty() && !sortKey.equals("\"\"")) { %>	
