@@ -374,5 +374,10 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
 	public boolean doSupportDynamicMemoryAllocation() {
 		return true;
 	}
+	
+	@Override
+	public boolean doSupportAssumeRole() {
+		return true;
+	}
 
 }

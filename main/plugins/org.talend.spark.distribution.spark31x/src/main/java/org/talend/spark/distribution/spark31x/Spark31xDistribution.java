@@ -234,4 +234,9 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 	public String getADLS2Packages() {
     	return "org.apache.hadoop:hadoop-azure-datalake:3.2.1,org.apache.hadoop:hadoop-azure:3.2.1";
     }
+	
+	@Override
+	public boolean doSupportAssumeRole() {
+		return true;
+	}
 }
