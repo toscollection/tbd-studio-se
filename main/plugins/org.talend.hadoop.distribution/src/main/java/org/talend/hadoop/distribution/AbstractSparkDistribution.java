@@ -87,4 +87,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
     	}
     	return hBaseVersions;
     }
+	
+	@Override
+    public boolean doSupportEmbeddedMode() {
+        return false;
+    }
 }
