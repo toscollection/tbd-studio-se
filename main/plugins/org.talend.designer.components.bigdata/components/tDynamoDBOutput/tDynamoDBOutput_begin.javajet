@@ -172,7 +172,6 @@ int batchSizeCounter_<%=cid%> = 0;
 		<%if(use_batch){%>
 		java.util.List<com.amazonaws.services.dynamodbv2.document.Item> batchData_<%=cid%> = new java.util.ArrayList<>();
 		<%} else {%>
-		com.amazonaws.services.dynamodbv2.document.Item item_<%=cid%> = new com.amazonaws.services.dynamodbv2.document.Item();
 		com.amazonaws.services.dynamodbv2.document.spec.PutItemSpec putItemSpec_<%=cid%>;
 		<%}%>
 <% } else if ("UPDATE".equalsIgnoreCase(dataAction)) {	%>
