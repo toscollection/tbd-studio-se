@@ -466,8 +466,8 @@
           mvn_uri="mvn:commons-lang/commons-lang/2.6"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-          id="commons-codec-1.11.jar" name="commons-codec-1.11.jar"
-          mvn_uri="mvn:commons-codec/commons-codec/1.11"/>
+          id="commons-codec-1.15.jar" name="commons-codec-1.15.jar"
+          mvn_uri="mvn:commons-codec/commons-codec/1.15"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
           id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar"
@@ -617,7 +617,7 @@
             <library id="breeze_2.12-1.0.jar"/>
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="chill-java-0.9.5.jar"/>
-            <library id="commons-codec-1.11.jar"/>
+            <library id="commons-codec-1.15.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.16.jar"/>
             <library id="commons-configuration2-2.1.1.jar"/>

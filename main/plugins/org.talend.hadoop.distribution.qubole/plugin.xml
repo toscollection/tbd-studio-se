@@ -127,9 +127,9 @@
         <!-- Jars for Spark 2 -->
 		<libraryNeeded
 			context="plugin:org.talend.hadoop.distribution.qubole"
-			id="commons-codec-1.10.jar"
-			name="commons-codec-1.10.jar"
-			mvn_uri="mvn:commons-codec/commons-codec/1.10">
+			id="commons-codec-1.15.jar"
+			name="commons-codec-1.15.jar"
+			mvn_uri="mvn:commons-codec/commons-codec/1.15">
 		</libraryNeeded>
 		<libraryNeeded
 			context="plugin:org.talend.hadoop.distribution.qubole"
@@ -355,7 +355,7 @@
              <library id="jackson-core-2.8.9.jar"/>
              <library id="json-simple-1.1.jar"/>
              <library id="commons-lang-2.6.jar"/>
-             <library id="commons-codec-1.10.jar"/>
+             <library id="commons-codec-1.15.jar"/>
              <library id="hadoop-common-2.7.3.jar"/>
              <library id="hadoop-mapreduce-client-core-2.7.3.jar"/>
              <library id="kryo-shaded-3.0.3.jar"/>

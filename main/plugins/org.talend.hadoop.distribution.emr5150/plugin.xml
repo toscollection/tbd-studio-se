@@ -729,9 +729,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5150"
-            id="commons-codec-1.10.jar"
-            name="commons-codec-1.10.jar"
-            mvn_uri="mvn:commons-codec/commons-codec/1.10"/>
+            id="commons-codec-1.15.jar"
+            name="commons-codec-1.15.jar"
+            mvn_uri="mvn:commons-codec/commons-codec/1.15"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5150"
@@ -1972,7 +1972,7 @@
              <library id="hadoop-common-2.8.3-amzn-1.jar" />
              <library id="hadoop-auth-2.8.3-amzn-1.jar" />
              <library id="commons-logging-1.2.jar" />
-             <library id="commons-codec-1.10.jar" />
+             <library id="commons-codec-1.15.jar" />
              <library id="commons-configuration-1.6.jar" />
              <library id="commons-lang-2.6.jar" />
              <library id="commons-collections-3.2.2.jar" />
@@ -2175,7 +2175,7 @@
             <library id="commons-beanutils-1.8.3.jar"/>
             <library id="commons-beanutils-core-1.8.0.jar"/>
             <library id="commons-cli-1.2.jar"/>
-            <library id="commons-codec-1.10.jar"/>
+            <library id="commons-codec-1.15.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.8.jar"/>
             <library id="commons-compress-1.4.1.jar"/>
@@ -2465,7 +2465,7 @@
         </classloader>
         <classloader
                 index="HBASE:AMAZON_EMR:EMR_5_15_0"
-                libraries="hbase-common-1.4.4.jar;hbase-client-1.4.4.jar;hbase-protocol-1.4.4.jar;hadoop-common-2.8.3-amzn-1.jar;hadoop-auth-2.8.3-amzn-1.jar;commons-logging-1.2.jar;commons-codec-1.10.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.2.jar;zookeeper-3.4.12.jar;htrace-core-3.1.0-incubating.jar;guava-14.0.1.jar;jackson-mapper-asl-1.9.15-TALEND.jar;jackson-core-asl-1.9.15-TALEND.jar;netty-all-4.0.43.Final.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.10.jar;slf4j-log4j12-1.7.10.jar;hbase-server-1.4.4.jar;metrics-core-2.2.0.jar;netty-all-4.1.17.Final.jar;htrace-core4-4.0.1-incubating.jar">
+                libraries="hbase-common-1.4.4.jar;hbase-client-1.4.4.jar;hbase-protocol-1.4.4.jar;hadoop-common-2.8.3-amzn-1.jar;hadoop-auth-2.8.3-amzn-1.jar;commons-logging-1.2.jar;commons-codec-1.15.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.2.jar;zookeeper-3.4.12.jar;htrace-core-3.1.0-incubating.jar;guava-14.0.1.jar;jackson-mapper-asl-1.9.15-TALEND.jar;jackson-core-asl-1.9.15-TALEND.jar;netty-all-4.0.43.Final.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.10.jar;slf4j-log4j12-1.7.10.jar;hbase-server-1.4.4.jar;metrics-core-2.2.0.jar;netty-all-4.1.17.Final.jar;htrace-core4-4.0.1-incubating.jar">
         </classloader>
     </extension>
 </plugin>
