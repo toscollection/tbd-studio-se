@@ -292,7 +292,7 @@
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="jsr305-1.3.9.jar" name="jsr305-1.3.9.jar" mvn_uri="mvn:com.google.code.findbugs/jsr305/1.3.9"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="hadoop-yarn-api-2.7.2-amzn-3.jar" name="hadoop-yarn-api-2.7.2-amzn-3.jar" mvn_uri="mvn:org.talend.libraries/hadoop-yarn-api-2.7.2-amzn-3/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="netty-3.8.0.Final.jar" name="netty-3.8.0.Final.jar" mvn_uri="mvn:org.talend.libraries/netty-3.8.0.Final/6.0.0"/>
-<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="commons-codec-1.10.jar" name="commons-codec-1.10.jar" mvn_uri="mvn:commons-codec/commons-codec/1.10"/>
+<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="commons-codec-1.15.jar" name="commons-codec-1.15.jar" mvn_uri="mvn:commons-codec/commons-codec/1.15"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="datanucleus-core-3.2.10.jar" name="datanucleus-core-3.2.10.jar" mvn_uri="mvn:org.datanucleus/datanucleus-core/3.2.10"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="breeze-macros_2.11-0.11.2.jar" name="breeze-macros_2.11-0.11.2.jar" mvn_uri="mvn:org.talend.libraries/breeze-macros_2.11-0.11.2/6.0.0"/>
 <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr500" id="RoaringBitmap-0.5.11.jar" name="RoaringBitmap-0.5.11.jar" mvn_uri="mvn:org.roaringbitmap/RoaringBitmap/0.5.11"/>
@@ -689,7 +689,7 @@
              <library id="hadoop-common-emr500-latest" />
              <library id="hadoop-auth-emr500-latest" />
              <library id="commons-logging-1.2.jar" />
-             <library id="commons-codec-1.9.jar" />
+             <library id="commons-codec-1.15.jar" />
              <library id="commons-configuration-1.6.jar" />
              <library id="commons-lang-2.6.jar" />
              <library id="commons-collections-3.2.2.jar" />
@@ -819,7 +819,7 @@
 			 <library id="commons-beanutils-1.7.0.jar"/>
 			 <library id="commons-beanutils-core-1.8.0.jar"/>
 			 <library id="commons-cli-1.2.jar"/>
-			 <library id="commons-codec-1.10.jar"/> <!-- TBR with 1.4 -->
+			 <library id="commons-codec-1.15.jar"/> <!-- TBR with 1.4 -->
 			 <library id="commons-collections-3.2.2.jar"/>
 			 <library id="commons-compiler-2.7.6.jar"/> 
 			 <library id="commons-compress-1.4.1.jar"/>
@@ -1178,7 +1178,7 @@
       </classloader>
       <classloader
             index="HBASE:AMAZON_EMR:EMR_5_0_0"
-            libraries="hbase-common-1.2.2.jar;hbase-client-1.2.2.jar;hbase-protocol-1.2.2.jar;hadoop-common-2.7.2-amzn-3.jar;hadoop-auth-2.7.2-amzn-3.jar;commons-logging-1.2.jar;commons-codec-1.9.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.2.jar;zookeeper-3.4.8.jar;htrace-core-3.1.0-incubating.jar;guava-12.0.1.jar;jackson-mapper-asl-1.9.15-TALEND.jar;jackson-core-asl-1.9.15-TALEND.jar;netty-all-4.0.23.Final.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.10.jar;slf4j-log4j12-1.7.10.jar;hbase-server-1.2.2.jar;metrics-core-2.2.0.jar;netty-3.9.0.Final.jar">
+            libraries="hbase-common-1.2.2.jar;hbase-client-1.2.2.jar;hbase-protocol-1.2.2.jar;hadoop-common-2.7.2-amzn-3.jar;hadoop-auth-2.7.2-amzn-3.jar;commons-logging-1.2.jar;commons-codec-1.15.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-collections-3.2.2.jar;zookeeper-3.4.8.jar;htrace-core-3.1.0-incubating.jar;guava-12.0.1.jar;jackson-mapper-asl-1.9.15-TALEND.jar;jackson-core-asl-1.9.15-TALEND.jar;netty-all-4.0.23.Final.jar;protobuf-java-2.5.0.jar;log4j-1.2.17.jar;slf4j-api-1.7.10.jar;slf4j-log4j12-1.7.10.jar;hbase-server-1.2.2.jar;metrics-core-2.2.0.jar;netty-3.9.0.Final.jar">
       </classloader>          
     </extension>
 </plugin>

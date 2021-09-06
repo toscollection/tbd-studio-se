@@ -50,9 +50,9 @@
         </libraryNeeded>
         <libraryNeeded 
          	context="plugin:org.talend.hadoop.distribution.dbr550" 
-         	id="commons-codec-1.10.jar" 
-         	name="commons-codec-1.10.jar" 
-         	mvn_uri="mvn:commons-codec/commons-codec/1.10">
+         	id="commons-codec-1.15.jar" 
+         	name="commons-codec-1.15.jar" 
+         	mvn_uri="mvn:commons-codec/commons-codec/1.15">
         </libraryNeeded>
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
@@ -294,7 +294,7 @@
              <library id="avro-mapred-1.8.2-hadoop2.jar"/>
              <library id="avro-1.8.2.jar"/>
              <library id="avro-compiler-1.8.2.jar"/>
-             <library id="commons-codec-1.10.jar"/>
+             <library id="commons-codec-1.15.jar"/>
              <library id="commons-lang-2.6.jar"/>
              <library id="commons-lang3-3.5.jar"/>
              <library id="commons-logging-1.1.3.jar"/>
