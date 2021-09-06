@@ -472,4 +472,9 @@ public class EMR580Distribution extends EMRDistribution implements
     public boolean doSupportEMRFS() {
         return false;
     }
+    
+    @Override
+	public boolean doSupportMultiBucket() {
+		return false;
+	}
 }

@@ -387,4 +387,9 @@ public class EMR62xDistribution extends AbstractDistribution implements HBaseCom
     public boolean doSupportHBase2x() {
         return true;
     }
+
+	@Override
+	public boolean doSupportMultiBucket() {
+		return true;
+	}
 }
