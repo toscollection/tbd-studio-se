@@ -22,4 +22,8 @@ public interface IAmazonEMRDistribution {
     public boolean doSupportEMRFS();
     
     public String getVersion();
+    
+    //should be true if hadoop2.8+
+    public boolean doSupportMultiBucket();
+    
 }
