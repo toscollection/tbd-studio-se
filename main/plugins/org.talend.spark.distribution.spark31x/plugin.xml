@@ -7,7 +7,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk15on-1.68.jar" name="bcpkix-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.68"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk15on-1.68.jar" name="bcprov-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.68"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-codec-1.11.jar" name="commons-codec-1.11.jar" mvn_uri="mvn:commons-codec/commons-codec/1.11"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-codec-1.15.jar" name="commons-codec-1.15.jar" mvn_uri="mvn:commons-codec/commons-codec/1.15"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-collections-3.2.2.jar" name="commons-collections-3.2.2.jar" mvn_uri="mvn:commons-collections/commons-collections/3.2.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-configuration2-2.1.1.jar" name="commons-configuration2-2.1.1.jar" mvn_uri="mvn:org.apache.commons/commons-configuration2/2.1.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-lang3-3.10.jar" name="commons-lang3-3.10.jar" mvn_uri="mvn:org.apache.commons/commons-lang3/3.10"/>
@@ -128,7 +128,7 @@
             <library id="avro-mapred-1.8.2.jar"/>
             <library id="bcpkix-jdk15on-1.68.jar"/>
             <library id="bcprov-jdk15on-1.68.jar"/>
-            <library id="commons-codec-1.11.jar"/>
+            <library id="commons-codec-1.15.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-configuration2-2.1.1.jar"/>
             <library id="commons-lang3-3.10.jar"/>
