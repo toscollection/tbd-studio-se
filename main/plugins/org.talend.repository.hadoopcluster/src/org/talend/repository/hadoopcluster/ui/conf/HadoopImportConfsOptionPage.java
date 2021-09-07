@@ -115,7 +115,9 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
                 && (IHortonworksDistribution.DISTRIBUTION_NAME.equals(distribution.name) || IClouderaDistribution.DISTRIBUTION_NAME
                         .equals(distribution.name));
         remoteBtn.setEnabled(supportRemote);
-        manualBtn.setEnabled(!"Universal".equals(distribution.getDisplayName()));
+        if (distribution != null) {
+        	manualBtn.setEnabled(!"Universal".equals(distribution.getDisplayName()));
+        }
     }
 
     private void addDistributionFields(Composite parent) {
