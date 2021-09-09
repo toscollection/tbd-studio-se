@@ -823,13 +823,7 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "parquet-hadoop-bundle",
-                "talend-bigdata-launcher-core",
-                "talend-bigdata-launcher-livy",
-                "talend-bigdata-launcher-knox",
-                "gateway-cloud-bindings",
-                "gateway-shell",
-                "gateway-i18n"
+                "parquet-hadoop-bundle"
             ]
         },
         {
