@@ -194,6 +194,7 @@
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-mapreduce-client-common-3.2.1.jar" name="hadoop-mapreduce-client-common-3.2.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-common/3.2.1"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-mapreduce-client-jobclient-3.2.1.jar" name="hadoop-mapreduce-client-jobclient-3.2.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-jobclient/3.2.1"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-mapreduce-client-shuffle-3.2.1.jar" name="hadoop-mapreduce-client-shuffle-3.2.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-shuffle/3.2.1"/>
+          	<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="sqoop-1.4.7-talend.jar" name="sqoop-1.4.7-talend.jar" mvn_uri="mvn:org.talend.bigdata.libs/sqoop-talend/1.4.7"/>
           
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
