@@ -229,6 +229,8 @@
 			<library id="jackson-core-asl-1.9.13.jar"/>
 			<library id="jackson-databind-2.6.7.3.jar"/>
 			<library id="jackson-jaxrs-1.9.13.jar"/>
+			<library id="jackson-jaxrs-base-2.6.7.jar"/>
+			<library id="jackson-jaxrs-json-provier-2.6.7.jar"/>
 			<library id="jackson-mapper-asl-1.9.13.jar"/>
 			<library id="jackson-module-jaxb-annotations-2.6.7.jar"/>
 			<library id="jackson-module-paranamer-2.7.9.jar"/>
