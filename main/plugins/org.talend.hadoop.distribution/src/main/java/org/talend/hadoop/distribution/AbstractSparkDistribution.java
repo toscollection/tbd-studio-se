@@ -89,6 +89,11 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
     }
 	
 	@Override
+    public String getSqoopPackageName() {
+        return ESqoopPackageName.COM_CLOUDERA_SQOOP.toString();
+    }
+	
+	@Override
     public boolean doSupportEmbeddedMode() {
         return false;
     }
