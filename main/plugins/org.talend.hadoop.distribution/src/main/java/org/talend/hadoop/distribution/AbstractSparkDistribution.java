@@ -20,6 +20,7 @@ import java.util.Set;
 import org.talend.core.model.process.INode;
 import org.talend.hadoop.distribution.condition.common.HDFSLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 public abstract class AbstractSparkDistribution extends AbstractDistribution {
@@ -91,5 +92,10 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 	@Override
     public boolean doSupportEmbeddedMode() {
         return false;
+    }
+	
+	@Override
+    public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion version) {
+        return SparkStreamingKafkaVersion.KAFKA_0_10;
     }
 }

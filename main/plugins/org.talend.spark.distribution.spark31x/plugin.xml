@@ -110,6 +110,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="snowflake-jdbc-3.13.13.jar" name="snowflake-jdbc-3.13.13.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.13"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kafka-clients-2.7.0.jar" name="kafka-clients-2.7.0.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/2.7.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kafka_2.12-2.7.0.jar" name="kafka_2.12-2.7.0.jar" mvn_uri="mvn:org.apache.kafka/kafka_2.12/2.7.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="spark-streaming-kafka-0-10_2.12-3.1.1.jar" name="spark-streaming-kafka-0-10_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.1.1"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="spark-streaming-kinesis-asl_2.12-3.1.1.jar" name="spark-streaming-kinesis-asl_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.12/3.1.1"/>
@@ -283,6 +284,7 @@
         <!-- Spark Streaming Kafka group -->
         <libraryNeededGroup description="Spark streaming Kafka libraries for spark311" id="KAFKA-GROUP-SPARK_3_1_x" name="KAFKA-GROUP-SPARK_3_1_x">
             <library id="kafka-clients-2.7.0.jar"/>
+            <library id="kafka_2.12-2.7.0.jar"/>
             <library id="spark-streaming-kafka-0-10_2.12-3.1.1.jar"/>
         </libraryNeededGroup>
 
