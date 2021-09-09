@@ -12764,8 +12764,8 @@
       "context" : "plugin:org.talend.repository.hadoopcluster",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_3_2_dynamic_20201201110315335_0100_hive_exec_shade_2_1_1_cdh6_3_2_talend_1_0_jar_20201201110356937_0100",
-      "mvn_uri" : "mvn:org.talend.bigdata.libs/hive-exec-shade-2.1.1-cdh6.3.2-talend/1.0",
-      "name" : "hive-exec-shade-2.1.1-cdh6.3.2-talend-1.0.jar",
+      "mvn_uri" : "mvn:org.talend.bigdata.libs/hive-exec-shade-2.1.1-cdh6.3.2-talend/1.1",
+      "name" : "hive-exec-shade-2.1.1-cdh6.3.2-talend-1.1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],

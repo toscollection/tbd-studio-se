@@ -415,4 +415,9 @@ public class EMR450Distribution extends EMRDistribution implements HDFSComponent
         return false;
     }
 
+	@Override
+	public boolean doSupportMultiBucket() {
+		return false;
+	}
+
 }

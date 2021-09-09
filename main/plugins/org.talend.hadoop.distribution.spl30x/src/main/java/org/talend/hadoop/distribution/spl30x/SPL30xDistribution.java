@@ -122,6 +122,12 @@ public class SPL30xDistribution extends AbstractDistribution
                                 .getModuleGroup(ModuleGroupName.PARQUET.get(getVersion()),
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         SPL30xDistribution.SPARK_VERSION));
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
+                        SPL30xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.PARQUET.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
 
         // Spark Batch S3
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
@@ -216,6 +222,23 @@ public class SPL30xDistribution extends AbstractDistribution
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.GRADIENT_BOOSTED_TREE_MODEL),
                 SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.MATH.get(getVersion()),
                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION));
+
+        // spark model encoder
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
+                        SPL30xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.MODEL_ENCODER.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
+
+        // spark Streaming model encoder
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                        SparkStreamingConstant.TMODEL_ENCODER_COMPONENT),
+                        SPL30xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.MODEL_ENCODER.get(getVersion()),
+                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        SPL30xDistribution.SPARK_VERSION));
 
         // Spark Streaming TDM
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.HMAP_RECORD_COMPONENT),
