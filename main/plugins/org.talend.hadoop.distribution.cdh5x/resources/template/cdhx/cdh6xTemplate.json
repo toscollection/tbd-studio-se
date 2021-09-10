@@ -1616,13 +1616,6 @@
             ]
         },
         {
-            "id": "MODULE_COMMONS_CODEC",
-            "type": "REFERENCE",
-            "context": "{properties.context}",
-            "jarName": "commons-codec-1.10.jar",
-            "description": ""
-        },
-        {
             "id": "json-20080701",
             "type": "STANDARD",
             "context": "{properties.context}",
