@@ -209,7 +209,7 @@ public class RetrieveConfigurationProcess extends org.talend.designer.core.ui.ed
                             ComponentsFactoryProvider.getInstance().get(componentName, ComponentCategory.CATEGORY_4_DI.getName()),
                             this);
                     libNode.setPropertyValue("UNIQUE_NAME", "tLibraryLoad_1"); //$NON-NLS-1$ //$NON-NLS-2$
-                    libNode.setPropertyValue("LIBRARY", "\"" + moduleName + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    libNode.setPropertyValue("LIBRARY", "\"" + module.getMavenUri() + "\""); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     NodeContainer nc = this.loadNodeContainer(libNode, false);
                     this.addNodeContainer(nc);
                 }
