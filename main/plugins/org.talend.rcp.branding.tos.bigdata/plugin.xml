@@ -46,33 +46,6 @@
       </property>
    </product>
 </extension>
-   <extension
-         point="org.eclipse.ui.intro.config">
-      <config
-            introId="org.talend.rcp.tos.bigdata.intro"
-            content="introContent.xml"
-            id="org.talend.rcp.tos.bigdata.configId">
-         <presentation
-               home-page-id="root">
-            <implementation
-                  kind="html"
-                  os="win32,linux,macosx">
-            </implementation>
-         </presentation>
-      </config>
-   </extension>
-      <extension
-         point="org.eclipse.ui.intro">
-      <intro
-            class="org.eclipse.ui.intro.config.CustomizableIntroPart"
-            icon="platform:/plugin/org.talend.rcp/icons/appli_16x16.gif"
-            id="org.talend.rcp.tos.bigdata.intro">
-      </intro>
-      <introProductBinding
-            introId="org.talend.rcp.tos.bigdata.intro"
-            productId="org.talend.rcp.branding.tos.bigdata.product">
-      </introProductBinding>
-   </extension>
       <extension
          id="application"
          point="org.eclipse.core.runtime.applications">
