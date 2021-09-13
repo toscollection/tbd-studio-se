@@ -36,8 +36,11 @@ boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
 //%cid%_kafkaProducer.close();
 %>
 
+<%=cid%>_kafkaProducer.flush();
 final long <%=cid%>_startCheckingTime = System.nanoTime();
-while (<%=cid%>_counter_send > <%=cid%>_counter_rev.intValue() && java.util.concurrent.TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - <%=cid%>_startCheckingTime) < <%=cid%>_EXCEPTION_CATCH_TIMEOUT);
+while (<%=cid%>_counter_send > <%=cid%>_counter_rev.intValue() && java.util.concurrent.TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - <%=cid%>_startCheckingTime) < <%=cid%>_EXCEPTION_CATCH_TIMEOUT){
+    Thread.sleep(100);
+}
 if (<%=cid%>_counter_send <= <%=cid%>_counter_rev.intValue()) {
 	if (!<%=cid%>_producerExceptions.isEmpty()) {
 		Exception e = <%=cid%>_producerExceptions.iterator().next();
@@ -62,7 +65,9 @@ if (<%=cid%>_counter_send <= <%=cid%>_counter_rev.intValue()) {
 			} else {
 				<%if(isLog4jEnabled){%>	
 					log.error("<%=cid%> - " + e.getMessage());
-				<%}%>
+			<%}else{%>
+			    System.err.println("<%=cid%> - " + e.getMessage());
+			<%}%>
 			}
 		<%
 		}
