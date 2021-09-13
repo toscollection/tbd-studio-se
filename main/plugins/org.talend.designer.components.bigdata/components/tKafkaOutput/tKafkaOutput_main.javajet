@@ -98,6 +98,8 @@ if (!<%=cid%>_producerExceptions.isEmpty()) {
 		} else {
 			<%if(isLog4jEnabled){%>	
 				log.error("<%=cid%> - " + e.getMessage());
+			<%}else{%>
+			    System.err.println("<%=cid%> - " + e.getMessage());
 			<%}%>
 		}
 	<%
