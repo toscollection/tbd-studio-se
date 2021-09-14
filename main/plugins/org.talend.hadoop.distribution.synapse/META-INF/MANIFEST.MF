@@ -3,7 +3,7 @@ Service-Component: OSGI-INF/synapse.xml
 Bundle-ManifestVersion: 2
 Bundle-Name: Azure Synapse
 Bundle-SymbolicName: org.talend.hadoop.distribution.synapse;singleton:=true
-Bundle-Version: 8.0.1.qualifier
+Bundle-Version: 8.0.1.M12
 Bundle-Vendor: .Talend SA.
 Bundle-Activator: org.talend.hadoop.distribution.synapse.SynapsePlugin
 Bundle-ActivationPolicy: lazy
