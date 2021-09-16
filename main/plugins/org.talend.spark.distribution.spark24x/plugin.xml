@@ -421,30 +421,6 @@
 			<library id="libthrift-0.9.3.jar"/>
         </libraryNeededGroup>
         
-        <!-- HBase on DI group -->
-        <libraryNeededGroup description="Hive on DI " id="HBASE-GROUP-SPARK_2_4_x" name="HBASE-GROUP-SPARK_2_4_x">
-        	<group id="HIVE-GROUP-SPARK_2_4_x" />
-        	<library id="htrace-core4-4.2.0-incubating.jar"/>
-			<library id="metrics-core-3.1.5.jar"/>
-			<library id="commons-lang3-3.5.jar"/>
-			<library id="hbase-client-2.1.0.jar"/>
-			<library id="hbase-common-2.1.0.jar"/>
-			<library id="hbase-hadoop-compat-2.1.0.jar"/>
-			<library id="hbase-hadoop2-compat-2.1.0.jar"/>
-			<library id="hbase-http-2.1.0.jar"/>
-			<library id="hbase-metrics-2.1.0.jar"/>
-			<library id="hbase-metrics-api-2.1.0.jar"/>
-			<library id="hbase-procedure-2.1.0.jar"/>
-			<library id="hbase-protocol-2.1.0.jar"/>
-			<library id="hbase-protocol-shaded-2.1.0.jar"/>
-			<library id="hbase-replication-2.1.0.jar"/>
-			<library id="hbase-server-2.1.0.jar"/>
-			<library id="hbase-shaded-miscellaneous-2.1.0.jar"/>
-			<library id="hbase-shaded-netty-2.1.0.jar"/>
-			<library id="hbase-shaded-protobuf-2.1.0.jar"/>
-			<library id="hbase-zookeeper-2.1.0.jar"/>
-        </libraryNeededGroup>
-        
         <!-- Impala group -->
         <libraryNeededGroup description="Impala " id="IMPALA-GROUP-SPARK_2_4_x" name="IMPALA-GROUP-SPARK_2_4_x">
         	<group id="HIVE-GROUP-SPARK_2_4_x" />
