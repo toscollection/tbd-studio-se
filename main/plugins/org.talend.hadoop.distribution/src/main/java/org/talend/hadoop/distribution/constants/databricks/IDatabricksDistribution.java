@@ -22,5 +22,7 @@ public interface IDatabricksDistribution {
     static final String DISTRIBUTION_DISPLAY_NAME = "Databricks";
 
     List<EDatabriksCloudProvider> getSupportCloudProviders();
+    
+    List<EDatabriksSubmitMode> getRunSubmitMode();
 
 }

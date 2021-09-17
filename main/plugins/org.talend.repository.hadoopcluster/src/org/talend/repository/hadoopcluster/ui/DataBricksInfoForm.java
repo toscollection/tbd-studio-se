@@ -36,6 +36,7 @@ import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.model.properties.ConnectionItem;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
 import org.talend.hadoop.distribution.constants.databricks.IDatabricksDistribution;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -52,6 +53,8 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText endpointText;
 
     private LabelledCombo cloudProviderCombo;
+    
+    private LabelledCombo runSubmitCombo;
 
     private LabelledText clusterIDText;
 
@@ -115,6 +118,8 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private void addConfigurationFields() {
         Group configGroup = Form.createGroup(this, 2, Messages.getString("DataBricksInfoForm.text.configuration"), 110); //$NON-NLS-1$
         configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        runSubmitCombo = new LabelledCombo(configGroup, Messages.getString("DataBricksInfoForm.text.runSubmitMode"), "", //$NON-NLS-1$ $NON-NLS-2$
+                getRunSubmitModes());
         cloudProviderCombo = new LabelledCombo(configGroup, Messages.getString("DataBricksInfoForm.text.cloudProvider"), "", //$NON-NLS-1$ $NON-NLS-2$
                 getProviders());
         endpointText = new LabelledText(configGroup, Messages.getString("DataBricksInfoForm.text.endPoint"), 1); //$NON-NLS-1$
@@ -210,6 +215,16 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 String providerLableName = cloudProviderCombo.getText();
                     getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER,
                         getDatabriksCloudProviderByName(providerLableName).getProviderValue());
+                    checkFieldsValue();
+            }
+        });
+        runSubmitCombo.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String runModeLableName = runSubmitCombo.getText();
+                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE,
+                    		getDatabriksRunModeByName(runModeLableName).getRunModeValue());
                     checkFieldsValue();
             }
         });
@@ -311,7 +326,13 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
             cloudProviderCombo.setText(EDatabriksCloudProvider.AWS.getProviderLableName());
         }
-
+        String runModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE);
+        if (runModeValue != null) {
+        	runSubmitCombo.setText(getDatabriksRunModeByValue(runModeValue).getRunModeLabel());
+        } else {
+        	runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
+        }
+        
         String endPoint = StringUtils
                 .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT));
         endpointText.setText(endPoint);
@@ -403,6 +424,19 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         return providerLableNames;
     }
+    
+    private List<String> getRunSubmitModes() {
+    	List<String> runSubmitLabelNames = new ArrayList<String>();
+        if (databricksDistribution != null) {
+            List<EDatabriksSubmitMode> runSubmitModes = databricksDistribution.getRunSubmitMode();
+            if (runSubmitModes != null) {
+            	runSubmitLabelNames = runSubmitModes.stream().map(mode -> {
+                    return mode.getRunModeLabel();
+                }).collect(Collectors.toList());
+            }
+        }
+        return runSubmitLabelNames;
+    }
 
     private EDatabriksCloudProvider getDatabriksCloudProviderByName(String providerLableName) {
         if (databricksDistribution != null) {
@@ -415,6 +449,18 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         return EDatabriksCloudProvider.AWS;
     }
+    
+    private EDatabriksSubmitMode getDatabriksRunModeByName(String runModeLableName) {
+        if (databricksDistribution != null) {
+            List<EDatabriksSubmitMode> supportRunModes = databricksDistribution.getRunSubmitMode();
+            for (EDatabriksSubmitMode provider : supportRunModes) {
+                if (StringUtils.equals(provider.getRunModeLabel(), runModeLableName)) {
+                    return provider;
+                }
+            }
+        }
+        return EDatabriksSubmitMode.CREATE_RUN_JOB;
+    }
 
     private EDatabriksCloudProvider getDatabriksCloudProviderByVaule(String providerValue) {
         if (databricksDistribution != null) {
@@ -426,5 +472,17 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
         }
         return EDatabriksCloudProvider.AWS;
+    }
+    
+    private EDatabriksSubmitMode getDatabriksRunModeByValue(String runModeValue) {
+        if (databricksDistribution != null) {
+            List<EDatabriksSubmitMode> runModes = databricksDistribution.getRunSubmitMode();
+            for (EDatabriksSubmitMode runMode : runModes) {
+                if (StringUtils.equals(runMode.getRunModeValue(), runModeValue)) {
+                    return runMode;
+                }
+            }
+        }
+        return EDatabriksSubmitMode.CREATE_RUN_JOB;
     }
 }

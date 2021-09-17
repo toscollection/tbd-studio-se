@@ -21,6 +21,7 @@ import java.util.Set;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
 import org.talend.hadoop.distribution.constants.databricks.IDatabricksDistribution;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -37,6 +38,10 @@ public abstract class AbstractDatabricksDistribution extends AbstractDistributio
         return Arrays.asList(EDatabriksCloudProvider.values());
     }
     
+    public List<EDatabriksSubmitMode> getRunSubmitMode() {
+    	return Arrays.asList(EDatabriksSubmitMode.values());
+    }
+    
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(
             String distribution, String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = new HashMap<>();
@@ -49,4 +54,8 @@ public abstract class AbstractDatabricksDistribution extends AbstractDistributio
         return result;
     }
     
+    @Override
+    public boolean doSupportSparkYarnClusterMode() {
+        return false;
+    }
 }
