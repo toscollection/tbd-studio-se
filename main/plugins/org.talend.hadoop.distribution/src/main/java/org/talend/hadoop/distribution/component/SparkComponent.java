@@ -123,4 +123,5 @@ public interface SparkComponent extends MRComponent {
      * returns the class path used by lightweight on cluster side
      */
     public String getLightWeightClasspath();
+    
 }
