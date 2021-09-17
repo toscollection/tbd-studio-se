@@ -642,6 +642,4 @@ public abstract class AbstractDistribution {
        
         return result;
     }
-    
-    
 }
