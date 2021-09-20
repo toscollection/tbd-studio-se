@@ -647,17 +647,15 @@
 	class CQLManagerV4Driver extends CQLManager {
 		public CQLManagerV4Driver(INode node, List<IMetadataColumn> columnList){
         	super(node, columnList);
-			%>
-			//Initializaing CQLManagerV4Driver
-			<%
+        }
+		
+		protected String getDBMSId(){
+            return "cassandra40_datastax_id";
         }
 		
 		protected String generateSetStmt(String assignStmt, Column column, String inConnName, int index){
             String dbType = validateDBType(column);
             String columnValue = inConnName + "." + column.getName();
-			%>
-			//generating data for column <%=columnValue%> with type <%=dbType%>
-			<%
             StringBuilder setStmt = new StringBuilder();
             if(column.isObject()){
                 setStmt.append("if(" + columnValue + " == null){\r\n");
