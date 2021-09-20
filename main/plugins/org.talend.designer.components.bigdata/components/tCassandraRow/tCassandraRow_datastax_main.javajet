@@ -1,18 +1,32 @@
 <%@ jet %>
     <% 
     boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
+	INode nodeWithVersion = useExistConn ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node;
+	String dbVersion = ElementParameterParser.getValue(nodeWithVersion, "__DB_VERSION__");
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     if(useExistConn){
-    %>
-        com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
-        com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
-    <%
+		if("CASSANDRA_4_0".equals(dbVersion)) {
+		%>
+			com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = (com.datastax.oss.driver.api.core.CqlSession)globalMap.get("connection_<%=connection%>");
+		<%
+		} else {
+		%>
+			com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
+			com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
+		<%
+		}
     }else{  
     %>
         <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/tCassandraConnection_datastax_connect.javajet"%>
-        resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
-        resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
-    <%
+		<%
+		if(!"CASSANDRA_4_0".equals(dbVersion)) {
+		%>
+			resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+		<%
+		}
+		%>
+		resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
+	<%
     }
     Boolean dieOnError = ElementParameterParser.getBooleanValue(node, "__DIE_ON_ERROR__");
     String query = ElementParameterParser.getValue(node, "__QUERY__").replaceAll("[\r\n]", " ");
@@ -36,7 +50,11 @@
     if(!useExistConn){
     %>
         connection_<%=cid%>.close();
-        cluster_<%=cid%>.close();
-    <%
+		<%
+		if(!"CASSANDRA_4_0".equals(dbVersion)) {
+		%>
+			cluster_<%=cid%>.close();
+		<%
+		}
     }
     %>

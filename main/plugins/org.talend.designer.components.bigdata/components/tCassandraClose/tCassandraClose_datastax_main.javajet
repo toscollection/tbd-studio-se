@@ -1,10 +1,31 @@
-<%@ jet %>
-	com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
-	com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
-	if(connection_<%=cid%> != null){
-		connection_<%=cid%>.close();
+<%@ jet 
+mports="
+    	org.talend.core.model.process.INode 
+    	org.talend.core.model.process.ElementParameterParser 
+    	org.talend.designer.codegen.config.CodeGeneratorArgument
+    	org.talend.core.model.utils.NodeUtil
+"
+%>
+	<%
+	String dbVersion = ElementParameterParser.getValue(connectionNode, "__DB_VERSION__");
+	if("CASSANDRA_4_0".equals(dbVersion)) {
+	%>
+		com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = (com.datastax.oss.driver.api.core.CqlSession)globalMap.get("connection_<%=connection%>");
+		if(connection_<%=cid%> != null){
+			connection_<%=cid%>.close();
+		}
+	<%
+	} else {
+	%>
+		com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
+		com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
+		if(connection_<%=cid%> != null){
+			connection_<%=cid%>.close();
+		}
+		if(cluster_<%=cid%> != null){
+			cluster_<%=cid%>.close();
+		}
+	<%
 	}
-	if(cluster_<%=cid%> != null){
-		cluster_<%=cid%>.close();
-	}
+	%>
 	
