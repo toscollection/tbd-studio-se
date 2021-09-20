@@ -24,12 +24,26 @@
     if(!useExistConn){
     %>
     	if(resourceMap.get("finish_<%=cid%>") == null){
-    		if(resourceMap.get("connection_<%=cid%>") != null){
-    			((com.datastax.driver.core.Session)resourceMap.get("connection_<%=cid%>")).close();
-    		}
-    		if(resourceMap.get("cluster_<%=cid%>") != null){
-    			((com.datastax.driver.core.Cluster)resourceMap.get("cluster_<%=cid%>")).close();
-    		}
+			<%
+			String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+			if("CASSANDRA_4_0".equals(dbVersion)) {
+			%>
+				if(resourceMap.get("connection_<%=cid%>") != null){
+					((com.datastax.oss.driver.api.core.session.Session)resourceMap.get("connection_<%=cid%>")).close();
+				}
+			<%
+			} else {
+			%>
+			
+				if(resourceMap.get("connection_<%=cid%>") != null){
+					((com.datastax.driver.core.Session)resourceMap.get("connection_<%=cid%>")).close();
+				}
+				if(resourceMap.get("cluster_<%=cid%>") != null){
+					((com.datastax.driver.core.Cluster)resourceMap.get("cluster_<%=cid%>")).close();
+				}
+			<%
+			}
+			%>
     	}
     <%
     }
