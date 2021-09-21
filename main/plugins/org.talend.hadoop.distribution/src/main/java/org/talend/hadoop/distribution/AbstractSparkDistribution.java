@@ -98,4 +98,14 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
     public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion version) {
         return SparkStreamingKafkaVersion.KAFKA_0_10;
     }
+	
+	@Override 
+	public boolean doSupportHBase2x() {
+		return true;
+	}
+	
+	@Override 
+	public boolean doSupportHBase1x() {
+		return true;
+	}
 }
