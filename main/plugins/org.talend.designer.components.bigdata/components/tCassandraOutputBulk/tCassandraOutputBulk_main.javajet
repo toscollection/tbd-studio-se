@@ -70,7 +70,7 @@ if("CASSANDRA_4_0".equals(version)) {
 		<%
 		}else if(javaType == JavaTypesManager.BYTE_ARRAY){
 		%>
-			java.nio.charset.Charset.forName(<%=encoding %>).decode(java.nio.ByteBuffer.wrap(<%=inConnName %>.<%=column.getLabel() %>)).toString();
+			new String(java.util.Base64.getEncoder().encode(java.nio.charset.Charset.forName(<%=encoding %>).decode(java.nio.ByteBuffer.wrap(<%=inConnName %>.<%=column.getLabel() %>)).toString().getBytes()));
 		<%
 		} else if (javaType == JavaTypesManager.BIGDECIMAL) {
 		%>
