@@ -173,7 +173,7 @@
 			FIELD="CLOSED_LIST"
 			NUM_ROW="28"
 			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE=='false')"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE=='true')"
 		>
 			<ITEMS DEFAULT="NONE">
                 <ITEM NAME="NONE" VALUE="NONE"/>
