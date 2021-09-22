@@ -12,10 +12,12 @@
 // ============================================================================
 package org.talend.repository.hadoopcluster.ui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.core.runtime.IStatus;
@@ -69,6 +71,9 @@ import org.talend.designer.hdfsbrowse.hadoop.service.check.CheckHadoopServicesDi
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterValidator;
 import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.MRComponent;
+import org.talend.hadoop.distribution.constants.apache.ESparkMode;
+import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -227,6 +232,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledFileField webHDFSSSLTrustStorePath;
 
     private LabelledText webHDFSSSLTrustStorePassword;
+    
+    private LabelledCombo sparkModeCombo;
+    
+    private ISparkDistribution sparkDistribution;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -236,6 +245,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         this.creation = creation;
         this.hadoopDistribution = hadoopDistribution;
         this.hadoopVersison = hadoopVersison;
+        if (hadoopVersison != null && hadoopVersison.hadoopComponent instanceof ISparkDistribution) {
+            this.sparkDistribution = (ISparkDistribution) hadoopVersison.hadoopComponent;
+        }
         setConnectionItem(connectionItem);
         setupForm(true);
         init();
@@ -324,6 +336,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         	setHadoopConfBtn.setEnabled(false);
         	setHadoopConfBtn.setSelection(true);
         	hadoopConfSpecificJarText.setEditable(true);
+        	String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
+        	if (sparkModeValue != null) {
+            	sparkModeCombo.setText(getSparkModeByValue(sparkModeValue).getLabel());
+            } else {
+            	sparkModeCombo.setText(ESparkMode.YARN_CLUSTER.getLabel());
+            }
         }
     }
 
@@ -436,11 +454,18 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     @Override
     protected void addFields() {
 
+    	if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+        	Group configGroup = Form.createGroup(this, 2, Messages.getString("HadoopClusterForm.sparkConfig"), 120); //$NON-NLS-1$
+            configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+            sparkModeCombo = new LabelledCombo(configGroup, Messages.getString("HadoopClusterForm.sparkMode"), Messages.getString("HadoopClusterForm.sparkMode.tooltip"), //$NON-NLS-1$ $NON-NLS-2$
+            		getSparkModes());
+        }
+    	
         Composite parent = new Composite(this, SWT.NONE);
         parent.setLayout(new FillLayout());
         GridData parentGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         parent.setLayoutData(parentGridData);
-
+        
         sash = new SashForm(parent, SWT.VERTICAL | SWT.SMOOTH);
         sash.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
         GridLayout layout = new GridLayout();
@@ -486,7 +511,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addHadoopConfsFields();
 
         addCheckFields();
-
+        
         scrolledComposite.addControlListener(new ControlAdapter() {
             @Override
             public void controlResized(ControlEvent e) {
@@ -1248,7 +1273,18 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+        if (sparkModeCombo != null) {
+        	sparkModeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
 
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    String sparkModeLableName = sparkModeCombo.getText();
+                        getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
+                        		getSparkModeByName(sparkModeLableName).getValue());
+                        checkFieldsValue();
+                }
+            });	
+        }
     }
 
     private void onUseCustomConfBtnSelected(SelectionEvent event) {
@@ -1951,6 +1987,43 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     protected void exportAsContext() {
         super.exportAsContext();
         HadoopConfsUtils.updateContextualHadoopConfs((HadoopClusterConnectionItem) this.connectionItem);
+    }
+    
+    private List<String> getSparkModes() {
+    	List<String> sparkModeNames = new ArrayList<String>();
+        if (sparkDistribution != null) {
+            List<ESparkMode> sparkModes = sparkDistribution.getSparkModes();
+            if (sparkModes != null) {
+            	sparkModeNames = sparkModes.stream().map(mode -> {
+                    return mode.getLabel();
+                }).collect(Collectors.toList());
+            }
+        }
+        return sparkModeNames;
+    }
+    
+    private ESparkMode getSparkModeByName(String sparkModeName) {
+        if (sparkDistribution != null) {
+            List<ESparkMode> supportRunModes = sparkDistribution.getSparkModes();
+            for (ESparkMode provider : supportRunModes) {
+                if (StringUtils.equals(provider.getLabel(), sparkModeName)) {
+                    return provider;
+                }
+            }
+        }
+        return ESparkMode.YARN_CLUSTER;
+    }
+    
+    private ESparkMode getSparkModeByValue(String sparkModeValue) {
+        if (sparkDistribution != null) {
+            List<ESparkMode> runModes = sparkDistribution.getSparkModes();
+            for (ESparkMode runMode : runModes) {
+                if (StringUtils.equals(runMode.getValue(), sparkModeValue)) {
+                    return runMode;
+                }
+            }
+        }
+        return ESparkMode.YARN_CLUSTER;
     }
 
 }
