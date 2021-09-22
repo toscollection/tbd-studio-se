@@ -71,6 +71,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 			classpath += classpathSeparator + hadoopHome + "/../sqoop/*"; //HDP hbase lib for spark
 			classpath += classpathSeparator + "/usr/lib/sqoop/lib/*"; //EMR
 		}
+		if (doesJobContain(nodes, "kudu")) {
+			classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/kudu/*"; //CDH&CDP hbase lib for spark
+		}
 		return classpath;
 	}
 	
