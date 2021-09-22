@@ -15,6 +15,6 @@
    <requires>
       <import plugin="org.talend.designer.maven.repo.tck" version="0.0.0" match="greaterOrEqual"/>
       <import plugin="org.talend.designer.maven.repo.tcksdk" version="0.0.0" match="greaterOrEqual"/>
+      <import plugin="org.talend.studio.components.bd.cosmosdb"/>
    </requires>
-   <plugin id="org.talend.studio.components.bd.cosmosdb" download-size="0" install-size="0" version="0.0.0" unpack="true"/>
 </feature>
