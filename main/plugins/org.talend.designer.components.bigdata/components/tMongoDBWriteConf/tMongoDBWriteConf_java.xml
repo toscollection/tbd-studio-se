@@ -282,6 +282,13 @@
             <DEFAULT>"query"</DEFAULT>
         </PARAMETER>
         <PARAMETER
+            FIELD="TEXT"
+            NAME="PUSH_NODE"
+            NUM_ROW="31"
+        >
+            <DEFAULT>"push"</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
             NAME="REMOVE_ROOT"
             FIELD="CHECK"
             NUM_ROW="36"
