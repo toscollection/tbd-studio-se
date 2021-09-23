@@ -13,8 +13,9 @@
       [Enter License Description here.]
    </license>
    <requires>
-      <import plugin="org.talend.designer.maven.repo.tcompv0"/>
-      <import plugin="org.talend.studio.components.tcompv0.couchbase"/>
-      <import plugin="org.talend.components.couchbase"/>
+      <import plugin="org.talend.designer.maven.repo.tcompv0" version="0.0.0" match="greaterOrEqual"/>
    </requires>
+   <plugin id="org.talend.studio.components.tcompv0.couchbase" download-size="0" install-size="0" version="0.0.0"/>
+
+   <plugin id="org.talend.components.couchbase" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 </feature>
