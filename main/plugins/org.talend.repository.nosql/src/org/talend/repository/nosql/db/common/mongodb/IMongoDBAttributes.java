@@ -28,4 +28,17 @@ public interface IMongoDBAttributes extends INoSQLCommonAttributes {
     public final static String COLLECTION = "COLLECTION"; //$NON-NLS-1$
 
     public final static String REQUIRED_ENCRYPTION = "REQUIRED_ENCRYPTION"; //$NON-NLS-1$
+    
+    public static final String SET_AUTHENTICATION_DATABASE = "SET_AUTHENTICATION_DATABASE"; //$NON-NLS-1$
+    
+    public static final String AUTHENTICATION_DATABASE = "AUTHENTICATION_DATABASE"; //$NON-NLS-1$
+    
+    public static final String AUTHENTICATION_MECHANISM = "AUTHENTICATION_MECHANISM"; //$NON-NLS-1$
+    
+    public static final String KRB_USER_PRINCIPAL = "KRB_USER_PRINCIPAL"; //$NON-NLS-1$
+    
+    public static final String KRB_REALM = "KRB_REALM"; //$NON-NLS-1$
+    
+    public static final String KRB_KDC = "KRB_KDC"; //$NON-NLS-1$
+    
 }

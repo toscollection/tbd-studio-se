@@ -107,6 +107,22 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), JavaTypesManager.PASSWORD);
                         break;
+                    case AuthenticationDatabase:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_DATABASE), javaType);
+                        break;
+                    case UserPrincipal:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.KRB_USER_PRINCIPAL), javaType);
+                        break;
+                    case Realm:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.KRB_REALM), javaType);
+                        break;
+                    case KDCServer:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.KRB_KDC), javaType);
+                        break;
                     case ReplicaSets:
                         String replicaSets = conn.getAttributes().get(IMongoDBAttributes.REPLICA_SET);
                         if (StringUtils.isNotEmpty(replicaSets)) {
@@ -283,6 +299,22 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
             break;
         case Password:
             noSqlConn.getAttributes().put(INoSQLCommonAttributes.PASSWORD,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case AuthenticationDatabase:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_DATABASE,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case UserPrincipal:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.KRB_USER_PRINCIPAL,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case Realm:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.KRB_REALM,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case KDCServer:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.KRB_KDC,
                     ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
             break;
         case ReplicaSets:

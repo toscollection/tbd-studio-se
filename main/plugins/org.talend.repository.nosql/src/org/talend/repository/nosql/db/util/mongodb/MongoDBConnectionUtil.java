@@ -237,9 +237,7 @@ public class MongoDBConnectionUtil {
 
             String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
             if (requireAuth) {
-                Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
-                        new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
-                        char[].class);
+                Object credential = getCredential(connection, contextType, user, pass, classLoader);
                 NoSQLReflection.invokeMethod(clientSettingsBuilder, "credential", new Object[] { credential }, //$NON-NLS-1$
                         Class.forName("com.mongodb.MongoCredential", true, classLoader)); //$NON-NLS-1$
             }
@@ -303,9 +301,7 @@ public class MongoDBConnectionUtil {
 
             String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
             if (requireAuth) {
-                Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
-                        new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
-                        char[].class);
+                Object credential = getCredential(connection, contextType, user, pass, classLoader);
                 credentials.add(credential);
             }
 
@@ -543,5 +539,57 @@ public class MongoDBConnectionUtil {
                 ExceptionHandler.process(e);
             }
         }
+    }
+    
+    //TUP-32857, keep the same configuration as tMongoDBConnection and the logic is referred from GeneralMongoDBConnectionSettings_4_4_X.javajet
+    private static Object getCredential(NoSQLConnection connection, ContextType contextType, String user, String pass, ClassLoader classLoader) throws Exception{
+        // Client Credentials
+        String authDatabase = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_DATABASE);
+        String authMechanism = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+        String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
+        String setAuthDatabase = connection.getAttributes().get(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE);
+        boolean useAuthDB = setAuthDatabase == null ? false : Boolean.valueOf(setAuthDatabase);
+        authDatabase = useAuthDB ? authDatabase : database;
+        if (contextType != null) {
+            authDatabase = ContextParameterUtils.getOriginalValue(contextType, authDatabase);
+            database = ContextParameterUtils.getOriginalValue(contextType, database);
+        }
+        //for backport on legacy metadata configuration
+        Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
+                new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
+                char[].class);
+        if (authMechanism.equals(IMongoConstants.NEGOTIATE_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createCredential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, authDatabase, pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.PLAIN_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createPlainCredential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, "$external", pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.SCRAMSHA1_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, authDatabase, pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.SCRAMSHA256_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha256Credential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, authDatabase, pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.KERBEROS_MEC)) {
+            String krbUserPrincipal = connection.getAttributes().get(IMongoDBAttributes.KRB_USER_PRINCIPAL);
+            String krbRealm = connection.getAttributes().get(IMongoDBAttributes.KRB_REALM);
+            String krbKdc = connection.getAttributes().get(IMongoDBAttributes.KRB_KDC);
+            if (contextType != null) {
+                krbUserPrincipal = ContextParameterUtils.getOriginalValue(contextType, krbUserPrincipal);
+                krbRealm = ContextParameterUtils.getOriginalValue(contextType, krbRealm);
+                krbKdc = ContextParameterUtils.getOriginalValue(contextType, krbKdc);
+            }
+            // GSSAPI SASL (KERBEROS)
+            System.setProperty("java.security.krb5.realm", krbRealm);
+            System.setProperty("java.security.krb5.kdc", krbKdc);
+            System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createGSSAPICredential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { krbUserPrincipal }, classLoader, String.class);
+        } 
+        return credential;
     }
 }
