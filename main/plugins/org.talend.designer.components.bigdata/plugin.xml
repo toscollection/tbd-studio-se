@@ -313,6 +313,7 @@
 		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-zookeeper-2.1.0.jar" name="hbase-zookeeper-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-zookeeper/2.1.0"/>
 		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core4-4.2.0-incubating.jar" name="htrace-core4-4.2.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.2.0-incubating"/>
 		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-3.1.5.jar" name="metrics-core-3.1.5.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-core/3.1.5"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="zookeeper-3.4.12.jar" name="zookeeper-3.4.12.jar" mvn_uri="mvn:org.apache.zookeeper/zookeeper/3.4.12"/>
 		
 		<!-- HBase2 group  -->
 		<libraryNeededGroup description="HBASE 2.1.0" id="HBASE-2.1.0" name="HBASE-2.1.0">
@@ -335,6 +336,7 @@
 			<library id="hbase-shaded-netty-2.1.0.jar"/>
 			<library id="hbase-shaded-protobuf-2.1.0.jar"/>
 			<library id="hbase-zookeeper-2.1.0.jar"/>
+			<library id="zookeeper-3.4.12.jar"/>
         </libraryNeededGroup>
         
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-1.4.10.jar" name="hbase-common-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/1.4.10"/>
@@ -346,8 +348,6 @@
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core-3.1.0-incubating.jar" name="htrace-core-3.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core/3.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="netty-all-4.1.17.Final.jar" name="netty-all-4.1.17.Final.jar" mvn_uri="mvn:io.netty/netty-all/4.1.17.Final"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-2.2.0.jar" name="metrics-core-2.2.0.jar" mvn_uri="mvn:com.yammer.metrics/metrics-core/2.2.0"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="zookeeper-3.4.12.jar" name="zookeeper-3.4.12.jar" mvn_uri="mvn:org.apache.zookeeper/zookeeper/3.4.12"/>
-
         
         <!-- HBase1 group  -->
         <libraryNeededGroup description="HBASE 1.4.10" id="HBASE-1.4.10" name="HBASE-1.4.10">
