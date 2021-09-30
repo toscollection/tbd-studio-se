@@ -37,7 +37,7 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="3"
             >
-            <ITEMS DEFAULT="CASSANDRA_3_0">
+            <ITEMS DEFAULT="CASSANDRA_4_0">
                 <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>
 				<ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
@@ -108,19 +108,6 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 		
-		<PARAMETER NAME="USE_CONF_FILE_4_0" FIELD="CHECK" NUM_ROW="15" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')">
-            <DEFAULT>false</DEFAULT>
-        </PARAMETER>
-        <PARAMETER
-            NAME="CONF_FILE_4_0"
-            FIELD="FILE"
-            REQUIRED="true"
-            NUM_ROW="16"
-            SHOW_IF="(isShow[USE_CONF_FILE_4_0]) AND (USE_CONF_FILE_4_0 == 'true')"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>		
-		
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"
@@ -141,15 +128,6 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 		
-		<PARAMETER
-			NAME="USE_STATEMENT"
-			FIELD="CHECK"
-			NUM_ROW="26"
-			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
         <PARAMETER
             NAME="INSERT_STMT"
             FIELD="TEXT"
@@ -180,15 +158,6 @@
         >
           <DEFAULT>"0=id, 1=name, 2=birthday"</DEFAULT>
         </PARAMETER>
-		<PARAMETER
-			NAME="USE_HEADER"
-			FIELD="CHECK"
-			NUM_ROW="33"
-			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
 		<PARAMETER
             NAME="DATA_FILE_PATH"
             FIELD="FILE"
@@ -222,8 +191,38 @@
 		<PARAMETER NAME="TEXT_ENCLOSURE" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" MAX_LENGTH="1" REPOSITORY_VALUE="TEXT_ENCLOSURE" SHOW="false">
 		  <DEFAULT>"\""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="60" REQUIRED="true" REPOSITORY_VALUE="ENCODING" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
+		<PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="50" REQUIRED="true" REPOSITORY_VALUE="ENCODING" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
 		  <DEFAULT>"ISO-8859-15"</DEFAULT>
+		</PARAMETER>
+		<PARAMETER NAME="USE_CONF_FILE_4_0" FIELD="CHECK" NUM_ROW="55" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
+            NAME="CONF_FILE_4_0"
+            FIELD="FILE"
+            REQUIRED="true"
+            NUM_ROW="56"
+            SHOW_IF="(isShow[USE_CONF_FILE_4_0]) AND (USE_CONF_FILE_4_0 == 'true')"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+			NAME="USE_STATEMENT"
+			FIELD="CHECK"
+			NUM_ROW="60"
+			REQUIRED="true"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="USE_HEADER"
+			FIELD="CHECK"
+			NUM_ROW="65"
+			REQUIRED="true"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')"
+		>
+			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
     </ADVANCED_PARAMETERS>
     <CODEGENERATION>
@@ -637,9 +636,6 @@
 				    NAME="reactor-core-3.4.2"
 				    MODULE="reactor-core-3.4.2.jar" MVN="mvn:io.projectreactor/reactor-core/3.4.2" />
 				<IMPORT
-				    NAME="logback-core-1.2.3"
-				    MODULE="logback-core-1.2.3.jar" MVN="mvn:ch.qos.logback/logback-core/1.2.3" />
-				<IMPORT
                     NAME="jul-to-slf4j-1.7.26"
                     MODULE="jul-to-slf4j-1.7.26.jar" MVN="mvn:org.slf4j/jul-to-slf4j/1.7.26" />
 				<IMPORT MODULE="netty-common-4.1.60.Final.jar"
@@ -669,18 +665,18 @@
 				<IMPORT MODULE="jackson-annotations-2.12.2.jar"
 					MVN="mvn:com.fasterxml.jackson.core/jackson-annotations/2.12.2"
 					NAME="jackson-annotations-2.12.2.jar" />
-				<IMPORT MODULE="antl4-runtime-4.9.1.jar"
-					MVN="mvn:org.antlr/antl4-runtime/4.9.1"
-					NAME="antl4-runtime-4.9.1.jar" />
+				<IMPORT MODULE="antlr4-runtime-4.9.1.jar"
+					MVN="mvn:org.antlr/antlr4-runtime/4.9.1"
+					NAME="antlr4-runtime-4.9.1.jar" />
 				<IMPORT MODULE="caffeine-2.8.8.jar"
 					MVN="mvn:com.github.ben-manes.caffeine/caffeine/2.8.8"
 					NAME="caffeine-2.8.8.jar" />
 				<IMPORT MODULE="metrics-core-4.1.18.jar"
 					MVN="mvn:io.dropwizard.metrics/metrics-core/4.1.18"
 					NAME="metrics-core-4.1.18.jar" />
-				<IMPORT MODULE="metrics-jmx-4.1.18.jar"
-					MVN="mvn:io.dropwizard.metrics/metrics-jmx/4.1.18"
-					NAME="metrics-jmx-4.1.18.jar" />
+				<IMPORT MODULE="metrics-jmx-4.1.17.jar"
+					MVN="mvn:io.dropwizard.metrics/metrics-jmx/4.1.17"
+					NAME="metrics-jmx-4.1.17.jar" />
 				<IMPORT MODULE="HdrHistogram-2.1.12.jar"
 					MVN="mvn:org.hdrhistogram/HdrHistogram/2.1.12"
 					NAME="HdrHistogram-2.1.12.jar" />
@@ -696,8 +692,11 @@
                     NAME="univocity-parsers-2.9.1"
                     MODULE="univocity-parsers-2.9.1.jar" MVN="mvn:com.univocity/univocity-parsers/2.9.1" />
 				<IMPORT
+				    NAME="logback-core-1.2.3"
+				    MODULE="logback-core-1.2.3.jar" MVN="mvn:org.talend.components/logback-core/1.2.3" />
+				<IMPORT
 				    NAME="logback-classic-1.2.3"
-				    MODULE="logback-classic-1.2.3.jar" MVN="mvn:ch.qos.logback/logback-classic/1.2.3" />
+				    MODULE="logback-classic-1.2.3.jar" MVN="mvn:org.talend.components/logback-classic/1.2.3" />
 				<IMPORT
 				    NAME="reactive-streams-1.0.3"
 				    MODULE="reactive-streams-1.0.3.jar" MVN="mvn:org.reactivestreams/reactive-streams/1.0.3" />
