@@ -30,4 +30,20 @@ public interface IMongoConstants {
 
     public final static String DEFAULT_PORT = "27017"; //$NON-NLS-1$
 
+    public final static String NEGOTIATE_MEC = "NEGOTIATE_MEC";
+    
+    public final static String PLAIN_MEC = "PLAIN_MEC";
+    
+    public final static String SCRAMSHA1_MEC = "SCRAMSHA1_MEC";
+    
+    public final static String SCRAMSHA256_MEC = "SCRAMSHA256_MEC";
+    
+    public final static String KERBEROS_MEC = "KERBEROS_MEC";
+    
+    public final static String DEFAULT_KRB_USER_PRINCIPAL = "mongouser@EXAMPLE.COM";
+    
+    public final static String DEFAULT_KRB_REALM = "EXAMPLE.COM";
+    
+    public final static String DEFAULT_KRB_KDC = "kdc.example.com";
+    
 }

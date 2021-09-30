@@ -49,6 +49,18 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
         } else if (IMongoDBAttributes.PASSWORD.equals(value)) {
             return getCanonicalRepositoryValue(connection,
                     connection.getValue(connection.getAttributes().get(IMongoDBAttributes.PASSWORD), false));
+        } else if (IMongoDBAttributes.AUTHENTICATION_MECHANISM.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM), false);
+        } else if (IMongoDBAttributes.SET_AUTHENTICATION_DATABASE.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE), false);
+        } else if (IMongoDBAttributes.AUTHENTICATION_DATABASE.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_DATABASE));
+        } else if (IMongoDBAttributes.KRB_USER_PRINCIPAL.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.KRB_USER_PRINCIPAL));
+        } else if (IMongoDBAttributes.KRB_REALM.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.KRB_REALM));
+        } else if (IMongoDBAttributes.KRB_KDC.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.KRB_KDC));
         } else if (IMongoDBAttributes.USE_REPLICA_SET.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.USE_REPLICA_SET),
                     false);
@@ -98,6 +110,16 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(IMongoDBAttributes.REQUIRED_AUTHENTICATION, value);
+            }
+        } else if (IMongoDBAttributes.AUTHENTICATION_MECHANISM.equals(param.getRepositoryValue())) {
+                String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
+                if (value != null) {
+                    connection.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM, value);
+                }
+        } else if (IMongoDBAttributes.SET_AUTHENTICATION_DATABASE.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
+            if (value != null) {
+                connection.getAttributes().put(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE, value);
             }
         } else if (IMongoDBAttributes.REPLICA_SET.equals(param.getRepositoryValue())) {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
