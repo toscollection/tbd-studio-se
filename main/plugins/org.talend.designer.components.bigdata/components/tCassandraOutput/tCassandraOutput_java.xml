@@ -63,7 +63,7 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="4"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-            <ITEMS DEFAULT="CASSANDRA_3_0">
+            <ITEMS DEFAULT="CASSANDRA_4_0">
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
                 <ITEM NAME="CASSANDRA_2_2" VALUE="CASSANDRA_2_2"/>
                 <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>               

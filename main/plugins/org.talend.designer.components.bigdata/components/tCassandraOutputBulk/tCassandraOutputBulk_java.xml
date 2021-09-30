@@ -40,6 +40,7 @@
             <DEFAULT IF="(DB_VERSION == 'CASSANDRA_2_0_0')">cassandra_id</DEFAULT>
             <DEFAULT IF="(DB_VERSION == 'CASSANDRA_2_1')">cassandra_datastax_id</DEFAULT>
             <DEFAULT IF="(DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0')">cassandra22_datastax_id</DEFAULT>
+			<DEFAULT IF="(DB_VERSION == 'CASSANDRA_4_0')">cassandra40_datastax_id</DEFAULT>
             
         </PARAMETER>
         <PARAMETER
@@ -67,7 +68,7 @@
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="5"
         >
-            <ITEMS DEFAULT="CASSANDRA_3_0">
+            <ITEMS DEFAULT="CASSANDRA_4_0">
                 <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
                 <ITEM NAME="CASSANDRA_2_1" VALUE="CASSANDRA_2_1"/>
                 <ITEM NAME="CASSANDRA_2_2" VALUE="CASSANDRA_2_2"/>
@@ -75,15 +76,6 @@
 				<ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
-		<PARAMETER
-			NAME="USE_CONF_FILE"
-			FIELD="CHECK"
-			NUM_ROW="9"
-			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
 		
         <PARAMETER
             NAME="KEY_SPACE"
@@ -153,15 +145,6 @@
         >
           <DEFAULT>"create table ks.tb (id int, name text, birthday timestamp, primary key(id, birthday)) with clustering order by (birthday desc)"</DEFAULT>
         </PARAMETER>
-		<PARAMETER
-			NAME="USE_STATEMENT"
-			FIELD="CHECK"
-			NUM_ROW="26"
-			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE=='true')"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
         <PARAMETER
             NAME="INSERT_STMT"
             FIELD="TEXT"
@@ -203,24 +186,6 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 		<PARAMETER
-			NAME="APPEND"
-			FIELD="CHECK"
-			NUM_ROW="32"
-			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
-		<PARAMETER
-			NAME="USE_HEADER"
-			FIELD="CHECK"
-			NUM_ROW="33"
-			REQUIRED="true"
-            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')"
-		>
-			<DEFAULT>false</DEFAULT>
-		</PARAMETER>
-		<PARAMETER
             NAME="DATA_FILE_PATH"
             FIELD="FILE"
             REQUIRED="true"
@@ -229,15 +194,7 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-		<PARAMETER
-            NAME="CONF_FILE"
-            FIELD="FILE"
-            REQUIRED="true"
-            NUM_ROW="35"
-			SHOW_IF="((DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE=='true'))"
-        >
-            <DEFAULT>""</DEFAULT>
-        </PARAMETER>
+		
         <PARAMETER
             NAME="BUFFER_SIZE"
             FIELD="TEXT"
@@ -265,8 +222,53 @@
 		<PARAMETER NAME="CREATE" FIELD="CHECK" REQUIRED="true" NUM_ROW="40" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')">
 		  <DEFAULT>true</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="60" REQUIRED="true" REPOSITORY_VALUE="ENCODING" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')">
+		<PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="50" REQUIRED="true" REPOSITORY_VALUE="ENCODING" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')">
 		  <DEFAULT>"ISO-8859-15"</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="USE_CONF_FILE"
+			FIELD="CHECK"
+			NUM_ROW="51"
+			REQUIRED="true"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+            NAME="CONF_FILE"
+            FIELD="FILE"
+            REQUIRED="true"
+            NUM_ROW="52"
+			SHOW_IF="((DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE=='true'))"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+		<PARAMETER
+			NAME="USE_STATEMENT"
+			FIELD="CHECK"
+			NUM_ROW="54"
+			REQUIRED="true"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE=='true')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="APPEND"
+			FIELD="CHECK"
+			NUM_ROW="55"
+			REQUIRED="true"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="USE_HEADER"
+			FIELD="CHECK"
+			NUM_ROW="60"
+			REQUIRED="true"
+            SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0')"
+		>
+			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
     </ADVANCED_PARAMETERS>
     <CODEGENERATION>
