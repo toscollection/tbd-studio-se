@@ -31,7 +31,7 @@ public class EMR5290SparkBatchParquetNodeModuleGroupTest {
         Map<String, String> results = new HashMap<>();
         results.put(
                 EMR5290Constant.SPARK_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "((#LINK@NODE.SPARK_CONFIGURATION.DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION=='EMR_5_29_0')) AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
+                "((#LINK@NODE.SPARK_CONFIGURATION.DISTRIBUTION == 'AMAZON_EMR') AND (#LINK@NODE.SPARK_CONFIGURATION.SPARK_VERSION == 'EMR_5_29_0'))"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = EMR5290SparkBatchParquetNodeModuleGroup.getModuleGroups(EMR5290Distribution.DISTRIBUTION_NAME, EMR5290Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());

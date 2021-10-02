@@ -30,11 +30,11 @@ public class HDInsight40SparkStreamingParquetNodeModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
 
-        results.put(HDInsight40Constant.SPARK23_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false') AND (SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')");
-        results.put(HDInsight40Constant.SPARK24_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false') AND (SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')");
-        results.put(HDInsight40Constant.SPARK_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')");
-        results.put(HDInsight40Constant.SPARK23_STREAMING_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false') AND (SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')");
-        results.put(HDInsight40Constant.SPARK24_STREAMING_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false') AND (SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')");
+        results.put(HDInsight40Constant.SPARK23_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')");
+        results.put(HDInsight40Constant.SPARK24_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')");
+        results.put(HDInsight40Constant.SPARK_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
+        results.put(HDInsight40Constant.SPARK23_STREAMING_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')");
+        results.put(HDInsight40Constant.SPARK24_STREAMING_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')");
 
         Set<DistributionModuleGroup> moduleGroups = HDInsight40SparkStreamingParquetNodeModuleGroup.getModuleGroups(
                 HDInsight40Distribution.DISTRIBUTION_NAME, HDInsight40Distribution.VERSION);

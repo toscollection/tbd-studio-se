@@ -32,7 +32,7 @@ public class EMR5290SparkBatchS3NodeModuleGroupTest {
         Map<String, String> results = new HashMap<>();
         results.put(
                 EMR5290Constant.S3_MODULE_GROUP.getModuleName(),
-                "((#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".DISTRIBUTION=='AMAZON_EMR') AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_VERSION=='EMR_5_29_0')) AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
+                "((#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".DISTRIBUTION == 'AMAZON_EMR') AND (#LINK@NODE."+SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER+".SPARK_VERSION == 'EMR_5_29_0'))"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = EMR5290SparkBatchS3NodeModuleGroup.getModuleGroups(EMR5290Distribution.DISTRIBUTION_NAME, EMR5290Distribution.VERSION);
         assertEquals(results.size(), moduleGroups.size());
