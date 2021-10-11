@@ -3453,6 +3453,95 @@
           "useStudioRepository": "true"
         },
         {
+         "childNodes" : [
+	     {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_avro_1_8_2_jar",
+              "tagName": "library"
+            },
+	    {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_commons_codec_1_13_jar",
+              "tagName": "library"
+        },
+        {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_commons_compress_1_18_jar",
+              "tagName": "library"
+        },
+	    {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_jackson_core_asl_1_9_13_jar",
+              "tagName": "library"
+        },
+        {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_jackson_mapper_asl_1_9_13_jar",
+              "tagName": "library"
+        },	
+	    {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_paranamer_2_8_jar",
+              "tagName": "library"
+            },            
+	    {
+	        "childNodes" : [],
+	        "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_avro_1_8_2_jar",
+	        "tagName" : "library"
+	    },	    
+	    {
+	        "childNodes" : [],
+	        "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_column_1_8_2_jar",
+	        "tagName" : "library"
+	    },
+	    {
+	        "childNodes" : [],
+	        "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_common_1_8_2_jar",
+	        "tagName" : "library"
+	    },
+	    {
+      		  "childNodes" : [ ],
+		  "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_encoding_1_8_2_jar",
+	          "tagName" : "library"
+	    }, 
+	    {
+	        "childNodes" : [ ],
+        	"id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_format_2_3_1_jar",
+        	"tagName" : "library"
+	    }, 
+	    {
+	        "childNodes" : [ ],
+        	"id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_jackson_1_8_2_jar",
+	        "tagName" : "library"
+      	    }, 
+	    {
+	        "childNodes" : [],
+	        "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_hadoop_1_8_2_jar",
+	        "tagName" : "library"
+	    },
+	    {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_jcl_over_slf4j_1_7_28_jar",
+              "tagName": "library"
+            }, 
+	    {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_snappy_java_1_1_7_1_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_xz_1_5_jar",
+              "tagName": "library"
+            }
+            
+	    ],
+	      "description" : "",
+	      "id" : "DYNAMIC_HDP_3_1_4_12_1_SQOOP_PARQUET_LIB_DYNAMIC",
+	      "tagName" : "libraryNeededGroup",
+	      "templateId" : "SQOOP-PARQUET-LIB-DYNAMIC"
+	    },
+        {
           "childNodes": [],
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
@@ -13246,6 +13335,69 @@
           "tagName": "libraryNeeded"
         },
         {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_3_1_4_12_1_parquet_avro_1_8_2_jar",
+          "mvn_uri": "mvn:org.apache.parquet/parquet-avro/1.8.2",
+          "name": "parquet-avro-1.8.2.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_3_1_4_12_1_parquet_hadoop_1_8_2_jar",
+          "mvn_uri": "mvn:org.apache.parquet/parquet-hadoop/1.8.2",
+          "name": "parquet-hadoop-1.8.2.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_3_1_4_12_1_parquet_column_1_8_2_jar",
+          "mvn_uri": "mvn:org.apache.parquet/parquet-column/1.8.2",
+          "name": "parquet-column-1.8.2.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+          "childNodes": [],
+          "context": "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies": "true",
+          "id": "DYNAMIC_HDP_3_1_4_12_1_parquet_common_1_8_2_jar",
+          "mvn_uri": "mvn:org.apache.parquet/parquet-common/1.8.2",
+          "name": "parquet-common-1.8.2.jar",
+          "tagName": "libraryNeeded"
+        },
+        {
+    	  "childNodes" : [ ],
+      	  "context" : "plugin:org.talend.hadoop.distribution.hdpx",
+     	  "excludeDependencies" : "true",
+         "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_encoding_1_8_2_jar",
+         "mvn_uri" : "mvn:org.apache.parquet/parquet-encoding/1.8.2/jar",
+         "name" : "parquet-encoding-1.8.2.jar",
+         "tagName" : "libraryNeeded"
+     	}, 
+     	{
+      	  "childNodes" : [ ],
+          "context" : "plugin:org.talend.hadoop.distribution.hdpx",
+          "excludeDependencies" : "true",
+          "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_format_2_3_1_jar",
+          "mvn_uri" : "mvn:org.apache.parquet/parquet-format/2.3.1/jar",
+          "name" : "parquet-format-2.3.1.jar",
+          "tagName" : "libraryNeeded"
+       },
+       {
+     	 "childNodes" : [ ],
+      	 "context" : "plugin:org.talend.hadoop.distribution.hdpx",
+	 "excludeDependencies" : "true",
+         "id" : "DYNAMIC_HDP_3_1_4_12_1_parquet_jackson_1_8_2_jar",
+         "mvn_uri" : "mvn:org.apache.parquet/parquet-jackson/1.8.2/jar",
+         "name" : "parquet-jackson-1.8.2.jar",
+      	 "tagName" : "libraryNeeded"
+    	}, 
+       {
           "childNodes": [],
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
