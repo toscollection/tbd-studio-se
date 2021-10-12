@@ -533,7 +533,6 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.FLUME_OUTPUT_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, flumeCondition, ModuleGroupName.FLUME.get(this.getVersion()), true ));
 
-        
         // Spark Batch  GCS 
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.GCS_CONFIG_COMPONENT), 
                     ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.GCS.get(this.getVersion()), true));
@@ -542,7 +541,6 @@ public abstract class AbstractDistribution {
         // GraphFrames - Spark Batch DQ matching
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.MATCH_PREDICT_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null,  ModuleGroupName.GRAPHFRAMES.get(this.getVersion()), true));     
-        
         
         // Spark Streaming Kafka nodes
         
@@ -556,7 +554,6 @@ public abstract class AbstractDistribution {
         
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, kafkaCondition, ModuleGroupName.KAFKA.get(this.getVersion()), true ));
-
         
         // Spark Streaming Kinesis nodes
         Set<DistributionModuleGroup> kinesisModuleGroups =  ModuleGroupsUtils.getStreamingModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.KINESIS.get(this.getVersion()), true );
@@ -565,6 +562,13 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), kinesisModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), kinesisModuleGroups);
         
+        // PubSub nodes...
+        Set<DistributionModuleGroup> pubSubNodeModuleGroups = ModuleGroupsUtils.getStreamingModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PUBSUB.get(this.getVersion()), true );
+       
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PUBSUB_INPUT_COMPONENT), pubSubNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PUBSUB_INPUT_AVRO_COMPONENT), pubSubNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PUBSUB_OUTPUT_COMPONENT), pubSubNodeModuleGroups);
+
         // Spark Batch Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
                     ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), true));
@@ -597,7 +601,6 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.REDSHIFT_OUTPUT_COMPONENT), redshiftStreamingNodeModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.REDSHIFT_CONFIGURATION_COMPONENT), redshiftStreamingConfigurationModuleGroups);           
         
-        
         // Snowflake nodes ...
         Set<DistributionModuleGroup> snowFlakeBatchNodeModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'", ModuleGroupName.SNOWFLAKE.get(this.getVersion()), true );
         Set<DistributionModuleGroup> snowFlakeBatchConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.SNOWFLAKE.get(this.getVersion()), true );
@@ -606,7 +609,6 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_INPUT_COMPONENT), snowFlakeBatchNodeModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_OUTPUT_COMPONENT), snowFlakeBatchNodeModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_CONFIGURATION_COMPONENT), snowFlakeBatchConfigurationModuleGroups);
-        
         
         // Spark S3 condition
         ComponentCondition s3StorageCondition = new SparkBatchLinkedNodeCondition(distribution, version,

@@ -92,6 +92,12 @@ public final class SparkStreamingConstant {
 
     public static final String SPARK_SQL_ROW_COMPONENT = "tSqlRow"; //$NON-NLS-1$
 
+    public static final String PUBSUB_INPUT_COMPONENT = "tPubSubInput"; //$NON-NLS-1$
+    
+    public static final String PUBSUB_INPUT_AVRO_COMPONENT = "tPubSubInputAvro"; //$NON-NLS-1$
+
+    public static final String PUBSUB_OUTPUT_COMPONENT = "tPubSubOutput"; //$NON-NLS-1$
+
     public static final String TMODEL_ENCODER_COMPONENT = "tModelEncoder"; //$NON-NLS-1$
 
     public static final String TOP_BY_COMPONENT = "tTopBy"; //$NON-NLS-1$

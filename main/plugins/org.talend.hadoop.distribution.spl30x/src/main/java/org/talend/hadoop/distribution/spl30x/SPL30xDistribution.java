@@ -303,7 +303,23 @@ public class SPL30xDistribution extends AbstractDistribution
                 SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.KINESIS.get(getVersion()),
                         SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
                         SPL30xDistribution.SPARK_VERSION));
-
+        
+        // Spark Streaming PubSub
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PUBSUB_INPUT_COMPONENT),
+                SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.PUBSUB.get(getVersion()),
+                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        SPL30xDistribution.SPARK_VERSION));
+                        
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PUBSUB_INPUT_AVRO_COMPONENT),
+                SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.PUBSUB.get(getVersion()),
+                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        SPL30xDistribution.SPARK_VERSION));
+                        
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PUBSUB_OUTPUT_COMPONENT),
+                SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.PUBSUB.get(getVersion()),
+                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                        SPL30xDistribution.SPARK_VERSION));                
+    
         // Spark Streaming KMeans
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KMEANSSTR_MODEL_COMPONENT),
                 SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.KMEANS.get(getVersion()),

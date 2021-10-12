@@ -524,6 +524,10 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
           id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar"
           mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
+          
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar"
+          mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
           id="spark-streaming-kinesis-asl_2.12-3.0.1.jar" name="spark-streaming-kinesis-asl_2.12-3.0.1.jar"
@@ -817,7 +821,13 @@
             <group id="SPARK-BATCH-GROUP-SPARK_3_0_x"/>
             <library id="py4j-0.10.9.1.jar"/>
         </libraryNeededGroup>
-
+        
+        <!-- Spark Streaming PubSub group -->
+        <!-- Since no spark-streaming-pubsub lib for spark 3.x  spark-streaming-pubsub_2.12-2.4.0.jar will be used as workaround-->
+        <libraryNeededGroup description="Spark streaming PubSub libraries for spl30x" id="PUBSUB-GROUP-SPARK_3_0_x" name="PUBSUB-GROUP-SPARK_3_0_x">
+            <library id="spark-streaming-pubsub_2.12-2.4.0.jar"/>
+        </libraryNeededGroup>
+        
         <!-- Spark Streaming Kafka group -->
         <libraryNeededGroup description="Spark streaming Kafka libraries for spl30x" id="KAFKA-GROUP-SPARK_3_0_x" name="KAFKA-GROUP-SPARK_3_0_x">
             <library id="kafka-clients-2.7.0.jar"/>
