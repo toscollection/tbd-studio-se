@@ -546,6 +546,10 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="spark-streaming-kafka-0-10_2.12-3.0.3.jar" name="spark-streaming-kafka-0-10_2.12-3.0.3.jar"
           mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.3"/>
+       
+       <libraryNeeded context="plugin:org.talend.hadoop.distribution.spark30x"
+          id="spark-token-provider-kafka-0-10_2.12-3.0.1.jar" name="spark-token-provider-kafka-0-10_2.12-3.0.1.jar"
+          mvn_uri="mvn:org.apache.spark/spark-token-provider-kafka-0-10_2.12/3.0.1"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="spark-streaming-kinesis-asl_2.12-3.0.3.jar" name="spark-streaming-kinesis-asl_2.12-3.0.3.jar"
@@ -862,6 +866,7 @@
             <library id="kafka-clients-2.7.0.jar"/>
             <library id="kafka_2.12-2.7.0.jar"/>
             <library id="spark-streaming-kafka-0-10_2.12-3.0.3.jar"/>
+            <library id="spark-token-provider-kafka-0-10_2.12-3.0.1.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming Kinesis group -->
