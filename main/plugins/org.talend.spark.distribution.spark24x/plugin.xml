@@ -84,7 +84,7 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-kvstore_2.11-2.4.7.jar" name="spark-kvstore_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-kvstore_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-launcher_2.11-2.4.7.jar" name="spark-launcher_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-launcher_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-mllib-local_2.11-2.4.7.jar" name="spark-mllib-local_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.11/2.4.7"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-mllib-2.11-2.4.7.jar" name="spark-mllib-2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-2.11/2.4.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-mllib-2.11_2.4.7.jar" name="spark-mllib-2.11_2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-mllib_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-network-common_2.11-2.4.7.jar" name="spark-network-common_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-sql_2.11-2.4.7.jar" name="spark-sql_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.11/2.4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming_2.11-2.4.7.jar" name="spark-streaming_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.11/2.4.7"/>
