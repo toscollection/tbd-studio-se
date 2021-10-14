@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature
-      id="org.talend.studio.components.bd.couchbase.feature"
-      label="Couchbase_feature"
-      version="8.0.1.qualifier">
+<feature id="org.talend.studio.components.bd.couchbase.feature" label="Couchbase_feature" version="8.0.1.qualifier">
 
    <description url="http://www.example.com/description">
       Couchbase feature
@@ -47,10 +44,6 @@ Licensed under the CDDL,GPL-2.0-or-later license.
       <import plugin="org.talend.designer.maven.repo.tcksdk" version="0.0.0" match="greaterOrEqual"/>
    </requires>
 
-   <plugin
-         id="org.talend.studio.components.bd.couchbase"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
+   <plugin id="org.talend.studio.components.bd.couchbase" download-size="0" install-size="0" version="0.0.0"/>
 
 </feature>
