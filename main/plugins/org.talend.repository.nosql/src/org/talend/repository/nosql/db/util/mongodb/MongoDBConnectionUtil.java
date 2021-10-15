@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.talend.commons.exception.ExceptionHandler;
@@ -32,6 +34,7 @@ import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.prefs.SSLPreferenceConstants;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.ui.utils.PluginUtil;
+import org.talend.core.utils.StudioSSLContextProvider;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
@@ -226,6 +229,10 @@ public class MongoDBConnectionUtil {
             Object sslSettingsBuilder = NoSQLReflection.invokeStaticMethod("com.mongodb.connection.SslSettings", "builder", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[0], classLoader);
             NoSQLReflection.invokeMethod(sslSettingsBuilder, "enabled", new Object[] { requireEncryption }, boolean.class); //$NON-NLS-1$
+            if (requireEncryption) {
+            	SSLContext sslContext = StudioSSLContextProvider.getContext();
+                NoSQLReflection.invokeMethod(sslSettingsBuilder, "context", new Object[] { sslContext }, SSLContext.class); //$NON-NLS-1$
+            }
             Object sslSettingsBuild = NoSQLReflection.invokeMethod(sslSettingsBuilder, "build", new Object[0]); //$NON-NLS-1$
             Class<?> sslBlockClasszz = Class.forName("com.mongodb.Block", false, classLoader); //$NON-NLS-1$
             Class[] sslInterfaces = new Class[1];
@@ -308,6 +315,10 @@ public class MongoDBConnectionUtil {
         try {
             Object builder = NoSQLReflection.newInstance("com.mongodb.MongoClientOptions$Builder", new Object[0], classLoader); //$NON-NLS-1$
             NoSQLReflection.invokeMethod(builder, "sslEnabled", new Object[] { requireEncryption }, boolean.class); //$NON-NLS-1$
+            if (requireEncryption) {
+            	SSLContext sslContext = StudioSSLContextProvider.getContext();
+                NoSQLReflection.invokeMethod(builder, "sslContext", new Object[] { sslContext }, SSLContext.class); //$NON-NLS-1$
+            }
             Object build = NoSQLReflection.invokeMethod(builder, "build", new Object[0]); //$NON-NLS-1$
 
             for (String host : hosts.keySet()) {
