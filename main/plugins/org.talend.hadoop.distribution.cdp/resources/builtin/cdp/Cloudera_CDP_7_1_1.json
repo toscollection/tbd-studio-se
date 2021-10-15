@@ -1276,6 +1276,14 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_jdbc_3_1_3000_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_service_3_1_3000_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_annotations_3_1_1_7_1_1_0_565_jar",
         "tagName" : "library"
       }, {
@@ -1317,6 +1325,14 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_yarn_common_3_1_1_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_httpclient_4_5_6_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_httpcore_4_4_10_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -3605,6 +3621,35 @@
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HIVE_LIB_DYNAMIC",
       "tagName" : "libraryNeededGroup",
       "templateId" : "HIVE-LIB-DYNAMIC"
+    }, {
+      "childNodes" : [ 
+	      {
+	        "childNodes" : [ ],
+	        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
+	        "tagName" : "library"
+	      }
+       ],
+      "description" : "",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HIVE_LIB_DYNAMIC",
+      "tagName" : "libraryNeededGroup",
+      "templateId" : "HIVE-COMPONENTS-LIB-DYNAMIC"
+    },
+    {
+      "childNodes" : [
+	      {
+	        "childNodes" : [ ],
+	        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_warehouse_jar",
+	        "tagName" : "library"
+	      }, {
+	        "childNodes" : [ ],
+	        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
+	        "tagName" : "library"
+	      }
+       ],
+      "description" : "",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HIVE_WAREHOUSE_LIB_DYNAMIC",
+      "tagName" : "libraryNeededGroup",
+      "templateId" : "HIVE-WAREHOUSE-LIB-DYNAMIC"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
@@ -7352,162 +7397,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_client_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_common_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_hadoop2_compat_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_hadoop_compat_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_http_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_mapreduce_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_metrics_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_metrics_api_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_procedure_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_protocol_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_protocol_shaded_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_replication_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_server_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_shaded_gson_3_3_0_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_shaded_miscellaneous_3_3_0_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_shaded_netty_3_3_0_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_shaded_protobuf_3_3_0_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hbase_zookeeper_2_2_3_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_classification_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_common_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_jdbc_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_llap_client_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_llap_common_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_llap_common_3_1_3000_7_1_1_0_565_tests_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_llap_server_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_llap_tez_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_metastore_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_serde_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_service_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_service_rpc_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_shims_0_20_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_shims_0_23_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_shims_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_shims_common_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_shims_scheduler_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_standalone_metastore_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_storage_api_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_vector_code_gen_3_1_3000_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hk2_api_2_5_0_jar",
         "tagName" : "library"
       }, {
@@ -10515,6 +10404,14 @@
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
       "mvn_uri" : "mvn:org.apache.hive/hive-exec/3.1.3000.7.1.1.0-565/jar",
       "name" : "hive-exec-3.1.3000.7.1.1.0-565.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_warehouse_jar",
+      "mvn_uri" : "mvn:org.talend.bigdata.libs/hive-warehouse-connector_2.11/1.0.0.7.1.1.0-565-tlnd-0",
+      "name" : "hive-warehouse-connector_2.11-1.0.0.7.1.1.0-565-tlnd-0.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
