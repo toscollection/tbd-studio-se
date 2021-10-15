@@ -106,6 +106,14 @@ public final class SparkBatchConstant {
 
     public static final String DELTALAKE_INPUT_COMPONENT = "tDeltaLakeInput";
     public static final String DELTALAKE_OUTPUT_COMPONENT = "tDeltaLakeOutput";
+    
+    public static final String HIVE_WAREHOUSE_CONFIGURATION_COMPONENT = "tHiveWarehouseConfiguration";
+    public static final String HIVE_WAREHOUSE_INPUT_COMPONENT = "tHiveWarehouseInput";
+    public static final String HIVE_WAREHOUSE_OUTPUT_COMPONENT = "tHiveWarehouseOutput";
+    
+    public static final String HIVE_CONFIGURATION_COMPONENT = "tHiveConfiguration";
+    public static final String HIVE_INPUT_COMPONENT = "tHiveInput";
+    public static final String HIVE_OUTPUT_COMPONENT = "tHiveOutput";
 
     public static final String REDSHIFT_CONFIGURATION_COMPONENT = "tRedshiftConfiguration";
     public static final String REDSHIFT_INPUT_COMPONENT = "tRedshiftInput";

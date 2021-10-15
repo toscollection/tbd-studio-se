@@ -54,6 +54,7 @@ public class DynamicCDPSparkBatchModuleGroupTemplate extends DynamicSparkBatchMo
         String version = configuration.getId();
 
         buildNodeModuleGroups4SparkBatch(pluginAdapter, nodeModuleGroups, distribution, version);
+        buildNodeModuleGroups4SparkStreaming(pluginAdapter, nodeModuleGroups, distribution, version);
 
         return nodeModuleGroups;
     }
