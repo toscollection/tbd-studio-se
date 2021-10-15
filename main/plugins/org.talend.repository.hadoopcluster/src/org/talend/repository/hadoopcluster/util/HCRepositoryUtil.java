@@ -916,6 +916,62 @@ public class HCRepositoryUtil {
         if (defaultJobResultFolder != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_JOB_RESULT_FOLDER, defaultJobResultFolder);
         }
+        //Synapse default values
+        String synapseHostName = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SYNAPSE_ENDPOINT.getName());
+        if (synapseHostName != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST, synapseHostName);
+        }
+        String synapseAuthToken = hiveVersion.getDefaultConfig(distribution,
+        		EHadoopProperties.SYNAPSE_TOKEN.getName());
+        if (synapseAuthToken != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN, synapseAuthToken);
+        }
+        String synapseSparkPools = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SPARK_POOL_NAME.getName());
+        if (synapseSparkPools != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_SPARK_POOLS, synapseSparkPools);
+        } 
+        String synapseFsHostname = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SYNAPSE_STORAGE_HOST.getName());
+        if (synapseFsHostname != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME, synapseFsHostname);
+        }
+        String synapseFsContainer = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SYNAPSE_STORAGE_CONTAINER.getName());
+        if (synapseFsContainer != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER, synapseFsContainer);
+        }
+        String synapseFsUsername =  hiveVersion.getDefaultConfig(distribution,
+        		EHadoopProperties.SYNAPSE_STORAGE_USERNAME.getName());
+        if (synapseFsUsername != null) {
+        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME, synapseFsUsername);
+        }
+        String synapseFsPassword = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SYNAPSE_STORAGE_PASSWORD.getName());
+        if (synapseFsPassword != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD, synapseFsPassword);
+        }
+        String synapseDeployBlob = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.DEPLOY_FOLDER.getName());
+        if (synapseDeployBlob != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB, synapseDeployBlob);
+        }
+        String synapseDriverMemory = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SPARK_DRIVER_MEM.getName());
+        if (synapseDriverMemory != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY, synapseDriverMemory);
+        }
+        String synapseDriverCores = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SPARK_DRIVER_CORES.getName());
+        if (synapseDriverCores != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES, synapseDriverCores);
+        }
+        String synapseExecutorMemory = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SPARK_EXECUTOR_MEMORY.getName());
+        if (synapseExecutorMemory != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY, synapseExecutorMemory);
+        }
         String dataBricksEndpoint = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.DATABRICKS_ENDPOINT.getName());
         if (dataBricksEndpoint != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT, dataBricksEndpoint);

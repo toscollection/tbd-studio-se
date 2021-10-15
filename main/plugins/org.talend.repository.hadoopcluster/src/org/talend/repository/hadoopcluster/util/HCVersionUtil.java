@@ -136,6 +136,20 @@ public class HCVersionUtil {
         }
         return false;
     }
+    
+    public static boolean isSynapse(HadoopSubConnection connection) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        return isSynapse(hcConnection);
+    }
+    
+    public static boolean isSynapse(HadoopClusterConnection connection) {
+      if (connection != null) {
+            if (EHadoopDistributions.AZURE_SYNAPSE.getName().equals(connection.getDistribution())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static boolean isGoogleDataproc(HadoopSubConnection connection) {
         HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
