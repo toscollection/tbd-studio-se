@@ -17,6 +17,7 @@ import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.hadoop.distribution.constants.cdh.IClouderaDistribution;
 import org.talend.hadoop.distribution.constants.hdp.IHortonworksDistribution;
+import org.talend.hadoop.distribution.constants.synapse.ISynapseDistribution;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -117,7 +118,15 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
                 && (IHortonworksDistribution.DISTRIBUTION_NAME.equals(distribution.name) || IClouderaDistribution.DISTRIBUTION_NAME
                         .equals(distribution.name));
         remoteBtn.setEnabled(supportRemote);
-    }
+        
+        //Synapse supports only manually configured wizard
+        boolean supportManualOnly = distribution != null && ISynapseDistribution.DISTRIBUTION_NAME.equals(distribution.name);
+        if (supportManualOnly) {
+        	remoteBtn.setEnabled(false);
+        	localBtn.setEnabled(false);
+        	manualBtn.setEnabled(true);
+        }
+      }
 
     private void addDistributionFields(Composite parent) {
         Group distributionGroup = Form.createGroup(parent, 4,
@@ -137,9 +146,9 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
         remoteBtn.setText(Messages.getString("HadoopImportConfsOptionPage.option.remote")); //$NON-NLS-1$
         localBtn = new Button(optionGroup, SWT.RADIO);
         localBtn.setText(Messages.getString("HadoopImportConfsOptionPage.option.local")); //$NON-NLS-1$
-        localBtn.setSelection(true);
         manualBtn = new Button(optionGroup, SWT.RADIO);
         manualBtn.setText(Messages.getString("HadoopImportConfsOptionPage.option.manual")); //$NON-NLS-1$
+        manualBtn.setSelection(true);
     }
 
     @Override
@@ -160,7 +169,7 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
             optionPage = new HadoopImportRemoteOptionPage(getDistribution(), getVersion());
         } else if (localBtn.getSelection()) {
             optionPage = new HadoopImportLocalOptionPage(getVersion());
-        }
+        } 
         return optionPage;
     }
 
