@@ -573,6 +573,7 @@ public class MongoDBConnectionUtil {
             database = ContextParameterUtils.getOriginalValue(contextType, database);
         }
         //for backport on legacy metadata configuration
+        if (authMechanism == null) authMechanism = IMongoConstants.SCRAMSHA1_MEC;
         Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
                 new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
                 char[].class);
