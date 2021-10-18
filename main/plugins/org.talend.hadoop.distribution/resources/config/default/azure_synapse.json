@@ -1,0 +1,13 @@
+{
+    "SYNAPSE_ENDPOINT":   "https://xxxx.dev.azuresynapse.net", 
+    "SYNAPSE_TOKEN": "token",
+    "SPARK_POOL_NAME": "sparkpools",
+    "SYNAPSE_STORAGE_HOST":  "https://xxxx.dfs.core.windows.net",
+    "SYNAPSE_STORAGE_CONTAINER": "container",
+    "SYNAPSE_STORAGE_USERNAME": "user",
+    "SYNAPSE_STORAGE_PASSWORD": "password",
+    "DEPLOY_FOLDER": "/tmp",
+    "SPARK_DRIVER_MEM": "2g",
+    "SPARK_DRIVER_CORES": "1",
+    "SPARK_EXECUTOR_MEMORY": "2g"
+}

@@ -259,6 +259,9 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         
         if (HCVersionUtil.isHDI(getConnection())) {
             hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
+        } else if (HCVersionUtil.isSynapse(getConnection())) {
+            hcInfoForm = new SynapseInfoForm(this, connectionItem, existingNamesArray, creation, hadoopDistribution,
+                    hadoopVersion);
         } else if (HCVersionUtil.isGoogleDataproc(getConnection())) {
             hcInfoForm = new GoogleDataprocInfoForm(this, connectionItem, existingNamesArray, creation, hadoopDistribution,
                     hadoopVersion);

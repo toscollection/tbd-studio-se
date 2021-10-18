@@ -294,9 +294,43 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.KNOX_DIRECTORY.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_ENDPOINT.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_TOKEN.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN));
+        } else if (EHDFSRepositoryToComponent.SPARK_POOL_NAME.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_SPARK_POOLS));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_HOST.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_CONTAINER.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_USERNAME.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_PASSWORD.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD));
+        } else if (EHDFSRepositoryToComponent.DEPLOY_FOLDER.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
+        } else if (EHDFSRepositoryToComponent.SPARK_DRIVER_MEMORY.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY));
+        } else if (EHDFSRepositoryToComponent.SPARK_DRIVER_CORES.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES));
+        } else if (EHDFSRepositoryToComponent.SPARK_EXECUTOR_MEMORY.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY));
+        } else if (EHDFSRepositoryToComponent.ADVANCED_SETTINGS_CHECK.getRepositoryValue().equals(value)) {
+            return Boolean.parseBoolean(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
         }
-        
-
         return null;
     }
 
