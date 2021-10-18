@@ -111,6 +111,33 @@ public class DynamicSparkBatchModuleGroupTemplate extends AbstractDynamicModuleG
         
         nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.GCS_CONFIG_COMPONENT), buildModuleGroups4SparkBatch4GCS(pluginAdapter, distribution, version));
         nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.BIGQUERY_CONFIG_COMPONENT), buildModuleGroups4SparkBatch4BigQuery(pluginAdapter, distribution, version));
+        
+        Set<DistributionModuleGroup> hiveConfigurationModuleGroups = buildNodeModuleGroup4Spark4Hive(pluginAdapter, distribution, version);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.HIVE_INPUT_COMPONENT), hiveConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.HIVE_OUTPUT_COMPONENT), hiveConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.HIVE_CONFIGURATION_COMPONENT), hiveConfigurationModuleGroups);
+        
+        Set<DistributionModuleGroup> hiveWarehouseConfigurationModuleGroups = buildNodeModuleGroup4Spark4HiveWarehouse(pluginAdapter, distribution, version);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.HIVE_WAREHOUSE_INPUT_COMPONENT), hiveWarehouseConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.HIVE_WAREHOUSE_OUTPUT_COMPONENT), hiveWarehouseConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.HIVE_WAREHOUSE_CONFIGURATION_COMPONENT), hiveWarehouseConfigurationModuleGroups);
+
+    }
+    
+    protected void buildNodeModuleGroups4SparkStreaming(DynamicPluginAdapter pluginAdapter,
+            Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroupsMap, String distribution, String version)
+            throws Exception {
+       
+        Set<DistributionModuleGroup> hiveConfigurationModuleGroups = buildNodeModuleGroup4Spark4Hive(pluginAdapter, distribution, version);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.HIVE_INPUT_COMPONENT), hiveConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.HIVE_OUTPUT_COMPONENT), hiveConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.HIVE_CONFIGURATION_COMPONENT), hiveConfigurationModuleGroups);
+        
+        Set<DistributionModuleGroup> hiveWarehouseConfigurationModuleGroups = buildNodeModuleGroup4Spark4HiveWarehouse(pluginAdapter, distribution, version);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.HIVE_WAREHOUSE_INPUT_COMPONENT), hiveWarehouseConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.HIVE_WAREHOUSE_OUTPUT_COMPONENT), hiveWarehouseConfigurationModuleGroups);
+        nodeModuleGroupsMap.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.HIVE_WAREHOUSE_CONFIGURATION_COMPONENT), hiveWarehouseConfigurationModuleGroups);
+
     }
 
     protected Set<DistributionModuleGroup> buildNodeModuleGroups4SparkBatch4GraphFrames(DynamicPluginAdapter pluginAdapter,
@@ -127,6 +154,14 @@ public class DynamicSparkBatchModuleGroupTemplate extends AbstractDynamicModuleG
             String distribution, String version, String condition) throws Exception {
         return new DynamicSparkDynamoDBNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, version, condition);
     }
+    
+    protected Set<DistributionModuleGroup> buildNodeModuleGroup4Spark4HiveWarehouse(DynamicPluginAdapter pluginAdapter, String distribution, String version) throws Exception {
+        return new DynamicSparkNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, version, DynamicModuleGroupConstant.HIVE_WAREHOUSE_MODULE_GROUP, null);
+    }
+    
+    protected Set<DistributionModuleGroup> buildNodeModuleGroup4Spark4Hive(DynamicPluginAdapter pluginAdapter, String distribution, String version) throws Exception {
+        return new DynamicSparkNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, version, DynamicModuleGroupConstant.HIVE_COMPONENTS_MODULE_GROUP, null);
+    }   
 
     protected Set<DistributionModuleGroup> buildNodeModuleGroup4Spark4JDBC(DynamicPluginAdapter pluginAdapter,
             String distribution, String version, String condition) throws Exception {
