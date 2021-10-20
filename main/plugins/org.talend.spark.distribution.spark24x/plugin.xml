@@ -145,7 +145,6 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
 			
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-aws-3.2.2.jar" name="hadoop-aws-3.2.2.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.2.2"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-bundle-1.11.760.jar" name="aws-java-sdk-bundle-1.11.760.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="talend-bigdata-aws-lib-1.1.0.jar" name="talend-bigdata-aws-lib-1.1.0.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-aws-lib/1.1.0"/>
         
@@ -297,9 +296,7 @@
 
         <!-- S3 group -->
         <libraryNeededGroup description="S3 libraries for spark247" id="S3-GROUP-SPARK_2_4_x" name="S3-GROUP-SPARK_2_4_x">
-            <library id="hadoop-aws-3.2.2.jar"/>
             <library id="guava-27.0-jre.jar"/>
-            <library id="aws-java-sdk-bundle-1.11.760.jar"/>
             <library id="talend-bigdata-aws-lib-1.1.0.jar"/>
         </libraryNeededGroup>
 

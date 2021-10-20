@@ -283,14 +283,6 @@
 
         <!-- S3 libs -->
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-          id="hadoop-aws-3.2.2.jar" name="hadoop-aws-3.2.2.jar"
-          mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.2.2"/>
-
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-          id="aws-java-sdk-bundle-1.11.760.jar" name="aws-java-sdk-bundle-1.11.760.jar"
-          mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760"/>
-          
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="commons-text-1.4.jar" name="commons-text-1.4.jar"
           mvn_uri="mvn:org.apache.commons/commons-text/1.4"/>
           
@@ -644,6 +636,7 @@
           id="google-api-services-pubsub-v1-rev452-1.25.0.jar" name="google-api-services-pubsub-v1-rev452-1.25.0.jar"
           mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev452-1.25.0"/>
 
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="aws-java-sdk-bundle-1.11.760.jar" name="aws-java-sdk-bundle-1.11.760.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="httpclient-4.5.6.jar" name="httpclient-4.5.6.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.6"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="httpcore-4.4.12.jar" name="httpcore-4.4.12.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.12"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
@@ -753,9 +746,7 @@
 
         <!-- S3 group -->
         <libraryNeededGroup description="S3 libraries for spl30x" id="S3-GROUP-SPARK_3_0_x" name="S3-GROUP-SPARK_3_0_x">
-            <library id="hadoop-aws-3.2.2.jar"/>
             <library id="guava-27.0-jre.jar"/>
-            <library id="aws-java-sdk-bundle-1.11.760.jar"/>
             <library id="commons-text-1.4.jar"/>
             <library id="talend-bigdata-aws-lib-1.1.0.jar"/>
         </libraryNeededGroup>
