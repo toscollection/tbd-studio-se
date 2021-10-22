@@ -38,18 +38,18 @@ public enum ESparkVersion {
 
     private static final Map<String, ESparkVersion> lookupBySparkVersion = new HashMap<String, ESparkVersion>();
     private static final Map<String, ESparkVersion> lookupByApiVersion = new HashMap<String, ESparkVersion>();
-    
+
     static {
         for (ESparkVersion v : ESparkVersion.values()) {
             lookupBySparkVersion.put(v.getSparkVersion(), v);
             lookupByApiVersion.put(v.getApiVersion(), v);
         }
     }
-    
+
     private String sparkVersion;
 
     private String versionLabel;
-    
+
     private String apiVersion;
 
     private ESparkVersion(String sparkVersion, String versionLabel, String apiVersion) {
@@ -68,8 +68,8 @@ public enum ESparkVersion {
 
     public String getApiVersion() {
         return this.apiVersion;
-    }    
-    
+    }
+
     public static Comparator<ESparkVersion> descComparator() {
         return new Comparator<ESparkVersion>() {
 
@@ -80,7 +80,7 @@ public enum ESparkVersion {
 
         };
     }
-    
+
     public static ESparkVersion getBySparkVersion(String sparkVersion) {
         return lookupBySparkVersion.get(sparkVersion);
     }
