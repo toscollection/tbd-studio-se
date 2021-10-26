@@ -13,6 +13,11 @@
 %>
 
     <%@ include file="../templates/CosmosDB/ApplicationName.javajet"%>
+    
+    <%
+    boolean use_connection_string = false;
+    String connection_string = false;
+    %>
 
     // Declarations
     com.mongodb.client.MongoClient mongo_<%=cid%>=null;

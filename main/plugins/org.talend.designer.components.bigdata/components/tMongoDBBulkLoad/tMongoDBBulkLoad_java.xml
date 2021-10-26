@@ -75,7 +75,7 @@
             NAME="USE_REPLICA_SET"
             REPOSITORY_VALUE="USE_REPLICA_SET"
             NUM_ROW="15"
-            SHOW_IF="(USE_LOCAL_DBPATH == 'false')"
+            SHOW_IF="(USE_LOCAL_DBPATH == 'false') AND (USE_CONNECTION_STRING == 'false')"
             GROUP="CONNECTION"
       	>
             <DEFAULT>"false"</DEFAULT>
@@ -85,7 +85,7 @@
             FIELD="CHECK"
             NAME="SPECIFY_REPLICA_SET"
             NUM_ROW="19"
-            SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
+            SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false') AND (USE_CONNECTION_STRING == 'false')"
             GROUP="CONNECTION"
         >
             <DEFAULT>true</DEFAULT>
@@ -95,7 +95,7 @@
 			FIELD="TEXT"
 			NAME="REPLICA_NAME"
 			NUM_ROW="20"
-			SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false') AND (SPECIFY_REPLICA_SET == 'true')"
+			SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false') AND (SPECIFY_REPLICA_SET == 'true') AND (USE_CONNECTION_STRING == 'false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>"rep1"</DEFAULT>
@@ -108,7 +108,7 @@
             REQUIRED="false"
             NUM_ROW="25"
             NB_LINES="5"
-            SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false')"
+            SHOW_IF="(USE_REPLICA_SET=='true') AND (USE_LOCAL_DBPATH == 'false') AND (USE_CONNECTION_STRING == 'false')"
             GROUP="CONNECTION"
       	>
             <ITEMS>
@@ -122,7 +122,7 @@
 			NAME="HOST"
 			REPOSITORY_VALUE="HOST"
 			NUM_ROW="30"
-			SHOW_IF="(USE_REPLICA_SET=='false') AND (USE_LOCAL_DBPATH == 'false')"
+			SHOW_IF="(USE_REPLICA_SET=='false') AND (USE_LOCAL_DBPATH == 'false') AND (USE_CONNECTION_STRING == 'false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT>""</DEFAULT>
@@ -132,10 +132,18 @@
 			NAME="PORT"
 			REPOSITORY_VALUE="PORT"
 			NUM_ROW="30"
-			SHOW_IF="(USE_REPLICA_SET=='false') AND (USE_LOCAL_DBPATH == 'false')"
+			SHOW_IF="(USE_REPLICA_SET=='false') AND (USE_LOCAL_DBPATH == 'false') AND (USE_CONNECTION_STRING == 'false')"
 			GROUP="CONNECTION"
 		>
 			<DEFAULT></DEFAULT>
+		</PARAMETER>
+		
+		<PARAMETER FIELD="CHECK" NAME="USE_CONNECTION_STRING" NUM_ROW="32" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_LOCAL_DBPATH == 'false')" GROUP="CONNECTION">
+			<DEFAULT>"false"</DEFAULT>
+		</PARAMETER>
+
+		<PARAMETER FIELD="TEXT" NAME="CONNECTION_STRING" NUM_ROW="33" REQUIRED="true" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_CONNECTION_STRING=='true') AND (USE_LOCAL_DBPATH == 'false')" GROUP="CONNECTION">
+			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
 
 		<PARAMETER

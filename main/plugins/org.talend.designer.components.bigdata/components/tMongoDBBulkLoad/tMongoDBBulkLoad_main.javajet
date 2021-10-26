@@ -15,8 +15,12 @@
   	INode node = (INode)codeGenArgument.getArgument();
   	String cid = node.getUniqueName();
 
-    String dbhost   = ElementParameterParser.getValue(node, "__HOST__");
-    String dbname   = ElementParameterParser.getValue(node, "__DATABASE__");
+    String dbhost = ElementParameterParser.getValue(node, "__HOST__");
+    String dbname = ElementParameterParser.getValue(node, "__DATABASE__");
+
+    boolean use_connection_string = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_CONNECTION_STRING__"));
+    String connection_string = ElementParameterParser.getValue(node, "__CONNECTION_STRING__");
+
     String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
     boolean useSSL ="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
     boolean authentication="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__REQUIRED_AUTHENTICATION__"));
@@ -87,6 +91,11 @@
 	%>
 		args_<%=cid%>.add("--dbpath");
 		args_<%=cid%>.add(<%=localDBpath%>);
+	<%
+	} else if(use_connection_string) {
+	%>
+		args_<%=cid%>.add("--uri");
+		args_<%=cid%>.add(<%=connection_string%>);
 	<%
 	}else{
 		if(!useReplicaSet){
@@ -342,7 +351,7 @@
 		}
 		log.info("<%=cid%> - Execute command " + sb.toString() + ".");
 		<%
-		if (useReplicaSet) {
+		if (useReplicaSet || use_connection_string || useLocalDBpath) {
 		    %>
 	        log.info("<%=cid%> - Start to import the data");
 		    <%

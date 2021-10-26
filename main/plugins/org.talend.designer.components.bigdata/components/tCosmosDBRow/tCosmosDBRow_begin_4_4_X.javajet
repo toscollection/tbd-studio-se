@@ -23,6 +23,11 @@
         }
     } else {%>
         // Internal declarations
+        <%
+        boolean use_connection_string = false;
+        String connection_string = false;
+        %>
+    
         List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<>();
         com.mongodb.MongoClientSettings.Builder clientSettingsBuilder_<%=cid%> = com.mongodb.MongoClientSettings.builder();
         com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_<%=cid%> = com.mongodb.connection.ClusterSettings.builder();
