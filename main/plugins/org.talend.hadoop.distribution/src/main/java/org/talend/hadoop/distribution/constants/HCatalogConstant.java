@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class HCatalogConstant {
 
     public static final String SERVICE = "org.talend.hadoop.distribution.component.HCatalogComponent";//$NON-NLS-1$
@@ -23,4 +26,7 @@ public final class HCatalogConstant {
     public static final String VERSION_PARAMETER = "HCAT_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "HCAT_VERSION";//$NON-NLS-1$
+
+    public static final List<String> HCATALOG_COMPONENTS = Arrays.asList("tHCatalogInput", "tHCatalogOutput", //$NON-NLS-1$ //$NON-NLS-2$
+            "tHCatalogOperation", "tHCatalogLoad"); //$NON-NLS-1$ //$NON-NLS-2$
 }
