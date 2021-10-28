@@ -25,7 +25,7 @@
         // Internal declarations
         <%
         boolean use_connection_string = false;
-        String connection_string = false;
+        String connection_string = null;
         %>
     
         List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<>();

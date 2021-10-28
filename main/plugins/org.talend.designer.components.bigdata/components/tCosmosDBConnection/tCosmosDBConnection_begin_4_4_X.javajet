@@ -16,7 +16,7 @@
     
     <%
     boolean use_connection_string = false;
-    String connection_string = false;
+    String connection_string = null;
     %>
 
     // Declarations
