@@ -6,9 +6,8 @@
 %>
                 // SSL
                 <%if (useSSL) {
-                    isSslSettingsBuilderUsed = true;
                     %>
-                    sslSettingsBuilder_<%=cid%>.enabled(true);
+                    clientSettingsBuilder_<%=cid%>.applyToSslSettings(builder -> builder.enabled(true));
                     <%
                 }%>
 
@@ -61,9 +60,6 @@
                     }
                     %>
                     clusterSettingsBuilder_<%=cid%>.hosts(addrs_<%=cid%>);
+                    
+                    clientSettingsBuilder_<%=cid%>.applyToClusterSettings(builder -> builder.hosts(addrs_<%=cid%>));
                 <%}%>
-
-                <%if(isSslSettingsBuilderUsed) {%>
-                    clientSettingsBuilder_<%=cid%>.applyToSslSettings(builder -> builder.applySettings(sslSettingsBuilder_<%=cid%>.build()));
-                <%}%>
-                clientSettingsBuilder_<%=cid%>.applyToClusterSettings(builder -> builder.applySettings(clusterSettingsBuilder_<%=cid%>.build()));

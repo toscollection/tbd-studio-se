@@ -53,11 +53,6 @@
         }
         optionalConnectionAttributesMap.put(attributeName, attributeValue);
     }
-    // clusterSettingsBuilder is always used, no need to check it.
-    boolean isConnPoolBuilderUsed = false;
-    boolean isServSettingsBuilderUsed = false;
-    boolean isSocSettingsBuilderUsed = false;
-    boolean isSslSettingsBuilderUsed = false;
 
     // Client options
     %>
@@ -65,100 +60,89 @@
     <%if(applyOptionalAttributes) {
         Set<String> connectionAttributesKeySet = optionalConnectionAttributesMap.keySet();
         if(connectionAttributesKeySet.contains("CONNECTIONS_PER_HOST")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxSize(<%=optionalConnectionAttributesMap.get("CONNECTIONS_PER_HOST")%>);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.maxSize(<%=optionalConnectionAttributesMap.get("CONNECTIONS_PER_HOST")%>));
+            <%
         }
         if(connectionAttributesKeySet.contains("MIN_CONNECTIONS_PER_HOST")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.minSize(<%=optionalConnectionAttributesMap.get("MIN_CONNECTIONS_PER_HOST")%>);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.minSize(<%=optionalConnectionAttributesMap.get("MIN_CONNECTIONS_PER_HOST")%>));
+            <%
         }
         if(connectionAttributesKeySet.contains("MAINTENANCE_FREQUENCY")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maintenanceFrequency(<%=optionalConnectionAttributesMap.get("MAINTENANCE_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.maintenanceFrequency(<%=optionalConnectionAttributesMap.get("MAINTENANCE_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("MAINTENANCE_INITIAL_DELAY")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maintenanceInitialDelay(<%=optionalConnectionAttributesMap.get("MAINTENANCE_INITIAL_DELAY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.maintenanceInitialDelay(<%=optionalConnectionAttributesMap.get("MAINTENANCE_INITIAL_DELAY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("MAX_CONNECTION_IDLE_TIME")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxConnectionIdleTime(<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_IDLE_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.maxConnectionIdleTime(<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_IDLE_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("MAX_CONNECTION_LIFE_TIME")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxConnectionLifeTime(<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_LIFE_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.maxConnectionLifeTime(<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_LIFE_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("MAX_WAIT_TIME")) {
-            isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxWaitTime(<%=optionalConnectionAttributesMap.get("MAX_WAIT_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.maxWaitTime(<%=optionalConnectionAttributesMap.get("MAX_WAIT_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
-        if(connectionAttributesKeySet.contains("LOCAL_THRESHOLD")) {%>
-            clusterSettingsBuilder_<%=cid%>.localThreshold(<%=optionalConnectionAttributesMap.get("LOCAL_THRESHOLD")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+        if(connectionAttributesKeySet.contains("LOCAL_THRESHOLD")) {
+            %>
+            clientSettingsBuilder_<%=cid%>.applyToClusterSettings(builder -> builder.localThreshold(<%=optionalConnectionAttributesMap.get("LOCAL_THRESHOLD")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
-        if(connectionAttributesKeySet.contains("REQUIRED_REPLICA_SET_NAME")) {%>
-            clusterSettingsBuilder_<%=cid%>.requiredReplicaSetName(<%=optionalConnectionAttributesMap.get("REQUIRED_REPLICA_SET_NAME")%>);
-        <%
+        if(connectionAttributesKeySet.contains("REQUIRED_REPLICA_SET_NAME")) {
+            %>
+            clientSettingsBuilder_<%=cid%>.applyToClusterSettings(builder -> builder.requiredReplicaSetName(<%=optionalConnectionAttributesMap.get("REQUIRED_REPLICA_SET_NAME")%>));
+            <%
         }
-        if(connectionAttributesKeySet.contains("SERVER_SELECTION_TIMEOUT")) {%>
-            clusterSettingsBuilder_<%=cid%>.serverSelectionTimeout(<%=optionalConnectionAttributesMap.get("SERVER_SELECTION_TIMEOUT")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+        if(connectionAttributesKeySet.contains("SERVER_SELECTION_TIMEOUT")) {
+            %>
+            clientSettingsBuilder_<%=cid%>.applyToClusterSettings(builder -> builder.serverSelectionTimeout(<%=optionalConnectionAttributesMap.get("SERVER_SELECTION_TIMEOUT")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("HEARTBEAT_FREQUENCY")) {
-            isServSettingsBuilderUsed = true;
             %>
-            serverSettingsBuilder_<%=cid%>.heartbeatFrequency(<%=optionalConnectionAttributesMap.get("HEARTBEAT_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToServerSettings(builder -> builder.heartbeatFrequency(<%=optionalConnectionAttributesMap.get("HEARTBEAT_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("MIN_HEARTBEAT_FREQUENCY")) {
-            isServSettingsBuilderUsed = true;
             %>
-            serverSettingsBuilder_<%=cid%>.minHeartbeatFrequency(<%=optionalConnectionAttributesMap.get("MIN_HEARTBEAT_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToServerSettings(builder -> builder.minHeartbeatFrequency(<%=optionalConnectionAttributesMap.get("MIN_HEARTBEAT_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("SOCKET_CONNECT_TIMEOUT")) {
-            isSocSettingsBuilderUsed = true;
             %>
-            socketSettingsBuilder_<%=cid%>.connectTimeout(<%=optionalConnectionAttributesMap.get("SOCKET_CONNECT_TIMEOUT")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToSocketSettings(builder -> builder.connectTimeout(<%=optionalConnectionAttributesMap.get("SOCKET_CONNECT_TIMEOUT")%>, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("SOCKET_READ_TIMEOUT")) {
-            isSocSettingsBuilderUsed = true;
             %>
-            socketSettingsBuilder_<%=cid%>.readTimeout(<%=optionalConnectionAttributesMap.get("SOCKET_READ_TIMEOUT")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToSocketSettings(builder -> builder.readTimeout(<%=optionalConnectionAttributesMap.get("SOCKET_READ_TIMEOUT")%>, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("RECEIVE_BUFFER_SIZE")) {
-            isSocSettingsBuilderUsed = true;
             %>
-            socketSettingsBuilder_<%=cid%>.receiveBufferSize(<%=optionalConnectionAttributesMap.get("RECEIVE_BUFFER_SIZE")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToSocketSettings(builder -> builder.receiveBufferSize(<%=optionalConnectionAttributesMap.get("RECEIVE_BUFFER_SIZE")%>, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("SEND_BUFFER_SIZE")) {
-            isSocSettingsBuilderUsed = true;
             %>
-            socketSettingsBuilder_<%=cid%>.sendBufferSize(<%=optionalConnectionAttributesMap.get("SEND_BUFFER_SIZE")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToSocketSettings(builder -> builder.sendBufferSize(<%=optionalConnectionAttributesMap.get("SEND_BUFFER_SIZE")%>, java.util.concurrent.TimeUnit.MILLISECONDS));
+            <%
         }
         if(connectionAttributesKeySet.contains("SSL_INVALID_HOSTNAME_ALLOWED")) {
-            isSslSettingsBuilderUsed = true;
             %>
-            sslSettingsBuilder_<%=cid%>.invalidHostNameAllowed(<%=optionalConnectionAttributesMap.get("SSL_INVALID_HOSTNAME_ALLOWED")%>);
-        <%
+            clientSettingsBuilder_<%=cid%>.applyToSslSettings(builder -> builder.invalidHostNameAllowed(<%=optionalConnectionAttributesMap.get("SSL_INVALID_HOSTNAME_ALLOWED")%>));
+            <%
         }
     }%>
 
@@ -185,19 +169,6 @@
 
     <%if(setWriteConcern) {%>
         clientSettingsBuilder_<%=cid%>.writeConcern(com.mongodb.WriteConcern.<%=writeConcern%>);
-        <%
-    }%>
-
-    <%if(isConnPoolBuilderUsed) {%>
-        clientSettingsBuilder_<%=cid%>.applyToConnectionPoolSettings(builder -> builder.applySettings(connPoolSettingsBuilder_<%=cid%>.build()));
-        <%
-    }%>
-    <%if(isServSettingsBuilderUsed) {%>
-        clientSettingsBuilder_<%=cid%>.applyToServerSettings(builder -> builder.applySettings(serverSettingsBuilder_<%=cid%>.build()));
-        <%
-    }%>
-    <%if(isSocSettingsBuilderUsed) {%>
-        clientSettingsBuilder_<%=cid%>.applyToSocketSettings(builder -> builder.applySettings(socketSettingsBuilder_<%=cid%>.build()));
         <%
     }%>
 
