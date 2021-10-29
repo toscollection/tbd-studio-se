@@ -4,8 +4,8 @@
     <extension point="org.talend.core.runtime.librariesNeeded">
 		
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-             id="spark-core_2.12-3.0.1-amzn-0.jar" name="spark-core_2.12-3.0.1-amzn-0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-core_2.12/2.12-3.0.1-amzn-0"/>
+             id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="spark-hive_2.12-3.0.1.jar" name="spark-hive_2.12-3.0.1.jar"
@@ -24,8 +24,8 @@
              mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-             id="spark-sql_2.12-3.0.1-amzn-0.jar" name="spark-sql_2.12-3.0.1-amzn-0.jar"
-             mvn_uri="mvn:org.apache.spark/spark-sql_2.12/2.12-3.0.1-amzn-0"/>
+             id="spark-sql_2.12-3.0.1.jar" name="spark-sql_2.12-3.0.1.jar"
+             mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.1"/>
 
          <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
              id="spark-unsafe_2.12-3.0.1.jar" name="spark-unsafe_2.12-3.0.1.jar"
@@ -1006,7 +1006,7 @@
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="spark-avro_2.12-3.0.1.jar"/>
             <library id="spark-catalyst_2.12-3.0.1.jar"/>
-            <library id="spark-core_2.12-3.0.1-amzn-0.jar"/>
+            <library id="spark-core_2.12-3.0.1.jar"/>
             <library id="spark-kvstore_2.12-3.0.1.jar"/>
             <library id="spark-launcher_2.12-3.0.1.jar"/>
             <library id="spark-mllib_2.12-3.0.1.jar"/>
@@ -1014,7 +1014,7 @@
             <library id="spark-network-common_2.12-3.0.1.jar"/>
             <library id="spark-network-shuffle_2.12-3.0.1.jar"/>
             <library id="spark-redshift_2.12-4.2.0.jar"/>
-            <library id="spark-sql_2.12-3.0.1-amzn-0.jar"/>
+            <library id="spark-sql_2.12-3.0.1.jar"/>
             <library id="spark-tags_2.12-3.0.1.jar"/>
             <library id="spark-unsafe_2.12-3.0.1.jar"/>
             <library id="spark-yarn_2.12-3.0.1.jar"/>
