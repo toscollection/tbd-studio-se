@@ -35,8 +35,6 @@
         <%}%>
         ;
         
-        com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_<%=cid%> = com.mongodb.connection.ClusterSettings.builder();
-        com.mongodb.connection.SslSettings.Builder sslSettingsBuilder_<%=cid%> = com.mongodb.connection.SslSettings.builder();
         <%
         // clusterSettingsBuilder is always used, no need to check it
         boolean isSslSettingsBuilderUsed = false;

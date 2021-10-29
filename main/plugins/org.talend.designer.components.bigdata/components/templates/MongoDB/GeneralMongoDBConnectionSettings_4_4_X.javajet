@@ -59,7 +59,5 @@
                     <%
                     }
                     %>
-                    clusterSettingsBuilder_<%=cid%>.hosts(addrs_<%=cid%>);
-                    
                     clientSettingsBuilder_<%=cid%>.applyToClusterSettings(builder -> builder.hosts(addrs_<%=cid%>));
                 <%}%>

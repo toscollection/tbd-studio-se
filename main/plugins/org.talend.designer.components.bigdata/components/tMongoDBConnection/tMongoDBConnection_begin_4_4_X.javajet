@@ -29,12 +29,6 @@
     <%}%>
     .applicationName(applicationName_<%=cid %>);
     
-    com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_<%=cid%> = com.mongodb.connection.ClusterSettings.builder();
-    com.mongodb.connection.ConnectionPoolSettings.Builder connPoolSettingsBuilder_<%=cid%> = com.mongodb.connection.ConnectionPoolSettings.builder();
-    com.mongodb.connection.ServerSettings.Builder serverSettingsBuilder_<%=cid%> = com.mongodb.connection.ServerSettings.builder();
-    com.mongodb.connection.SocketSettings.Builder socketSettingsBuilder_<%=cid%> = com.mongodb.connection.SocketSettings.builder();
-    com.mongodb.connection.SslSettings.Builder sslSettingsBuilder_<%=cid%> = com.mongodb.connection.SslSettings.builder();
-
     <%
     List<String> intAttributes = Arrays.asList(
         "CONNECTIONS_PER_HOST","MIN_CONNECTIONS_PER_HOST","MAINTENANCE_FREQUENCY","MAINTENANCE_INITIAL_DELAY",
