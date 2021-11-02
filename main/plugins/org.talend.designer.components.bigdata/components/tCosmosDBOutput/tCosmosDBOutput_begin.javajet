@@ -46,6 +46,8 @@
     boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
+    
+    boolean set_x509_username = "true".equals(ElementParameterParser.getValue(node, "__SET_X509_USERNAME__"));
 
     boolean queryOptionNoTimeOut;
     String dbversion;

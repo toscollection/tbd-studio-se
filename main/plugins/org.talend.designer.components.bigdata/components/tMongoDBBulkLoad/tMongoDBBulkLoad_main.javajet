@@ -46,7 +46,11 @@
     boolean useAuthDB = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_AUTHENTICATION_DATABASE__"));
     String authDB = ElementParameterParser.getValue(node, "__AUTHENTICATION_DATABASE__");
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
-  	
+    
+    String ssl_pem_key_file = ElementParameterParser.getValue(node, "__SSLPEMKEYFILE__");
+    boolean use_ssl_ca_file = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSLCAFILE__"));
+    String ssl_ca_file = ElementParameterParser.getValue(node, "__SSLCAFILE__");
+    
   	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
   	List<Map<String, String>> additionalParams = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__ADDITIONAL_ARGS__");
   	
@@ -92,13 +96,13 @@
 		args_<%=cid%>.add("--dbpath");
 		args_<%=cid%>.add(<%=localDBpath%>);
 	<%
-	} else if(use_connection_string) {
-	%>
-		args_<%=cid%>.add("--uri");
-		args_<%=cid%>.add(<%=connection_string%>);
-	<%
-	}else{
-		if(!useReplicaSet){
+	} else {
+		if(use_connection_string) {
+		%>
+			args_<%=cid%>.add("--uri");
+			args_<%=cid%>.add(<%=connection_string%>);
+		<%
+		} else if(!useReplicaSet){
 			if(dbhost!= null && !"".equals(dbhost)&& !"\"\"".equals(dbhost)){
 			%>
 				args_<%=cid%>.add("--host");
@@ -230,9 +234,27 @@
                 args_<%=cid%>.add(<%=usedAuthenticationDB%>);
                 <%
             }
+        } else if("X509".equals(authenticationMechanism)) {
+            %>
+            args_<%=cid%>.add("--authenticationMechanism");
+            args_<%=cid%>.add("MONGODB-X509");
+            <%
+            if(ssl_pem_key_file!= null && !"".equals(ssl_pem_key_file)&& !"\"\"".equals(ssl_pem_key_file)) {
+            %>
+                args_<%=cid%>.add("--sslPEMKeyFile");
+                args_<%=cid%>.add(<%=ssl_pem_key_file%>);
+            <%
+            }
+            
+            if(use_ssl_ca_file && ssl_ca_file!= null && !"".equals(ssl_ca_file)&& !"\"\"".equals(ssl_ca_file)) {
+            %>
+                args_<%=cid%>.add("--sslCAFile");
+                args_<%=cid%>.add(<%=ssl_ca_file%>);
+            <%
+            }
         } else { // GSSAPI SASL (KERBEROS)
-        	// SSL is not compatible with Kerberos in mongoimport
-        	if(!useSSL){
+            // SSL is not compatible with Kerberos in mongoimport
+            if(!useSSL){
 	        	%>
 	            args_<%=cid%>.add("--authenticationMechanism");
 	            args_<%=cid%>.add("GSSAPI");
