@@ -46,6 +46,9 @@
     <libraryNeeded id="wsdl4j-1.6.3.jar" name="wsdl4j-1.6.3.jar" mvn_uri="mvn:wsdl4j/wsdl4j/1.6.3" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-snowflake_2.12-2.8.2-spark_3.0.jar" name="spark-snowflake_2.12-2.8.2-spark_3.0.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.8.2-spark_3.0"/>
 	<libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="snowflake-jdbc-3.12.12.jar" name="snowflake-jdbc-3.12.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.12.12"/>
+    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar" name="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar" mvn_uri="mvn:org.talend.libraries/kafka-clients-2.6.0-shaded-for-kafka-0-10"/>
+    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
+    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0.jar" name="kafka-clients-2.6.0.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/2.6.0"/>
     
     <libraryNeededGroup id="BIGDATA-LAUNCHER-LIB-DBR73X" name="BIGDATA-LAUNCHER-LIB-DBR73X" description="Big Data launcher libraries for DBR73X">
       <library id="gson-2.7.jar"/>
@@ -122,6 +125,13 @@
         <libraryNeededGroup description="DynamoDB libraries for DBR73X" id="DYNAMODB-GROUP-DBR73x" name="DYNAMODB-GROUP-DBR73x">
             <library id="aws-java-sdk-core-1.11.655.jar"/>
             <library id="aws-java-sdk-dynamodb-1.11.655.jar"/>
+        </libraryNeededGroup>
+        
+     <!-- Kafka group -->
+        <libraryNeededGroup description="Spark streaming Kafka libraries for DBR73X" id="KAFKA-LIB-REQUIRED-DBR73X" name="KAFKA-LIB-REQUIRED-DBR73X">
+            <library id="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar"/>
+            <library id="spark-streaming-kafka-0-10_2.12-3.0.1.jar"/>
+            <library id="kafka-clients-2.6.0.jar"/>
         </libraryNeededGroup>
     
   </extension>
