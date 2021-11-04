@@ -55,6 +55,10 @@ public class DBR73xSparkStreamingModuleGroup {
                 true,
                 notSparkLocal
         ));
+        hs.add(new DistributionModuleGroup(
+                DBR73xConstant.KAFKA_LIB_REQUIRED_DBR73X.getModuleName(),
+                true
+        ));
         return hs;
     }
 }

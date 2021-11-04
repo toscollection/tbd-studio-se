@@ -37,6 +37,7 @@ import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xDynamoDBNode
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xKinesisNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xSnowflakeNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xTopByNodeModuleGroup;
+import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 
 public class DBR73xDistribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
         SparkStreamingComponent, HiveOnSparkComponent {
@@ -291,5 +292,10 @@ public class DBR73xDistribution extends AbstractDatabricksDistribution implement
     @Override
     public String getTransientClusterSparkVersion() {
         return DBR73xConstant.TRANSIENT_SPARK_VERSION;
+    }
+    
+    @Override
+    public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion version) {
+        return SparkStreamingKafkaVersion.DBR_KAFKA_2_2_1;
     }
 }
