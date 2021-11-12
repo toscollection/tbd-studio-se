@@ -162,7 +162,6 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
                         break;
-
                     case GoogleProjectId:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID));
@@ -190,6 +189,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case DataBricksCloudProvider:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER));
+                        break;
+                    case DatabricksRunMode:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE));
                         break;
                     case DataBricksClusterId:
                         ConnectionContextHelper.createParameters(varList, paramName,
@@ -242,9 +245,56 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
                         break;
+                    case SynapseHostName:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST));
+                        break;
+                    case SynapseAuthToken:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN), JavaTypesManager.PASSWORD);
+                        break;
+                    case SynapseSparkPools:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_SPARK_POOLS));
+                        break;
+                    case SynapseFsHostName:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME));
+                        break;
+                    case SynapseFsContainer:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER));
+                        break;
+                    case SynapseFsUserName:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME));
+                        break;
+                    case SynapseFsPassword:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD), JavaTypesManager.PASSWORD);
+                        break;
+                    case SynapseDeployBlob:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
+                        break;
+                    case SynapseDriverMemory:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY));
+                        break;
+                    case SynapseDriverCores:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES));
+                        break;
+                    case SynapseExecutorMemory:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY));
+                        break;
+                    case UseTuningProperties:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
+                        break;
                     default:
                     }
-
                 }
             }
             createHadoopPropertiesContextVariable(prefixName, varList, conn.getHadoopProperties());
@@ -440,6 +490,50 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
+        case SynapseHostName:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseAuthToken:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseSparkPools:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_SPARK_POOLS,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	break;
+        case SynapseFsHostName:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseFsContainer:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseFsUserName:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseFsPassword:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseDeployBlob:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseDriverMemory:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseDriverCores:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SynapseExecutorMemory:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	break;
         case ClouderaNavigatorUsername:
             hadoopConn.setClouderaNaviUserName(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
@@ -493,6 +587,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             break;
         case DataBricksCloudProvider:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DatabricksRunMode:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         case DataBricksClusterId:

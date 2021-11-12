@@ -261,16 +261,6 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
 	public boolean doSendBySparkSubmit() {
 		return true;
 	}
-	
-	@Override 
-	public boolean doSupportHBase2x() {
-		return true;
-	}
-	
-	@Override 
-	public boolean doSupportHBase1x() {
-		return false;
-	}
 
 	@Override
 	public boolean doSupportNewHBaseAPI() {

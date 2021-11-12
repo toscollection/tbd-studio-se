@@ -20,6 +20,7 @@ import java.util.Set;
 import org.talend.core.model.process.INode;
 import org.talend.hadoop.distribution.condition.common.HDFSLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
+import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -70,6 +71,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 			classpath += classpathSeparator + hadoopHome + "/../sqoop/*"; //HDP hbase lib for spark
 			classpath += classpathSeparator + "/usr/lib/sqoop/lib/*"; //EMR
 		}
+		if (doesJobContain(nodes, "kudu")) {
+			classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/kudu/*"; //CDH&CDP hbase lib for spark
+		}
 		return classpath;
 	}
 	
@@ -98,4 +102,28 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
     public SparkStreamingKafkaVersion getSparkStreamingKafkaVersion(ESparkVersion version) {
         return SparkStreamingKafkaVersion.KAFKA_0_10;
     }
+	
+	public List<ESparkMode> getSparkModes() {
+		List<ESparkMode> result = new ArrayList<ESparkMode>();
+		if (this.doSupportUniversalLocalMode()) {
+			result.add(ESparkMode.SPARK_LOCAL);
+		}
+		if (this.doSupportSparkYarnK8SMode()) {
+			result.add(ESparkMode.KUBERNETES);
+		}
+		if (this.doSupportSparkYarnClusterMode()) {
+			result.add(ESparkMode.YARN_CLUSTER);
+		}
+		return result;
+	}
+
+	@Override 
+	public boolean doSupportHBase2x() {
+		return true;
+	}
+	
+	@Override 
+	public boolean doSupportHBase1x() {
+		return true;
+	}
 }

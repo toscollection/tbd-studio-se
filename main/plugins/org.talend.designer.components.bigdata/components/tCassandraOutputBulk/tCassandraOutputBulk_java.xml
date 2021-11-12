@@ -69,14 +69,11 @@
             NUM_ROW="5"
         >
             <ITEMS DEFAULT="CASSANDRA_4_0">
-                <ITEM NAME="CASSANDRA_2_0_0" VALUE="CASSANDRA_2_0_0"/>
-                <ITEM NAME="CASSANDRA_2_1" VALUE="CASSANDRA_2_1"/>
-                <ITEM NAME="CASSANDRA_2_2" VALUE="CASSANDRA_2_2"/>
                 <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>
-				<ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
+                <ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
-		
+
         <PARAMETER
             NAME="KEY_SPACE"
             FIELD="TEXT"

@@ -369,6 +369,13 @@
           			if(javaType == JavaTypesManager.OBJECT) {
 %>
 				<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>;
+				
+<%
+					} else if(javaType == JavaTypesManager.STRING) {
+%>
+					
+				<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>==null ? null : valueObj_<%=cid%>.toString();
+				
 <%
           			}else{
 %>
@@ -389,10 +396,6 @@
 						<%} else {%>
 					<%=firstConnName %>.<%=column.getLabel() %> = java.nio.charset.Charset.defaultCharset().decode(java.nio.ByteBuffer.wrap((byte[])valueObj_<%=cid%>)).toString().getBytes(utf8Charset);
 						<%}%>
-<%
-						} else if(javaType == JavaTypesManager.STRING){
-%>
-					<%=firstConnName %>.<%=column.getLabel() %> = valueObj_<%=cid%>.toString();
 <%
 						} else if (javaType == JavaTypesManager.INTEGER){
 %>

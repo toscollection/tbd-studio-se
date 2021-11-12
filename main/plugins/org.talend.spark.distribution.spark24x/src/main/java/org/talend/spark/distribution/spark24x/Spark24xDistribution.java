@@ -251,16 +251,6 @@ public class Spark24xDistribution extends AbstractSparkDistribution
 		return true;
 	}
 	
-	@Override 
-	public boolean doSupportHBase2x() {
-		return true;
-	}
-	
-	@Override 
-	public boolean doSupportHBase1x() {
-		return false;
-	}
-
 	@Override
 	public boolean doSupportNewHBaseAPI() {
 		return true;

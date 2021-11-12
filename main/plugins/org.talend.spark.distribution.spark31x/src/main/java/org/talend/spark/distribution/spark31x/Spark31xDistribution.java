@@ -239,4 +239,14 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 	public boolean doSupportAssumeRole() {
 		return true;
 	}
+	
+	@Override 
+	public boolean doSupportHBase2x() {
+		return false;
+	}
+	
+	@Override 
+	public boolean doSupportHBase1x() {
+		return false;
+	}
 }

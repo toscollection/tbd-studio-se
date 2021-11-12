@@ -29,11 +29,11 @@ public class DBR550SparkStreamingModuleGroupTest {
     @Test
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
-        results.put(DBR550Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
+        results.put(DBR550Constant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName(), null); //$NON-NLS-1$
         results.put(DBR550Constant.SPARK_STREAMING_MRREQUIRED_MODULE_GROUP.getModuleName(),
-                "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(DBR550Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
-        results.put(DBR550Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SPARK_LOCAL_MODE=='false')"); //$NON-NLS-1$
+                null); //$NON-NLS-1$
+        results.put(DBR550Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), null); //$NON-NLS-1$
+        results.put(DBR550Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), null); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = DBR550SparkStreamingModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());

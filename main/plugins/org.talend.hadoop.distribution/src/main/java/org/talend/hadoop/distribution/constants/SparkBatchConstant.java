@@ -12,6 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
+import org.talend.hadoop.distribution.i18n.Messages;
+
 public final class SparkBatchConstant {
 
     public static final String SERVICE = "org.talend.hadoop.distribution.component.SparkBatchComponent";//$NON-NLS-1$
@@ -29,6 +31,10 @@ public final class SparkBatchConstant {
     public static final String SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER = "STORAGE_CONFIGURATION";//$NON-NLS-1$
 
     public static final String SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER = "STORAGE_CONFIGURATION";//$NON-NLS-1$
+
+    public static final String SPARK_MODE_PARAMETER = "SPARK_MODE"; //$NON-NLS-1$
+
+    public static final String SUPPORTED_SPARK_VERSION_PARAMETER = "SUPPORTED_SPARK_VERSION"; //$NON-NLS-1$
 
     public static final String PARQUET_INPUT_COMPONENT = "tFileInputParquet"; //$NON-NLS-1$
 
@@ -49,7 +55,7 @@ public final class SparkBatchConstant {
     public static final String S3_CONFIGURATION_COMPONENT = "tS3Configuration"; //$NON-NLS-1$
 
     public static final String AZURE_CONFIGURATION_COMPONENT = "tAzureFSConfiguration"; //$NON-NLS-1$
-    
+
     public static final String AZURE_FS_CONFIGURATION_COMPONENT = "tAzureFSConfiguration"; //$NON-NLS-1$
 
     public static final String BIGQUERY_CONFIGURATION_COMPONENT = "tBigQueryConfiguration"; //$NON-NLS-1$
@@ -93,13 +99,21 @@ public final class SparkBatchConstant {
     public static final String ORACLE_CONFIG_COMPONENT = "tOracleConfiguration";  //$NON-NLS-1$
 
     public static final String GCS_CONFIG_COMPONENT = "tGSConfiguration";  //$NON-NLS-1$
-    
+
     public static final String BIGQUERY_CONFIG_COMPONENT = "tBigQueryConfiguration";  //$NON-NLS-1$
 
     public static final String TOP_BY_COMPONENT = "tTopBy"; //$NON-NLS-1$
-  
+
     public static final String DELTALAKE_INPUT_COMPONENT = "tDeltaLakeInput";
     public static final String DELTALAKE_OUTPUT_COMPONENT = "tDeltaLakeOutput";
+    
+    public static final String HIVE_WAREHOUSE_CONFIGURATION_COMPONENT = "tHiveWarehouseConfiguration";
+    public static final String HIVE_WAREHOUSE_INPUT_COMPONENT = "tHiveWarehouseInput";
+    public static final String HIVE_WAREHOUSE_OUTPUT_COMPONENT = "tHiveWarehouseOutput";
+    
+    public static final String HIVE_CONFIGURATION_COMPONENT = "tHiveConfiguration";
+    public static final String HIVE_INPUT_COMPONENT = "tHiveInput";
+    public static final String HIVE_OUTPUT_COMPONENT = "tHiveOutput";
 
     public static final String REDSHIFT_CONFIGURATION_COMPONENT = "tRedshiftConfiguration";
     public static final String REDSHIFT_INPUT_COMPONENT = "tRedshiftInput";
@@ -116,10 +130,14 @@ public final class SparkBatchConstant {
     public static final String LINEAR_REGRESSION_MODEL_COMPONENT = "tLinearRegressionModel";
     public static final String LOGISTIC_REGRESSION_MODEL_COMPONENT = "tLogisticRegressionModel";
 
-    public static final String DECISION_TREE_MODEL_COMPONENT = "tDecisionTreeModel"; 
+    public static final String DECISION_TREE_MODEL_COMPONENT = "tDecisionTreeModel";
     public static final String GRADIENT_BOOSTED_TREE_MODEL = "tGradientBoostedTreeModel";
 
     public static final String ALS_MODEL_COMPONENT = "tALSModel";
 
     public static final String RECOMMEND_COMPONENT = "tRecommend";
+
+    public static String getName(String key) {
+        return Messages.getString(key + ".NAME");
+    }
 }

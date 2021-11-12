@@ -31,24 +31,24 @@ public enum ESparkVersion {
     SPARK_2_2("SPARK_2_2_0", "2.2", "SPARK_220"), //$NON-NLS-1$ //$NON-NLS-2$
     SPARK_2_3("SPARK_2_3_0", "2.3", "SPARK_230"), //$NON-NLS-1$ //$NON-NLS-2$
     SPARK_2_4("SPARK_2_4_0", "2.4", "SPARK_240"), //$NON-NLS-1$ //$NON-NLS-2$
-    SPARK_2_4_X("SPARK_2_4_x", "2.4.7", "SPARK_24x"), //$NON-NLS-1$ //$NON-NLS-2$
-    SPARK_3_0("SPARK_3_0_x", "3.0.3", "SPARK_30x"), //$NON-NLS-1$ //$NON-NLS-2$
-	SPARK_3_1("SPARK_3_1_x", "3.1.1", "SPARK_31x"); //$NON-NLS-1$ //$NON-NLS-2$
+    SPARK_2_4_X("SPARK_2_4_x", "Spark 2.4.x", "SPARK_24x"), //$NON-NLS-1$ //$NON-NLS-2$
+    SPARK_3_0("SPARK_3_0_x", "Spark 3.0.x", "SPARK_30x"), //$NON-NLS-1$ //$NON-NLS-2$
+    SPARK_3_1("SPARK_3_1_x", "Spark 3.1.x", "SPARK_31x"); //$NON-NLS-1$ //$NON-NLS-2$
 
     private static final Map<String, ESparkVersion> lookupBySparkVersion = new HashMap<String, ESparkVersion>();
     private static final Map<String, ESparkVersion> lookupByApiVersion = new HashMap<String, ESparkVersion>();
-    
+
     static {
         for (ESparkVersion v : ESparkVersion.values()) {
             lookupBySparkVersion.put(v.getSparkVersion(), v);
             lookupByApiVersion.put(v.getApiVersion(), v);
         }
     }
-    
+
     private String sparkVersion;
 
     private String versionLabel;
-    
+
     private String apiVersion;
 
     private ESparkVersion(String sparkVersion, String versionLabel, String apiVersion) {
@@ -67,8 +67,8 @@ public enum ESparkVersion {
 
     public String getApiVersion() {
         return this.apiVersion;
-    }    
-    
+    }
+
     public static Comparator<ESparkVersion> descComparator() {
         return new Comparator<ESparkVersion>() {
 
@@ -79,7 +79,7 @@ public enum ESparkVersion {
 
         };
     }
-    
+
     public static ESparkVersion getBySparkVersion(String sparkVersion) {
         return lookupBySparkVersion.get(sparkVersion);
     }

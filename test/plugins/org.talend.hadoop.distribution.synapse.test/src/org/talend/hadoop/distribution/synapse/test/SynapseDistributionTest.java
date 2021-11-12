@@ -49,32 +49,16 @@ public class SynapseDistributionTest {
         assertTrue(distribution.doSupportUseDatanodeHostname());
         assertFalse(distribution.doSupportGroup());
         assertFalse(distribution.doSupportOldImportMode());
-        assertFalse(((HDFSComponent) distribution).doSupportSequenceFileShortType());
+        assertTrue(((HDFSComponent) distribution).doSupportSequenceFileShortType());
         assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
         assertTrue(((MRComponent) distribution).doSupportCrossPlatformSubmission());
         assertFalse(((MRComponent) distribution).doSupportImpersonation());
         assertEquals(((MRComponent) distribution).getYarnApplicationClasspath(), YARN_APPLICATION_CLASSPATH);
         assertFalse(distribution instanceof HBaseComponent);
         assertFalse(distribution instanceof SqoopComponent);
-        assertFalse(((HiveComponent) distribution).doSupportEmbeddedMode());
-        assertFalse(((HiveComponent) distribution).doSupportStandaloneMode());
-        assertFalse(((HiveComponent) distribution).doSupportHive1());
-        assertFalse(((HiveComponent) distribution).doSupportHive2());
-        assertFalse(((HiveComponent) distribution).doSupportTezForHive());
-        assertFalse(((HiveComponent) distribution).doSupportHBaseForHive());
-        assertFalse(((HiveComponent) distribution).doSupportSSL());
-        assertFalse(((HiveComponent) distribution).doSupportORCFormat());
-        assertTrue(((HiveComponent) distribution).doSupportAvroFormat());
-        assertTrue(((HiveComponent) distribution).doSupportParquetFormat());
-        assertFalse(((HiveComponent) distribution).doSupportStoreAsParquet());
-        assertFalse(((HiveComponent) distribution).doSupportClouderaNavigator());
         assertFalse(distribution instanceof HCatalogComponent);
         assertFalse(distribution instanceof ImpalaComponent);
-        assertFalse(((SqoopComponent) distribution).doJavaAPISqoopImportAllTablesSupportExcludeTable());
-        assertFalse(((SqoopComponent) distribution).doJavaAPISqoopImportSupportDeleteTargetDir());
-        assertFalse(((SqoopComponent) distribution).doJavaAPISupportStorePasswordInFile());
-        assertFalse(((HBaseComponent) distribution).doSupportNewHBaseAPI());
-        assertTrue(distribution.doSupportAzureDataLakeStorage());
+        assertTrue(distribution.doSupportAzureDataLakeStorageGen2());
         assertTrue(distribution.doSupportWebHDFS());
     }
 

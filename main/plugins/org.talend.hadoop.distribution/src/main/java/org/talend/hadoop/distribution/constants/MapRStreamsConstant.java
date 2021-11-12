@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class MapRStreamsConstant {
 
     public static final String SERVICE = "org.talend.hadoop.distribution.component.MapRStreamsComponent";//$NON-NLS-1$
@@ -26,4 +29,7 @@ public final class MapRStreamsConstant {
     public static final String VERSION_REPOSITORYVALUE = HDFSConstant.VERSION_REPOSITORYVALUE;
 
     public static final String CREATE_STREAM_COMPONENT = "tMapRStreamsCreateStream"; //$NON-NLS-1$
+
+    public static final List<String> MAPRSTREAMS_COMPONENTS = Arrays.asList("tMapRStreamsConnection", "tMapRStreamsInput", //$NON-NLS-1$ //$NON-NLS-2$
+            "tMapRStreamsOutput"); //$NON-NLS-1$
 }

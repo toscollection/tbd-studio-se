@@ -155,14 +155,14 @@
             mvn_uri="mvn:com.101tec/zkclient/0.10"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdatas"
-            id="slf4j-log4j12-1.7.25.jar"
-            name="slf4j-log4j12-1.7.25.jar" 
-            mvn_uri="mvn:org.talend.libraries/slf4j-log4j12-1.7.25/6.0.0"/>
+            id="slf4j-log4j12-1.7.29.jar"
+            name="slf4j-log4j12-1.7.29.jar" 
+            mvn_uri="mvn:org.slf4j/slf4j-log4j12/1.7.29"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
-            id="slf4j-api-1.7.25.jar"
-            name="slf4j-api-1.7.25.jar" 
-            mvn_uri="mvn:org.slf4j/slf4j-api/1.7.25"/>
+            id="slf4j-api-1.7.29.jar"
+            name="slf4j-api-1.7.29.jar" 
+            mvn_uri="mvn:org.slf4j/slf4j-api/1.7.29"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="jopt-simple-5.0.4.jar"
@@ -280,8 +280,8 @@
             <library id="zkclient-0.10.jar"/>
             <library id="zookeeper-3.4.10.jar"/>
             <library id="log4j-1.2.17.jar"/>
-            <library id="slf4j-api-1.7.25.jar"/>
-            <library id="slf4j-log4j12-1.7.25.jar"/>
+            <library id="slf4j-api-1.7.29.jar"/>
+            <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
         
         <!-- Kafka 1.1.0 client group (tKafkaOutput) -->
@@ -291,9 +291,78 @@
                 name="KAFKA-CLIENT-LIB-2_11-1_1_0">
             <library id="kafka-clients-1.1.0.jar"/>
             <library id="log4j-1.2.17.jar"/>
-            <library id="slf4j-api-1.7.25.jar"/>
-            <library id="slf4j-log4j12-1.7.25.jar"/>
+            <library id="slf4j-api-1.7.29.jar"/>
+            <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
+      
+      <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-2.1.0.jar" name="hbase-client-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-2.1.0.jar" name="hbase-common-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop-compat-2.1.0.jar" name="hbase-hadoop-compat-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hadoop-compat/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop2-compat-2.1.0.jar" name="hbase-hadoop2-compat-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-hadoop2-compat/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-http-2.1.0.jar" name="hbase-http-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-http/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-metrics-2.1.0.jar" name="hbase-metrics-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-metrics/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-metrics-api-2.1.0.jar" name="hbase-metrics-api-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-metrics-api/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-procedure-2.1.0.jar" name="hbase-procedure-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-procedure/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-protocol-2.1.0.jar" name="hbase-protocol-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-protocol/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-protocol-shaded-2.1.0.jar" name="hbase-protocol-shaded-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-protocol-shaded/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-replication-2.1.0.jar" name="hbase-replication-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-replication/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-server-2.1.0.jar" name="hbase-server-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-server/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-shaded-miscellaneous-2.1.0.jar" name="hbase-shaded-miscellaneous-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-shaded-miscellaneous/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-shaded-netty-2.1.0.jar" name="hbase-shaded-netty-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-shaded-netty/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-shaded-protobuf-2.1.0.jar" name="hbase-shaded-protobuf-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-shaded-protobuf/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-zookeeper-2.1.0.jar" name="hbase-zookeeper-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-zookeeper/2.1.0"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core4-4.2.0-incubating.jar" name="htrace-core4-4.2.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.2.0-incubating"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-3.1.5.jar" name="metrics-core-3.1.5.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-core/3.1.5"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="zookeeper-3.4.12.jar" name="zookeeper-3.4.12.jar" mvn_uri="mvn:org.apache.zookeeper/zookeeper/3.4.12"/>
+		
+		<!-- HBase2 group  -->
+		<libraryNeededGroup description="HBASE 2.1.0" id="HBASE-2.1.0" name="HBASE-2.1.0">
+        	<library id="htrace-core4-4.2.0-incubating.jar"/>
+			<library id="metrics-core-3.1.5.jar"/>
+			<library id="commons-lang3-3.5.jar"/>
+			<library id="hbase-client-2.1.0.jar"/>
+			<library id="hbase-common-2.1.0.jar"/>
+			<library id="hbase-hadoop-compat-2.1.0.jar"/>
+			<library id="hbase-hadoop2-compat-2.1.0.jar"/>
+			<library id="hbase-http-2.1.0.jar"/>
+			<library id="hbase-metrics-2.1.0.jar"/>
+			<library id="hbase-metrics-api-2.1.0.jar"/>
+			<library id="hbase-procedure-2.1.0.jar"/>
+			<library id="hbase-protocol-2.1.0.jar"/>
+			<library id="hbase-protocol-shaded-2.1.0.jar"/>
+			<library id="hbase-replication-2.1.0.jar"/>
+			<library id="hbase-server-2.1.0.jar"/>
+			<library id="hbase-shaded-miscellaneous-2.1.0.jar"/>
+			<library id="hbase-shaded-netty-2.1.0.jar"/>
+			<library id="hbase-shaded-protobuf-2.1.0.jar"/>
+			<library id="hbase-zookeeper-2.1.0.jar"/>
+			<library id="zookeeper-3.4.12.jar"/>
+        </libraryNeededGroup>
+        
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-1.4.10.jar" name="hbase-common-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/1.4.10"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-1.4.10.jar" name="hbase-client-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/1.4.10"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-protocol-1.4.10.jar" name="hbase-protocol-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-protocol/1.4.10"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-server-1.4.10.jar" name="hbase-server-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-server/1.4.10"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop-compat-1.4.10.jar" name="hbase-hadoop-compat-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-hadoop-compat/1.4.10"/>
+		<libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hive-hbase-handler-2.3.6.jar" name="hive-hbase-handler-2.3.6.jar" mvn_uri="mvn:org.apache.hive/hive-hbase-handler/2.3.6"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core-3.1.0-incubating.jar" name="htrace-core-3.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core/3.1.0-incubating"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="netty-all-4.1.17.Final.jar" name="netty-all-4.1.17.Final.jar" mvn_uri="mvn:io.netty/netty-all/4.1.17.Final"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-2.2.0.jar" name="metrics-core-2.2.0.jar" mvn_uri="mvn:com.yammer.metrics/metrics-core/2.2.0"/>
+        
+        <!-- HBase1 group  -->
+        <libraryNeededGroup description="HBASE 1.4.10" id="HBASE-1.4.10" name="HBASE-1.4.10">
+            <library id="hbase-common-1.4.10.jar" />
+            <library id="hbase-client-1.4.10.jar" />
+            <library id="hbase-protocol-1.4.10.jar" />
+            <library id="hbase-server-1.4.10.jar" />
+            <library id="hbase-hadoop-compat-1.4.10.jar" />
+            <library id="hive-hbase-handler-2.3.6-amzn-1.jar"/>
+            <library id="htrace-core-3.1.0-incubating.jar"/>
+            <library id="netty-all-4.1.17.Final.jar"/>
+            <library id="metrics-core-2.2.0.jar"/>
+            <library id="zookeeper-3.4.12.jar"/>
+        </libraryNeededGroup>
+      
       
    </extension>
 </plugin>

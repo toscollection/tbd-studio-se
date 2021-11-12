@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants;
 
+import java.util.Arrays;
+import java.util.List;
+
 public final class HiveOnSparkConstant {
 
     public static final String SERVICE = "org.talend.hadoop.distribution.component.HiveOnSparkComponent";//$NON-NLS-1$
@@ -23,4 +26,6 @@ public final class HiveOnSparkConstant {
     public static final String VERSION_PARAMETER = "DB_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "HIVE_VERSION";//$NON-NLS-1$
+
+    public static final List<String> HIVE_COMPONENTS = Arrays.asList("tHiveConfiguration", "tHiveInput", "tHiveOutput");
 }

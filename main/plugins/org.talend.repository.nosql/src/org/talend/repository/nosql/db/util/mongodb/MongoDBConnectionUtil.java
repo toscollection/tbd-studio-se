@@ -25,6 +25,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.SSLContext;
+
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.talend.commons.exception.ExceptionHandler;
@@ -32,6 +34,7 @@ import org.talend.core.model.utils.ContextParameterUtils;
 import org.talend.core.prefs.SSLPreferenceConstants;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.ui.utils.PluginUtil;
+import org.talend.core.utils.StudioSSLContextProvider;
 import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
@@ -226,6 +229,28 @@ public class MongoDBConnectionUtil {
             Object sslSettingsBuilder = NoSQLReflection.invokeStaticMethod("com.mongodb.connection.SslSettings", "builder", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[0], classLoader);
             NoSQLReflection.invokeMethod(sslSettingsBuilder, "enabled", new Object[] { requireEncryption }, boolean.class); //$NON-NLS-1$
+            if (requireEncryption) {
+            	SSLContext sslContext = StudioSSLContextProvider.getContext();
+                NoSQLReflection.invokeMethod(sslSettingsBuilder, "context", new Object[] { sslContext }, SSLContext.class); //$NON-NLS-1$
+            }
+            Object sslSettingsBuild = NoSQLReflection.invokeMethod(sslSettingsBuilder, "build", new Object[0]); //$NON-NLS-1$
+            Class<?> sslBlockClasszz = Class.forName("com.mongodb.Block", false, classLoader); //$NON-NLS-1$
+            Class[] sslInterfaces = new Class[1];
+            sslInterfaces[0] = sslBlockClasszz;
+            Object sslBlock = Proxy.newProxyInstance(classLoader, sslInterfaces, (proxy, method, args) -> {
+                switch (method.getName()) {
+                case "apply": //$NON-NLS-1$
+                    if (args[0] != null) {
+                        NoSQLReflection.invokeMethod(args[0], "applySettings", new Object[] { sslSettingsBuild }, //$NON-NLS-1$
+                                Class.forName("com.mongodb.connection.SslSettings", true, classLoader)); //$NON-NLS-1$
+                    }
+                    return null;
+                default:
+                    throw new NoSQLServerException(
+                            Messages.getString("MongoDBConnectionUtil.CannotFindMethod", method.getName())); //$NON-NLS-1$
+                }
+            });
+            NoSQLReflection.invokeMethod(clientSettingsBuilder, "applyToSslSettings", new Object[] { sslBlock }, sslBlockClasszz); //$NON-NLS-1$
 
             for (String host : hosts.keySet()) {
                 String port = hosts.get(host);
@@ -237,9 +262,7 @@ public class MongoDBConnectionUtil {
 
             String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
             if (requireAuth) {
-                Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
-                        new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
-                        char[].class);
+                Object credential = getCredential(connection, contextType, user, pass, classLoader);
                 NoSQLReflection.invokeMethod(clientSettingsBuilder, "credential", new Object[] { credential }, //$NON-NLS-1$
                         Class.forName("com.mongodb.MongoCredential", true, classLoader)); //$NON-NLS-1$
             }
@@ -292,6 +315,10 @@ public class MongoDBConnectionUtil {
         try {
             Object builder = NoSQLReflection.newInstance("com.mongodb.MongoClientOptions$Builder", new Object[0], classLoader); //$NON-NLS-1$
             NoSQLReflection.invokeMethod(builder, "sslEnabled", new Object[] { requireEncryption }, boolean.class); //$NON-NLS-1$
+            if (requireEncryption) {
+            	SSLContext sslContext = StudioSSLContextProvider.getContext();
+                NoSQLReflection.invokeMethod(builder, "sslContext", new Object[] { sslContext }, SSLContext.class); //$NON-NLS-1$
+            }
             Object build = NoSQLReflection.invokeMethod(builder, "build", new Object[0]); //$NON-NLS-1$
 
             for (String host : hosts.keySet()) {
@@ -303,9 +330,7 @@ public class MongoDBConnectionUtil {
 
             String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
             if (requireAuth) {
-                Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
-                        new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
-                        char[].class);
+                Object credential = getCredential(connection, contextType, user, pass, classLoader);
                 credentials.add(credential);
             }
 
@@ -543,5 +568,58 @@ public class MongoDBConnectionUtil {
                 ExceptionHandler.process(e);
             }
         }
+    }
+    
+    //TUP-32857, keep the same configuration as tMongoDBConnection and the logic is referred from GeneralMongoDBConnectionSettings_4_4_X.javajet
+    private static Object getCredential(NoSQLConnection connection, ContextType contextType, String user, String pass, ClassLoader classLoader) throws Exception{
+        // Client Credentials
+        String authDatabase = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_DATABASE);
+        String authMechanism = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+        String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
+        String setAuthDatabase = connection.getAttributes().get(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE);
+        boolean useAuthDB = setAuthDatabase == null ? false : Boolean.valueOf(setAuthDatabase);
+        authDatabase = useAuthDB ? authDatabase : database;
+        if (contextType != null) {
+            authDatabase = ContextParameterUtils.getOriginalValue(contextType, authDatabase);
+            database = ContextParameterUtils.getOriginalValue(contextType, database);
+        }
+        //for backport on legacy metadata configuration
+        if (authMechanism == null) authMechanism = IMongoConstants.SCRAMSHA1_MEC;
+        Object credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
+                new Object[] { user, database, pass.toCharArray() }, classLoader, String.class, String.class,
+                char[].class);
+        if (authMechanism.equals(IMongoConstants.NEGOTIATE_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createCredential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, authDatabase, pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.PLAIN_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createPlainCredential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, "$external", pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.SCRAMSHA1_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha1Credential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, authDatabase, pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.SCRAMSHA256_MEC)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createScramSha256Credential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { user, authDatabase, pass.toCharArray() }, classLoader, String.class, String.class,
+                    char[].class);
+        } else if (authMechanism.equals(IMongoConstants.KERBEROS_MEC)) {
+            String krbUserPrincipal = connection.getAttributes().get(IMongoDBAttributes.KRB_USER_PRINCIPAL);
+            String krbRealm = connection.getAttributes().get(IMongoDBAttributes.KRB_REALM);
+            String krbKdc = connection.getAttributes().get(IMongoDBAttributes.KRB_KDC);
+            if (contextType != null) {
+                krbUserPrincipal = ContextParameterUtils.getOriginalValue(contextType, krbUserPrincipal);
+                krbRealm = ContextParameterUtils.getOriginalValue(contextType, krbRealm);
+                krbKdc = ContextParameterUtils.getOriginalValue(contextType, krbKdc);
+            }
+            // GSSAPI SASL (KERBEROS)
+            System.setProperty("java.security.krb5.realm", krbRealm);
+            System.setProperty("java.security.krb5.kdc", krbKdc);
+            System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createGSSAPICredential", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { krbUserPrincipal }, classLoader, String.class);
+        } 
+        return credential;
     }
 }

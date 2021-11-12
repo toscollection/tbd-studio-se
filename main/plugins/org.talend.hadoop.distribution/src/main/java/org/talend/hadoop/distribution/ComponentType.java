@@ -24,8 +24,8 @@ import org.talend.hadoop.distribution.constants.HiveOnSparkConstant;
 import org.talend.hadoop.distribution.constants.ImpalaConstant;
 import org.talend.hadoop.distribution.constants.MRConstant;
 import org.talend.hadoop.distribution.constants.MapRDBConstant;
-import org.talend.hadoop.distribution.constants.MapRStreamsConstant;
 import org.talend.hadoop.distribution.constants.MapROJAIConstant;
+import org.talend.hadoop.distribution.constants.MapRStreamsConstant;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.SqoopConstant;
@@ -41,82 +41,89 @@ public enum ComponentType {
             MapROJAIConstant.DISTRIBUTION_PARAMETER,
             MapROJAIConstant.DISTRIBUTION_REPOSITORYVALUE,
             MapROJAIConstant.VERSION_PARAMETER,
-            MapROJAIConstant.VERSION_REPOSITORYVALUE),
+            MapROJAIConstant.VERSION_REPOSITORYVALUE,
+            MapROJAIConstant.MAPROJAI_COMPONENTS),
     HDFS(
-         HDFSConstant.SERVICE,
-         HDFSConstant.DISTRIBUTION_PARAMETER,
-         HDFSConstant.DISTRIBUTION_REPOSITORYVALUE,
-         HDFSConstant.VERSION_PARAMETER,
-         HDFSConstant.VERSION_REPOSITORYVALUE,
-         HDFSConstant.HDFS_COMPONENTS),
+            HDFSConstant.SERVICE,
+            HDFSConstant.DISTRIBUTION_PARAMETER,
+            HDFSConstant.DISTRIBUTION_REPOSITORYVALUE,
+            HDFSConstant.VERSION_PARAMETER,
+            HDFSConstant.VERSION_REPOSITORYVALUE,
+            HDFSConstant.HDFS_COMPONENTS),
     HBASE(
-          HBaseConstant.SERVICE,
-          HBaseConstant.DISTRIBUTION_PARAMETER,
-          HBaseConstant.DISTRIBUTION_REPOSITORYVALUE,
-          HBaseConstant.VERSION_PARAMETER,
-          HBaseConstant.VERSION_REPOSITORYVALUE,
-          HBaseConstant.HBASE_COMPONENTS),
+            HBaseConstant.SERVICE,
+            HBaseConstant.DISTRIBUTION_PARAMETER,
+            HBaseConstant.DISTRIBUTION_REPOSITORYVALUE,
+            HBaseConstant.VERSION_PARAMETER,
+            HBaseConstant.VERSION_REPOSITORYVALUE,
+            HBaseConstant.HBASE_COMPONENTS),
     HIVE(
-         HiveConstant.SERVICE,
-         HiveConstant.DISTRIBUTION_PARAMETER,
-         HiveConstant.DISTRIBUTION_REPOSITORYVALUE,
-         HiveConstant.VERSION_PARAMETER,
-         HiveConstant.VERSION_REPOSITORYVALUE,
-         HiveConstant.HIVE_COMPONENTS),
+            HiveConstant.SERVICE,
+            HiveConstant.DISTRIBUTION_PARAMETER,
+            HiveConstant.DISTRIBUTION_REPOSITORYVALUE,
+            HiveConstant.VERSION_PARAMETER,
+            HiveConstant.VERSION_REPOSITORYVALUE,
+            HiveConstant.HIVE_COMPONENTS),
     IMPALA(
-           ImpalaConstant.SERVICE,
-           ImpalaConstant.DISTRIBUTION_PARAMETER,
-           ImpalaConstant.DISTRIBUTION_REPOSITORYVALUE,
-           ImpalaConstant.VERSION_PARAMETER,
-           ImpalaConstant.VERSION_REPOSITORYVALUE),
+            ImpalaConstant.SERVICE,
+            ImpalaConstant.DISTRIBUTION_PARAMETER,
+            ImpalaConstant.DISTRIBUTION_REPOSITORYVALUE,
+            ImpalaConstant.VERSION_PARAMETER,
+            ImpalaConstant.VERSION_REPOSITORYVALUE,
+            ImpalaConstant.IMPALA_COMPONENTS),
     MAPREDUCE(
-              MRConstant.SERVICE,
-              MRConstant.DISTRIBUTION_PARAMETER,
-              MRConstant.DISTRIBUTION_REPOSITORYVALUE,
-              MRConstant.VERSION_PARAMETER,
-              MRConstant.VERSION_REPOSITORYVALUE),
+            MRConstant.SERVICE,
+            MRConstant.DISTRIBUTION_PARAMETER,
+            MRConstant.DISTRIBUTION_REPOSITORYVALUE,
+            MRConstant.VERSION_PARAMETER,
+            MRConstant.VERSION_REPOSITORYVALUE),
     SQOOP(
-          SqoopConstant.SERVICE,
-          SqoopConstant.DISTRIBUTION_PARAMETER,
-          SqoopConstant.DISTRIBUTION_REPOSITORYVALUE,
-          SqoopConstant.VERSION_PARAMETER,
-          SqoopConstant.VERSION_REPOSITORYVALUE),
+            SqoopConstant.SERVICE,
+            SqoopConstant.DISTRIBUTION_PARAMETER,
+            SqoopConstant.DISTRIBUTION_REPOSITORYVALUE,
+            SqoopConstant.VERSION_PARAMETER,
+            SqoopConstant.VERSION_REPOSITORYVALUE,
+            SqoopConstant.SQOOP_COMPONENTS),
     HCATALOG(
-             HCatalogConstant.SERVICE,
-             HCatalogConstant.DISTRIBUTION_PARAMETER,
-             HCatalogConstant.DISTRIBUTION_REPOSITORYVALUE,
-             HCatalogConstant.VERSION_PARAMETER,
-             HCatalogConstant.VERSION_REPOSITORYVALUE),
+            HCatalogConstant.SERVICE,
+            HCatalogConstant.DISTRIBUTION_PARAMETER,
+            HCatalogConstant.DISTRIBUTION_REPOSITORYVALUE,
+            HCatalogConstant.VERSION_PARAMETER,
+            HCatalogConstant.VERSION_REPOSITORYVALUE,
+            HCatalogConstant.HCATALOG_COMPONENTS),
     SPARKBATCH(
-               SparkBatchConstant.SERVICE,
-               SparkBatchConstant.DISTRIBUTION_PARAMETER,
-               SparkBatchConstant.DISTRIBUTION_REPOSITORYVALUE,
-               SparkBatchConstant.VERSION_PARAMETER,
-               SparkBatchConstant.VERSION_REPOSITORYVALUE),
+            SparkBatchConstant.SERVICE,
+            SparkBatchConstant.DISTRIBUTION_PARAMETER,
+            SparkBatchConstant.DISTRIBUTION_REPOSITORYVALUE,
+            SparkBatchConstant.VERSION_PARAMETER,
+            SparkBatchConstant.VERSION_REPOSITORYVALUE),
     SPARKSTREAMING(
-                   SparkStreamingConstant.SERVICE,
-                   SparkStreamingConstant.DISTRIBUTION_PARAMETER,
-                   SparkStreamingConstant.DISTRIBUTION_REPOSITORYVALUE,
-                   SparkStreamingConstant.VERSION_PARAMETER,
-                   SparkStreamingConstant.VERSION_REPOSITORYVALUE),
+            SparkStreamingConstant.SERVICE,
+            SparkStreamingConstant.DISTRIBUTION_PARAMETER,
+            SparkStreamingConstant.DISTRIBUTION_REPOSITORYVALUE,
+            SparkStreamingConstant.VERSION_PARAMETER,
+            SparkStreamingConstant.VERSION_REPOSITORYVALUE),
     HIVEONSPARK(
-                HiveOnSparkConstant.SERVICE,
-                HiveOnSparkConstant.DISTRIBUTION_PARAMETER,
-                HiveOnSparkConstant.DISTRIBUTION_REPOSITORYVALUE,
-                HiveOnSparkConstant.VERSION_PARAMETER,
-                HiveOnSparkConstant.VERSION_REPOSITORYVALUE),
+            HiveOnSparkConstant.SERVICE,
+            HiveOnSparkConstant.DISTRIBUTION_PARAMETER,
+            HiveOnSparkConstant.DISTRIBUTION_REPOSITORYVALUE,
+            HiveOnSparkConstant.VERSION_PARAMETER,
+            HiveOnSparkConstant.VERSION_REPOSITORYVALUE,
+            HiveOnSparkConstant.HIVE_COMPONENTS),
     MAPRSTREAMS(
-                MapRStreamsConstant.SERVICE,
-                MapRStreamsConstant.DISTRIBUTION_PARAMETER,
-                MapRStreamsConstant.DISTRIBUTION_REPOSITORYVALUE,
-                MapRStreamsConstant.VERSION_PARAMETER,
-                MapRStreamsConstant.VERSION_REPOSITORYVALUE),
+            MapRStreamsConstant.SERVICE,
+            MapRStreamsConstant.DISTRIBUTION_PARAMETER,
+            MapRStreamsConstant.DISTRIBUTION_REPOSITORYVALUE,
+            MapRStreamsConstant.VERSION_PARAMETER,
+                MapRStreamsConstant.VERSION_REPOSITORYVALUE,
+                MapRStreamsConstant.MAPRSTREAMS_COMPONENTS),
     MAPRDB(
-           MapRDBConstant.SERVICE,
-           HBaseConstant.DISTRIBUTION_PARAMETER,
-           HBaseConstant.DISTRIBUTION_REPOSITORYVALUE,
-           HBaseConstant.VERSION_PARAMETER,
-           HBaseConstant.VERSION_REPOSITORYVALUE);
+            MapRDBConstant.SERVICE,
+            HBaseConstant.DISTRIBUTION_PARAMETER,
+            HBaseConstant.DISTRIBUTION_REPOSITORYVALUE,
+            HBaseConstant.VERSION_PARAMETER,
+            HBaseConstant.VERSION_REPOSITORYVALUE,
+            MapRDBConstant.MAPRDB_COMPONENTS);
 
     private String mService;
 
@@ -127,7 +134,7 @@ public enum ComponentType {
     private String mDistributionRepositoryValueParameter;
 
     private String mVersionRepositoryValueParameter;
-    
+
     private List<String> mComponentList;
 
     /**
@@ -141,9 +148,9 @@ public enum ComponentType {
      */
     ComponentType(String service, String distributionParameter, String distributionRepositoryValueParameter,
             String versionParameter, String versionRepositoryValueParameter) {
-        
+
         this(service,  distributionParameter,  distributionRepositoryValueParameter,
-                 versionParameter,  versionRepositoryValueParameter, new ArrayList<String>());
+                versionParameter,  versionRepositoryValueParameter, new ArrayList<String>());
     }
 
     /**
@@ -165,7 +172,7 @@ public enum ComponentType {
         this.mVersionRepositoryValueParameter = versionRepositoryValueParameter;
         this.mComponentList = new ArrayList<String>( componentLists );
     }
-  
+
     public static ComponentType getComponentType(String type) {
         for (ComponentType ct : values()) {
             if (ct.name().equals(type)) {
@@ -194,7 +201,7 @@ public enum ComponentType {
     public String getVersionRepositoryValueParameter() {
         return this.mVersionRepositoryValueParameter;
     }
-    
+
     public List<String> getComponentList() {
         return new ArrayList<>( mComponentList );
     }

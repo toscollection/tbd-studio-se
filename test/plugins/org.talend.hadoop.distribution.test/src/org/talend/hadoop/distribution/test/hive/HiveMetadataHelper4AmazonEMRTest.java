@@ -22,13 +22,7 @@ public class HiveMetadataHelper4AmazonEMRTest extends AbstractDistributionTest4H
 
     private static final String[] VERSIONS_NON_DYNAMIC = new String[] {
     	"EMR 6.2.0 (Hive 3.1.2)",
-        "EMR 5.29.0 (Hive 2.3.6)",
-        "EMR 5.15.0 (Hive 2.3.2)",
-        "EMR 5.8.0 (Hive 2.3.0)",
-        "EMR 5.5.0 (Hive 2.1.1)",
-        "EMR 5.0.0 (Hive 2.1.0)",
-        "EMR 4.6.0 (Hive 1.0.0)",
-        "EMR 4.5.0 (Hive 1.0.0)"};
+        "EMR 5.29.0 (Hive 2.3.6)"};
 
     @Override
     protected String getDistribution() {

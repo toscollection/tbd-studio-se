@@ -17,6 +17,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.BidiMap;
+import org.apache.commons.collections.bidimap.DualHashBidiMap;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
@@ -92,6 +94,22 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
     protected Group encryptionGroup;
 
     protected Button checkRequireEncryptionBtn;
+    
+    private Composite authComposite;
+    
+    private LabelledCombo authMechanismCombo;
+    
+    private Button checkSetAuthDatabaseBtn;
+    
+    private LabelledText authDatabaseText;
+
+    private LabelledText authKrbUserPrincipalText;
+    
+    private LabelledText authKrbRealmText;
+    
+    private LabelledText authKrbKdcText;
+    
+    private BidiMap value2LabelMap = new DualHashBidiMap();
 
     /**
      * DOC PLV MongoDBConnForm constructor comment.
@@ -123,7 +141,15 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         boolean isUseRequireEncryption = Boolean.parseBoolean(conn.getAttributes().get(IMongoDBAttributes.REQUIRED_ENCRYPTION));
         boolean isUseRequireAuth = Boolean.parseBoolean(conn.getAttributes().get(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION));
         boolean isUseReplicaSet = Boolean.parseBoolean(conn.getAttributes().get(IMongoDBAttributes.USE_REPLICA_SET));
+        String authMechanism = conn.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+        boolean isUseAuthDatbase = Boolean.parseBoolean(conn.getAttributes().get(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE));
+        String authDatabase = conn.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_DATABASE);
+        String authKrbUserPrincipal = conn.getAttributes().get(IMongoDBAttributes.KRB_USER_PRINCIPAL);
+        String authKrbRealm = conn.getAttributes().get(IMongoDBAttributes.KRB_REALM);
+        String authKrbKdc = conn.getAttributes().get(IMongoDBAttributes.KRB_KDC);
+        
         if (validText(dbVersion)) {
+            authMechanismCombo.getCombo().setItems(getAuthMechanismLables(dbVersion));
             dbVersionCombo.setText(repositoryTranslator.getLabel(dbVersion));
         } else {
             dbVersionCombo.select(0);
@@ -136,6 +162,13 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         if (checkRequireAuthBtn.getSelection()) {
             userText.setText(user == null ? "" : user); //$NON-NLS-1$
             pwdText.setText(passwd == null ? "" : passwd); //$NON-NLS-1$
+            if (StringUtils.isEmpty(authMechanism)) authMechanism = IMongoConstants.NEGOTIATE_MEC;
+            authMechanismCombo.setText(Messages.getString("MongoDBConnForm." + authMechanism));
+            checkSetAuthDatabaseBtn.setSelection(isUseAuthDatbase);
+            authDatabaseText.setText(authDatabase == null ? "" : authDatabase);
+            authKrbUserPrincipalText.setText(authKrbUserPrincipal == null ? IMongoConstants.DEFAULT_KRB_USER_PRINCIPAL : authKrbUserPrincipal); 
+            authKrbRealmText.setText(authKrbRealm == null ? IMongoConstants.DEFAULT_KRB_REALM : authKrbRealm);
+            authKrbKdcText.setText(authKrbKdc == null ? IMongoConstants.DEFAULT_KRB_KDC : authKrbKdc);
         }
         checkRequireEncryptionBtn.setSelection(isUseRequireEncryption);
         initReplicaField();
@@ -161,6 +194,12 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         conn.getAttributes().put(IMongoDBAttributes.REQUIRED_ENCRYPTION,
                 String.valueOf(checkRequireEncryptionBtn.getSelection()));
         conn.getAttributes().put(IMongoDBAttributes.USE_REPLICA_SET, String.valueOf(checkUseReplicaBtn.getSelection()));
+        conn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM, getAuthMechanismValue(authMechanismCombo.getText()));
+        conn.getAttributes().put(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE, String.valueOf(checkSetAuthDatabaseBtn.getSelection()));
+        conn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_DATABASE, authDatabaseText.getText());
+        conn.getAttributes().put(IMongoDBAttributes.KRB_USER_PRINCIPAL, authKrbUserPrincipalText.getText());
+        conn.getAttributes().put(IMongoDBAttributes.KRB_REALM, authKrbRealmText.getText());
+        conn.getAttributes().put(IMongoDBAttributes.KRB_KDC, authKrbKdcText.getText());
         saveReplicaModel();
     }
 
@@ -175,8 +214,20 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
             attributes.add(INoSQLCommonAttributes.PORT);
         }
         if (checkRequireAuthBtn.getSelection()) {
-            attributes.add(INoSQLCommonAttributes.USERNAME);
-            attributes.add(INoSQLCommonAttributes.PASSWORD);
+            attributes.add(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+            //attributes.add(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE);
+            if (checkSetAuthDatabaseBtn.getSelection()) {
+                attributes.add(IMongoDBAttributes.AUTHENTICATION_DATABASE);
+            }
+            if (ifShowAuthUserName()) {
+                attributes.add(INoSQLCommonAttributes.USERNAME);
+                attributes.add(INoSQLCommonAttributes.PASSWORD);
+            }
+            if (ifShowAuthKrbFields()) {
+                attributes.add(IMongoDBAttributes.KRB_USER_PRINCIPAL);
+                attributes.add(IMongoDBAttributes.KRB_REALM);
+                attributes.add(IMongoDBAttributes.KRB_KDC);
+            }
         }
     }
 
@@ -289,10 +340,30 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         checkRequireAuthBtn = new Button(authGroup, SWT.CHECK);
         checkRequireAuthBtn.setText(Messages.getString("MongoDBConnForm.requireAuth")); //$NON-NLS-1$
         checkRequireAuthBtn.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 4, 1));
-        userText = new LabelledText(authGroup, Messages.getString("MongoDBConnForm.username"), 1); //$NON-NLS-1$
-        pwdText = new LabelledText(authGroup,
+
+        authComposite = new Composite(authGroup, SWT.NONE);
+        authComposite.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, false, 4, 1));
+        GridLayout authCompLayout = new GridLayout(4, false);
+        authCompLayout.marginWidth = 0;
+        authCompLayout.marginHeight = 0;
+        authComposite.setLayout(authCompLayout);
+        authMechanismCombo = new LabelledCombo(
+                authComposite,
+                Messages.getString("MongoDBConnForm.authMechanism"), Messages.getString("MongoDBConnForm.authMechanism"), getAuthMechanismLables(repositoryTranslator.getValue(dbVersionCombo.getText())), 3, false);
+        authMechanismCombo.select(0);
+        checkSetAuthDatabaseBtn = new Button(authComposite, SWT.CHECK);
+        checkSetAuthDatabaseBtn.setText(Messages.getString("MongoDBConnForm.setAuthDatabase")); //$NON-NLS-1$
+        checkSetAuthDatabaseBtn.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 4, 1));
+        authDatabaseText = new LabelledText(authComposite, Messages.getString("MongoDBConnForm.authDatabase"), 3); 
+        
+        userText = new LabelledText(authComposite, Messages.getString("MongoDBConnForm.username"), 1); //$NON-NLS-1$
+        pwdText = new LabelledText(authComposite,
                 Messages.getString("MongoDBConnForm.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
         pwdText.getTextControl().setEchoChar('*');
+        
+        authKrbUserPrincipalText = new LabelledText(authComposite, Messages.getString("MongoDBConnForm.KRB_USER_PRINCIPAL"), 3); //$NON-NLS-1$
+        authKrbRealmText = new LabelledText(authComposite, Messages.getString("MongoDBConnForm.KRB_REALM"), 3); //$NON-NLS-1$
+        authKrbKdcText = new LabelledText(authComposite, Messages.getString("MongoDBConnForm.KRB_KDC"), 3); //$NON-NLS-1$
     }
 
     private void addEncryptionGroup(Composite composite) {
@@ -307,17 +378,33 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
      * DOC PLV Comment method "updateAuthGroup".
      */
     private void updateAuthGroup() {
-        if (!isContextMode()) {
-            boolean selection = checkRequireAuthBtn.getSelection();
-            userText.setEditable(selection);
-            pwdText.setEditable(selection);
-            pwdText.getTextControl().setEchoChar('*');
-        } else {
-            userText.setEditable(false);
-            pwdText.setEditable(false);
+        boolean selection = checkRequireAuthBtn.getSelection();
+        hideControl(authComposite,!selection);
+        authMechanismCombo.setHideWidgets(!selection);
+        hideControl(checkSetAuthDatabaseBtn,!ifShowCheckSetAuthDatabaseBtn());
+        authDatabaseText.setHideWidgets(!ifShowAuthDatabaseText());
+        userText.setHideWidgets(!ifShowAuthUserName());
+        pwdText.setHideWidgets(!ifShowAuthUserName());
+        authKrbUserPrincipalText.setHideWidgets(!ifShowAuthKrbFields());
+        authKrbRealmText.setHideWidgets(!ifShowAuthKrbFields());
+        authKrbKdcText.setHideWidgets(!ifShowAuthKrbFields());
+        authGroup.getParent().layout();
+        
+        authMechanismCombo.setEnabled(!isContextMode());
+        checkSetAuthDatabaseBtn.setEnabled(!isContextMode());
+        authDatabaseText.setEnabled(!isContextMode());
+        userText.setEnabled(!isContextMode());
+        pwdText.setEnabled(!isContextMode());
+        authKrbUserPrincipalText.setEnabled(!isContextMode());
+        authKrbRealmText.setEnabled(!isContextMode());
+        authKrbKdcText.setEnabled(!isContextMode());
+        
+        if (isContextMode()) {
             if (pwdText.getText().startsWith(ContextParameterUtils.JAVA_NEW_CONTEXT_PREFIX)) {
                 pwdText.getTextControl().setEchoChar('\0');
             }
+        } else {
+            pwdText.getTextControl().setEchoChar('*');
         }
     }
 
@@ -338,6 +425,9 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
             collectValidateEntry(new NonemptyValidator(userText.getText()),
                     Messages.getString("AbstractNoSQLConnForm.InvalidUser")); //$NON-NLS-1$
             collectValidateEntry(new NonemptyValidator(pwdText.getText()), Messages.getString("AbstractNoSQLConnForm.InvalidPwd")); //$NON-NLS-1$
+            if (checkSetAuthDatabaseBtn.getSelection()) {
+                collectValidateEntry(new NonemptyValidator(authDatabaseText.getText()), Messages.getString("MongoDBConnForm.InvalidAuthDatabase"));
+            }
         }
     }
 
@@ -350,8 +440,14 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         databaseText.setEnabled(editable);
         checkRequireAuthBtn.setEnabled(editable);
         boolean enableAuth = checkRequireAuthBtn.isEnabled() && checkRequireAuthBtn.getSelection();
-        userText.setEditable(editable && enableAuth);
-        pwdText.setEditable(editable && enableAuth);
+        userText.setEditable(editable);
+        pwdText.setEditable(editable);
+        authMechanismCombo.setEnabled(editable && enableAuth);
+        checkSetAuthDatabaseBtn.setEnabled(editable && enableAuth);
+        authDatabaseText.setEnabled(editable && enableAuth);
+        authKrbUserPrincipalText.setEnabled(editable && enableAuth);
+        authKrbRealmText.setEnabled(editable && enableAuth);
+        authKrbKdcText.setEnabled(editable && enableAuth);
     }
 
     /*
@@ -366,6 +462,10 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
             @Override
             public void modifyText(ModifyEvent e) {
                 checkFieldsValue();
+                if (checkRequireAuthBtn.getSelection()) {
+                    authMechanismCombo.getCombo().setItems(getAuthMechanismLables(repositoryTranslator.getValue(dbVersionCombo.getText())));
+                    authMechanismCombo.select(0);
+                }
                 getConnection().getAttributes().put(INoSQLCommonAttributes.DB_VERSION,
                         repositoryTranslator.getValue(dbVersionCombo.getText()));
             }
@@ -409,6 +509,37 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
                         String.valueOf(checkRequireAuthBtn.getSelection()));
             }
         });
+        
+        checkSetAuthDatabaseBtn.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                boolean checked = checkSetAuthDatabaseBtn.getSelection();
+                updateAuthGroup();
+                getConnection().getAttributes().put(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE,
+                        String.valueOf(checkSetAuthDatabaseBtn.getSelection()));
+            }
+        });
+        
+        authDatabaseText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                getConnection().getAttributes().put(IMongoDBAttributes.AUTHENTICATION_DATABASE, authDatabaseText.getText());
+            }
+        });
+        
+        authMechanismCombo.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                updateAuthGroup();
+                getConnection().getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM,
+                        getAuthMechanismValue(authMechanismCombo.getText()));
+            }
+        });
 
         userText.addModifyListener(new ModifyListener() {
 
@@ -428,6 +559,37 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
                 conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, conn.getValue(pwdText.getText(), true));
             }
         });
+        
+        authKrbUserPrincipalText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                NoSQLConnection conn = getConnection();
+                conn.getAttributes().put(IMongoDBAttributes.KRB_USER_PRINCIPAL, authKrbUserPrincipalText.getText());
+            }
+        });
+        
+        authKrbRealmText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                NoSQLConnection conn = getConnection();
+                conn.getAttributes().put(IMongoDBAttributes.KRB_REALM, authKrbRealmText.getText());
+            }
+        });
+        
+        authKrbKdcText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(ModifyEvent e) {
+                checkFieldsValue();
+                NoSQLConnection conn = getConnection();
+                conn.getAttributes().put(IMongoDBAttributes.KRB_KDC, authKrbKdcText.getText());
+            }
+        });
+        
 
         checkUseReplicaBtn.addSelectionListener(new SelectionAdapter() {
 
@@ -538,6 +700,96 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         if (checkRequireAuthBtn.getSelection()) {
             getConnection().getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
             getConnection().getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());
+            getConnection().getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM, getAuthMechanismValue(authMechanismCombo.getText()));
+            if (checkSetAuthDatabaseBtn.getSelection()) {
+                getConnection().getAttributes().put(IMongoDBAttributes.AUTHENTICATION_DATABASE, authDatabaseText.getText());
+            }
+            if (ifShowAuthKrbFields()) {
+                getConnection().getAttributes().put(IMongoDBAttributes.KRB_USER_PRINCIPAL, authKrbUserPrincipalText.getText());
+                getConnection().getAttributes().put(IMongoDBAttributes.KRB_REALM, authKrbRealmText.getText());
+                getConnection().getAttributes().put(IMongoDBAttributes.KRB_KDC, authKrbKdcText.getText());
+            }
         }
+    }
+    
+    @Override
+    protected void collectAuthParams(boolean isNeed) {
+        addContextParams(EHadoopParamName.UserName, isNeed && ifShowAuthUserName());
+        addContextParams(EHadoopParamName.Password, isNeed && ifShowAuthUserName());
+        addContextParams(EHadoopParamName.AuthenticationDatabase,isNeed && ifShowAuthDatabaseText());
+        addContextParams(EHadoopParamName.UserPrincipal,isNeed && ifShowAuthKrbFields());
+        addContextParams(EHadoopParamName.Realm,isNeed && ifShowAuthKrbFields());
+        addContextParams(EHadoopParamName.KDCServer,isNeed && ifShowAuthKrbFields());
+    }
+    
+    private  String[] getAuthMechanismLables(String dbVersion) {
+        if (StringUtils.isEmpty(dbVersion)) dbVersion = "MONGODB_4_4_X";
+        List<String> lables = new ArrayList<String>();
+        String label = Messages.getString("MongoDBConnForm." + IMongoConstants.NEGOTIATE_MEC);
+        lables.add(label);
+        value2LabelMap.put(IMongoConstants.NEGOTIATE_MEC,label);
+        
+        if (!"MONGODB_2_5_X".equals(dbVersion)) {
+            label = Messages.getString("MongoDBConnForm." + IMongoConstants.PLAIN_MEC);
+            lables.add(label);
+            value2LabelMap.put(IMongoConstants.PLAIN_MEC,label);
+        }
+        if ("MONGODB_3_0_X".equals(dbVersion) || "MONGODB_3_2_X".equals(dbVersion) || "MONGODB_3_5_X".equals(dbVersion)) {
+            label = Messages.getString("MongoDBConnForm." + IMongoConstants.SCRAMSHA1_MEC);
+            lables.add(label);
+            value2LabelMap.put(IMongoConstants.SCRAMSHA1_MEC,label);
+        }
+        if ("MONGODB_4_4_X".equals(dbVersion)) {
+            label = Messages.getString("MongoDBConnForm." + IMongoConstants.SCRAMSHA256_MEC);
+            lables.add(label);
+            value2LabelMap.put(IMongoConstants.SCRAMSHA256_MEC,label);
+        }
+        label = Messages.getString("MongoDBConnForm." + IMongoConstants.KERBEROS_MEC);
+        lables.add(label);
+        value2LabelMap.put(IMongoConstants.KERBEROS_MEC,label);
+        return lables.toArray(new String[0]);
+    }
+    
+    private  String getAuthMechanismValue(String label) {
+        String value = "";
+        if (value2LabelMap != null ) {
+            value = (String) value2LabelMap.getKey(label);
+        }
+        return value;
+    }
+    
+    //The logic is from tMongoDBConnection_java.xml
+    private boolean ifShowCheckSetAuthDatabaseBtn() {
+        boolean show = false;
+        String authMechanism = getAuthMechanismValue(authMechanismCombo.getText());
+        show = checkRequireAuthBtn.getSelection() && (IMongoConstants.NEGOTIATE_MEC.equals(authMechanism) 
+                || IMongoConstants.SCRAMSHA1_MEC.equals(authMechanism)
+                || IMongoConstants.SCRAMSHA256_MEC.equals(authMechanism));
+        return show;
+    }
+    
+    private boolean ifShowAuthDatabaseText() {
+        boolean show = false;
+        show = ifShowCheckSetAuthDatabaseBtn() && checkSetAuthDatabaseBtn.getSelection();
+        return show;
+    }
+    
+    private boolean ifShowAuthUserName() {
+        boolean show = false;
+        String authMechanism = getAuthMechanismValue(authMechanismCombo.getText());
+        show = checkRequireAuthBtn.getSelection() && 
+                (IMongoConstants.NEGOTIATE_MEC.equals(authMechanism) || 
+                 IMongoConstants.PLAIN_MEC.equals(authMechanism) ||
+                 IMongoConstants.SCRAMSHA1_MEC.equals(authMechanism) ||
+                 IMongoConstants.SCRAMSHA256_MEC.equals(authMechanism));
+        return show;
+    }
+    
+    private boolean ifShowAuthKrbFields() {
+        boolean show = false;
+        String authMechanism = getAuthMechanismValue(authMechanismCombo.getText());
+        show = checkRequireAuthBtn.getSelection() && 
+                IMongoConstants.KERBEROS_MEC.equals(authMechanism);
+        return show;
     }
 }

@@ -12,10 +12,14 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.apache;
 
+import java.util.List;
+
 public interface ISparkDistribution {
 
     static final String DISTRIBUTION_NAME = "SPARK";
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Universal";
+    
+    public List<ESparkMode> getSparkModes();
     
 }

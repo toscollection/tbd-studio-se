@@ -17,24 +17,8 @@
 
    <plugin id="org.talend.hadoop.distribution.test.base" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-   <plugin id="org.talend.hadoop.distribution.mapr500.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.mapr510.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.mapr520.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.mapr600.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.emr450.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.emr500.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.emr550.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
-   <plugin id="org.talend.hadoop.distribution.emr580.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-
    <plugin id="org.talend.hadoop.distribution.hdinsight400.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-         
+
    <plugin id="org.talend.repository.nosql.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.hadoop.distribution.custom.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
@@ -43,16 +27,20 @@
 
    <plugin id="org.talend.repository.hadoopcluster.configurator.test" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
-	<plugin id="org.talend.repository.maprdbprovider.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-	
+   <plugin id="org.talend.repository.maprdbprovider.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
+
    <plugin id="org.talend.hadoop.distribution.synapse.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.repository.hdfs.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.hadoop.distribution.dbr550.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
-   
+
    <plugin id="org.talend.hadoop.distribution.dbr73x.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
    <plugin id="org.talend.bigdata.se.test.base" download-size="0" install-size="0" version="0.0.0"/>
+
+   <plugin id="org.talend.hadoop.distribution.dbr640.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
+
+   <plugin id="org.talend.hadoop.distribution.emr5290.test" download-size="0" install-size="0" version="0.0.0" fragment="true" unpack="false"/>
 
 </feature>
