@@ -40,11 +40,11 @@ public final class SparkStreamingConstant {
 
     public static final String CLASSIFY_SVM_COMPONENT = "tClassifySVM"; //$NON-NLS-1$
     
-    public static final String CASSANDRA_CONFIGURATION = "tCassandraConfiguration";
+    public static final String CASSANDRA_CONFIGURATION = "tCassandraConfiguration"; //$NON-NLS-1$
     
-    public static final String CASSANDRA_INPUT = "tCassandraLookupInput;
+    public static final String CASSANDRA_INPUT = "tCassandraLookupInput"; //$NON-NLS-1$
     
-    public static final String CASSANDRA_OUTPUT = "tCassandraOutput";
+    public static final String CASSANDRA_OUTPUT = "tCassandraOutput"; //$NON-NLS-1$
 
     public static final String KMEANSSTR_MODEL_COMPONENT = "tKMeansStrModel"; //$NON-NLS-1$
 
