@@ -46,11 +46,11 @@ public final class SparkBatchConstant {
 
     public static final String CLASSIFY_SVM_COMPONENT = "tClassifySVM"; //$NON-NLS-1$
     
-    public static final String CASSANDRA_CONFIGURATION = "tCassandraConfiguration";
+    public static final String CASSANDRA_CONFIGURATION = "tCassandraConfiguration"; //$NON-NLS-1$
     
-    public static final String CASSANDRA_INPUT = "tCassandraInput;
+    public static final String CASSANDRA_INPUT = "tCassandraInput"; //$NON-NLS-1$
     
-    public static final String CASSANDRA_OUTPUT = "tCassandraOutput";
+    public static final String CASSANDRA_OUTPUT = "tCassandraOutput"; //$NON-NLS-1$
 
     public static final String KMEANS_MODEL_COMPONENT = "tKMeansModel"; //$NON-NLS-1$
 
