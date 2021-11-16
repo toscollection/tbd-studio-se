@@ -516,6 +516,18 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.DYNAMODB_OUTPUT_COMPONENT), dynamoDBStreamingNodeModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.DYNAMODB_CONFIGURATION_COMPONENT), dynamoDBStreamingConfigurationModuleGroups);   
         
+        //Cassandra
+        Set<DistributionModuleGroup> cassandraNodeModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'", ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+        Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+        
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_INPUT), cassandraNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_OUTPUT), cassandraNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_CONFIGURATION), cassandraNodeModuleGroups);
+        
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_INPUT), cassandraNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_OUTPUT), cassandraNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_CONFIGURATION), cassandraConfigurationModuleGroups);
+        
         // Spark Streaming Flume nodes
         ComponentCondition flumeCondition = new SparkStreamingLinkedNodeCondition(distribution, version, SparkStreamingConstant.FLUME_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition();
         
