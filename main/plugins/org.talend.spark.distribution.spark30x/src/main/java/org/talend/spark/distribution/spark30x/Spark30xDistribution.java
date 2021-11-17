@@ -369,5 +369,4 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
 	public boolean doSupportAssumeRole() {
 		return true;
 	}
-
 }
