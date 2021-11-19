@@ -5,7 +5,7 @@
     "id" : "Cloudera_CDP7_1_1_0_565",
     "name" : "Cloudera CDP7.1.1.0-565",
     "repository" : "https://talend-update.talend.com/nexus/content/groups/dynamicdistribution/",
-    "selectedSparkVersions" : [ "SPARK_2_4" ],
+    "selectedSparkVersions" : [ "SPARK_2_4_X" ],
     "tagName" : "dynamicPluginConfiguration",
     "templateId" : "CDP7xDistributionTemplate",
     "version" : "7.1.1.0-565"
