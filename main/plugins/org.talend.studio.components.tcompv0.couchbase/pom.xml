@@ -12,6 +12,7 @@
 	<properties>
 		<compGroup>org.talend.components</compGroup>
 		<compArtifact>components-couchbase</compArtifact>
+		<tycho.buildtimestamp.format>${timestamp}</tycho.buildtimestamp.format>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
