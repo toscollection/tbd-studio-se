@@ -476,12 +476,12 @@
         
         <!-- Bigdata launcher group -->
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-          id="talend-bigdata-launcher-core-2.1.2.jar" name="talend-bigdata-launcher-core-2.1.2.jar" 
-          mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.1.2"/>
+          id="talend-bigdata-launcher-core-2.4.3.jar" name="talend-bigdata-launcher-core-2.4.3.jar" 
+          mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.4.3"/>
         
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-          id="talend-bigdata-launcher-synapse-2.1.2.jar" name="talend-bigdata-launcher-synapse-2.1.2.jar" 
-          mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-synapse/2.1.2"/>
+          id="talend-bigdata-launcher-synapse-2.4.3.jar" name="talend-bigdata-launcher-synapse-2.4.3.jar" 
+          mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-synapse/2.4.3"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
           id="logback-classic-1.2.3.jar" name="logback-classic-1.2.3.jar" 
@@ -561,6 +561,7 @@
             <library id="univocity-parsers-2.9.1.jar"/>
             <library id="woodstox-core-5.0.3.jar"/>
             <library id="xbean-asm7-shaded-4.15.jar"/>
+            <group id="BIGDATA-LAUNCHER-LIB-SYNAPSE"/>
             <group id="AZURE-GROUP-SYNAPSE"/>
         </libraryNeededGroup>
 
@@ -620,8 +621,8 @@
         
          <!-- Bigdata launcher group -->
         <libraryNeededGroup description="Bigdata launcher libraries for synapse" id="BIGDATA-LAUNCHER-LIB-SYNAPSE" name="BIGDATA-LAUNCHER-LIB-SYNAPSE">
-        	<library id="talend-bigdata-launcher-synapse-2.3.0"/>
-            <library id="talend-bigdata-launcher-core-2.3.0"/>
+        	<library id="talend-bigdata-launcher-synapse-2.4.3.jar"/>
+            <library id="talend-bigdata-launcher-core-2.4.3.jar"/>
             <library id="logback-classic-1.2.3"/>
             <library id="commons-logging-1.2"/>
         </libraryNeededGroup>
