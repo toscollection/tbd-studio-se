@@ -47,6 +47,10 @@ public class DBR73xSparkStreamingModuleGroup {
                 DBR73xConstant.DYNAMODB_GROUP_DBR73x.getModuleName(),
                 true
         ));
+        hs.add(new DistributionModuleGroup(
+                DBR73xConstant.KAFKA_LIB_REQUIRED_DBR73X.getModuleName(),
+                true
+        ));
         return hs;
     }
 }
