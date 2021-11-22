@@ -10,7 +10,7 @@
         "context" : "plugin:org.talend.hadoop.distribution.cdp"
     },
     "supportedSparkVersions": [
-        "SPARK_2_4"
+        "SPARK_2_4_X"
     ],
     "description" : "",
     "modules": [
