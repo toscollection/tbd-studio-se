@@ -11,7 +11,7 @@
   },
   "description": "",
   "supportedSparkVersions": [
-    "SPARK_2_3"
+    "SPARK_2_3_X"
   ],
   "modules": [
     {

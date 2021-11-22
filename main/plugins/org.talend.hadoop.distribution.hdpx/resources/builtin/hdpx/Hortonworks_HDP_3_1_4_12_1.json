@@ -6,7 +6,7 @@
       "id": "HDP_3_1_4_12_1",
       "name": "Hortonworks Data Platform V3.1.4.12-1",
       "repository": "https://talend-update.talend.com/nexus/content/groups/dynamicdistribution/",
-      "selectedSparkVersions": ["SPARK_2_3"],
+      "selectedSparkVersions": ["SPARK_2_3_X"],
       "tagName": "dynamicPluginConfiguration",
       "templateId": "HDP3xxDistributionTemplate",
       "version": "3.1.4.12-1"

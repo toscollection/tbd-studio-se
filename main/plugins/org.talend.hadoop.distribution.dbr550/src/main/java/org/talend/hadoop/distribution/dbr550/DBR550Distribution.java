@@ -149,7 +149,7 @@ public class DBR550Distribution extends AbstractDatabricksDistribution implement
 	@Override
 	public Set<ESparkVersion> getSparkVersions() {
 		Set<ESparkVersion> version = new HashSet<>();
-		version.add(ESparkVersion.SPARK_2_4);
+		version.add(ESparkVersion.SPARK_2_4_X);
         return version;
     }
 

@@ -305,7 +305,7 @@ public class CDH6xDistributionTemplate extends AbstractDynamicCDHDistributionTem
         Set<ESparkVersion> version = new HashSet<>();
         Set<ESparkVersion> sparkVersions = super.getSparkVersions();
         if (sparkVersions == null || sparkVersions.isEmpty()) {
-            version.add(ESparkVersion.SPARK_2_4);
+            version.add(ESparkVersion.SPARK_2_4_X);
         } else {
             version.addAll(sparkVersions);
         }

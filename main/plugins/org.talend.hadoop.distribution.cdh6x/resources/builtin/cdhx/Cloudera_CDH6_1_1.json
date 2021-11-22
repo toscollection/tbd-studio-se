@@ -5,7 +5,7 @@
     "id" : "Cloudera_CDH6_1_1",
     "name" : "Cloudera CDH6.1.1",
     "repository" : "https://talend-update.talend.com/nexus/content/groups/dynamicdistribution/",
-    "selectedSparkVersions" : [ "SPARK_2_4" ],
+    "selectedSparkVersions" : [ "SPARK_2_4_X" ],
     "tagName" : "dynamicPluginConfiguration",
     "templateId" : "CDH6xDistributionTemplate",
     "version" : "6.1.1"
