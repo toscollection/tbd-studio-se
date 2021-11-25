@@ -157,8 +157,8 @@
 						<phase>generate-sources</phase>
 						<configuration>
 							<tasks>
-								<zip destfile="${project.basedir}/repository/maven_repository.zip" basedir="${project.basedir}/tmp/" />
-								<delete dir="${project.basedir}/tmp/" />
+								<zip destfile="${project.basedir}/repository/maven_repository.zip" basedir="${project.basedir}/tmp/"/>
+								<delete dir="${project.basedir}/tmp/"/>
 							</tasks>
 						</configuration>
 						<goals>
