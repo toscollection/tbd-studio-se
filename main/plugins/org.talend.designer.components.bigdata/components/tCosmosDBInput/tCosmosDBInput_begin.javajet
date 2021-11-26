@@ -98,11 +98,7 @@
       	IMetadataTable metadata = metadatas.get(0);
       	if(metadata != null) {%>
 
-            <%if (version_4_4_X) {%>
-                <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection_4_4_X.javajet"%>
-            <%} else {%>
-                <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection_below_4_4_X.javajet"%>
-            <%}%>
+            <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection_4_4_X.javajet"%>
 
             <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
             <%log4jFileUtil.startRetriveDataInfo();%>

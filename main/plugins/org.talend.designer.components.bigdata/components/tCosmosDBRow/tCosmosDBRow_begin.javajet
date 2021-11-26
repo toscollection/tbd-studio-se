@@ -47,10 +47,4 @@
 
     <%@ include file="../templates/CosmosDB/ApplicationName.javajet"%>
 
-    <%if("MONGODB_4_4_X".equals(dbversion)) {%>
-        <%@ include file="./tCosmosDBRow_begin_4_4_X.javajet"%>
-        <%
-    } else {%>
-        <%@ include file="./tCosmosDBRow_begin_below_4_4_X.javajet"%>
-        <%
-    }%>
+    <%@ include file="./tCosmosDBRow_begin_4_4_X.javajet"%>
