@@ -81,13 +81,8 @@
         IMetadataTable metadata = metadatas.get(0);
         if(metadata != null) {%>
 
-            <%if(version_4_4_X) {%>
-                <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/DBObjectUtil_3_5_X.javajet"%>
-                <%
-            } else {%>
-                <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/DBObjectUtil_below_3_5_X.javajet"%>
-                <%
-            }%>
+            <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/DBObjectUtil_3_5_X.javajet"%>
+            
             DBObjectUtil_<%=cid%> updateObjectUtil_<%=cid%>=new DBObjectUtil_<%=cid%>();
             DBObjectUtil_<%=cid%> queryObjectUtil_<%=cid%>=new DBObjectUtil_<%=cid%>();
             java.util.Map<String, String> pathMap_<%=cid%>=new java.util.HashMap<>();
@@ -103,13 +98,7 @@
                 <%
             }%>
 
-            <%if(version_4_4_X) {%>
-                <%@ include file="./tCosmosDBOutput_begin_4_4_X.javajet"%>
-                <%
-            } else {%>
-                <%@ include file="./tCosmosDBOutput_begin_below_4_4_X.javajet"%>
-                <%
-            }%>
+            <%@ include file="./tCosmosDBOutput_begin_4_4_X.javajet"%>
 
             <%if (isLog4jEnabled) {%>
                 log.info("<%=cid%> - Start to write data into database [" + db_<%=cid%>.getName() + "].");

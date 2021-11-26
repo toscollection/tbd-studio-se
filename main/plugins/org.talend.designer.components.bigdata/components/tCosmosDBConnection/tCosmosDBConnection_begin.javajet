@@ -49,9 +49,5 @@
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 %>
 
-    <%if(version_4_4_X) {%>
-        <%@ include file="./tCosmosDBConnection_begin_4_4_X.javajet"%>
-    <%} else {%>
-        <%@ include file="./tCosmosDBConnection_begin_below_4_4_X.javajet"%>
-    <%}%>
+    <%@ include file="./tCosmosDBConnection_begin_4_4_X.javajet"%>
 

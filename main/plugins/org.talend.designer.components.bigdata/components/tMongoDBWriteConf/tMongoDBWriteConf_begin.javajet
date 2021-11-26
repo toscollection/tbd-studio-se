@@ -84,13 +84,7 @@
 				java.util.logging.Logger.getLogger("org.mongodb.driver").setLevel(java.util.logging.Level.SEVERE);
 			<%}%>
 
-			<%if(version_4_4_X) {%>
-				<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection_4_4_X.javajet"%>
-				<%
-			} else {%>
-				<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection_below_4_4_X.javajet"%>
-				<%
-			}%>
+			<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/MongoDB/GridFS/GetMongoDBConnection_4_4_X.javajet"%>
 
 			resourceMap.put("mongo_<%=cid%>", mongo_<%=cid%>);
 
