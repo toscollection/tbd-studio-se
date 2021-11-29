@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: .Talend SA.
 Bundle-SymbolicName: org.talend.repository.hadoopcluster.configurator
-Bundle-Version: 8.0.1.qualifier
+Bundle-Version: 8.8.8.qualifier
 Bundle-ClassPath: .,
  lib/annotations-17.0.0.jar,
  lib/cloudera-manager-api-swagger-6.2.0.jar,
@@ -22,7 +22,7 @@ Bundle-ClassPath: .,
  lib/swagger-annotations-1.5.15.jar
 Export-Package: org.talend.repository.hadoopcluster.configurator
 Require-Bundle: org.talend.libraries.apache.cxf,
- org.talend.libraries.guava,
+ com.google.guava,
  org.talend.libraries.hadoop,
  org.talend.libraries.jackson,
  org.talend.model,
