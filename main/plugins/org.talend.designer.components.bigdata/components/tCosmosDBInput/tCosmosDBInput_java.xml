@@ -304,6 +304,23 @@ Note : If you are running on a Sharded Cluster, please make sure to include the 
             GROUP="QUERY_SPECS"
             SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
         />
+        
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="SKIP"
+            NUM_ROW="55"
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
+        />
+        
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="BATCHSIZE"
+            NUM_ROW="55"
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
+        />
+        
     </PARAMETERS>
 
     <ADVANCED_PARAMETERS>

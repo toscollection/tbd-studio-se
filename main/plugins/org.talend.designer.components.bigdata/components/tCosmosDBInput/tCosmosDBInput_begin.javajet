@@ -36,7 +36,10 @@
     String query = ElementParameterParser.getValue(node,"__QUERY__");
     query = query.replaceAll("\n","");
     query = query.replaceAll("\r","");
-  	String limit = ElementParameterParser.getValue(node,"__LIMIT__");
+    
+    String limit = ElementParameterParser.getValue(node,"__LIMIT__");
+    String skip = ElementParameterParser.getValue(node,"__SKIP__");
+    String batchSize = ElementParameterParser.getValue(node,"__BATCHSIZE__");
 
   	List<Map<String, String>> mapping = (List<Map<String,String>>)ElementParameterParser.getObjectValueXML(node, "__MAPPING__");
   	List<Map<String, String>> sorts = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SORT__");
@@ -276,15 +279,23 @@
 				<%
 			}
 
+			if (skip != null && !"\"\"".equals(skip) && skip.length() > 0 && !isAggregationQuery){
+%>
+				findIterable_<%=cid%> = findIterable_<%=cid%>.skip(<%=skip%>);
+<%
+			}
+			
+			if (batchSize != null && !"\"\"".equals(batchSize) && batchSize.length() > 0 && !isAggregationQuery){
+%>
+				findIterable_<%=cid%> = findIterable_<%=cid%>.batchSize(<%=batchSize%>);
+<%
+			}
+			
 			// Note: Aggregation queriess do not support limit
-			if (limit != null && !"\"\"".equals(limit) && limit.length() > 0 && !isAggregationQuery) {%>
-				<%if(version_4_4_X) {%>
-					findIterable_<%=cid%> = findIterable_<%=cid%>.limit(<%=limit%>);
-					<%
-				} else {%>
-					cursor_<%=cid%> = cursor_<%=cid%>.limit(<%=limit%>);
-					<%
-				}
+			if (limit != null && !"\"\"".equals(limit) && limit.length() > 0 && !isAggregationQuery){
+%>
+				findIterable_<%=cid%> = findIterable_<%=cid%>.limit(<%=limit%>);
+<%
 			}
 
 			// Note: Aggregation queriess do not support sort
