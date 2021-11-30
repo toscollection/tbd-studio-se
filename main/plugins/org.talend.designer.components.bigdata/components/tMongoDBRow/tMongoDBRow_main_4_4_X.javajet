@@ -4,6 +4,11 @@
 		java.util.Map
 	"
 %>
+
+	<%
+	boolean propagate_result = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__PROPAGATE_RESULT__"));
+	%>
+	
 	try{
 		<%if(isKeyValueCommand) {%>
 			com.mongodb.BasicDBObject bsonObjectCommand_<%=cid%> = new com.mongodb.BasicDBObject();
@@ -17,6 +22,10 @@
 			result_<%=cid%> = db_<%=cid%>.runCommand(com.mongodb.BasicDBObject.parse(<%=jsonCommand%>));
 			<%
 		}%>
+		
+		<%if(propagate_result && (isKeyValueCommand || isJsonCommand)) {%>
+			globalMap.put("<%=cid %>_RESULT_DOCUMENT", result_<%=cid%>);
+		<%}%>
 
 	} catch(Exception e_<%=cid%>) {
 		<%if (dieOnError) {%>

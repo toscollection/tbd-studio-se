@@ -308,16 +308,30 @@
 		</PARAMETER>
 	</PARAMETERS>
 
-	<ADVANCED_PARAMETERS />
-
+	<ADVANCED_PARAMETERS>
+	
+		<PARAMETER
+			NAME="PROPAGATE_RESULT"
+			FIELD="CHECK"
+			NUM_ROW="1"
+			SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION=='MONGODB_4_4_X')) OR ((USE_EXISTING_CONNECTION == 'true') AND (#LINK@NODE.CONNECTION.DB_VERSION== 'MONGODB_4_4_X'))"
+			>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		
+	</ADVANCED_PARAMETERS>
+	
 	<CODEGENERATION>
 		<IMPORTS>
-            
             <IMPORT MODULE="mongodb-driver-core-4.2.0.jar" MVN="mvn:org.mongodb/mongodb-driver-core/4.2.0" NAME="mongodb-driver-core-4.2.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
             <IMPORT MODULE="mongodb-driver-sync-4.2.0.jar" MVN="mvn:org.mongodb/mongodb-driver-sync/4.2.0" NAME="mongodb-driver-sync-4.2.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
             <IMPORT MODULE="bson-4.2.0.jar" MVN="mvn:org.mongodb/bson/4.2.0" NAME="bson-4.2.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
             <IMPORT MODULE="mongo-java-driver-3.12.0.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.0" NAME="mongo-java-driver-3.12.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'MONGODB_3_0_X') OR (DB_VERSION == 'MONGODB_3_2_X') OR (DB_VERSION == 'MONGODB_3_5_X')))"/>
         </IMPORTS>
 	</CODEGENERATION>
-	<RETURNS/>
+	
+	<RETURNS>
+		<RETURN NAME="RESULT_DOCUMENT" TYPE="id_Object" AVAILABILITY="FLOW" SHOW_IF="isShow[PROPAGATE_RESULT] AND (PROPAGATE_RESULT=='true')"/>
+	</RETURNS>
+	
 </COMPONENT>
