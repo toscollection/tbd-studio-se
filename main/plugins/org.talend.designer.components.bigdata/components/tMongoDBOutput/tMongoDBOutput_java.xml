@@ -452,6 +452,16 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
         <PARAMETER
+            FIELD="TEXT"
+            NAME="PUSH_NODE"
+            REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
+            NUM_ROW="75"
+            SHOW_IF="(IS_VIRTUAL_COMPONENT == 'true') AND (DATA_ACTION =='UPSERT_WITH_SET')"
+            GROUP="JSON_CONFIGURATION"
+        >
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        <PARAMETER
             NAME="COMPACT_FORMAT"
             FIELD="CHECK"
             REQUIRED_IF="(IS_VIRTUAL_COMPONENT == 'true')"
@@ -516,6 +526,7 @@
             <TEMPLATE_PARAM SOURCE="self.DATA_ACTION" TARGET="Out.DATA_ACTION" />
             <TEMPLATE_PARAM SOURCE="self.DATA_NODE" TARGET="Out.DATA_NODE" />
             <TEMPLATE_PARAM SOURCE="self.QUERY_NODE" TARGET="Out.QUERY_NODE" />
+            <TEMPLATE_PARAM SOURCE="self.PUSH_NODE" TARGET="Out.PUSH_NODE" />
             <TEMPLATE_PARAM SOURCE="self.REMOVE_ROOT" TARGET="Out.REMOVE_ROOT" />
             <TEMPLATE_PARAM SOURCE="self.DIE_ON_ERROR" TARGET="Out.DIE_ON_ERROR" />
             <TEMPLATE_PARAM SOURCE="self.QUERYOPTION_NOTIMEOUT" TARGET="Out.QUERYOPTION_NOTIMEOUT" />
