@@ -47,6 +47,7 @@ import org.talend.repository.hadoopcluster.i18n.Messages;
 import org.talend.repository.hadoopcluster.ui.common.AbstractHadoopClusterInfoForm;
 import org.talend.repository.hadoopcluster.util.HCRepositoryUtil;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
+import org.talend.repository.model.hadoopcluster.util.EncryptionUtil;
 
 public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterConnection> {
 
@@ -251,7 +252,7 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
             @Override
             public void modifyText(final ModifyEvent e) {
-                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN, tokenText.getText());
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN, EncryptionUtil.getValue(tokenText.getText(), true));
                 checkFieldsValue();
             }
         });
@@ -342,7 +343,7 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         clusterIDText.setText(clusterId);
 
         String token = StringUtils
-                .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN));
+                .trimToEmpty(EncryptionUtil.getValue(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN), false));
         tokenText.setText(token);
 
         String folder = StringUtils

@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,6 +25,8 @@ import org.talend.core.model.process.INode;
 import org.talend.hadoop.distribution.condition.common.HDFSLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.apache.ESparkMode;
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -117,6 +120,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 		if (this.doSupportSparkYarnClusterMode()) {
 			result.add(ESparkMode.YARN_CLUSTER);
 		}
+		if (this.doSupportUniversalDBRMode()) {
+			result.add(ESparkMode.DATABRICKS);
+		}
 		return result;
 	}
 
@@ -129,4 +135,12 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 	public boolean doSupportHBase1x() {
 		return true;
 	}
+	
+	public List<EDatabriksCloudProvider> getSupportCloudProviders() {
+        return Arrays.asList(EDatabriksCloudProvider.values());
+    }
+    
+    public List<EDatabriksSubmitMode> getRunSubmitMode() {
+    	return Arrays.asList(EDatabriksSubmitMode.values());
+    }
 }

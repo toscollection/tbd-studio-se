@@ -43,6 +43,7 @@ import org.talend.repository.hadoopcluster.util.HCVersionUtil;
 import org.talend.repository.model.RepositoryNode;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
+import org.talend.repository.model.hadoopcluster.util.EncryptionUtil;
 
 /**
  * created by nrousseau on Mar 27, 2013 Detailled comment
@@ -236,7 +237,7 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_ID));
         } else if (EHDFSRepositoryToComponent.DATABRICKS_TOKEN.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
-                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN));
+            		EncryptionUtil.getValue(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN), false));
         } else if (EHDFSRepositoryToComponent.DATABRICKS_DBFS_DEP_FOLDER.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
