@@ -19,6 +19,7 @@
 	String dataAction = ElementParameterParser.getValue(node,"__DATA_ACTION__");
 	String dataNode = ElementParameterParser.getValue(node,"__DATA_NODE__");
 	String queryNode = ElementParameterParser.getValue(node,"__QUERY_NODE__");
+	String pushNode = ElementParameterParser.getValue(node,"__PUSH_NODE__");
 	boolean dieOnError = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 
@@ -157,6 +158,8 @@
             }%>
 
 			org.bson.Document queryObj_<%=cid%>=null;
+			org.bson.Document pushObj_<%=cid%>=null;
+			
 			if(data_<%=cid%>!=null) {
 				<%if("Insert".equalsIgnoreCase(dataAction)) {
 					// Bulk Writes
@@ -203,6 +206,7 @@
 					}
 				} else {%>
 					queryObj_<%=cid%> = (org.bson.Document) data_<%=cid%>.get(<%=queryNode%>);
+                    pushObj_<%=cid%> = (org.bson.Document)data_<%=cid%>.get(<%=pushNode%>);
 					data_<%=cid%> = (org.bson.Document) data_<%=cid%>.get(<%=dataNode%>);
 					if(data_<%=cid%>!=null && queryObj_<%=cid%>!=null) {
 						<%if("UPDATE".equalsIgnoreCase(dataAction)) {
@@ -264,11 +268,14 @@
                         } else if("UPSERT_WITH_SET".equalsIgnoreCase(dataAction)) {
                             // Bulk Upsert
                             if(bulkWrite) {%>
+                                org.bson.Document d_<%=cid%> = new org.bson.Document("$set", data_<%=cid%>);
+                                if(pushObj_<%=cid%>!=null) d_<%=cid%>.put("$push", pushObj_<%=cid%>);
+                                
                                 if(bulkWriteOperationCounter_<%=cid%> < bulkWriteOperationSize_<%=cid%>) {
-                                    bulkWriteOperation_<%=cid%>.add(new com.mongodb.client.model.UpdateOneModel<org.bson.Document>(queryObj_<%=cid%>,new org.bson.Document("$set", data_<%=cid%>),new com.mongodb.client.model.UpdateOptions().upsert(true)));
+                                    bulkWriteOperation_<%=cid%>.add(new com.mongodb.client.model.UpdateOneModel<org.bson.Document>(queryObj_<%=cid%>,d_<%=cid%>,new com.mongodb.client.model.UpdateOptions().upsert(true)));
                                     bulkWriteOperationCounter_<%=cid%>++;
                                 } else {
-                                    bulkWriteOperation_<%=cid%>.add(new com.mongodb.client.model.UpdateOneModel<org.bson.Document>(queryObj_<%=cid%>,new org.bson.Document("$set", data_<%=cid%>),new com.mongodb.client.model.UpdateOptions().upsert(true)));
+                                    bulkWriteOperation_<%=cid%>.add(new com.mongodb.client.model.UpdateOneModel<org.bson.Document>(queryObj_<%=cid%>,d_<%=cid%>,new com.mongodb.client.model.UpdateOptions().upsert(true)));
                                     coll_<%=cid%>.bulkWrite(bulkWriteOperation_<%=cid%>, new com.mongodb.client.model.BulkWriteOptions().ordered(<%=bulkWriteType%>));
                                     bulkWriteOperationCounter_<%=cid%>=1;
                                     bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
@@ -276,10 +283,16 @@
                                 <%
                             } else {
                                 if(updateAll) {%>
-                                    coll_<%=cid%>.updateMany(queryObj_<%=cid%>,new org.bson.Document("$set", data_<%=cid%>),new com.mongodb.client.model.UpdateOptions().upsert(true));
+                                    org.bson.Document d_<%=cid%> = new org.bson.Document("$set", data_<%=cid%>);
+                                    if(pushObj_<%=cid%>!=null) d_<%=cid%>.put("$push", pushObj_<%=cid%>);
+                                    
+                                    coll_<%=cid%>.updateMany(queryObj_<%=cid%>,d_<%=cid%>,new com.mongodb.client.model.UpdateOptions().upsert(true));
                                     <%
                                 } else {%>
-                                    coll_<%=cid%>.updateOne(queryObj_<%=cid%>,new org.bson.Document("$set", data_<%=cid%>),new com.mongodb.client.model.UpdateOptions().upsert(true));
+                                    org.bson.Document d_<%=cid%> = new org.bson.Document("$set", data_<%=cid%>);
+                                    if(pushObj_<%=cid%>!=null) d_<%=cid%>.put("$push", pushObj_<%=cid%>);
+                                    
+                                    coll_<%=cid%>.updateOne(queryObj_<%=cid%>,d_<%=cid%>,new com.mongodb.client.model.UpdateOptions().upsert(true));
                                 <%
                                 }
                             }
