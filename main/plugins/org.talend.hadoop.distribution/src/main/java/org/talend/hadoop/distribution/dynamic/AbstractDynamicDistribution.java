@@ -59,6 +59,8 @@ public abstract class AbstractDynamicDistribution implements IDynamicDistributio
 
     private final static String PROPERTY_FORCE_REFRESH_CACHE = "talend.studio.dynamicDistribution.template.forceRefresh"; //$NON-NLS-1$
 
+    private static final String PROP_LOAD_DYNAMIC_DISTRIBUTION_MODULE = "studio.dynamic.distribution.modules.load";
+    
     private List<IDynamicPlugin> builtinPluginsCache;
 
     private List<TemplateBean> templateBeansCache;
@@ -339,6 +341,9 @@ public abstract class AbstractDynamicDistribution implements IDynamicDistributio
         IDynamicDistributionTemplate distributionTemplate = initTemplate(pluginAdapter, monitor);
         registedDistribution.put(pluginConfiguration.getId(), distributionTemplate);
         distributionTemplate.registOsgiServices();
+        if (Boolean.getBoolean(PROP_LOAD_DYNAMIC_DISTRIBUTION_MODULE)) {
+            distributionTemplate.registPluginExtensions();
+        }
     }
 
     private void unloadDistribution(IDynamicDistributionTemplate distribution, boolean reloadLibCache) {
