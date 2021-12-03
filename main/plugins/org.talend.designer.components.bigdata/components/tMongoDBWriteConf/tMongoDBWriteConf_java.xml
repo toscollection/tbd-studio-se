@@ -292,13 +292,29 @@
         >
             <DEFAULT>"query"</DEFAULT>
         </PARAMETER>
+        
         <PARAMETER
-            FIELD="TEXT"
-            NAME="PUSH_NODE"
-            NUM_ROW="31"
-        >
-            <DEFAULT>"push"</DEFAULT>
+            NAME="NODES"
+            FIELD="TABLE"
+            NUM_ROW="34"
+            NB_LINES="5"
+            >
+            <ITEMS>
+                <ITEM NAME="NODE_TYPE" FIELD="OPENED_LIST">
+                    <ITEMS DEFAULT="PUSH">
+                    <ITEM NAME="PUSH" VALUE="push"/>
+                    <ITEM NAME="INC" VALUE="inc"/>
+                    <ITEM NAME="RENAME" VALUE="rename"/>
+                    <ITEM NAME="SETONINSERT" VALUE="setOnInsert"/>
+                    <ITEM NAME="UNSET" VALUE="unset"/>
+                    <ITEM NAME="MIN" VALUE="min"/>
+                    <ITEM NAME="MAX" VALUE="max"/>
+                  </ITEMS>
+                </ITEM>
+                <ITEM NAME="NODE_REF" FIELD="TEXT" />
+            </ITEMS>
         </PARAMETER>
+        
         <PARAMETER
             NAME="REMOVE_ROOT"
             FIELD="CHECK"
