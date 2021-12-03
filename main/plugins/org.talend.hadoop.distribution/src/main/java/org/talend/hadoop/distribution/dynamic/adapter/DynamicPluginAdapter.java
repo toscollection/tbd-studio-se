@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.model.general.ModuleNeeded;
 import org.talend.core.runtime.dynamic.IDynamicConfiguration;
 import org.talend.core.runtime.dynamic.IDynamicExtension;
 import org.talend.core.runtime.dynamic.IDynamicPlugin;
@@ -41,6 +42,9 @@ import org.talend.hadoop.distribution.dynamic.pref.IDynamicDistributionPreferenc
 public class DynamicPluginAdapter {
 
     private static final String TYPE_POM = "pom";
+
+    private static final String ATTR_DYNAMIC_DISTRIBUTION = "{\"" + ModuleNeeded.ATTR_USED_BY_DYNAMIC_DISTRIBUTION
+            + "\":\"true\", \"" + ModuleNeeded.ATTR_DYNAMIC_DISTRIBUTION_VERSION + "\":\"%s\"}";
 
     private IDynamicPlugin plugin;
 
@@ -110,6 +114,9 @@ public class DynamicPluginAdapter {
             password = preference.getPassword();
         }
 
+        String dynamic = String.format(ATTR_DYNAMIC_DISTRIBUTION,
+                pluginConfiguration.getDistribution() + "_" + pluginConfiguration.getVersion());
+
         for (IDynamicConfiguration configuration : configurations) {
             if (DynamicModuleGroupAdapter.TAG_NAME.equals(configuration.getTagName())) {
                 String templateId = (String) configuration.getAttribute(DynamicModuleGroupAdapter.ATTR_GROUP_TEMPLATE_ID);
@@ -148,6 +155,11 @@ public class DynamicPluginAdapter {
                             ExceptionHandler.process(e);
                         }
                     }
+                }
+
+                Object attribute = configuration.getAttribute(DynamicModuleAdapter.ATTR_MESSAGE);
+                if (attribute == null || StringUtils.isBlank(attribute.toString())) {
+                    configuration.setAttribute(DynamicModuleAdapter.ATTR_MESSAGE, dynamic);
                 }
             }
         }
