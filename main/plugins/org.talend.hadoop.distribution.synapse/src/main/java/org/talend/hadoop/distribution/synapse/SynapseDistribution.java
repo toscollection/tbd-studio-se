@@ -24,7 +24,6 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
-import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -34,7 +33,7 @@ import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 import org.talend.hadoop.distribution.constants.synapse.ISynapseDistribution;
 
 @SuppressWarnings("nls")
-public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, HDFSComponent, MRComponent,
+public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, MRComponent,
         SparkBatchComponent, SparkStreamingComponent {
 
     public static final String VERSION = "SYNAPSE";
@@ -132,7 +131,6 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 		return true;
 	}
 
-	@Override
 	public boolean doSupportSequenceFileShortType() {
 		return false;
 	}
