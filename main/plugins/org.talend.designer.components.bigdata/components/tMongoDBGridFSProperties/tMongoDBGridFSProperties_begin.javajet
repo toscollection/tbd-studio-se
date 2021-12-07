@@ -36,6 +36,8 @@
     boolean useExistingConnection = "true".equalsIgnoreCase(ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__"));
     String collection = ElementParameterParser.getValue(node,"__COLLECTION__");
     
+    boolean set_x509_username = "true".equals(ElementParameterParser.getValue(node, "__SET_X509_USERNAME__"));
+    
     String limit = ElementParameterParser.getValue(node,"__LIMIT__");
 
     List<Map<String, String>> sorts = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__SORT__");
