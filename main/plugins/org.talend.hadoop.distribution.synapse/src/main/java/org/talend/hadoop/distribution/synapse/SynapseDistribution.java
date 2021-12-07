@@ -42,7 +42,8 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
     
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_0;
 
-	private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*";
+	private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ;
+	
 	public final static String DEFAULT_LIB_ROOT = "/usr/lib";
 	
 	protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -131,10 +132,6 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 		return true;
 	}
 
-	public boolean doSupportSequenceFileShortType() {
-		return false;
-	}
-
 	@Override
 	public String getYarnApplicationClasspath() {
 		return YARN_APPLICATION_CLASSPATH;
@@ -142,13 +139,14 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 	
 	@Override
 	public String generateSparkJarsPaths(List<String> commandLineJarsPaths, boolean isLightWeight) {
-        return isLightWeight ? "" : generateSparkJarsPaths(commandLineJarsPaths);
-    }
+        	return isLightWeight ? "" : generateSparkJarsPaths(commandLineJarsPaths);
+    	
+    	}
 
 	@Override
 	public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
-        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths, ModuleGroupName.SPARK_BATCH.get(this.getVersion()));
-    }
+        	return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths, ModuleGroupName.SPARK_BATCH.get(this.getVersion()));
+    	}
 
 	
 	@Override
