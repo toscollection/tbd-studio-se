@@ -34,7 +34,7 @@ import org.talend.hadoop.distribution.constants.synapse.ISynapseDistribution;
 
 @SuppressWarnings("nls")
 public class SynapseDistribution extends AbstractDistribution  implements SparkBatchComponent, SparkStreamingComponent,
-        ISynapseDistribution, HiveOnSparkComponent, HiveComponent, MRComponent {
+        ISynapseDistribution, MRComponent {
 
     public static final String VERSION = "SYNAPSE";
 
@@ -42,18 +42,30 @@ public class SynapseDistribution extends AbstractDistribution  implements SparkB
     
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
-    private static Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
+    public final static String DEFAULT_LIB_ROOT = "/usr/lib";
+	
+    protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
-    private static Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
+    protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
 
-    private static Map<ComponentType, ComponentCondition> displayConditions = new HashMap<>();
+    protected Map<ComponentType, ComponentCondition> displayConditions;
 
+    protected Map<ComponentType, String> customVersionDisplayNames;
+
+    protected Map<ComponentType, ComponentCondition> buildDisplayConditions() {
+	return new HashMap<>();
+    }
+
+    protected Map<ComponentType, String> buildCustomVersionDisplayNames() {
+        return new HashMap<>();
+    } 	
+    
     public SynapseDistribution() {
 	displayConditions = buildDisplayConditions();
         customVersionDisplayNames = buildCustomVersionDisplayNames();
         moduleGroups = buildModuleGroups();
         nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());        
-    }
+    }      
     
     @Override
     public boolean doSupportOldImportMode() {
@@ -215,56 +227,6 @@ public class SynapseDistribution extends AbstractDistribution  implements SparkB
     @Override
     public boolean useCloudLauncher() {
         return true;
-    }
-
-    @Override
-    public boolean doSupportHive1() {
-        return false;
-    }
-
-    @Override
-    public boolean doSupportHive2() {
-        return true;
-    }
-
-
-    public boolean doSupportHive3() {
-    	return true;
-    }
-
-    @Override
-    public boolean doSupportTezForHive() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportHBaseForHive() {
-        return false;
-    }
-
-    @Override
-    public boolean doSupportSSL() {
-        return false;
-    }
-
-    @Override
-    public boolean doSupportORCFormat() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportAvroFormat() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportParquetFormat() {
-        return true;
-    }
-
-    @Override
-    public boolean doSupportStoreAsParquet() {
-        return false;
     }
 
     @Override
