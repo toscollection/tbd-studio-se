@@ -1556,6 +1556,10 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_impala_jdbc",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_woodstox_core_5_0_3_jar",
         "tagName" : "library"
       }, {
@@ -2843,10 +2847,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_httpcore_4_4_10_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_impala_jdbc",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -4178,10 +4178,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_httpcore_4_4_10_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_impala_jdbc",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -10634,10 +10630,9 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_impala_jdbc",
-      "mvn_uri" : "mvn:Impala/ImpalaJDBC42/2.6.15.1017",
+      "mvn_uri" : "mvn:Impala/ImpalaJDBC42/2.6.15.1017/jar",
       "name" : "ImpalaJDBC42-2.6.15.1017.jar",
-      "tagName" : "libraryNeeded",
-      "useStudioRepository" : "true"
+      "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
