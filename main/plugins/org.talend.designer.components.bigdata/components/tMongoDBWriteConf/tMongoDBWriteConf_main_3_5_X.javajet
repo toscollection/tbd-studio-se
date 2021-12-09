@@ -249,8 +249,7 @@
 								String node_type = nd.get("NODE_TYPE");
 								String node_ref = nd.get("NODE_REF");
 								%>
-								org.bson.Document nodeObj_<%=cid%> = (org.bson.Document)root_<%=cid%>.get(<%=node_ref%>);
-								if(nodeObj_<%=cid%> == null) {
+								if(root_<%=cid%>.get(<%=node_ref%>) == null) {
 									<%if(dieOnError){%>
 										throw new Exception("<%=node_type%> node configuration error!");
 									<%} else {%>
@@ -261,7 +260,7 @@
 									<%}%>
 								}
 								
-								d_<%=cid%>.put("$<%=node_type%>", nodeObj_<%=cid%>);
+								d_<%=cid%>.put("$<%=node_type%>", (org.bson.Document)root_<%=cid%>.get(<%=node_ref%>));
 							<%
 							}
 						}
