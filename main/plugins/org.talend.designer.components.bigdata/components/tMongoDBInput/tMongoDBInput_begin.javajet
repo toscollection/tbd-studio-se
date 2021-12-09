@@ -37,6 +37,8 @@
     query = query.replaceAll("\n","");
     query = query.replaceAll("\r","");
     String limit = ElementParameterParser.getValue(node,"__LIMIT__");
+    
+    boolean set_x509_username = "true".equals(ElementParameterParser.getValue(node, "__SET_X509_USERNAME__"));
 
     // declare read preferences and write concerns for unified connection template
     boolean setReadPreference = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SET_READ_PREFERENCE__"));

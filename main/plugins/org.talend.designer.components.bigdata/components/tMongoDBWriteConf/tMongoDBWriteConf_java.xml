@@ -67,7 +67,7 @@
             NAME="USE_REPLICA_SET"
             REPOSITORY_VALUE="USE_REPLICA_SET"
             NUM_ROW="4"
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false')"
+            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION=='MONGODB_4_4_X') AND (USE_CONNECTION_STRING=='false')) OR (DB_VERSION=='MONGODB_3_5_X'))"
             GROUP="CONNECTION">
             <DEFAULT>"false"</DEFAULT>
         </PARAMETER>
@@ -78,7 +78,7 @@
             REQUIRED_IF="(USE_REPLICA_SET=='true')"
             NUM_ROW="5"
             NB_LINES="5"
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='true')"
+            SHOW_IF="isShow[USE_REPLICA_SET] AND (USE_REPLICA_SET=='true')"
             GROUP="CONNECTION">
             <ITEMS>
                 <ITEM NAME="REPLICA_HOST" FIELD="TEXT" />
@@ -91,7 +91,7 @@
             REPOSITORY_VALUE="HOST"
             NUM_ROW="6"
             REQUIRED="true"
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
+            SHOW_IF="isShow[USE_REPLICA_SET] AND (USE_REPLICA_SET=='false')"
             GROUP="CONNECTION"
         >
             <DEFAULT>""</DEFAULT>
@@ -101,11 +101,21 @@
             NAME="PORT"
             REPOSITORY_VALUE="PORT"
             NUM_ROW="6"
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (USE_REPLICA_SET=='false')"
+            SHOW_IF="isShow[HOST]"
             GROUP="CONNECTION"
         >
             <DEFAULT>27017</DEFAULT>
         </PARAMETER>
+        
+        <!-- NUM_ROW should be set with some distance, now difficult to adjust the order, as this component is TECHNICAL one, is ok like this -->
+        <PARAMETER FIELD="CHECK" NAME="USE_CONNECTION_STRING" NUM_ROW="110" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION=='MONGODB_4_4_X')" GROUP="CONNECTION">
+            <DEFAULT>"false"</DEFAULT>
+        </PARAMETER>
+        
+        <PARAMETER FIELD="TEXT" NAME="CONNECTION_STRING" NUM_ROW="120" REQUIRED="true" SHOW_IF="isShow[USE_CONNECTION_STRING] AND (USE_CONNECTION_STRING=='true')" GROUP="CONNECTION">
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+        
         <PARAMETER
             FIELD="TEXT"
             NAME="DATABASE"
@@ -179,11 +189,12 @@
                 <ITEM NAME="SCRAMSHA1_MEC" VALUE="SCRAMSHA1_MEC" SHOW_IF="(DB_VERSION=='MONGODB_3_0_X') OR (DB_VERSION=='MONGODB_3_2_X') OR (DB_VERSION=='MONGODB_3_5_X')" />
                 <ITEM NAME="SCRAMSHA256_MEC" VALUE="SCRAMSHA256_MEC" SHOW_IF="(DB_VERSION=='MONGODB_4_4_X')" />
                 <ITEM NAME="KERBEROS_MEC" VALUE="KERBEROS_MEC" SHOW_IF="(DB_VERSION!='INVALID')"/>
+                <ITEM NAME="X509" VALUE="X509" />
             </ITEMS>
         </PARAMETER>
 
         <PARAMETER FIELD="CHECK" NAME="SET_AUTHENTICATION_DATABASE" REPOSITORY_VALUE="SET_AUTHENTICATION_DATABASE"
-            NUM_ROW="18" SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            NUM_ROW="18" SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA256_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
 
@@ -191,13 +202,17 @@
             SHOW_IF="(SET_AUTHENTICATION_DATABASE=='true') AND (isShow[SET_AUTHENTICATION_DATABASE])" GROUP="AUTHENTICATION">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
+        
+        <PARAMETER FIELD="CHECK" NAME="SET_X509_USERNAME" NUM_ROW="20" SHOW_IF="(AUTHENTICATION_MECHANISM=='X509') AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')" GROUP="AUTHENTICATION">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
 
         <PARAMETER
             FIELD="TEXT"
             NAME="USERNAME"
             REPOSITORY_VALUE="USERNAME"
             NUM_ROW="20"
-            SHOW_IF="((AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='PLAIN_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA256_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
+            SHOW_IF="(((AUTHENTICATION_MECHANISM=='X509') AND (SET_X509_USERNAME=='true')) OR (AUTHENTICATION_MECHANISM=='NEGOTIATE_MEC') OR (AUTHENTICATION_MECHANISM=='PLAIN_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA1_MEC') OR (AUTHENTICATION_MECHANISM=='SCRAMSHA256_MEC')) AND (REQUIRED_AUTHENTICATION == 'true') AND (USE_EXISTING_CONNECTION == 'false')"
             GROUP="AUTHENTICATION"
         >
             <DEFAULT>""</DEFAULT>
@@ -331,11 +346,10 @@
     </PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-            <IMPORT MODULE="mongodb-driver-core-4.2.0.jar" MVN="mvn:org.mongodb/mongodb-driver-core/4.2.0" NAME="mongodb-driver-core-4.2.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
-            <IMPORT MODULE="mongodb-driver-sync-4.2.0.jar" MVN="mvn:org.mongodb/mongodb-driver-sync/4.2.0" NAME="mongodb-driver-sync-4.2.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
-            <IMPORT MODULE="bson-4.2.0.jar" MVN="mvn:org.mongodb/bson/4.2.0" NAME="bson-4.2.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
-            <IMPORT MODULE="mongo-java-driver-3.12.0.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.0" NAME="mongo-java-driver-3.12.0" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'MONGODB_3_0_X') OR (DB_VERSION == 'MONGODB_3_2_X') OR (DB_VERSION == 'MONGODB_3_5_X')))"/>
-            <IMPORT MODULE="mongo-java-driver-3.4.2.jar" MVN="mvn:org.talend.libraries/mongo-java-driver-3.4.2/6.0.0"  NAME="mongo-java-driver-3.4.2" REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'MONGODB_2_6_X') OR (DB_VERSION == 'MONGODB_2_5_X'))" />
+            <IMPORT MODULE="mongodb-driver-core-4.2.3.jar" MVN="mvn:org.mongodb/mongodb-driver-core/4.2.3" NAME="mongodb-driver-core-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
+            <IMPORT MODULE="mongodb-driver-sync-4.2.3.jar" MVN="mvn:org.mongodb/mongodb-driver-sync/4.2.3" NAME="mongodb-driver-sync-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
+            <IMPORT MODULE="bson-4.2.3.jar" MVN="mvn:org.mongodb/bson/4.2.3" NAME="bson-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'MONGODB_4_4_X'))" />
+            <IMPORT MODULE="mongo-java-driver-3.12.8.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.8" NAME="mongo-java-driver-3.12.8" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'MONGODB_3_0_X') OR (DB_VERSION == 'MONGODB_3_2_X') OR (DB_VERSION == 'MONGODB_3_5_X')))"/>
 
             <IMPORT NAME="xom" MODULE="xom-1.2.7.jar" MVN="mvn:org.talend.libraries/xom-1.2.7/6.0.0"  REQUIRED="true" />
             <IMPORT NAME="commons_beanutils" MODULE="commons-beanutils-1.9.4.jar" MVN="mvn:commons-beanutils/commons-beanutils/1.9.4" REQUIRED="true" />
