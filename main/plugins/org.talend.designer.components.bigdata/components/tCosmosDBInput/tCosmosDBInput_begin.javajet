@@ -59,6 +59,9 @@
     boolean useExternalSort = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__EXTERNAL_SORT_AGGREGATION__"));
     boolean specifyFields="true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__SPECIFY_FIELDS__"));
     List<Map<String, String>> filter = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__FIELDS_TO_RETURN__");
+    
+    boolean set_x509_username = "true".equals(ElementParameterParser.getValue(node, "__SET_X509_USERNAME__"));
+    
     boolean queryOptionNoTimeOut;
 	String dbversion;
 	if(useExistingConnection){

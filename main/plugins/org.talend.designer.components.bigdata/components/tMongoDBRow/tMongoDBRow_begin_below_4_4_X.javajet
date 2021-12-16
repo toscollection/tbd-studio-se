@@ -79,6 +79,16 @@
 					mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createScramSha1Credential(<%=dbuser%>, <%=usedAuthenticationDB%>, new String(decryptedPassword_<%=cid%>).toCharArray());
 					<%
 				}
+			} else if("X509".equals(authenticationMechanism)) {
+				if(set_x509_username) {
+				%>
+					mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoX509Credential(<%=dbuser%>);
+				<%
+				} else {
+				%>
+					mongoCredential_<%=cid%> = com.mongodb.MongoCredential.createMongoX509Credential();
+				<%
+				}
 			} else { // GSSAPI SASL (KERBEROS)
 				%>
 				System.setProperty("java.security.krb5.realm", <%=krbRealm%>);
