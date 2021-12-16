@@ -346,6 +346,7 @@
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
