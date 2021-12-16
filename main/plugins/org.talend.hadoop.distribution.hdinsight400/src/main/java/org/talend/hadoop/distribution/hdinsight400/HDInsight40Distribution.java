@@ -210,8 +210,8 @@ public class HDInsight40Distribution extends HDIDistribution  implements SparkBa
     @Override
     public Set<ESparkVersion> getSparkVersions() {
         Set<ESparkVersion> version = new HashSet<>();
-        version.add(ESparkVersion.SPARK_2_4);
-        version.add(ESparkVersion.SPARK_2_3);
+        version.add(ESparkVersion.SPARK_2_4_X);
+        version.add(ESparkVersion.SPARK_2_3_X);
         return version;
     }
 

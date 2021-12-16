@@ -23,10 +23,18 @@
         }
     } else {%>
         // Internal declarations
+        <%
+        boolean use_connection_string = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_CONNECTION_STRING__"));
+        String connection_string = ElementParameterParser.getValue(node, "__CONNECTION_STRING__");
+        %>
+    
         List<com.mongodb.ServerAddress> addrs_<%=cid%> = new java.util.ArrayList<>();
-        com.mongodb.MongoClientSettings.Builder clientSettingsBuilder_<%=cid%> = com.mongodb.MongoClientSettings.builder().applicationName(applicationName_<%=cid %>);
-        com.mongodb.connection.ClusterSettings.Builder clusterSettingsBuilder_<%=cid%> = com.mongodb.connection.ClusterSettings.builder();
-        com.mongodb.connection.SslSettings.Builder sslSettingsBuilder_<%=cid%> = com.mongodb.connection.SslSettings.builder();
+        com.mongodb.MongoClientSettings.Builder clientSettingsBuilder_<%=cid%> = com.mongodb.MongoClientSettings.builder()
+        <%if(use_connection_string) {%>
+        .applyConnectionString(new com.mongodb.ConnectionString(<%=connection_string%>))
+        <%}%>
+        .applicationName(applicationName_<%=cid %>);
+        
         <%
         // clusterSettingsBuilder is always used, no need to check it
         boolean isSslSettingsBuilderUsed = false;

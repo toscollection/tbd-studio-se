@@ -32,6 +32,9 @@
     String usedAuthenticationDB = useAuthDB ? authDB : dbname;
     boolean useSSL = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__USE_SSL__"));
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+    
+    boolean set_x509_username = "true".equals(ElementParameterParser.getValue(node, "__SET_X509_USERNAME__"));
+    
     String dbversion;
     if(useExistingConnection){
         String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
