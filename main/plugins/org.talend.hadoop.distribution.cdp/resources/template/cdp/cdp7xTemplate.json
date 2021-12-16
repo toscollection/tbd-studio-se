@@ -121,7 +121,8 @@
                 { "groupId" : "com.fasterxml.jackson.core", "artifactId" : "jackson-core", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
 
@@ -167,7 +168,8 @@
                 { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         }, 
         {
@@ -184,7 +186,8 @@
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -197,7 +200,8 @@
             "exclusions": [
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -214,7 +218,8 @@
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         
@@ -279,31 +284,6 @@
             ]
         },
         {
-            "id" : "hive-common",
-            "type" : "BASE",
-            "context" : "{properties.context}",
-            "groupId" : "org.apache.hive",
-            "artifactId" : "hive-common",
-            "classifier" : "",
-            "description" : "",
-            "exclusions": [
-                { "groupId" : "com.fasterxml.jackson.core", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.httpcomponents", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
-            ]
-        },
-        {
             "id" : "hive-exec",
             "type" : "BASE",
             "context" : "{properties.context}",
@@ -324,6 +304,8 @@
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
@@ -346,7 +328,33 @@
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
+            ]
+        },
+        {
+            "id" : "hive-service",
+            "type" : "BASE",
+            "context" : "{properties.context}",
+            "groupId" : "org.apache.hive",
+            "artifactId" : "hive-service",
+            "classifier" : "",
+            "description" : "",
+            "exclusions": [
+                { "groupId" : "org.apache.curator", "artifactId" : "apache-curator", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "eigenbase", "artifactId" : "eigenbase-properties", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.pentaho", "artifactId" : "pentaho-aggdesigner-algorithm", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -388,17 +396,26 @@
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
             "id" : "hive-warehouse-connector",
-            "type" : "STANDARD",
+            "type" : "BASE",
             "context" : "{properties.context}",
-            "jarName" : "hive-warehouse-connector_2.11-1.0.0.7.1.1.0-565-tlnd-0.jar",
-            "mvnUri" : "mvn:org.talend.bigdata.libs/hive-warehouse-connector_2.11/1.0.0.7.1.1.0-565-tlnd-0",
-            "useStudioRepository" : "true",
-            "description" : ""
+            "groupId" : "com.hortonworks.hive",
+            "artifactId" : "hive-warehouse-connector_2.11",
+            "classifier" : "",
+            "description" : "",
+            "exclusions": [
+            	{ "groupId" : "org.apache.hive", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },         	
+            	{ "groupId" : "net.shibboleth.tool", "artifactId" : "xmlsectool", "classifier" : "", "extension" : "", "description" : "" },
+            	{ "groupId" : "jdk.tools", "artifactId" : "jdk.tools", "classifier" : "", "extension" : "", "description" : "" },
+            	{ "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
+            	{ "groupId" : "org.apache.spark", "artifactId" : "spark-core_2.11", "classifier" : "", "extension" : "", "description" : "" },
+            	{ "groupId" : "org.scala-lang", "artifactId" : "scala-library", "classifier" : "", "extension" : "", "description" : "" }
+            ]
         },
         {
             "id" : "hive-hbase-handler",
@@ -419,7 +436,8 @@
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
        
@@ -445,7 +463,9 @@
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -470,7 +490,9 @@
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -689,9 +711,8 @@
                 { "groupId" : "org.cloudera.logredactor", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.spark-project.hive", "artifactId" : "hive-exec", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hive", "artifactId" : "hive-exec", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -708,7 +729,8 @@
                 { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
       {
@@ -752,7 +774,9 @@
                 { "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
@@ -944,7 +968,8 @@
             "id" : "HIVE-WAREHOUSE-LIB-DYNAMIC",
             "description" : "",
             "modules": [
-                "hive-warehouse-connector"                
+                "hive-warehouse-connector",
+                "hive-service"
             ]
         },
         {
