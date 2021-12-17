@@ -74,3 +74,6 @@ if (<%=cid%>_counter_send <= <%=cid%>_counter_rev.intValue()) {
 		%>
 	}
 }
+globalMap.put("<%=cid %>_NB_LINE",<%=cid%>_counter_send);
+globalMap.put("<%=cid %>_NB_SUCCESS",<%=cid%>_counter_rev.intValue() - <%=cid%>_producerExceptions.size());
+globalMap.put("<%=cid %>_NB_ERRORS",<%=cid%>_producerExceptions.size());
