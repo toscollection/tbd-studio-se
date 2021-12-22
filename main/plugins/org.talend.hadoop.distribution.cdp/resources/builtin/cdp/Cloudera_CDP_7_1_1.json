@@ -1566,6 +1566,14 @@
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_xz_1_6_jar",
         "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_impala_jdbc",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_core_jar",
+        "tagName" : "library"
       } ],
       "description" : "jars for hdfs, only module.id permitted",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HDFS_LIB_DYNAMIC",
@@ -10080,6 +10088,14 @@
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_common_3_1_1_7_1_1_0_565_jar",
       "mvn_uri" : "mvn:org.apache.hadoop/hadoop-common/3.1.1.7.1.1.0-565/jar",
       "name" : "hadoop-common-3.1.1.7.1.1.0-565.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_core_jar",
+      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-core/1.2.1/jar",
+      "name" : "hadoop-core-1.2.1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
