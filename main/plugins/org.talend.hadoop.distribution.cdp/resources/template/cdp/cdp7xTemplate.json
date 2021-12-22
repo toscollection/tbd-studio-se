@@ -900,7 +900,8 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "parquet-hadoop-bundle"
+                "parquet-hadoop-bundle",
+                "hadoop-common"
             ]
         },
         {
