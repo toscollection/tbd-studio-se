@@ -1556,10 +1556,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_impala_jdbc",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_woodstox_core_5_0_3_jar",
         "tagName" : "library"
       }, {
