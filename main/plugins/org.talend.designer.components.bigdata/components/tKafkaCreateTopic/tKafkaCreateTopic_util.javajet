@@ -41,6 +41,10 @@ class TKafkaCreateTopicUtil {
 	public String getZookeeperConnect() {
 		return ElementParameterParser.getValue(connNode, "__ZOOKEEPER_CONNECT__");
 	}
+	
+	public String getKafkaConnect() {
+		return ElementParameterParser.getValue(connNode, "__BROKER_LIST__");
+	}
 
 	public boolean isRetentionSet() {
 		return "true".equals(ElementParameterParser.getValue(node, "__KAFKA_RETENTION_CHECK__"));

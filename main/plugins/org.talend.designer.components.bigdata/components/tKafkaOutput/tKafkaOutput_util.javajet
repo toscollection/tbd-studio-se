@@ -22,6 +22,8 @@ class TKafkaOutputUtil {
 	 
 	 private TSetKeystoreUtil tSetKeystoreUtil;
 
+    private TSetKeystoreUtil tSetKeystoreUtilSchemaRegistry;
+
     private IConnection incomingConnection;
 
     private Map<String, String> kafkaProducerProperties;
@@ -32,6 +34,11 @@ class TKafkaOutputUtil {
             ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__")
             : node;
 		  this.tSetKeystoreUtil = new TSetKeystoreUtil(connNode);
+        this.tSetKeystoreUtilSchemaRegistry = new TSetKeystoreUtil(connNode);
+        if (useSchemaRegistryHttps() && !"true".equals(ElementParameterParser.getValue(connNode, "__USE_HTTPS__"))) {
+            INode schemaRegistryKeystoreSettingsNode = ElementParameterParser.getLinkedNodeValue(node, "__SCHEMA_REGISTRY_KEYSTORE_SETTINGS__");
+            this.tSetKeystoreUtilSchemaRegistry.setSettingsNode(schemaRegistryKeystoreSettingsNode);
+        }
         this.incomingConnection = findIncomingConnection();
         this.kafkaProducerProperties = findKafkaProducerProperties();
     }
@@ -111,7 +118,66 @@ class TKafkaOutputUtil {
     public String getKrb5Conf() {
     		return ElementParameterParser.getValue(connNode, "__KRB5_CONF__");
     }
-    
+
+    public boolean isKafkaVersion(String... versions) {
+    	String kafkaVersion = ElementParameterParser.getValue(connNode, "__KAFKA_VERSION__");
+            for (String version : versions) {
+                if(version.equals(kafkaVersion)){
+                    return true;
+                }
+            }
+            return false;
+//            return java.util.Arrays.stream(versions).anyMatch(kafkaVersion::equals);
+    }
+
+    public boolean applySecurityPropertiesAfterAdvanced() {
+        return "true".equals(ElementParameterParser.getValue(node, "__APPLY_SECURITY_PROPERTIES_AFTER_ADVANCED__"));
+    }
+
+    public boolean useProducerRecord() {
+        return "PRODUCER_RECORD".equals(ElementParameterParser.getValue(node, "__INPUT_TYPE__"));
+    }
+
+    public boolean useSchemaRegistry() {
+        return "true".equals(ElementParameterParser.getValue(node, "__USE_SCHEMA_REGISTRY__"));
+    }
+
+    public String getSchemaRegistryUrl() {
+        return ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_URL__");
+    }
+
+    public boolean useSchemaRegistryBasicAuth() {
+        return "true".equals(ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_BASIC_AUTH__"));
+    }
+
+    public String getSchemaRegistryUsername() {
+        return ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_USERNAME__");
+    }
+
+    public String getSchemaRegistryPassword() {
+        return ElementParameterParser.getPasswordValue(node, "__SCHEMA_REGISTRY_PASSWORD__");
+    }
+
+    public boolean useSchemaRegistryHttps() {
+        return "true".equals(ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_USE_HTTPS__"));
+    }
+
+    public String getSchemaRegistryKeySerializer() {
+        return ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_KEY_SERIALIZER__");
+    }
+
+    public String getSchemaRegistryCustomKeySerializer() {
+        return ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_CUSTOM_KEY_SERIALIZER__");
+    }
+
+    public String getSchemaRegistryValueSerializer() {
+        return ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_VALUE_SERIALIZER__");
+    }
+
+    public String getSchemaRegistryCustomValueSerializer() {
+        return ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_CUSTOM_VALUE_SERIALIZER__");
+    }
+
     private IConnection findIncomingConnection() {
         IConnection result = null;
         if (node.getIncomingConnections() != null) {
@@ -127,14 +193,98 @@ class TKafkaOutputUtil {
 
     private Map<String, String> findKafkaProducerProperties() {
         Map<String, String> result = new HashMap<String, String>();
+
+        // Basic configuration
+        result.put("\"bootstrap.servers\"", getBrokerList());
+        result.put("\"compression.type\"", "\"" + getCompression() + "\"");
+        result.put("\"security.protocol\"", "\"" + getSecurityProtocol() + "\"");
+
+        setProducerRecordProps(result);
+        setSchemaRegistryProps(result);
+
+        if (applySecurityPropertiesAfterAdvanced()) {
+            setCustomProps(result);
+            setSecurityProps(result);
+        } else {
+            setSecurityProps(result);
+            setCustomProps(result);
+        }
+
+        return result;
+    }
+
+    private void setSecurityProps(Map<String, String> result) {
+        if (!isKafkaVersion("KAFKA_0_8_2_0")) {
+            // SSL configuration
+            if (tSetKeystoreUtil.useHTTPS()) {
+                result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
+                result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
+                result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
+                if (tSetKeystoreUtil.needClientAuth()) {
+                    result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
+                    result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath());
+                    result.put("\"ssl.keystore.password\"", tSetKeystoreUtil.getKeyStorePassword());
+                }
+            }
+
+            // Kerberos configuration
+            if (useKrb()) {
+                result.put("\"sasl.kerberos.service.name\"", getKrbServiceName());
+                if (isSetKinitPath()) {
+                    result.put("\"sasl.kerberos.kinit.cmd\"", getKinitPath());
+                }
+            }
+        }
+    }
+
+    private void setProducerRecordProps(Map<String, String> result) {
+        // If input type is ProducerRecord - serialize key, value as byte[] by default
+        if (useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0")) {
+            result.put("\"key.serializer\"", "\"org.apache.kafka.common.serialization.ByteArraySerializer\"");
+            result.put("\"value.serializer\"", "\"org.apache.kafka.common.serialization.ByteArraySerializer\"");
+        }
+    }
+
+    private void setSchemaRegistryProps(Map<String, String> result) {
+        if (useSchemaRegistry() && useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0")) {
+            // Schema registry
+            result.put("\"schema.registry.url\"", getSchemaRegistryUrl());
+            if (useSchemaRegistryBasicAuth()) {
+                result.put("\"basic.auth.credentials.source\"", "\"USER_INFO\"");
+                String userInfo = getSchemaRegistryUsername() + " + ':' + " + getSchemaRegistryPassword();
+                result.put("\"basic.auth.user.info\"", userInfo);
+            }
+            if (tSetKeystoreUtilSchemaRegistry.useHTTPS()) {
+                result.put("\"schema.registry.ssl.truststore.type\"", tSetKeystoreUtilSchemaRegistry.getTrustStoreType());
+                result.put("\"schema.registry.ssl.truststore.location\"", tSetKeystoreUtilSchemaRegistry.getTrustStorePath());
+                result.put("\"schema.registry.ssl.truststore.password\"", tSetKeystoreUtilSchemaRegistry.getTrustStorePassword());
+                if (tSetKeystoreUtilSchemaRegistry.needClientAuth()) {
+                    result.put("\"schema.registry.ssl.keystore.type\"", tSetKeystoreUtilSchemaRegistry.getKeyStoreType());
+                    result.put("\"schema.registry.ssl.keystore.location\"", tSetKeystoreUtilSchemaRegistry.getKeyStorePath());
+                    result.put("\"schema.registry.ssl.keystore.password\"", tSetKeystoreUtilSchemaRegistry.getKeyStorePassword());
+                }
+            }
+            if ("AVRO".equals(getSchemaRegistryKeySerializer())) {
+                result.put("\"key.serializer\"", "\"io.confluent.kafka.serializers.KafkaAvroSerializer\"");
+            } else {
+                result.put("\"key.serializer\"", getSchemaRegistryCustomKeySerializer());
+            }
+            if ("AVRO".equals(getSchemaRegistryValueSerializer())) {
+                result.put("\"value.serializer\"", "\"io.confluent.kafka.serializers.KafkaAvroSerializer\"");
+            } else {
+                result.put("\"value.serializer\"", getSchemaRegistryCustomValueSerializer());
+            }
+        }
+    }
+
+    private void setCustomProps(Map<String, String> result) {
         List<Map<String, String>> producerPropertiesFromStudio = (List<Map<String, String>>) ElementParameterParser
                 .getObjectValue(node, "__KAFKA_PRODUCER_PROPERTIES__");
         if(producerPropertiesFromStudio != null) {
-	        for (Map<String, String> producerPropertyFromStudio : producerPropertiesFromStudio) {
-	            result.put(producerPropertyFromStudio.get("PROPERTY"), producerPropertyFromStudio.get("VALUE"));
-	        }
+            for (Map<String, String> producerPropertyFromStudio : producerPropertiesFromStudio) {
+                result.put(producerPropertyFromStudio.get("PROPERTY"), producerPropertyFromStudio.get("VALUE"));
+            }
         }
-        return result;
     }
 }
 %>
