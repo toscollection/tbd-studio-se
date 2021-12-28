@@ -40,10 +40,6 @@ public interface ICassandraConstants {
 
     public final static String DB_VERSION_CASSANDRA_3_0 = "CASSANDRA_3_0";
 
-    public final static String DB_VERSION_CASSANDRA_2_2 = "CASSANDRA_2_2";
-
-    public final static String DB_VERSION_CASSANDRA_2_0_0 = "CASSANDRA_2_0_0";
-
-    public final static String[] DBVERSIONS = { DB_VERSION_CASSANDRA_3_0, DB_VERSION_CASSANDRA_2_2, DB_VERSION_CASSANDRA_2_0_0,
+    public final static String[] DBVERSIONS = { DB_VERSION_CASSANDRA_3_0,
             "CASSANDRA_1_2_2", "CASSANDRA_1_1_2" };//$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 }

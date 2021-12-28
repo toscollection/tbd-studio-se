@@ -128,7 +128,7 @@ public class Neo4jConnForm extends AbstractNoSQLConnForm {
         gd.exclude = !isRemote;
         authArea.setVisible(isRemote);
 
-        boolean hasSetUsername = Neo4jConnectionUtil.isHasSetUsernameOption(getConnection());
+        boolean hasSetUsername = false;
         gd = (GridData) setUsernameBtn.getLayoutData();
         gd.exclude = !hasSetUsername;
         setUsernameBtn.setVisible(hasSetUsername);
