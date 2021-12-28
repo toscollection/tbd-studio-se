@@ -26,7 +26,6 @@ import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.neo4j.INeo4jAttributes;
-import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
 import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
@@ -135,16 +134,9 @@ public class Neo4jConnectionUtil {
         doCheck(db, classLoader, null);
     }
 
-    public static boolean isHasSetUsernameOption(NoSQLConnection connection) {
-        boolean isRemote = Boolean.valueOf(connection.getAttributes().get(INeo4jAttributes.REMOTE_SERVER));
-        String neo4jVersion = connection.getAttributes().get(INeo4jAttributes.DB_VERSION);
-        return isRemote && (INeo4jConstants.NEO4J_1_X_X.equals(neo4jVersion) || INeo4jConstants.NEO4J_2_1_X.equals(neo4jVersion));
-    }
-
     public static boolean isNeedAuthorization(NoSQLConnection connection) {
         boolean isRemote = Boolean.valueOf(connection.getAttributes().get(INeo4jAttributes.REMOTE_SERVER));
-        boolean setUsername = Boolean.valueOf(connection.getAttributes().get(INeo4jAttributes.SET_USERNAME));
-        return isRemote && (setUsername || !isHasSetUsernameOption(connection));
+        return isRemote;
     }
 
     public static synchronized Object getDB(NoSQLConnection connection) throws NoSQLServerException {
