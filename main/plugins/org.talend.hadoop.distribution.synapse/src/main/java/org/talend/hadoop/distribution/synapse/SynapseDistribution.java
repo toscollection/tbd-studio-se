@@ -25,17 +25,20 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.HDFSComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
+import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
+import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 import org.talend.hadoop.distribution.constants.synapse.ISynapseDistribution;
 
 @SuppressWarnings("nls")
-public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, HDFSComponent, MRComponent,
-        SparkBatchComponent, SparkStreamingComponent {
+public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, 
+			SparkBatchComponent, SparkStreamingComponent, MRComponent {
 
     public static final String VERSION = "SYNAPSE";
 
@@ -120,7 +123,7 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 
 	@Override
 	public boolean doSupportUseDatanodeHostname() {
-		return true;
+		return false;
 	}
 	
 	@Override
@@ -130,12 +133,7 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 	
 	@Override
 	public boolean doSupportCrossPlatformSubmission() {
-		return true;
-	}
-
-	@Override
-	public boolean doSupportSequenceFileShortType() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -193,16 +191,11 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 
     @Override
     public boolean doSupportCheckpointing() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean doSupportBackpressure() {
-        return true;
-    }
-
-    @Override
-    public boolean useOldAWSAPI() {
         return false;
     }
 
@@ -221,6 +214,11 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
         return true;
     }
    
+    @Override
+    public boolean doSupportAzureBlobStorage() {
+        return true;
+    }
+    
     @Override
     public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
