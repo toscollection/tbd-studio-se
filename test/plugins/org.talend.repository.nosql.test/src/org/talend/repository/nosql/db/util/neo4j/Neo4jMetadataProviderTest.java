@@ -1,5 +1,15 @@
 package org.talend.repository.nosql.db.util.neo4j;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+
 import org.eclipse.emf.common.util.EMap;
 import org.junit.After;
 import org.junit.Before;
@@ -13,16 +23,6 @@ import org.talend.repository.nosql.db.common.neo4j.INeo4jConstants;
 import org.talend.repository.nosql.factory.NoSQLRepositoryFactory;
 import org.talend.repository.nosql.metadata.IMetadataProvider;
 import org.talend.utils.io.FilesUtils;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 //TODO: FIXME
 @Ignore("failed because workbench has not been created")
@@ -53,7 +53,7 @@ public class Neo4jMetadataProviderTest {
 
         attributes.put(INeo4jAttributes.DATABASE_PATH, tmpFolder.getCanonicalPath());
 
-        attributes.put(INeo4jAttributes.DB_VERSION, INeo4jConstants.NEO4J_2_3_X);
+        attributes.put(INeo4jAttributes.DB_VERSION, INeo4jConstants.NEO4J_3_2_X);
         localConnection.setDbType("NEO4J");
 
         ExecutorService threadExecutor = null;
