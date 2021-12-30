@@ -170,8 +170,9 @@
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.0.1"/>
 	        
-	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-snowflake_2.12-2.9.0-spark_3.1.jar" name="spark-snowflake_2.12-2.9.0-spark_3.1.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.9.0-spark_3.1"/>
-        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-jdbc-3.13.13.jar" name="snowflake-jdbc-3.13.13.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.13"/>
+	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-snowflake_2.11-2.9.2-spark_2.4.jar" name="spark-snowflake_2.11-2.9.2-spark_2.4.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.11/2.9.2-spark_2.4"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar" mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
         	
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kafka-clients-2.7.0.jar" name="kafka-clients-2.7.0.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/2.7.0"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kafka_2.12-2.7.0.jar" name="kafka_2.12-2.7.0.jar" mvn_uri="mvn:org.apache.kafka/kafka_2.12/2.7.0"/>
@@ -353,8 +354,9 @@
         
         <!-- Snowflake group -->
         <libraryNeededGroup description="Snowflake libraries for spark247" id="SNOWFLAKE-GROUP-SPARK_2_4_x" name="SNOWFLAKE-GROUP-SPARK_2_4_x">
-            <library id="spark-snowflake_2.12-2.9.0-spark_3.1.jar"/>
-            <library id="snowflake-jdbc-3.12.12.jar"/>
+            <library id="spark-snowflake_2.11-2.9.2-spark_2.4.jar"/>
+            <library id="snowflake-jdbc-3.13.12.jar"/>
+            <library id="snowflake-ingest-sdk-0.10.3.jar"/>
         </libraryNeededGroup>
         
         <!-- TDM group -->
