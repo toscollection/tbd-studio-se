@@ -4,6 +4,7 @@
    <extension
          point="org.talend.core.runtime.librariesNeeded">
 		
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="antlr4-runtime-4.7.jar" name="antlr4-runtime-4.7.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.7"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-cli-1.2.jar" name="commons-cli-1.2.jar" mvn_uri="mvn:commons-cli/commons-cli/1.2/jar"/>
@@ -201,6 +202,7 @@
           
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
+            <library id="jodd-core-3.5.2.jar"/>
 			<library id="antlr4-runtime-4.7.jar"/>
 			<library id="avro-1.8.2.jar"/>
 			<library id="avro-mapred-1.8.2.jar"/>

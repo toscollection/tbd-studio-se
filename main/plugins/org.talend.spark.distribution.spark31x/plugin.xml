@@ -3,7 +3,8 @@
 <plugin>
    <extension
          point="org.talend.core.runtime.librariesNeeded">
-        
+
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>        
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk15on-1.68.jar" name="bcpkix-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.68"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk15on-1.68.jar" name="bcprov-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.68"/>
@@ -135,6 +136,7 @@
 	   
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_1_x" name="SPARK-COMPILE-GROUP-SPARK_3_1_x">
+            <library id="jodd-core-3.5.2.jar"/>
             <library id="avro-1.8.2.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
             <library id="bcpkix-jdk15on-1.68.jar"/>
