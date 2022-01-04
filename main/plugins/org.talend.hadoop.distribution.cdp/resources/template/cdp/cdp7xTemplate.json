@@ -266,6 +266,15 @@
             "description" : ""
         },
         {
+            "id" : "guava-28.1-jre",
+            "type" : "STANDARD",
+            "context" : "{properties.context}",
+            "jarName" : "guava-28.1-jre.jar",
+            "mvnUri" : "mvn:com.google.guava/guava/28.1-jre",
+            "useStudioRepository" : "true",
+            "description" : ""
+        },
+        {
             "id" : "hbase-server",
             "type" : "BASE",
             "context" : "{properties.context}",
@@ -335,6 +344,31 @@
             ]
         },
         {
+            "id" : "hive-common",
+            "type" : "BASE",
+            "context" : "{properties.context}",
+            "groupId" : "org.apache.hive",
+            "artifactId" : "hive-common",
+            "classifier" : "",
+            "description" : "",
+            "exclusions": [
+                { "groupId" : "org.apache.curator", "artifactId" : "apache-curator", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "eigenbase", "artifactId" : "eigenbase-properties", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.pentaho", "artifactId" : "pentaho-aggdesigner-algorithm", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-hdfs-client", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.springframework", "artifactId" : "spring-framework-bom", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.hive", "artifactId" : "hive-common", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "commons-lang", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" }
+            ]
+        },
+        {
             "id" : "hive-service",
             "type" : "BASE",
             "context" : "{properties.context}",
@@ -381,23 +415,30 @@
         },
         {
             "id" : "hadoop-common",
-            "type" : "BASE",
+            "type" : "STANDARD",
             "context" : "{properties.context}",
-            "groupId" : "org.apache.hadoop",
-            "artifactId" : "hadoop-common",
-            "classifier" : "",
-            "description" : "",
-            "exclusions": [
-                { "groupId" : "org.apache.curator", "artifactId" : "apache-curator", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "eigenbase", "artifactId" : "eigenbase-properties", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.pentaho", "artifactId" : "pentaho-aggdesigner-algorithm", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.logging.log4j", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
-            ]
+            "jarName" : "hadoop-common-2.7.0.jar",
+            "mvnUri" : "mvn:org.apache.hadoop/hadoop-common/2.7.0",
+            "useStudioRepository" : "true",
+            "description" : ""
+        },
+        {
+            "id" : "woodstox-core",
+            "type" : "STANDARD",
+            "context" : "{properties.context}",
+            "jarName" : "woodstox-core-5.0.3.jar",
+            "mvnUri" : "mvn:com.fasterxml.woodstox/woodstox-core/5.0.3",
+            "useStudioRepository" : "true",
+            "description" : ""
+        },
+        {
+            "id" : "stax2-api",
+            "type" : "STANDARD",
+            "context" : "{properties.context}",
+            "jarName" : "stax2-api-3.1.4.jar",
+            "mvnUri" : "mvn:org.codehaus.woodstox/stax2-api/3.1.4",
+            "useStudioRepository" : "true",
+            "description" : ""
         },
         {
             "id" : "hive-warehouse-connector",
@@ -785,6 +826,7 @@
             "classifier" : "",
             "description" : "",
             "exclusions": [
+            	{ "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-core", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hive", "artifactId" : "hive-exec", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.curator", "artifactId" : "apache-curator", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "eigenbase", "artifactId" : "eigenbase-properties", "classifier" : "", "extension" : "", "description" : "" },
@@ -900,6 +942,14 @@
             "useStudioRepository": "true"
         },
         {
+            "id": "commons-configuration2",
+            "type": "STANDARD",
+            "context": "{properties.context}",
+            "jarName": "commons-configuration2-2.1.1.jar",
+            "mvnUri": "mvn:org.apache.commons/commons-configuration2/2.1.1/jar",
+            "useStudioRepository": "true"
+        },
+        {
             "id": "fluent-hc",
             "type": "STANDARD",
             "context": "{properties.context}",
@@ -936,10 +986,15 @@
                 "httpclient",
                 "hadoop-client",
                 "commons-configuration",
+                "commons-configuration2",
+                "woodstox-core",
+                "stax2-api",
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "parquet-hadoop-bundle"
+                "parquet-hadoop-bundle",
+                "hadoop-common",
+                "impala-jdbc"
             ]
         },
         {
@@ -981,7 +1036,14 @@
             "modules": [
                 "hadoop-client",
                 "impala-jdbc",
-                "hive-jdbc"
+                "hive-jdbc",
+                "hive-common",
+                "hadoop-common",
+                "guava-28.1-jre",
+                "commons-configuration",
+                "commons-configuration2",
+                "woodstox-core",
+                "stax2-api"
             ]
         },
         {
