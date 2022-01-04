@@ -63,6 +63,8 @@
 			boolean useSsl = "true".equals(ElementParameterParser.getValue(node, "__USE_SSL__"));
 			String sslTrustStore = ElementParameterParser.getValue(node, "__SSL_TRUST_STORE__");
 			String sslStorepasswordFieldName = "__SSL_TRUST_STORE_PASSWORD__";
+			
+			boolean useLDAP = !("".equals(ElementParameterParser.getValue(node, "__PASS__")) || "\"\"".equals(ElementParameterParser.getValue(node, "__PASS__")));
 
 			boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 			boolean storeByHBase = "true".equals(ElementParameterParser.getValue(node, "__STORE_BY_HBASE__"));
@@ -315,7 +317,11 @@
 %>
 							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=sslSyntaxe%>" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-						} else {
+						} else if (useLDAP) {
+%>
+							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+<%
+						}  else {
 %>
 							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";auth=noSasl";
 <%
@@ -333,6 +339,68 @@
 					url_<%=cid%> += additionalJdbcSettings_<%=cid%>;
 				}
 <%	
+		}
+		
+		public void createConnection(INode node, boolean needUserAndPassword) {
+			cid = node.getUniqueName();
+			dbproperties = ElementParameterParser.getValue(node, "__PROPERTIES__");
+			dbhost = ElementParameterParser.getValue(node, "__HOST__");
+	    	dbport = ElementParameterParser.getValue(node, "__PORT__");
+	    	dbname = ElementParameterParser.getValue(node, "__DBNAME__");
+	    	dbuser = ElementParameterParser.getValue(node, "__USER__");
+	    	
+	    	boolean useLDAP = !("".equals(ElementParameterParser.getValue(node, "__PASS__")) || "\"\"".equals(ElementParameterParser.getValue(node, "__PASS__")));
+	    	boolean isImpala = "impala".equalsIgnoreCase(ElementParameterParser.getValue(node, "__IMPALA_DRIVER__"));
+	    	
+	    	String userPrefix = "user";
+	    	String passwordPrefix = "password";
+	    	String authPrefix = "";
+	    	
+	    	if (isImpala) {
+				userPrefix = "UID";
+				passwordPrefix = "PWD";
+				authPrefix = ";AuthMech=3";
+			}	
+			
+%>
+				String driverClass_<%=cid%> = "<%=this.getDirverClassName(node) %>";
+			    java.lang.Class jdbcclazz_<%=cid%> = java.lang.Class.forName(driverClass_<%=cid%>);
+<%
+				newInstance(node);
+%>
+				String dbUser_<%=cid %> = <%=dbuser%>;
+				
+				<%
+				String passwordFieldName = "__PASS__";
+				%>
+				<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+
+				String dbPwd_<%=cid %> = decryptedPassword_<%=cid%>;
+				<%this.setURL(node);%>
+				<%
+				log4jCodeGenerateUtil.debugConnectionParams(node);
+				if (!needUserAndPassword){
+					log4jCodeGenerateUtil.connect_begin_noUser();
+				} else {
+					log4jCodeGenerateUtil.connect_begin();
+				}
+
+			if (useLDAP) {
+%>
+				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+"<%=authPrefix%>"+";<%=userPrefix%>="+dbUser_<%=cid%>+";<%=passwordPrefix%>="+dbPwd_<%=cid%>);
+<%
+			} else if(needUserAndPassword) {
+%>
+				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>,dbUser_<%=cid%>,dbPwd_<%=cid%>);
+<%
+			} else {
+%>
+				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid %>);
+<%
+			}
+			
+			log4jCodeGenerateUtil.connect_end();
+			this.afterUseNewConnection(node);
 		}
 	
 		public String getDirverClassName(INode node){
