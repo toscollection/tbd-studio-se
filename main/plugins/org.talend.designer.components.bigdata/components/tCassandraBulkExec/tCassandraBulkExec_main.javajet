@@ -66,10 +66,9 @@ if("CASSANDRA_4_0".equals(version)) {
 		boolean append = ("true").equals(ElementParameterParser.getValue(node, "__APPEND__"));
 		String filePath = ElementParameterParser.getValue(node, "__DATA_FILE_PATH__");
 		String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
-		String rowSeparator = ElementParameterParser.getValue(node,"__ROWSEPARATOR__");
-		
+
+		String commentLineChar = ElementParameterParser.getValue(node,"__COMMENTROWCHAR__");
 		String fieldSeparator = ElementParameterParser.getValue(node,"__FIELDSEPARATOR__");
-		
 		String escapeChar1 = ElementParameterParser.getValue(node, "__ESCAPE_CHAR__");
 		boolean useStatement = ("true").equals(ElementParameterParser.getValue(node, "__USE_STATEMENT__"));
 		String mappingType = ElementParameterParser.getValue(node,"__STMT_MAPPING_TYPE__");
@@ -128,6 +127,8 @@ if("CASSANDRA_4_0".equals(version)) {
 			args_<%=cid%>.add(<%=filePath%>);
 			args_<%=cid%>.add("--dsbulk.connector.csv.delimiter");
 			args_<%=cid%>.add(<%=fieldSeparator%>);
+			args_<%=cid%>.add("--dsbulk.connector.csv.comment");
+			args_<%=cid%>.add(<%=commentLineChar%>);
 			args_<%=cid%>.add("--dsbulk.connector.csv.escape");
 			args_<%=cid%>.add(<%=escapeChar1.replace("\\", "\\\\")%>);
 	<%
