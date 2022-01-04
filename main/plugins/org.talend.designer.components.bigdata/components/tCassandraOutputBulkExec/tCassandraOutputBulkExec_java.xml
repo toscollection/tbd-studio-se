@@ -239,15 +239,6 @@
           <DEFAULT>"create table ks.tb (id int, name text, birthday timestamp, primary key(id, birthday)) with clustering order by (birthday desc)"</DEFAULT>
         </PARAMETER>
         <PARAMETER
-            NAME="INSERT_STMT"
-            FIELD="TEXT"
-            NUM_ROW="27"
-            REQUIRED="true"
-            NOT_SHOW_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (TABLE_TYPE=='NON_CQL')) OR ((DB_VERSION=='CASSANDRA_4_0') AND (USE_STATEMENT=='false'))"
-        >
-          <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
-        </PARAMETER>
-        <PARAMETER
             NAME="SSTABLE_STORE_PATH"
             FIELD="DIRECTORY"
             REQUIRED="true"
@@ -295,6 +286,15 @@
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
+        <PARAMETER
+            NAME="STMT"
+            FIELD="TEXT"
+            NUM_ROW="52"
+            REQUIRED="true"
+            SHOW_IF="(isShow[USE_STATEMENT] AND (USE_STATEMENT=='true'))"
+        >
+          <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			NAME="USE_HEADER"
 			FIELD="CHECK"
@@ -323,7 +323,7 @@
             <TEMPLATE_PARAM SOURCE="self.SSTABLE_STORE_PATH" TARGET="tCOB.SSTABLE_STORE_PATH"/>
             <TEMPLATE_PARAM SOURCE="self.TABLE_TYPE" TARGET="tCOB.TABLE_TYPE"/>
             <TEMPLATE_PARAM SOURCE="self.SCHEMA_STMT" TARGET="tCOB.SCHEMA_STMT"/>
-            <TEMPLATE_PARAM SOURCE="self.INSERT_STMT" TARGET="tCOB.INSERT_STMT"/>
+            <TEMPLATE_PARAM SOURCE="self.STMT" TARGET="tCOB.STMT"/>
 
             <TEMPLATE_PARAM SOURCE="self.DB_VERSION" TARGET="tCBE.DB_VERSION"/>
             <TEMPLATE_PARAM SOURCE="self.HOST" TARGET="tCBE.HOST"/>
@@ -341,8 +341,8 @@
 			
 			<TEMPLATE_PARAM SOURCE="self.USE_STATEMENT" TARGET="tCBE.USE_STATEMENT"/>
 			<TEMPLATE_PARAM SOURCE="self.USE_STATEMENT" TARGET="tCOB.USE_STATEMENT"/>
-			<TEMPLATE_PARAM SOURCE="self.INSERT_STMT" TARGET="tCBE.INSERT_STMT"/>
-			<TEMPLATE_PARAM SOURCE="self.INSERT_STMT" TARGET="tCOB.INSERT_STMT"/>
+			<TEMPLATE_PARAM SOURCE="self.STMT" TARGET="tCBE.STMT"/>
+			<TEMPLATE_PARAM SOURCE="self.STMT" TARGET="tCOB.STMT"/>
 			<TEMPLATE_PARAM SOURCE="self.STMT_MAPPING_TYPE" TARGET="tCBE.STMT_MAPPING_TYPE"/>
 			<TEMPLATE_PARAM SOURCE="self.STMT_MAPPING_TYPE" TARGET="tCOB.STMT_MAPPING_TYPE"/>
 			<TEMPLATE_PARAM SOURCE="self.STMT_MAPPING" TARGET="tCBE.STMT_MAPPING"/>

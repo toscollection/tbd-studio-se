@@ -127,16 +127,7 @@
         >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
-		
-        <PARAMETER
-            NAME="INSERT_STMT"
-            FIELD="TEXT"
-            NUM_ROW="27"
-            REQUIRED="true"
-            SHOW_IF="((DB_VERSION=='CASSANDRA_4_0') AND isShow[USE_STATEMENT] AND (USE_STATEMENT=='true') AND (USE_CONF_FILE_4_0=='false'))"
-        >
-          <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
-        </PARAMETER>
+
 		<PARAMETER
 			NAME="STMT_MAPPING_TYPE"
 			FIELD="CLOSED_LIST"
@@ -179,17 +170,14 @@
         </PARAMETER>
     </PARAMETERS>
     <ADVANCED_PARAMETERS>
-		<PARAMETER NAME="ROWSEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" REPOSITORY_VALUE="ROW_SEPARATOR" SHOW="false">
-		  <DEFAULT>"\n"</DEFAULT>
-		</PARAMETER>
-		<PARAMETER NAME="FIELDSEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" REPOSITORY_VALUE="FIELD_SEPARATOR" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
+		<PARAMETER NAME="FIELDSEPARATOR" FIELD="TEXT" REQUIRED="true" NUM_ROW="31" REPOSITORY_VALUE="FIELD_SEPARATOR" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
 		  <DEFAULT>","</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="ESCAPE_CHAR" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" MAX_LENGTH="1" REPOSITORY_VALUE="ESCAPE_CHAR" SHOW="false">
+		<PARAMETER NAME="ESCAPE_CHAR" FIELD="TEXT" REQUIRED="true" NUM_ROW="32" MAX_LENGTH="1" REPOSITORY_VALUE="ESCAPE_CHAR" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
 		  <DEFAULT>"\\"</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="TEXT_ENCLOSURE" FIELD="TEXT" REQUIRED="true" NUM_ROW="30" MAX_LENGTH="1" REPOSITORY_VALUE="TEXT_ENCLOSURE" SHOW="false">
-		  <DEFAULT>"\""</DEFAULT>
+		<PARAMETER NAME="COMMENTROWCHAR" FIELD="TEXT" REQUIRED="true" NUM_ROW="33" MAX_LENGTH="1" REPOSITORY_VALUE="COMMENTROWCHAR" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
+		  <DEFAULT>"#"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER NAME="ENCODING" FIELD="ENCODING_TYPE" NUM_ROW="50" REQUIRED="true" REPOSITORY_VALUE="ENCODING" SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')">
 		  <DEFAULT>"ISO-8859-15"</DEFAULT>
@@ -215,12 +203,30 @@
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
+        <PARAMETER
+            NAME="STMT"
+            FIELD="TEXT"
+            NUM_ROW="61"
+            REQUIRED="true"
+            SHOW_IF="(isShow[USE_STATEMENT] AND (USE_STATEMENT=='true'))"
+        >
+          <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
+        </PARAMETER>
 		<PARAMETER
 			NAME="USE_HEADER"
 			FIELD="CHECK"
 			NUM_ROW="65"
 			REQUIRED="true"
             SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')"
+		>
+			<DEFAULT>false</DEFAULT>
+		</PARAMETER>
+		<PARAMETER
+			NAME="APPEND"
+			FIELD="CHECK"
+			NUM_ROW="65"
+			REQUIRED="true"
+			SHOW_IF="(DB_VERSION == 'CASSANDRA_4_0') AND (USE_CONF_FILE_4_0=='false')"
 		>
 			<DEFAULT>false</DEFAULT>
 		</PARAMETER>
@@ -563,6 +569,12 @@
             </IMPORTS>
 			<IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_4_0')">
                 <IMPORT
+                    NAME="logback-core-1.2.3"
+                    MODULE="logback-core-1.2.3.jar" MVN="mvn:org.talend.components/logback-core/1.2.3" />
+                <IMPORT
+                    NAME="logback-classic-1.2.3"
+                    MODULE="logback-classic-1.2.3.jar" MVN="mvn:org.talend.components/logback-classic/1.2.3" />
+                <IMPORT
 				    NAME="dsbulk-batcher-api-1.8.0"
 				    MODULE="dsbulk-batcher-api-1.8.0.jar" MVN="mvn:com.datastax.oss/dsbulk-batcher-api/1.8.0" />
 				<IMPORT
@@ -693,12 +705,6 @@
 				<IMPORT
                     NAME="univocity-parsers-2.9.1"
                     MODULE="univocity-parsers-2.9.1.jar" MVN="mvn:com.univocity/univocity-parsers/2.9.1" />
-				<IMPORT
-				    NAME="logback-core-1.2.3"
-				    MODULE="logback-core-1.2.3.jar" MVN="mvn:org.talend.components/logback-core/1.2.3" />
-				<IMPORT
-				    NAME="logback-classic-1.2.3"
-				    MODULE="logback-classic-1.2.3.jar" MVN="mvn:org.talend.components/logback-classic/1.2.3" />
 				<IMPORT
 				    NAME="reactive-streams-1.0.3"
 				    MODULE="reactive-streams-1.0.3.jar" MVN="mvn:org.reactivestreams/reactive-streams/1.0.3" />
