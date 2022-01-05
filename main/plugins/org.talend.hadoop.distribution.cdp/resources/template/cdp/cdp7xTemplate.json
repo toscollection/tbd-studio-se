@@ -417,8 +417,8 @@
             "id" : "hadoop-common",
             "type" : "STANDARD",
             "context" : "{properties.context}",
-            "jarName" : "hadoop-common-2.7.0.jar",
-            "mvnUri" : "mvn:org.apache.hadoop/hadoop-common/2.7.0",
+            "jarName" : "hadoop-common-3.1.1.jar",
+            "mvnUri" : "mvn:org.apache.hadoop/hadoop-common/3.1.1",
             "useStudioRepository" : "true",
             "description" : ""
         },
