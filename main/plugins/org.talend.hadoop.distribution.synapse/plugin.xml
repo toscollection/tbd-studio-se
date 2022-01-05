@@ -140,8 +140,8 @@
           mvn_uri="mvn:org.json4s/json4s-jackson_2.12/3.6.6"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-            id="jackson-core-asl-1.9.14-TALEND.jar" name="jackson-core-asl-1.9.14-TALEND.jar"
-            mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.14-TALEND"/>
+            id="jackson-core-asl-1.9.16-TALEND.jar" name="jackson-core-asl-1.9.16-TALEND.jar"
+            mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.16-TALEND"/>
             
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
             id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar"
@@ -520,7 +520,7 @@
             <library id="jackson-datatype-jsr310-2.10.2.jar"/>
             <library id="jackson-module-paranamer-2.10.2.jar"/>
             <library id="jackson-module-scala_2.12-2.10.0.jar"/>
-            <library id="jackson-core-asl-1.9.14-TALEND.jar"/>
+            <library id="jackson-core-asl-1.9.16-TALEND.jar"/>
             <library id="jackson-mapper-asl-1.9.13.jar"/>
             <library id="janino-3.0.16.jar"/>
             <library id="javax.servlet-api-3.1.0.jar"/>
