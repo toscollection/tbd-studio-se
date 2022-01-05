@@ -729,12 +729,7 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         lables.add(label);
         value2LabelMap.put(IMongoConstants.NEGOTIATE_MEC,label);
         
-        if (!"MONGODB_2_5_X".equals(dbVersion)) {
-            label = Messages.getString("MongoDBConnForm." + IMongoConstants.PLAIN_MEC);
-            lables.add(label);
-            value2LabelMap.put(IMongoConstants.PLAIN_MEC,label);
-        }
-        if ("MONGODB_3_0_X".equals(dbVersion) || "MONGODB_3_2_X".equals(dbVersion) || "MONGODB_3_5_X".equals(dbVersion)) {
+        if ("MONGODB_3_2_X".equals(dbVersion) || "MONGODB_3_5_X".equals(dbVersion)) {
             label = Messages.getString("MongoDBConnForm." + IMongoConstants.SCRAMSHA1_MEC);
             lables.add(label);
             value2LabelMap.put(IMongoConstants.SCRAMSHA1_MEC,label);

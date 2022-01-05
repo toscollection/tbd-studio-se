@@ -40,12 +40,20 @@ if(useExistingConnection) {
 }
 boolean isKafka0820Version = "KAFKA_0_8_2_0".equals(kafkaVersion);
 boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
-final boolean isKafkaVersionSupportHeaders = ("KAFKA_2_2_1").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__")) || ("KAFKA_1_1_0").equals(ElementParameterParser.getValue(node, "__KAFKA_VERSION__"));
+final boolean isKafkaVersionSupportHeaders = ("KAFKA_2_4_0").equals(kafkaVersion) || ("KAFKA_2_2_1").equals(kafkaVersion) || ("KAFKA_1_1_0").equals(kafkaVersion);
 
 
+
+if (tKafkaOutputUtil.useProducerRecord()) {
 %>
-org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record_<%=cid%> = new org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]>(<%=tKafkaOutputUtil.getKafkaTopic()%>, <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>);
+    org.apache.kafka.clients.producer.ProducerRecord<Object, Object> record_<%=cid%> = (org.apache.kafka.clients.producer.ProducerRecord<Object, Object>) <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>;
 <%
+} else {
+%>
+    org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]> record_<%=cid%> = new org.apache.kafka.clients.producer.ProducerRecord<byte[], byte[]>(<%=tKafkaOutputUtil.getKafkaTopic()%>, <%=tKafkaOutputUtil.getIncomingConnection().getName()%>.<%=tKafkaOutputUtil.getIncomingColumnName()%>);
+<%
+}
+
         if(isHeaderEnabled && isKafkaVersionSupportHeaders){
         List<Map<String, String>> headers = (List<Map<String, String>>) ElementParameterParser
                 .getObjectValue(node, "__KAFKA_HEADERS_PROPERTIES__");

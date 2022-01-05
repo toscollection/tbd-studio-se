@@ -36,7 +36,9 @@ boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
 //%cid%_kafkaProducer.close();
 %>
 
+<%if(!isKafka0820Version) {%>
 <%=cid%>_kafkaProducer.flush();
+<%}%>
 final long <%=cid%>_startCheckingTime = System.nanoTime();
 while (<%=cid%>_counter_send > <%=cid%>_counter_rev.intValue() && java.util.concurrent.TimeUnit.NANOSECONDS.toSeconds(System.nanoTime() - <%=cid%>_startCheckingTime) < <%=cid%>_EXCEPTION_CATCH_TIMEOUT){
     Thread.sleep(100);
@@ -74,3 +76,6 @@ if (<%=cid%>_counter_send <= <%=cid%>_counter_rev.intValue()) {
 		%>
 	}
 }
+globalMap.put("<%=cid %>_NB_LINE",<%=cid%>_counter_send);
+globalMap.put("<%=cid %>_NB_SUCCESS",<%=cid%>_counter_rev.intValue() - <%=cid%>_producerExceptions.size());
+globalMap.put("<%=cid %>_NB_ERRORS",<%=cid%>_producerExceptions.size());

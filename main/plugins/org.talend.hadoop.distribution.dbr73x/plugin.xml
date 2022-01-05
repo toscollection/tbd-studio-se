@@ -44,8 +44,9 @@
     <libraryNeeded id="talend-bigdata-launcher-jobserver-2.0.12.jar" name="talend-bigdata-launcher-jobserver-2.0.12.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.0.12" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="talend-bigdata-launcher-databricks-2.4.4.jar" name="talend-bigdata-launcher-databricks-2.4.4.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-databricks/2.4.4" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="wsdl4j-1.6.3.jar" name="wsdl4j-1.6.3.jar" mvn_uri="mvn:wsdl4j/wsdl4j/1.6.3" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
-    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-snowflake_2.12-2.8.2-spark_3.0.jar" name="spark-snowflake_2.12-2.8.2-spark_3.0.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.8.2-spark_3.0"/>
-	<libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="snowflake-jdbc-3.12.12.jar" name="snowflake-jdbc-3.12.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.12.12"/>
+    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-snowflake_2.12-2.9.2-spark_3.0.jar" name="spark-snowflake_2.12-2.9.2-spark_3.0.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.9.2-spark_3.0"/>
+	<libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
+	<libraryNeeded context="plugin:org.talend.spark.distribution.dbr73x"  id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar" mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar" name="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar" mvn_uri="mvn:org.talend.libraries/kafka-clients-2.6.0-shaded-for-kafka-0-10"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0.jar" name="kafka-clients-2.6.0.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/2.6.0"/>
@@ -117,8 +118,9 @@
     
     <!-- Snowflake group -->
     <libraryNeededGroup description="Snowflake libraries for DBR73X" id="SNOWFLAKE-GROUP-DBR73x" name="SNOWFLAKE-GROUP-DBR73x">
-        <library id="spark-snowflake_2.12-2.8.2-spark_3.0.jar"/>
-        <library id="snowflake-jdbc-3.12.12.jar"/>
+        <library id="spark-snowflake_2.12-2.9.2-spark_3.0.jar"/>
+        <library id="snowflake-jdbc-3.13.12.jar"/>
+        <library id="snowflake-ingest-sdk-0.10.3.jar"/>
     </libraryNeededGroup>
     
     <!-- DynamoDB group -->
