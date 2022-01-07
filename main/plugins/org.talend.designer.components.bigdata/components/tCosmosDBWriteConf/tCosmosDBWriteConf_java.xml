@@ -256,6 +256,29 @@
         >
             <DEFAULT>"query"</DEFAULT>
         </PARAMETER>
+        
+        <PARAMETER
+            NAME="NODES"
+            FIELD="TABLE"
+            NUM_ROW="34"
+            NB_LINES="5"
+            >
+            <ITEMS>
+                <ITEM NAME="NODE_TYPE" FIELD="OPENED_LIST">
+                    <ITEMS DEFAULT="PUSH">
+                    <ITEM NAME="PUSH" VALUE="push"/>
+                    <ITEM NAME="INC" VALUE="inc"/>
+                    <ITEM NAME="RENAME" VALUE="rename"/>
+                    <ITEM NAME="SETONINSERT" VALUE="setOnInsert"/>
+                    <ITEM NAME="UNSET" VALUE="unset"/>
+                    <ITEM NAME="MIN" VALUE="min"/>
+                    <ITEM NAME="MAX" VALUE="max"/>
+                  </ITEMS>
+                </ITEM>
+                <ITEM NAME="NODE_REF" FIELD="TEXT" />
+            </ITEMS>
+        </PARAMETER>
+        
         <PARAMETER
             NAME="REMOVE_ROOT"
             FIELD="CHECK"
@@ -313,7 +336,6 @@
             <IMPORT MODULE="mongodb-driver-core-4.2.3.jar" MVN="mvn:org.mongodb/mongodb-driver-core/4.2.3" NAME="mongodb-driver-core-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION == 'MONGODB_4_4_X')))" />
             <IMPORT MODULE="mongodb-driver-sync-4.2.3.jar" MVN="mvn:org.mongodb/mongodb-driver-sync/4.2.3" NAME="mongodb-driver-sync-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION == 'MONGODB_4_4_X')))" />
             <IMPORT MODULE="bson-4.2.3.jar" MVN="mvn:org.mongodb/bson/4.2.3" NAME="bson-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION == 'MONGODB_4_4_X')))" />
-            <IMPORT MODULE="mongo-java-driver-3.12.8.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.8"  NAME="mongo-java-driver-3.12.8" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION != 'MONGODB_4_4_X')))" />
             <IMPORT NAME="xom" MODULE="xom-1.2.7.jar" MVN="mvn:org.talend.libraries/xom-1.2.7/6.0.0"  REQUIRED="true" />
             <IMPORT NAME="commons_beanutils" MODULE="commons-beanutils-1.9.4.jar" MVN="mvn:commons-beanutils/commons-beanutils/1.9.4" REQUIRED="true" />
             <IMPORT NAME="commons_collections" MODULE="commons-collections-3.2.2.jar" MVN="mvn:commons-collections/commons-collections/3.2.2"  UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-collections-3.2.2.jar" REQUIRED="true" />
