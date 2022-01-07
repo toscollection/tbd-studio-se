@@ -304,6 +304,23 @@ Note : If you are running on a Sharded Cluster, please make sure to include the 
             GROUP="QUERY_SPECS"
             SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
         />
+        
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="SKIP"
+            NUM_ROW="55"
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
+        />
+        
+        <PARAMETER
+            FIELD="TEXT"
+            NAME="BATCHSIZE"
+            NUM_ROW="55"
+            GROUP="QUERY_SPECS"
+            SHOW_IF="QUERY_TYPE=='FIND_QUERY'"
+        />
+        
     </PARAMETERS>
 
     <ADVANCED_PARAMETERS>
@@ -322,7 +339,6 @@ Note : If you are running on a Sharded Cluster, please make sure to include the 
             <IMPORT MODULE="mongodb-driver-core-4.2.3.jar" MVN="mvn:org.mongodb/mongodb-driver-core/4.2.3" NAME="mongodb-driver-core-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION == 'MONGODB_4_4_X')))" />
             <IMPORT MODULE="mongodb-driver-sync-4.2.3.jar" MVN="mvn:org.mongodb/mongodb-driver-sync/4.2.3" NAME="mongodb-driver-sync-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION == 'MONGODB_4_4_X')))" />
             <IMPORT MODULE="bson-4.2.3.jar" MVN="mvn:org.mongodb/bson/4.2.3" NAME="bson-4.2.3" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION == 'MONGODB_4_4_X')))" />
-            <IMPORT MODULE="mongo-java-driver-3.12.8.jar" MVN="mvn:org.mongodb/mongo-java-driver/3.12.8"  NAME="mongo-java-driver-3.12.8" REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false') AND ((API=='MONGODB') AND (DB_VERSION != 'MONGODB_4_4_X')))" />
         </IMPORTS>
     </CODEGENERATION>
     <RETURNS>
