@@ -540,8 +540,8 @@
             mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.16-TALEND"/>
             
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-            id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar"
-            mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13"/>
+            id="jackson-mapper-asl-1.9.16.jar" name="jackson-mapper-asl-1.9.16.jar"
+            mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.16"/>
             
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="jackson-jaxrs-1.9.13.jar" name="jackson-jaxrs-1.9.13.jar"
@@ -676,12 +676,12 @@
           mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
         
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-            id="httpclient-4.5.5.jar" name="httpclient-4.5.5.jar"
-            mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.5"/>
+            id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar"
+            mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
             
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-            id="httpcore-4.4.9.jar" name="httpcore-4.4.9.jar"
-            mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.9"/>
+            id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar"
+            mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
         
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="libfb303-0.9.3.jar" name="libfb303-0.9.3.jar"
@@ -869,15 +869,15 @@
             <library id="hadoop-yarn-common-3.2.1-amzn-2.jar"/>
             <library id="hadoop-yarn-server-common-3.2.1-amzn-2.jar"/>
             <library id="hadoop-yarn-server-web-proxy-3.2.1-amzn-2.jar"/>
-            <library id="httpclient-4.5.5.jar"/>
-            <library id="httpcore-4.4.9.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
             <library id="jackson-annotations-2.10.1.jar"/>
             <library id="jackson-core-2.10.1.jar"/>
             <library id="jackson-core-asl-1.9.16-TALEND.jar"/>
             <library id="jackson-databind-2.10.1.jar"/>
             <library id="jackson-dataformat-cbor-2.10.1.jar"/>
-            <library id="jackson-mapper-asl-1.9.13.jar"/>
+            <library id="jackson-mapper-asl-1.9.16.jar"/>
             <library id="jackson-jaxrs-1.9.13.jar"/>
             <library id="jackson-module-paranamer-2.10.1.jar"/>
             <library id="jackson-module-scala_2.12-2.10.1.jar"/>
