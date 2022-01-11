@@ -22,8 +22,8 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-yarn-client-3.2.0.jar" name="hadoop-yarn-client-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-client/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-yarn-common-3.2.0.jar" name="hadoop-yarn-common-3.2.0.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.2.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="httpclient-4.5.6.jar" name="httpclient-4.5.6.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.6"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="httpcore-4.4.12.jar" name="httpcore-4.4.12.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.12"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
@@ -154,8 +154,8 @@
             <library id="hadoop-yarn-client-3.2.0.jar"/>
             <library id="hadoop-yarn-common-3.2.0.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
-            <library id="httpclient-4.5.6.jar"/>
-            <library id="httpcore-4.4.12.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
             <library id="ivy-2.4.0.jar"/>
             <library id="jackson-annotations-2.10.0.jar"/>
             <library id="jackson-core-2.10.0.jar"/>
