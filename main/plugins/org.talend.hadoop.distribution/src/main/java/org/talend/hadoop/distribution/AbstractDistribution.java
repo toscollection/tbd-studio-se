@@ -612,7 +612,7 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_OUTPUT_COMPONENT), snowFlakeBatchNodeModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_CONFIGURATION_COMPONENT), snowFlakeBatchConfigurationModuleGroups);
         
-        // Spark S3 condition
+     // Spark S3 condition
         ComponentCondition s3StorageCondition = new SparkBatchLinkedNodeCondition(distribution, version,
                 SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER).getCondition();
         
@@ -623,7 +623,7 @@ public abstract class AbstractDistribution {
         // Spark Streaming S3 nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.S3_CONFIGURATION_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) s3StorageCondition, ModuleGroupName.S3.get(this.getVersion()), true));
-    
+        
         // WebHDFS
         HDFSLinkedNodeCondition hdfsLinkedNodeCondition = new HDFSLinkedNodeCondition(distribution, version);
        
