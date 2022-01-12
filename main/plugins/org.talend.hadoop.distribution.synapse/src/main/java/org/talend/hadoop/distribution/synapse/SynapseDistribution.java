@@ -25,8 +25,6 @@ import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
-import org.talend.hadoop.distribution.component.HDFSComponent;
-import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
@@ -35,8 +33,7 @@ import org.talend.hadoop.distribution.constants.synapse.ISynapseDistribution;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
 @SuppressWarnings("nls")
-public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, HDFSComponent, MRComponent,
-        SparkBatchComponent, SparkStreamingComponent {
+public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, SparkBatchComponent, SparkStreamingComponent {
 
     public static final String VERSION = "SYNAPSE";
 
@@ -44,8 +41,8 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
     
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_0;
 
-	private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ;
-	
+    private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
+
 	public final static String DEFAULT_LIB_ROOT = "/usr/lib";
 	
 	protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
@@ -131,14 +128,9 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 	
 	@Override
 	public boolean doSupportCrossPlatformSubmission() {
-		return true;
+		return false;
 	}
-
-	@Override
-	public boolean doSupportSequenceFileShortType() {
-		return true;
-	}
-
+	
 	@Override
 	public String getYarnApplicationClasspath() {
 		return YARN_APPLICATION_CLASSPATH;
@@ -203,11 +195,6 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
     }
 
     @Override
-    public boolean useOldAWSAPI() {
-        return false;
-    }
-
-    @Override
     public short orderingWeight() {
         return 10;
     }
@@ -222,6 +209,11 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
         return true;
     }
    
+    @Override
+    public boolean doSupportAzureBlobStorage() {
+        return true;
+    }
+    
     @Override
     public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
