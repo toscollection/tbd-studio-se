@@ -462,10 +462,6 @@
           id="py4j-0.10.9.1.jar" name="py4j-0.10.9.1.jar"
           mvn_uri="mvn:net.sf.py4j/py4j/0.10.9.1"/>
 
-        <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-          id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar"
-          mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
-
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse" 
           id="core-1.1.2.jar" name="core-1.1.2.jar" 
           mvn_uri="mvn:com.github.fommil.netlib/core/1.1.2"/>
