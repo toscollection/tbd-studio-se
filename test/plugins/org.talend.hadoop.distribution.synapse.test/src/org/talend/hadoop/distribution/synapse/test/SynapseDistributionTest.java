@@ -18,7 +18,6 @@ import org.junit.Test;
 import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.component.HBaseComponent;
 import org.talend.hadoop.distribution.component.HCatalogComponent;
-import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HadoopComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.ImpalaComponent;
@@ -33,7 +32,7 @@ import org.talend.hadoop.distribution.synapse.SynapseDistribution;
 public class SynapseDistributionTest {
 
     
- private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ;
+	private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
     @Test
     public void testSynapseDistribution() throws Exception {
@@ -49,9 +48,8 @@ public class SynapseDistributionTest {
         assertTrue(distribution.doSupportUseDatanodeHostname());
         assertFalse(distribution.doSupportGroup());
         assertFalse(distribution.doSupportOldImportMode());
-        assertTrue(((HDFSComponent) distribution).doSupportSequenceFileShortType());
         assertFalse(((MRComponent) distribution).isExecutedThroughWebHCat());
-        assertTrue(((MRComponent) distribution).doSupportCrossPlatformSubmission());
+        assertFalse(((MRComponent) distribution).doSupportCrossPlatformSubmission());
         assertFalse(((MRComponent) distribution).doSupportImpersonation());
         assertEquals(((MRComponent) distribution).getYarnApplicationClasspath(), YARN_APPLICATION_CLASSPATH);
         assertFalse(distribution instanceof HBaseComponent);
