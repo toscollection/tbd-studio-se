@@ -54,11 +54,11 @@ public class DynamicHDPSparkStreamingKinesisNodeModuleGroup extends DynamicSpark
 										new MultiComponentCondition (
 												new LinkedNodeExpression(SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
 														"SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-														ESparkVersion.SPARK_2_3.getSparkVersion()),
+														ESparkVersion.SPARK_2_3_X.getSparkVersion()),
 														BooleanOperator.OR,
 														new LinkedNodeExpression(SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
 																"SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-																ESparkVersion.SPARK_2_4.getSparkVersion())))
+																ESparkVersion.SPARK_2_4_X.getSparkVersion())))
 				);
 	}
 
