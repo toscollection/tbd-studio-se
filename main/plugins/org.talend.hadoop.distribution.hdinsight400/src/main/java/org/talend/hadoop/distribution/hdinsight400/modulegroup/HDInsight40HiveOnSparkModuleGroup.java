@@ -36,7 +36,7 @@ public class HDInsight40HiveOnSparkModuleGroup {
 							SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
 							"SUPPORTED_SPARK_VERSION",   //$NON-NLS-1$
 							EqualityOperator.EQ,
-							ESparkVersion.SPARK_2_3.getSparkVersion()
+							ESparkVersion.SPARK_2_3_X.getSparkVersion()
 					)
 			),
 			BooleanOperator.OR,
@@ -45,7 +45,7 @@ public class HDInsight40HiveOnSparkModuleGroup {
 							SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
 							"SUPPORTED_SPARK_VERSION",  //$NON-NLS-1$
 							EqualityOperator.EQ,
-							ESparkVersion.SPARK_2_3.getSparkVersion()
+							ESparkVersion.SPARK_2_3_X.getSparkVersion()
 					)
 			)
 	);
@@ -56,7 +56,7 @@ public class HDInsight40HiveOnSparkModuleGroup {
 							SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
 							"SUPPORTED_SPARK_VERSION",   //$NON-NLS-1$
 							EqualityOperator.EQ,
-							ESparkVersion.SPARK_2_4.getSparkVersion()
+							ESparkVersion.SPARK_2_4_X.getSparkVersion()
 					)
 			),
 			BooleanOperator.OR,
@@ -65,7 +65,7 @@ public class HDInsight40HiveOnSparkModuleGroup {
 							SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
 							"SUPPORTED_SPARK_VERSION",  //$NON-NLS-1$
 							EqualityOperator.EQ,
-							ESparkVersion.SPARK_2_4.getSparkVersion()
+							ESparkVersion.SPARK_2_4_X.getSparkVersion()
 					)
 			)
 	);

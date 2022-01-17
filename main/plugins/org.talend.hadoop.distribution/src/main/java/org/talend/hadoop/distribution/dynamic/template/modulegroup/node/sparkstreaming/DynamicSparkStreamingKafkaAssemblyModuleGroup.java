@@ -54,7 +54,7 @@ public class DynamicSparkStreamingKafkaAssemblyModuleGroup extends AbstractNodeM
                 BooleanOperator.OR,
                 new LinkedNodeExpression(SparkStreamingConstant.KAFKA_SPARKCONFIGURATION_LINKEDPARAMETER,
                         "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-                        ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+                        ESparkVersion.SPARK_2_4_X.getSparkVersion()) //$NON-NLS-1$
         		);
     }
 

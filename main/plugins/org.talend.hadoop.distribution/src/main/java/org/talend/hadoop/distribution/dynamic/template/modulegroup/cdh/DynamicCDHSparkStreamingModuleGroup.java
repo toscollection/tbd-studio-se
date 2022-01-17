@@ -46,7 +46,7 @@ public class DynamicCDHSparkStreamingModuleGroup extends DynamicSparkStreamingMo
         		new MultiComponentCondition(
                 		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()),
                 		BooleanOperator.OR,
-                		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion())
+                		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4_X.getSparkVersion())
                 ); //$NON-NLS-1$
     }
 
