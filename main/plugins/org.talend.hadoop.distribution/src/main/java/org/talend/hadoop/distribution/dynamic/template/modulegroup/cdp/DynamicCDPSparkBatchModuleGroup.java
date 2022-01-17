@@ -39,7 +39,7 @@ public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
     @Override
     protected void initConditions() {
         conditionSpark2 = new SimpleComponentCondition(new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-                        ESparkVersion.SPARK_2_4.getSparkVersion()));
+                        ESparkVersion.SPARK_2_4_X.getSparkVersion()));
     }
 
     @Override

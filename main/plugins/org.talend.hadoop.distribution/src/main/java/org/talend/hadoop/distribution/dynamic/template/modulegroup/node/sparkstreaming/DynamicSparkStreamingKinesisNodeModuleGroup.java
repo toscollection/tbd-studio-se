@@ -51,7 +51,7 @@ public class DynamicSparkStreamingKinesisNodeModuleGroup extends AbstractNodeMod
                 BooleanOperator.OR,
                 new LinkedNodeExpression(SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
                         "SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, //$NON-NLS-1$
-                        ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+                        ESparkVersion.SPARK_2_4_X.getSparkVersion()) //$NON-NLS-1$
         		);
     }
 

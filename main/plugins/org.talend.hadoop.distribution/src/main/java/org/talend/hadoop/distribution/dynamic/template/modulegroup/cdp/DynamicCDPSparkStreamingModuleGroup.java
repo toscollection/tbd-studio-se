@@ -39,9 +39,9 @@ public class DynamicCDPSparkStreamingModuleGroup extends DynamicSparkStreamingMo
 	protected void init() {
 		spark2Condition = 
 				new MultiComponentCondition(
-                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion()), //$NON-NLS-1$
+                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3_X.getSparkVersion()), //$NON-NLS-1$
                         BooleanOperator.OR,
-                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion()) //$NON-NLS-1$
+                        new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4_X.getSparkVersion()) //$NON-NLS-1$
                 );
 	}
 

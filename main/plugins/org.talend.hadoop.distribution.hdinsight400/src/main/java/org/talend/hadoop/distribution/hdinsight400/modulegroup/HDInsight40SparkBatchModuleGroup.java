@@ -26,10 +26,10 @@ import org.talend.hadoop.distribution.hdinsight400.HDInsight40Constant;
 public class HDInsight40SparkBatchModuleGroup {
 
     private final static ComponentCondition conditionSpark2_3 = new SimpleComponentCondition(
-            new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3.getSparkVersion())); //$NON-NLS-1$
+            new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_3_X.getSparkVersion())); //$NON-NLS-1$
 
     private final static ComponentCondition conditionSpark2_4 = new SimpleComponentCondition(
-            new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4.getSparkVersion())); //$NON-NLS-1$
+            new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_4_X.getSparkVersion())); //$NON-NLS-1$
 
     public static Set<DistributionModuleGroup> getModuleGroups() {
         Set<DistributionModuleGroup> hs = new HashSet<>();
