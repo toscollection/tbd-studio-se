@@ -168,7 +168,6 @@
                 { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
         }, 
@@ -412,15 +411,6 @@
                 { "groupId" : "io.netty", "artifactId" : "netty-transport-native-kqueue", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "io.netty", "artifactId" : "netty-tcnative", "classifier" : "", "extension" : "", "description" : "" }
             ]
-        },
-        {
-            "id" : "hadoop-common",
-            "type" : "STANDARD",
-            "context" : "{properties.context}",
-            "jarName" : "hadoop-common-2.7.0.jar",
-            "mvnUri" : "mvn:org.apache.hadoop/hadoop-common/2.7.0",
-            "useStudioRepository" : "true",
-            "description" : ""
         },
         {
             "id" : "woodstox-core",
@@ -995,7 +985,6 @@
                 "jackson-databind",
                 "jackson-annotations",
                 "parquet-hadoop-bundle",
-                "hadoop-common",
                 "impala-jdbc"
             ]
         },
@@ -1040,7 +1029,6 @@
                 "impala-jdbc",
                 "hive-jdbc",
                 "hive-common",
-                "hadoop-common",
                 "guava-28.1-jre",
                 "commons-configuration",
                 "commons-configuration2",
@@ -1085,7 +1073,6 @@
             "modules": [
                 "azure-common-1.7.1",
                 "commons-httpclient-3.1",
-                "hadoop-common",
                 "hadoop-client",
                 "hadoop-mapreduce-client-core",
                 "hadoop-yarn-server-web-proxy",
