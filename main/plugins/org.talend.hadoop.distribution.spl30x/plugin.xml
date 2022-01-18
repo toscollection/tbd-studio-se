@@ -374,8 +374,12 @@
           mvn_uri="mvn:com.google.code.gson/gson/2.2.4"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-          id="httpclient-4.5.12.jar" name="httpclient-4.5.12.jar"
-          mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.12"/>
+          id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar"
+          mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
+        
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
+          id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar"
+          mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>  
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
           id="opencensus-api-0.24.0.jar" name="opencensus-api-0.24.0.jar"
@@ -643,6 +647,8 @@
             <library id="hadoop-hdfs-client-3.2.1.jar"/>
             <library id="hadoop-mapreduce-client-core-3.2.1.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
+           	<library id="httpcore-4.4.13.jar"/>
             <library id="jackson-annotations-2.9.0.jar"/>
             <library id="jackson-core-2.10.0.jar"/>
             <library id="jackson-databind-2.10.0.jar"/>
@@ -849,8 +855,8 @@
             <library id="spark-streaming-kinesis-asl_2.12-3.0.1.jar"/>
             <library id="aws-java-sdk-kinesis-1.11.760.jar"/>
             <library id="aws-java-sdk-core-1.11.760.jar"/>
-            <library id="httpclient-4.5.12.jar"/>
-            <library id="httpcore-4.4.11.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
             <library id="jackson-dataformat-cbor-2.10.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
             <library id="amazon-kinesis-client-1.12.0.jar"/>
