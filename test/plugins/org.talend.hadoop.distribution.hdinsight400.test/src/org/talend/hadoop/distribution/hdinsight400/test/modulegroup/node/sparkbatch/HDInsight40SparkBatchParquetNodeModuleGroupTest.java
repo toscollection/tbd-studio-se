@@ -31,8 +31,8 @@ public class HDInsight40SparkBatchParquetNodeModuleGroupTest {
         Map<String, String> results = new HashMap<>();
 
         results.put(HDInsight40Constant.SPARK_PARQUET_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
-        results.put(HDInsight40Constant.SPARK23_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')");
-        results.put(HDInsight40Constant.SPARK24_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')");
+        results.put(HDInsight40Constant.SPARK23_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_x')");
+        results.put(HDInsight40Constant.SPARK24_SQL_MRREQUIRED_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_x')");
 
         Set<DistributionModuleGroup> moduleGroups = HDInsight40SparkBatchParquetNodeModuleGroup.getModuleGroups(
                 HDInsight40Distribution.DISTRIBUTION_NAME, HDInsight40Distribution.VERSION);
