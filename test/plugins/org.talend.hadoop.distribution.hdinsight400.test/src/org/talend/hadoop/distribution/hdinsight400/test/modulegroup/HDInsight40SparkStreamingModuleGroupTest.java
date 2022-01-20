@@ -29,10 +29,10 @@ public class HDInsight40SparkStreamingModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
 
-        results.put(HDInsight40Constant.SPARK23_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')"); //$NON-NLS-1$
-        results.put(HDInsight40Constant.SPARK24_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')"); //$NON-NLS-1$
-        results.put(HDInsight40Constant.SPARK23_STREAMING_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')"); //$NON-NLS-1$
-        results.put(HDInsight40Constant.SPARK24_STREAMING_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')"); //$NON-NLS-1$
+        results.put(HDInsight40Constant.SPARK23_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_x')"); //$NON-NLS-1$
+        results.put(HDInsight40Constant.SPARK24_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_x')"); //$NON-NLS-1$
+        results.put(HDInsight40Constant.SPARK23_STREAMING_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_3_x')"); //$NON-NLS-1$
+        results.put(HDInsight40Constant.SPARK24_STREAMING_MODULE_GROUP.getModuleName(), "(SUPPORTED_SPARK_VERSION=='SPARK_2_4_x')"); //$NON-NLS-1$
         results.put(HDInsight40Constant.BIGDATALAUNCHER_MODULE_GROUP.getModuleName(), null); //$NON-NLS-1$
         results.put(HDInsight40Constant.HDINSIGHT400COMMON_MODULE_GROUP.getModuleName(), null); //$NON-NLS-1$
 
