@@ -228,6 +228,8 @@
 			<library id="hadoop-yarn-api-3.2.2.jar"/>
 			<library id="hadoop-yarn-client-3.2.2.jar"/>
 			<library id="hadoop-yarn-common-3.2.2.jar"/>
+			<library id="hive-exec-shade-2.1.1-talend-1.2.jar"/>
+			<library id="hive-metastore-1.2.1.spark2.jar"/>
 			<library id="htrace-core4-4.1.0-incubating.jar"/>
 			<library id="httpclient-4.5.13.jar"/>
 			<library id="httpcore-4.4.13.jar"/>
