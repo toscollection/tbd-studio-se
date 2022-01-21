@@ -112,9 +112,10 @@ pipeline {
                         echo "Build disabled on PR"
                     } else if (env.branchType == 'maintenance') {
                         //maintenance branch
+                        def patch_name = env.BRANCH_NAME.split('/')[1]
                         def build_job = build job: '/Patches/patch-manual-build', parameters: [
                                 string(name: 'branches', value: env.BRANCH_NAME),
-                                string(name: 'patch_name', value: env.BRANCH_NAME),
+                                string(name: 'patch_name', value: patch_name),
                                 string(name: 'patch_version', value: "v1"),
                         ]
                     } else {
