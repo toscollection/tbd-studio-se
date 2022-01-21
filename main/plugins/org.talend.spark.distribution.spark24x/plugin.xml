@@ -180,7 +180,7 @@
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kafka_2.11-2.4.0.jar" name="kafka_2.11-2.4.0.jar" mvn_uri="mvn:org.apache.kafka/kafka_2.11/2.4.0"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming-kafka-0-10_2.11-2.4.0.jar" name="spark-streaming-kafka-0-10_2.11-2.4.0.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.11/2.4.0"/>
         	
-        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming-kinesis-asl_2.12-3.1.1.jar" name="spark-streaming-kinesis-asl_2.12-3.1.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.12/3.1.1"/>
+        	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming-kinesis-asl_2.11-2.4.7.jar" name="spark-streaming-kinesis-asl_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.11/2.4.7"/>
         	<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-kinesis-1.11.375.jar" name="aws-java-sdk-kinesis-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-kinesis/1.11.375"/>
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-core-1.11.375.jar" name="aws-java-sdk-core-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-core/1.11.375"/>
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-dataformat-cbor-2.10.0.jar" name="jackson-dataformat-cbor-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-cbor/2.10.0"/>
@@ -388,7 +388,8 @@
 
         <!-- Spark Streaming Kinesis group -->
         <libraryNeededGroup description="Spark streaming Kinesis libraries for spark247" id="KINESIS-GROUP-SPARK_2_4_x" name="KINESIS-GROUP-SPARK_2_4_x">
-            <library id="spark-streaming-kinesis-asl_2.12-3.1.1.jar"/>
+            <library id="spark-streaming-kinesis-asl_2.11-2.4.7.jar"/>
+            <library id="commons-pool2-2.9.0.jar"/>
             <library id="aws-java-sdk-kinesis-1.11.375.jar"/>
             <library id="aws-java-sdk-core-1.11.375.jar"/>
             <library id="jackson-dataformat-cbor-2.10.0.jar"/>
