@@ -90,6 +90,7 @@ pipeline {
             steps {
 
                 script {
+                    /*
                     if (env.branchType == 'pull-request') {
                         pullRequest.addLabel('Build Running')
                         if (env.targetBranchType == 'maintenance') {
@@ -107,7 +108,9 @@ pipeline {
 //                                    string(name: 'BRANCH_NAME', value: env.BRANCH_NAME)
 //                            ]
                         }
-                    } else if (env.branchType == 'maintenance') {
+                    } else 
+                    */
+                    if (env.branchType == 'maintenance') {
                         //maintenance branch
                         def build_job = build job: '/Patches/patch-manual-build', parameters: [
                                 string(name: 'branches', value: env.BRANCH_NAME),
