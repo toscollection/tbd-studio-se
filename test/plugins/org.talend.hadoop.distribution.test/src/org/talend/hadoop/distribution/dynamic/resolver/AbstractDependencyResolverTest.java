@@ -30,7 +30,7 @@ public class AbstractDependencyResolverTest {
         DynamicDistributionManager dynamicDistributionManager = DynamicDistributionManager.getInstance();
         DynamicConfiguration configuration = new DynamicConfiguration();
         configuration.setDistribution("HORTONWORKS"); //$NON-NLS-1$
-        List<String> hadoopVersions = Arrays.asList("3.1.7.0-142"); //$NON-NLS-1$ //$NON-NLS-2$
+        List<String> hadoopVersions = Arrays.asList("3.1.4.12-1"); //$NON-NLS-1$ //$NON-NLS-2$
         for (String hadoopVersion : hadoopVersions) {
             configuration.setVersion(hadoopVersion);
             IDependencyResolver dependencyResolver = dynamicDistributionManager.getDependencyResolver(configuration);
