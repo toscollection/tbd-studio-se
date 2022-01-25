@@ -91,6 +91,7 @@ pipeline {
 
                 script {
                     if (env.branchType == 'pull-request') {
+                        /*
                         pullRequest.addLabel('Build Running')
                         if (env.targetBranchType == 'maintenance') {
                             def releaseBranch = getReleaseBranch "${env.CHANGE_TARGET}"
@@ -107,11 +108,14 @@ pipeline {
 //                                    string(name: 'BRANCH_NAME', value: env.BRANCH_NAME)
 //                            ]
                         }
+                        */
+                        echo "Build disabled on PR"
                     } else if (env.branchType == 'maintenance') {
                         //maintenance branch
+                        def patch_name = env.BRANCH_NAME.split('/')[1]
                         def build_job = build job: '/Patches/patch-manual-build', parameters: [
                                 string(name: 'branches', value: env.BRANCH_NAME),
-                                string(name: 'patch_name', value: env.BRANCH_NAME),
+                                string(name: 'patch_name', value: patch_name),
                                 string(name: 'patch_version', value: "v1"),
                         ]
                     } else {
@@ -127,7 +131,8 @@ pipeline {
                     script {
                         // CHANGE_ID is set only for pull requests, so it is safe to access the pullRequest global variable
                         if (env.CHANGE_ID) {
-                            pullRequest.removeLabel('Build Running')
+                            echo ("Build stage finished")
+                            //pullRequest.removeLabel('Build Running')
                         }
                     }
                 }
