@@ -2146,6 +2146,7 @@
 			<library id="hadoop-client-2.8.5-amzn-5.jar"/>
 			<library id="hadoop-common-2.8.5-amzn-5.jar"/>
 			<library id="hadoop-hdfs-2.8.5-amzn-5.jar"/>
+			<library id="hadoop-hdfs-client-2.8.5-amzn-5.jar"/>
 			<library id="hadoop-mapreduce-client-app-2.8.1.jar"/>
 			<library id="hadoop-mapreduce-client-common-2.8.5-amzn-5.jar"/>
 			<library id="hadoop-mapreduce-client-core-2.8.5-amzn-5.jar"/>
