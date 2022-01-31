@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<component name="Dataproc20xDistribution">
+  <implementation class="org.talend.hadoop.distribution.dataproc20x.Dataproc20xDistribution"/>
+  <service>
+    <provide interface="org.talend.hadoop.distribution.component.HadoopComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.HiveComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.HiveOnSparkComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.SparkBatchComponent"/>
+    <provide interface="org.talend.hadoop.distribution.component.SparkStreamingComponent"/>
+    <provide interface="org.talend.hadoop.distribution.constants.dataproc.IGoogleDataprocDistribution"/>
+  </service>
+</component>

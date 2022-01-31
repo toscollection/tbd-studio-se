@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Service-Component: OSGI-INF/dataproc20x.xml
+Bundle-ManifestVersion: 2
+Bundle-Name: Google Dataproc 2.0.x
+Bundle-SymbolicName: org.talend.hadoop.distribution.dataproc20x;singleton:=true
+Bundle-Version: 8.0.1.qualifier
+Bundle-Vendor: .Talend SA.
+Bundle-Activator: org.talend.hadoop.distribution.dataproc20x.Dataproc20xPlugin
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.core.runtime,
+ org.talend.hadoop.distribution,
+ org.talend.core.runtime,
+ org.talend.designer.maven.aether
+Export-Package: org.talend.hadoop.distribution.dataproc20x
