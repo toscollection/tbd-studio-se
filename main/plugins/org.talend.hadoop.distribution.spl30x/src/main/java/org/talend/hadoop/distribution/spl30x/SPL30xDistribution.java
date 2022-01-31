@@ -133,6 +133,11 @@ public class SPL30xDistribution extends AbstractDistribution
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
                         SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION));
+        
+        // Spark Streaming S3
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.S3_CONFIGURATION_COMPONENT),
+                SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
+                        SparkStreamingConstant.S3_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION));
 
         // Spark Batch Azure
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.AZURE_CONFIGURATION_COMPONENT),
