@@ -38,13 +38,13 @@ import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 
 @SuppressWarnings("nls")
 public class Dataproc20xDistribution extends DTPDistribution implements IGoogleDataprocDistribution, SparkBatchComponent, SparkStreamingComponent, 
-			HiveComponent, HiveOnSparkComponent, {
+			HiveComponent, HiveOnSparkComponent {
 	
     public static final String VERSION = "DATAPROC_2_0_x";
 
     public static final String VERSION_DISPLAY = "Google Dataproc";
     
-    public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1_x;
+    public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
 	protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
@@ -141,13 +141,8 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 	    }
 
 	    @Override
-	    public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
-	        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths);
-	    }
-
-	    @Override
-	    public String getDistribution() {
-	        return DISTRIBUTION_NAME;
+		public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
+	        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths, ModuleGroupName.SPARK_BATCH.get(this.getVersion()));
 	    }
 
 	    @Override
