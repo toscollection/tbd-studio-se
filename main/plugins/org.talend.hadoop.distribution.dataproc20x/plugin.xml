@@ -6,21 +6,21 @@
         <!-- Big Data launcher libraries -->
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dataproc20x"
-            id="talend-bigdata-launcher-core-2.4.3"
-            name="talend-bigdata-launcher-core-2.4.3.jar"
-            mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.4.3">
+            id="talend-bigdata-launcher-core-2.4.6"
+            name="talend-bigdata-launcher-core-2.4.6.jar"
+            mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.4.6">
         </libraryNeeded>
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dataproc20x"
-            id="talend-bigdata-launcher-dataproc-2.4.3"
-            name="talend-bigdata-launcher-dataproc-2.4.3.jar"
-            mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-dataproc/2.4.3">
+            id="talend-bigdata-launcher-dataproc-2.4.6"
+            name="talend-bigdata-launcher-dataproc-2.4.6.jar"
+            mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-dataproc/2.4.6">
         </libraryNeeded>
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dataproc20x"
-            id="talend-bigdata-launcher-jobserver-2.4.3"
-            name="talend-bigdata-launcher-jobserver-2.4.3.jar"
-            mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.4.3">
+            id="talend-bigdata-launcher-jobserver-2.4.6"
+            name="talend-bigdata-launcher-jobserver-2.4.6.jar"
+            mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.4.6">
         </libraryNeeded>
 		
 		<!-- Bigquery libraries -->
