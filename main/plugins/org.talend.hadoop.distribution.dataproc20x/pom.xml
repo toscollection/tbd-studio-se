@@ -7,7 +7,7 @@
     <version>8.0.1-SNAPSHOT</version>
     <relativePath>../../../</relativePath>
   </parent>
-  <artifactId>org.talend.hadoop.distribution.dataproc2x</artifactId>
+  <artifactId>org.talend.hadoop.distribution.dataproc20x</artifactId>
   <packaging>eclipse-plugin</packaging>
     <properties>
         <maven.compiler.target>1.8</maven.compiler.target>
