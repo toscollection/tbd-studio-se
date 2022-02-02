@@ -136,11 +136,6 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 	    }
 
 	    @Override
-	    public boolean doSupportSequenceFileShortType() {
-	        return true;
-	    }
-
-	    @Override
 		public String generateSparkJarsPaths(List<String> commandLineJarsPaths) {
 	        return SparkClassPathUtils.generateSparkJarsPaths(commandLineJarsPaths, ModuleGroupName.SPARK_BATCH.get(this.getVersion()));
 	    }
