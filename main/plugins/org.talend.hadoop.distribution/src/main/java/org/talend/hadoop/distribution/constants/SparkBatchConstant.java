@@ -33,6 +33,8 @@ public final class SparkBatchConstant {
     public static final String SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER = "STORAGE_CONFIGURATION";//$NON-NLS-1$
 
     public static final String SPARK_MODE_PARAMETER = "SPARK_MODE"; //$NON-NLS-1$
+    
+    public static final String DATAPROC_RUNTIME_VERSION = "DATAPROC_RUNTIME_VERSION"; //$NON-NLS-1$
 
     public static final String SUPPORTED_SPARK_VERSION_PARAMETER = "SUPPORTED_SPARK_VERSION"; //$NON-NLS-1$
 

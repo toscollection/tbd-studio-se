@@ -20,7 +20,7 @@ import java.util.List;
 
 public class DataprocRuntimeVersion {
 
-private static List<DataprocRuntimeAndSparkVersion> availableRuntimeAndSparkVersion = initAvailableRuntimeAndSparkVersion();
+	private static List<DataprocRuntimeAndSparkVersion> availableRuntimeAndSparkVersion = initAvailableRuntimeAndSparkVersion();
 	
 	public static String showIfCondition = "(SPARK_MODE=='DATAPROC')";
 

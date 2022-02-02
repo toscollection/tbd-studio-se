@@ -32,7 +32,7 @@ public enum ESparkMode {
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])"),
     DATAPROC(Messages.getString("ESparkMode.DATAPROC"),
             "DATAPROC",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDataprocMode[])");;
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDataprocMode[])");
 
     private String runModeLabel;
 

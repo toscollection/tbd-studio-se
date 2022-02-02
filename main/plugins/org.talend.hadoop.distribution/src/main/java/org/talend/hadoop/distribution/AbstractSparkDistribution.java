@@ -114,6 +114,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 		if (this.doSupportSparkYarnClusterMode()) {
 			result.add(ESparkMode.YARN_CLUSTER);
 		}
+		if (this.doSupportUniversalDataprocMode()) {
+			result.add(ESparkMode.DATAPROC);
+		}
 		return result;
 	}
 
