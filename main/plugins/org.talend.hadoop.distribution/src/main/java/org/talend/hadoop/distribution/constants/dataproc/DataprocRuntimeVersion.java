@@ -33,7 +33,7 @@ public class DataprocRuntimeVersion {
 		    String inputLine;
 		    while ((inputLine = in.readLine()) != null) {
 		    	String[] split = inputLine.split(";");
-		    	result.add(new DataprocRuntimeAndSparkVersion(split[0], split[1], split[2], split[3]));
+		    	result.add(new DataprocRuntimeAndSparkVersion(split[0], split[1]));
 		    }
 		    in.close();
 			return result;
