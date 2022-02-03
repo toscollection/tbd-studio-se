@@ -270,12 +270,22 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 	    public boolean doRequireMetastoreVersionOverride() {
 	        return true;
 	    }
-	    
+    
+	    @Override
+	    public boolean doSupportUniversalLocalMode() {
+	        return true;
+	    }
+    
+	    @Override
+	    public boolean doSupportUniversalDataprocMode() {
+	        return true;
+	    }
+
 	    @Override
 	    public String getHiveMetastoreVersionForSpark() {
 	        return "3.1.2";
 	    }
-	    
+
 	    @Override
 	    public String getHiveMetastoreJars() {
 	        return "/usr/lib/hive/lib/*";
