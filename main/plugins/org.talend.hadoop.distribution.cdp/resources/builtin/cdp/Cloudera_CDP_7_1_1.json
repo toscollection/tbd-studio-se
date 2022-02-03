@@ -8467,6 +8467,14 @@
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_commons_pool_1_6_jar",
         "tagName" : "library"
+      },{
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_annotations_3_1_1_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_auth_3_1_1_7_1_1_0_565_jar",
+        "tagName" : "library"
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jackson_core_asl_1_9_13_cloudera_1_jar",
