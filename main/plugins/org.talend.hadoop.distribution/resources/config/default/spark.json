@@ -27,5 +27,9 @@
     "HBASE":{
         "PORT":2181
     },
-    "HADOOP_CONFIG_LIST":["HDFS","MAPREDUCE2","YARN","WEBHCAT","HIVE","HBASE","OOZIE","SPARK","SQOOP","TEZ","ZOOKEEPER"]
+    "HADOOP_CONFIG_LIST":["HDFS","MAPREDUCE2","YARN","WEBHCAT","HIVE","HBASE","OOZIE","SPARK","SQOOP","TEZ","ZOOKEEPER"],
+    "GOOGLE_PROJECT_ID": "my-google-project",
+    "GOOGLE_CLUSTER_ID": "my-cluster-id",
+    "GOOGLE_REGION": "global",
+    "GOOGLE_JARS_BUCKET": "gs://my-bucket/talend/jars"
 }
