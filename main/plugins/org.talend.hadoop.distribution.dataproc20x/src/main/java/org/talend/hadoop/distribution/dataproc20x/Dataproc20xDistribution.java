@@ -58,7 +58,7 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 		displayConditions = buildDisplayConditions();
         	customVersionDisplayNames = buildCustomVersionDisplayNames();
         	moduleGroups = buildModuleGroups();
-        	nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());        
+        	nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());
 	}
 
 	protected Map<ComponentType, ComponentCondition> buildDisplayConditions() {
