@@ -42,7 +42,7 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 	
     public static final String VERSION = "DATAPROC_2_0_x";
 
-    public static final String VERSION_DISPLAY = "Google Dataproc";
+    public static final String VERSION_DISPLAY = "Google Dataproc 2.0.x";
     
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
@@ -204,8 +204,12 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 
 	    @Override
 	    public boolean doSupportHive2() {
-	        // use rest API
-	        return true;
+	        return false;
+	    }
+	    
+	    @Override
+	    public boolean doSupportHive3() {
+	    	return true;
 	    }
 
 	    /**
