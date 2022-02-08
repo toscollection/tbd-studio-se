@@ -207,10 +207,6 @@ public class Dataproc20xDistribution extends DTPDistribution implements IGoogleD
 	        return false;
 	    }
 	    
-	    @Override
-	    public boolean doSupportHive3() {
-	    	return true;
-	    }
 
 	    /**
 	    * Theoretically tez is supported by Dataproc:
