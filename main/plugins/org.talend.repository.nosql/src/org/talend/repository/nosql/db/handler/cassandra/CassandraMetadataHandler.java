@@ -74,6 +74,13 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         }
         return instanceForDataStax;
     }
+    
+    public static synchronized ICassandraMetadataHandler getInstanceFor40DataStax() {
+        if (instanceForDataStax == null) {
+            instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM40_DATASTAX_ID);
+        }
+        return instanceForDataStax;
+    }
 
     @Override
     public boolean checkConnection(NoSQLConnection connection) throws NoSQLServerException {
