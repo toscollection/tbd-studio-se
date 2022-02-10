@@ -262,6 +262,36 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 	}
 	
 	@Override
+	public boolean doSupportTezForHive() {
+		return false;
+	}
+	
+	@Override
+	public boolean doSupportStoreAsParquet() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportParquetFormat() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportSSL() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportAvroFormat() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportORCFormat() {
+		return true;
+	}
+	
+	@Override
 	public boolean doSupportUniversalDataprocMode() {
     	return true;
     }
