@@ -292,6 +292,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 	}
 	
 	@Override
+	public boolean doSupportHBaseForHive() {
+		return true;
+	}
+	
+	@Override
 	public boolean doSupportUniversalDataprocMode() {
     	return true;
     }
