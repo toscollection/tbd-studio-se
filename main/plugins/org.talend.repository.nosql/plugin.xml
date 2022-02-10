@@ -155,7 +155,7 @@
             dbDNDProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraDNDProvider"
             dbMetadataProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraMetadataProvider"
             dbType="CASSANDRA"
-            dbVersions="CASSANDRA_3_0;"
+            dbVersions="CASSANDRA_4_0;CASSANDRA_3_0;"
             dbWizPageProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraWizardPageProvider"
             description="Cassandra">
       </factory>
@@ -184,6 +184,10 @@
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_3_0"
+            libraries="netty-common-4.1.68.Final.jar;netty-resolver-4.1.68.Final.jar;netty-transport-4.1.68.Final.jar;cassandra-driver-core-3.0.0.jar;guava-16.0.1.jar;slf4j-api-1.7.7.jar;metrics-core-3.1.2.jar;netty-buffer-4.1.68.Final.jar;netty-codec-4.1.68.Final.jar;netty-handler-4.1.68.Final.jar;">
+      </classloader>
+      <classloader
+            index="NOSQL:CASSANDRA:CASSANDRA_4_0"
             libraries="netty-common-4.1.68.Final.jar;netty-resolver-4.1.68.Final.jar;netty-transport-4.1.68.Final.jar;cassandra-driver-core-3.0.0.jar;guava-16.0.1.jar;slf4j-api-1.7.7.jar;metrics-core-3.1.2.jar;netty-buffer-4.1.68.Final.jar;netty-codec-4.1.68.Final.jar;netty-handler-4.1.68.Final.jar;">
       </classloader>
       <classloader
