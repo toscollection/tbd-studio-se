@@ -42,8 +42,18 @@ if(metadata != null){
 if(sizeColumns == 0 || inConnName == null){
 	return "";
 }
+String version = ElementParameterParser.getValue(node,"__DB_VERSION__");
+if("CASSANDRA_4_0".equals(version)) {
+	%>
+		if(csvWriter_<%=cid %> != null) {
+			csvWriter_<%=cid %>.flush();
+			csvWriter_<%=cid %>.close();
+		}
+	<%
+} else {
 %>
-writer_<%=cid%>.close();
+	writer_<%=cid%>.close();
 <%
+}
 log4jFileUtil.writeDataFinishInfo(node);
 %>
