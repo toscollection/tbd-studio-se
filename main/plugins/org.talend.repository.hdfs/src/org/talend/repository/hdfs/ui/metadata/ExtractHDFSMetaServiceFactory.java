@@ -58,6 +58,8 @@ public class ExtractHDFSMetaServiceFactory {
             service = new ExtractSequenceFileSchemaService(classLoader);
         } else if (ExtractAVROFileSchemaService.isAnAVROFormattedFile(String.valueOf(path))) {
             service = new ExtractAVROFileSchemaService(classLoader);
+        } else if (ExtractParquetFileSchemaService.isParquetFile(String.valueOf(path))) {
+            service = new ExtractParquetFileSchemaService(classLoader);
         } else {
             service = new ExtractTextFileSchemaService(classLoader);
         }
