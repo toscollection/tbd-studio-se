@@ -30,8 +30,8 @@ public class HDInsight40SparkBatchGraphFramesNodeModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
 
-        results.put(HDInsight40Constant.SPARK23_GRAPHFRAMES_MRREQUIRED_MODULE_GROUP.getModuleName(),"(SUPPORTED_SPARK_VERSION=='SPARK_2_3_0')"); //$NON-NLS-1$
-        results.put(HDInsight40Constant.SPARK24_GRAPHFRAMES_MRREQUIRED_MODULE_GROUP.getModuleName(),"(SUPPORTED_SPARK_VERSION=='SPARK_2_4_0')"); //$NON-NLS-1$
+        results.put(HDInsight40Constant.SPARK23_GRAPHFRAMES_MRREQUIRED_MODULE_GROUP.getModuleName(),"(SUPPORTED_SPARK_VERSION=='SPARK_2_3_x')"); //$NON-NLS-1$
+        results.put(HDInsight40Constant.SPARK24_GRAPHFRAMES_MRREQUIRED_MODULE_GROUP.getModuleName(),"(SUPPORTED_SPARK_VERSION=='SPARK_2_4_x')"); //$NON-NLS-1$
 
         Set<DistributionModuleGroup> moduleGroups = HDInsight40SparkBatchGraphFramesNodeModuleGroup.getModuleGroups(
                 HDInsight40Distribution.DISTRIBUTION_NAME, HDInsight40Distribution.VERSION);

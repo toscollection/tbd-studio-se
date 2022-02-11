@@ -39,6 +39,7 @@
     <libraryNeeded id="spark-network-common_2.12-3.0.1.jar" name="spark-network-common_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-sql_2.12-3.0.1.jar" name="spark-sql_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-streaming-kinesis-asl_2.12-3.0.1.jar" name="spark-streaming-kinesis-asl_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
+    <libraryNeeded id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-streaming_2.12-3.0.1.jar" name="spark-streaming_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-unsafe_2.12-3.0.1.jar" name="spark-unsafe_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="talend-bigdata-launcher-jobserver-2.0.12.jar" name="talend-bigdata-launcher-jobserver-2.0.12.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.0.12" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
@@ -106,6 +107,7 @@
       <library id="aws-java-sdk-core-1.11.655.jar"/>
       <library id="aws-java-sdk-kinesis-1.11.655.jar"/>
       <library id="spark-streaming-kinesis-asl_2.12-3.0.1.jar"/>
+      <library id="commons-pool2-2.9.0.jar"/>
     </libraryNeededGroup>
     
     <libraryNeededGroup id="SPARK-STREAMING-LIB-MRREQUIRED-DBR73X" name="SPARK-STREAMING-LIB-MRREQUIRED-DBR73X" description="SPARK libraries for DBR73X">
