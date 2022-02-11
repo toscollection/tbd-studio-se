@@ -172,6 +172,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     }
 
     @Override
+    public boolean doSupportUniversalLocalMode() {
+    	return true;
+    }
+    
+    @Override
     public boolean doSupportImpersonation() {
         return false;
     }
