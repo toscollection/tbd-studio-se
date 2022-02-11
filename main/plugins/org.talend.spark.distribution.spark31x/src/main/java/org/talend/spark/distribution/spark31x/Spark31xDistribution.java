@@ -34,7 +34,7 @@ import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark31x.modulegroup.node.Spark31xNodeModuleGroup;
 
 public class Spark31xDistribution extends AbstractSparkDistribution
-        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveComponent, HiveOnSparkComponent {
+        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
