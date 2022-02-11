@@ -247,23 +247,13 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 	}
 	
 	@Override 
-	public boolean doSupportHBase1x() {
-		return false;
-	}
-	
-	@Override 
 	public boolean doSupportHBase2x() {
 		return false;
 	}
 	
-	@Override
-	public boolean doSupportHive1() {
+	@Override 
+	public boolean doSupportHBase1x() {
 		return false;
-	}
-
-	@Override
-	public boolean doSupportHive2() {
-		return true;
 	}
 	
 	@Override
