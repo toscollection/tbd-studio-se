@@ -32,7 +32,7 @@ public class NoSQLRepositoryTranslator {
 
     private BidiMap value2LabelMap = new DualHashBidiMap();
 
-    private String[] deprecatedVersion = { "MONGODB_2_5_X", "MONGODB_2_6_X", "MONGODB_3_0_X", "MONGODB_3_2_X" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+    private String[] deprecatedVersion = { "MONGODB_2_5_X", "MONGODB_2_6_X", "MONGODB_3_0_X", "MONGODB_3_2_X","CASSANDRA_3_0" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
 
     private NoSQLRepositoryTranslator() {
     }
