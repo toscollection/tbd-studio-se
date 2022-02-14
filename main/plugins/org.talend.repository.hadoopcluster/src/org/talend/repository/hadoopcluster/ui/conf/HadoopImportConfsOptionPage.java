@@ -117,9 +117,6 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
                         .equals(distribution.name));
         remoteBtn.setEnabled(supportRemote);
 
-        if (distribution != null) {
-        	manualBtn.setEnabled(!"Universal".equals(distribution.getDisplayName()));
-        }
         //Synapse supports only manually configured wizard
         boolean supportManualOnly = distribution != null && ISynapseDistribution.DISTRIBUTION_NAME.equals(distribution.name);
         if (supportManualOnly) {

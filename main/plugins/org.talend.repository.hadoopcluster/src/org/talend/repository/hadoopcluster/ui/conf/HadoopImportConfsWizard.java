@@ -124,7 +124,7 @@ public class HadoopImportConfsWizard extends Wizard {
                 if (creation) {
                     HadoopConfsUtils.setConnectionParameters(connectionItem, optionPage.getDistribution(),
                             optionPage.getVersion(), confsService);
-                    if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+                    if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution()) && confJarName != null) {
                     	MavenArtifact artifact = new MavenArtifact();
                 		artifact.setGroupId("org.talend.libraries");
                         artifact.setArtifactId(confJarName.split(".jar")[0]);
