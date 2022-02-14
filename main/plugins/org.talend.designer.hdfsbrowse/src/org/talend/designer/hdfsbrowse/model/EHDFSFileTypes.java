@@ -22,6 +22,8 @@ public enum EHDFSFileTypes {
 
     SEQUENCE("Sequence File"),
 
+    PARQUET("Parquet File"),
+
     // AVRO formatted file, can be avsc or avro formatted file.
     AVRO("AVRO Kind File"),
 
