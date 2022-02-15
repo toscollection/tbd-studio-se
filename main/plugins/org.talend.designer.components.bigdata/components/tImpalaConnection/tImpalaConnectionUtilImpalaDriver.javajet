@@ -258,7 +258,11 @@
 							String krbServiceName_<%=cid%>  = (<%=impalaPrincipal%>.split("/")[0]);
 							String krbHostFQDN_<%=cid%> = (<%=impalaPrincipal%>.split("/")[1].split("@")[0]);
 							String krbRealm_<%=cid%> = (<%=impalaPrincipal%>.split("/")[1].split("@")[1]);
-	
+
+                            org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
+	                        conf_<%=cid%>.set("hadoop.security.authentication", "kerberos");
+	                        org.apache.hadoop.security.UserGroupInformation.setConfiguration(conf_<%=cid%>);
+	                        
 							urlKerberosParameter_<%=cid%> = ";AuthMech=1"
 														+ ";KrbServiceName=" + krbServiceName_<%=cid%>
 														+ ";KrbHostFQDN=" + krbHostFQDN_<%=cid%>
@@ -332,6 +336,8 @@
 					}
 					url_<%=cid%> += additionalJdbcSettings_<%=cid%>;
 				}
+				
+				final String con_url_<%=cid%> = url_<%=cid%>;
 <%
 		}
 

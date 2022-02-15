@@ -86,18 +86,19 @@ public class MongoDBWizardPageProvider extends AbstractWizardPageProvider {
                 ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
                 dbName = ContextParameterUtils.getOriginalValue(contextType, dbName);
             }
+            Object mongoClient = MongoDBConnectionUtil.getMongoVersioned(connection);
             if (StringUtils.isEmpty(dbName)) {
-                List<String> databaseNames = MongoDBConnectionUtil.getDatabaseNames(connection);
+                List<String> databaseNames = MongoDBConnectionUtil.getDatabaseNames(connection, mongoClient);
                 for (String dbn : databaseNames) {
                     INoSQLSchemaNode dbNode = new NoSQLSchemaNode();
                     dbNode.setName(dbn);
                     dbNode.setNodeType(IMongoConstants.DATABASE);
                     dbNode.setSchemaType(ENoSQLSchemaType.DATABASE);
-                    dbNode.addChildren(addSchemaNodes(connection, dbNode));
+                    dbNode.addChildren(addSchemaNodes(connection, mongoClient, dbNode));
                     schemaNodes.add(dbNode);
                 }
             } else {
-                schemaNodes.addAll(addSchemaNodes(connection, null));
+                schemaNodes.addAll(addSchemaNodes(connection, mongoClient, null));
             }
         } catch (Exception e) {
             throw new NoSQLExtractSchemaException(e);
@@ -106,7 +107,7 @@ public class MongoDBWizardPageProvider extends AbstractWizardPageProvider {
         return schemaNodes;
     }
 
-    private List<INoSQLSchemaNode> addSchemaNodes(NoSQLConnection connection, INoSQLSchemaNode parentNode)
+    private List<INoSQLSchemaNode> addSchemaNodes(NoSQLConnection connection, Object mongoClient, INoSQLSchemaNode parentNode)
             throws NoSQLServerException {
         List<INoSQLSchemaNode> schemaNodes = new ArrayList<INoSQLSchemaNode>();
         Set<String> collectionNames = null;
@@ -115,9 +116,9 @@ public class MongoDBWizardPageProvider extends AbstractWizardPageProvider {
             dbName = parentNode.getName();
         }
         if (dbName != null) {
-            collectionNames = MongoDBConnectionUtil.getCollectionNames(connection, dbName);
+            collectionNames = MongoDBConnectionUtil.getCollectionNames(connection, dbName, mongoClient);
         } else {
-            collectionNames = MongoDBConnectionUtil.getCollectionNames(connection);
+            collectionNames = MongoDBConnectionUtil.getCollectionNames(connection, null, mongoClient);
         }
         for (String name : collectionNames) {
             NoSQLSchemaNode node = new NoSQLSchemaNode();

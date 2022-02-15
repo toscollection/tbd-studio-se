@@ -3623,11 +3623,11 @@
       "templateId" : "HIVE-LIB-DYNAMIC"
     }, {
       "childNodes" : [ 
-	      {
-	        "childNodes" : [ ],
-	        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
-	        "tagName" : "library"
-	      }
+          {
+            "childNodes" : [ ],
+            "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
+            "tagName" : "library"
+          }
        ],
       "description" : "",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HIVE_LIB_DYNAMIC",
@@ -3636,15 +3636,15 @@
     },
     {
       "childNodes" : [
-	      {
-	        "childNodes" : [ ],
-	        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_warehouse_jar",
-	        "tagName" : "library"
-	      }, {
-	        "childNodes" : [ ],
-	        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
-	        "tagName" : "library"
-	      }
+          {
+            "childNodes" : [ ],
+            "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_warehouse_jar",
+            "tagName" : "library"
+          }, {
+            "childNodes" : [ ],
+            "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_exec_3_1_3000_7_1_1_0_565_jar",
+            "tagName" : "library"
+          }
        ],
       "description" : "",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HIVE_WAREHOUSE_LIB_DYNAMIC",

@@ -40,6 +40,8 @@ public interface IMongoConstants {
     
     public final static String KERBEROS_MEC = "KERBEROS_MEC";
     
+    public final static String X509 = "X509";
+    
     public final static String DEFAULT_KRB_USER_PRINCIPAL = "mongouser@EXAMPLE.COM";
     
     public final static String DEFAULT_KRB_REALM = "EXAMPLE.COM";
