@@ -12,9 +12,25 @@
 // ============================================================================
 package org.talend.repository.nosql.db.util.mongodb;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Proxy;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.KeyFactory;
+import java.security.KeyStore;
+import java.security.PrivateKey;
+import java.security.SecureRandom;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.RSAPrivateKeySpec;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -25,9 +41,15 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManagerFactory;
 
 import org.apache.commons.lang.StringUtils;
+import org.bouncycastle.asn1.ASN1Object;
+import org.bouncycastle.asn1.ASN1Sequence;
+import org.bouncycastle.asn1.pkcs.RSAPrivateKeyStructure;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.talend.commons.exception.ExceptionHandler;
 import org.talend.core.model.utils.ContextParameterUtils;
@@ -65,7 +87,8 @@ public class MongoDBConnectionUtil {
             }
             Object db = getDB(connection);
             if (db == null) {
-                List<String> databaseNames = getDatabaseNames(connection);
+                Object mongoClient = getMongoVersioned(connection);
+                List<String> databaseNames = getDatabaseNames(connection, mongoClient);
                 if (databaseNames != null && databaseNames.size() > 0) {
                     for (String databaseName : databaseNames) {
                         if (StringUtils.isNotEmpty(databaseName)) {
@@ -73,7 +96,7 @@ public class MongoDBConnectionUtil {
                             if (Thread.currentThread().interrupted()) {
                                 throw new InterruptedException();
                             }
-                            db = getDB(connection, databaseName);
+                            db = getDB(connection, databaseName, mongoClient);
                             if (db != null) {
                                 break;
                             }
@@ -91,10 +114,12 @@ public class MongoDBConnectionUtil {
             }
             if (isUpgradeLatestVersion(connection)) {
                 Iterable<String> iter = (Iterable<String>) NoSQLReflection.invokeMethod(db, "listCollectionNames"); //$NON-NLS-1$
-                Iterator<String> iterator = iter.iterator();
+                for(Object dbname:iter) {//empty, just activate the real call to mongodb server
+                }
             } else {
                 NoSQLReflection.invokeMethod(db, "getStats"); //$NON-NLS-1$
             }
+            
         } catch (Exception e) {
             canConnect = false;
             if (e instanceof InterruptedException) {
@@ -107,6 +132,20 @@ public class MongoDBConnectionUtil {
         return canConnect;
     }
 
+    public static synchronized Object getMongoVersioned(NoSQLConnection connection) throws NoSQLServerException {
+        if(isUpgradeVersion(connection)){
+            String requireAuthAttr = connection.getAttributes().get(IMongoDBAttributes.REQUIRED_AUTHENTICATION);
+            boolean requireAuth = requireAuthAttr == null ? false : Boolean.valueOf(requireAuthAttr);
+            //
+            String requireEncryptionAttr = connection.getAttributes().get(IMongoDBAttributes.REQUIRED_ENCRYPTION);
+            boolean requireEncryption = requireEncryptionAttr == null ? false : Boolean.valueOf(requireEncryptionAttr);
+            
+            return getMongo(connection, requireAuth, requireEncryption);
+        }
+        
+        return getMongo(connection);
+    }
+    
     public static synchronized Object getMongo(NoSQLConnection connection) throws NoSQLServerException {
         Object mongo = null;
         ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
@@ -159,12 +198,18 @@ public class MongoDBConnectionUtil {
         ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
         String useReplicaAttr = connection.getAttributes().get(IMongoDBAttributes.USE_REPLICA_SET);
         boolean useReplica = useReplicaAttr == null ? false : Boolean.valueOf(useReplicaAttr);
+        
+        String useConnStringAttr = connection.getAttributes().get(IMongoDBAttributes.USE_CONN_STRING);
+        boolean useConnString = useConnStringAttr == null ? false : Boolean.valueOf(useConnStringAttr);
+        
         ContextType contextType = null;
         if (connection.isContextMode()) {
             contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
         }
         try {
-            if(useReplica){
+            if(useConnString) {
+                mongo = getMongo4ConnStringVersion(connection, contextType, classLoader, requireAuth, requireEncryption);
+            } else if(useReplica){
                 String replicaSet = connection.getAttributes().get(IMongoDBAttributes.REPLICA_SET);
                 List<HashMap<String, Object>> replicaSetList = getReplicaSetList(replicaSet, false);
                 Map<String, String> hosts = new HashMap<String, String>();
@@ -228,11 +273,21 @@ public class MongoDBConnectionUtil {
                     "builder", new Object[0], classLoader); //$NON-NLS-1$
             Object sslSettingsBuilder = NoSQLReflection.invokeStaticMethod("com.mongodb.connection.SslSettings", "builder", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[0], classLoader);
+            
+            //
+            SSLContext sslContext = null;
+            String authMechanism = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+            if(requireAuth && authMechanism.equals(IMongoConstants.X509)) {
+                sslContext = mongoX509SSLContext(connection);
+            } else if (requireEncryption) {
+            	sslContext = StudioSSLContextProvider.getContext();
+            }
+            
             NoSQLReflection.invokeMethod(sslSettingsBuilder, "enabled", new Object[] { requireEncryption }, boolean.class); //$NON-NLS-1$
-            if (requireEncryption) {
-            	SSLContext sslContext = StudioSSLContextProvider.getContext();
+            if(sslContext != null) {
                 NoSQLReflection.invokeMethod(sslSettingsBuilder, "context", new Object[] { sslContext }, SSLContext.class); //$NON-NLS-1$
             }
+            
             Object sslSettingsBuild = NoSQLReflection.invokeMethod(sslSettingsBuilder, "build", new Object[0]); //$NON-NLS-1$
             Class<?> sslBlockClasszz = Class.forName("com.mongodb.Block", false, classLoader); //$NON-NLS-1$
             Class[] sslInterfaces = new Class[1];
@@ -260,7 +315,6 @@ public class MongoDBConnectionUtil {
                 NoSQLReflection.invokeMethod(clusterSettingsBuilder, "hosts", new Object[] { addrs }, List.class); //$NON-NLS-1$
             }
 
-            String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
             if (requireAuth) {
                 Object credential = getCredential(connection, contextType, user, pass, classLoader);
                 NoSQLReflection.invokeMethod(clientSettingsBuilder, "credential", new Object[] { credential }, //$NON-NLS-1$
@@ -314,11 +368,20 @@ public class MongoDBConnectionUtil {
         }
         try {
             Object builder = NoSQLReflection.newInstance("com.mongodb.MongoClientOptions$Builder", new Object[0], classLoader); //$NON-NLS-1$
+            
+            //
+            SSLContext sslContext = null;
+            String authMechanism = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+            if(requireAuth && authMechanism.equals(IMongoConstants.X509)) {
+                sslContext = mongoX509SSLContext(connection);
+            } else if (requireEncryption) {
+                sslContext = StudioSSLContextProvider.getContext();
+            }
             NoSQLReflection.invokeMethod(builder, "sslEnabled", new Object[] { requireEncryption }, boolean.class); //$NON-NLS-1$
-            if (requireEncryption) {
-            	SSLContext sslContext = StudioSSLContextProvider.getContext();
+            if(sslContext != null) {
                 NoSQLReflection.invokeMethod(builder, "sslContext", new Object[] { sslContext }, SSLContext.class); //$NON-NLS-1$
             }
+            
             Object build = NoSQLReflection.invokeMethod(builder, "build", new Object[0]); //$NON-NLS-1$
 
             for (String host : hosts.keySet()) {
@@ -328,7 +391,6 @@ public class MongoDBConnectionUtil {
                 addrs.add(serverAddress);
             }
 
-            String database = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
             if (requireAuth) {
                 Object credential = getCredential(connection, contextType, user, pass, classLoader);
                 credentials.add(credential);
@@ -343,6 +405,211 @@ public class MongoDBConnectionUtil {
         return mongo;
     }
 
+    public static synchronized Object getMongo4ConnStringVersion(NoSQLConnection connection, ContextType contextType,
+            ClassLoader classLoader, boolean requireAuth, boolean requireEncryption) throws NoSQLServerException{
+        Object mongo = null;
+        
+        String user = connection.getAttributes().get(IMongoDBAttributes.USERNAME);
+        String pass = connection.getAttributes().get(IMongoDBAttributes.PASSWORD);
+        if (contextType != null) {
+            user = ContextParameterUtils.getOriginalValue(contextType, user);
+            pass = ContextParameterUtils.getOriginalValue(contextType, pass);
+        } else {
+            pass = connection.getValue(pass, false);
+        }
+        try {
+            String connString = extractFromContext(connection, IMongoDBAttributes.CONN_STRING);
+            
+            Object clientSettingsBuilder = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoClientSettings", "builder", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[0], classLoader);
+            Object connectionString = NoSQLReflection.newInstance("com.mongodb.ConnectionString", new Object[] { connString },
+                    classLoader, String.class);
+            clientSettingsBuilder = NoSQLReflection.invokeMethod(clientSettingsBuilder, "applyConnectionString",
+                    new Object[] { connectionString }, connectionString.getClass());
+            Object mongoCredential = getCredential(connection, contextType, user, pass, classLoader);
+            clientSettingsBuilder = NoSQLReflection.invokeMethod(clientSettingsBuilder, "credential",
+                    new Object[] { mongoCredential }, Class.forName("com.mongodb.MongoCredential", true, classLoader));
+            
+            String authMechanism = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
+            //
+            if((requireAuth && authMechanism.equals(IMongoConstants.X509)) || requireEncryption) {//enable ssl & context
+                Class<?> blockClasszz = Class.forName("com.mongodb.Block", false, classLoader); //$NON-NLS-1$
+                Class[] interfaces = new Class[1];
+                interfaces[0] = blockClasszz;
+                Object block = Proxy.newProxyInstance(classLoader, interfaces, (proxy, method, args) -> {
+                    switch (method.getName()) {
+                    case "apply": //$NON-NLS-1$
+                        if (args[0] != null) {
+                            SSLContext sslContext = null;
+                            if(requireAuth && authMechanism.equals(IMongoConstants.X509)) {
+                                sslContext = mongoX509SSLContext(connection);
+                            } else if (requireEncryption) {
+                                sslContext = StudioSSLContextProvider.getContext();
+                            }
+                            NoSQLReflection.invokeMethod(args[0], "context", new Object[] { sslContext}, //$NON-NLS-1$
+                                    SSLContext.class); //$NON-NLS-1$
+                        }
+                        return null;
+                    default:
+                        throw new NoSQLServerException(
+                                Messages.getString("MongoDBConnectionUtil.CannotFindMethod", method.getName())); //$NON-NLS-1$
+                    }
+                });
+                clientSettingsBuilder = NoSQLReflection.invokeMethod(clientSettingsBuilder,"applyToSslSettings",new Object[] {block}, blockClasszz);
+                
+                blockClasszz = Class.forName("com.mongodb.Block", false, classLoader); //$NON-NLS-1$
+                interfaces = new Class[1];
+                interfaces[0] = blockClasszz;
+                block = Proxy.newProxyInstance(classLoader, interfaces, (proxy, method, args) -> {
+                    switch (method.getName()) {
+                    case "apply": //$NON-NLS-1$
+                        if (args[0] != null) {
+                            NoSQLReflection.invokeMethod(args[0], "enabled", new Object[] { true}, //$NON-NLS-1$
+                                    boolean.class);
+                        }
+                        return null;
+                    default:
+                        throw new Exception(
+                                "MongoDBConnectionUtil.CannotFindMethod"+ method.getName()); //$NON-NLS-1$
+                    }
+                });
+                clientSettingsBuilder = NoSQLReflection.invokeMethod(clientSettingsBuilder,"applyToSslSettings",new Object[] {block}, blockClasszz);
+            }
+            
+            
+            Object mongoClientSettings = NoSQLReflection.invokeMethod(clientSettingsBuilder, "build", new Object[0]); 
+            
+            mongo = NoSQLReflection.invokeStaticMethod("com.mongodb.client.MongoClients", "create", //$NON-NLS-1$ //$NON-NLS-2$
+                    new Object[] { mongoClientSettings }, classLoader,
+                    Class.forName("com.mongodb.MongoClientSettings", true, classLoader)); //$NON-NLS-1$
+            mongos.add(mongo);
+        } catch (Exception e) {
+            throw new NoSQLServerException(e);
+        }
+        return mongo;
+    }
+    
+    public static SSLContext mongoX509SSLContext(NoSQLConnection connection) {
+        String _keystore = extractFromContext(connection, IMongoDBAttributes.X509_CERT);
+        String _keystorePass = decrypt(extractFromContext(connection, IMongoDBAttributes.X509_CERT_KEYSTORE_PASSWORD));
+        String isUseX509CertAuth = connection.getAttributes().get(IMongoDBAttributes.X509_USE_CERT_AUTH);
+        String _truststore = null;
+        String _truststorePass = null;
+        if("true".equals(isUseX509CertAuth)) {
+            _truststore = extractFromContext(connection, IMongoDBAttributes.X509_CERT_AUTH);
+            _truststorePass = decrypt(extractFromContext(connection, IMongoDBAttributes.X509_CERT_AUTH_TRUSTSTORE_PASSWORD));
+        }
+        //
+        SSLContext sslContext = null;
+        if(_keystore.endsWith("jks")) {
+            sslContext = buildSSLContext_JKS(_keystore, _keystorePass, _truststore, _truststorePass, sslContext);
+        } else if(_keystore.endsWith("pem")) {
+            sslContext = buildSSLContext_PEM(_keystore, _keystorePass, _truststore, _truststorePass, sslContext);
+        }
+
+        return sslContext;
+    }
+
+    private static SSLContext buildSSLContext_JKS(String _keystore, String _keystorePass, String _truststore,
+            String _truststorePass, SSLContext sslContext) {
+        try {
+            sslContext = SSLContext.getInstance("TLS");
+            //keystore
+            KeyManagerFactory keyManagerFactory;
+            
+            String keystoreType = KeyStore.getDefaultType();
+            KeyStore keystore = KeyStore.getInstance(keystoreType);
+            try (InputStream in = new FileInputStream(_keystore)) {
+                keystore.load(in, _keystorePass.toCharArray());
+            }
+            keyManagerFactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            keyManagerFactory.init(keystore, _keystorePass.toCharArray());
+            
+            //truststore
+            TrustManagerFactory trustManagerFactory = null;
+            if(StringUtils.isNotEmpty(_truststore)) {
+                KeyStore trustStore = KeyStore.getInstance(keystoreType);
+                try (InputStream in = new FileInputStream(_truststore)) {
+                    trustStore.load(in, _truststorePass.toCharArray());
+                }
+                trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                trustManagerFactory.init(trustStore);    
+            }
+
+            
+            sslContext.init(keyManagerFactory.getKeyManagers(), trustManagerFactory == null? null:trustManagerFactory.getTrustManagers(), new SecureRandom());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sslContext;
+    }
+    
+    private static SSLContext buildSSLContext_PEM(String _keystore, String _keystorePass, String _truststore,
+            String _truststorePass, SSLContext sslContext) {
+        SSLContext context = null;
+        
+        final String pubCertEndDelimiter = "-----END CERTIFICATE-----";
+        final String privateKeyStartDelimiter = "-----BEGIN PRIVATE KEY-----";
+        final String privateKeyEndDelimiter = "-----END PRIVATE KEY-----";
+        final String privateKeyRSAStartDelimiter = "-----BEGIN RSA PRIVATE KEY-----";
+        final String privateKeyRSAEndDelimiter = "-----END RSA PRIVATE KEY-----";
+        try {
+            context = SSLContext.getInstance("TLS");
+
+            byte[] certAndKey = Files.readAllBytes(Paths.get(new File(_keystore).toURI()));
+            
+            String[] tokens = new String(certAndKey).split(pubCertEndDelimiter);
+
+            byte[] certBytes = tokens[0].concat(pubCertEndDelimiter).getBytes();
+
+            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+            java.security.cert.Certificate certificate = certificateFactory.generateCertificate(new ByteArrayInputStream(certBytes));
+            X509Certificate cert = (X509Certificate)certificate;//
+            
+            PrivateKey key = null;
+            KeyFactory kf = KeyFactory.getInstance("RSA");
+            if(tokens[1].contains(privateKeyStartDelimiter)) {
+                byte[] privatekeyBytes = tokens[1].replace(privateKeyStartDelimiter, "").replace(privateKeyEndDelimiter, "").replace("\r\n", "").replace("\n", "").getBytes();
+                byte[] decode = Base64.getDecoder().decode(privatekeyBytes);
+                PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(decode);
+                key = kf.generatePrivate(spec);
+            } else if(tokens[1].contains(privateKeyRSAStartDelimiter)) {
+                byte[] privateKeyBytes = tokens[1].replace(privateKeyRSAStartDelimiter, "").replace(privateKeyRSAEndDelimiter, "").replace("\r\n", "").replace("\n", "").getBytes("UTF-8");
+                byte[] decodeBytes = Base64.getDecoder().decode(privateKeyBytes);
+                ASN1Object fromByteArray = ASN1Sequence.fromByteArray(decodeBytes);
+                RSAPrivateKeyStructure asn1PrivKey = new RSAPrivateKeyStructure((ASN1Sequence) fromByteArray);
+                RSAPrivateKeySpec rsaPrivKeySpec = new RSAPrivateKeySpec(asn1PrivKey.getModulus(), asn1PrivKey.getPrivateExponent());
+                key= kf.generatePrivate(rsaPrivKeySpec);
+            }
+            
+            KeyStore keystore = KeyStore.getInstance("JKS");
+            keystore.load(null);
+            keystore.setCertificateEntry("cert-alias", cert);
+            keystore.setKeyEntry("key-alias", key, "changeit".toCharArray(), new Certificate[] {cert});
+
+            KeyManagerFactory kmf = KeyManagerFactory.getInstance("SunX509");
+            kmf.init(keystore, "changeit".toCharArray());
+
+            KeyManager[] km = kmf.getKeyManagers();
+            
+            context.init(km, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return context;
+    }
+    
+    private static String extractFromContext(NoSQLConnection connection, String attr) {
+        String attrVal = connection.getAttributes().get(attr);
+        if (connection.isContextMode()) {
+            ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
+            attrVal = ContextParameterUtils.getOriginalValue(contextType, attrVal);
+        }
+        
+        return attrVal;
+    }
+    
     public static synchronized Object getDB(NoSQLConnection connection) throws NoSQLServerException {
         String dbName = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
         if (connection.isContextMode()) {
@@ -354,6 +621,16 @@ public class MongoDBConnectionUtil {
     }
 
     public static synchronized Object getDB(NoSQLConnection connection, String dbName) throws NoSQLServerException {
+        if (StringUtils.isEmpty(dbName)) {
+            return null;
+        }
+        
+        Object mongoClient = getMongoVersioned(connection);
+        
+        return getDB(connection, dbName, mongoClient);
+    }
+    
+    public static synchronized Object getDB(NoSQLConnection connection, String dbName, Object mongoClient) throws NoSQLServerException {
         Object db = null;
         if (StringUtils.isEmpty(dbName)) {
             return db;
@@ -368,13 +645,22 @@ public class MongoDBConnectionUtil {
             updateConfigProperties(requireEncryption);
 
             if (isUpgradeLatestVersion(connection)) {
-                db = NoSQLReflection.invokeMethod(getMongo(connection, requireAuth, requireEncryption), "getDatabase", //$NON-NLS-1$
+                if(mongoClient == null) {
+                    mongoClient = getMongo(connection, requireAuth, requireEncryption);
+                }
+                db = NoSQLReflection.invokeMethod(mongoClient, "getDatabase", //$NON-NLS-1$
                         new Object[] { dbName });
             } else if (isUpgradeVersion(connection)) {
-                db = NoSQLReflection.invokeMethod(getMongo(connection, requireAuth, requireEncryption), "getDB", //$NON-NLS-1$
+                if(mongoClient == null) {
+                    mongoClient = getMongo(connection, requireAuth, requireEncryption);
+                }
+                db = NoSQLReflection.invokeMethod(mongoClient, "getDB", //$NON-NLS-1$
                         new Object[] { dbName });
             } else {
-                db = NoSQLReflection.invokeMethod(getMongo(connection), "getDB", new Object[] { dbName }); //$NON-NLS-1$
+                if(mongoClient == null) {
+                    mongoClient = getMongo(connection);
+                }
+                db = NoSQLReflection.invokeMethod(mongoClient, "getDB", new Object[] { dbName }); //$NON-NLS-1$
                 // Do authenticate
                 if (requireAuth) {
                     String userName = connection.getAttributes().get(IMongoDBAttributes.USERNAME);
@@ -401,13 +687,38 @@ public class MongoDBConnectionUtil {
     }
 
     public static synchronized List<String> getDatabaseNames(NoSQLConnection connection) throws NoSQLServerException {
+        Object mongoClient = getMongoVersioned(connection);
+        
+        return getDatabaseNames(connection, mongoClient);
+    }
+    
+    public static synchronized List<String> getDatabaseNames(NoSQLConnection connection, Object mongoClient) throws NoSQLServerException {
         List<String> databaseNames = null;
         try {
+            databaseNames = Collections.synchronizedList(new ArrayList<String>());
             if(isUpgradeVersion(connection)){
-                databaseNames = (List<String>) NoSQLReflection.invokeMethod(getMongo(connection, false, false),
-                        "getDatabaseNames"); //$NON-NLS-1$
+                String requireAuthAttr = connection.getAttributes().get(IMongoDBAttributes.REQUIRED_AUTHENTICATION);
+                boolean requireAuth = requireAuthAttr == null ? false : Boolean.valueOf(requireAuthAttr);
+                //
+                String requireEncryptionAttr = connection.getAttributes().get(IMongoDBAttributes.REQUIRED_ENCRYPTION);
+                boolean requireEncryption = requireEncryptionAttr == null ? false : Boolean.valueOf(requireEncryptionAttr);
+                
+                if(mongoClient == null) {
+                    mongoClient = getMongo(connection, requireAuth, requireEncryption);
+                }
+                
+                Iterable mongoIterable = (Iterable)NoSQLReflection.invokeMethod(mongoClient, "listDatabaseNames");
+                for(Object dbname:mongoIterable) {
+                    databaseNames.add((String)dbname);
+                }
             }else{
-                databaseNames = (List<String>) NoSQLReflection.invokeMethod(getMongo(connection), "getDatabaseNames"); //$NON-NLS-1$
+                if(mongoClient == null) {
+                    mongoClient = getMongo(connection);
+                }
+                Iterable mongoIterable = (Iterable)NoSQLReflection.invokeMethod(mongoClient, "listDatabaseNames");
+                for(Object dbname:mongoIterable) {
+                    databaseNames.add((String)dbname);
+                }
             }
         } catch (NoSQLReflectionException e) {
             throw new NoSQLServerException(e);
@@ -419,20 +730,34 @@ public class MongoDBConnectionUtil {
     public static synchronized Set<String> getCollectionNames(NoSQLConnection connection) throws NoSQLServerException {
         return getCollectionNames(connection, null);
     }
-
+    
     public static synchronized Set<String> getCollectionNames(NoSQLConnection connection, String dbName)
+            throws NoSQLServerException {
+        return getCollectionNames(connection, null, null);
+    }
+
+    public static synchronized Set<String> getCollectionNames(NoSQLConnection connection, String dbName, Object mongoClient)
             throws NoSQLServerException {
         Set<String> collectionNames = new HashSet<String>();
         Object db = null;
+        
+        if(mongoClient == null) {
+            mongoClient = getMongoVersioned(connection);
+        }
         if (dbName != null) {
-            db = getDB(connection, dbName);
+            db = getDB(connection, dbName, mongoClient);
         } else {
-            db = getDB(connection);
+            dbName = connection.getAttributes().get(IMongoDBAttributes.DATABASE);
+            if (connection.isContextMode()) {
+                ContextType contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
+                dbName = ContextParameterUtils.getOriginalValue(contextType, dbName);
+            }
+            db = getDB(connection, dbName, mongoClient);
         }
         if (db == null) {
-            List<String> databaseNames = getDatabaseNames(connection);
+            List<String> databaseNames = getDatabaseNames(connection, mongoClient);
             for (String databaseName : databaseNames) {
-                collectionNames.addAll(getCollectionNames(connection, databaseName));
+                collectionNames.addAll(getCollectionNames(connection, databaseName, mongoClient));
             }
         } else {
             try {
@@ -496,6 +821,10 @@ public class MongoDBConnectionUtil {
     
     public static boolean isUpgradeLatestVersion(NoSQLConnection connection) {
         String dbVersion = connection.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        return isUpgradeLatestVersion(dbVersion);
+    }
+
+    public static boolean isUpgradeLatestVersion(String dbVersion) {
         try{
              Pattern pattern = Pattern.compile("MONGODB_(\\d+)_(\\d+)");//$NON-NLS-1$
              Matcher matcher = pattern.matcher(dbVersion);
@@ -556,8 +885,10 @@ public class MongoDBConnectionUtil {
                 IPreferenceStore store = CoreRuntimePlugin.getInstance().getCoreService().getPreferenceStore();
                 File configFile = PluginUtil.getStudioConfigFile();
                 Properties configProperties = PluginUtil.readProperties(configFile);
-                configProperties.setProperty(SSLPreferenceConstants.TRUSTSTORE_TYPE,
-                        store.getString(SSLPreferenceConstants.TRUSTSTORE_TYPE));
+                String truststoreType = store.getString(SSLPreferenceConstants.TRUSTSTORE_TYPE);
+                if(!StringUtils.isEmpty(truststoreType)) {
+                    configProperties.setProperty(SSLPreferenceConstants.TRUSTSTORE_TYPE, truststoreType);
+                }
                 configProperties.setProperty(SSLPreferenceConstants.TRUSTSTORE_FILE,
                         store.getString(SSLPreferenceConstants.TRUSTSTORE_FILE));
                 configProperties.setProperty(SSLPreferenceConstants.TRUSTSTORE_PASSWORD,
@@ -619,7 +950,16 @@ public class MongoDBConnectionUtil {
             System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");
             credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createGSSAPICredential", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[] { krbUserPrincipal }, classLoader, String.class);
-        } 
+        } else if (authMechanism.equals(IMongoConstants.X509)) {
+            credential = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoCredential", "createMongoX509Credential", new Object[0], classLoader);
+        }
         return credential;
+    }
+    
+    public static String encrypt(String src) {
+        return StudioEncryption.getStudioEncryption(StudioEncryption.EncryptionKeyName.SYSTEM).encrypt(src);
+    }
+    public static String decrypt(String src) {
+        return StudioEncryption.getStudioEncryption(StudioEncryption.EncryptionKeyName.SYSTEM).decrypt(src);
     }
 }

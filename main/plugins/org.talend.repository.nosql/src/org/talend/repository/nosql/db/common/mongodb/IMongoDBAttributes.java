@@ -24,6 +24,10 @@ public interface IMongoDBAttributes extends INoSQLCommonAttributes {
     public final static String USE_REPLICA_SET = "USE_REPLICA_SET"; //$NON-NLS-1$
 
     public final static String REPLICA_SET = "REPLICA_SET"; //$NON-NLS-1$
+    
+    public final static String USE_CONN_STRING = "USE_CONNECTION_STRING"; //$NON-NLS-1$
+    
+    public final static String CONN_STRING = "CONNECTION_STRING"; //$NON-NLS-1$
 
     public final static String COLLECTION = "COLLECTION"; //$NON-NLS-1$
 
@@ -40,5 +44,15 @@ public interface IMongoDBAttributes extends INoSQLCommonAttributes {
     public static final String KRB_REALM = "KRB_REALM"; //$NON-NLS-1$
     
     public static final String KRB_KDC = "KRB_KDC"; //$NON-NLS-1$
+    
+    public static final String X509_CERT = "SSLPEMKEYFILE"; //$NON-NLS-1$
+    
+    public static final String X509_CERT_KEYSTORE_PASSWORD = "X509_CERT_KEYSTORE_PASSWORD"; //$NON-NLS-1$
+    
+    public static final String X509_USE_CERT_AUTH = "USE_SSLCAFILE"; //$NON-NLS-1$
+    
+    public static final String X509_CERT_AUTH = "SSLCAFILE"; //$NON-NLS-1$
+    
+    public static final String X509_CERT_AUTH_TRUSTSTORE_PASSWORD = "X509_CERT_AUTH_TRUSTSTORE_PASSWORD"; //$NON-NLS-1$
     
 }

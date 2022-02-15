@@ -107,6 +107,26 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), JavaTypesManager.PASSWORD);
                         break;
+                    case ConnectionString:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.CONN_STRING), javaType);
+                        break;
+                    case Keystore:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.X509_CERT), javaType);
+                        break;
+                    case KeystorePass:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.X509_CERT_KEYSTORE_PASSWORD), JavaTypesManager.PASSWORD);
+                        break;
+                    case Truststore:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.X509_CERT_AUTH), javaType);
+                        break;
+                    case TruststorePass:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(IMongoDBAttributes.X509_CERT_AUTH_TRUSTSTORE_PASSWORD), JavaTypesManager.PASSWORD);
+                        break;
                     case AuthenticationDatabase:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_DATABASE), javaType);
@@ -273,6 +293,10 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
             noSqlConn.getAttributes().put(INoSQLCommonAttributes.HOST,
                     ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
             break;
+        case ConnectionString:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.CONN_STRING,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
         case Port:
             noSqlConn.getAttributes().put(INoSQLCommonAttributes.PORT,
                     ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
@@ -299,6 +323,22 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
             break;
         case Password:
             noSqlConn.getAttributes().put(INoSQLCommonAttributes.PASSWORD,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case Keystore:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.X509_CERT,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case KeystorePass:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.X509_CERT_KEYSTORE_PASSWORD,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case Truststore:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.X509_CERT_AUTH,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case TruststorePass:
+            noSqlConn.getAttributes().put(IMongoDBAttributes.X509_CERT_AUTH_TRUSTSTORE_PASSWORD,
                     ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
             break;
         case AuthenticationDatabase:

@@ -32,4 +32,5 @@ Export-Package: org.talend.repository.model.nosql,
  org.talend.repository.model.nosql.util
 Bundle-Vendor: .Talend SA.
 Bundle-Localization: plugin
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ lib/bcprov-jdk16-1.46.jar
