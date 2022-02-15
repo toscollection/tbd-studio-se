@@ -35,6 +35,16 @@ public class MongoDBDNDProvider extends AbstractDNDProvider {
     public Object getRepositoryValue(NoSQLConnection connection, String value, IMetadataTable table, String targetComponent) {
         if (IMongoDBAttributes.DB_VERSION.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.DB_VERSION), false);
+        } else if (IMongoDBAttributes.USE_CONN_STRING.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.USE_CONN_STRING), false);
+        } else if (IMongoDBAttributes.CONN_STRING.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.CONN_STRING));
+        } else if (IMongoDBAttributes.X509_CERT.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.X509_CERT));
+        } else if (IMongoDBAttributes.X509_USE_CERT_AUTH.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.X509_USE_CERT_AUTH), false);
+        } else if (IMongoDBAttributes.X509_CERT_AUTH.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.X509_CERT_AUTH));
         } else if (IMongoDBAttributes.HOST.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(IMongoDBAttributes.HOST));
         } else if (IMongoDBAttributes.PORT.equals(value)) {
