@@ -24,6 +24,8 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.EParquetPackagePrefix;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
+import org.talend.hadoop.distribution.component.HDFSComponent;
+import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -34,7 +36,7 @@ import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark31x.modulegroup.node.Spark31xNodeModuleGroup;
 
 public class Spark31xDistribution extends AbstractSparkDistribution
-        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent {
+        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HDFSComponent, HiveComponent, HiveOnSparkComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
@@ -250,6 +252,67 @@ public class Spark31xDistribution extends AbstractSparkDistribution
 		return false;
 	}
 	
+
+	@Override 
+	public boolean doSupportUniversalDataprocMode() {
+    	return true;
+    }
+	
+	@Override
+	public boolean doSupportSequenceFileShortType() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportHive1() {
+		return false;
+	}
+
+	@Override
+	public boolean doSupportHive2() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportTezForHive() {
+		return false;
+	}
+	
+	@Override
+	public boolean doSupportHBaseForHive() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportSSL() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportORCFormat() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportAvroFormat() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportParquetFormat() {
+		return true;
+	}
+	
+	@Override
+	public boolean doSupportStoreAsParquet() {
+		return true;
+	}
+	
+	@Override
+    public boolean doSupportSSLwithKerberos() {
+        return true;
+    }
+
 	@Override
 	public boolean doSupportUniversalDBRMode() {
     	return true;
