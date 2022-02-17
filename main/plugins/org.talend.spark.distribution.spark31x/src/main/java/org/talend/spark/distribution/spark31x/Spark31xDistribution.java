@@ -171,6 +171,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean doSupportSparkYarnK8SMode() {
     	return true;
     }
+    
+    @Override
+    public boolean doSupportUniversalLocalMode() {
+    	return true;
+    }
 
     @Override
     public boolean doSupportImpersonation() {
