@@ -30,6 +30,9 @@ public enum ESparkMode {
     SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
             "SPARK_LOCAL",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])"),
+    DATAPROC(Messages.getString("ESparkMode.DATAPROC"),
+            "DATAPROC",
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDataprocMode[])"),
     DATABRICKS(Messages.getString("ESparkMode.DATABRICKS"),
             "DATABRICKS",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDBRMode[])");

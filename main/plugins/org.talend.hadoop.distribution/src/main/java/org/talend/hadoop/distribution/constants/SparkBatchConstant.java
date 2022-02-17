@@ -23,7 +23,7 @@ public final class SparkBatchConstant {
     public static final String DISTRIBUTION_REPOSITORYVALUE = "DISTRIBUTION";//$NON-NLS-1$
 
     public static final String VERSION_PARAMETER = "SPARK_VERSION";//$NON-NLS-1$
-
+    
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 
     public static final String SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER = "SPARK_CONFIGURATION";//$NON-NLS-1$
@@ -33,7 +33,7 @@ public final class SparkBatchConstant {
     public static final String SPARK_BATCH_AZURE_SPARKCONFIGURATION_LINKEDPARAMETER = "STORAGE_CONFIGURATION";//$NON-NLS-1$
 
     public static final String SPARK_MODE_PARAMETER = "SPARK_MODE"; //$NON-NLS-1$
-    
+
     public static final String DATABRICKS_RUNTIME_VERSION = "DATABRICKS_RUNTIME_VERSION"; //$NON-NLS-1$
 
     public static final String SUPPORTED_SPARK_VERSION_PARAMETER = "SUPPORTED_SPARK_VERSION"; //$NON-NLS-1$

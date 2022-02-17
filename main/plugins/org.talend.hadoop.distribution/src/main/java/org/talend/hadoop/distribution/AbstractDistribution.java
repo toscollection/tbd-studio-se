@@ -706,6 +706,12 @@ public abstract class AbstractDistribution {
     }
     
     public boolean doSupportUniversalDBRMode() {
+
     	return false;
     }
+    
+    public boolean doSupportUniversalDataprocMode() {
+    	return false;
+    }
+
 }
