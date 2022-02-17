@@ -704,4 +704,8 @@ public abstract class AbstractDistribution {
     public List<String> getSupportedHCatalogVersion() {
     	return null;
     }
+    
+    public boolean doSupportUniversalDBRMode() {
+    	return false;
+    }
 }

@@ -61,6 +61,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.HadoopClusterPackage;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnection;
 import org.talend.repository.model.hadoopcluster.HadoopSubConnectionItem;
+import org.talend.repository.model.hadoopcluster.util.EncryptionUtil;
 
 /**
  * created by ycbai on 2013-1-22 Detailled comment
@@ -993,7 +994,7 @@ public class HCRepositoryUtil {
         }
         String databricksToken = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.DATABRICKS_TOKEN.getName());
         if (databricksToken != null) {
-            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN, databricksToken);
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN, EncryptionUtil.getValue(databricksToken, true));
         }
         String databricksDBFSDepFolder = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.DATABRICKS_DBFS_DEP_FOLDER.getName());
