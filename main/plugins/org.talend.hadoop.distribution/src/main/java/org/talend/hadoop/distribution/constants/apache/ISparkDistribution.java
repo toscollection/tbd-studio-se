@@ -14,6 +14,9 @@ package org.talend.hadoop.distribution.constants.apache;
 
 import java.util.List;
 
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+
 public interface ISparkDistribution {
 
     static final String DISTRIBUTION_NAME = "SPARK";
@@ -21,5 +24,9 @@ public interface ISparkDistribution {
     static final String DISTRIBUTION_DISPLAY_NAME = "Universal";
     
     public List<ESparkMode> getSparkModes();
+    
+    List<EDatabriksCloudProvider> getSupportCloudProviders();
+    
+    List<EDatabriksSubmitMode> getRunSubmitMode();
     
 }
