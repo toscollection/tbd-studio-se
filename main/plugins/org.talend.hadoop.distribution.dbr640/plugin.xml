@@ -148,7 +148,6 @@
             <library id="jackson-databind-2.6.7.1.jar"/>
             <library id="talend-bigdata-launcher-jobserver-2.0.12.jar"/>
             <library id="talend-bigdata-launcher-databricks-2.4.4.jar"/>
-            <library id="talend-mapred-lib-7.2.2.jar"/>
         </libraryNeededGroup>
         <libraryNeededGroup id="HIVEONSPARK-LIB-MRREQUIRED-DBR640" name="HIVEONSPARK-LIB-MRREQUIRED-DBR640"
                             description="Hive On SPARK libraries for DBR640">
@@ -191,6 +190,7 @@
             <library id="spark-unsafe_2.11-2.4.5.jar"/>
             <library id="wsdl4j-1.6.3.jar"/>
             <library id="guava-27.1-jre.jar"/>
+            <library id="talend-mapred-lib-7.2.2.jar"/>
         </libraryNeededGroup>
         <libraryNeededGroup id="SPARK-STREAMING-LIB-KINESIS-DBR640" name="SPARK-STREAMING-LIB-KINESIS-DBR640"
                             description="SPARK libraries for DBR640">
