@@ -36,7 +36,7 @@ import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark31x.modulegroup.node.Spark31xNodeModuleGroup;
 
 public class Spark31xDistribution extends AbstractSparkDistribution
-        implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HDFSComponent, HiveComponent, HiveOnSparkComponent {
+implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HDFSComponent, HiveComponent, HiveOnSparkComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
@@ -68,15 +68,16 @@ public class Spark31xDistribution extends AbstractSparkDistribution
         return result;
     }
 
+    @Override
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
         Set<DistributionModuleGroup> s3ModuleGroup = Spark31xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
                 SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark31xDistribution.SPARK_VERSION);
-        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
-        					s3ModuleGroup);	
-        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
-				s3ModuleGroup);	
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                s3ModuleGroup);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                s3ModuleGroup);
         return result;
     }
 
@@ -146,7 +147,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean useOldAWSAPI() {
         return false;
     }
-    
+
     @Override
     public boolean useS3AProperties() {
         return true;
@@ -161,20 +162,20 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean doSupportSparkYarnClientMode() {
         return false;
     }
-    
+
     @Override
     public boolean doSupportSparkYarnClusterMode() {
         return false; //at some point we should enable this
     }
-    
+
     @Override
     public boolean doSupportSparkYarnK8SMode() {
-    	return true;
+        return true;
     }
-    
+
     @Override
     public boolean doSupportUniversalLocalMode() {
-    	return true;
+        return true;
     }
 
     @Override
@@ -196,12 +197,12 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean doSupportAzureBlobStorage() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportAzureDataLakeStorage() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
@@ -212,114 +213,119 @@ public class Spark31xDistribution extends AbstractSparkDistribution
         return EParquetPackagePrefix.APACHE.toString();
     }
 
-	@Override
-	public boolean doSupportDynamicMemoryAllocation() {
-		return false;
-	}
-
-	@Override
-	public boolean doSupportCrossPlatformSubmission() {
-		return false;
-	}
-	
-	@Override
-	public boolean doSupportOldImportMode() {
+    @Override
+    public boolean doSupportDynamicMemoryAllocation() {
         return false;
     }
-	
-	@Override
-	public String getS3Packages() {
-    	return "com.amazonaws:aws-java-sdk-bundle:1.11.375,org.apache.hadoop:hadoop-aws:3.2.0";
-    }
-	
-	@Override
-	public String getBlobPackages() {
-    	return "org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:7.0.0";
-    }
-	
-	@Override
-	public String getADLS2Packages() {
-    	return "org.apache.hadoop:hadoop-azure-datalake:3.2.1,org.apache.hadoop:hadoop-azure:3.2.1";
-    }
-	
-	@Override
-	public boolean doSupportAssumeRole() {
-		return true;
-	}
-	
-	@Override 
-	public boolean doSupportHBase2x() {
-		return false;
-	}
-	
-	@Override 
-	public boolean doSupportHBase1x() {
-		return false;
-	}
-	
 
-	@Override 
-	public boolean doSupportUniversalDataprocMode() {
-    	return true;
+    @Override
+    public boolean doSupportCrossPlatformSubmission() {
+        return false;
     }
-	
-	@Override
-	public boolean doSupportSequenceFileShortType() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportHive1() {
-		return false;
-	}
 
-	@Override
-	public boolean doSupportHive2() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportTezForHive() {
-		return false;
-	}
-	
-	@Override
-	public boolean doSupportHBaseForHive() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportSSL() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportORCFormat() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportAvroFormat() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportParquetFormat() {
-		return true;
-	}
-	
-	@Override
-	public boolean doSupportStoreAsParquet() {
-		return true;
-	}
-	
-	@Override
+    @Override
+    public boolean doSupportOldImportMode() {
+        return false;
+    }
+
+    @Override
+    public String getS3Packages() {
+        return "com.amazonaws:aws-java-sdk-bundle:1.11.375,org.apache.hadoop:hadoop-aws:3.2.0";
+    }
+
+    @Override
+    public String getBlobPackages() {
+        return "org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:7.0.0";
+    }
+
+    @Override
+    public String getADLS2Packages() {
+        return "org.apache.hadoop:hadoop-azure-datalake:3.2.1,org.apache.hadoop:hadoop-azure:3.2.1";
+    }
+
+    @Override
+    public boolean doSupportAssumeRole() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportHBase2x() {
+        return false;
+    }
+
+    @Override
+    public boolean doSupportHBase1x() {
+        return false;
+    }
+
+
+    @Override
+    public boolean doSupportUniversalDataprocMode() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportSequenceFileShortType() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportHive1() {
+        return false;
+    }
+
+    @Override
+    public boolean doSupportHive2() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportTezForHive() {
+        return false;
+    }
+
+    @Override
+    public boolean doSupportHBaseForHive() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportSSL() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportORCFormat() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportAvroFormat() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportParquetFormat() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportStoreAsParquet() {
+        return true;
+    }
+
+    @Override
     public boolean doSupportSSLwithKerberos() {
         return true;
     }
 
-	@Override
-	public boolean doSupportUniversalDBRMode() {
-    	return true;
+    @Override
+    public boolean doSupportUniversalDBRMode() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportUniversalCDEMode() {
+        return true;
     }
 }

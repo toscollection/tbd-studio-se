@@ -438,7 +438,7 @@
         <libraryNeededGroup description="Spark streaming Rest libraries for spark311" id="REST-GROUP-SPARK_3_1_x" name="REST-GROUP-SPARK_3_1_x">
         </libraryNeededGroup>
        
-       <!-- Spark Streaming PubSub group -->
+        <!-- Spark Streaming PubSub group -->
         <!-- Since no spark-streaming-pubsub lib for spark 3.x  spark-streaming-pubsub_2.12-2.4.0.jar will be used as workaround-->
         <libraryNeededGroup description="Spark streaming PubSub libraries for spl311" id="PUBSUB-GROUP-SPARK_3_1_x" name="PUBSUB-GROUP-SPARK_3_1_x">
             <group id="SPARK-COMPILE-GROUP-SPARK_3_1_x" />
