@@ -5,7 +5,7 @@
     "id" : "Cloudera_CDP7_1_1_0_565",
     "name" : "Cloudera CDP 7.x",
     "repository" : "https://talend-update.talend.com/nexus/content/groups/dynamicdistribution/",
-    "selectedSparkVersions" : [ "SPARK_2_4_X" ],
+    "selectedSparkVersions" : [ "SPARK_2_4_X"],
     "tagName" : "dynamicPluginConfiguration",
     "templateId" : "CDP7xDistributionTemplate",
     "version" : "7.1.1.0-565"
@@ -10086,7 +10086,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_common_3_1_1_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-common/3.1.1.7.1.1.0-565",
+      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-common/3.1.1.7.1.1.0-565/jar",
       "name" : "hadoop-common-3.1.1.7.1.1.0-565.jar",
       "tagName" : "libraryNeeded"
     }, {
