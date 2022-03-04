@@ -523,11 +523,11 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar"
           mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
-		
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+        
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar"
           mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
-		
+        
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="spark-streaming_2.12-3.0.3.jar" name="spark-streaming_2.12-3.0.3.jar"
           mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.0.3"/>
@@ -540,7 +540,7 @@
           id="kafka-clients-2.7.0.jar" name="kafka-clients-2.7.0.jar"
           mvn_uri="mvn:org.apache.kafka/kafka-clients/2.7.0"/>
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="kafka_2.12-2.7.0.jar" name="kafka_2.12-2.7.0.jar" mvn_uri="mvn:org.apache.kafka/kafka_2.12/2.7.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="kafka_2.12-2.7.0.jar" name="kafka_2.12-2.7.0.jar" mvn_uri="mvn:org.apache.kafka/kafka_2.12/2.7.0"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="spark-streaming-kafka-0-10_2.12-3.0.3.jar" name="spark-streaming-kafka-0-10_2.12-3.0.3.jar"
@@ -634,31 +634,31 @@
           id="talend-bigdata-aws-lib-1.1.0.jar" name="talend-bigdata-aws-lib-1.1.0.jar"
           mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-aws-lib/1.1.0">
         </libraryNeeded>
-	   
-	   <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+       
+       <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar"
           mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
-	   
-	   <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+       
+       <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="google-api-services-pubsub-v1-rev452-1.25.0.jar" name="google-api-services-pubsub-v1-rev452-1.25.0.jar"
           mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev452-1.25.0"/>
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="aws-java-sdk-bundle-1.11.760.jar" name="aws-java-sdk-bundle-1.11.760.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="aws-java-sdk-bundle-1.11.760.jar" name="aws-java-sdk-bundle-1.11.760.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="commons-httpclient-3.1.jar" name="commons-httpclient-3.1.jar" mvn_uri="mvn:commons-httpclient/commons-httpclient/3.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-core-2.10.0.jar" name="jackson-core-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.10.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-jaxrs-base-2.9.5.jar" name="jackson-jaxrs-base-2.9.5.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.9.5"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-jaxrs-json-provider-2.9.5.jar" name="jackson-jaxrs-json-provider-2.9.5.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.9.5"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-module-jaxb-annotations-2.10.0.jar" name="jackson-module-jaxb-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.10.0"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jaxb-api-2.2.11.jar" name="jaxb-api-2.2.11.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.11"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="sqoop-1.4.7.jar" name="sqoop-1.4.7.jar" mvn_uri="mvn:org.apache.sqoop/sqoop/1.4.7"/>
-		
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="hive-metastore-1.2.1.spark2.jar" name="hive-metastore-1.2.1.spark2.jar" mvn_uri="mvn:org.spark-project.hive/hive-metastore/1.2.1.spark2"/>
-			        
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jackson-module-jaxb-annotations-2.10.0.jar" name="jackson-module-jaxb-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.10.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="jaxb-api-2.2.11.jar" name="jaxb-api-2.2.11.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.11"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="sqoop-1.4.7.jar" name="sqoop-1.4.7.jar" mvn_uri="mvn:org.apache.sqoop/sqoop/1.4.7"/>
+
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" id="hive-metastore-1.2.1.spark2.jar" name="hive-metastore-1.2.1.spark2.jar" mvn_uri="mvn:org.spark-project.hive/hive-metastore/1.2.1.spark2"/>
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK-COMPILE-GROUP-SPARK_3_0_x" name="SPARK-BATCH-GROUP-SPARK_3_0_x">
             <library id="jodd-core-3.5.2.jar"/>
@@ -686,12 +686,12 @@
             <library id="hadoop-yarn-common-3.2.2.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
             <library id="httpclient-4.5.13.jar"/>
-			<library id="httpcore-4.4.13.jar"/>
-			<library id="commons-httpclient-3.1.jar"/>
-			<library id="ivy-2.4.0.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
+            <library id="commons-httpclient-3.1.jar"/>
+            <library id="ivy-2.4.0.jar"/>
             <library id="jackson-annotations-2.10.0.jar"/>
             <library id="jackson-core-2.10.0.jar"/>
-           	<library id="jackson-core-asl-1.9.13.jar"/>
+            <library id="jackson-core-asl-1.9.13.jar"/>
             <library id="jackson-jaxrs-base-2.9.5.jar"/>
             <library id="jackson-jaxrs-json-provider-2.9.5.jar"/>
             <library id="jackson-databind-2.10.0.jar"/>
@@ -718,10 +718,10 @@
             <library id="objenesis-2.6.jar"/>
             <library id="paranamer-2.8.jar"/>
             <library id="parquet-column-1.10.1.jar"/>
-			<library id="parquet-common-1.10.1.jar"/>
-			<library id="parquet-encoding-1.10.1.jar"/>
-			<library id="parquet-format-2.4.0.jar"/>
-			<library id="parquet-hadoop-1.10.1.jar"/>          
+            <library id="parquet-common-1.10.1.jar"/>
+            <library id="parquet-encoding-1.10.1.jar"/>
+            <library id="parquet-format-2.4.0.jar"/>
+            <library id="parquet-hadoop-1.10.1.jar"/>          
             <library id="protobuf-java-2.5.0.jar"/>
             <library id="py4j-0.10.9.1.jar"/>
             <library id="re2j-1.1.jar"/>
@@ -830,7 +830,8 @@
         <!-- Redshift group -->
         <libraryNeededGroup description="Redshift libraries for spl30x" id="REDSHIFT-BATCH-GROUP-SPARK_3_0_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_0_x">
             <library id="spark-redshift_2.12-4.2.0.jar"/>
-            <library id="spark-avro_2.12-3.0.3.jar"/><library id="gson-2.2.4.jar"/>
+            <library id="spark-avro_2.12-3.0.3.jar"/>
+            <library id="gson-2.2.4.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
         </libraryNeededGroup>
         
@@ -862,13 +863,13 @@
 
         <!-- KMeans -->
         <libraryNeededGroup description="KMeans libraries for spl30x" id="KMEANS-GROUP-SPARK_3_0_x" name="KMEANS-GROUP-SPARK_3_0_x">
-        	<group id="ML-GROUP-SPARK_3_0_x"/>
+            <group id="ML-GROUP-SPARK_3_0_x"/>
             <group id="PARQUET-GROUP-SPARK_3_0_x"/>
         </libraryNeededGroup>
 
         <!-- ModelEncoder -->
         <libraryNeededGroup description="ModelEncoder libraries for spl30x" id="MODEL-ENCODER-GROUP-SPARK_3_0_x" name="MODEL-ENCODER-GROUP-SPARK_3_0_x">
-        	<group id="ML-GROUP-SPARK_3_0_x"/>
+            <group id="ML-GROUP-SPARK_3_0_x"/>
             <group id="MATH-GROUP-SPARK_3_0_x"/>
         </libraryNeededGroup>
 
@@ -921,84 +922,85 @@
         
         <!-- Hive on DI group -->
         <libraryNeededGroup description="Hive on DI " id="HIVE-GROUP-SPARK_3_0_x" name="HIVE-GROUP-SPARK_3_0_x">
-        	<group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
-        	<library id="hive-common-2.1.1.jar"/>
-			<library id="hive-exec-shade-2.1.1-talend-1.2.jar"/>
-			<library id="hive-jdbc-2.1.1.jar"/>
-			<library id="hive-metastore-2.1.1.jar"/>
-			<library id="hive-serde-2.1.1.jar"/>
-			<library id="hive-service-2.1.1.jar"/>
-			<library id="hive-service-rpc-2.1.1.jar"/>
-			<library id="hive-shims-2.1.1.jar"/>
-			<library id="httpclient-4.5.13.jar"/>
-			<library id="httpcore-4.4.13.jar"/>
-			<library id="libthrift-0.9.3.jar"/>
+            <group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
+            <library id="hive-common-2.1.1.jar"/>
+            <library id="hive-exec-shade-2.1.1-talend-1.2.jar"/>
+            <library id="hive-jdbc-2.1.1.jar"/>
+            <library id="hive-metastore-2.1.1.jar"/>
+            <library id="hive-serde-2.1.1.jar"/>
+            <library id="hive-service-2.1.1.jar"/>
+            <library id="hive-service-rpc-2.1.1.jar"/>
+            <library id="hive-shims-2.1.1.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
+            <library id="libthrift-0.9.3.jar"/>
         </libraryNeededGroup>
         
         <!-- Impala group -->
         <libraryNeededGroup description="Impala " id="IMPALA-GROUP-SPARK_3_0_x" name="IMPALA-GROUP-SPARK_3_0_x">
-        	<group id="HIVE-GROUP-SPARK_3_0_x" />
-        	<library id="htrace-core4-4.2.0-incubating.jar"/>
-			<library id="metrics-core-3.1.5.jar"/>
-			<library id="commons-lang3-3.5.jar"/>
-			<library id="hbase-client-2.1.0.jar"/>
-			<library id="hbase-common-2.1.0.jar"/>
-			<library id="hbase-hadoop-compat-2.1.0.jar"/>
-			<library id="hbase-hadoop2-compat-2.1.0.jar"/>
-			<library id="hbase-http-2.1.0.jar"/>
-			<library id="hbase-metrics-2.1.0.jar"/>
-			<library id="hbase-metrics-api-2.1.0.jar"/>
-			<library id="hbase-procedure-2.1.0.jar"/>
-			<library id="hbase-protocol-2.1.0.jar"/>
-			<library id="hbase-protocol-shaded-2.1.0.jar"/>
-			<library id="hbase-replication-2.1.0.jar"/>
-			<library id="hbase-server-2.1.0.jar"/>
-			<library id="hbase-shaded-miscellaneous-2.1.0.jar"/>
-			<library id="hbase-shaded-netty-2.1.0.jar"/>
-			<library id="hbase-shaded-protobuf-2.1.0.jar"/>
-			<library id="hbase-zookeeper-2.1.0.jar"/>
+            <group id="HIVE-GROUP-SPARK_3_0_x" />
+            <library id="htrace-core4-4.2.0-incubating.jar"/>
+            <library id="metrics-core-3.1.5.jar"/>
+            <library id="commons-lang3-3.5.jar"/>
+            <library id="hbase-client-2.1.0.jar"/>
+            <library id="hbase-common-2.1.0.jar"/>
+            <library id="hbase-hadoop-compat-2.1.0.jar"/>
+            <library id="hbase-hadoop2-compat-2.1.0.jar"/>
+            <library id="hbase-http-2.1.0.jar"/>
+            <library id="hbase-metrics-2.1.0.jar"/>
+            <library id="hbase-metrics-api-2.1.0.jar"/>
+            <library id="hbase-procedure-2.1.0.jar"/>
+            <library id="hbase-protocol-2.1.0.jar"/>
+            <library id="hbase-protocol-shaded-2.1.0.jar"/>
+            <library id="hbase-replication-2.1.0.jar"/>
+            <library id="hbase-server-2.1.0.jar"/>
+            <library id="hbase-shaded-miscellaneous-2.1.0.jar"/>
+            <library id="hbase-shaded-netty-2.1.0.jar"/>
+            <library id="hbase-shaded-protobuf-2.1.0.jar"/>
+            <library id="hbase-zookeeper-2.1.0.jar"/>
         </libraryNeededGroup>
         
         <!-- WebHDFS group -->
         <libraryNeededGroup description="WebHDFS " id="WEBHDFS-GROUP-SPARK_3_0_x" name="WEBHDFS-GROUP-SPARK_3_0_x">
-        	<group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
-        	<library id="jersey-bundle-1.19.3.jar"/>
+            <group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
+            <library id="jersey-bundle-1.19.3.jar"/>
         </libraryNeededGroup>
         
         <!-- Parquet group -->
         <libraryNeededGroup description="Parquet" id="PARQUET-GROUP-SPARK_3_0_x" name="PARQUET-GROUP-SPARK_3_0_x">
-        	<library id="parquet-common-1.10.1.jar"/>
+            <library id="parquet-common-1.10.1.jar"/>
         </libraryNeededGroup>
         
         <!-- Sqoop group -->
         <libraryNeededGroup description="Sqoop" id="SQOOP-GROUP-SPARK_3_0_x" name="SQOOP-GROUP-SPARK_3_0_x">
-        	<group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
-        	<library id="avro-mapred-1.8.2-hadoop2.jar"/>
-        	<library id="avro-mapred-1.8.2.jar"/>
-        	<library id="commons-net-3.1.jar"/>
-        	<library id="hadoop-client-3.2.2.jar"/>
-        	<library id="hadoop-mapreduce-client-common-3.2.2.jar"/>
-        	<library id="hadoop-mapreduce-client-jobclient-3.2.2.jar"/>
-        	<library id="hadoop-mapreduce-client-shuffle-3.2.2.jar"/>
-        	<library id="json-1.8.jar"/>
-        	<library id="sqoop-1.4.7.jar"/>
+            <group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
+            <library id="avro-mapred-1.8.2-hadoop2.jar"/>
+            <library id="avro-mapred-1.8.2.jar"/>
+            <library id="commons-net-3.1.jar"/>
+            <library id="hadoop-client-3.2.2.jar"/>
+            <library id="hadoop-mapreduce-client-common-3.2.2.jar"/>
+            <library id="hadoop-mapreduce-client-jobclient-3.2.2.jar"/>
+            <library id="hadoop-mapreduce-client-shuffle-3.2.2.jar"/>
+            <library id="json-1.8.jar"/>
+            <library id="sqoop-1.4.7.jar"/>
         </libraryNeededGroup>
-	   
-	     <!-- Spark Streaming PubSub group -->
+       
+         <!-- Spark Streaming PubSub group -->
         <!-- Since no spark-streaming-pubsub lib for spark 3.x  spark-streaming-pubsub_2.12-2.4.0.jar will be used as workaround-->
         <libraryNeededGroup description="Spark streaming PubSub libraries for spl30x" id="PUBSUB-GROUP-SPARK_3_0_x" name="PUBSUB-GROUP-SPARK_3_0_x">
-			<group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
-			<library id="spark-streaming-pubsub_2.12-2.4.0.jar"/>
-			<library id="commons-pool2-2.9.0.jar"/>
-			<library id="google-api-client-1.30.10.jar"/>
-			<library id="google-http-client-jackson2-1.36.0.jar"/>
-			<library id="google-http-client-1.36.0.jar"/>
-			<library id="google-oauth-client-1.31.0.jar"/>
-			<library id="util-2.1.4.jar"/>
-			<library id="google-api-services-pubsub-v1-rev452-1.25.0.jar"/>
+            <group id="SPARK-COMPILE-GROUP-SPARK_3_0_x" />
+            <library id="spark-streaming-pubsub_2.12-2.4.0.jar"/>
+            <library id="commons-pool2-2.9.0.jar"/>
+            <library id="google-api-client-1.30.10.jar"/>
+            <library id="google-http-client-jackson2-1.36.0.jar"/>
+            <library id="google-http-client-1.36.0.jar"/>
+            <library id="google-oauth-client-1.31.0.jar"/>
+            <library id="util-2.1.4.jar"/>
+            <library id="google-api-services-pubsub-v1-rev452-1.25.0.jar"/>
         </libraryNeededGroup>
 
    </extension>
+
    <extension
          point="org.talend.core.runtime.classloader_provider">
       <classloader
