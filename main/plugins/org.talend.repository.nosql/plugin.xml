@@ -278,6 +278,30 @@
         mvn_uri="mvn:com.datastax.oss/java-driver-core/4.13.0">
       </libraryNeeded>
       <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="config-1.4.1.jar"
+        name="config-1.4.1.jar" 
+        mvn_uri="mvn:com.typesafe/config/1.4.1">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="java-driver-shaded-guava-25.1-jre-graal-sub-1.jar"
+        name="java-driver-shaded-guava-25.1-jre-graal-sub-1.jar" 
+        mvn_uri="mvn:com.datastax.oss/java-driver-shaded-guava/25.1-jre-graal-sub-1">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="native-protocol-1.5.0.jar"
+        name="native-protocol-1.5.0.jar" 
+        mvn_uri="mvn:com.datastax.oss/native-protocol/1.5.0">
+      </libraryNeeded>
+       <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="talend-cassandra-2.0.jar"
+        name="talend-cassandra-2.0.jar" 
+        mvn_uri="mvn:org.talend.libraries/talend-cassandra/2.0">
+      </libraryNeeded>
+      <libraryNeeded
         context="Needed for Neo4J Connection"
         id="spring-data-neo4j-rest-3.4.0.RELEASE.jar"
         name="spring-data-neo4j-rest-3.4.0.RELEASE.jar" 
