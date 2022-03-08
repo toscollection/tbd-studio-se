@@ -1,9 +1,6 @@
 package org.talend.hadoop.distribution.constants.databricks;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DatabricksRuntimeVersion {
@@ -13,22 +10,7 @@ public class DatabricksRuntimeVersion {
 	public static String showIfCondition = "(SPARK_MODE=='DATABRICKS' AND DATABRICKS_USE_TRANSIENT_CLUSTER=='true')";
 
 	private static List<DatabricksRuntimeAndSparkVersion> initAvailableRuntimeAndSparkVersion() {
-		try {
-			List<DatabricksRuntimeAndSparkVersion> result = new ArrayList<DatabricksRuntimeAndSparkVersion>();
-			//TODO change to master
-			URL url = new URL("https://raw.githubusercontent.com/Talend/tbd-studio-se/feat/TBD-12989/main/plugins/org.talend.hadoop.distribution/resources/config/default/DBRRuntimeVersionWithSparkVersion.txt");
-			BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-		    String inputLine;
-		    while ((inputLine = in.readLine()) != null) {
-		    	String[] split = inputLine.split(";");
-		    	result.add(new DatabricksRuntimeAndSparkVersion(split[0], split[1]));
-		    }
-		    in.close();
-			return result;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return Arrays.asList(new DatabricksRuntimeAndSparkVersion("9.1.x-scala2.12", "SPARK_3_1_x"));
 	}
 	
 	public static List<DatabricksRuntimeAndSparkVersion> getAvailableRuntimeAndSparkVersion() {
