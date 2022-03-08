@@ -369,10 +369,4 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
 	public boolean doSupportAssumeRole() {
 		return true;
 	}
-	
-	@Override
-	public boolean doSupportUniversalDBRMode() {
-    	return true;
-    }
-
 }
