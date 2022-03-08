@@ -21,6 +21,7 @@ import org.talend.core.utils.KeywordsValidator;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
+import org.talend.repository.nosql.db.handler.cassandra.Cassandra4VersionMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.CassandraMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.CassandraOldVersionMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.ICassandraMetadataHandler;
@@ -38,7 +39,7 @@ public class CassandraConnectionUtil {
         }
         
         if(is40Version(connection)) {
-            return CassandraMetadataHandler.getInstanceFor40DataStax();
+            return Cassandra4VersionMetadataHandler.getInstanceFor40DataStax();
         }
         
         if(isUpgradeVersion(connection)){
