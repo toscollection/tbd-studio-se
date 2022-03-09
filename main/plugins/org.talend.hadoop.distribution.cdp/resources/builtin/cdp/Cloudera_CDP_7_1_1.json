@@ -12578,8 +12578,8 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "Cloudera_CDP7_1_1_0_565_netty_transport_native_epoll_4_1_52_Final___os_detected_name____os_detected_arch__jar",
-      "mvn_uri" : "mvn:io.netty/netty-transport-native-epoll/4.1.52.Final/jar/${os.detected.name}-${os.detected.arch}",
-      "name" : "netty-transport-native-epoll-4.1.52.Final-${os.detected.name}-${os.detected.arch}.jar",
+      "mvn_uri" : "mvn:io.netty/netty-transport-native-epoll/4.1.52.Final/jar",
+      "name" : "netty-transport-native-epoll-4.1.52.Final.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
