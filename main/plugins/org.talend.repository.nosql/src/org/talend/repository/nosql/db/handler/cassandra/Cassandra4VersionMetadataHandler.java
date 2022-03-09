@@ -84,6 +84,10 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
                 throw new InterruptedException(); // $NON-NLS-1$
             }
             session = cluster;
+            String sessionName = (String) NoSQLReflection.invokeMethod(cluster, "getName"); //$NON-NLS-1$
+            if (StringUtils.isBlank(sessionName)) {
+                throw new NoSQLServerException(Messages.getString("noSQLConnectionTest.failCheckConnection")); //$NON-NLS-1$
+            }
 
             return true;
         } catch (Exception e) {
@@ -92,6 +96,15 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
             } else {
                 throw new NoSQLServerException(e);
             }
+        } finally {
+            try {
+                if (session != null) {
+                    NoSQLReflection.invokeMethod(session, "closeAsync"); //$NON-NLS-1$
+                }
+            } catch (NoSQLReflectionException e) {
+                // only for debug
+                e.printStackTrace();
+            }
         }
     }
 
@@ -99,7 +112,11 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
         try {
 
             if (cluster != null) {
-                return;
+                
+                String sessionName = (String) NoSQLReflection.invokeMethod(cluster, "getName"); //$NON-NLS-1$
+                if(StringUtils.isNotBlank(sessionName)) {
+                    return;
+                }
             }
             ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
             ContextType contextType = null;
@@ -300,6 +317,15 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
             }
         } catch (Exception e) {
             throw new NoSQLServerException(e);
+        } finally {
+            try {
+                if (cluster != null) {
+                    NoSQLReflection.invokeMethod(cluster, "closeAsync"); //$NON-NLS-1$
+                }
+            } catch (NoSQLReflectionException e) {
+                // only for debug
+                e.printStackTrace();
+            }
         }
         return scfNames;
     }
@@ -378,7 +404,14 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
 
     @Override
     public void closeConnections() throws NoSQLServerException {
-
+        try {
+            if (cluster != null) {
+                NoSQLReflection.invokeMethod(cluster, "closeAsync"); //$NON-NLS-1$
+            }
+        } catch (NoSQLReflectionException e) {
+            // only for debug
+            e.printStackTrace();
+        }
     }
 
 }
