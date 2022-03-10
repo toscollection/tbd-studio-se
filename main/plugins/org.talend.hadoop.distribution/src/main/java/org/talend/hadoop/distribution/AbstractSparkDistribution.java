@@ -62,7 +62,7 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 		String classpathSeparator = ",";
 		String classpath = "/opt/cloudera/parcels/CDH/lib/spark/jars/*"//CDH&CDP base classpath
 							+ classpathSeparator + hadoopHome + "/../spark2/jars/*" //HDP base classpath
-							+ classpathSeparator + "/usr/lib/spark/jars/*" + classpathSeparator + "/usr/lib/hadoop-lzo/lib/*"; //EMR base classpath
+							+ classpathSeparator + "/usr/lib/spark/jars/*" + classpathSeparator + "/usr/lib/hadoop-lzo/lib/*" + classpathSeparator + "/usr/lib/hadoop-lzo/lib/native/*"; //EMR base classpath
 		if (doesJobContain(nodes, "hive")) {
 			classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/spark/hive/*" //CDH&CDP hive lib for spark
 					+ classpathSeparator + "/usr/lib/hive/lib/*" + classpathSeparator + "/usr/lib/tez/*"; //Hive for EMR
