@@ -1,6 +1,6 @@
 // ============================================================================
 //
-// Copyright (C) 2006-2021 Talend Inc. - www.talend.com
+// Copyright (C) 2006-2022 Talend Inc. - www.talend.com
 //
 // This source code is available under agreement available at
 // %InstallDIR%\features\org.talend.rcp.branding.%PRODUCTNAME%\%PRODUCTNAME%license.txt
@@ -12,11 +12,14 @@
 // ============================================================================
 package org.talend.repository.nosql.db.handler.cassandra;
 
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
@@ -30,6 +33,7 @@ import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraAttributies;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
+import org.talend.repository.nosql.db.util.cassandra.CassandraConnectionUtil;
 import org.talend.repository.nosql.exceptions.NoSQLReflectionException;
 import org.talend.repository.nosql.exceptions.NoSQLServerException;
 import org.talend.repository.nosql.factory.NoSQLClassLoaderFactory;
@@ -40,7 +44,7 @@ import org.talend.repository.nosql.reflection.NoSQLReflection;
  * created by ycbai on 2014年11月26日 Detailled comment
  *
  */
-public class CassandraMetadataHandler implements ICassandraMetadataHandler {
+public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandler {
 
     private static ICassandraMetadataHandler instance = null;
 
@@ -48,36 +52,15 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
 
     private static Object cluster;
 
-    private String dbmsId = ICassandraConstants.DBM_ID;
+    private String dbmsId = ICassandraConstants.DBM40_DATASTAX_ID;
 
-    private CassandraMetadataHandler(String _dbmsId) {
+    private Cassandra4VersionMetadataHandler(String _dbmsId) {
         this.dbmsId = _dbmsId;
     }
 
-    public static synchronized ICassandraMetadataHandler getInstance() {
-        if (instance == null) {
-            instance = new CassandraMetadataHandler(ICassandraConstants.DBM_ID);
-        }
-        return instance;
-    }
-
-    public static synchronized ICassandraMetadataHandler getInstanceForDataStax() {
-        if (instanceForDataStax == null) {
-            instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM_DATASTAX_ID);
-        }
-        return instanceForDataStax;
-    }
-
-    public static synchronized ICassandraMetadataHandler getInstanceForUpgradeDataStax() {
-        if (instanceForDataStax == null) {
-            instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM22_DATASTAX_ID);
-        }
-        return instanceForDataStax;
-    }
-    
     public static synchronized ICassandraMetadataHandler getInstanceFor40DataStax() {
         if (instanceForDataStax == null) {
-            instanceForDataStax = new CassandraMetadataHandler(ICassandraConstants.DBM40_DATASTAX_ID);
+            instanceForDataStax = new Cassandra4VersionMetadataHandler(ICassandraConstants.DBM40_DATASTAX_ID);
         }
         return instanceForDataStax;
     }
@@ -100,11 +83,12 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
             if (Thread.currentThread().interrupted()) {
                 throw new InterruptedException(); // $NON-NLS-1$
             }
-            if (StringUtils.isEmpty(ksName)) {
-                session = NoSQLReflection.invokeMethod(cluster, "connect"); //$NON-NLS-1$
-            } else {
-                session = NoSQLReflection.invokeMethod(cluster, "connect", new Object[] { ksName }); //$NON-NLS-1$
+            session = cluster;
+            String sessionName = (String) NoSQLReflection.invokeMethod(cluster, "getName"); //$NON-NLS-1$
+            if (StringUtils.isBlank(sessionName)) {
+                throw new NoSQLServerException(Messages.getString("noSQLConnectionTest.failCheckConnection")); //$NON-NLS-1$
             }
+
             return true;
         } catch (Exception e) {
             if (e instanceof InterruptedException) {
@@ -115,7 +99,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         } finally {
             try {
                 if (session != null) {
-                    NoSQLReflection.invokeMethod(session, "close"); //$NON-NLS-1$
+                    NoSQLReflection.invokeMethod(session, "closeAsync"); //$NON-NLS-1$
                 }
             } catch (NoSQLReflectionException e) {
                 // only for debug
@@ -126,9 +110,11 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
 
     private void initCluster(NoSQLConnection connection) throws NoSQLServerException {
         try {
+
             if (cluster != null) {
-                boolean isClosed = (Boolean) NoSQLReflection.invokeMethod(cluster, "isClosed"); //$NON-NLS-1$
-                if (!isClosed) {
+                
+                String sessionName = (String) NoSQLReflection.invokeMethod(cluster, "getName"); //$NON-NLS-1$
+                if(StringUtils.isNotBlank(sessionName)) {
                     return;
                 }
             }
@@ -143,20 +129,30 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
                 host = ContextParameterUtils.getOriginalValue(contextType, host);
                 port = ContextParameterUtils.getOriginalValue(contextType, port);
             }
-            cluster = NoSQLReflection.invokeStaticMethod("com.datastax.driver.core.Cluster", "builder", classLoader); //$NON-NLS-1$ //$NON-NLS-2$
-            cluster = NoSQLReflection.invokeMethod(cluster, "addContactPoint", new Object[] { host }); //$NON-NLS-1$
-            cluster = NoSQLReflection.invokeMethod(cluster, "withPort", new Object[] { Integer.valueOf(port) }, int.class);// //$NON-NLS-1$
+
+            cluster = NoSQLReflection.invokeStaticMethod("com.datastax.oss.driver.api.core.CqlSession", "builder",
+                    classLoader);
+            InetAddress inetAddress = InetAddress.getByName(host);
+            InetSocketAddress socketAddress = new InetSocketAddress(inetAddress, Integer.valueOf(port));
+            cluster = NoSQLReflection.invokeMethod(cluster, "addContactPoint", new Object[] { socketAddress }, //$NON-NLS-1$
+                    InetSocketAddress.class);
+            cluster = NoSQLReflection.invokeMethod(cluster, "withLocalDatacenter", new Object[] { "datacenter1" });//$NON-NLS-1$
+            cluster = NoSQLReflection.invokeMethod(cluster, "withClassLoader", new Object[] { classLoader }, //$NON-NLS-1$
+                    ClassLoader.class);
+
             // Do authenticate
             String requireAuthAttr = connection.getAttributes().get(ICassandraAttributies.REQUIRED_AUTHENTICATION);
             boolean requireAuth = requireAuthAttr == null ? false : Boolean.valueOf(requireAuthAttr);
             if (requireAuth) {
                 String username = connection.getAttributes().get(ICassandraAttributies.USERNAME);
-                String password = connection.getValue(connection.getAttributes().get(ICassandraAttributies.PASSWORD), false);
+                String password = connection.getValue(connection.getAttributes().get(ICassandraAttributies.PASSWORD),
+                        false);
                 if (contextType != null) {
                     username = ContextParameterUtils.getOriginalValue(contextType, username);
                     password = ContextParameterUtils.getOriginalValue(contextType, password);
                 }
-                cluster = NoSQLReflection.invokeMethod(cluster, "withCredentials", new Object[] { username, password }); //$NON-NLS-1$
+                cluster = NoSQLReflection.invokeMethod(cluster, "withAuthCredentials", //$NON-NLS-1$
+                        new Object[] { username, password });
             }
             cluster = NoSQLReflection.invokeMethod(cluster, "build"); //$NON-NLS-1$
 
@@ -195,7 +191,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
             initCluster(connection);
             List<Object> keySpaces = getKeySpaces(connection);
             for (Object keySpace : keySpaces) {
-                String tmpKsName = (String) NoSQLReflection.invokeMethod(keySpace, "getName"); //$NON-NLS-1$
+                String tmpKsName = (String) NoSQLReflection.invokeMethod(keySpace, "getName").toString(); //$NON-NLS-1$
                 if (hasQuote) {
                     ksName = TalendQuoteUtils.removeQuotesIfExist(ksName);
                     if (ksName.equals(tmpKsName)) {
@@ -217,7 +213,9 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         initCluster(connection);
         try {
             Object metadata = NoSQLReflection.invokeMethod(cluster, "getMetadata"); //$NON-NLS-1$
-            keySpaces.addAll((List) NoSQLReflection.invokeMethod(metadata, "getKeyspaces")); //$NON-NLS-1$
+            Map<Object, Object> map = (Map<Object, Object>) NoSQLReflection.invokeMethod(metadata, "getKeyspaces");
+            keySpaces.addAll(map.values());
+
         } catch (NoSQLReflectionException e) {
             throw new NoSQLServerException(e);
         }
@@ -231,7 +229,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         try {
             List<Object> keySpaces = getKeySpaces(connection);
             for (Object keySpace : keySpaces) {
-                String ksName = (String) NoSQLReflection.invokeMethod(keySpace, "getName"); //$NON-NLS-1$
+                String ksName = NoSQLReflection.invokeMethod(keySpace, "getName").toString(); //$NON-NLS-1$
                 ksNames.add(ksName);
             }
         } catch (Exception e) {
@@ -264,9 +262,10 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
                     cfNames.addAll(getColumnFamilyNames(connection, name));
                 }
             } else {
-                Collection tables = (Collection) NoSQLReflection.invokeMethod(keySpace, "getTables"); //$NON-NLS-1$
+                Map<Object, Object> map = (Map<Object, Object>) NoSQLReflection.invokeMethod(keySpace, "getTables"); //$NON-NLS-1$
+                Collection tables = map.values();
                 for (Object table : tables) {
-                    String cfName = (String) NoSQLReflection.invokeMethod(table, "getName"); //$NON-NLS-1$
+                    String cfName = NoSQLReflection.invokeMethod(table, "getName").toString(); //$NON-NLS-1$
                     cfNames.add(cfName);
                 }
             }
@@ -282,9 +281,9 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
     }
 
     @Override
-    public Set<String> getSuperColumnFamilyNames(NoSQLConnection connection, String ksName) throws NoSQLServerException {
+    public Set<String> getSuperColumnFamilyNames(NoSQLConnection connection, String ksName)
+            throws NoSQLServerException {
         Set<String> scfNames = new HashSet<String>();
-        Object session = null;
         ClassLoader classLoader = NoSQLClassLoaderFactory.getClassLoader(connection);
 
         try {
@@ -295,35 +294,33 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
                 }
             } else {
                 initCluster(connection);
-                session = NoSQLReflection.invokeMethod(cluster, "connect", new Object[] { "system" }); //$NON-NLS-1$ //$NON-NLS-2$
-                Object toPrepare = NoSQLReflection.newInstance("com.datastax.driver.core.SimpleStatement", //$NON-NLS-1$
+
+                Object toPrepare = NoSQLReflection.newInstance("com.datastax.oss.driver.core.SimpleStatement", //$NON-NLS-1$
                         new Object[] { "select * from schema_columnfamilies where keyspace_name =?" }, classLoader); //$NON-NLS-1$
-                Object prepared = NoSQLReflection.invokeMethod(session, "prepare", new Object[] { toPrepare }, //$NON-NLS-1$
-                        Class.forName("com.datastax.driver.core.RegularStatement", false, classLoader)); //$NON-NLS-1$
-                Object statement = NoSQLReflection.invokeMethod(prepared, "bind", new Object[] { new Object[] { ksName } }, //$NON-NLS-1$
-                        Object[].class);
+                Object prepared = NoSQLReflection.invokeMethod(cluster, "prepare", new Object[] { toPrepare }, //$NON-NLS-1$
+                        Class.forName("com.datastax.oss.driver.core.RegularStatement", false, classLoader)); //$NON-NLS-1$
+                Object statement = NoSQLReflection.invokeMethod(prepared, "bind", //$NON-NLS-1$
+                        new Object[] { new Object[] { ksName } }, Object[].class);
                 // Statement
-                Object resultSet = NoSQLReflection.invokeMethod(session, "execute", new Object[] { statement }, //$NON-NLS-1$
-                        Class.forName("com.datastax.driver.core.Statement", false, classLoader)); //$NON-NLS-1$
+                Object resultSet = NoSQLReflection.invokeMethod(cluster, "execute", new Object[] { statement }, //$NON-NLS-1$
+                        Class.forName("com.datastax.oss.driver.core.Statement", false, classLoader)); //$NON-NLS-1$
                 Iterator iterator = (Iterator) NoSQLReflection.invokeMethod(resultSet, "iterator"); //$NON-NLS-1$
                 while (iterator.hasNext()) {
                     Object row = iterator.next();
-                    // String type = row.getString("type");s
-                    String type = (String) NoSQLReflection.invokeMethod(row, "getString", new Object[] { "type" }); //$NON-NLS-1$ //$NON-NLS-2$
-                    String scfName = (String) NoSQLReflection
-                            .invokeMethod(row, "getString", new Object[] { "columnfamily_name" }); //$NON-NLS-1$ //$NON-NLS-2$
+                    String type = NoSQLReflection.invokeMethod(row, "getString", new Object[] { "type" }).toString(); //$NON-NLS-1$ //$NON-NLS-2$
+                    String scfName = NoSQLReflection
+                            .invokeMethod(row, "getString", new Object[] { "columnfamily_name" }).toString(); //$NON-NLS-1$ //$NON-NLS-2$
                     if (type.equalsIgnoreCase("super")) { //$NON-NLS-1$
                         scfNames.add(scfName);
                     }
                 }
             }
         } catch (Exception e) {
-             throw new NoSQLServerException(e);
+            throw new NoSQLServerException(e);
         } finally {
             try {
-                if (session != null) {
-                    NoSQLReflection.invokeMethod(session, "close"); //$NON-NLS-1$
-                    closeConnections();
+                if (cluster != null) {
+                    NoSQLReflection.invokeMethod(cluster, "closeAsync"); //$NON-NLS-1$
                 }
             } catch (NoSQLReflectionException e) {
                 // only for debug
@@ -334,18 +331,23 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
     }
 
     @Override
-    public List<Object> getColumns(NoSQLConnection connection, String ksName, String cfName) throws NoSQLServerException {
+    public List<Object> getColumns(NoSQLConnection connection, String ksName, String cfName)
+            throws NoSQLServerException {
         List<Object> columns = new ArrayList<Object>();
         try {
             Object keySpace = getKeySpace(connection, ksName);
             if (keySpace == null) {
                 return columns;
             }
-            Collection<Object> tables = (Collection) NoSQLReflection.invokeMethod(keySpace, "getTables"); //$NON-NLS-1$
+            Map<Object, Object> map = (Map<Object, Object>) NoSQLReflection.invokeMethod(keySpace, "getTables"); //$NON-NLS-1$
+            Collection<Object> tables = map.values();
             for (Object table : tables) {
-                String name = (String) NoSQLReflection.invokeMethod(table, "getName"); //$NON-NLS-1$
+                String name = (String) NoSQLReflection.invokeMethod(table, "getName").toString(); //$NON-NLS-1$
                 if (name != null && cfName.equals(name)) {
-                    columns.addAll((List) NoSQLReflection.invokeMethod(table, "getColumns")); //$NON-NLS-1$
+                    Map<Object, Object> mapColumns = (Map<Object, Object>) NoSQLReflection.invokeMethod(table,
+                            "getColumns");
+                    columns.addAll((List) mapColumns.values()); // $NON-NLS-1$
+
                     break;
                 }
             }
@@ -359,7 +361,7 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
     public String getColumnName(NoSQLConnection connection, Object column) throws NoSQLServerException {
         String columnName = ""; //$NON-NLS-1$
         try {
-            columnName = (String) NoSQLReflection.invokeMethod(column, "getName"); //$NON-NLS-1$
+            columnName = NoSQLReflection.invokeMethod(column, "getName").toString(); //$NON-NLS-1$
         } catch (Exception e) {
             throw new NoSQLServerException(e);
         }
@@ -388,9 +390,9 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
         try {
             Object type = NoSQLReflection.invokeMethod(column, "getType"); //$NON-NLS-1$
             if (type != null) {
-                Object typeName = NoSQLReflection.invokeMethod(type, "getName"); //$NON-NLS-1$
+                Object typeName = NoSQLReflection.invokeMethod(type, "toString"); //$NON-NLS-1$
                 dbType = ((String) NoSQLReflection.invokeMethod(typeName, "toString")); //$NON-NLS-1$
-                if (ICassandraConstants.DBM_ID.equals(dbmsId)) {
+                if (ICassandraConstants.DBM40_DATASTAX_ID.equals(dbmsId)) {
                     dbType = dbType.toUpperCase();
                 }
             }
@@ -404,11 +406,11 @@ public class CassandraMetadataHandler implements ICassandraMetadataHandler {
     public void closeConnections() throws NoSQLServerException {
         try {
             if (cluster != null) {
-                NoSQLReflection.invokeMethod(cluster, "close"); //$NON-NLS-1$
-                cluster = null;
+                NoSQLReflection.invokeMethod(cluster, "closeAsync"); //$NON-NLS-1$
             }
         } catch (NoSQLReflectionException e) {
-            throw new NoSQLServerException(e);
+            // only for debug
+            e.printStackTrace();
         }
     }
 

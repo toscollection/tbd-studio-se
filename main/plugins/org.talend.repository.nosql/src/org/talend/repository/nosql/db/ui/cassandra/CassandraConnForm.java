@@ -216,7 +216,7 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
 
         // update port
         String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
-        if (ICassandraConstants.DB_VERSION_CASSANDRA_3_0.equals(dbVersion)) {
+        if (ICassandraConstants.DB_VERSION_CASSANDRA_3_0.equals(dbVersion)||ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion)) {
             portText.setText(ICassandraConstants.DATASTAX_PORT);
         } else {
             portText.setText(ICassandraConstants.DEFAULT_PORT);

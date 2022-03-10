@@ -21,6 +21,7 @@ import org.talend.core.utils.KeywordsValidator;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
 import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
+import org.talend.repository.nosql.db.handler.cassandra.Cassandra4VersionMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.CassandraMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.CassandraOldVersionMetadataHandler;
 import org.talend.repository.nosql.db.handler.cassandra.ICassandraMetadataHandler;
@@ -35,7 +36,13 @@ public class CassandraConnectionUtil {
     public static ICassandraMetadataHandler getMetadataHandler(NoSQLConnection connection) {
         if (isOldVersion(connection)) {
             return CassandraOldVersionMetadataHandler.getInstance();
-        }if(isUpgradeVersion(connection)){
+        }
+        
+        if(is40Version(connection)) {
+            return Cassandra4VersionMetadataHandler.getInstanceFor40DataStax();
+        }
+        
+        if(isUpgradeVersion(connection)){
                return CassandraMetadataHandler.getInstanceForUpgradeDataStax();
         } else {
             boolean isDatastaxApiType = ICassandraConstants.API_TYPE_DATASTAX.equals(connection.getAttributes().get(
@@ -73,6 +80,26 @@ public class CassandraConnectionUtil {
                      }else{
                          return true;
                      }
+                 }
+             }
+        } catch (Exception ex) {
+            //do nothing
+        }
+        return false;
+    }
+    
+    public static boolean is40Version(NoSQLConnection connection) {
+        String dbVersion = connection.getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        try{
+             Pattern pattern = Pattern.compile("CASSANDRA_(\\d+)_(\\d+)");//$NON-NLS-1$
+             Matcher matcher = pattern.matcher(dbVersion);
+             while (matcher.find()) {
+                 String firstStr = matcher.group(1);
+                 Integer firstInt = Integer.parseInt(firstStr);
+                 if(firstInt==4){
+                     return true;
+                 }else {
+                     return false;
                  }
              }
         } catch (Exception ex) {
