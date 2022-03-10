@@ -43,85 +43,263 @@ if(sizeColumns == 0 || inConnName == null){
 	return "";
 }
 
-String sstablePath = ElementParameterParser.getValue(node,"__SSTABLE_STORE_PATH__");
-String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
-String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
-String partitioner = ElementParameterParser.getValue(node,"__PARTITIONER__");
-String buffer_size = ElementParameterParser.getValue(node,"__BUFFER_SIZE__");
-%>
-int nb_line_<%=cid%> = 0;
-byte[] bTrue_<%=cid%> = new byte[1];
-byte[] bFalse_<%=cid%> = new byte[1];
-bTrue_<%=cid%>[0] = (byte)1;
-bFalse_<%=cid%>[0] = (byte)0;
-java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);		
-<%
-if(isLog4jEnabled){
-%>	
-	log.info("<%=cid%> - Creating the SSTable data directory " + file_<%=cid%>.getPath() + ".");
-<%
-}
-%>
-file_<%=cid%>.mkdirs();
-<%
-if(isLog4jEnabled){
-%>	
-	log.info("<%=cid%> - Created the data directory successfully.");
-<%
-}
-%>
-class ObjectSerializer_<%=cid%>{
-	public java.nio.ByteBuffer toByteBuffer(Object obj){
-	    try{
-	      	ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	      	ObjectOutputStream oos = new ObjectOutputStream(baos);
-	      	oos.writeObject(obj);
-	      	oos.close();
-	      	return java.nio.ByteBuffer.wrap(baos.toByteArray());
-	    }catch (IOException ex){
-	      	throw new RuntimeException(ex);
-	    }
-	}
-}
-ObjectSerializer_<%=cid%> objectSerializer_<%=cid%> = new ObjectSerializer_<%=cid%>();
-
-org.apache.cassandra.dht.IPartitioner partitioner_<%=cid%> = new org.apache.cassandra.dht.<%=partitioner%>();
-
-
-<%
 String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
-boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3_0".equals(dbVersion);
-boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
-if(newCqlTable || cqlTable){
-%>
-	org.apache.cassandra.io.sstable.CQLSSTableWriter writer_<%=cid%> = org.apache.cassandra.io.sstable.CQLSSTableWriter
-																			.builder()
-																			.inDirectory(file_<%=cid%>)
-																			.forTable(<%=ElementParameterParser.getValue(node, "__SCHEMA_STMT__")%>)
-																			.using(	<%=ElementParameterParser.getValue(node, "__INSERT_STMT__")%>)
-																			.withBufferSizeInMB(<%=buffer_size%>)
-																			.withPartitioner(partitioner_<%=cid%>)
-																			.build();
-<%
-}else{
-	String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
-	String sub_comparator = ElementParameterParser.getValue(node,"__SUBCOMPARATOR__");
+if("CASSANDRA_4_0".equals(dbVersion)) {
+	boolean useConfFile = ("true").equals(ElementParameterParser.getValue(node, "__USE_CONF_FILE__"));
+	boolean useHeader = ("true").equals(ElementParameterParser.getValue(node, "__USE_HEADER__"));
+	boolean append = ("true").equals(ElementParameterParser.getValue(node, "__APPEND__"));
+	String filePath = ElementParameterParser.getValue(node, "__DATA_FILE_PATH__");
+	String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+	boolean isCreateDir = ("true").equals(ElementParameterParser.getValue(node,"__CREATE__"));
+	String rowSeparator = ElementParameterParser.getValue(node,"__ROWSEPARATOR__");
+	
+	String fieldSeparator = ElementParameterParser.getValue(node,"__FIELDSEPARATOR__");
+	
+	String escapeChar1 = ElementParameterParser.getValue(node, "__ESCAPE_CHAR__");
+
+	if(escapeChar1.equals("\"\"\"")){
+		escapeChar1 = "\"\\\"\"";
+	}
+
+	String textEnclosure1 = ElementParameterParser.getValue(node, "__TEXT_ENCLOSURE__");
+	if(textEnclosure1.equals("\"\"\"")){
+		textEnclosure1 = "\"\\\"\"";
+	}
+	fieldSeparator = (fieldSeparator.length() == 0 || ("").equals(fieldSeparator)) ? "\",\"" : fieldSeparator;
 	%>
-	org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter writer_<%=cid%> = new org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter(file_<%=cid%>, partitioner_<%=cid%>, <%=keySpace%>, <%=columnFamily%>, 
-		org.apache.cassandra.db.marshal.<%=comparator%>.instance
-		,
-		<%
-		sub_comparator = "NONE";
-		if("NONE".equals(sub_comparator)){
+	String fieldSeparator_<%=cid %> = <%=fieldSeparator%>;
+	//Use conf file = <%=useConfFile%>|<%=ElementParameterParser.getValue(node, "__USE_CONF_FILE__")%>
+	<%
+	if(useConfFile) {
+		String confFilePath = ElementParameterParser.getValue(node,"__CONF_FILE__");
 		%>
-		null
+		java.io.File confFile_<%=cid %> = new java.io.File(<%=confFilePath %>);
 		<%
-		}else if("ASCIITYPE".equals(sub_comparator)){
+		if(isCreateDir) {
 		%>
-		org.apache.cassandra.db.marshal.AsciiType.instance
+			<%
+			if(isLog4jEnabled){
+			%>
+				log.info("<%=cid%> - Creating directory for config file '" + confFile_<%=cid %>.getCanonicalPath() +"', if the directory not exist.");
+			<%
+			}
+			%>
+			confFile_<%=cid %>.getParentFile().mkdirs();
 		<%
 		}
 		%>
-		,<%=buffer_size%>
-		);
-<%}%>      
+		try(java.io.BufferedWriter confFileWriter_<%=cid%> = new java.io.BufferedWriter(new java.io.FileWriter(confFile_<%=cid %>))) {
+		<%
+		boolean useStatement = ("true").equals(ElementParameterParser.getValue(node, "__USE_STATEMENT__"));
+		String mappingType = ElementParameterParser.getValue(node,"__STMT_MAPPING_TYPE__");
+		String mapping = "";
+		if("AUTO_GENERATE".equals(mappingType)) {
+			mapping += "\"";
+			for(int i = 0; i < columns.size(); i++) {
+				if(i > 0) {
+					mapping += ", ";
+				}
+				mapping += i + "=" + columns.get(i).getOriginalDbColumnName();
+			}
+			mapping += "\"";
+		} else if("MANUAL".equals(mappingType)) {
+			mapping = ElementParameterParser.getValue(node,"__STMT_MAPPING__");
+		}
+		%>
+		//Mapping is <%=mapping%>
+		<%
+		if(!"NONE".equals(mappingType) && !mapping.isEmpty()) {
+			mapping = org.talend.core.model.utils.TalendTextUtils.addQuotes(mapping);
+		%>
+			confFileWriter_<%=cid%>.write("dsbulk.schema.mapping");
+			confFileWriter_<%=cid%>.write("=");
+			confFileWriter_<%=cid%>.write(<%=mapping%>);
+			confFileWriter_<%=cid%>.newLine();
+		<%
+		}
+		if(useStatement) {
+			String insertStatement = ElementParameterParser.getValue(node, "__INSERT_STMT__");
+			if(insertStatement != null) {
+				%>
+				//write statement
+				confFileWriter_<%=cid%>.write("dsbulk.schema.query");
+				confFileWriter_<%=cid%>.write("=\"");
+				confFileWriter_<%=cid%>.write((<%=insertStatement%>).replace("\\", "\\\\"));
+				confFileWriter_<%=cid%>.write("\"");
+				confFileWriter_<%=cid%>.newLine();
+				<%
+			}
+		} else {
+			String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+			String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+			
+			//https://github.com/datastax/dsbulk/blob/1.x/manual/application.template.conf
+		%>
+			confFileWriter_<%=cid%>.write("dsbulk.schema.keyspace");
+			confFileWriter_<%=cid%>.write("=");
+			confFileWriter_<%=cid%>.write(<%=keySpace%>);
+			confFileWriter_<%=cid%>.newLine();
+			
+			confFileWriter_<%=cid%>.write("dsbulk.schema.table");
+			confFileWriter_<%=cid%>.write("=");
+			confFileWriter_<%=cid%>.write(<%=columnFamily%>);
+			confFileWriter_<%=cid%>.newLine();
+		<%
+		}
+		%>
+			//write use header
+			confFileWriter_<%=cid%>.write("dsbulk.connector.csv.header");
+			confFileWriter_<%=cid%>.write("=");
+			confFileWriter_<%=cid%>.write("" + (<%=useHeader%>));
+			confFileWriter_<%=cid%>.newLine();
+			
+			//write data file path
+			confFileWriter_<%=cid%>.write("dsbulk.connector.csv.url");
+			confFileWriter_<%=cid%>.write("=\"");
+			confFileWriter_<%=cid%>.write((<%=filePath%>).replace("\\", "\\\\"));
+			confFileWriter_<%=cid%>.write("\"");
+			confFileWriter_<%=cid%>.newLine();
+			
+			confFileWriter_<%=cid%>.write("dsbulk.connector.csv.delimiter");
+			confFileWriter_<%=cid%>.write("=\"");
+			confFileWriter_<%=cid%>.write((<%=fieldSeparator%>).replace("\\", "\\\\"));
+			confFileWriter_<%=cid%>.write("\"");
+			confFileWriter_<%=cid%>.newLine();
+			
+			confFileWriter_<%=cid%>.write("dsbulk.connector.csv.escape");
+			confFileWriter_<%=cid%>.write("=\"");
+			confFileWriter_<%=cid%>.write((<%=escapeChar1%>).replace("\\", "\\\\"));
+			confFileWriter_<%=cid%>.write("\"");
+			confFileWriter_<%=cid%>.newLine();
+		} //End of BufferedWriter try block
+	<%
+	} // end of useConf block
+	%>
+	java.io.File file_<%=cid %> = new java.io.File(<%=filePath %>);
+	<%
+	if(isCreateDir) {
+	%>
+		<%
+		if(isLog4jEnabled){
+		%>
+			log.info("<%=cid%> - Creating directory for file '" + file_<%=cid%>.getCanonicalPath() +"', if the directory not exist.");
+		<%
+		}
+		%>
+		file_<%=cid %>.getParentFile().mkdirs();
+	<%
+	}
+	%>
+	
+	com.talend.csv.CSVWriter csvWriter_<%=cid%> = new com.talend.csv.CSVWriter(new java.io.BufferedWriter(new java.io.OutputStreamWriter(
+	new java.io.FileOutputStream(file_<%=cid %>, <%=append %>), <%=encoding %>)));
+	resourceMap.put("csvWriter_<%=cid%>", csvWriter_<%=cid%>);
+	csvWriter_<%=cid%>.setSeparator(fieldSeparator_<%=cid %>.charAt(0));
+	
+	csvWriter_<%=cid %>.setLineEnd(<%=rowSeparator%>);              	
+	csvWriter_<%=cid %>.setEscapeChar(<%=escapeChar1%>.charAt(0));      		
+	csvWriter_<%=cid %>.setQuoteChar(<%=textEnclosure1%>.charAt(0)); 
+	csvWriter_<%=cid %>.setQuoteStatus(com.talend.csv.CSVWriter.QuoteStatus.AUTO);
+	
+	<%
+	if(!append && useHeader) {
+	%>
+		//Write headers
+		String[] headers_<%=cid%> = new String[<%=sizeColumns%>];
+	<%
+		for(int i = 0; i < sizeColumns; i++) {
+			IMetadataColumn column = columns.get(i);
+			%>
+			headers_<%=cid%>[<%=i%>] = "<%=column.getOriginalDbColumnName()%>";
+			<%
+		}
+		%>
+		csvWriter_<%=cid%>.writeNext(headers_<%=cid%>);
+		csvWriter_<%=cid%>.flush();
+		<%
+	}
+} else {
+	String sstablePath = ElementParameterParser.getValue(node,"__SSTABLE_STORE_PATH__");
+	String keySpace = ElementParameterParser.getValue(node,"__KEY_SPACE__");
+	String columnFamily = ElementParameterParser.getValue(node,"__COLUMN_FAMILY__");
+	String partitioner = ElementParameterParser.getValue(node,"__PARTITIONER__");
+	String buffer_size = ElementParameterParser.getValue(node,"__BUFFER_SIZE__");
+	%>
+	byte[] bTrue_<%=cid%> = new byte[1];
+	byte[] bFalse_<%=cid%> = new byte[1];
+	bTrue_<%=cid%>[0] = (byte)1;
+	bFalse_<%=cid%>[0] = (byte)0;
+	java.io.File file_<%=cid%> = new java.io.File(<%=sstablePath%>, <%=keySpace%>+"/"+<%=columnFamily%>);		
+	<%
+	if(isLog4jEnabled){
+	%>	
+		log.info("<%=cid%> - Creating the SSTable data directory " + file_<%=cid%>.getPath() + ".");
+	<%
+	}
+	%>
+	file_<%=cid%>.mkdirs();
+	<%
+	if(isLog4jEnabled){
+	%>	
+		log.info("<%=cid%> - Created the data directory successfully.");
+	<%
+	}
+	%>
+	class ObjectSerializer_<%=cid%>{
+		public java.nio.ByteBuffer toByteBuffer(Object obj){
+			try{
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				ObjectOutputStream oos = new ObjectOutputStream(baos);
+				oos.writeObject(obj);
+				oos.close();
+				return java.nio.ByteBuffer.wrap(baos.toByteArray());
+			}catch (IOException ex){
+				throw new RuntimeException(ex);
+			}
+		}
+	}
+	ObjectSerializer_<%=cid%> objectSerializer_<%=cid%> = new ObjectSerializer_<%=cid%>();
+
+	org.apache.cassandra.dht.IPartitioner partitioner_<%=cid%> = new org.apache.cassandra.dht.<%=partitioner%>();
+
+
+	<%
+
+	boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3_0".equals(dbVersion);
+	boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
+	if(newCqlTable || cqlTable){
+	%>
+		org.apache.cassandra.io.sstable.CQLSSTableWriter writer_<%=cid%> = org.apache.cassandra.io.sstable.CQLSSTableWriter
+																				.builder()
+																				.inDirectory(file_<%=cid%>)
+																				.forTable(<%=ElementParameterParser.getValue(node, "__SCHEMA_STMT__")%>)
+																				.using(	<%=ElementParameterParser.getValue(node, "__INSERT_STMT__")%>)
+																				.withBufferSizeInMB(<%=buffer_size%>)
+																				.withPartitioner(partitioner_<%=cid%>)
+																				.build();
+	<%
+	}else{
+		String comparator = ElementParameterParser.getValue(node,"__COMPARATOR__");
+		String sub_comparator = ElementParameterParser.getValue(node,"__SUBCOMPARATOR__");
+		%>
+		org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter writer_<%=cid%> = new org.apache.cassandra.io.sstable.SSTableSimpleUnsortedWriter(file_<%=cid%>, partitioner_<%=cid%>, <%=keySpace%>, <%=columnFamily%>, 
+			org.apache.cassandra.db.marshal.<%=comparator%>.instance
+			,
+			<%
+			sub_comparator = "NONE";
+			if("NONE".equals(sub_comparator)){
+			%>
+			null
+			<%
+			}else if("ASCIITYPE".equals(sub_comparator)){
+			%>
+			org.apache.cassandra.db.marshal.AsciiType.instance
+			<%
+			}
+			%>
+			,<%=buffer_size%>
+			);
+	<%}
+}%>
+int nb_line_<%=cid%> = 0;      
+	

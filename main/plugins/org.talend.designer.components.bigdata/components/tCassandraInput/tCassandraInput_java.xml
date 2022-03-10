@@ -39,6 +39,7 @@
             <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR')) OR (DB_VERSION == 'CASSANDRA_1_1_2') OR (DB_VERSION == 'CASSANDRA_1_2_2'))) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_1_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_1_2_2')))">cassandra_id</DEFAULT>
             <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')))">cassandra_datastax_id</DEFAULT>
             <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0')))">cassandra22_datastax_id</DEFAULT>
+			<DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_4_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_4_0'))">cassandra40_datastax_id</DEFAULT>
         </PARAMETER>
 		<PARAMETER
 			NAME="USE_EXISTING_CONNECTION"
@@ -59,9 +60,10 @@
             FIELD="CLOSED_LIST"
             REPOSITORY_VALUE="DB_VERSION"
             NUM_ROW="4"
-			SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
-            <ITEMS DEFAULT="CASSANDRA_3_0">
-                <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>               
+            SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
+            <ITEMS DEFAULT="CASSANDRA_4_0">
+                <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>
+                <ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
         <PARAMETER
@@ -94,7 +96,7 @@
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
             <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">"9160"</DEFAULT>
-            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0')))">"9042"</DEFAULT>		     
+            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0') OR (DB_VERSION == 'CASSANDRA_4_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_4_0')))">"9042"</DEFAULT>		     
 		</PARAMETER>
 		<PARAMETER
 			NAME="REQUIRED_AUTHENTICATION"
@@ -125,7 +127,7 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="13" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))">
+		<PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="13" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0') OR (DB_VERSION == 'CASSANDRA_4_0'))">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
@@ -394,7 +396,7 @@
 			FIELD="MEMO"
 			NUM_ROW="40"
             REQUIRED="true"
-            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0')))"
+            SHOW_IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0') OR (DB_VERSION == 'CASSANDRA_4_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_4_0')))"
 	    >
 	      <DEFAULT>"select id, name from employee"</DEFAULT>
 	    </PARAMETER>
@@ -457,6 +459,44 @@
 	                    MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
 	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
 	                    NAME="metrics-core-3.1.2.jar" />
+	            </IMPORTS>
+				<IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_4_0')">
+                    <IMPORT MODULE="netty-common-4.1.68.Final.jar"
+	                    MVN="mvn:io.netty/netty-common/4.1.68.Final"
+	                    NAME="netty-common-4.1.68.Final.jar" />
+					<IMPORT MODULE="netty-buffer-4.1.68.Final.jar"
+	                    MVN="mvn:io.netty/netty-buffer/4.1.68.Final"
+	                    NAME="netty-buffer-4.1.68.Final.jar" />
+					<IMPORT MODULE="netty-transport-4.1.68.Final.jar"
+	                    MVN="mvn:io.netty/netty-transport/4.1.68.Final"
+	                    NAME="netty-transport-4.1.68.Final.jar" />
+					<IMPORT MODULE="netty-resolver-4.1.68.Final.jar"
+	                    MVN="mvn:io.netty/netty-resolver/4.1.68.Final"
+	                    NAME="netty-resolver-4.1.68.Final.jar" />
+					<IMPORT MODULE="netty-handler-4.1.68.Final.jar"
+	                    MVN="mvn:io.netty/netty-handler/4.1.68.Final"
+	                    NAME="netty-handler-4.1.68.Final.jar" />
+					<IMPORT MODULE="netty-codec-4.1.68.Final.jar"
+	                    MVN="mvn:io.netty/netty-codec/4.1.68.Final"
+	                    NAME="netty-codec-4.1.68.Final.jar" />
+                    <IMPORT MODULE="slf4j-api-1.7.29.jar"
+		                MVN="mvn:org.slf4j/slf4j-api/1.7.29"
+		                NAME="slf4j-api-1.7.29.jar" />
+	                <IMPORT MODULE="java-driver-core-4.13.0.jar"
+	                    MVN="mvn:com.datastax.oss/java-driver-core/4.13.0"
+	                    NAME="java-driver-core-4.13.0.jar" />
+                    <IMPORT MODULE="java-driver-shaded-guava-25.1-jre-graal-sub-1.jar"
+                        MVN="mvn:com.datastax.oss/java-driver-shaded-guava/25.1-jre-graal-sub-1"
+                        NAME="java-driver-shaded-guava-25.1-jre-graal-sub-1.jar" />
+                    <IMPORT
+                        NAME="jnr-posix-3.1.5.jar"
+                        MODULE="jnr-posix-3.1.5.jar" MVN="mvn:com.github.jnr/jnr-posix/3.1.5" />
+                    <IMPORT MODULE="config-1.4.1.jar"
+                        MVN="mvn:com.typesafe/config/1.4.1"
+                        NAME="config-1.4.1.jar" />
+                    <IMPORT MODULE="native-protocol-1.5.0.jar"
+	                    MVN="mvn:com.datastax.oss/native-protocol/1.5.0"
+	                    NAME="native-protocol-1.5.0.jar" />
 	            </IMPORTS>
             </IMPORTS>
         </IMPORTS>

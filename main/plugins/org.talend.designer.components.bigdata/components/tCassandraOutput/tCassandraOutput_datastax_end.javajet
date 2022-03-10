@@ -28,9 +28,16 @@
     }
     boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
     if(!useExistConn){
+		String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
     %>
         connection_<%=cid%>.close();
-        cluster_<%=cid%>.close();
+        <%
+		if(!"CASSANDRA_4_0".equals(dbVersion)) {
+		%>
+			cluster_<%=cid%>.close();
+		<%
+		}
+		%>
         resourceMap.put("finish_<%=cid%>", true); 
     <%
     }

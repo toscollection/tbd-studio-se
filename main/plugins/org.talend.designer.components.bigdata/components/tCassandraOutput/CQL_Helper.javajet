@@ -566,7 +566,7 @@
             preDeleteSQL.append("\"");
             return preDeleteSQL.toString();
         }
-        private String validateDBType(Column column){
+        protected String validateDBType(Column column){
         	String dbType = column.getDBType();
         	if(dbType == null || "".equals(dbType.trim())){//TODO: throw error or use default value?
         		MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetriever(getDBMSId());
@@ -574,7 +574,7 @@
             } 
             return dbType;
         }
-        private String generateSetStmt(String assignStmt, Column column, String inConnName, int index){
+        protected String generateSetStmt(String assignStmt, Column column, String inConnName, int index){
             String dbType = validateDBType(column);
             String columnValue = inConnName + "." + column.getName();
             StringBuilder setStmt = new StringBuilder();
@@ -644,4 +644,83 @@
             return setStmt.toString();
         }
     }
+	class CQLManagerV4Driver extends CQLManager {
+		public CQLManagerV4Driver(INode node, List<IMetadataColumn> columnList){
+        	super(node, columnList);
+        }
+		
+		protected String getDBMSId(){
+            return "cassandra40_datastax_id";
+        }
+		
+		protected String generateSetStmt(String assignStmt, Column column, String inConnName, int index){
+            String dbType = validateDBType(column);
+            String columnValue = inConnName + "." + column.getName();
+            StringBuilder setStmt = new StringBuilder();
+            if(column.isObject()){
+                setStmt.append("if(" + columnValue + " == null){\r\n");
+				setStmt.append(assignStmt).append(" = ");
+                setStmt.append(assignStmt + ".setToNull(" + index + ");\r\n");
+                setStmt.append("} else {");
+            }
+			setStmt.append(assignStmt).append(" = ");
+
+            if("ascii".equals(dbType) || "text".equals(dbType) || "varchar".equals(dbType)){
+            	if(JavaTypesManager.STRING == column.getJavaType()){
+                    setStmt.append(assignStmt +".setString(" + index + ", " + columnValue + ");\r\n");
+            	}else if(JavaTypesManager.CHARACTER == column.getJavaType()){
+            		setStmt.append(assignStmt +".setString(" + index + ", String.valueOf(" + columnValue + "));\r\n");
+            	}
+            }else if("timeuuid".equals(dbType) || "uuid".equals(dbType)){
+                setStmt.append(assignStmt +".setUuid(" + index + ", java.util.UUID.fromString(" + columnValue + "));\r\n");
+            }else if("varint".equals(dbType)){
+                setStmt.append(assignStmt +".setBigInteger(" + index + ", (java.math.BigInteger)" + columnValue + ");\r\n");
+            }else if("inet".equals(dbType)){
+                setStmt.append(assignStmt +".setInetAddress(" + index + ", (java.net.InetAddress)" + columnValue + ");\r\n");
+            }else if("map".equals(dbType)){
+                setStmt.append(assignStmt +".setMap(" + index + ", (java.util.Map)" + columnValue + ", (Class)(((java.util.Map)" + columnValue + ").isEmpty() ? String.class : ((java.util.Map<Object, Object>)" + columnValue + ").entrySet().iterator().next().getKey().getClass()), (Class)(((java.util.Map)" + columnValue + ").isEmpty() ? String.class : ((java.util.Map<Object, Object>)" + columnValue + ").entrySet().iterator().next().getValue().getClass()));\r\n");
+            }else if("set".equals(dbType)){
+                setStmt.append(assignStmt +".setSet(" + index + ", (java.util.Set)" + columnValue + ", (Class)(((java.util.Set)" + columnValue + ").isEmpty() ? String.class : ((java.util.Set)" + columnValue + ").iterator().next().getClass()));\r\n");
+            }else if("list".equals(dbType)){
+                setStmt.append(assignStmt +".setList(" + index + ", " + columnValue + ", (Class)(" + columnValue + ".isEmpty() ? String.class : " + columnValue + ".get(0).getClass()));\r\n");
+            }else if("boolean".equals(dbType)){
+                setStmt.append(assignStmt +".setBoolean(" + index + ", " + columnValue + ");\r\n");
+            }else if("blob".equals(dbType)){
+                setStmt.append(assignStmt +".setByteBuffer(" + index + ", java.nio.ByteBuffer.wrap(" + columnValue + "));\r\n");
+            }else if("timestamp".equals(dbType)){
+				if(JavaTypesManager.LONG == column.getJavaType()) {
+					setStmt.append(assignStmt +".setInstant(" + index + ", java.time.Instant.ofEpochMilli(" + columnValue + "));\r\n");
+				} else if(JavaTypesManager.DATE == column.getJavaType()) {
+					setStmt.append(assignStmt +".setInstant(" + index + ", " + columnValue + ".toInstant());\r\n");
+                }
+            }else if("decimal".equals(dbType)){
+                setStmt.append(assignStmt +".setBigDecimal(" + index + ", " + columnValue + ");\r\n");
+            }else if("double".equals(dbType)){
+                setStmt.append(assignStmt +".setDouble(" + index + ", " + columnValue + ");\r\n");
+            }else if("float".equals(dbType)){
+                setStmt.append(assignStmt +".setFloat(" + index + ", " + columnValue + ");\r\n");
+            }else if("int".equals(dbType)){
+            	setStmt.append(assignStmt +".setInt(" + index + ", " + columnValue + ");\r\n");
+            }else if("bigint".equals(dbType) || "count".equals(dbType)){
+                setStmt.append(assignStmt +".setLong(" + index + ", " + columnValue + ");\r\n");
+            }else if("smallint".equals(dbType)){
+            	setStmt.append(assignStmt +".setShort(" + index + ", " + columnValue + ");\r\n");
+            }else if("tinyint".equals(dbType)){
+            	setStmt.append(assignStmt +".setByte(" + index + ", " + columnValue + ");\r\n");
+            }else if("time".equals(dbType)){
+				if(JavaTypesManager.DATE == column.getJavaType()) {
+					setStmt.append(assignStmt +".setLocalTime(" + index + ", " + columnValue + ".toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime());\r\n");
+				} else if(JavaTypesManager.LONG == column.getJavaType()) {
+					setStmt.append(assignStmt +".setLocalTime(" + index + ", new java.util.Date(" + columnValue + ").toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime());\r\n");
+				}
+            }else if("date".equals(dbType)){
+            	setStmt.append(assignStmt +".setLocalDate(" + index + ", " + columnValue + ".toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());\r\n");
+            }
+
+            if(column.isObject()){
+                setStmt.append("}\r\n");
+            }
+            return setStmt.toString();
+        }
+	}
     %>

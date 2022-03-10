@@ -45,168 +45,210 @@ if(sizeColumns == 0 || inConnName == null){
 	return "";
 }
 String version = ElementParameterParser.getValue(node,"__DB_VERSION__");
-class ConvertTypeUtil{
-	String version = null;
-	String cid = null;
-	public void setCID(String cid){
-		this.cid = cid;
-	}
-	public void setVersion(String version){
-		this.version = version;
-	}
-	public void convert(String cType, String inConnName, String columnName){
-		if("BytesType".equals(cType)){
-		%>
-			java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>)
-		<%
-		}else if("DateType".equals(cType)){
-		%>
-			org.apache.cassandra.utils.ByteBufferUtil.bytes(<%=inConnName%>.<%=columnName%>.getTime())
-		<%
-		}else if("BooleanType".equals(cType)){
-		%>
-			java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>?bTrue_<%=cid%>:bFalse_<%=cid%>)
-		<%
-		}else if("ObjectType".equals(cType)){
-		%>
-		    objectSerializer_<%=cid%>.toByteBuffer(<%=inConnName%>.<%=columnName%>)
-		<%
-		}else if("IntegerType".equals(cType)){
-		%>
-			java.nio.ByteBuffer.wrap(((java.math.BigInteger)<%=inConnName%>.<%=columnName%>).toByteArray())
-		<%
-		}else if("DecimalType".equals(cType)){
-		%>
-			org.apache.cassandra.db.marshal.DecimalType.instance.decompose(<%=inConnName%>.<%=columnName%>)
-		<%
-		}else if("UUIDType".equals(cType) || "TimeUUIDType".equals(cType)){
-			if("CASSANDRA_1_1_2".equals(version)){
-			%>
-				java.nio.ByteBuffer.wrap(org.apache.cassandra.utils.UUIDGen.decompose(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)))
-			<%
-			}else{
-			%>
-				org.apache.cassandra.utils.ByteBufferUtil.bytes(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>))
-			<%
-			}
-		}else{
-	    %>
-	    	org.apache.cassandra.utils.ByteBufferUtil.bytes(<%=inConnName%>.<%=columnName%>)
-		<%
-		}
-	}
-}
-ConvertTypeUtil convertUtil = new ConvertTypeUtil();
-convertUtil.setCID(cid);
-convertUtil.setVersion(version);
-
-String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
-boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3_0".equals(dbVersion);
-boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
-if(newCqlTable){
-%>
-	writer_<%=cid%>.addRow(	
-		<%
-		for(int i = 0; i < sizeColumns; i++){
-			IMetadataColumn column = columns.get(i);
-			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
-			String columnName = column.getLabel();
-			String cType = column.getType();
-			List<String> stringList = java.util.Arrays.asList(new String[]{"ascii", "text", "varchar"});
-			List<String> uuidList = java.util.Arrays.asList(new String[]{"timeuuid", "uuid"});
-			if(!JavaTypesManager.isJavaPrimitiveType( column.getTalendType(), column.isNullable())){
-			%>
-				<%=inConnName%>.<%=columnName%> == null ? null :
-			<%
-			}
-			if(stringList.contains(cType)){
-			%>
-				String.valueOf(<%=inConnName%>.<%=columnName%>)
-			<%
-			}else if("int".equals(cType)){
-			%>
-				(int)<%=inConnName%>.<%=columnName%>
-			<%
-			}else if(uuidList.contains(cType)){
-			%>
-				java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)
-			<%
-			}else{
-			%>
-				<%=inConnName%>.<%=columnName%>
-			<%
-			}
-			%>
-			<%if(i + 1 < sizeColumns){%>
-				,
-			<%}%>
-		<%
-		} 
-		%>
-	);		
-<%
-}else if(cqlTable){
-%>
-	writer_<%=cid%>.rawAddRow(	
-		<%
-		for(int i = 0; i < sizeColumns; i++){
-			IMetadataColumn column = columns.get(i);
-			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
-			String columnName = column.getLabel();
-			String cType = column.getType();
-			%>
-			<%convertUtil.convert(cType, inConnName, columnName);%>
-			<%if(i + 1 < sizeColumns){%>
-				,
-			<%}%>
-		<%
-		} 
-		%>
-	);		
-<%
-}else{
-	String keyColumn = null;
-	String keyCType = null;
-	for(int i = 0; i < sizeColumns; i++){
-		IMetadataColumn column = columns.get(i);
-		if(column.isKey()){
-			keyColumn = column.getLabel();
-			keyCType = column.getType();
-			break;
-		}
-	}
-	if(keyColumn != null){
+if("CASSANDRA_4_0".equals(version)) {
 	%>
-		writer_<%=cid%>.newRow(<%convertUtil.convert(keyCType, inConnName, keyColumn);%>);
+	String[] row<%=cid%> = new String[<%=sizeColumns%>];
 	<%
-	}else{
-	%>
-		if(true){
-			throw new java.lang.Exception("A key should be specified in the schema.");
-		}
-	<%
-	}
-	%>
-	long timestamp_<%=cid%> = System.currentTimeMillis() * 1000;
-	nb_line_<%=cid%> ++;
-	<%
-	if(isLog4jEnabled){
-	%>
-		log.debug("<%=cid%> - Writing the record " + (nb_line_<%=cid%>) + " to the SSTable directory.");
-	<%
-	}
 	for(int i = 0; i < sizeColumns; i++){
 		IMetadataColumn column = columns.get(i);
 		JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
-		String columnName = column.getLabel();
-		String cType = column.getType();
-		if(column.isKey()){
-			continue;
+		String pattern = column.getPattern() == null || column.getPattern().trim().length() == 0 ? null : column.getPattern();
+		String encoding = ElementParameterParser.getValue(node,"__ENCODING__");
+		boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( column.getTalendType(), column.isNullable());
+		String thousandsSeparator = "";
+		String decimalSeparator = ".";
+		%>
+			row<%=cid%>[<%=i%>]=<%=isPrimitive? "":inConnName+"."+column.getLabel()+ " == null ? null : "%>
+		<%
+		if(javaType == JavaTypesManager.STRING ){
+		%>
+			<%=inConnName %>.<%=column.getLabel() %>;
+		<%
+		}else if(javaType == JavaTypesManager.DATE && pattern != null){
+		%>
+			FormatterUtils.format_Date(<%=inConnName %>.<%=column.getLabel() %>, <%= pattern %>);
+		<%
+		}else if(javaType == JavaTypesManager.BYTE_ARRAY){
+		%>
+			new String(java.util.Base64.getEncoder().encode(java.nio.charset.Charset.forName(<%=encoding %>).decode(java.nio.ByteBuffer.wrap(<%=inConnName %>.<%=column.getLabel() %>)).toString().getBytes()));
+		<%
+		} else if (javaType == JavaTypesManager.BIGDECIMAL) {
+		%>
+			<%=column.getPrecision() == null? inConnName + "." + column.getLabel() : inConnName + "." + column.getLabel() + ".setScale(" + column.getPrecision() + ", java.math.RoundingMode.HALF_UP)" %>.toPlainString();
+		<%
+		} else{
+		%>
+			String.valueOf(<%=inConnName %>.<%=column.getLabel() %>);
+		<%
+		}
+	}
+	%>
+	csvWriter_<%=cid %>.writeNext(row<%=cid%>);
+	<%
+} else {
+	class ConvertTypeUtil{
+		String version = null;
+		String cid = null;
+		public void setCID(String cid){
+			this.cid = cid;
+		}
+		public void setVersion(String version){
+			this.version = version;
+		}
+		public void convert(String cType, String inConnName, String columnName){
+			if("BytesType".equals(cType)){
+			%>
+				java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else if("DateType".equals(cType)){
+			%>
+				org.apache.cassandra.utils.ByteBufferUtil.bytes(<%=inConnName%>.<%=columnName%>.getTime())
+			<%
+			}else if("BooleanType".equals(cType)){
+			%>
+				java.nio.ByteBuffer.wrap(<%=inConnName%>.<%=columnName%>?bTrue_<%=cid%>:bFalse_<%=cid%>)
+			<%
+			}else if("ObjectType".equals(cType)){
+			%>
+				objectSerializer_<%=cid%>.toByteBuffer(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else if("IntegerType".equals(cType)){
+			%>
+				java.nio.ByteBuffer.wrap(((java.math.BigInteger)<%=inConnName%>.<%=columnName%>).toByteArray())
+			<%
+			}else if("DecimalType".equals(cType)){
+			%>
+				org.apache.cassandra.db.marshal.DecimalType.instance.decompose(<%=inConnName%>.<%=columnName%>)
+			<%
+			}else if("UUIDType".equals(cType) || "TimeUUIDType".equals(cType)){
+				if("CASSANDRA_1_1_2".equals(version)){
+				%>
+					java.nio.ByteBuffer.wrap(org.apache.cassandra.utils.UUIDGen.decompose(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)))
+				<%
+				}else{
+				%>
+					org.apache.cassandra.utils.ByteBufferUtil.bytes(java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>))
+				<%
+				}
+			}else{
+			%>
+				org.apache.cassandra.utils.ByteBufferUtil.bytes(<%=inConnName%>.<%=columnName%>)
+			<%
+			}
+		}
+	}
+	ConvertTypeUtil convertUtil = new ConvertTypeUtil();
+	convertUtil.setCID(cid);
+	convertUtil.setVersion(version);
+
+	String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+	boolean newCqlTable = "CASSANDRA_2_1".equals(dbVersion) || "CASSANDRA_2_2".equals(dbVersion) || "CASSANDRA_3_0".equals(dbVersion);
+	boolean cqlTable = "CQL".equals(ElementParameterParser.getValue(node, "__TABLE_TYPE__"));
+	if(newCqlTable){
+	%>
+		writer_<%=cid%>.addRow(	
+			<%
+			for(int i = 0; i < sizeColumns; i++){
+				IMetadataColumn column = columns.get(i);
+				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+				String columnName = column.getLabel();
+				String cType = column.getType();
+				List<String> stringList = java.util.Arrays.asList(new String[]{"ascii", "text", "varchar"});
+				List<String> uuidList = java.util.Arrays.asList(new String[]{"timeuuid", "uuid"});
+				if(!JavaTypesManager.isJavaPrimitiveType( column.getTalendType(), column.isNullable())){
+				%>
+					<%=inConnName%>.<%=columnName%> == null ? null :
+				<%
+				}
+				if(stringList.contains(cType)){
+				%>
+					String.valueOf(<%=inConnName%>.<%=columnName%>)
+				<%
+				}else if("int".equals(cType)){
+				%>
+					(int)<%=inConnName%>.<%=columnName%>
+				<%
+				}else if(uuidList.contains(cType)){
+				%>
+					java.util.UUID.fromString(<%=inConnName%>.<%=columnName%>)
+				<%
+				}else{
+				%>
+					<%=inConnName%>.<%=columnName%>
+				<%
+				}
+				%>
+				<%if(i + 1 < sizeColumns){%>
+					,
+				<%}%>
+			<%
+			} 
+			%>
+		);		
+	<%
+	}else if(cqlTable){
+	%>
+		writer_<%=cid%>.rawAddRow(	
+			<%
+			for(int i = 0; i < sizeColumns; i++){
+				IMetadataColumn column = columns.get(i);
+				JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+				String columnName = column.getLabel();
+				String cType = column.getType();
+				%>
+				<%convertUtil.convert(cType, inConnName, columnName);%>
+				<%if(i + 1 < sizeColumns){%>
+					,
+				<%}%>
+			<%
+			} 
+			%>
+		);		
+	<%
+	}else{
+		String keyColumn = null;
+		String keyCType = null;
+		for(int i = 0; i < sizeColumns; i++){
+			IMetadataColumn column = columns.get(i);
+			if(column.isKey()){
+				keyColumn = column.getLabel();
+				keyCType = column.getType();
+				break;
+			}
+		}
+		if(keyColumn != null){
+		%>
+			writer_<%=cid%>.newRow(<%convertUtil.convert(keyCType, inConnName, keyColumn);%>);
+		<%
+		}else{
+		%>
+			if(true){
+				throw new java.lang.Exception("A key should be specified in the schema.");
+			}
+		<%
 		}
 		%>
-		writer_<%=cid%>.addColumn(org.apache.cassandra.utils.ByteBufferUtil.bytes("<%=columnName%>"),<%convertUtil.convert(cType, inConnName, columnName);%>,timestamp_<%=cid%>);
-	<%
-	} 
+		long timestamp_<%=cid%> = System.currentTimeMillis() * 1000;
+		nb_line_<%=cid%> ++;
+		<%
+		if(isLog4jEnabled){
+		%>
+			log.debug("<%=cid%> - Writing the record " + (nb_line_<%=cid%>) + " to the SSTable directory.");
+		<%
+		}
+		for(int i = 0; i < sizeColumns; i++){
+			IMetadataColumn column = columns.get(i);
+			JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
+			String columnName = column.getLabel();
+			String cType = column.getType();
+			if(column.isKey()){
+				continue;
+			}
+			%>
+			writer_<%=cid%>.addColumn(org.apache.cassandra.utils.ByteBufferUtil.bytes("<%=columnName%>"),<%convertUtil.convert(cType, inConnName, columnName);%>,timestamp_<%=cid%>);
+		<%
+		} 
+	}
 }
 %>
 

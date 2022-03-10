@@ -21,13 +21,27 @@
     %>
     <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/CQL_Helper.javajet"%> 
     <%
+	boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
+	INode nodeWithVersion = useExistConn ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node;
+	String dbVersion = ElementParameterParser.getValue(nodeWithVersion, "__DB_VERSION__");
     Boolean dieOnError = ElementParameterParser.getBooleanValue(node, "__DIE_ON_ERROR__");
-    CQLManager cqlManager = new CQLManager(node, columns);
+    CQLManager cqlManager;
+	if("CASSANDRA_4_0".equals(dbVersion)) {
+		cqlManager = new CQLManagerV4Driver(node, columns);
+	} else {
+		cqlManager = new CQLManager(node, columns);
+	}
     boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
     if(useBatch){
-    %>
-        boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
-    <%
+		if("CASSANDRA_4_0".equals(dbVersion)) {
+		%>
+			boundStmt_<%=cid%> = prepareStmt_<%=cid%>.bind();
+		<%
+		} else {
+		%>
+			boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
+		<%
+		}
     }
     %>
     
