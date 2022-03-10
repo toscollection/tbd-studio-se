@@ -1,6 +1,7 @@
 <%@ jet %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/tSetKeystore/SSL_Helper.javajet"%>
 	<%
+	String dbVersion_connection = ElementParameterParser.getValue(node, "__DB_VERSION__");
     String host = ElementParameterParser.getValue(node,"__HOST__");
     String port = ElementParameterParser.getValue(node,"__PORT__");
     String userName = ElementParameterParser.getValue(node, "__USERNAME__");
@@ -28,24 +29,52 @@
 		sslContext_<%=cid%>.init(kmf_<%=cid%> == null ? null : kmf_<%=cid%>.getKeyManagers(), tmf_<%=cid%>.getTrustManagers(), new java.security.SecureRandom());
 	<%
 	}
-    %>
-    com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
-    															.addContactPoints(<%=host%>.split(","))
-    															.withPort(Integer.valueOf(<%=port%>))
+	if("CASSANDRA_4_0".equals(dbVersion_connection)) {
+	%>
+		java.util.List<java.net.InetSocketAddress> contactPoints = new java.util.ArrayList<>();
+	
+	for(String host : <%=host%>.split(",")) {
+		contactPoints.add(java.net.InetSocketAddress.createUnresolved(host, Integer.parseInt(<%=port%>)));
+	}
+    com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = com.datastax.oss.driver.api.core.CqlSession.builder()
+    															.addContactPoints(contactPoints)
+    															.withLocalDatacenter("datacenter1")
                                                             	<%
                                                             	if(authentication){
                                                             	%>
-                                                                	.withCredentials(<%=userName%>, <%=passWord%>)
+                                                                	.withAuthCredentials(<%=userName%>, <%=passWord%>)
                                                             	<%
                                                             	}
                                                             	if(useSSL){
                                                             	%>
-                                                            		.withSSL(com.datastax.driver.core.JdkSSLOptions.builder()
-                                                            					.withSSLContext(sslContext_<%=cid%>).build())
+                                                            		.withSslContext(sslContext_<%=cid%>)
                                                             	<%
                                                             	}
                                                             	%>
     															.build();
-	
-	com.datastax.driver.core.Session connection_<%=cid%> = null;
-	connection_<%=cid%> = cluster_<%=cid%>.connect();
+	<%
+	} else {
+    %>
+		com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
+																	.addContactPoints(<%=host%>.split(","))
+																	.withPort(Integer.valueOf(<%=port%>))
+																	<%
+																	if(authentication){
+																	%>
+																		.withCredentials(<%=userName%>, <%=passWord%>)
+																	<%
+																	}
+																	if(useSSL){
+																	%>
+																		.withSSL(com.datastax.driver.core.JdkSSLOptions.builder()
+																					.withSSLContext(sslContext_<%=cid%>).build())
+																	<%
+																	}
+																	%>
+																	.build();
+		
+		com.datastax.driver.core.Session connection_<%=cid%> = null;
+		connection_<%=cid%> = cluster_<%=cid%>.connect();
+	<%
+	}
+	%>

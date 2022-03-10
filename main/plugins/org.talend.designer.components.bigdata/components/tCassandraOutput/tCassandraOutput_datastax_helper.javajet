@@ -7,10 +7,23 @@ class CassandraOutputGenHelper{
     IMetadataTable metadata = null;
     IConnection conn = null;
     List<IMetadataColumn> columns = null;
+	String dbVersion = null;
+	String cqlPackage = null;
     
 	CQLManager cqlManager;
 	public CassandraOutputGenHelper(INode node){
 		this.node = node;
+		boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
+		INode nodeWithVersion = useExistConn ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node;
+		this.dbVersion = ElementParameterParser.getValue(nodeWithVersion, "__DB_VERSION__");
+		%>
+		//dbVersion=<%=dbVersion%>
+		<%
+		if("CASSANDRA_4_0".equals(dbVersion)) {
+			cqlPackage = "com.datastax.oss.driver.api.core.cql";
+		} else {
+			cqlPackage = "com.datastax.driver.core";
+		}
 	}
 	
 	public void init(){
@@ -26,7 +39,11 @@ class CassandraOutputGenHelper{
 	    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 	        conn = conns.get(0);
 	    }
-        cqlManager = new CQLManager(node, columns);
+		if("CASSANDRA_4_0".equals(dbVersion)) {
+			cqlManager = new CQLManagerV4Driver(node, columns);
+		} else {
+			cqlManager = new CQLManager(node, columns);
+		}
 	}
 	public String getCid(){
 		return cid;
@@ -50,14 +67,26 @@ class CassandraOutputGenHelper{
 		boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
     	String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     	if(useExistConn){
-		%>
-			com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
-        	com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
-        <%
+			if("CASSANDRA_4_0".equals(dbVersion)) {
+			%>
+				com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = (com.datastax.oss.driver.api.core.CqlSession)globalMap.get("connection_<%=connection%>");
+			<%
+			} else {
+			%>
+				com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
+				com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
+			<%
+			}
 	    }else{  
 	    %>
 	        <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/tCassandraConnection_datastax_connect.javajet"%>
-	        resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+            <%
+            if(!"CASSANDRA_4_0".equals(dbVersion)) {
+            %>
+                resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
+            <%
+            }
+            %>
 	        resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
 	    <%
 	    }
@@ -157,9 +186,9 @@ class CassandraOutputGenHelper{
 	public void genInit(){
 	%>
 		int nb_line_<%=cid%> = 0;
-	    com.datastax.driver.core.PreparedStatement prepareStmt_<%=cid%> = null;
+	    <%=cqlPackage%>.PreparedStatement prepareStmt_<%=cid%> = null;
 	    prepareStmt_<%=cid%> = connection_<%=cid%>.prepare(<%=cqlManager.generatePreActionSQL()%>);
-	    com.datastax.driver.core.BoundStatement boundStmt_<%=cid%> = null;
+	    <%=cqlPackage%>.BoundStatement boundStmt_<%=cid%> = null;
 	    <%
 	    if(ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__")){
     	%>
@@ -182,10 +211,16 @@ class CassandraOutputGenHelper{
 	    																					<%=ElementParameterParser.getBooleanValue(node, "__ASYNC__")%>,
 	    																					<%=ElementParameterParser.getValue(node, "__CONCURRENT_TASKS__")%>);
     	<%
-	    }else{
-	    %>
-	        boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
+        } else{
+            if("CASSANDRA_4_0".equals(dbVersion)) {
+        %>
+            boundStmt_<%=cid%> = prepareStmt_<%=cid%>.bind();
+        <%
+            } else {
+        %>
+                boundStmt_<%=cid%> = new <%=cqlPackage%>.BoundStatement(prepareStmt_<%=cid%>);
 	    <%
+            }
 	    }
 	}
 }
