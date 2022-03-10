@@ -155,7 +155,7 @@
             dbDNDProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraDNDProvider"
             dbMetadataProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraMetadataProvider"
             dbType="CASSANDRA"
-            dbVersions="CASSANDRA_3_0;"
+            dbVersions="CASSANDRA_4_0;CASSANDRA_3_0;"
             dbWizPageProvider="org.talend.repository.nosql.db.provider.cassandra.CassandraWizardPageProvider"
             description="Cassandra">
       </factory>
@@ -185,6 +185,10 @@
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_3_0"
             libraries="netty-common-4.1.68.Final.jar;netty-resolver-4.1.68.Final.jar;netty-transport-4.1.68.Final.jar;cassandra-driver-core-3.0.0.jar;guava-16.0.1.jar;slf4j-api-1.7.7.jar;metrics-core-3.1.2.jar;netty-buffer-4.1.68.Final.jar;netty-codec-4.1.68.Final.jar;netty-handler-4.1.68.Final.jar;">
+      </classloader>
+      <classloader
+            index="NOSQL:CASSANDRA:CASSANDRA_4_0"
+            libraries="java-driver-core-4.13.0.jar;netty-common-4.1.68.Final.jar;netty-buffer-4.1.68.Final.jar;netty-transport-4.1.68.Final.jar;netty-resolver-4.1.68.Final.jar;netty-handler-4.1.68.Final.jar;netty-codec-4.1.68.Final.jar;slf4j-api-1.7.7.jar;java-driver-shaded-guava-25.1-jre-graal-sub-1.jar;talend-cassandra-2.0.jar;config-1.4.1.jar;native-protocol-1.5.0.jar">
       </classloader>
       <classloader
             index="NOSQL:NEO4J:NEO4J_3_2_X"
@@ -266,6 +270,36 @@
         id="spring-data-neo4j-3.4.0.RELEASE.jar"
         name="spring-data-neo4j-3.4.0.RELEASE.jar" 
         mvn_uri="mvn:org.talend.libraries/spring-data-neo4j-3.4.0.RELEASE/6.0.0">
+      </libraryNeeded>
+        <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="java-driver-core-4.13.0.jar"
+        name="java-driver-core-4.13.0.jar" 
+        mvn_uri="mvn:com.datastax.oss/java-driver-core/4.13.0">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="config-1.4.1.jar"
+        name="config-1.4.1.jar" 
+        mvn_uri="mvn:com.typesafe/config/1.4.1">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="java-driver-shaded-guava-25.1-jre-graal-sub-1.jar"
+        name="java-driver-shaded-guava-25.1-jre-graal-sub-1.jar" 
+        mvn_uri="mvn:com.datastax.oss/java-driver-shaded-guava/25.1-jre-graal-sub-1">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="native-protocol-1.5.0.jar"
+        name="native-protocol-1.5.0.jar" 
+        mvn_uri="mvn:com.datastax.oss/native-protocol/1.5.0">
+      </libraryNeeded>
+       <libraryNeeded
+        context="Needed for CASSANDRA_4_0"
+        id="talend-cassandra-2.0.jar"
+        name="talend-cassandra-2.0.jar" 
+        mvn_uri="mvn:org.talend.components/talend-cassandra/2.0">
       </libraryNeeded>
       <libraryNeeded
         context="Needed for Neo4J Connection"
