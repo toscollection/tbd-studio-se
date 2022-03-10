@@ -299,7 +299,7 @@
         context="Needed for CASSANDRA_4_0"
         id="talend-cassandra-2.0.jar"
         name="talend-cassandra-2.0.jar" 
-        mvn_uri="mvn:org.talend.libraries/talend-cassandra/2.0">
+        mvn_uri="mvn:org.talend.components/talend-cassandra/2.0">
       </libraryNeeded>
       <libraryNeeded
         context="Needed for Neo4J Connection"
