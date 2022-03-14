@@ -15,6 +15,7 @@ package org.talend.repository.nosql.db.ui.cassandra;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.eclipse.jface.fieldassist.ControlDecoration;
 import org.eclipse.jface.fieldassist.FieldDecorationRegistry;
 import org.eclipse.jface.wizard.WizardPage;
@@ -66,6 +67,8 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
     protected LabelledText portText;
 
     protected LabelledText databaseText;
+    
+    protected LabelledText datacenterText;
 
     protected LabelledText userText;
 
@@ -92,6 +95,11 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         String server = conn.getAttributes().get(INoSQLCommonAttributes.HOST);
         String port = conn.getAttributes().get(INoSQLCommonAttributes.PORT);
         String database = conn.getAttributes().get(INoSQLCommonAttributes.DATABASE);
+        String datacenter = null;
+        if(ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion)) {
+             datacenter = conn.getAttributes().get(INoSQLCommonAttributes.DATACENTER);
+        }
+        
         String user = conn.getAttributes().get(INoSQLCommonAttributes.USERNAME);
         String passwd = conn.getValue(conn.getAttributes().get(INoSQLCommonAttributes.PASSWORD), false);
         Boolean isUseRequireAuth = Boolean.parseBoolean(conn.getAttributes().get(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION));
@@ -112,6 +120,10 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         }
         serverText.setText(server == null ? ICassandraConstants.DEFAULT_HOST : server);
         databaseText.setText(database == null ? "" : database); //$NON-NLS-1$
+        if (datacenterText != null) {
+            datacenterText.setText(datacenter == null ? "" : datacenter); //$NON-NLS-1$
+        }
+
         checkRequireAuthBtn.setSelection(isUseRequireAuth);
         if (checkRequireAuthBtn.getSelection()) {
             userText.setText(user == null ? "" : user); //$NON-NLS-1$
@@ -129,6 +141,10 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         conn.getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
         conn.getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
         conn.getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        if (ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion) && datacenterText != null) {
+            conn.getAttributes().put(INoSQLCommonAttributes.DATACENTER, datacenterText.getText());
+        }
         conn.getAttributes().put(INoSQLCommonAttributes.REQUIRED_AUTHENTICATION,
                 String.valueOf(checkRequireAuthBtn.getSelection()));
         conn.getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
@@ -141,6 +157,10 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         attributes.add(INoSQLCommonAttributes.HOST);
         attributes.add(INoSQLCommonAttributes.PORT);
         attributes.add(INoSQLCommonAttributes.DATABASE);
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        if (ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion)) {
+            attributes.add(INoSQLCommonAttributes.DATACENTER);
+        }
         if (checkRequireAuthBtn.getSelection()) {
             attributes.add(INoSQLCommonAttributes.USERNAME);
             attributes.add(INoSQLCommonAttributes.PASSWORD);
@@ -195,8 +215,10 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         updateAPITypeComboField();
         serverText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.server"), 1); //$NON-NLS-1$
         portText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.port"), 1); //$NON-NLS-1$
+        databaseText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.keyspace"), 1); //$NON-NLS-1$
+        datacenterText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.datacenter"), 1); //$NON-NLS-1$
         updatePortDecoration();
-        databaseText = new LabelledText(connComposite, Messages.getString("CassandraConnForm.keyspace"), 1, true); //$NON-NLS-1$
+        
     }
 
     private void updatePortDecoration() {
@@ -221,6 +243,14 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         } else {
             portText.setText(ICassandraConstants.DEFAULT_PORT);
         }
+        if (datacenterText != null) {
+            if (ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion)||StringUtils.isBlank(dbVersion)) {
+                datacenterText.setVisible(true);
+            } else {
+                datacenterText.setVisible(false);
+            }
+        }
+       
     }
 
     private void addAuthGroup(Composite composite) {
@@ -270,6 +300,9 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         serverText.setEnabled(editable);
         portText.setEnabled(editable);
         databaseText.setEnabled(editable);
+        if (datacenterText != null) {
+            datacenterText.setEnabled(editable);
+        }
         checkRequireAuthBtn.setEnabled(editable);
         boolean enableAuth = checkRequireAuthBtn.isEnabled() && checkRequireAuthBtn.getSelection();
         userText.setEditable(editable && enableAuth);
@@ -361,6 +394,16 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
                 getConnection().getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
             }
         });
+        if (datacenterText != null) {
+            datacenterText.addModifyListener(new ModifyListener() {
+
+                @Override
+                public void modifyText(ModifyEvent e) {
+                    checkFieldsValue();
+                    getConnection().getAttributes().put(INoSQLCommonAttributes.DATACENTER, datacenterText.getText());
+                }
+            });
+        }
 
         checkRequireAuthBtn.addSelectionListener(new SelectionAdapter() {
 
@@ -415,6 +458,11 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         addContextParams(EHadoopParamName.Server, true);
         addContextParams(EHadoopParamName.Port, true);
         addContextParams(EHadoopParamName.Keyspace, true);
+
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        if (ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion)) {
+            addContextParams(EHadoopParamName.Datacenter, true);
+        }
         collectAuthParams(checkRequireAuthBtn.getSelection());
     }
 
@@ -429,6 +477,10 @@ public class CassandraConnForm extends AbstractNoSQLConnForm {
         conn.getAttributes().put(INoSQLCommonAttributes.HOST, serverText.getText());
         conn.getAttributes().put(INoSQLCommonAttributes.PORT, portText.getText());
         conn.getAttributes().put(INoSQLCommonAttributes.DATABASE, databaseText.getText());
+        String dbVersion = getConnection().getAttributes().get(INoSQLCommonAttributes.DB_VERSION);
+        if (ICassandraConstants.DB_VERSION_CASSANDRA_4_0.equals(dbVersion) && datacenterText != null) {
+            conn.getAttributes().put(INoSQLCommonAttributes.DATACENTER, datacenterText.getText());
+        }
         if (checkRequireAuthBtn.getSelection()) {
             conn.getAttributes().put(INoSQLCommonAttributes.USERNAME, userText.getText());
             conn.getAttributes().put(INoSQLCommonAttributes.PASSWORD, pwdText.getText());

@@ -91,6 +91,10 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(INoSQLCommonAttributes.DATABASE), javaType);
                         break;
+                    case Datacenter:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getAttributes().get(INoSQLCommonAttributes.DATACENTER), javaType);
+                        break;
                     case Databasepath:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getAttributes().get(INeo4jAttributes.DATABASE_PATH), javaType);
@@ -307,6 +311,10 @@ public class NoSQLRepositoryContextHandler extends AbstractRepositoryContextHand
             break;
         case Keyspace:
             noSqlConn.getAttributes().put(INoSQLCommonAttributes.DATABASE,
+                    ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
+            break;
+        case Datacenter:
+            noSqlConn.getAttributes().put(INoSQLCommonAttributes.DATACENTER,
                     ContextParameterUtils.getNewScriptCode(noSqlVariableName, LANGUAGE));
             break;
         case Databasepath:
