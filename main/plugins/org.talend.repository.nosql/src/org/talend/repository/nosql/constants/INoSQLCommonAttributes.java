@@ -25,6 +25,8 @@ public interface INoSQLCommonAttributes {
     public static final String HOST = "HOST"; //$NON-NLS-1$
 
     public static final String PORT = "PORT"; //$NON-NLS-1$
+    
+    public static final String DATACENTER = "DATACENTER"; //$NON-NLS-1$
 
     public static final String USERNAME = "USERNAME"; //$NON-NLS-1$
 
