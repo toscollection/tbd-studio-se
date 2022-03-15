@@ -44,6 +44,8 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.PORT));
         } else if (ICassandraAttributies.KEY_SPACE.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.DATABASE));
+        }else if (ICassandraAttributies.DATACENTER.equals(value)) {
+            return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.DATACENTER));
         } else if (ICassandraAttributies.USERNAME.equals(value)) {
             return getCanonicalRepositoryValue(connection, connection.getAttributes().get(ICassandraAttributies.USERNAME));
         } else if (ICassandraAttributies.PASSWORD.equals(value)) {
@@ -88,6 +90,11 @@ public class CassandraDNDProvider extends AbstractDNDProvider {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
             if (value != null) {
                 connection.getAttributes().put(ICassandraAttributies.DATABASE, value);
+            }
+        }else if (ICassandraAttributies.DATACENTER.equals(param.getRepositoryValue())) {
+            String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);
+            if (value != null) {
+                connection.getAttributes().put(ICassandraAttributies.DATACENTER, value);
             }
         } else if (ICassandraAttributies.REQUIRED_AUTHENTICATION.equals(param.getRepositoryValue())) {
             String value = ComponentToRepositoryProperty.getParameterValue(connection, node, param);

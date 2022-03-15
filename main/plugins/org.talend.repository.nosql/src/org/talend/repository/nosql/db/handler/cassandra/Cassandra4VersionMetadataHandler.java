@@ -122,6 +122,7 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
             ContextType contextType = null;
             String host = connection.getAttributes().get(ICassandraAttributies.HOST);
             String port = connection.getAttributes().get(ICassandraAttributies.PORT);
+            String datacenter = connection.getAttributes().get(ICassandraAttributies.DATACENTER);
             if (connection.isContextMode()) {
                 contextType = ConnectionContextHelper.getContextTypeForContextMode(connection);
             }
@@ -136,7 +137,9 @@ public class Cassandra4VersionMetadataHandler implements ICassandraMetadataHandl
             InetSocketAddress socketAddress = new InetSocketAddress(inetAddress, Integer.valueOf(port));
             cluster = NoSQLReflection.invokeMethod(cluster, "addContactPoint", new Object[] { socketAddress }, //$NON-NLS-1$
                     InetSocketAddress.class);
-            cluster = NoSQLReflection.invokeMethod(cluster, "withLocalDatacenter", new Object[] { "datacenter1" });//$NON-NLS-1$
+            if (StringUtils.isNotBlank(datacenter)) {
+                cluster = NoSQLReflection.invokeMethod(cluster, "withLocalDatacenter", new Object[] { datacenter });//$NON-NLS-1$
+            }
             cluster = NoSQLReflection.invokeMethod(cluster, "withClassLoader", new Object[] { classLoader }, //$NON-NLS-1$
                     ClassLoader.class);
 
