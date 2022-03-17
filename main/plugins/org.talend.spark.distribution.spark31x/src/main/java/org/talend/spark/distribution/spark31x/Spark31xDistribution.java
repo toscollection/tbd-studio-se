@@ -76,15 +76,16 @@ public class Spark31xDistribution extends AbstractSparkDistribution
         return result;
     }
 
+    @Override
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {
         Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> result = super.buildNodeModuleGroups(distribution, version);
         Set<DistributionModuleGroup> s3ModuleGroup = Spark31xNodeModuleGroup.getModuleGroup(ModuleGroupName.S3.get(getVersion()),
                 SparkBatchConstant.SPARK_BATCH_S3_SPARKCONFIGURATION_LINKEDPARAMETER, Spark31xDistribution.SPARK_VERSION);
-        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
-                            s3ModuleGroup);	
-        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
-                s3ModuleGroup);	
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                s3ModuleGroup);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
+                s3ModuleGroup);
         return result;
     }
 
@@ -159,7 +160,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean useOldAWSAPI() {
         return false;
     }
-    
+
     @Override
     public boolean useS3AProperties() {
         return true;
@@ -174,17 +175,17 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean doSupportSparkYarnClientMode() {
         return false;
     }
-    
+
     @Override
     public boolean doSupportSparkYarnClusterMode() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportSparkYarnK8SMode() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportUniversalLocalMode() {
         return true;
@@ -209,12 +210,12 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean doSupportAzureBlobStorage() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportAzureDataLakeStorage() {
         return true;
     }
-    
+
     @Override
     public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
@@ -362,4 +363,10 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public String getSqoopPackageName() {
         return ESqoopPackageName.ORG_APACHE_SQOOP.toString();
     }
+
+    @Override
+    public boolean doSupportUniversalCDEMode() {
+        return true;
+    }
+    
 }
