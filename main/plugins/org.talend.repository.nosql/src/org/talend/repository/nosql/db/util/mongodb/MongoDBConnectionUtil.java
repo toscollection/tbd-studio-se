@@ -277,7 +277,7 @@ public class MongoDBConnectionUtil {
             //
             SSLContext sslContext = null;
             String authMechanism = connection.getAttributes().get(IMongoDBAttributes.AUTHENTICATION_MECHANISM);
-            if(requireAuth && authMechanism.equals(IMongoConstants.X509)) {
+            if(requireAuth && IMongoConstants.X509.equals(authMechanism)) {
                 sslContext = mongoX509SSLContext(connection);
             } else if (requireEncryption) {
             	sslContext = StudioSSLContextProvider.getContext();
