@@ -313,8 +313,8 @@
     </ADVANCED_PARAMETERS>
     <CODEGENERATION>
         <IMPORTS>
-            <IMPORT NAME="log4j-1.2.17" MODULE="log4j-1.2.17.jar"
-                    MVN="mvn:log4j/log4j/1.2.17"/>
+            <IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar"
+                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
             <IMPORT NAME="aws-java-sdk-1.11.848.jar" MODULE="aws-java-sdk-1.11.848.jar"
                     MVN="mvn:com.amazonaws/aws-java-sdk/1.11.848"
                     REQUIRED="true" />
