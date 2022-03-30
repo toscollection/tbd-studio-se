@@ -56,7 +56,7 @@ public class Apache100ClassLoaderTest extends AbstractTest4ClassLoaderProvider {
 
     @Test
     public void testHDFS() {
-        String libsStr = "hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;avro-1.5.4.jar;jackson-mapper-asl-1.9.14-TALEND.jar;jackson-core-asl-1.9.14-TALEND.jar;log4j-1.2.17.jar";
+        String libsStr = "hadoop-core-1.0.0.jar;commons-logging-1.1.1.jar;commons-configuration-1.6.jar;commons-lang-2.4.jar;jetty-util-6.1.26.jar;jersey-core-1.8.jar;avro-1.5.4.jar;jackson-mapper-asl-1.9.14-TALEND.jar;jackson-core-asl-1.9.14-TALEND.jar;reload4j-1.2.19.jar";
         doTestClassLoader(EHadoopCategory.HDFS.getName(), libsStr);
     }
 

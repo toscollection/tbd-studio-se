@@ -14078,8 +14078,8 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_log4j_1_2_17_jar",
-      "mvn_uri" : "mvn:log4j/log4j/1.2.17/jar",
-      "name" : "log4j-1.2.17.jar",
+      "mvn_uri" : "ch.qos.reload4j/reload4j/1.2.19/jar",
+      "name" : "reload4j-1.2.19.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
