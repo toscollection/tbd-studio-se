@@ -83,8 +83,8 @@
 	<CODEGENERATION>
 		<IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')">
 
-           <IMPORT NAME="log4j-1.2.17" MODULE="log4j-1.2.17.jar" 
-                   MVN="mvn:log4j/log4j/1.2.17"/>
+           <IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar" 
+                   MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
 
            <IMPORT NAME="commons-logging-1.2.jar" MODULE="commons-logging-1.2.jar" 
                    MVN="mvn:commons-logging/commons-logging/1.2"/>

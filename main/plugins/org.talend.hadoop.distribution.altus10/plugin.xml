@@ -108,7 +108,7 @@
              <library id="protobuf-java-2.5.0.jar" />
              <library id="slf4j-api-1.7.5.jar" />
              <library id="slf4j-log4j12-1.7.5.jar" />
-             <library id="log4j-1.2.17.jar" />
+             <library id="reload4j-1.2.19.jar" />
              <library id="jersey-core-1.9.jar" />
              <library id="htrace-core4-4.0.1-incubating.jar" />
              <library id="servlet-api-2.5.jar"/>

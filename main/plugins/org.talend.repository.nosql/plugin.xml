@@ -208,7 +208,7 @@
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_2_0_0"
-            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;log4j-1.2.16.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
+            libraries="cassandra-driver-core-2.0.3.jar;guava-13.0.1.jar;reload4j-1.2.19.jar;metrics-core-3.0.2.jar;netty-3.6.6.Final.jar;slf4j-api-1.7.5.jar;slf4j-log4j12-1.7.5.jar;">
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_2_2"
