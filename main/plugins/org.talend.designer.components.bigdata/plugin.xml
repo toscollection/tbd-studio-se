@@ -13,18 +13,6 @@
          point="org.talend.core.runtime.librariesNeeded">
       <libraryNeeded
             context="plugin:"
-            id="logback-classic-1.1.2.jar"
-            mvn_uri="mvn:org.talend.libraries/logback-classic-1.1.2/6.1.0"
-            name="logback-classic-1.1.2.jar">
-      </libraryNeeded>
-      <libraryNeeded
-            context="plugin:"
-            id="logback-core-1.1.2.jar"
-            mvn_uri="mvn:org.talend.libraries/logback-core-1.1.2/6.1.0"
-            name="logback-core-1.1.2.jar">
-      </libraryNeeded>
-      <libraryNeeded
-            context="plugin:"
             id="jersey-core-1.17.jar"
             mvn_uri="mvn:org.talend.libraries/jersey-core-1.17/6.1.0"
             name="jersey-core-1.17.jar"
