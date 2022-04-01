@@ -15803,8 +15803,8 @@
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
           "id": "DYNAMIC_HDP_3_1_4_12_1_log4j_1_2_17_jar",
-          "mvn_uri": "mvn:log4j/log4j/1.2.17/jar",
-          "name": "log4j-1.2.17.jar",
+          "mvn_uri": "mvn:ch.qos.reload4j/reload4j/1.2.19/jar",
+          "name": "reload4j-1.2.19.jar",
           "tagName": "libraryNeeded"
         },
         {
