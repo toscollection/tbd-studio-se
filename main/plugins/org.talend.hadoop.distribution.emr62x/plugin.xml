@@ -856,6 +856,7 @@
             <library id="gson-2.2.4.jar"/>
             <library id="hadoop-auth-3.2.1-amzn-2.jar"/>
             <library id="hadoop-aws-3.2.1-amzn-2.jar"/>
+            <library id="hadoop-common-3.2.1-amzn-2.1.jar"/>
             <library id="hadoop-client-3.2.1-amzn-2.jar"/>
             <library id="hadoop-common-3.2.1-amzn-2.1.jar"/>
             <library id="hadoop-hdfs-3.2.1-amzn-2.jar"/>
