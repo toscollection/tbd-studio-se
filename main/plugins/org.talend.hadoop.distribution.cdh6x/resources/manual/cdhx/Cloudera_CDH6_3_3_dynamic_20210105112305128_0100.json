@@ -11549,30 +11549,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_aop_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_beans_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_context_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_core_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_expression_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_web_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_stax2_api_3_1_4_jar",
         "tagName" : "library"
       }, {
@@ -14656,54 +14632,6 @@
       "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spire_macros_2_11_0_13_0_jar",
       "mvn_uri" : "mvn:org.spire-math/spire-macros_2.11/0.13.0/jar",
       "name" : "spire-macros_2.11-0.13.0.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_aop_4_0_7_RELEASE_jar",
-      "mvn_uri" : "mvn:org.springframework/spring-aop/4.0.7.RELEASE/jar",
-      "name" : "spring-aop-4.0.7.RELEASE.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_beans_4_0_7_RELEASE_jar",
-      "mvn_uri" : "mvn:org.springframework/spring-beans/4.0.7.RELEASE/jar",
-      "name" : "spring-beans-4.0.7.RELEASE.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_context_4_0_7_RELEASE_jar",
-      "mvn_uri" : "mvn:org.springframework/spring-context/4.0.7.RELEASE/jar",
-      "name" : "spring-context-4.0.7.RELEASE.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_core_4_0_7_RELEASE_jar",
-      "mvn_uri" : "mvn:org.springframework/spring-core/4.0.7.RELEASE/jar",
-      "name" : "spring-core-4.0.7.RELEASE.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_expression_4_0_7_RELEASE_jar",
-      "mvn_uri" : "mvn:org.springframework/spring-expression/4.0.7.RELEASE/jar",
-      "name" : "spring-expression-4.0.7.RELEASE.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_3_3_dynamic_20210105112305128_0100_spring_web_4_0_7_RELEASE_jar",
-      "mvn_uri" : "mvn:org.springframework/spring-web/4.0.7.RELEASE/jar",
-      "name" : "spring-web-4.0.7.RELEASE.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
