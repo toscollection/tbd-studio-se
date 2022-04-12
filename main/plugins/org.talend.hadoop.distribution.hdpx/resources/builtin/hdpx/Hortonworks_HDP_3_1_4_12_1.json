@@ -302,21 +302,6 @@
             },
             {
               "childNodes": [],
-              "id": "DYNAMIC_HDP_3_1_4_12_1_spring_asm_3_1_3_RELEASE",
-              "tagName": "library"
-            },
-            {
-              "childNodes": [],
-              "id": "DYNAMIC_HDP_3_1_4_12_1_spring_beans_3_1_3_RELEASE",
-              "tagName": "library"
-            },
-            {
-              "childNodes": [],
-              "id": "DYNAMIC_HDP_3_1_4_12_1_spring_core_3_1_3_RELEASE",
-              "tagName": "library"
-            },
-            {
-              "childNodes": [],
               "id": "DYNAMIC_HDP_3_1_4_12_1_stax_api_1_0_1_jar",
               "tagName": "library"
             },
@@ -15803,8 +15788,8 @@
           "context": "plugin:org.talend.hadoop.distribution.hdpx",
           "excludeDependencies": "true",
           "id": "DYNAMIC_HDP_3_1_4_12_1_log4j_1_2_17_jar",
-          "mvn_uri": "mvn:log4j/log4j/1.2.17/jar",
-          "name": "log4j-1.2.17.jar",
+          "mvn_uri": "mvn:ch.qos.reload4j/reload4j/1.2.19/jar",
+          "name": "reload4j-1.2.19.jar",
           "tagName": "libraryNeeded"
         },
         {
@@ -16490,36 +16475,6 @@
           "mvn_uri": "mvn:org.spire-math/spire-macros_2.11/0.13.0/jar",
           "name": "spire-macros_2.11-0.13.0.jar",
           "tagName": "libraryNeeded"
-        },
-        {
-          "childNodes": [],
-          "context": "plugin:org.talend.hadoop.distribution.hdpx",
-          "excludeDependencies": "true",
-          "id": "DYNAMIC_HDP_3_1_4_12_1_spring_asm_3_1_3_RELEASE",
-          "mvn_uri": "mvn:org.talend.libraries/spring-asm-3.1.3.RELEASE/6.3.0",
-          "name": "spring-asm-3.1.3.RELEASE.jar",
-          "tagName": "libraryNeeded",
-          "useStudioRepository": "true"
-        },
-        {
-          "childNodes": [],
-          "context": "plugin:org.talend.hadoop.distribution.hdpx",
-          "excludeDependencies": "true",
-          "id": "DYNAMIC_HDP_3_1_4_12_1_spring_beans_3_1_3_RELEASE",
-          "mvn_uri": "mvn:org.talend.libraries/spring-beans-3.1.3.RELEASE/6.3.0",
-          "name": "spring-beans-3.1.3.RELEASE.jar",
-          "tagName": "libraryNeeded",
-          "useStudioRepository": "true"
-        },
-        {
-          "childNodes": [],
-          "context": "plugin:org.talend.hadoop.distribution.hdpx",
-          "excludeDependencies": "true",
-          "id": "DYNAMIC_HDP_3_1_4_12_1_spring_core_3_1_3_RELEASE",
-          "mvn_uri": "mvn:org.talend.libraries/spring-core-3.1.3.RELEASE/6.3.0",
-          "name": "spring-core-3.1.3.RELEASE.jar",
-          "tagName": "libraryNeeded",
-          "useStudioRepository": "true"
         },
         {
           "childNodes": [],
