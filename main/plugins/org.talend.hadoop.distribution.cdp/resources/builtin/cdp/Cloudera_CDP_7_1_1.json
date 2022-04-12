@@ -1284,6 +1284,10 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_auth_3_1_1_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_annotations_3_1_1_7_1_1_0_565_jar",
         "tagName" : "library"
       }, {
