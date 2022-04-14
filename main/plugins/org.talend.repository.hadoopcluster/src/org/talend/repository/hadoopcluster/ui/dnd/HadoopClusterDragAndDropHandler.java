@@ -278,13 +278,25 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_CONTAINER.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER));
+        } else if (EHDFSRepositoryToComponent.ADLSGEN2AUTH.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE));    
         } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_USERNAME.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME));
         } else if (EHDFSRepositoryToComponent.SYNAPSE_STORAGE_PASSWORD.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD));
-        } else if (EHDFSRepositoryToComponent.DEPLOY_FOLDER.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_APPLICATION_ID.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_DIRECTORY_ID.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID));
+        } else if (EHDFSRepositoryToComponent.SYNAPSE_CLIENT_KEY.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY));
+        }  else if (EHDFSRepositoryToComponent.DEPLOY_FOLDER.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
         } else if (EHDFSRepositoryToComponent.SPARK_DRIVER_MEMORY.getRepositoryValue().equals(value)) {

@@ -943,6 +943,11 @@ public class HCRepositoryUtil {
         if (synapseFsContainer != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER, synapseFsContainer);
         }
+        String synapseAuthMode = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.ADLSGEN2AUTH.getName());
+        if (synapseAuthMode != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE, synapseAuthMode);
+        }
         String synapseFsUsername =  hiveVersion.getDefaultConfig(distribution,
         		EHadoopProperties.SYNAPSE_STORAGE_USERNAME.getName());
         if (synapseFsUsername != null) {
@@ -952,6 +957,21 @@ public class HCRepositoryUtil {
                 EHadoopProperties.SYNAPSE_STORAGE_PASSWORD.getName());
         if (synapseFsPassword != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD, synapseFsPassword);
+        }
+        String synapseclientId =  hiveVersion.getDefaultConfig(distribution,
+        		EHadoopProperties.SYNAPSE_APPLICATION_ID.getName());
+        if (synapseclientId != null) {
+        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID, synapseclientId);
+        }
+        String synapsedirectoryId =  hiveVersion.getDefaultConfig(distribution,
+        		EHadoopProperties.SYNAPSE_DIRECTORY_ID.getName());
+        if (synapseclientId != null) {
+        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID, synapsedirectoryId);
+        }
+        String synapseclientKey = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SYNAPSE_CLIENT_KEY.getName());
+        if (synapseclientKey != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY, synapseclientKey);
         }
         String synapseDeployBlob = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.DEPLOY_FOLDER.getName());
