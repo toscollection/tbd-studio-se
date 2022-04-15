@@ -59,7 +59,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     private Button customButton;
 
     private Button useYarnButton;
-    
+
     private Button useKnoxButton;
 
     private IHadoopClusterInfoForm hcInfoForm;
@@ -90,13 +90,13 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         }
         updateVersionPart();
         updateKnoxPart();
-        
+
         useYarnButton.setSelection(getConnection().isUseYarn());
-        
-        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);  
+
+        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
         useKnoxButton.setSelection("true".equals(useKnoxStr));
         switchToInfoForm();
-        
+
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
 
@@ -224,14 +224,14 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
                 switchToInfoForm();
             }
         });
-        
+
         useKnoxButton.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                
+
                 String selection = String.valueOf(useKnoxButton.getSelection());
-                
+
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX, selection);
                 switchToInfoForm();
                 checkFieldsValue();
@@ -254,9 +254,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         }
         DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(distributionCombo.getText(), true);
         DistributionVersion hadoopVersion = hadoopDistribution.getVersion(versionCombo.getText(), true);
-        
-        
-        
+
         if (HCVersionUtil.isHDI(getConnection())) {
             hcInfoForm = new HDIInfoForm(this, connectionItem, existingNamesArray, creation);
         } else if (HCVersionUtil.isSynapse(getConnection())) {
@@ -294,7 +292,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
         } else {
             versionCombo.getCombo().select(0);
         }
-        
+
         if (distribution.useCustom()) {
             versionCombo.setHideWidgets(true);
             hideControl(useYarnButton, false);
@@ -305,7 +303,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
             hideControl(customButton, true);
         }
     }
-    
+
     private void updateKnoxPart() {
         if(HCVersionUtil.isExecutedThroughKnox(getConnection())) {
             hideControl(useKnoxButton, false);
@@ -317,7 +315,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     private void updateYarnContent() {
         useYarnButton.setSelection(getConnection().isUseYarn());
     }
-    
+
     private void updateKnoxContent() {
         boolean isUseKnox = Boolean.getBoolean(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX));
         useKnoxButton.setSelection(isUseKnox);

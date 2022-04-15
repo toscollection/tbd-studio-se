@@ -13,9 +13,11 @@
 package org.talend.repository.hadoopcluster.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -50,9 +52,11 @@ import org.talend.commons.exception.ExceptionHandler;
 import org.talend.commons.ui.runtime.image.EImage;
 import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.commons.ui.swt.formtools.Form;
+import org.talend.commons.ui.swt.formtools.LabelledCheckbox;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
 import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
+import org.talend.commons.ui.swt.formtools.LabelledWidget;
 import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
@@ -224,9 +228,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private Composite maprTSetComposite;
 
     private Group authGroup;
-    
+
     private Group connectionGroup;
-    
+
     private Group webHDFSSSLEncryptionGrp;
 
     private Button useWebHDFSSSLEncryptionBtn;
@@ -236,17 +240,19 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledFileField webHDFSSSLTrustStorePath;
 
     private LabelledText webHDFSSSLTrustStorePassword;
-    
+
     private LabelledCombo sparkModeCombo;
-    
+
     private ISparkDistribution sparkDistribution;
-    
+
     private Group dataBricksGroup;
-    
+
+    private Group cdeGroup;
+
     private LabelledText endpointText;
 
     private LabelledCombo cloudProviderCombo;
-    
+
     private LabelledCombo runSubmitCombo;
 
     private LabelledText clusterIDText;
@@ -254,6 +260,16 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText tokenText;
 
     private LabelledText dbfsDepFolderText;
+    
+    // CDE widgets
+    private LabelledWidget cdeApiEndPoint;
+    private LabelledWidget cdeAutoGenerateToken;
+    private LabelledWidget cdeToken;
+    private LabelledWidget cdeTokenEndpoint;
+    private LabelledWidget cdeWorkloadUser;
+    private LabelledWidget cdeWorkloadPassword;
+    // Mapping between connection parameter and form field 
+    private Map<String, LabelledWidget> fieldByParamKey;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -347,33 +363,33 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
         onUseCustomConfBtnSelected(null);
         onOverrideHadoopConfBtnSelected(null);
-        
+
         if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
-        	useCustomConfBtn.setEnabled(false);
-        	useCustomConfBtn.setSelection(true);
-        	setHadoopConfBtn.setEnabled(false);
-        	setHadoopConfBtn.setSelection(true);
-        	hadoopConfSpecificJarText.setEditable(true);
-        	String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
-        	if (sparkModeValue != null) {
-            	sparkModeCombo.setText(getSparkModeByValue(sparkModeValue).getLabel());
+            useCustomConfBtn.setEnabled(false);
+            useCustomConfBtn.setSelection(true);
+            setHadoopConfBtn.setEnabled(false);
+            setHadoopConfBtn.setSelection(true);
+            hadoopConfSpecificJarText.setEditable(true);
+            String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
+            if (sparkModeValue != null) {
+                sparkModeCombo.setText(getSparkModeByValue(sparkModeValue).getLabel());
             } else {
-            	sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
+                sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
             }
-        	String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
+            String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
             if (providerValue != null) {
-                cloudProviderCombo.setText(getDatabriksCloudProviderByVaule(providerValue).getProviderLableName());
+                cloudProviderCombo.setText(getDatabricksCloudProviderByValue(providerValue).getProviderLableName());
             } else {
 
                 cloudProviderCombo.setText(EDatabriksCloudProvider.AWS.getProviderLableName());
             }
             String runModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE);
             if (runModeValue != null) {
-            	runSubmitCombo.setText(getDatabriksRunModeByValue(runModeValue).getRunModeLabel());
+                runSubmitCombo.setText(getDatabricksRunModeByValue(runModeValue).getRunModeLabel());
             } else {
-            	runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
+                runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
             }
-            
+
             String endPoint = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT));
             endpointText.setText(endPoint);
@@ -389,6 +405,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String folder = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
             dbfsDepFolderText.setText(folder);
+            
+            // CDE - Set widget values from connection
+            for (Entry<String, LabelledWidget> entry : fieldByParamKey.entrySet())
+            {
+                String value = StringUtils.trimToEmpty(getConnection().getParameters().get(entry.getKey()));
+                entry.getValue().set(value);
+            }
+            updateCdeFieldsVisibility();
         }
     }
 
@@ -432,14 +456,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         webHDFSSSLTrustStorePath.setReadOnly(readOnly);
         webHDFSSSLTrustStorePassword.setReadOnly(readOnly);
         if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
-        	useCustomConfBtn.setEnabled(false);
-        	useCustomConfBtn.setSelection(true);
-        	setHadoopConfBtn.setEnabled(false);
-        	setHadoopConfBtn.setSelection(true);
-        	hadoopConfSpecificJarText.setEditable(true);
-        	sparkModeCombo.setEnabled(!readOnly);
-        	runSubmitCombo.setEnabled(!readOnly);
-        	cloudProviderCombo.setEnabled(!readOnly);
+            useCustomConfBtn.setEnabled(false);
+            useCustomConfBtn.setSelection(true);
+            setHadoopConfBtn.setEnabled(false);
+            setHadoopConfBtn.setSelection(true);
+            hadoopConfSpecificJarText.setEditable(true);
+            sparkModeCombo.setEnabled(!readOnly);
+            runSubmitCombo.setEnabled(!readOnly);
+            cloudProviderCombo.setEnabled(!readOnly);
             endpointText.setEnabled(!readOnly);
             clusterIDText.setEnabled(!readOnly);
             tokenText.setEnabled(!readOnly);
@@ -504,8 +528,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         hadoopConfSpecificJarText.setEditable(isEditable && setHadoopConfBtn.getSelection());
         browseHadoopConfBtn.setEnabled(isEditable && setHadoopConfBtn.getSelection());
         sparkModeCombo.setEnabled(isEditable);
-    	runSubmitCombo.setEnabled(isEditable);
-    	cloudProviderCombo.setEnabled(isEditable);
+        runSubmitCombo.setEnabled(isEditable);
+        cloudProviderCombo.setEnabled(isEditable);
         endpointText.setEnabled(isEditable);
         clusterIDText.setEnabled(isEditable);
         tokenText.setEnabled(isEditable);
@@ -514,27 +538,27 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     @Override
     protected void addFields() {
-
-    	if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
-        	Group configGroup = Form.createGroup(this, 2, Messages.getString("HadoopClusterForm.sparkConfig"), 120); //$NON-NLS-1$
+        if ("SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) { //$NON-NLS-1$
+            Group configGroup = Form.createGroup(this, 2, Messages.getString("HadoopClusterForm.sparkConfig"), 120); //$NON-NLS-1$
             configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-            sparkModeCombo = new LabelledCombo(configGroup, Messages.getString("HadoopClusterForm.sparkMode"), Messages.getString("HadoopClusterForm.sparkMode.tooltip"), //$NON-NLS-1$ $NON-NLS-2$
-            		getSparkModes());
+            sparkModeCombo = new LabelledCombo(configGroup, Messages.getString("HadoopClusterForm.sparkMode"), //$NON-NLS-1$
+                    Messages.getString("HadoopClusterForm.sparkMode.tooltip"), // $NON-NLS-2$
+                    getSparkModes());
             String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
-        	if (sparkModeValue != null) {
-            	sparkModeCombo.setText(getSparkModeByValue(sparkModeValue).getLabel());
+            if (sparkModeValue != null) {
+                sparkModeCombo.setText(getSparkModeByValue(sparkModeValue).getLabel());
             } else {
-            	sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
+                sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
             }
-        	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
-            		getSparkModeByName(sparkModeCombo.getText()).getValue());
+            getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
+                    getSparkModeByName(sparkModeCombo.getText()).getValue());
         }
-    	
+
         Composite parent = new Composite(this, SWT.NONE);
         parent.setLayout(new FillLayout());
         GridData parentGridData = new GridData(SWT.FILL, SWT.FILL, true, true);
         parent.setLayoutData(parentGridData);
-        
+
         sash = new SashForm(parent, SWT.VERTICAL | SWT.SMOOTH);
         sash.setBackground(parent.getDisplay().getSystemColor(SWT.COLOR_WHITE));
         GridLayout layout = new GridLayout();
@@ -556,12 +580,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         bigComposite = Form.startNewGridLayout(scrolledComposite, 1);
         scrolledComposite.setContent(bigComposite);
 
-
         addCustomFields();
         addConnectionFields(bigComposite);
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
-        addDatabricksField();
+        addDatabricksFields();
+        addCdeFields();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -575,41 +599,41 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         propertiesLayout.marginHeight = 0;
         propertiesComposite.setLayout(propertiesLayout);
         propertiesComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        
+
         addHadoopPropertiesFields();
         addSparkPropertiesFields();
         addNavigatorFields();
         addHadoopConfsFields();
-        
+
         addCheckFields();
-        
+
         hideFieldsOnSparkMode();
-        
+
         scrolledComposite.addControlListener(new ControlAdapter() {
+
             @Override
             public void controlResized(ControlEvent e) {
                 Rectangle r = scrolledComposite.getClientArea();
                 // scrolledComposite.setMinSize(bigComposite.computeSize(r.width-100, 550));
-                    if (Platform.getOS().equals(Platform.OS_LINUX)) {
-                        scrolledComposite.setMinSize(bigComposite.computeSize(SWT.DEFAULT, 900));
-                    } else {
+                if (Platform.getOS().equals(Platform.OS_LINUX)) {
+                    scrolledComposite.setMinSize(bigComposite.computeSize(SWT.DEFAULT, 900));
+                } else {
                     scrolledComposite.setMinSize(bigComposite.computeSize(SWT.DEFAULT, 620));
-                    }
+                }
             }
         });
         propertiesScroll.addControlListener(new ControlAdapter() {
+
             @Override
             public void controlResized(ControlEvent e) {
                 propertiesScroll.setMinSize(propertiesComposite.computeSize(SWT.DEFAULT, SWT.DEFAULT));
             }
         });
-
     }
-    
-    
-    private void addDatabricksField() {
-    	dataBricksGroup = Form.createGroup(bigComposite, 2, Messages.getString("DataBricksInfoForm.text.configuration"), 110); //$NON-NLS-1$
-    	dataBricksGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+    private void addDatabricksFields() {
+        dataBricksGroup = Form.createGroup(bigComposite, 2, Messages.getString("DataBricksInfoForm.text.configuration"), 110); //$NON-NLS-1$
+        dataBricksGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         runSubmitCombo = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.runSubmitMode"), "", //$NON-NLS-1$ $NON-NLS-2$
                 getRunSubmitModes());
         cloudProviderCombo = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.cloudProvider"), "", //$NON-NLS-1$ $NON-NLS-2$
@@ -623,20 +647,39 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
         dbfsDepFolderText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.dbfsDepFolder"), 1); //$NON-NLS-1$
     }
-    
+
+    private void addCdeFields() {
+        cdeGroup = Form.createGroup(bigComposite, 2, Messages.getString("CdeInfoForm.text.configuration"), 110); //$NON-NLS-1$
+        cdeGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        cdeApiEndPoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeApiEndPoint"));  //$NON-NLS-1$
+        cdeAutoGenerateToken = new LabelledCheckbox(cdeGroup, Messages.getString("CdeInfoForm.checkbox.cdeAutoGenerateToken")); //$NON-NLS-1$
+        cdeToken = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeToken"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);  //$NON-NLS-1$
+        cdeTokenEndpoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeTokenEndpoint"));  //$NON-NLS-1$
+        cdeWorkloadUser = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadUser"));  //$NON-NLS-1$
+        cdeWorkloadPassword = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadPassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);  //$NON-NLS-1$
+
+        fieldByParamKey = new HashMap<String, LabelledWidget>();
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT, cdeApiEndPoint);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN, cdeToken);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_AUTO_GENERATE_TOKEN, cdeAutoGenerateToken);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT, cdeTokenEndpoint);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER, cdeWorkloadUser);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD, cdeWorkloadPassword);
+    }
+
     private List<String> getRunSubmitModes() {
-    	List<String> runSubmitLabelNames = new ArrayList<String>();
+        List<String> runSubmitLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
             List<EDatabriksSubmitMode> runSubmitModes = sparkDistribution.getRunSubmitMode();
             if (runSubmitModes != null) {
-            	runSubmitLabelNames = runSubmitModes.stream().map(mode -> {
+                runSubmitLabelNames = runSubmitModes.stream().map(mode -> {
                     return mode.getRunModeLabel();
                 }).collect(Collectors.toList());
             }
         }
         return runSubmitLabelNames;
     }
-    
+
     private List<String> getProviders() {
         List<String> providerLableNames = new ArrayList<String>();
         if (sparkDistribution != null) {
@@ -698,7 +741,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         webHDFSSSLTrustStorePath = new LabelledFileField(webHDFSSSLEncryptionDetailComposite,
                 Messages.getString("HadoopClusterForm.webHDFS.encryption.useSSLEncryption.trustStorePath"), extensions); //$NON-NLS-1$
         webHDFSSSLTrustStorePassword = new LabelledText(webHDFSSSLEncryptionDetailComposite,
-                Messages.getString("HadoopClusterForm.webHDFS.encryption.useSSLEncryption.trustStorePassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
+                Messages.getString("HadoopClusterForm.webHDFS.encryption.useSSLEncryption.trustStorePassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$        
         webHDFSSSLTrustStorePassword.getTextControl().setEchoChar('*');
     }
 
@@ -976,7 +1019,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         formData.top = new FormAttachment(setHadoopConfBtn, 0, SWT.CENTER);
         formData.right = new FormAttachment(100);
         browseHadoopConfBtn.setLayoutData(formData);
-        
+
         hadoopConfSpecificJarText = new Text(hadoopConfsGroup, SWT.BORDER);
         formData = new FormData();
         formData.left = new FormAttachment(setHadoopConfBtn, 5, SWT.RIGHT);
@@ -1391,23 +1434,23 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
         });
         if (sparkModeCombo != null) {
-        	sparkModeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
+            sparkModeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
 
                 @Override
                 public void widgetSelected(SelectionEvent e) {
                     hideFieldsOnSparkMode();
                     checkFieldsValue();
                 }
-            });	
+            });
         }
         cloudProviderCombo.getCombo().addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
                 String providerLableName = cloudProviderCombo.getText();
-                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER,
-                        getDatabriksCloudProviderByName(providerLableName).getProviderValue());
-                    checkFieldsValue();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER,
+                        getDatabricksCloudProviderByName(providerLableName).getProviderValue());
+                checkFieldsValue();
             }
         });
         runSubmitCombo.getCombo().addSelectionListener(new SelectionAdapter() {
@@ -1415,9 +1458,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             @Override
             public void widgetSelected(SelectionEvent e) {
                 String runModeLableName = runSubmitCombo.getText();
-                    getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE,
-                    		getDatabriksRunModeByName(runModeLableName).getRunModeValue());
-                    checkFieldsValue();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE,
+                        getDatabricksRunModeByName(runModeLableName).getRunModeValue());
+                checkFieldsValue();
             }
         });
         endpointText.addModifyListener(new ModifyListener() {
@@ -1457,42 +1500,79 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
-    }
-    
-    private void hideFieldsOnSparkMode() {
-    	if (sparkModeCombo != null && "SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
-    		String sparkModeLableName = sparkModeCombo.getText();
-            getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
-            		getSparkModeByName(sparkModeLableName).getValue());
-            if (ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeLableName)) {
-            	hideControl(connectionGroup, false);
-            	hideControl(authGroup, false);
-            	hideControl(webHDFSSSLEncryptionGrp, false);
-            	hideControl(dataBricksGroup, true);
-            } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLableName)) {
-            	hideControl(connectionGroup, true);
-            	hideControl(authGroup, true);
-            	hideControl(webHDFSSSLEncryptionGrp, true);
-            	hideControl(dataBricksGroup, false);
-            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
-            	hideControl(connectionGroup, true);
-            	hideControl(authGroup, true);
-            	hideControl(webHDFSSSLEncryptionGrp, true);
-            	hideControl(dataBricksGroup, true);
-            } else if (ESparkMode.SPARK_LOCAL.getLabel().equals(sparkModeLableName)) {
-            	hideControl(connectionGroup, true);
-            	hideControl(authGroup, true);
-            	hideControl(webHDFSSSLEncryptionGrp, true);
-            	hideControl(dataBricksGroup, true);
-            } else { 
-            	hideControl(connectionGroup, true);
-            	hideControl(authGroup, true);
-            	hideControl(webHDFSSSLEncryptionGrp, true);
-            	hideControl(dataBricksGroup, true);
+        
+        // CDE listeners (UI to Connection)
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN);
+        ((LabelledCheckbox) cdeAutoGenerateToken).addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateCdeFieldsVisibility();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_AUTO_GENERATE_TOKEN, Boolean.valueOf(((LabelledCheckbox) cdeAutoGenerateToken).getSelection()).toString());
             }
-    	} else {
-    		hideControl(dataBricksGroup, true);
-    	}
+        });
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD);
+    }
+
+    /*
+     * Show/hide required CDE fields according token generation mechanism
+     */
+    private void updateCdeFieldsVisibility() {
+        boolean autoGenerateToken = ((LabelledCheckbox) cdeAutoGenerateToken).getSelection();
+        cdeToken.setVisible(! autoGenerateToken, autoGenerateToken);
+        cdeTokenEndpoint.setVisible(autoGenerateToken, ! autoGenerateToken);
+        cdeWorkloadUser.setVisible(autoGenerateToken, ! autoGenerateToken);
+        cdeWorkloadPassword.setVisible(autoGenerateToken, ! autoGenerateToken);
+        cdeGroup.layout();
+        cdeGroup.getParent().layout();
+    }
+
+    /*
+     * Add a listener to update paramKey connection parameter with value from associated widget
+     */
+    private void addBasicListener(String paramKey) {
+        LabelledText targetComponent = (LabelledText) fieldByParamKey.get(paramKey);
+        targetComponent.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(paramKey, targetComponent.getText());
+                checkFieldsValue();
+            }
+        });
+    }
+
+    /**
+     * Hide widgets according to current Spark mode
+     */
+    private void hideFieldsOnSparkMode() {
+        if (sparkModeCombo != null
+                && "SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+            String sparkModeLabelName = sparkModeCombo.getText();
+            getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
+                    getSparkModeByName(sparkModeLabelName).getValue());
+
+            // List of possible configuration groups
+            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup);
+
+            // Group visibility depends on Spark mode
+            Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
+            visibleGroupsBySparkMode.put(ESparkMode.YARN_CLUSTER, Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp));
+            visibleGroupsBySparkMode.put(ESparkMode.DATABRICKS, Arrays.asList(dataBricksGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.CDE, Arrays.asList(cdeGroup));
+
+            // Compute current visible groups
+            ESparkMode currentSparkMode = ESparkMode.getByLabel(sparkModeLabelName);
+            List<Group> currentVisibleGroups = visibleGroupsBySparkMode.get(currentSparkMode);
+            // Hide required groups
+            for (Group group : groups) {
+                hideControl(group, currentVisibleGroups == null || !currentVisibleGroups.contains(group));
+            }
+        } else {
+            hideControl(dataBricksGroup, true);
+            hideControl(cdeGroup, true);
+        }
     }
 
     private void onUseCustomConfBtnSelected(SelectionEvent event) {
@@ -1873,11 +1953,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private void updateMRRelatedContent() {
         boolean useYarn = getConnection().isUseYarn();
         jobtrackerUriText
-                .setLabelText(useYarn ? Messages.getString("HadoopClusterForm.text.resourceManager") : Messages.getString("HadoopClusterForm.text.jobtrackerURI")); //$NON-NLS-1$ //$NON-NLS-2$
-        jobtrackerUriText.getTextControl().getParent().layout();
-        jtOrRmPrincipalText
-                .setLabelText(useYarn ? Messages.getString("HadoopClusterForm.text.rmPrincipal") : Messages.getString("HadoopClusterForm.text.jtPrincipal")); //$NON-NLS-1$ //$NON-NLS-2$
-        jtOrRmPrincipalText.getTextControl().getParent().layout();
+        .setLabelText(useYarn ? Messages.getString("HadoopClusterForm.text.resourceManager") : Messages.getString("HadoopClusterForm.text.jobtrackerURI")); //$NON-NLS-1$ //$NON-NLS-2$
+jobtrackerUriText.getTextControl().getParent().layout();
+jtOrRmPrincipalText
+        .setLabelText(useYarn ? Messages.getString("HadoopClusterForm.text.rmPrincipal") : Messages.getString("HadoopClusterForm.text.jtPrincipal")); //$NON-NLS-1$ //$NON-NLS-2$
+    jtOrRmPrincipalText.getTextControl().getParent().layout();
     }
 
     private void updateConnectionContent() {
@@ -1938,174 +2018,167 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     @Override
     public boolean checkFieldsValue() {
         checkServicesBtn.setEnabled(false);
-        // hadoopConfSpecificJarText
-        // .setBackground(hadoopConfSpecificJarText.getEditable() ? null : ColorConstants.GREY_COLOR);
         updateStatus(IStatus.OK, null);
 
-        // if (useCustomConfBtn.getSelection() && setHadoopConfBtn.getSelection()) {
-        // String tooltip = Messages.getString("HadoopClusterForm.check.overrideCustomConf.warn");
-        // updateStatus(IStatus.WARNING, tooltip);
-        // hadoopConfSpecificJarText.setBackground(ColorConstants.YELLOW_COLOR);
-        // hadoopConfSpecificJarText.setToolTipText(tooltip);
-        // }
-        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution()) || (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
-	        if (getConnection().isUseCustomVersion()) {
-	            if (authenticationCombo.getSelectionIndex() == -1) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.authentication")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (!validText(namenodeUriText.getText())) {
-	            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodeURI")); //$NON-NLS-1$
-	            return false;
-	        }
-	
-	        if (!isContextMode() && !HadoopParameterValidator.isValidNamenodeURI(namenodeUriText.getText())) {
-	            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodeURI.invalid")); //$NON-NLS-1$
-	            return false;
-	        }
-	
-	        if (!validText(jobtrackerUriText.getText())) {
-	            updateStatus(IStatus.ERROR,
-	                    Messages.getString("HadoopClusterForm.check.jobtrackerURI2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
-	            return false;
-	        }
-	
-	        if (!isContextMode() && !HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
-	            updateStatus(IStatus.ERROR,
-	                    Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
-	            return false;
-	        }
-	
-	        if (namenodePrincipalText.getEditable()) {
-	            if (!validText(namenodePrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodePrincipal")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(namenodePrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodePrincipal.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (jtOrRmPrincipalText.getEditable()) {
-	            if (!validText(jtOrRmPrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR,
-	                        Messages.getString("HadoopClusterForm.check.jtOrRmPrincipal", jtOrRmPrincipalText.getLabelText())); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(jtOrRmPrincipalText.getText())) {
+        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
+                || (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
+            if (getConnection().isUseCustomVersion()) {
+                if (authenticationCombo.getSelectionIndex() == -1) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.authentication")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (!validText(namenodeUriText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodeURI")); //$NON-NLS-1$
+                return false;
+            }
+
+            if (!isContextMode() && !HadoopParameterValidator.isValidNamenodeURI(namenodeUriText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodeURI.invalid")); //$NON-NLS-1$
+                return false;
+            }
+
+            if (!validText(jobtrackerUriText.getText())) {
+                updateStatus(IStatus.ERROR,
+                        Messages.getString("HadoopClusterForm.check.jobtrackerURI2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
+                return false;
+            }
+
+            if (!isContextMode() && !HadoopParameterValidator.isValidJobtrackerURI(jobtrackerUriText.getText())) {
+                updateStatus(IStatus.ERROR,
+                        Messages.getString("HadoopClusterForm.check.jobtrackerURI.invalid2", jobtrackerUriText.getLabelText())); //$NON-NLS-1$
+                return false;
+            }
+
+            if (namenodePrincipalText.getEditable()) {
+                if (!validText(namenodePrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodePrincipal")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(namenodePrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.namenodePrincipal.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (jtOrRmPrincipalText.getEditable()) {
+                if (!validText(jtOrRmPrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR,
+                            Messages.getString("HadoopClusterForm.check.jtOrRmPrincipal", jtOrRmPrincipalText.getLabelText())); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(jtOrRmPrincipalText.getText())) {
 	                updateStatus(IStatus.ERROR,
 	                        Messages.getString("HadoopClusterForm.check.jtOrRmPrincipal.invalid", jtOrRmPrincipalText.getLabelText())); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (jobHistoryPrincipalText.getEditable()) {
-	            if (!validText(jobHistoryPrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(jobHistoryPrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (userNameText != null && userNameText.getEditable()) {
-	            if (!validText(userNameText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (groupText.getEditable()) {
-	            if (!validText(groupText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidGroup(groupText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (validText(userNameText.getText()) && !HadoopParameterValidator.isValidUserName(userNameText.getText())) {
-	            updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName.invalid")); //$NON-NLS-1$
-	            return false;
-	        }
-	
-	        if (keytabPrincipalText.getEditable()) {
-	            if (!validText(keytabPrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytabPrincipal")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(keytabPrincipalText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytabPrincipal.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (keytabText.getEditable()) {
-	            if (!validText(keytabText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytab")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (maprTPasswordText.getEditable()) {
-	            if (!validText(maprTPasswordText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTPassword")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidMaprTPassword(maprTPasswordText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTPassword.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (maprTClusterText.getEditable()) {
-	            if (!validText(maprTClusterText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTCluster")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidMaprTCluster(maprTClusterText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTCluster.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (maprTDurationText.getEditable()) {
-	            if (!validText(maprTDurationText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTDuration")); //$NON-NLS-1$
-	                return false;
-	            }
-	            if (!isContextMode() && !HadoopParameterValidator.isValidMaprTDuration(maprTDurationText.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTDuration.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (webHDFSSSLTrustStorePassword.getEditable()) {
-	            if (!validText(webHDFSSSLTrustStorePassword.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePassword")); //$NON-NLS-1$
-	                return false;
-	            }
+                    return false;
+                }
+            }
+
+            if (jobHistoryPrincipalText.getEditable()) {
+                if (!validText(jobHistoryPrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(jobHistoryPrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.jobHistoryPrincipal.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (userNameText != null && userNameText.getEditable()) {
+                if (!validText(userNameText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (groupText.getEditable()) {
+                if (!validText(groupText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidGroup(groupText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.group.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (validText(userNameText.getText()) && !HadoopParameterValidator.isValidUserName(userNameText.getText())) {
+                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.userName.invalid")); //$NON-NLS-1$
+                return false;
+            }
+
+            if (keytabPrincipalText.getEditable()) {
+                if (!validText(keytabPrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytabPrincipal")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidPrincipal(keytabPrincipalText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytabPrincipal.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (keytabText.getEditable()) {
+                if (!validText(keytabText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.keytab")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (maprTPasswordText.getEditable()) {
+                if (!validText(maprTPasswordText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTPassword")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidMaprTPassword(maprTPasswordText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTPassword.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (maprTClusterText.getEditable()) {
+                if (!validText(maprTClusterText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTCluster")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidMaprTCluster(maprTClusterText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTCluster.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (maprTDurationText.getEditable()) {
+                if (!validText(maprTDurationText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTDuration")); //$NON-NLS-1$
+                    return false;
+                }
+                if (!isContextMode() && !HadoopParameterValidator.isValidMaprTDuration(maprTDurationText.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.maprTDuration.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (webHDFSSSLTrustStorePassword.getEditable()) {
+                if (!validText(webHDFSSSLTrustStorePassword.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePassword")); //$NON-NLS-1$
+                    return false;
+                }
 	            if (!isContextMode()
 	                    && !HadoopParameterValidator.isValidWebHDFSSSLTrustStorePassword(webHDFSSSLTrustStorePassword.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePassword.invalid")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	
-	        if (webHDFSSSLTrustStorePath.getEditable()) {
-	            if (!validText(webHDFSSSLTrustStorePath.getText())) {
-	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePath")); //$NON-NLS-1$
-	                return false;
-	            }
-	        }
-	        checkServicesBtn.setEnabled(true);
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePassword.invalid")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+
+            if (webHDFSSSLTrustStorePath.getEditable()) {
+                if (!validText(webHDFSSSLTrustStorePath.getText())) {
+                    updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePath")); //$NON-NLS-1$
+                    return false;
+                }
+            }
+            checkServicesBtn.setEnabled(true);
         }
         return true;
     }
@@ -2132,20 +2205,30 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     @Override
     protected void collectConParameters() {
-    	if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
-    		collectYarnConParameters();
-    	} else {
-    		String sparkModeLableName = sparkModeCombo.getText();
-            if (ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeLableName)) {
-            	collectYarnConParameters();
-            } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLableName)) {
-            	collectDBRParameters();
-            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLableName)) {
-            	//TODO
+        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+            collectYarnConParameters();
+        } else {
+            String sparkModeLabelName = sparkModeCombo.getText();
+            if (ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeLabelName)) {
+                collectYarnConParameters();
+            } else if (ESparkMode.DATABRICKS.getLabel().equals(sparkModeLabelName)) {
+                collectDBRParameters();
+            } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLabelName)) {
+                // TODO
+            } else if (ESparkMode.CDE.getLabel().equals(sparkModeLabelName)) {
+                collectCDEParameters();
             }
-    	}
+        }
     }
-    
+
+    private void collectCDEParameters() {
+        addContextParams(EHadoopParamName.CdeApiEndPoint, true);
+        addContextParams(EHadoopParamName.CdeToken, true);
+        addContextParams(EHadoopParamName.CdeTokenEndpoint, true);
+        addContextParams(EHadoopParamName.CdeWorkloadUser, true);
+        addContextParams(EHadoopParamName.CdeWorkloadPassword, true);
+    }
+
     protected void collectDBRParameters() {
         collectConfigurationParameters(true);
     }
@@ -2157,7 +2240,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addContextParams(EHadoopParamName.DataBricksDBFSDepFolder, isUse);
     }
 
-        
     protected void collectYarnConParameters() {
         collectConFieldContextParameters(
                 isCurrentHadoopVersionSupportYarn() || getConnection().isUseYarn());
@@ -2225,20 +2307,20 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         super.exportAsContext();
         HadoopConfsUtils.updateContextualHadoopConfs((HadoopClusterConnectionItem) this.connectionItem);
     }
-    
+
     private List<String> getSparkModes() {
-    	List<String> sparkModeNames = new ArrayList<String>();
+        List<String> sparkModeNames = new ArrayList<String>();
         if (sparkDistribution != null) {
             List<ESparkMode> sparkModes = sparkDistribution.getSparkModes();
             if (sparkModes != null) {
-            	sparkModeNames = sparkModes.stream().map(mode -> {
+                sparkModeNames = sparkModes.stream().map(mode -> {
                     return mode.getLabel();
                 }).collect(Collectors.toList());
             }
         }
         return sparkModeNames;
     }
-    
+
     private ESparkMode getSparkModeByName(String sparkModeName) {
         if (sparkDistribution != null) {
             List<ESparkMode> supportRunModes = sparkDistribution.getSparkModes();
@@ -2250,7 +2332,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         return ESparkMode.YARN_CLUSTER;
     }
-    
+
     private ESparkMode getSparkModeByValue(String sparkModeValue) {
         if (sparkDistribution != null) {
             List<ESparkMode> runModes = sparkDistribution.getSparkModes();
@@ -2262,8 +2344,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         return ESparkMode.YARN_CLUSTER;
     }
-    
-    private EDatabriksCloudProvider getDatabriksCloudProviderByVaule(String providerValue) {
+
+    private EDatabriksCloudProvider getDatabricksCloudProviderByValue(String providerValue) {
         if (sparkDistribution != null) {
             List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
             for (EDatabriksCloudProvider provider : supportCloudProviders) {
@@ -2274,8 +2356,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         return EDatabriksCloudProvider.AWS;
     }
-    
-    private EDatabriksSubmitMode getDatabriksRunModeByValue(String runModeValue) {
+
+    private EDatabriksSubmitMode getDatabricksRunModeByValue(String runModeValue) {
         if (sparkDistribution != null) {
             List<EDatabriksSubmitMode> runModes = sparkDistribution.getRunSubmitMode();
             for (EDatabriksSubmitMode runMode : runModes) {
@@ -2287,7 +2369,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         return EDatabriksSubmitMode.CREATE_RUN_JOB;
     }
 
-    private EDatabriksCloudProvider getDatabriksCloudProviderByName(String providerLableName) {
+    private EDatabriksCloudProvider getDatabricksCloudProviderByName(String providerLableName) {
         if (sparkDistribution != null) {
             List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
             for (EDatabriksCloudProvider provider : supportCloudProviders) {
@@ -2298,8 +2380,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         return EDatabriksCloudProvider.AWS;
     }
-    
-    private EDatabriksSubmitMode getDatabriksRunModeByName(String runModeLableName) {
+
+    private EDatabriksSubmitMode getDatabricksRunModeByName(String runModeLableName) {
         if (sparkDistribution != null) {
             List<EDatabriksSubmitMode> supportRunModes = sparkDistribution.getRunSubmitMode();
             for (EDatabriksSubmitMode provider : supportRunModes) {
