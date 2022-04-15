@@ -12,6 +12,9 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.apache;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.talend.hadoop.distribution.i18n.Messages;
 public enum ESparkMode {
 
@@ -44,6 +47,14 @@ public enum ESparkMode {
 
     private String displayCondition;
 
+    private static final Map<String, ESparkMode> sparkModeByLabel = new HashMap<String, ESparkMode>();
+
+    static {
+        for (ESparkMode m : ESparkMode.values()) {
+            sparkModeByLabel.put(m.getLabel(), m);
+        }
+    }
+    
     ESparkMode(String runModeLabel, String runModeValue, String displayCondition) {
         this.runModeLabel = runModeLabel;
         this.runModeValue = runModeValue;
@@ -60,6 +71,10 @@ public enum ESparkMode {
 
     public String getDisplayCondition() {
         return displayCondition;
+    }
+
+    public static ESparkMode getByLabel(String label) {
+        return sparkModeByLabel.get(label);
     }
 
 }
