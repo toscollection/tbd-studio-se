@@ -309,6 +309,27 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
                         break;
+                    case CdeApiEndPoint:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT));
+                        break;
+                    case CdeToken:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN), JavaTypesManager.PASSWORD);
+                        break;
+                    case CdeTokenEndpoint:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT));
+                        break;
+                    case CdeWorkloadUser:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER));
+                        break;
+                    case CdeWorkloadPassword:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD), JavaTypesManager.PASSWORD);
+                        break;
+                        
                     default:
                     }
                 }
@@ -673,6 +694,27 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             break;
         case KnoxDirectory:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+// CDE
+        case CdeApiEndPoint:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case CdeToken:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case CdeTokenEndpoint:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case CdeWorkloadUser:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case CdeWorkloadPassword:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         default:

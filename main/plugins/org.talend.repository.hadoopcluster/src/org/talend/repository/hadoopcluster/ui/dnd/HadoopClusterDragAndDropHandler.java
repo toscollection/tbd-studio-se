@@ -311,6 +311,30 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.ADVANCED_SETTINGS_CHECK.getRepositoryValue().equals(value)) {
             return Boolean.parseBoolean(hcConnection.getParameters().get(
                     ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
+
+        } else if (EHDFSRepositoryToComponent.CDE_API_ENDPOINT.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT));
+
+        } else if (EHDFSRepositoryToComponent.CDE_TOKEN.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN));
+
+        } else if (EHDFSRepositoryToComponent.CDE_AUTO_GENERATE_TOKEN.getRepositoryValue().equals(value)) {
+            return Boolean
+                    .parseBoolean(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_AUTO_GENERATE_TOKEN));
+
+        } else if (EHDFSRepositoryToComponent.CDE_TOKEN_ENDPOINT.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT));
+
+        } else if (EHDFSRepositoryToComponent.CDE_WORKLOAD_USER.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER));
+
+        } else if (EHDFSRepositoryToComponent.CDE_WORKLOAD_PASSWORD.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD));
         }
         return null;
     }
