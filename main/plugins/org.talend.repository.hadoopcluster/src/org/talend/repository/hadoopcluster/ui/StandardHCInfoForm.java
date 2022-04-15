@@ -1948,7 +1948,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         // hadoopConfSpecificJarText.setBackground(ColorConstants.YELLOW_COLOR);
         // hadoopConfSpecificJarText.setToolTipText(tooltip);
         // }
-        if (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText())) {
+        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution()) || (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
 	        if (getConnection().isUseCustomVersion()) {
 	            if (authenticationCombo.getSelectionIndex() == -1) {
 	                updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.check.authentication")); //$NON-NLS-1$
