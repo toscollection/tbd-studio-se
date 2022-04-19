@@ -39,7 +39,10 @@ public enum ESparkMode {
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDataprocMode[])"),
     DATABRICKS(Messages.getString("ESparkMode.DATABRICKS"),
             "DATABRICKS",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDBRMode[])");
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDBRMode[])"),
+    STANDALONE(Messages.getString("ESparkMode.STANDALONE"),
+            "STANDALONE",
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalStandaloneMode[])"),;
 
     private String runModeLabel;
 
