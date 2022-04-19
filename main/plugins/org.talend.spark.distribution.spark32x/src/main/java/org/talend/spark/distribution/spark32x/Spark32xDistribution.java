@@ -170,6 +170,11 @@ public class Spark32xDistribution extends AbstractSparkDistribution
     public boolean doSupportSparkStandaloneMode() {
         return false;
     }
+    
+    @Override
+    public boolean doSupportUniversalStandaloneMode() {
+        return true;
+    }
 
     @Override
     public boolean doSupportSparkYarnClientMode() {

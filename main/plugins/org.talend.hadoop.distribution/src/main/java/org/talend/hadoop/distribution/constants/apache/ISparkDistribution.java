@@ -29,4 +29,16 @@ public interface ISparkDistribution {
     
     List<EDatabriksSubmitMode> getRunSubmitMode();
     
+    public boolean doSupportUniversalDBRMode();
+    
+    public boolean doSupportUniversalDataprocMode();
+    
+    public boolean doSupportUniversalLocalMode();
+    
+    public boolean doSupportSparkYarnK8SMode();
+    
+    public boolean doSupportSparkYarnClusterMode();
+    
+    public boolean doSupportUniversalStandaloneMode();
+    
 }

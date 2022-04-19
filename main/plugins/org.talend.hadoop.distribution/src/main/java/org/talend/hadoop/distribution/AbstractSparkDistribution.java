@@ -22,15 +22,16 @@ import org.talend.core.model.process.INode;
 import org.talend.hadoop.distribution.condition.common.HDFSLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.apache.ESparkMode;
+import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
-public abstract class AbstractSparkDistribution extends AbstractDistribution {
-
-    @Override
-    protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
+public abstract class AbstractSparkDistribution extends AbstractDistribution implements ISparkDistribution {
+	
+	@Override
+	protected Map<ComponentType, Set<DistributionModuleGroup>> buildModuleGroups() {
         Map<ComponentType, Set<DistributionModuleGroup>> result = super.buildModuleGroups();
         HDFSLinkedNodeCondition hDFSLinkedNodeCondition = new HDFSLinkedNodeCondition(this.getDistribution(), this.getVersion());
         Set<DistributionModuleGroup> hdfsDistributionModuleGroup = ModuleGroupsUtils.getModuleGroups(hDFSLinkedNodeCondition.getWebHDFSCondition(), ModuleGroupName.WEBHDFS.get(this.getVersion()), false);
@@ -145,5 +146,29 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution {
 
     public List<EDatabriksSubmitMode> getRunSubmitMode() {
         return Arrays.asList(EDatabriksSubmitMode.values());
+    }
+    
+    public boolean doSupportUniversalDBRMode() {
+    	return false;
+    }
+    
+    public boolean doSupportUniversalDataprocMode() {
+    	return false;
+    }
+    
+    public boolean doSupportUniversalLocalMode() {
+    	return false;
+    }
+    
+    public boolean doSupportSparkYarnK8SMode() {
+    	return false;
+    }
+    
+    public boolean doSupportSparkYarnClusterMode() {
+    	return false;
+    }
+    
+    public boolean doSupportUniversalStandaloneMode() {
+    	return false;
     }
 }
