@@ -159,6 +159,10 @@ public abstract class AbstractDistribution {
     public boolean doSupportSparkYarnK8SMode() {
         return false;
     }
+    
+    public boolean doSupportUniversalStandaloneMode() {
+        return false;
+    }
 
     public boolean doSupportS3() {
         return false;
