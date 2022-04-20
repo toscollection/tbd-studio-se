@@ -61,6 +61,10 @@ public final class SparkBatchConstant {
     public static final String AZURE_FS_CONFIGURATION_COMPONENT = "tAzureFSConfiguration"; //$NON-NLS-1$
 
     public static final String BIGQUERY_CONFIGURATION_COMPONENT = "tBigQueryConfiguration"; //$NON-NLS-1$
+    
+    public static final String BIGQUERY_INPUT_COMPONENT = "tBigQueryInput"; //$NON-NLS-1$
+    
+    public static final String BIGQUERY_OUTPUT_COMPONENT = "tBigQueryOutput"; //$NON-NLS-1$
 
     public static final String DYNAMODB_CONFIGURATION_COMPONENT = "tDynamoDBConfiguration"; //$NON-NLS-1$
 

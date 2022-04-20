@@ -66,8 +66,10 @@ public final class DistributionHelper {
     public static Map<String, Boolean> doSupportMethods(HadoopComponent hadoopComponent, String... methods) throws Exception {
         Map<String, Boolean> resultsMap = new HashMap<String, Boolean>();
         if (hadoopComponent != null) {
+        	String mm = new String(hadoopComponent.getClass().toString());
             for (String m : methods) {
                 Method method = findMethod(hadoopComponent.getClass(), m);
+                mm = m + ", ";
                 if (method != null) {
                     try {
                         method.setAccessible(true);
@@ -81,7 +83,8 @@ public final class DistributionHelper {
                 } else {
                     throw new NoSuchMethodException(
                             "The distribution " + hadoopComponent.getDistributionName() + " with the version " + hadoopComponent.getVersion() //$NON-NLS-1$ //$NON-NLS-2$
-                                    + " is not supported in this component. Please check your configuration."); //$NON-NLS-1$
+                                    
+                            	+ " is not supported in this component. Please check your configuration."+ " Methods list " + mm + " method name "+m); //$NON-NLS-1$
                 }
 
             }
@@ -100,11 +103,16 @@ public final class DistributionHelper {
             }
             if (method == null) { // can't find in current base class, try parent class or interfaces.
                 //we look for the classes first as this is where the behavior can be overridden.
-                if (baseClazz.getSuperclass()!=null) {
+                if (baseClazz.getSuperclass() != null) {
                     method = findMethod(baseClazz.getSuperclass(), methodName);
                 }
+                if (method == null && baseClazz.getSuperclass() != null) {
+                	 if (baseClazz.getSuperclass().getSuperclass() != null) {
+                         method = findMethod(baseClazz.getSuperclass().getSuperclass(), methodName);
+                     }
+                }
                 //then we look for default behavior in interfaces.
-                if (method==null) {
+                if (method == null) {
                     method = findDefaultMethod(baseClazz,methodName);
                 }
             }

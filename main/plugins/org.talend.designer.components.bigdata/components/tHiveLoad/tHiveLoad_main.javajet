@@ -88,11 +88,11 @@ imports="
             }
 <%
         }
-    } else if(hiveDistrib.isGoogleDataprocDistribution()) {
+     } else if(theVersion.equals("DATAPROC")) {
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetDataprocConnection.javajet"%>
 <%
-	} else {
+	} else if (theVersion.equals("STANDALONE")) {
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
 <%
@@ -200,7 +200,7 @@ imports="
                     String jarToRegister = jarsToRegister.get(i);
                     for(int j=0; j<jars.size(); j++) {
                         if(jars.get(j).contains(jarToRegister)) {
-                            if(!hiveDistrib.useCloudLauncher()) { // Then we use the created SQL statement to add the jars.
+                            if(!hiveDistrib.useCloudLauncher() && (theVersion.equals("STANDALONE"))) { // Then we use the created SQL statement to add the jars.
 %>
                                 addJar_<%=cid%> = conn_<%=cid%>.createStatement();
                                 try {
@@ -237,7 +237,7 @@ imports="
 
         // End of parquet format handling.
 
-        if(!hiveDistrib.useCloudLauncher()) {
+        if(!hiveDistrib.useCloudLauncher() && (theVersion.equals("STANDALONE"))) {
 %>
             java.sql.Statement setCompression_<%=cid%> = conn_<%=cid%>.createStatement();
             try {
@@ -268,9 +268,9 @@ imports="
     <%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveLoad/loadQueryGeneration.javajet"%>
 	<%
     boolean setApplicationName=ElementParameterParser.getBooleanValue(node, "__SET_APPLICATION_NAME__");
-    if(!hiveDistrib.useCloudLauncher() && setApplicationName) {
+    if(theVersion.equals("STANDALONE")) {
     %>
-        java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
+        	java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
         try {
 			<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/SetQueryName.javajet"%>
             stmt_<%=cid%>.execute(querySQL_<%=cid %>);
@@ -344,7 +344,7 @@ imports="
 %>
             }
 <%
-        } else { // dataproc
+        } else if (theVersion.equals("DATAPROC")) { // dataproc
             if(isLog4jEnabled) {
 %>
                 log.debug("Query for <%=cid%>: " + querySQL_<%=cid %>.replace("';'", "'\\;'") + ";");
