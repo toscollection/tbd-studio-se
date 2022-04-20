@@ -33,5 +33,11 @@
     "DATABRICKS_ENDPOINT": "https://westeurope.azuredatabricks.net", 
     "DATABRICKS_CLUSTER_ID": "", 
     "DATABRICKS_TOKEN": "", 
-    "DATABRICKS_DBFS_DEP_FOLDER": ""
+    "DATABRICKS_DBFS_DEP_FOLDER": "",
+    "GOOGLE_PROJECT_ID": "my-google-project", 
+    "GOOGLE_CLUSTER_ID": "my-cluster-id", 
+    "GOOGLE_REGION": "global", 
+    "GOOGLE_JARS_BUCKET": "gs://my-bucket/talend/jars",
+    "PATH_TO_GOOGLE_CREDENTIALS": "",
+    "OAUTH_ACCESS_TOKEN": ""
 }

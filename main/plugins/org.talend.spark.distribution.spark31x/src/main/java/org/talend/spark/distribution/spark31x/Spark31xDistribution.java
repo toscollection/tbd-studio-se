@@ -51,7 +51,7 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public final static String VERSION = Spark31xDistribution.SPARK_VERSION.getSparkVersion();
 
     public static final String VERSION_DISPLAY = Spark31xDistribution.SPARK_VERSION.getVersionLabel();
-
+    
     protected Map<ComponentType, Set<DistributionModuleGroup>> moduleGroups;
 
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> nodeModuleGroups;
@@ -61,12 +61,12 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     protected Map<ComponentType, String> customVersionDisplayNames;
 
     public Spark31xDistribution() {
-        this.displayConditions = buildDisplayConditions();
-        this.customVersionDisplayNames = buildCustomVersionDisplayNames();
-        this.moduleGroups = buildModuleGroups();
-        this.nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());
+        displayConditions = buildDisplayConditions();
+        customVersionDisplayNames = buildCustomVersionDisplayNames();
+        moduleGroups = buildModuleGroups();
+        nodeModuleGroups = buildNodeModuleGroups(getDistribution(), getVersion());
     }
-
+    
     protected Map<ComponentType, ComponentCondition> buildDisplayConditions() {
         return new HashMap<>();
     }
@@ -170,7 +170,12 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     public boolean doSupportSparkStandaloneMode() {
         return false;
     }
-
+    
+    @Override
+    public boolean doSupportHive1Standalone() {
+        return false;
+    }
+   
     @Override
     public boolean doSupportSparkYarnClientMode() {
         return false;
@@ -280,6 +285,16 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     @Override
     public boolean doSupportSequenceFileShortType() {
         return true;
+    }
+    
+    @Override
+    public boolean doSupportStandaloneMode() {
+        return true;
+    }
+    
+    @Override
+    public boolean doSupportEmbeddedMode() {
+        return false;
     }
     
     @Override
