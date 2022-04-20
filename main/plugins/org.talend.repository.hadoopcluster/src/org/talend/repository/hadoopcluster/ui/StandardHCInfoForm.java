@@ -61,6 +61,7 @@ import org.talend.commons.ui.swt.formtools.UtilsButton;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.hadoop.version.EAuthenticationMode;
+import org.talend.core.hadoop.version.EDataprocAuthType;
 import org.talend.core.hadoop.version.custom.ECustomVersionGroup;
 import org.talend.core.model.components.ComponentCategory;
 import org.talend.core.model.process.INode;
@@ -79,6 +80,7 @@ import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.dataproc.EDataprocAuthMode;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -115,7 +117,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private ScrolledComposite scrolledComposite;
 
     private Composite bigComposite;
-
+    
     private Composite parentForm;
 
     protected Composite propertiesComposite;
@@ -133,6 +135,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private Button kerberosBtn;
 
     private Composite authPartComposite;
+    
+    private Composite authPartCompositeDataproc;
 
     private Composite authCommonComposite;
 
@@ -260,7 +264,26 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText tokenText;
 
     private LabelledText dbfsDepFolderText;
+
+    private Group dataProcGroup;
+  
+    //Dataproc
+    private LabelledText projectIdNameText;
+
+    private LabelledText clusterIdNameText;
+
+    private LabelledText regionNameText;
+
+    private LabelledText jarsBucketNameText;
     
+    private LabelledCombo credentialTypeCombo;
+    
+    private LabelledFileField pathToCredentials;
+    
+    private LabelledText oauthTokenText;
+    
+    private Button credentialsBtn;
+
     // CDE widgets
     private LabelledWidget cdeApiEndPoint;
     private LabelledWidget cdeAutoGenerateToken;
@@ -371,13 +394,16 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             setHadoopConfBtn.setSelection(true);
             hadoopConfSpecificJarText.setEditable(true);
             String sparkModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
+            
             if (sparkModeValue != null) {
                 sparkModeCombo.setText(getSparkModeByValue(sparkModeValue).getLabel());
             } else {
                 sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
             }
-            String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
-            if (providerValue != null) {
+
+           String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
+
+           if (providerValue != null) {
                 cloudProviderCombo.setText(getDatabricksCloudProviderByValue(providerValue).getProviderLableName());
             } else {
 
@@ -405,8 +431,48 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             String folder = StringUtils
                     .trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
             dbfsDepFolderText.setText(folder);
+
+            //Dataproc
+            String projectIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID));
+            projectIdNameText.setText(projectIdValue);
             
-            // CDE - Set widget values from connection
+            String clusterIdValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID));
+            clusterIdNameText.setText(clusterIdValue);
+            
+            String regionValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION));
+            regionNameText.setText(regionValue);
+            
+            String jarsBucketValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
+            jarsBucketNameText.setText(jarsBucketValue);
+            
+            boolean checkCredentialsBtn = Boolean.parseBoolean(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PROVIDE_GOOGLE_CREDENTIALS));
+            credentialsBtn.setSelection(checkCredentialsBtn);
+            
+            credentialTypeCombo.setVisible(credentialsBtn.getSelection());
+            String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE));
+            if (authModeValue != null) {
+            	EDataprocAuthType type = EDataprocAuthType.getDataprocAuthTypeByName(authModeValue, false);
+                if (type != null) {
+                    credentialTypeCombo.setText(type.getDisplayName());
+                } else {
+                    credentialTypeCombo.select(0);
+                }
+            } else {
+                credentialTypeCombo.select(0);
+            }
+            
+            String pathToGoogleCredentials = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
+            pathToCredentials.setText(pathToGoogleCredentials);
+           
+            String credentialName = credentialTypeCombo.getText();
+            pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+            
+            String oauthTokenValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS));
+            oauthTokenText.setText(oauthTokenValue);
+            oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
+          }
+
+          // CDE - Set widget values from connection
             for (Entry<String, LabelledWidget> entry : fieldByParamKey.entrySet())
             {
                 String value = StringUtils.trimToEmpty(getConnection().getParameters().get(entry.getKey()));
@@ -414,7 +480,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
             updateCdeFieldsVisibility();
         }
-    }
+   
 
     @Override
     protected void adaptFormToReadOnly() {
@@ -469,6 +535,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             tokenText.setEnabled(!readOnly);
             dbfsDepFolderText.setEnabled(!readOnly);
         }
+        
     }
 
     @Override
@@ -527,6 +594,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         // setHadoopConfBtn.setEnabled(isEditable);
         hadoopConfSpecificJarText.setEditable(isEditable && setHadoopConfBtn.getSelection());
         browseHadoopConfBtn.setEnabled(isEditable && setHadoopConfBtn.getSelection());
+        
         sparkModeCombo.setEnabled(isEditable);
         runSubmitCombo.setEnabled(isEditable);
         cloudProviderCombo.setEnabled(isEditable);
@@ -534,6 +602,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         clusterIDText.setEnabled(isEditable);
         tokenText.setEnabled(isEditable);
         dbfsDepFolderText.setEnabled(isEditable);
+        
+        //Dataproc
+        projectIdNameText.setEditable(isEditable);
+        clusterIdNameText.setEditable(isEditable);
+        regionNameText.setEditable(isEditable);
+        jarsBucketNameText.setEditable(isEditable);
+        pathToCredentials.setEditable(isEditable);
+        oauthTokenText.setEditable(isEditable);
     }
 
     @Override
@@ -584,7 +660,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addConnectionFields(bigComposite);
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
+      
         addDatabricksFields();
+        addDataprocField();
         addCdeFields();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
@@ -646,6 +724,33 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
 
         dbfsDepFolderText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.dbfsDepFolder"), 1); //$NON-NLS-1$
+    }
+    
+    private void addDataprocField() {
+    	dataProcGroup = Form.createGroup(bigComposite, 2, Messages.getString("GoogleDataprocInfoForm.text.configuration"), 110); //$NON-NLS-1$
+    	dataProcGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+    	projectIdNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.projectId"), 1); //$NON-NLS-1$
+
+    	clusterIdNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.clusterId"), 1); //$NON-NLS-1$
+
+    	regionNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.region"), 1); //$NON-NLS-1$
+
+    	jarsBucketNameText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.configuration.jarsBucket"), 1); //$NON-NLS-1$
+    	
+    	credentialsBtn = new Button(dataProcGroup, SWT.CHECK);
+    	credentialsBtn.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 5, 1));
+        credentialsBtn.setText(Messages.getString("GoogleDataprocInfoForm.button.authentication.credentials")); //$NON-NLS-1$
+        
+        credentialTypeCombo = new LabelledCombo(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		EDataprocAuthType.getAllDataprocAuthTypes());
+        
+        oauthTokenText = new LabelledText(dataProcGroup, Messages.getString("GoogleDataprocInfoForm.text.token"), 1, //$NON-NLS-1$
+                SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        String[] extensions = { "*.*" }; //$NON-NLS-1$
+        pathToCredentials = new LabelledFileField(dataProcGroup,
+                Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
+    	
     }
 
     private void addCdeFields() {
@@ -1500,6 +1605,88 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+
+        projectIdNameText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_PROJECT_ID,
+                		projectIdNameText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        clusterIdNameText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_CLUSTER_ID,
+                		clusterIdNameText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        regionNameText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION,
+                		regionNameText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        jarsBucketNameText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET,
+                		jarsBucketNameText.getText());
+                checkFieldsValue();
+            }
+        });
+        
+        credentialsBtn.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	String selection = String.valueOf(credentialsBtn.getSelection());
+            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PROVIDE_GOOGLE_CREDENTIALS, selection);
+	
+            	credentialTypeCombo.setVisible(credentialsBtn.getSelection());
+            	String credentialName = credentialTypeCombo.getText();
+            	pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+            	oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
+                checkFieldsValue();
+            }
+        });
+        
+        credentialTypeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String credentialName = credentialTypeCombo.getText();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE,
+                    	EDataprocAuthType.getDataprocAuthTypeByDisplayName(credentialName).getName());
+                credentialTypeCombo.setVisible(credentialsBtn.getSelection());
+                pathToCredentials.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.SERVICE_ACCOUNT.getDisplayName().equals(credentialName));
+            	oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
+                checkFieldsValue();
+            }
+        });
+
+        pathToCredentials.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+            	String credentialName = credentialTypeCombo.getText();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
+                		pathToCredentials.getText());
+                checkFieldsValue();
+            }
+        });
+
+        oauthTokenText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+            	String credentialName = credentialTypeCombo.getText();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, EncryptionUtil.getValue(oauthTokenText.getText(), true));
+                checkFieldsValue();
+            }
+        });
         
         // CDE listeners (UI to Connection)
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT);
@@ -1547,20 +1734,23 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
      * Hide widgets according to current Spark mode
      */
     private void hideFieldsOnSparkMode() {
-        if (sparkModeCombo != null
+       
+             if (sparkModeCombo != null
                 && "SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
             String sparkModeLabelName = sparkModeCombo.getText();
             getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,
                     getSparkModeByName(sparkModeLabelName).getValue());
 
             // List of possible configuration groups
-            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup);
+            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup);
 
             // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
             visibleGroupsBySparkMode.put(ESparkMode.YARN_CLUSTER, Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp));
             visibleGroupsBySparkMode.put(ESparkMode.DATABRICKS, Arrays.asList(dataBricksGroup));
             visibleGroupsBySparkMode.put(ESparkMode.CDE, Arrays.asList(cdeGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.DATAPROC, Arrays.asList(dataProcGroup));
+
 
             // Compute current visible groups
             ESparkMode currentSparkMode = ESparkMode.getByLabel(sparkModeLabelName);
@@ -1572,7 +1762,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         } else {
             hideControl(dataBricksGroup, true);
             hideControl(cdeGroup, true);
+            hideControl(dataProcGroup, true);
         }
+
     }
 
     private void onUseCustomConfBtnSelected(SelectionEvent event) {
@@ -2014,7 +2206,7 @@ jtOrRmPrincipalText
             HCRepositoryUtil.fillDefaultValuesOfHadoopCluster(connection);
         }
     }
-
+    
     @Override
     public boolean checkFieldsValue() {
         checkServicesBtn.setEnabled(false);
@@ -2160,19 +2352,19 @@ jtOrRmPrincipalText
                 }
             }
 
-            if (webHDFSSSLTrustStorePassword.getEditable()) {
+             if (webHDFSSSLTrustStorePassword.getEditable()) {
                 if (!validText(webHDFSSSLTrustStorePassword.getText())) {
                     updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePassword")); //$NON-NLS-1$
                     return false;
                 }
-	            if (!isContextMode()
+	           if (!isContextMode()
 	                    && !HadoopParameterValidator.isValidWebHDFSSSLTrustStorePassword(webHDFSSSLTrustStorePassword.getText())) {
                     updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePassword.invalid")); //$NON-NLS-1$
                     return false;
                 }
             }
-
-            if (webHDFSSSLTrustStorePath.getEditable()) {
+	
+	         if (webHDFSSSLTrustStorePath.getEditable()) {
                 if (!validText(webHDFSSSLTrustStorePath.getText())) {
                     updateStatus(IStatus.ERROR, Messages.getString("HadoopClusterForm.webHDFS.check.trustStorePath")); //$NON-NLS-1$
                     return false;
@@ -2217,6 +2409,8 @@ jtOrRmPrincipalText
                 // TODO
             } else if (ESparkMode.CDE.getLabel().equals(sparkModeLabelName)) {
                 collectCDEParameters();
+            } else if (ESparkMode.DATAPROC.getLabel().equals(sparkModeLabelName)) {
+            	collectDBRParameters();
             }
         }
     }
@@ -2238,6 +2432,13 @@ jtOrRmPrincipalText
         addContextParams(EHadoopParamName.DataBricksClusterId, isUse);
         addContextParams(EHadoopParamName.DataBricksToken, isUse);
         addContextParams(EHadoopParamName.DataBricksDBFSDepFolder, isUse);
+        
+        addContextParams(EHadoopParamName.GoogleProjectId, isUse);
+        addContextParams(EHadoopParamName.GoogleClusterId, isUse);
+        addContextParams(EHadoopParamName.GoogleRegion, isUse);
+        addContextParams(EHadoopParamName.GoogleJarsBucket, isUse);
+        addContextParams(EHadoopParamName.PathToGoogleCredentials, isUse);
+        addContextParams(EHadoopParamName.GoogleOauthToken, isUse);
     }
 
     protected void collectYarnConParameters() {

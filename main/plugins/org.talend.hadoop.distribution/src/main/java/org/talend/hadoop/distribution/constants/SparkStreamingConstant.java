@@ -23,6 +23,12 @@ public final class SparkStreamingConstant {
     public static final String VERSION_PARAMETER = "SPARK_VERSION";//$NON-NLS-1$
 
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
+    
+    public static final String BIGQUERY_CONFIG_COMPONENT = "tBigQueryConfiguration"; //$NON-NLS-1$
+    
+    public static final String BIGQUERY_INPUT_COMPONENT = "tBigQueryInput"; //$NON-NLS-1$
+    
+    public static final String BIGQUERY_OUTPUT_COMPONENT = "tBigQueryOutput"; //$NON-NLS-1$
 
     public static final String KAFKA_INPUT_COMPONENT = "tKafkaInput"; //$NON-NLS-1$
 

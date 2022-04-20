@@ -736,6 +736,8 @@ public class HCRepositoryUtil {
     public static void fillDefaultValuesOfHadoopCluster(HadoopClusterConnection connection) {
         String distribution = connection.getDistribution();
         String version = connection.getDfVersion();
+        String sparkMode  = connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE);
+        
         if (distribution == null) {
             return;
         }
@@ -863,10 +865,24 @@ public class HCRepositoryUtil {
         if (defaultGoogleRegion != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_REGION, defaultGoogleRegion);
         }
-        String defaultGoogleJarsBucket = hiveVersion.getDefaultConfig(distribution,
-                EHadoopProperties.GOOGLE_JARS_BUCKET.getName());
+        String defaultGoogleJarsBucket = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.GOOGLE_JARS_BUCKET.getName());
         if (defaultGoogleJarsBucket != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET, defaultGoogleJarsBucket);
+        }
+        
+        String defaultGoogleAuthMode =  hiveVersion.getDefaultConfig(distribution, EHadoopProperties.AUTH_MODE.getName());
+        if (defaultGoogleAuthMode != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE, defaultGoogleAuthMode);
+        }
+        
+        String defaultPathToGoogleCredentials = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.PATH_TO_GOOGLE_CREDENTIALS.getName());
+        if (defaultPathToGoogleCredentials != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS, defaultPathToGoogleCredentials);
+        }
+        
+        String defaultGoogleOauthToken = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.OAUTH_ACCESS_TOKEN.getName());
+        if (defaultGoogleOauthToken != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS, defaultGoogleOauthToken);
         }
         String defaultWebHCatHostName = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.HD_WEBHCAT_HOSTNAME.getName());

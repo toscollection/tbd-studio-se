@@ -94,11 +94,11 @@ imports="
             }
 <%
         }
-    } else if (hiveDistrib.isGoogleDataprocDistribution()) {
+    } else if (theVersion.equals("DATAPROC")) {
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetDataprocConnection.javajet"%>
 <%
-    } else { // normal mode
+    } else if (theVersion.equals("STANDALONE")) { // standalone mode
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
 <%
@@ -121,7 +121,7 @@ imports="
     String fsDefaultName = ElementParameterParser.getValue(node, "__FS_DEFAULT_NAME__");
     INode connectionInformationNode = node;
 
-    if(useExistingConnection && !hiveDistrib.useCloudLauncher()) {
+     if(useExistingConnection && !hiveDistrib.useCloudLauncher()) {
         connectionMode = "";
         setFsDefaultName = false;
         fsDefaultName = "";
@@ -222,7 +222,7 @@ imports="
                 String jarToRegister = jarsToRegister.get(i);
                 for(int j=0; j<jars.size(); j++) {
                     if(jars.get(j).contains(jarToRegister)) {
-                        if(!hiveDistrib.useCloudLauncher()) { // Then we use the created SQL statement to add the jars.
+                        if(!hiveDistrib.useCloudLauncher() && theVersion.equals("STANDALONE")) { // Then we use the created SQL statement to add the jars.
 %>
                             addJar_<%=cid%> = conn_<%=cid%>.createStatement();
                             try {
@@ -258,7 +258,7 @@ imports="
     }
 
     // End of parquet format handling.
-    if(!hiveDistrib.useCloudLauncher()) {
+  if(!hiveDistrib.useCloudLauncher() && theVersion.equals("STANDALONE")) {
 %>
     java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 <%
@@ -310,7 +310,8 @@ if(likeTable) {
 %>
     String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
 <%
-    if(!hiveDistrib.useCloudLauncher()) {
+    //if(!hiveDistrib.useCloudLauncher() && !hiveDistrib.doSupportUniversalDataprocMode() && theVersion.equals("STANDALONE")) {
+    if(false) {
         %>
         try {
             <%
@@ -320,7 +321,7 @@ if(likeTable) {
                 <%
             }
             %>
-            stmt_<%=cid%>.execute(querySQL_<%=cid %>);
+            	stmt_<%=cid%>.execute(querySQL_<%=cid %>);
             } catch(java.sql.SQLException e_<%=cid%>) {
                 <%if(("true").equals(dieOnError)) {%>
                     throw(e_<%=cid%>);
@@ -660,7 +661,7 @@ if(asSelect) {
 %>
 String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
 <%
-    if(!hiveDistrib.useCloudLauncher()) {
+    if(!hiveDistrib.useCloudLauncher() && !hiveDistrib.doSupportUniversalDataprocMode() && theVersion.equals("STANDALONE")) {
 %>
         try {
             <%
@@ -726,9 +727,9 @@ int exitCode_<%=cid%> = instance_<%=cid%>.execute();
 if(exitCode_<%=cid%> > 0) {
 
 <%
-    if (("true").equals(dieOnError)) {
+                if(("true").equals(dieOnError)) {
 %>
-throw new Exception("The Hive job failed. Please read the logs for more details");
+                    throw new Exception("The Hive job failed. Please read the logs for more details");
 <%
                 } else {
 %>
@@ -743,13 +744,14 @@ throw new Exception("The Hive job failed. Please read the logs for more details"
 %>
             }
 <%
-        } else { // Dataproc
+        } else if (theVersion.equals("DATAPROC")) { // dataproc
             if(isLog4jEnabled) {
 %>
                 log.debug("Query for <%=cid%>: " + querySQL_<%=cid %>.replace("';'", "'\\;'") + ";");
 <%
             }
 %>
+
             instance_<%=cid%>.addQuery(querySQL_<%=cid %>.replace("';'", "'\\;'") + ";");
             globalMap.put("<%=cid%>_QUERY", querySQL_<%=cid %>);
             int exitCode_<%=cid%> = instance_<%=cid%>.executeJob();
