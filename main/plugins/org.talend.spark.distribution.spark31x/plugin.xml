@@ -3,12 +3,11 @@
 <plugin>
    <extension
          point="org.talend.core.runtime.librariesNeeded">
+
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="antlr4-runtime-4.8-1.jar" name="antlr4-runtime-4.8-1.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.8-1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="aircompressor-0.10.jar" name="aircompressor-0.10.jar" mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.9.2.jar" name="avro-1.9.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.9.2"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-1.9.2.jar" name="avro-mapred-1.9.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.9.2" />
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk15on-1.68.jar" name="bcpkix-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.68"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk15on-1.68.jar" name="bcprov-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.68"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar" mvn_uri="mvn:org.scalanlp/breeze_2.12/1.0"/>
@@ -243,23 +242,11 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="google-oauth-client-1.31.0.jar" name="google-oauth-client-1.31.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/1.31.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="google-extensions-0.5.1.jar" name="google-extensions-0.5.1.jar" mvn_uri="mvn:com.google.flogger/google-extensions/0.5.1"/>
        
-        <!-- Avro group -->
-         <libraryNeededGroup description="S3 libraries for spark311" id="AVRO-GROUP-SPARK_3_1_x" name="AVRO-GROUP-SPARK_3_1_x">
-            <library id="avro-1.8.2.jar"/>
-            <library id="avro-mapred-1.8.2.jar"/>
-        </libraryNeededGroup>
-        
-        <!-- Avro group for Dataproc-->
-         <libraryNeededGroup description="S3 libraries for spark311" id="AVRO-DATAPROC-GROUP-SPARK_3_1_x" name="AVRO-DATAPROC-GROUP-SPARK_3_1_x">
-            <library id="avro-1.9.2.jar"/>
-            <library id="avro-mapred-1.9.2.jar"/>
-        </libraryNeededGroup>
-        
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_1_x" name="SPARK-COMPILE-GROUP-SPARK_3_1_x">
+            <library id="antlr4-runtime-4.8-1.jar"/>
             <library id="avro-1.8.2.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
-            <library id="antlr4-runtime-4.8-1.jar"/>
             <library id="bcpkix-jdk15on-1.68.jar"/>
             <library id="bcprov-jdk15on-1.68.jar"/>
             <library id="breeze_2.12-1.0.jar"/>
@@ -409,7 +396,7 @@
 
         <!-- HiveOnSpark group -->
         <libraryNeededGroup description="Hive On SPARK libraries for spark311" id="HIVE-GROUP-SPARK_3_1_x" name="HIVE-GROUP-SPARK_3_1_x">
-		    <library id="aircompressor-0.10.jar"/>
+            <library id="aircompressor-0.10.jar"/>
             <library id="hive-common-2.3.7.jar"/>
             <library id="hive-exec-2.3.7.jar"/>
             <library id="hive-jdbc-2.3.7.jar"/>

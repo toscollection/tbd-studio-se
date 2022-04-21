@@ -151,18 +151,16 @@ public class HCVersionUtil {
         return false;
     }
 
+    public static boolean isGoogleDataproc(HadoopSubConnection connection) {
+        HadoopClusterConnection hcConnection = HCRepositoryUtil.getRelativeHadoopClusterConnection(connection);
+        return isGoogleDataproc(hcConnection);
+    }
+
     public static boolean isGoogleDataproc(HadoopClusterConnection connection) {
         if (connection != null) {
-        HadoopComponent hadoopComponent;
-        	try {
-                hadoopComponent = HadoopDistributionsHelper.buildDistribution(connection.getDistribution(),
-                        connection.getDfVersion());
-                if (hadoopComponent != null && hadoopComponent.isGoogleDataprocDistribution()) {
-                    return true;
-                }
-            } catch (Exception e) {
-                ExceptionHandler.process(e);
-            }	
+            if (EHadoopDistributions.GOOGLE_CLOUD_DATAPROC.getName().equals(connection.getDistribution())) {
+                return true;
+            }
         }
         return false;
     }

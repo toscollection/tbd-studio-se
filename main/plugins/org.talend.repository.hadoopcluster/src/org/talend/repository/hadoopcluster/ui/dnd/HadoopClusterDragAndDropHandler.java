@@ -217,18 +217,12 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.GOOGLE_JARS_BUCKET.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
-        } else if (EHDFSRepositoryToComponent.DEFINE_GOOGLE_CREDENTIALS.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.DEFINE_PATH_TO_GOOGLE_CREDENTIALS.getRepositoryValue().equals(value)) {
             return Boolean.parseBoolean(hcConnection.getParameters().get(
-                    ConnParameterKeys.CONN_PARA_KEY_PROVIDE_GOOGLE_CREDENTIALS));
-        } else if (EHDFSRepositoryToComponent.AUTH_MODE.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(hcConnection, 
-            		hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE));
+                    ConnParameterKeys.CONN_PARA_KEY_DEFINE_PATH_TO_GOOGLE_CREDENTIALS));
         } else if (EHDFSRepositoryToComponent.PATH_TO_GOOGLE_CREDENTIALS.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
-        } else if (EHDFSRepositoryToComponent.OAUTH_ACCESS_TOKEN.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(hcConnection,
-            		EncryptionUtil.getValue(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS), false));
         } else if (EHDFSRepositoryToComponent.DATABRICKS_ENDPOINT.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT));

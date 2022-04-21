@@ -178,21 +178,9 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET));
                         break;
-                    case useGoogleCredentials:
-                    	ConnectionContextHelper.createParameters(varList, paramName,
-                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PROVIDE_GOOGLE_CREDENTIALS));
-                        break;
-                    case GoogleAuthMode:
-                        ConnectionContextHelper.createParameters(varList, paramName,
-                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE));
-                        break;
                     case PathToGoogleCredentials:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS));
-                        break;
-                    case GoogleOauthToken:
-                    	ConnectionContextHelper.createParameters(varList, paramName,
-                              conn.getParameters().get(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS), JavaTypesManager.PASSWORD );
                         break;
                     case DataBricksEndpoint:
                         ConnectionContextHelper.createParameters(varList, paramName,
@@ -642,20 +630,8 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_GOOGLE_JARS_BUCKET,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case useGoogleCredentials:
-            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PROVIDE_GOOGLE_CREDENTIALS,
-                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
-            break;    
-        case GoogleAuthMode:
-        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AUTH_MODE,
-                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
-            break;    
         case PathToGoogleCredentials:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_PATH_TO_GOOGLE_CREDENTIALS,
-                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
-            break;
-        case GoogleOauthToken:
-            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_OAUTH2_TOKEN_TO_GOOGLE_CREDENTIALS,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         case DataBricksEndpoint:
