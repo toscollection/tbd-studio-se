@@ -30,9 +30,6 @@ public enum ESparkMode {
     KUBERNETES(Messages.getString("ESparkMode.KUBERNETES"),
             "SPARK_K8S",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportSparkYarnK8SMode[])"),
-    SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
-            "SPARK_LOCAL",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])"),
     CDE(Messages.getString("ESparkMode.CDE"), "CDE", "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalCDEMode[])"),
     DATAPROC(Messages.getString("ESparkMode.DATAPROC"),
             "DATAPROC",
@@ -42,7 +39,11 @@ public enum ESparkMode {
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDBRMode[])"),
     STANDALONE(Messages.getString("ESparkMode.STANDALONE"),
             "STANDALONE",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalStandaloneMode[])"),;
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalStandaloneMode[])"),
+    SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
+            "SPARK_LOCAL",
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])");
+	// we want spark local by default if possible so please let it last in this list
 
     private String runModeLabel;
 

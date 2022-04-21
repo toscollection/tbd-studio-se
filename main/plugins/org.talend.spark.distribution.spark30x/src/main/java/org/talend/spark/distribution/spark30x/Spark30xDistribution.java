@@ -359,6 +359,11 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
 	public boolean doSupportUniversalLocalMode() {
     	return true;
     }
+	
+	@Override
+	public boolean doSupportSparkYarnClusterMode() {
+    	return true;
+    }
 
 	@Override
 	public boolean doSupportDynamicMemoryAllocation() {
