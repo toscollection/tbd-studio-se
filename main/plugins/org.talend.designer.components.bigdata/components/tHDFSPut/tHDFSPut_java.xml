@@ -178,7 +178,7 @@
 		</PARAMETER>
 		
 		<PARAMETER
-	      NAME="FILE_ACTION"
+	      NAME="OVERWRITE"
 	      FIELD="CLOSED_LIST"
 	      NUM_ROW="50" >
 	      <ITEMS DEFAULT="CREATE">
