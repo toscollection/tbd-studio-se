@@ -11,7 +11,7 @@ public class DatabricksRuntimeVersion {
 
 	private static List<DatabricksRuntimeAndSparkVersion> initAvailableRuntimeAndSparkVersion() {
 		return Arrays.asList(new DatabricksRuntimeAndSparkVersion("9.1.x-scala2.12", "SPARK_3_1_x"),
-				new DatabricksRuntimeAndSparkVersion("10.5.x-scala2.12", "SPARK_3_2_x"),
+				new DatabricksRuntimeAndSparkVersion("10.5.x-scala2.12", "SPARK_3_2_x"), 
 				new DatabricksRuntimeAndSparkVersion("10.4.x-scala2.12", "SPARK_3_2_x"),
 				new DatabricksRuntimeAndSparkVersion("10.3.x-scala2.12", "SPARK_3_2_x"),
 				new DatabricksRuntimeAndSparkVersion("10.2.x-scala2.12", "SPARK_3_2_x"),
