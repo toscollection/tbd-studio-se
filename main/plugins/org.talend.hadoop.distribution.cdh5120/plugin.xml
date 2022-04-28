@@ -1434,8 +1434,6 @@
              <library id="talend-lineage-api-0.2.0.jar" />
              <library id="navigator-sdk-client-2.0.jar" />
              <library id="navigator-sdk-model-2.0.jar" />
-             <library id="spring-core-4.0.7.RELEASE"/>
-             <library id="spring-web-4.0.7.RELEASE"/>
              <library id="jackson-databind-2.6.7.1.jar"/>
              <library id="jackson-annotations-2.6.7.jar"/>
              <library id="jackson-core-2.6.7.jar"/>

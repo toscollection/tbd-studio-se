@@ -10723,30 +10723,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH5_13_0_spring_aop_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH5_13_0_spring_beans_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH5_13_0_spring_context_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH5_13_0_spring_core_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH5_13_0_spring_expression_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH5_13_0_spring_web_4_0_7_RELEASE_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH5_13_0_stax_api_1_0_2_jar",
         "tagName" : "library"
       }, {
