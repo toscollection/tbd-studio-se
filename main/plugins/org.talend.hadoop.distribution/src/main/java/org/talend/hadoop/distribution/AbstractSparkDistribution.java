@@ -148,26 +148,42 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         return Arrays.asList(EDatabriksSubmitMode.values());
     }
     
+    @Override
+    public boolean isHiveMRRequired() {
+    	return false;
+    }
+    
+    @Override
+    public boolean isParquetMRRequired() {
+    	return false;
+    }
+    
+    @Override
     public boolean doSupportUniversalDBRMode() {
     	return false;
     }
     
+    @Override
     public boolean doSupportUniversalDataprocMode() {
     	return false;
     }
     
+    @Override
     public boolean doSupportUniversalLocalMode() {
     	return false;
     }
     
+    @Override
     public boolean doSupportSparkYarnK8SMode() {
     	return false;
     }
     
+    @Override
     public boolean doSupportSparkYarnClusterMode() {
     	return false;
     }
     
+    @Override
     public boolean doSupportUniversalStandaloneMode() {
     	return false;
     }
