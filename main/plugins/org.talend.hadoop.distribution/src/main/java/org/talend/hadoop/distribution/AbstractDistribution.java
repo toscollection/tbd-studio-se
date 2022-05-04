@@ -468,7 +468,7 @@ public abstract class AbstractDistribution {
 
         //Hive on Spark
         result.put(ComponentType.HIVEONSPARK, ModuleGroupsUtils.getModuleGroups((ComponentCondition) null,
-                ModuleGroupName.HIVE.get(this.getVersion()), true));
+                ModuleGroupName.HIVE.get(this.getVersion()), this.isHiveMRRequired()));
 
         //Sqoop
         result.put(ComponentType.SQOOP, SqoopModuleGroup.getModuleGroups(this.getVersion()));
@@ -582,18 +582,18 @@ public abstract class AbstractDistribution {
 
         // Spark Batch Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_INPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), this.isParquetMRRequired()));
 
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.PARQUET_OUTPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), this.isParquetMRRequired()));
 
         // Spark Streaming Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), this.isParquetMRRequired()));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_OUTPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), this.isParquetMRRequired()));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_STREAM_INPUT_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), !"SPARK".equals(this.getDistribution())));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.PARQUET.get(this.getVersion()), this.isParquetMRRequired()));
 
         // Redshift nodes ...
         Set<DistributionModuleGroup> redshiftBatchNodeModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'", ModuleGroupName.REDSHIFT_BATCH.get(this.getVersion()), true );
@@ -654,11 +654,11 @@ public abstract class AbstractDistribution {
                 "SQL_CONTEXT", EqualityOperator.EQ, "HiveContext"));
 
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SPARK_SQL_ROW_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, hiveContextCondition, ModuleGroupName.HIVE.get(this.getVersion()), true));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, hiveContextCondition, ModuleGroupName.HIVE.get(this.getVersion()), this.isHiveMRRequired()));
 
         // Spark Streaming tSQLRow nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.SPARK_SQL_ROW_COMPONENT),
-                ModuleGroupsUtils.getModuleGroups(distribution, version, hiveContextCondition, ModuleGroupName.HIVE.get(this.getVersion()), true));
+                ModuleGroupsUtils.getModuleGroups(distribution, version, hiveContextCondition, ModuleGroupName.HIVE.get(this.getVersion()), this.isHiveMRRequired()));
 
         // delta components in Spark batch
         Set<DistributionModuleGroup> deltaBatchConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.DELTALAKE.get(this.getVersion()), true);
@@ -719,6 +719,14 @@ public abstract class AbstractDistribution {
 
     public List<String> getSupportedHCatalogVersion() {
         return null;
+    }
+    
+    public boolean isHiveMRRequired() {
+    	return true;
+    }
+    
+    public boolean isParquetMRRequired() {
+    	return true;
     }
 
     public boolean doSupportUniversalDBRMode() {
