@@ -202,7 +202,7 @@
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="bigquery-connector-hadoop3-1.1.6-shaded" name="bigquery-connector-hadoop3-1.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop3-1.1.6/jar/shaded"/>
             
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="delta-core_2.12-1.0.1.jar" name="delta-core_2.12-1.0.1.jar" mvn_uri="mvn:io.delta/delta-core_2.12/1.0.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="delta-core_2.12-1.1.0.jar" name="delta-core_2.12-1.1.0.jar" mvn_uri="mvn:io.delta/delta-core_2.12/1.1.0"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
             
@@ -422,7 +422,8 @@
 
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark32x" id="DELTALAKE-GROUP-SPARK_3_2_x" name="DELTALAKE-GROUP-SPARK_3_2_x">
-            <library id="delta-core_2.12-1.0.1.jar"/>
+            <library id="delta-core_2.12-1.1.0.jar"/>
+            <library id="snappy-java-1.1.8.2.jar"/>
         </libraryNeededGroup>
         
         <!-- Cassandra group -->
