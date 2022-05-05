@@ -966,7 +966,7 @@
                 "hadoop-client",
                 "hadoop-mapreduce-client-core",
                 "hadoop-yarn-server-web-proxy",
-                "parquet-hadoop-bundle"
+                "parquet-hadoop-bundle"                
             ]
         },
         {
@@ -985,7 +985,8 @@
                 "jackson-databind",
                 "jackson-annotations",
                 "parquet-hadoop-bundle",
-                "impala-jdbc"
+                "impala-jdbc",
+                "guava-28.1-jre"
             ]
         },
         {
