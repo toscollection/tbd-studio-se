@@ -33,7 +33,7 @@ imports="
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node,"__DIE_ON_ERROR__"));
 	dbLog = new DBLogUtil(node);
 	
-	getManager(dbmsId, cid, node);
+	Manager manager = getManager(dbmsId, cid, node);
 	String incomingConnName = null;
 	List<IMetadataColumn> columnList = getColumnList(node);
 	
@@ -52,7 +52,7 @@ imports="
 		}
 	}
     
-	List<Column> stmtStructure =  getManager(dbmsId, cid).createColumnList(columnList, false, null, null);
+	List<Column> stmtStructure =  manager.createColumnList(columnList, false, null, null);
     
 	////////////////////////////////////////////////////////////
 	List<Column> colStruct =  new ArrayList();
