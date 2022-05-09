@@ -25,12 +25,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.core.ui,
  org.talend.designer.core,
  org.talend.repository.view.di,
- org.talend.components.api
+ org.talend.components.api,
+ org.bouncycastle.bcprov
 Bundle-ActivationPolicy: lazy
 Export-Package: org.talend.repository.model.nosql,
  org.talend.repository.model.nosql.impl,
  org.talend.repository.model.nosql.util
 Bundle-Vendor: .Talend SA.
 Bundle-Localization: plugin
-Bundle-ClassPath: .,
- lib/bcprov-jdk16-1.46.jar
+Bundle-ClassPath: .
