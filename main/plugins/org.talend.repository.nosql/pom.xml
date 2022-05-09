@@ -9,36 +9,8 @@
   </parent>
   <artifactId>org.talend.repository.nosql</artifactId>
   <packaging>eclipse-plugin</packaging>
-  <dependencies>
-  	<dependency>
-        <groupId>org.bouncycastle</groupId>
-        <artifactId>bcprov-jdk16</artifactId>
-        <version>1.46</version>
-    </dependency>
-  </dependencies>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <outputDirectory>bin</outputDirectory>
-    
-    <plugins>
-    	<plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-dependency-plugin</artifactId>
-	        <executions>
-	          <execution>
-	            <id>copy-dependencies</id>
-	            <phase>generate-resources</phase>
-	            <goals>
-	              <goal>copy-dependencies</goal>
-	            </goals>
-	            <configuration>
-	              <includeScope>runtime</includeScope>
-	              <outputDirectory>${project.basedir}/lib</outputDirectory>
-<!-- 	              <stripVersion>true</stripVersion> -->
-	            </configuration>
-	          </execution>
-	        </executions>
-	      </plugin>
-    </plugins>
   </build>
 </project>
