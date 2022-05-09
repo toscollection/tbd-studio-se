@@ -279,11 +279,11 @@
 			<!-- Schema registry, Avro serializer -->
 			<IMPORT NAME="avro-1.10.1" MODULE="avro-1.10.1.jar" MVN="mvn:org.apache.avro/avro/1.10.1"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
-			<IMPORT NAME="jackson-core-2.11.4" MODULE="jackson-core-2.11.4.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.11.4"
+			<IMPORT NAME="jackson-core-2.13.2" MODULE="jackson-core-2.13.2.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.13.2"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
-			<IMPORT NAME="jackson-databind-2.11.4" MODULE="jackson-databind-2.11.4.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-databind/2.11.4"
+			<IMPORT NAME="jackson-databind-2.13.2.2" MODULE="jackson-databind-2.13.2.2.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-databind/2.13.2.2"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
-			<IMPORT NAME="jackson-annotations-2.11.4" MODULE="jackson-annotations-2.11.4.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-annotations/2.11.4"
+			<IMPORT NAME="jackson-annotations-2.13.2" MODULE="jackson-annotations-2.13.2.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-annotations/2.13.2"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
 			<IMPORT NAME="commons-compress-1.21" MODULE="commons-compress-1.21.jar" MVN="mvn:org.apache.commons/commons-compress/1.21"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
