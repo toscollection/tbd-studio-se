@@ -34,8 +34,10 @@ class TKafkaOutputUtil {
             ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__")
             : node;
 		  this.tSetKeystoreUtil = new TSetKeystoreUtil(connNode);
+        // reuse kafka ssl settings for schema registry if ssl for kafka is enabled
         this.tSetKeystoreUtilSchemaRegistry = new TSetKeystoreUtil(connNode);
-        if (useSchemaRegistryHttps() && !"true".equals(ElementParameterParser.getValue(connNode, "__USE_HTTPS__"))) {
+        if (!useHttps()) {
+            // If ssl for kafka is disabled - use schema registry's own keystore settings
             INode schemaRegistryKeystoreSettingsNode = ElementParameterParser.getLinkedNodeValue(node, "__SCHEMA_REGISTRY_KEYSTORE_SETTINGS__");
             this.tSetKeystoreUtilSchemaRegistry.setSettingsNode(schemaRegistryKeystoreSettingsNode);
         }
@@ -84,13 +86,17 @@ class TKafkaOutputUtil {
     }
     
     public String getSecurityProtocol() {
-			if (tSetKeystoreUtil.useHTTPS()) {
+			if (useHttps()) {
 				return useKrb() ? "SASL_SSL" : "SSL";
 			} else {
 				return useKrb() ? "SASL_PLAINTEXT" : "PLAINTEXT";
 			}
     }
-    
+
+    public boolean useHttps() {
+        return "true".equals(ElementParameterParser.getValue(connNode, "__USE_HTTPS__"));
+    }
+
     public boolean useKrb() {
 			return "true".equals(ElementParameterParser.getValue(connNode, "__USE_KRB__"));
     }
@@ -117,6 +123,10 @@ class TKafkaOutputUtil {
     
     public String getKrb5Conf() {
     		return ElementParameterParser.getValue(connNode, "__KRB5_CONF__");
+    }
+
+    public boolean isSetKeystore() {
+        return "true".equals(ElementParameterParser.getValue(connNode, "__SET_KEYSTORE__"));
     }
 
     public boolean isKafkaVersion(String... versions) {
@@ -158,8 +168,8 @@ class TKafkaOutputUtil {
         return ElementParameterParser.getPasswordValue(node, "__SCHEMA_REGISTRY_PASSWORD__");
     }
 
-    public boolean useSchemaRegistryHttps() {
-        return "true".equals(ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_USE_HTTPS__"));
+    public boolean isSchemaRegistrySetKeystore() {
+        return "true".equals(ElementParameterParser.getValue(node, "__SCHEMA_REGISTRY_SET_KEYSTORE__"));
     }
 
     public String getSchemaRegistryKeySerializer() {
@@ -216,7 +226,7 @@ class TKafkaOutputUtil {
     private void setSecurityProps(Map<String, String> result) {
         if (!isKafkaVersion("KAFKA_0_8_2_0")) {
             // SSL configuration
-            if (tSetKeystoreUtil.useHTTPS()) {
+            if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
                 result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
                 result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
                 result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
@@ -254,7 +264,8 @@ class TKafkaOutputUtil {
                 String userInfo = getSchemaRegistryUsername() + " + ':' + " + getSchemaRegistryPassword();
                 result.put("\"basic.auth.user.info\"", userInfo);
             }
-            if (tSetKeystoreUtilSchemaRegistry.useHTTPS()) {
+            if ((useHttps() && isSetKeystore() || !useHttps() && isSchemaRegistrySetKeystore())
+                    && tSetKeystoreUtilSchemaRegistry.useHTTPS()) {
                 result.put("\"schema.registry.ssl.truststore.type\"", tSetKeystoreUtilSchemaRegistry.getTrustStoreType());
                 result.put("\"schema.registry.ssl.truststore.location\"", tSetKeystoreUtilSchemaRegistry.getTrustStorePath());
                 result.put("\"schema.registry.ssl.truststore.password\"", tSetKeystoreUtilSchemaRegistry.getTrustStorePassword());
