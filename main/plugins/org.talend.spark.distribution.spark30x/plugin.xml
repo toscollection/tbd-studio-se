@@ -976,6 +976,7 @@
         <!-- Parquet group -->
         <libraryNeededGroup description="Parquet" id="PARQUET-GROUP-SPARK_3_0_x" name="PARQUET-GROUP-SPARK_3_0_x">
             <library id="parquet-common-1.10.1.jar"/>
+            <library id="snappy-java-1.1.8.2.jar"/>
         </libraryNeededGroup>
         
         <!-- Sqoop group -->
