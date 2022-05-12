@@ -34,6 +34,7 @@ imports="
     boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
     String theDistribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
     String theVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
+    String connMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 
     final String studioVersion = org.talend.commons.utils.VersionUtils.getDisplayVersion();
 
@@ -47,6 +48,7 @@ imports="
             if(connection!=null && connection.equals(pNode.getUniqueName())) {
                 theDistribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
                 theVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
+                connMode = ElementParameterParser.getValue(pNode, "__CONNECTION_MODE__");
             }
         }
     }
@@ -94,11 +96,11 @@ imports="
             }
 <%
         }
-    } else if (hiveDistrib.isGoogleDataprocDistribution()) {
+    } else if("DATAPROC".equalsIgnoreCase(connMode)) { // Dataproc
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetDataprocConnection.javajet"%>
 <%
-    } else { // normal mode
+    } else { // standalone mode
 %>
         <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Hive/GetConnection.javajet"%>
 <%
@@ -222,7 +224,7 @@ imports="
                 String jarToRegister = jarsToRegister.get(i);
                 for(int j=0; j<jars.size(); j++) {
                     if(jars.get(j).contains(jarToRegister)) {
-                        if(!hiveDistrib.useCloudLauncher()) { // Then we use the created SQL statement to add the jars.
+                        if(!hiveDistrib.useCloudLauncher() && !"DATAPROC".equalsIgnoreCase(connMode)) { // Then we use the created SQL statement to add the jars.
 %>
                             addJar_<%=cid%> = conn_<%=cid%>.createStatement();
                             try {
@@ -258,7 +260,7 @@ imports="
     }
 
     // End of parquet format handling.
-    if(!hiveDistrib.useCloudLauncher()) {
+    if(!hiveDistrib.useCloudLauncher() && !"DATAPROC".equalsIgnoreCase(connMode)) {
 %>
     java.sql.Statement stmt_<%=cid %> = conn_<%=cid %>.createStatement();
 <%
@@ -310,7 +312,7 @@ if(likeTable) {
 %>
     String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
 <%
-    if(!hiveDistrib.useCloudLauncher()) {
+    if(!hiveDistrib.useCloudLauncher() && !"DATAPROC".equalsIgnoreCase(connMode)) {
         %>
         try {
             <%
@@ -660,7 +662,7 @@ if(asSelect) {
 %>
 String querySQL_<%=cid %> = "<%=createTableSQL.toString()%>";
 <%
-    if(!hiveDistrib.useCloudLauncher()) {
+    if(!hiveDistrib.useCloudLauncher() && !"DATAPROC".equalsIgnoreCase(connMode)) {
 %>
         try {
             <%
