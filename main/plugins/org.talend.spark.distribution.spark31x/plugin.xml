@@ -363,6 +363,7 @@
             <library id="spark-kubernetes_2.12-3.1.1.jar"/>
             <library id="spark-kvstore_2.12-3.1.1.jar"/>
             <library id="spark-launcher_2.12-3.1.1.jar"/>
+            <library id="spark-mllib_2.12-3.1.1.jar"/>
             <library id="spark-mllib-local_2.12-3.1.1.jar"/>
             <library id="spark-network-common_2.12-3.1.1.jar"/>
             <library id="spark-network-shuffle_2.12-3.1.1.jar"/>
@@ -471,6 +472,8 @@
         
         <!-- spark 3 ML group -->
         <libraryNeededGroup description="ML libraries for spark311" id="ML-GROUP-SPARK_3_1_x" name="ML-GROUP-SPARK_3_1_x">
+            <library id="arpack_combined_all-0.1.jar"/>
+            <library id="core-1.1.2.jar"/>
         </libraryNeededGroup>
 
         <!-- commons math3 group -->

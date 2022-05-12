@@ -348,6 +348,7 @@
             <library id="spark-kubernetes_2.12-3.2.1.jar"/>
             <library id="spark-kvstore_2.12-3.2.1.jar"/>
             <library id="spark-launcher_2.12-3.2.1.jar"/>
+            <library id="spark-mllib_2.12-3.2.1.jar"/>
             <library id="spark-mllib-local_2.12-3.2.1.jar"/>
             <library id="spark-network-common_2.12-3.2.1.jar"/>
             <library id="spark-network-shuffle_2.12-3.2.1.jar"/>

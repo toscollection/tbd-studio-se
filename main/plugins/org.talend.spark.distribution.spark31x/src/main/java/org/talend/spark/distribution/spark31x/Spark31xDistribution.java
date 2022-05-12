@@ -86,6 +86,21 @@ public class Spark31xDistribution extends AbstractSparkDistribution
                 s3ModuleGroup);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 s3ModuleGroup);
+
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,
+                        SparkBatchConstant.LINEAR_REGRESSION_MODEL_COMPONENT),
+                        Spark31xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark31xDistribution.SPARK_VERSION));
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,
+                        SparkBatchConstant.LOGISTIC_REGRESSION_MODEL_COMPONENT),
+                        Spark31xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark31xDistribution.SPARK_VERSION));
         return result;
     }
 
