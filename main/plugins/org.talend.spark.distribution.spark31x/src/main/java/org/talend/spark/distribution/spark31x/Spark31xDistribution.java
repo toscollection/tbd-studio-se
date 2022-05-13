@@ -38,6 +38,7 @@ import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
+import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.spark.distribution.spark31x.modulegroup.node.Spark31xNodeModuleGroup;
 
@@ -100,6 +101,22 @@ public class Spark31xDistribution extends AbstractSparkDistribution
                         Spark31xNodeModuleGroup
                                 .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark31xDistribution.SPARK_VERSION));
+        // spark batch tModelEncoder
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,
+                        SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
+                        Spark31xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
+                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark31xDistribution.SPARK_VERSION));
+        // spark Streaming tModelEncoder
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                        SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
+                        Spark31xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
+                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         Spark31xDistribution.SPARK_VERSION));
         return result;
     }
