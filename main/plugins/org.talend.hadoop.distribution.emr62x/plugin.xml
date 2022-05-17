@@ -784,6 +784,14 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="hive-storage-api-2.7.1.jar" name="hive-storage-api-2.7.1.jar"
             mvn_uri="mvn:org.apache.hive/hive-storage-api/2.7.1"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="hive-service-rpc-3.1.2.jar" name="hive-service-rpc-3.1.2.jar"
+            mvn_uri="mvn:org.apache.hive/hive-service-rpc/3.1.2"/>
+            
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+            id="hive-service-3.1.2.jar" name="hive-service-3.1.2.jar"
+            mvn_uri="mvn:org.apache.hive/hive-service/3.1.2"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="hive-standalone-metastore-3.1.2.jar" name="hive-standalone-metastore-3.1.2.jar"
@@ -926,6 +934,8 @@
             <library id="hive-shims-common-3.1.2.jar"/>
             <library id="hive-standalone-metastore-3.1.2.jar"/>
             <library id="hive-storage-api-2.7.1.jar"/>
+            <library id="hive-service-3.1.2.jar"/>
+            <library id="hive-service-rpc-3.1.2.jar"/>
             <library id="joda-time-2.10.5.jar"/>
             <library id="libfb303-0.9.3.jar"/>
             <library id="orc-mapreduce-1.5.5.jar"/>
