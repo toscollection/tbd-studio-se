@@ -80,7 +80,6 @@ import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
 import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
-import org.talend.hadoop.distribution.constants.dataproc.EDataprocAuthMode;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -595,7 +594,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         hadoopConfSpecificJarText.setEditable(isEditable && setHadoopConfBtn.getSelection());
         browseHadoopConfBtn.setEnabled(isEditable && setHadoopConfBtn.getSelection());
         
-        sparkModeCombo.setEnabled(isEditable);
+        if(sparkModeCombo != null) {
+            sparkModeCombo.setEnabled(isEditable);
+        }
         runSubmitCombo.setEnabled(isEditable);
         cloudProviderCombo.setEnabled(isEditable);
         endpointText.setEnabled(isEditable);
