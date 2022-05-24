@@ -1786,7 +1786,6 @@
 			mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.4.1"/>
             
         <!-- Kinesis libraries -->
-        
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
             id="emr-dynamodb-hadoop-4.7.0.jar"
@@ -1843,7 +1842,23 @@
             name="bigquery-connector-hadoop2-1.1.6-shaded.jar"
             mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop2-1.1.6/jar/shaded">
         </libraryNeeded>
+		
+		<!-- Snowflake libraries -->
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr5290"
+          id="spark-snowflake_2.12-2.9.2-spark_3.0.jar" name="spark-snowflake_2.12-2.9.2-spark_3.0.jar"
+          mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.9.2-spark_3.0">
+        </libraryNeeded>  
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr5290"
+          id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar"
+          mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12">
+        </libraryNeeded>  
+          
+        <libraryNeeded context="plugin:org.talend.spark.distribution.emr5290"
+          id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar"
+          mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3">
+        </libraryNeeded>  
+		
         <!-- Groups -->
 
         <!-- HDFS group -->
@@ -2315,6 +2330,15 @@
             <library id="amazon-kinesis-client-1.8.1.jar"/>
             <library id="aws-java-sdk-kinesis-1.11.760.jar"/>
             <library id="aws-java-sdk-cloudwatch-1.11.760.jar"/>
+        </libraryNeededGroup>
+        
+        <!-- Snowflake group -->
+        <libraryNeededGroup description="Snowflake libraries for EMR 5.29.0" 
+        		id="SNOWFLAKE-GROUP-EMR_5_29_0_LATEST" 
+        		name="SNOWFLAKE-GROUP-EMR_5_29_0_LATEST">
+            <library id="spark-snowflake_2.12-2.9.2-spark_3.0.jar"/>
+            <library id="snowflake-jdbc-3.13.12.jar"/>
+            <library id="snowflake-ingest-sdk-0.10.3.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Hive group -->
