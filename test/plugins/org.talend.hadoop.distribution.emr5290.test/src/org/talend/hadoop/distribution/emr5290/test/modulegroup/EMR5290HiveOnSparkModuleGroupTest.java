@@ -29,6 +29,7 @@ public class EMR5290HiveOnSparkModuleGroupTest {
     public void testModuleGroups() throws Exception {
         Map<String, String> results = new HashMap<>();
         results.put(EMR5290Constant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
+        results.put(EMR5290Constant.SPARK_HIVE_TEZ_MRREQUIRED_MODULE_GROUP.getModuleName(), null);
 
         Set<DistributionModuleGroup> moduleGroups = EMR5290HiveOnSparkModuleGroup.getModuleGroups();
         assertEquals(results.size(), moduleGroups.size());
