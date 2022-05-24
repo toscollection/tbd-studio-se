@@ -60,6 +60,7 @@ import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkstreaming.EM
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkstreaming.EMR5290SparkStreamingParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkstreaming.EMR5290SparkStreamingS3NodeModuleGroup;
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkstreaming.EMR5290SparkStreamingSqlRowHiveNodeModuleGroup;
+import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.EMR5290SnowflakeModuleGroup;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
@@ -114,11 +115,9 @@ public class EMR5290Distribution extends EMRDistribution implements HBaseCompone
 		result.put(ComponentType.HDFS, EMR5290HDFSModuleGroup.getModuleGroups());
 		result.put(ComponentType.HIVE, EMR5290HiveModuleGroup.getModuleGroups());
         result.put(ComponentType.HIVEONSPARK, EMR5290HiveOnSparkModuleGroup.getModuleGroups());
-		result.put(ComponentType.SQOOP,
-				EMR5290SqoopModuleGroup.getModuleGroups());
-		result.put(ComponentType.HBASE,
-				EMR5290HBaseModuleGroup.getModuleGroups());
-        result.put(ComponentType.SPARKBATCH, EMR5290SparkBatchModuleGroup.getModuleGroups());
+		result.put(ComponentType.SQOOP, EMR5290SqoopModuleGroup.getModuleGroups());
+		result.put(ComponentType.HBASE, EMR5290HBaseModuleGroup.getModuleGroups());
+		result.put(ComponentType.SPARKBATCH, EMR5290SparkBatchModuleGroup.getModuleGroups());
         result.put(ComponentType.SPARKSTREAMING, EMR5290SparkStreamingModuleGroup.getModuleGroups());
 
 		return result;
@@ -171,7 +170,19 @@ public class EMR5290Distribution extends EMRDistribution implements HBaseCompone
                 dynamoDBNodeModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.DYNAMODB_CONFIGURATION_COMPONENT),
                 dynamoDBConfigurationModuleGroups);
-
+        
+        // Snowflake nodes
+        Set<DistributionModuleGroup> snowflakeNodeModuleGroups = EMR5290SnowflakeModuleGroup.getModuleGroups(distribution,
+                version, "USE_EXISTING_CONNECTION == 'false'");
+        Set<DistributionModuleGroup> snowflakeConfigurationModuleGroups = EMR5290SnowflakeModuleGroup.getModuleGroups(
+                distribution, version, null);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_INPUT_COMPONENT),
+        		snowflakeNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_OUTPUT_COMPONENT),
+        		snowflakeNodeModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.SNOWFLAKE_CONFIGURATION_COMPONENT),
+        		snowflakeConfigurationModuleGroups);
+        
         // Spark Streaming Parquet nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.PARQUET_INPUT_COMPONENT),
                 EMR5290SparkStreamingParquetNodeModuleGroup.getModuleGroups(distribution, version));
