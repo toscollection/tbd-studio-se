@@ -37,7 +37,6 @@ import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xDynamoDBNode
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xKinesisNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xSnowflakeNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xTopByNodeModuleGroup;
-import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xRestNodeModuleGroup;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 
 public class DBR73xDistribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
@@ -160,18 +159,7 @@ public class DBR73xDistribution extends AbstractDatabricksDistribution implement
         result.put(new NodeComponentTypeBean(
                 ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.DYNAMODB_INPUT_COMPONENT
-        ), DBR73xDynamoDBNodeModuleGroup.getModuleGroups(distribution, version));        
-        
-        // Spark Streaming RestWebService
-        result.put(new NodeComponentTypeBean(
-                ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.REST_WS_OUTPUT_COMPONENT
-        ), DBR73xRestNodeModuleGroup.getModuleGroups(distribution, version));
-        result.put(new NodeComponentTypeBean(
-                ComponentType.SPARKSTREAMING,
-                SparkStreamingConstant.REST_WS_INPUT_COMPONENT
-        ), DBR73xRestNodeModuleGroup.getModuleGroups(distribution, version));
-        
+        ), DBR73xDynamoDBNodeModuleGroup.getModuleGroups(distribution, version));
         return result;
 
     }
