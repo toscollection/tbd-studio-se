@@ -63,6 +63,10 @@ public class DBR73xSparkStreamingModuleGroup {
                 DBR73xConstant.SPARK_STREAMING_LIB_KINESIS_DBR73X.getModuleName(),
                 true
         ));
+        hs.add(new DistributionModuleGroup(
+                DBR73xConstant.REST_GROUP_DBR73X.getModuleName(),
+                true
+        ));
         return hs;
     }
 }
