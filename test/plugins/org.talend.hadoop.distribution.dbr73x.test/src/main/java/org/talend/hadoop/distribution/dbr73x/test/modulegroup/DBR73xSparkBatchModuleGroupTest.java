@@ -35,6 +35,7 @@ public class DBR73xSparkBatchModuleGroupTest {
         expected.put(DBR73xConstant.BIGDATA_LAUNCHER_LIB_DBR73X.getModuleName(), null);
         expected.put(DBR73xConstant.SNOWFLAKE_GROUP_DBR73x.getModuleName(), null);
         expected.put(DBR73xConstant.DYNAMODB_GROUP_DBR73x.getModuleName(), null);
+        expected.put(DBR73xConstant.REDSHIFT_GROUP_DBR73X.getModuleName(), null);
         Set<DistributionModuleGroup> moduleGroups = DBR73xSparkBatchModuleGroup.getModuleGroups();
         assertEquals(expected.size(), moduleGroups.size());
         moduleGroups.iterator();

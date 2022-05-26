@@ -55,6 +55,11 @@ public class DBR73xSparkBatchModuleGroup {
                 true,
                 notSparkLocal
         ));
+        hs.add(new DistributionModuleGroup(
+                DBR73xConstant.REDSHIFT_GROUP_DBR73X.getModuleName(),
+                true,
+                notSparkLocal
+        ));
         return hs;
     }
 }
