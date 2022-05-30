@@ -1119,10 +1119,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_parquet_hadoop_bundle_1_10_99_7_1_1_0_565_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_protobuf_java_2_5_0_jar",
         "tagName" : "library"
       }, {
@@ -1521,10 +1517,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_paranamer_2_8_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_parquet_hadoop_bundle_1_10_99_7_1_1_0_565_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
