@@ -965,8 +965,7 @@
             "modules": [
                 "hadoop-client",
                 "hadoop-mapreduce-client-core",
-                "hadoop-yarn-server-web-proxy",
-                "parquet-hadoop-bundle"                
+                "hadoop-yarn-server-web-proxy"
             ]
         },
         {
@@ -984,7 +983,7 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "parquet-hadoop-bundle",
+                "hadoop-common",
                 "impala-jdbc",
                 "guava-28.1-jre"
             ]
