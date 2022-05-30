@@ -38,6 +38,7 @@ public class DBR73xSparkStreamingModuleGroupTest {
         expected.put(DBR73xConstant.KAFKA_LIB_REQUIRED_DBR73X.getModuleName(), null);
         expected.put(DBR73xConstant.REST_GROUP_DBR73X.getModuleName(), null);
         expected.put(DBR73xConstant.SPARK_STREAMING_LIB_KINESIS_DBR73X.getModuleName(), null);
+        expected.put(DBR73xConstant.REDSHIFT_GROUP_DBR73X.getModuleName(), null);
         Set<DistributionModuleGroup> moduleGroups = DBR73xSparkStreamingModuleGroup.getModuleGroups();
         assertEquals(expected.size(), moduleGroups.size());
         moduleGroups.iterator();

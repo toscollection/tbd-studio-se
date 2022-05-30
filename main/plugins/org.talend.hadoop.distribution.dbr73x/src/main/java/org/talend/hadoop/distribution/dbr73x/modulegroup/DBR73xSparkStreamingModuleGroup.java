@@ -56,9 +56,14 @@ public class DBR73xSparkStreamingModuleGroup {
                 true
         ));
         hs.add(new DistributionModuleGroup(
+                DBR73xConstant.REDSHIFT_GROUP_DBR73X.getModuleName(),
+                true
+        ));
+        hs.add(new DistributionModuleGroup(
                 DBR73xConstant.REST_GROUP_DBR73X.getModuleName(),
                 true
         ));
+      
         return hs;
     }
 }
