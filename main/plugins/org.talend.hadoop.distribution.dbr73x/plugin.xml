@@ -38,6 +38,8 @@
     <libraryNeeded id="scala-reflect-2.12.10.jar" name="scala-reflect-2.12.10.jar" mvn_uri="mvn:org.scala-lang/scala-reflect/2.12.10" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="slf4j-api-1.7.16.jar" name="slf4j-api-1.7.16.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.16" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="slf4j-log4j12-1.7.16.jar" name="slf4j-log4j12-1.7.16.jar" mvn_uri="mvn:org.slf4j/slf4j-log4j12/1.7.16" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
+    <libraryNeeded id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
+    <libraryNeeded id="spark-avro_2.12-3.0.3.jar" name="spark-avro_2.12-3.0.3.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.0.3" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-catalyst_2.12-3.0.1.jar" name="spark-catalyst_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-graphx_2.12-3.0.1.jar" name="spark-graphx_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-graphx_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
@@ -50,6 +52,7 @@
     <libraryNeeded id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-streaming_2.12-3.0.1.jar" name="spark-streaming_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="spark-unsafe_2.12-3.0.1.jar" name="spark-unsafe_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
+    <libraryNeeded id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="talend-bigdata-launcher-jobserver-2.0.12.jar" name="talend-bigdata-launcher-jobserver-2.0.12.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.0.12" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="talend-bigdata-launcher-databricks-2.4.4.jar" name="talend-bigdata-launcher-databricks-2.4.4.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-databricks/2.4.4" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="wsdl4j-1.6.3.jar" name="wsdl4j-1.6.3.jar" mvn_uri="mvn:wsdl4j/wsdl4j/1.6.3" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
@@ -135,8 +138,24 @@
     
     <!-- DynamoDB group -->
     <libraryNeededGroup description="DynamoDB libraries for DBR73X" id="DYNAMODB-GROUP-DBR73x" name="DYNAMODB-GROUP-DBR73x">
-      <library id="aws-java-sdk-core-1.11.655.jar"/>
-      <library id="aws-java-sdk-dynamodb-1.11.655.jar"/>
+       <library id="aws-java-sdk-core-1.11.655.jar"/>
+       <library id="aws-java-sdk-dynamodb-1.11.655.jar"/>
+    </libraryNeededGroup>
+        
+    <!-- Kafka group -->
+    <libraryNeededGroup description="Spark streaming Kafka libraries for DBR73X" id="KAFKA-LIB-REQUIRED-DBR73X" name="KAFKA-LIB-REQUIRED-DBR73X">
+       <library id="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar"/>
+       <library id="spark-streaming-kafka-0-10_2.12-3.0.1.jar"/>
+       <library id="kafka-clients-2.6.0.jar"/>
+    </libraryNeededGroup>
+      
+    <!-- Redshift group -->
+    <libraryNeededGroup description="Redshift libraries for spl30x" id="REDSHIFT-GROUP-DBR73X" name="REDSHIFT-GROUP-DBR73X">
+       <library id="spark-redshift_2.12-4.2.0.jar"/>
+       <library id="spark-avro_2.12-3.0.3.jar"/>
+       <library id="gson-2.7.jar"/>
+       <library id="snappy-java-1.1.8.2.jar"/>
+       <library id="avro-mapred-1.8.2-hadoop2.jar"/>
     </libraryNeededGroup>
         
      <!-- Kafka group -->
@@ -158,6 +177,7 @@
         <library id="jersey-common-2.30.jar"/>
         <library id="jersey-hk2-2.30.jar"/>
       </libraryNeededGroup>
+
     
   </extension>
   <extension point="org.talend.core.runtime.classloader_provider"/>

@@ -42,6 +42,11 @@ public class DBR73xSparkBatchModuleGroup {
                 DBR73xConstant.DYNAMODB_GROUP_DBR73x.getModuleName(),
                 true
         ));
+        hs.add(new DistributionModuleGroup(
+                DBR73xConstant.REDSHIFT_GROUP_DBR73X.getModuleName(),
+                true
+        ));
+        
         return hs;
     }
 }
