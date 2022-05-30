@@ -10574,6 +10574,11 @@
             },
             {
               "childNodes": [],
+              "id": "DYNAMIC_HDP_3_1_4_12_1_commons_pool2_2_6_0_jar",
+              "tagName": "library"
+            },
+            {
+              "childNodes": [],
               "id": "DYNAMIC_HDP_3_1_4_12_1_compress_lzf_1_0_3_jar",
               "tagName": "library"
             },
