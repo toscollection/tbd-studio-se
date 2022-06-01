@@ -458,6 +458,8 @@
         
         <!-- spark 3 ML group -->
         <libraryNeededGroup description="ML libraries for spark32x" id="ML-GROUP-SPARK_3_2_x" name="ML-GROUP-SPARK_3_2_x">
+            <library id="arpack_combined_all-0.1.jar"/>
+            <library id="core-1.1.2.jar"/>
         </libraryNeededGroup>
 
         <!-- commons math3 group -->
@@ -466,6 +468,8 @@
 
         <!-- KMeans -->
         <libraryNeededGroup description="KMeans libraries for spark32x" id="KMEANS-GROUP-SPARK_3_2_x" name="KMEANS-GROUP-SPARK_3_2_x">
+            <group id="ML-GROUP-SPARK_3_2_x"/>
+            <library id="snappy-java-1.1.8.2.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming Kafka group -->

@@ -118,6 +118,16 @@ public class Spark31xDistribution extends AbstractSparkDistribution
                                 .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
                                         SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         Spark31xDistribution.SPARK_VERSION));
+
+        // spark Streaming tKMeansStrModel
+        result
+                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
+                        SparkStreamingConstant.KMEANSSTR_MODEL_COMPONENT),
+                        Spark31xNodeModuleGroup
+                                .getModuleGroup(ModuleGroupName.KMEANS.get(getVersion()),
+                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
+                                        Spark31xDistribution.SPARK_VERSION));
+
         return result;
     }
 

@@ -483,6 +483,8 @@
 
         <!-- KMeans -->
         <libraryNeededGroup description="KMeans libraries for spark311" id="KMEANS-GROUP-SPARK_3_1_x" name="KMEANS-GROUP-SPARK_3_1_x">
+            <group id="ML-GROUP-SPARK_3_1_x"/>
+            <library id="snappy-java-1.1.8.2.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming Kafka group -->
