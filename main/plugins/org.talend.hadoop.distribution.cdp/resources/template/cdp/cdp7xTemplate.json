@@ -171,6 +171,25 @@
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
             ]
+        },
+        {
+            "id" : "hadoop-common-checkservices",
+            "type" : "BASE",
+            "context" : "{properties.context}",
+            "groupId" : "org.apache.hadoop",
+            "artifactId" : "hadoop-common",
+            "classifier" : "",
+            "description" : "",
+            "exclusions": [
+                { "groupId" : "com.fasterxml.jackson.core", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.apache.httpcomponents", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "io.netty", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "xerces", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "org.glassfish", "artifactId" : "javax.el", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "jdk.tools", "artifactId" : "*", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "com.google.guava", "artifactId" : "guava", "classifier" : "", "extension" : "", "description" : "" }
+            ]
         }, 
         {
             "id" : "hadoop-mapreduce-client-core",
@@ -950,6 +969,14 @@
             "useStudioRepository": "true"
         },
         {
+            "id": "commons-collections",
+            "type": "STANDARD",
+            "context": "{properties.context}",
+            "jarName": "commons-collections-3.2.2.jar",
+            "mvnUri": "mvn:commons-collections/commons-collections/3.2.2/jar",
+            "useStudioRepository": "true"
+        },
+        {
             "id": "fluent-hc",
             "type": "STANDARD",
             "context": "{properties.context}",
@@ -973,7 +1000,9 @@
             "modules": [
                 "hadoop-client",
                 "hadoop-mapreduce-client-core",
-                "hadoop-yarn-server-web-proxy"
+                "hadoop-yarn-server-web-proxy",
+                "commons-collections",
+                "hadoop-common"
             ]
         },
         {
@@ -986,6 +1015,7 @@
                 "hadoop-client",
                 "commons-configuration",
                 "commons-configuration2",
+                "commons-collections",
                 "woodstox-core",
                 "stax2-api",
                 "jackson-core",
@@ -1056,7 +1086,9 @@
             "id" : "MAPREDUCE-LIB-DYNAMIC",
             "description" : "",
             "modules": [
+                "guava-28.1-jre",
                 "hadoop-client",
+                "hadoop-common-checkservices",
                 "jodd"
             ]
         },
