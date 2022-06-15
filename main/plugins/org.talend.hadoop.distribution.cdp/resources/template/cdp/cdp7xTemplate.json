@@ -1014,7 +1014,12 @@
                 "jackson-databind",
                 "jackson-annotations",
                 "impala-jdbc",
-                "guava-28.1-jre"
+                "guava-28.1-jre",
+                "talend-bigdata-launcher-knox",
+                "talend-bigdata-launcher-livy",
+                "talend-bigdata-launcher-core",
+                "gateway-i18n",
+                "gateway-shell"
             ]
         },
         {
