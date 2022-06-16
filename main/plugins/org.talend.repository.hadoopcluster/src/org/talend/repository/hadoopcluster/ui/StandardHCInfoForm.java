@@ -282,6 +282,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText oauthTokenText;
     
     private Button credentialsBtn;
+    
+    // Standalone 
+    
+    private Group standaloneGroup;
+    private LabelledWidget standaloneMaster;
+    private LabelledWidget standaloneConfigureExec;
+    private LabelledWidget standaloneExecCore;
+    private LabelledWidget standaloneExecMemory;
 
     // CDE widgets
     private LabelledWidget cdeApiEndPoint;
@@ -478,6 +486,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 entry.getValue().set(value);
             }
             updateCdeFieldsVisibility();
+            updateStandaloneConfigureExecutors();
         }
    
 
@@ -611,6 +620,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         jarsBucketNameText.setEditable(isEditable);
         pathToCredentials.setEditable(isEditable);
         oauthTokenText.setEditable(isEditable);
+        
+        ((LabelledText) standaloneMaster).setEditable(isEditable);
+        ((LabelledText) standaloneExecCore).setEditable(isEditable);
+        ((LabelledText) standaloneExecMemory).setEditable(isEditable);
     }
 
     @Override
@@ -665,6 +678,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addDatabricksFields();
         addDataprocField();
         addCdeFields();
+        addStandaloneFields();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -771,6 +785,20 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT, cdeTokenEndpoint);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER, cdeWorkloadUser);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD, cdeWorkloadPassword);
+    }
+    
+    private void addStandaloneFields() {
+        standaloneGroup = Form.createGroup(bigComposite, 2, Messages.getString("StandaloneInfoForm.text.configuration"), 110); //$NON-NLS-1$
+        standaloneGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        standaloneMaster = new LabelledText(standaloneGroup,  Messages.getString("StandaloneInfoForm.text.master"));  //$NON-NLS-1$
+        standaloneConfigureExec = new LabelledCheckbox(standaloneGroup, Messages.getString("StandaloneInfoForm.checkbox.configureExecutors")); //$NON-NLS-1$
+        standaloneExecCore = new LabelledText(standaloneGroup,  Messages.getString("StandaloneInfoForm.text.executorCores"));  //$NON-NLS-1$
+        standaloneExecMemory = new LabelledText(standaloneGroup,  Messages.getString("StandaloneInfoForm.text.executorMemory"));  //$NON-NLS-1$
+
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER, standaloneMaster);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC, standaloneConfigureExec);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY, standaloneExecMemory);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE, standaloneExecCore);
     }
 
     private List<String> getRunSubmitModes() {
@@ -1702,6 +1730,18 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN_ENDPOINT);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_USER);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD);
+        
+        // Standalone Listeners
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER);
+        ((LabelledCheckbox) standaloneConfigureExec).addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	updateStandaloneConfigureExecutors();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC, Boolean.valueOf(((LabelledCheckbox) standaloneConfigureExec).getSelection()).toString());
+            }
+        });
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY);
     }
 
     /*
@@ -1715,6 +1755,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         cdeWorkloadPassword.setVisible(autoGenerateToken, ! autoGenerateToken);
         cdeGroup.layout();
         cdeGroup.getParent().layout();
+    }
+    
+    private void updateStandaloneConfigureExecutors() {
+    	boolean configureExecutors = ((LabelledCheckbox) standaloneConfigureExec).getSelection();
+        standaloneExecCore.setVisible(configureExecutors, !configureExecutors);
+        standaloneExecMemory.setVisible(configureExecutors, !configureExecutors);
+        standaloneGroup.layout();
+        standaloneGroup.getParent().layout();
     }
 
     /*
@@ -1743,7 +1791,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                     getSparkModeByName(sparkModeLabelName).getValue());
 
             // List of possible configuration groups
-            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup);
+            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, standaloneGroup);
 
             // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
@@ -1751,6 +1799,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             visibleGroupsBySparkMode.put(ESparkMode.DATABRICKS, Arrays.asList(dataBricksGroup));
             visibleGroupsBySparkMode.put(ESparkMode.CDE, Arrays.asList(cdeGroup));
             visibleGroupsBySparkMode.put(ESparkMode.DATAPROC, Arrays.asList(dataProcGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.STANDALONE, Arrays.asList(standaloneGroup));
 
 
             // Compute current visible groups
@@ -1764,6 +1813,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             hideControl(dataBricksGroup, true);
             hideControl(cdeGroup, true);
             hideControl(dataProcGroup, true);
+            hideControl(standaloneGroup, true);
         }
 
     }
@@ -2412,6 +2462,8 @@ jtOrRmPrincipalText
                 collectCDEParameters();
             } else if (ESparkMode.DATAPROC.getLabel().equals(sparkModeLabelName)) {
             	collectDBRParameters();
+            } else if (ESparkMode.STANDALONE.getLabel().equals(sparkModeLabelName)) {
+            	collectStandaloneParameters();
             }
         }
     }
@@ -2422,6 +2474,12 @@ jtOrRmPrincipalText
         addContextParams(EHadoopParamName.CdeTokenEndpoint, true);
         addContextParams(EHadoopParamName.CdeWorkloadUser, true);
         addContextParams(EHadoopParamName.CdeWorkloadPassword, true);
+    }
+    
+    private void collectStandaloneParameters() {
+        addContextParams(EHadoopParamName.StandaloneMaster, true);
+        addContextParams(EHadoopParamName.StandaloneExecutorCore, true);
+        addContextParams(EHadoopParamName.StandaloneExecutorMemory, true);
     }
 
     protected void collectDBRParameters() {
