@@ -127,6 +127,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         if (this.doSupportUniversalCDEMode()) {
             result.add(ESparkMode.CDE);
         }
+        if (this.doSupportUniversalStandaloneMode()) {
+            result.add(ESparkMode.STANDALONE);
+        }
         return result;
     }
 

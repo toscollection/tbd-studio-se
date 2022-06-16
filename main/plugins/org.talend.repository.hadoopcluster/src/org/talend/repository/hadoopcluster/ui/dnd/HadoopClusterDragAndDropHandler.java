@@ -341,6 +341,23 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.CDE_WORKLOAD_PASSWORD.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD));
+            
+        } else if (EHDFSRepositoryToComponent.UNIV_STANDALONE_MASTER.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER));
+
+        } else if (EHDFSRepositoryToComponent.UNIV_STANDALONE_CONFIGURE_EXEC.getRepositoryValue().equals(value)) {
+            return Boolean
+                    .parseBoolean(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC));
+
+        } else if (EHDFSRepositoryToComponent.UNIV_STANDALONE_EXEC_CORE.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE));
+
+        } else if (EHDFSRepositoryToComponent.UNIV_STANDALONE_EXEC_MEMORY.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY));
+
         }
         return null;
     }

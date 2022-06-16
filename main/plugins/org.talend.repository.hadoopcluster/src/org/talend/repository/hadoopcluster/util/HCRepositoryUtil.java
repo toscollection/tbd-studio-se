@@ -1037,6 +1037,21 @@ public class HCRepositoryUtil {
         if (databricksDBFSDepFolder != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER, databricksDBFSDepFolder);
         }
+        String univStandaloneMaster = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.UNIV_STANDALONE_MASTER.getName());
+        if (univStandaloneMaster != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER, univStandaloneMaster);
+        }
+        String univStandaloneExecCore = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.UNIV_STANDALONE_EXEC_CORE.getName());
+        if (univStandaloneExecCore != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE, univStandaloneExecCore);
+        }
+        String univStandaloneExecMemory = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.UNIV_STANDALONE_EXEC_MEMORY.getName());
+        if (univStandaloneExecMemory != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY, univStandaloneExecMemory);
+        }
     }
 
     public static String getRepositoryTypeOfHadoopSubItem(Item item) {

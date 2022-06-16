@@ -321,6 +321,23 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
                         break;
+                    case StandaloneMaster:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER));
+                        break;
+                    case StandaloneConfigureExecutors : 
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC),
+                                JavaTypesManager.BOOLEAN);
+                        break;
+                    case StandaloneExecutorCore:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE));
+                        break;
+                    case StandaloneExecutorMemory:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY));
+                        break;
                     case CdeApiEndPoint:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT));
@@ -739,6 +756,22 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             break;
         case CdeWorkloadPassword:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_CDE_WORKLOAD_PASSWORD,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case StandaloneMaster:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case StandaloneConfigureExecutors : 
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case StandaloneExecutorCore:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case StandaloneExecutorMemory:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         default:

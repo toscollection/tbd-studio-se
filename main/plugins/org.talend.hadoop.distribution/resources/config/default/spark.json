@@ -39,5 +39,8 @@
     "GOOGLE_REGION": "global", 
     "GOOGLE_JARS_BUCKET": "gs://my-bucket/talend/jars",
     "PATH_TO_GOOGLE_CREDENTIALS": "",
-    "OAUTH_ACCESS_TOKEN": ""
+    "OAUTH_ACCESS_TOKEN": "",
+    "UNIV_STANDALONE_MASTER": "spark://localhost:7077",
+    "UNIV_STANDALONE_EXEC_MEMORY": "20G",
+    "UNIV_STANDALONE_EXEC_CORE": "100"
 }
