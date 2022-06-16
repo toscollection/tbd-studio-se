@@ -16,7 +16,8 @@ import org.talend.hadoop.distribution.i18n.Messages;
 public enum EDatabriksCloudProvider {
 
     AWS(Messages.getString("EDatabriksCloudProvider.AWS"), "AWS"),
-    AZURE(Messages.getString("EDatabriksCloudProvider.Azure"), "Azure");
+    AZURE(Messages.getString("EDatabriksCloudProvider.Azure"), "Azure"),
+    GCP(Messages.getString("EDatabriksCloudProvider.GCP"), "GCP");
 
     private String providerLableName;
 
