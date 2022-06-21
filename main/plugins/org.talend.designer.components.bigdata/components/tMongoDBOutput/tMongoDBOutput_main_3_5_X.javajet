@@ -25,6 +25,8 @@
     boolean updateAll = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__UPDATE_ALL__"));
     boolean deleteAll = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__DELETE_ALL__"));
 
+    boolean isPossibleDynamicMode = false;
+
 	IConnection inConn = null;
 	IMetadataTable metadata = null;
 	
@@ -42,6 +44,8 @@ try{
 			if (conn.getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)) {
 				List<IMetadataColumn> columnList = metadata.getListColumns();
 				int sizeColumns = columnList.size();
+				
+				isPossibleDynamicMode = sizeColumns == 1;
 
 				// Create the BasicDBObject
 				%>
@@ -182,6 +186,19 @@ try{
 
 				// INSERT operation
 				if ("INSERT".equalsIgnoreCase(dataAction)) {
+					if(isPossibleDynamicMode) {
+					%>
+					Object v_<%=cid%> = updateObj_<%=cid%>.get("*");
+					if(v_<%=cid%>!=null) {
+						if(v_<%=cid%> instanceof org.bson.Document) {
+							updateObj_<%=cid%> = (org.bson.Document)v_<%=cid%>;
+						} else if(v_<%=cid%> instanceof String) {
+							updateObj_<%=cid%> = org.bson.Document.parse((String)v_<%=cid%>);
+						}
+					}
+					<%
+					}
+					
 					// Bulk Writes
 					if(bulkWrite){
 						// Add inserts untill bulksize is reached then execute and re-initialze the bulk operation
