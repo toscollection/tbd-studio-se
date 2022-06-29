@@ -15,8 +15,8 @@
     boolean updateOnlyColumnExists = false;
     if(upsert_with_set) {
         for (java.util.Map<String, String> map: mapping) {
-            boolean updatable = "true".equals(map.get("UPDATABLE"));
-            boolean insertable = "true".equals(map.get("INSERTABLE"));
+            boolean updatable = true;
+            boolean insertable = true;
             if(insertable && !updatable) {
                 insertOnlyColumnExists = true;
                 continue;
@@ -45,6 +45,9 @@
     com.mongodb.client.MongoCollection<org.bson.Document> coll_<%=cid%> = db_<%=cid%>.getCollection(<%=collection%>);
 
     <%if(bulkWrite) {// BulkWrite
+        boolean updateAll = "true".equalsIgnoreCase(ElementParameterParser.getValue(node, "__UPDATE_ALL__"));
+        String updateModel = (updateAll ? "UpdateManyModel" : "UpdateOneModel");
+        
         if("INSERT".equalsIgnoreCase(dataAction)) {%>
             List<com.mongodb.client.model.InsertOneModel<org.bson.Document>> bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
             <%
@@ -55,14 +58,14 @@
             List<com.mongodb.client.model.DeleteOneModel<org.bson.Document>> bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
             <%
         } else if(upsert_with_set) {%>
-            List<com.mongodb.client.model.UpdateOneModel<org.bson.Document>> bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
+            List<com.mongodb.client.model.<%=updateModel%><org.bson.Document>> bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
             <%if(updateOnlyColumnExists) {%>
-                List<com.mongodb.client.model.UpdateOneModel<org.bson.Document>> bulkWriteOperationForUpdateOnlyColumn_<%=cid%> = new java.util.ArrayList<>();
+                List<com.mongodb.client.model.<%=updateModel%><org.bson.Document>> bulkWriteOperationForUpdateOnlyColumn_<%=cid%> = new java.util.ArrayList<>();
                 int bulkWriteOperationCounterForUpdateOnlyColumn_<%=cid%> = 1;
                 <%
             }
         } else {%>//set
-            List<com.mongodb.client.model.UpdateOneModel<org.bson.Document>> bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
+            List<com.mongodb.client.model.<%=updateModel%><org.bson.Document>> bulkWriteOperation_<%=cid%> = new java.util.ArrayList<>();
             <%
         }%>
         int bulkWriteOperationCounter_<%=cid%> = 1;
