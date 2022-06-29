@@ -39,8 +39,8 @@
 	boolean updateOnlyColumnExists = false;
 	if(upsert_with_set) {
 		for (java.util.Map<String, String> mapping: mappings) {
-			boolean updatable = "true".equals(mapping.get("UPDATABLE"));
-			boolean insertable = "true".equals(mapping.get("INSERTABLE"));
+			boolean updatable = true;
+			boolean insertable = true;
 			
 			if(updatable && !insertable) {
 				updateOnlyColumnExists = true;
