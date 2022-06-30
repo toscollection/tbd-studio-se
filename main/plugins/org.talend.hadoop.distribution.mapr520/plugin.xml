@@ -567,7 +567,7 @@
             <library id="slf4j-log4j12-1.7.10.jar" />
             <library id="jackson-core-asl-1.9.16-TALEND.jar" />
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar" />
-            <library id="gson-2.2.4.jar" />
+            <library id="gson-2.9.0.jar" />
             <library id="curator-client-2.7.1.jar" />
             <library id="curator-recipes-2.7.1.jar" />
             <library id="htrace-core-3.1.0-incubating.jar" />

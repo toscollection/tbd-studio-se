@@ -471,9 +471,9 @@
         </libraryNeeded> 
         <libraryNeeded 
             context="plugin:org.talend.libraries.hadoop.mapr.6.0.1" 
-            id="gson-2.2.4.jar" 
-            name="gson-2.2.4.jar"
-            mvn_uri="mvn:com.google.code.gson/gson/2.2.4">
+            id="gson-2.9.0.jar"
+            name="gson-2.9.0.jar"
+            mvn_uri="mvn:com.google.code.gson/gson/2.9.0">
         </libraryNeeded> 
         <libraryNeeded 
             context="plugin:org.talend.libraries.hadoop.mapr.6.0.1" 
@@ -776,7 +776,7 @@
             <library id="slf4j-log4j12-1.7.12.jar" />
             <library id="jackson-core-asl-1.9.16-TALEND.jar" />
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar" />
-            <library id="gson-2.2.4.jar" />
+            <library id="gson-2.9.0.jar" />
             <library id="curator-client-2.7.1.jar" />
             <library id="curator-recipes-2.7.1.jar" />
             <library id="htrace-core-3.1.0-incubating.jar" />
@@ -969,7 +969,7 @@
 			<library id="datanucleus-rdbms-4.1.19.jar"/>
 			<library id="derby-10.12.1.1.jar"/>
 			<library id="eigenbase-properties-1.1.5.jar"/>
-			<library id="gson-2.2.4.jar"/>
+			<library id="gson-2.9.0.jar"/>
 			<library id="hive-beeline-1.2.0-mapr-1912-spark.jar"/> <!-- was hive-beeline-1.2.0-mapr-1710-->
 			<library id="hive-cli-1.2.0-mapr-1912-spark.jar"/> <!-- was hive-cli-1.2.0-mapr-1710-->
 			<library id="hive-exec-1.2.0-mapr-1912-spark.jar"/> <!-- was hive-exec-1.2.0-mapr-1710.jar-->

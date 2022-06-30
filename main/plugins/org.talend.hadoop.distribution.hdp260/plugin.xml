@@ -671,7 +671,7 @@
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="datanucleus-rdbms-3.2.9.jar" name="datanucleus-rdbms-3.2.9.jar" mvn_uri="mvn:org.datanucleus/datanucleus-rdbms/3.2.9"/>
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="derby-10.12.1.1.jar" name="derby-10.12.1.1.jar" mvn_uri="mvn:org.apache.derby/derby/10.12.1.1"/>
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="eigenbase-properties-1.1.5.jar" name="eigenbase-properties-1.1.5.jar" mvn_uri="mvn:net.hydromatic/eigenbase-properties/1.1.5"/>
-        <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="gson-2.2.4.jar" name="gson-2.2.4.jar" mvn_uri="mvn:com.google.code.gson/gson/2.2.4"/>
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="guava-14.0.1.jar" name="guava-14.0.1.jar" mvn_uri="mvn:com.google.guava/guava/14.0.1"/>
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="guice-3.0.jar" name="guice-3.0.jar" mvn_uri="mvn:com.google.inject/guice/3.0"/>
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdp260" id="guice-servlet-3.0.jar" name="guice-servlet-3.0.jar" mvn_uri="mvn:com.google.inject.extensions/guice-servlet/3.0"/>
@@ -1108,7 +1108,7 @@
             <library id="curator-client-2.7.1.jar"/>
             <library id="curator-framework-2.7.1.jar"/>
             <library id="curator-recipes-2.7.1.jar"/>
-            <library id="gson-2.2.4.jar"/>
+            <library id="gson-2.9.0.jar"/>
             <library id="guice-3.0.jar"/>
             <library id="guice-servlet-3.0.jar"/>
             <library id="hadoop-auth-HDP_2_6"/>
@@ -1242,7 +1242,7 @@
             <library id="datanucleus-rdbms-3.2.9.jar" />
             <library id="derby-10.12.1.1.jar" />
             <library id="eigenbase-properties-1.1.5.jar" />
-            <library id="gson-2.2.4.jar" />
+            <library id="gson-2.9.0.jar" />
             <library id="guava-14.0.1.jar" />
             <library id="guice-3.0.jar" />
             <library id="guice-servlet-3.0.jar" />

@@ -674,7 +674,7 @@
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="flume-ng-configuration-1.6.0-cdh5.12.1.jar" name="flume-ng-configuration-1.6.0-cdh5.12.1.jar" mvn_uri="mvn:org.talend.libraries/flume-ng-configuration-1.6.0-cdh5.12.1/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="flume-ng-core-1.6.0-cdh5.12.1.jar" name="flume-ng-core-1.6.0-cdh5.12.1.jar" mvn_uri="mvn:org.talend.libraries/flume-ng-core-1.6.0-cdh5.12.1/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="flume-ng-sdk-1.6.0-cdh5.12.1.jar" name="flume-ng-sdk-1.6.0-cdh5.12.1.jar" mvn_uri="mvn:org.talend.libraries/flume-ng-sdk-1.6.0-cdh5.12.1/6.0.0"/>
-		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="gson-2.2.4.jar" name="gson-2.2.4.jar" mvn_uri="mvn:com.google.code.gson/gson/2.2.4"/>
+		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="hive-metastore-1.1.0-cdh5.12.1.jar" name="hive-metastore-1.1.0-cdh5.12.1.jar" mvn_uri="mvn:org.talend.libraries/hive-metastore-1.1.0-cdh5.12.1/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="hive-serde-1.1.0-cdh5.12.1.jar" name="hive-serde-1.1.0-cdh5.12.1.jar" mvn_uri="mvn:org.talend.libraries/hive-serde-1.1.0-cdh5.12.1/6.0.0"/>
 		<libraryNeeded context="plugin:org.talend.hadoop.distribution.cdh5120" id="hive-shims-0.23-1.1.0-cdh5.12.1.jar" name="hive-shims-0.23-1.1.0-cdh5.12.1.jar" mvn_uri="mvn:org.talend.libraries/hive-shims-0.23-1.1.0-cdh5.12.1/6.0.0"/>
@@ -1053,7 +1053,7 @@
 			<library id="flume-ng-configuration-1.6.0-cdh5.12.1.jar"/>
 			<library id="flume-ng-core-1.6.0-cdh5.12.1.jar"/>
 			<library id="flume-ng-sdk-1.6.0-cdh5.12.1.jar"/>
-			<library id="gson-2.2.4.jar"/>
+			<library id="gson-2.9.0.jar"/>
 			<library id="hive-metastore-1.1.0-cdh5.12.1.jar"/>
 			<library id="hive-serde-1.1.0-cdh5.12.1.jar"/>
 			<library id="hive-shims-0.23-1.1.0-cdh5.12.1.jar"/>

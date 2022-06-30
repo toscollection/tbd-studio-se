@@ -236,9 +236,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
-            id="gson-2.2.4.jar"
-            name="gson-2.2.4.jar"
-            mvn_uri="mvn:com.google.code.gson/gson/2.2.4"/>
+            id="gson-2.9.0.jar"
+            name="gson-2.9.0.jar"
+            mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
@@ -279,7 +279,7 @@
                 name="BIGDATA-LAUNCHER-LIB-DBR550"  >
 			<library id="talend-bigdata-launcher-databricks-2.4.4.jar" />
 			<library id="talend-bigdata-launcher-jobserver-2.0.12" />
-			<library id="gson-2.2.4.jar" />
+			<library id="gson-2.9.0.jar" />
 			<library id="jackson-core-2.6.7.jar" />
 			<library id="jackson-databind-2.6.7.1.jar" />
 			<library id="jackson-annotations-2.6.7.jar" />
