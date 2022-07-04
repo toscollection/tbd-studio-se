@@ -20,8 +20,8 @@
     <libraryNeeded id="hadoop-common-2.7.4.jar" name="hadoop-common-2.7.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-common/2.7.4" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="hadoop-mapreduce-client-core-2.7.4.jar" name="hadoop-mapreduce-client-core-2.7.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/2.7.4" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="hk2-api-2.6.1.jar" name="hk2-api-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-api/2.6.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
-    <libraryNeeded id="hk2-locator-2.6.1.jar" name="hk2-locator-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-locator/2.6.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>     
-    <libraryNeeded id="hk2-utils-2.6.1.jar" name="hk2-utils-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-utils/2.6.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/> 
+    <libraryNeeded id="hk2-locator-2.6.1.jar" name="hk2-locator-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-locator/2.6.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
+    <libraryNeeded id="hk2-utils-2.6.1.jar" name="hk2-utils-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2/hk2-utils/2.6.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="jackson-core-2.10.0.jar" name="jackson-core-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.10.0" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="jackson-databind-2.10.0.jar" name="jackson-databind-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.10.0" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
@@ -29,7 +29,7 @@
     <libraryNeeded id="jakarta.inject-2.6.1.jar" name="jakarta.inject-2.6.1.jar" mvn_uri="mvn:org.glassfish.hk2.external/jakarta.inject/2.6.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="jakarta.ws.rs-api-2.1.6.jar" name="jakarta.ws.rs-api-2.1.6.jar" mvn_uri="mvn:jakarta.ws.rs/jakarta.ws.rs-api/2.1.6" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="jersey-client-2.30.jar" name="jersey-client-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-client/2.30" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
-    <libraryNeeded id="jersey-common-2.30.jar" name="jersey-common-2.30.jar"  mvn_uri="mvn:org.glassfish.jersey.core/jersey-common/2.30" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
+    <libraryNeeded id="jersey-common-2.30.jar" name="jersey-common-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-common/2.30" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="jersey-hk2-2.30.jar" name="jersey-hk2-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.inject/jersey-hk2/2.30" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="json-simple-1.1.1.jar" name="json-simple-1.1.1.jar" mvn_uri="mvn:com.googlecode.json-simple/json-simple/1.1.1" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar" mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
@@ -57,12 +57,12 @@
     <libraryNeeded id="talend-bigdata-launcher-databricks-2.4.4.jar" name="talend-bigdata-launcher-databricks-2.4.4.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-databricks/2.4.4" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded id="wsdl4j-1.6.3.jar" name="wsdl4j-1.6.3.jar" mvn_uri="mvn:wsdl4j/wsdl4j/1.6.3" context="plugin:org.talend.hadoop.distribution.dbr73x"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-snowflake_2.12-2.9.2-spark_3.0.jar" name="spark-snowflake_2.12-2.9.2-spark_3.0.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.9.2-spark_3.0"/>
-	<libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
+    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar" mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
-    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar" name="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar" mvn_uri="mvn:org.talend.libraries/kafka-clients-2.6.0-shaded-for-kafka-0-10"/>
+    <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0-shaded-for-kafka-0.10.jar" name="kafka-clients-2.6.0-shaded-for-kafka-0.10.jar" mvn_uri="mvn:org.talend.libraries/kafka-clients-2.6.0-shaded-for-kafka/0.10"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0.jar" name="kafka-clients-2.6.0.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/2.6.0"/>
-    
+
     <libraryNeededGroup id="BIGDATA-LAUNCHER-LIB-DBR73X" name="BIGDATA-LAUNCHER-LIB-DBR73X" description="Big Data launcher libraries for DBR73X">
       <library id="gson-2.7.jar"/>
       <library id="jackson-annotations-2.10.0.jar"/>
@@ -71,16 +71,16 @@
       <library id="talend-bigdata-launcher-jobserver-2.0.12.jar"/>
       <library id="talend-bigdata-launcher-databricks-2.4.4.jar"/>
     </libraryNeededGroup>
-    
+
     <libraryNeededGroup id="HIVEONSPARK-LIB-MRREQUIRED-DBR73X" name="HIVEONSPARK-LIB-MRREQUIRED-DBR73X" description="Hive On SPARK libraries for DBR73X">
       <library id="spark-hive_2.12-3.0.1.jar"/>
     </libraryNeededGroup>
-    
+
     <libraryNeededGroup id="SPARK-AZURE-LIB-MRREQUIRED-DBR73X" name="SPARK-AZURE-LIB-MRREQUIRED-DBR73X" description="Hive On SPARK libraries for DBR73X">
       <library id="azure-data-lake-store-sdk-2.2.8.jar"/>
       <library id="hadoop-azure-datalake-2.7.4.jar"/>
     </libraryNeededGroup>
-    
+
     <libraryNeededGroup id="SPARK-LIB-MRREQUIRED-DBR73X" name="SPARK-LIB-MRREQUIRED-DBR73X" description="SPARK libraries for DBR73X">
       <library id="avro-1.8.2.jar"/>
       <library id="avro-compiler-1.8.2.jar"/>
@@ -112,7 +112,7 @@
       <library id="spark-unsafe_2.12-3.0.1.jar"/>
       <library id="wsdl4j-1.6.3.jar"/>
     </libraryNeededGroup>
-    
+
     <libraryNeededGroup id="SPARK-STREAMING-LIB-KINESIS-DBR73X" name="SPARK-STREAMING-LIB-KINESIS-DBR73X" description="SPARK libraries for DBR73X">
       <library id="amazon-kinesis-client-1.8.10.jar"/>
       <library id="commons-pool2-2.9.0.jar"/>
@@ -120,57 +120,57 @@
       <library id="aws-java-sdk-kinesis-1.11.655.jar"/>
       <library id="spark-streaming-kinesis-asl_2.12-3.0.1.jar"/>
     </libraryNeededGroup>
-    
+
     <libraryNeededGroup id="SPARK-STREAMING-LIB-MRREQUIRED-DBR73X" name="SPARK-STREAMING-LIB-MRREQUIRED-DBR73X" description="SPARK libraries for DBR73X">
       <library id="spark-streaming_2.12-3.0.1.jar"/>
     </libraryNeededGroup>
-    
+
     <libraryNeededGroup id="TOPBY-LIB-REQUIRED-DBR73X" name="TOPBY-LIB-REQUIRED-DBR73X" description="tTopBy needed libraries for DBR73X">
       <library id="guava-15.0.jar"/>
     </libraryNeededGroup>
-    
+
     <!-- Snowflake group -->
     <libraryNeededGroup description="Snowflake libraries for DBR73X" id="SNOWFLAKE-GROUP-DBR73x" name="SNOWFLAKE-GROUP-DBR73x">
-       <library id="spark-snowflake_2.12-2.9.2-spark_3.0.jar"/>
-       <library id="snowflake-jdbc-3.13.12.jar"/>
-       <library id="snowflake-ingest-sdk-0.10.3.jar"/>
+      <library id="spark-snowflake_2.12-2.9.2-spark_3.0.jar"/>
+      <library id="snowflake-jdbc-3.13.12.jar"/>
+      <library id="snowflake-ingest-sdk-0.10.3.jar"/>
     </libraryNeededGroup>
-    
+
     <!-- DynamoDB group -->
     <libraryNeededGroup description="DynamoDB libraries for DBR73X" id="DYNAMODB-GROUP-DBR73x" name="DYNAMODB-GROUP-DBR73x">
-       <library id="aws-java-sdk-core-1.11.655.jar"/>
-        <library id="aws-java-sdk-dynamodb-1.11.655.jar"/>
+      <library id="aws-java-sdk-core-1.11.655.jar"/>
+      <library id="aws-java-sdk-dynamodb-1.11.655.jar"/>
     </libraryNeededGroup>
-        
-     <!-- Kafka group -->
-     <libraryNeededGroup description="Spark streaming Kafka libraries for DBR73X" id="KAFKA-LIB-REQUIRED-DBR73X" name="KAFKA-LIB-REQUIRED-DBR73X">
-        <library id="kafka-clients-2.6.0-shaded-for-kafka-0-10.jar"/>
-        <library id="spark-streaming-kafka-0-10_2.12-3.0.1.jar"/>
-        <library id="kafka-clients-2.6.0.jar"/>
-     </libraryNeededGroup>
-        
-      <!-- Redshift group -->
-      <libraryNeededGroup description="Redshift libraries for spl30x" id="REDSHIFT-GROUP-DBR73X" name="REDSHIFT-GROUP-DBR73X">
-         <library id="spark-redshift_2.12-4.2.0.jar"/>
-         <library id="spark-avro_2.12-3.0.3.jar"/>
-         <library id="gson-2.7.jar"/>
-         <library id="snappy-java-1.1.8.2.jar"/>
-         <library id="avro-mapred-1.8.2-hadoop2.jar"/>
-      </libraryNeededGroup>  
-      
-      <!-- Spark Streaming Rest group -->
-      <libraryNeededGroup description="Spark streaming Rest libraries for DBR73X" id="REST-GROUP-DBR73X" name="REST-GROUP-DBR73X">
-         <library id="hk2-api-2.6.1.jar"/>
-         <library id="hk2-locator-2.6.1.jar"/>
-         <library id="hk2-utils-2.6.1.jar"/>
-         <library id="jakarta.annotation-api-1.3.5.jar"/>
-         <library id="jakarta.inject-2.6.1.jar"/>
-         <library id="jakarta.ws.rs-api-2.1.6.jar"/>
-         <library id="jersey-client-2.30.jar"/>
-         <library id="jersey-common-2.30.jar"/>
-         <library id="jersey-hk2-2.30.jar"/>
-      </libraryNeededGroup>
-    
+
+    <!-- Kafka group -->
+    <libraryNeededGroup description="Spark streaming Kafka libraries for DBR73X" id="KAFKA-LIB-REQUIRED-DBR73X" name="KAFKA-LIB-REQUIRED-DBR73X">
+      <library id="kafka-clients-2.6.0-shaded-for-kafka-0.10.jar"/>
+      <library id="spark-streaming-kafka-0-10_2.12-3.0.1.jar"/>
+      <library id="kafka-clients-2.6.0.jar"/>
+    </libraryNeededGroup>
+
+    <!-- Redshift group -->
+    <libraryNeededGroup description="Redshift libraries for spl30x" id="REDSHIFT-GROUP-DBR73X" name="REDSHIFT-GROUP-DBR73X">
+      <library id="spark-redshift_2.12-4.2.0.jar"/>
+      <library id="spark-avro_2.12-3.0.3.jar"/>
+      <library id="gson-2.7.jar"/>
+      <library id="snappy-java-1.1.8.2.jar"/>
+      <library id="avro-mapred-1.8.2-hadoop2.jar"/>
+    </libraryNeededGroup>
+
+    <!-- Spark Streaming Rest group -->
+    <libraryNeededGroup description="Spark streaming Rest libraries for DBR73X" id="REST-GROUP-DBR73X" name="REST-GROUP-DBR73X">
+      <library id="hk2-api-2.6.1.jar"/>
+      <library id="hk2-locator-2.6.1.jar"/>
+      <library id="hk2-utils-2.6.1.jar"/>
+      <library id="jakarta.annotation-api-1.3.5.jar"/>
+      <library id="jakarta.inject-2.6.1.jar"/>
+      <library id="jakarta.ws.rs-api-2.1.6.jar"/>
+      <library id="jersey-client-2.30.jar"/>
+      <library id="jersey-common-2.30.jar"/>
+      <library id="jersey-hk2-2.30.jar"/>
+    </libraryNeededGroup>
+
   </extension>
   <extension point="org.talend.core.runtime.classloader_provider"/>
 </plugin>
