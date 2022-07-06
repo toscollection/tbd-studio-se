@@ -391,8 +391,8 @@
           mvn_uri="mvn:io.grpc/grpc-context/1.30.0"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-          id="gson-2.8.5.jar" name="gson-2.8.5.jar"
-          mvn_uri="mvn:com.google.code.gson/gson/2.8.5"/>  
+          id="gson-2.9.0.jar" name="gson-2.9.0.jar"
+          mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
           id="opencensus-api-0.24.0.jar" name="opencensus-api-0.24.0.jar"
@@ -633,7 +633,7 @@
             <library id="azure-storage-file-datalake-12.0.1.jar"/>            
             <library id="azure-core-http-netty-1.4.0.jar"/>
             <library id="asm-1.0.2.jar"/>
-            <library id="gson-2.8.5.jar"/>
+            <library id="gson-2.9.0.jar"/>
             <library id="reactive-streams-1.0.3.jar"/>
             <library id="reactor-netty-0.9.4.RELEASE.jar"/>
             <library id="reactor-core-3.3.0.RELEASE.jar"/>
