@@ -53,8 +53,8 @@
                    MODULE="talend-bigdata-launcher-jobserver-2.0.12.jar"
                    MVN="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.0.12"/>
 
-           <IMPORT NAME="gson-2.2.4.jar" MODULE="gson-2.2.4.jar" 
-                   MVN="mvn:com.google.code.gson/gson/2.2.4"/>
+           <IMPORT NAME="gson-2.9.0.jar" MODULE="gson-2.9.0.jar"
+                   MVN="mvn:com.google.code.gson/gson/2.9.0"/>
 
 		</IMPORTS>
 	</CODEGENERATION>
