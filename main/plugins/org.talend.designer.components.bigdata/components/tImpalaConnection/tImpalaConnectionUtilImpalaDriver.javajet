@@ -250,7 +250,6 @@
 <%
 			} else {
 					if (securityIsEnabled) {
-						if (useKeytab) {
 %>
 							org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
 							String krbServiceName_<%=cid%>  = (<%=impalaPrincipal%>.split("/")[0]);
@@ -270,7 +269,6 @@
 
 						    String url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>" + urlKerberosParameter_<%=cid%>;                          
 <%
-						}
 						// Using SSL in Secure Mode
 						if (useSsl && this.distrib.doSupportSSL()) {
 							// Does the distrib support SSL + KERBEROS
