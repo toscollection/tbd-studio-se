@@ -32,6 +32,9 @@ public class SynapseRepositoryUtilTest {
         assertEquals("https://xxxx.dfs.core.windows.net", synapseConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME));
         assertEquals("container", synapseConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER));
         assertEquals("user", synapseConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME));
+        assertEquals("password", synapseConnection.getParameters().get(ConnParameterKeys.SYNAPSE_STORAGE_PASSWORD));
+        assertEquals("XXXX-XXXX-XXXX-XXXX-XXXX", synapseConnection.getParameters().get(ConnParameterKeys.SYNAPSE_DIRECTORY_ID));
+        assertEquals("XXXX-XXXX-XXXX-XXXX-XXXX", synapseConnection.getParameters().get(ConnParameterKeys.SYNAPSE_APPLICATION_ID));
         assertEquals("/tmp", synapseConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
         assertEquals("2g", synapseConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY));
         assertEquals("1", synapseConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES));

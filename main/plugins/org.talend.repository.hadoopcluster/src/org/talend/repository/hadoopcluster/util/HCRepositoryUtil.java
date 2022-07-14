@@ -989,6 +989,11 @@ public class HCRepositoryUtil {
         if (synapseclientKey != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY, synapseclientKey);
         }
+        String synapseclientCertificate = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SYNAPSE_CLIENT_CERTIFICATE.getName());
+        if (synapseclientCertificate != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE, synapseclientCertificate);
+        }
         String synapseDeployBlob = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.DEPLOY_FOLDER.getName());
         if (synapseDeployBlob != null) {
