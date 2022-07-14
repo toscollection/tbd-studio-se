@@ -300,7 +300,15 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case SynapseSecretKey:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY));
-                        break;      
+                        break;
+                    case UseSynapseCertificate:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_SYNAPSE_CLIENT_CERTIFICATE));
+                    	break;
+                    case SynapseClientCertificate:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE));
+                    	break;
                     case SynapseDeployBlob:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
@@ -591,7 +599,11 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
         case SynapseSecretKey:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
-            break;    
+            break;
+        case SynapseClientCertificate:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
         case SynapseFsUserName:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));

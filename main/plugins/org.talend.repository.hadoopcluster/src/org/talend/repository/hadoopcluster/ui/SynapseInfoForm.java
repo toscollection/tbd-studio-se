@@ -26,6 +26,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Group;
 import org.talend.commons.ui.swt.formtools.Form;
 import org.talend.commons.ui.swt.formtools.LabelledCombo;
+import org.talend.commons.ui.swt.formtools.LabelledFileField;
 import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.version.ESynapseStorage;
@@ -69,6 +70,10 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     private LabelledText azureDirectoryIdText;
     
     private LabelledText azureClientKeyText;
+    
+    private Button useSynapseCertButton;
+    
+    private LabelledFileField azureClientCertificateText;
 
     private LabelledText azureDeployBlobText;
     
@@ -177,17 +182,25 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azurePasswordText.setText(azurePassword);
         azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
         
-        String azureClientId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID));
-        azureClientIdText.setText(azureClientId);
-        azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
-        
         String azureDirectoryId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID));
         azureDirectoryIdText.setText(azureDirectoryId);
         azureDirectoryIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
         
+        String azureClientId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID));
+        azureClientIdText.setText(azureClientId);
+        azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+        
+        boolean useSynapse = Boolean.parseBoolean(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_SYNAPSE_CLIENT_CERTIFICATE));
+        useSynapseCertButton.setSelection(useSynapse);
+        useSynapseCertButton.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+        
         String azureClientKey = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY));
         azureClientKeyText.setText(azureClientKey);
-        azureClientKeyText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+        azureClientKeyText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName) && !useSynapseCertButton.getSelection());
+        
+        String azureClientCertificate = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE));
+        azureClientCertificateText.setText(azureClientCertificate);
+        azureClientCertificateText.setVisible(useSynapseCertButton.getSelection() && useSynapseCertButton.getSelection());
         
         String azureDeployBlob = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
         azureDeployBlobText.setText(azureDeployBlob);
@@ -221,6 +234,8 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azureClientIdText.setReadOnly(readOnly);
         azureDirectoryIdText.setReadOnly(readOnly);
         azureClientKeyText.setReadOnly(readOnly);
+        useSynapseCertButton.setEnabled(!readOnly);
+        azureClientCertificateText.setReadOnly(readOnly);
         azureDeployBlobText.setReadOnly(readOnly);
         driverMemoryText.setReadOnly(readOnly);
         driverCoresText.setReadOnly(readOnly);
@@ -241,6 +256,8 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azureClientIdText.setEditable(isEditable);
         azureDirectoryIdText.setEditable(isEditable);
         azureClientKeyText.setEditable(isEditable);
+        useSynapseCertButton.setEnabled(isEditable);
+        azureClientCertificateText.setEditable(isEditable);
         azureDeployBlobText.setEditable(isEditable);
         driverMemoryText.setEditable(isEditable);
         driverCoresText.setEditable(isEditable);
@@ -277,7 +294,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azureGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         storagePartComposite = new Composite(azureGroup, SWT.NULL);
-        GridLayout storagePartLayout = new GridLayout(4, false);
+        GridLayout storagePartLayout = new GridLayout(2, false);
         storagePartLayout.marginWidth = 0;
         storagePartLayout.marginHeight = 0;
         storagePartComposite.setLayout(storagePartLayout);
@@ -294,6 +311,8 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         azureContainerText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
         
+        azureDeployBlobText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
+        
         azureUsernameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
         
         azurePasswordText = new LabelledText(storagePartComposite,
@@ -305,17 +324,20 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         azureClientIdText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientId"), 1);
         
+        useSynapseCertButton = new Button(storagePartComposite, SWT.CHECK);
+        useSynapseCertButton.setText(Messages.getString("SynapseInfoForm.text.useSynapseCertButton"));
+        useSynapseCertButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
+    	
         azureClientKeyText = new LabelledText(storagePartComposite,
                 Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
         azureClientKeyText.getTextControl().setEchoChar('*');
         
-        azureDeployBlobText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
-        
+        String[] extensions = { "*.*" };
+        azureClientCertificateText = new LabelledFileField(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientCertificate"), extensions);
         
     }
     
     private void addTuningFields() {
-    	//Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 110);
     	Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 70);
     	tuningGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
     	
@@ -391,9 +413,11 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
                 azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
                 azurePasswordText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
                 
+                useSynapseCertButton.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
                 azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
                 azureDirectoryIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
                 azureClientKeyText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+                
                 checkFieldsValue();
             }
         });
@@ -417,7 +441,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azureClientIdText.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
-                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME, azureClientIdText.getText());
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID, azureClientIdText.getText());
                 checkFieldsValue();
             }
         });
@@ -430,10 +454,30 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             }
         });
         
+        useSynapseCertButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+            	String selection = String.valueOf(useSynapseCertButton.getSelection());            	
+            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_SYNAPSE_CLIENT_CERTIFICATE, selection);
+            	String credentialName = storageAuthTypeCombo.getText();
+            	azureClientKeyText.setVisible(!useSynapseCertButton.getSelection() && ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+            	azureClientCertificateText.setVisible(useSynapseCertButton.getSelection() && ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+            	checkFieldsValue();
+            }
+        });
+        
         azureClientKeyText.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY, azureClientKeyText.getText());
+                checkFieldsValue();
+            }
+        });
+
+        azureClientCertificateText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE, azureClientCertificateText.getText());
                 checkFieldsValue();
             }
         });
@@ -531,10 +575,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             updateStatus(IStatus.ERROR, Messages.getString("SynapseInfoForm.check.azure.directoryId")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(azureClientKeyText.getText())) {
-            updateStatus(IStatus.ERROR, Messages.getString("SynapseInfoForm.check.azure.clientKey")); //$NON-NLS-1$
-            return false;
-        }
         if (!validText(azureDeployBlobText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("SynapseInfoForm.check.azure.deployBlob")); //$NON-NLS-1$
             return false;
@@ -591,6 +631,12 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         addContextParams(EHadoopParamName.SynapseFsUserName, isUse);
         addContextParams(EHadoopParamName.SynapseFsPassword, isUse);
         addContextParams(EHadoopParamName.SynapseFsContainer, isUse);
+        addContextParams(EHadoopParamName.SynapseAuthType, isUse);
+        addContextParams(EHadoopParamName.SynapseClientId, isUse);
+        addContextParams(EHadoopParamName.SynapseDirectoryId, isUse);
+        addContextParams(EHadoopParamName.SynapseSecretKey, isUse);
+        addContextParams(EHadoopParamName.UseSynapseCertificate, isUse);
+        addContextParams(EHadoopParamName.SynapseClientCertificate, isUse);
         addContextParams(EHadoopParamName.SynapseDeployBlob, isUse);
     }
     
