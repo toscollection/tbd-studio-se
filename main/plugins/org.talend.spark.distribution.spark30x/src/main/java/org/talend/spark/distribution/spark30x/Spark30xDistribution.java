@@ -115,22 +115,6 @@ implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, Hiv
                                         SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
                                         Spark30xDistribution.SPARK_VERSION));
 
-        // spark model encoder
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
-                        Spark30xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.MODEL_ENCODER.get(getVersion()),
-                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark30xDistribution.SPARK_VERSION));
-
-        // spark Streaming model encoder
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                        SparkStreamingConstant.TMODEL_ENCODER_COMPONENT),
-                        Spark30xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.MODEL_ENCODER.get(getVersion()),
-                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark30xDistribution.SPARK_VERSION));
         return result;
 
     }

@@ -88,45 +88,6 @@ public class Spark32xDistribution extends AbstractSparkDistribution
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT),
                 s3ModuleGroup);
 
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,
-                        SparkBatchConstant.LINEAR_REGRESSION_MODEL_COMPONENT),
-                        Spark32xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
-                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark32xDistribution.SPARK_VERSION));
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,
-                        SparkBatchConstant.LOGISTIC_REGRESSION_MODEL_COMPONENT),
-                        Spark32xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
-                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark32xDistribution.SPARK_VERSION));
-        // spark batch tModelEncoder
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,
-                        SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
-                        Spark32xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
-                                        SparkBatchConstant.SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark32xDistribution.SPARK_VERSION));
-        // spark Streaming tModelEncoder
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                        SparkBatchConstant.TMODEL_ENCODER_COMPONENT),
-                        Spark32xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.ML.get(getVersion()),
-                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark32xDistribution.SPARK_VERSION));
-
-        // spark Streaming tKMeansStrModel
-        result
-                .put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
-                        SparkStreamingConstant.KMEANSSTR_MODEL_COMPONENT),
-                        Spark32xNodeModuleGroup
-                                .getModuleGroup(ModuleGroupName.KMEANS.get(getVersion()),
-                                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
-                                        Spark32xDistribution.SPARK_VERSION));
         return result;
     }
 
