@@ -537,8 +537,8 @@
           mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.4.3"/>
         
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-          id="talend-bigdata-launcher-synapse-2.5.4.jar" name="talend-bigdata-launcher-synapse-2.5.4.jar" 
-          mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-synapse/2.5.4"/>
+          id="talend-bigdata-launcher-synapse-2.5.5.jar" name="talend-bigdata-launcher-synapse-2.5.5.jar"
+          mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-synapse/2.5.5"/>
           
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
           id="logback-classic-1.2.3.jar" name="logback-classic-1.2.3.jar" 
@@ -694,7 +694,7 @@
         
          <!-- Bigdata launcher group -->
         <libraryNeededGroup description="Bigdata launcher libraries for synapse" id="BIGDATA-LAUNCHER-LIB-SYNAPSE" name="BIGDATA-LAUNCHER-LIB-SYNAPSE">
-        	<library id="talend-bigdata-launcher-synapse-2.5.4.jar"/>
+        	<library id="talend-bigdata-launcher-synapse-2.5.5.jar"/>
             <library id="talend-bigdata-launcher-core-2.4.3.jar"/>
             <library id="logback-classic-1.2.3"/>
             <library id="commons-logging-1.2"/>
