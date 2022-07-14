@@ -855,31 +855,6 @@
         <libraryNeededGroup description="TDM libraries for spl30x" id="TDM-GROUP-SPARK_3_0_x" name="TDM-GROUP-SPARK_3_0_x">
             <library id="avro-mapred-1.8.2.jar"/>
         </libraryNeededGroup>
-        
-        <!-- spark 3 ML group -->
-        <libraryNeededGroup description="ML libraries for spl30x" id="ML-GROUP-SPARK_3_0_x" name="ML-GROUP-SPARK_3_0_x">
-            <library id="spark-mllib_2.12-3.0.3.jar"/>
-            <library id="spark-mllib-local_2.12-3.0.3.jar"/>
-            <library id="arpack_combined_all-0.1.jar"/>
-            <library id="core-1.1.2.jar"/>
-        </libraryNeededGroup>
-
-        <!-- commons math3 group -->
-        <libraryNeededGroup description="commons math3 libraries for spl30x" id="MATH-GROUP-SPARK_3_0_x" name="MATH-GROUP-SPARK_3_0_x">
-            <library id="commons-math3-3.4.1.jar"/>
-        </libraryNeededGroup>
-
-        <!-- KMeans -->
-        <libraryNeededGroup description="KMeans libraries for spl30x" id="KMEANS-GROUP-SPARK_3_0_x" name="KMEANS-GROUP-SPARK_3_0_x">
-            <group id="ML-GROUP-SPARK_3_0_x"/>
-            <group id="PARQUET-GROUP-SPARK_3_0_x"/>
-        </libraryNeededGroup>
-
-        <!-- ModelEncoder -->
-        <libraryNeededGroup description="ModelEncoder libraries for spl30x" id="MODEL-ENCODER-GROUP-SPARK_3_0_x" name="MODEL-ENCODER-GROUP-SPARK_3_0_x">
-            <group id="ML-GROUP-SPARK_3_0_x"/>
-            <group id="MATH-GROUP-SPARK_3_0_x"/>
-        </libraryNeededGroup>
 
         <!-- Spark Streaming Kafka group -->
         <libraryNeededGroup description="Spark streaming Kafka libraries for spl30x" id="KAFKA-GROUP-SPARK_3_0_x" name="KAFKA-GROUP-SPARK_3_0_x">

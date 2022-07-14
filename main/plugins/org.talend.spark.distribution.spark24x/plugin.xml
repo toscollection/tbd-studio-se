@@ -366,18 +366,6 @@
         <!-- TDM group -->
         <libraryNeededGroup description="TDM libraries for spark247" id="TDM-GROUP-SPARK_2_4_x" name="TDM-GROUP-SPARK_2_4_x">
         </libraryNeededGroup>
-        
-        <!-- spark 3 ML group -->
-        <libraryNeededGroup description="ML libraries for spark247" id="ML-GROUP-SPARK_2_4_x" name="ML-GROUP-SPARK_2_4_x">
-        </libraryNeededGroup>
-
-        <!-- commons math3 group -->
-        <libraryNeededGroup description="commons math3 libraries for spark247" id="MATH-GROUP-SPARK_2_4_x" name="MATH-GROUP-SPARK_2_4_x">
-        </libraryNeededGroup>
-
-        <!-- KMeans -->
-        <libraryNeededGroup description="KMeans libraries for spark247" id="KMEANS-GROUP-SPARK_2_4_x" name="KMEANS-GROUP-SPARK_2_4_x">
-        </libraryNeededGroup>
 
         <!-- Spark Streaming Kafka group -->
         <libraryNeededGroup description="Spark streaming Kafka libraries for spark247" id="KAFKA-GROUP-SPARK_2_4_x" name="KAFKA-GROUP-SPARK_2_4_x">
