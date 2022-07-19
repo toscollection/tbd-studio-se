@@ -994,7 +994,7 @@
                 "hadoop-mapreduce-client-core",
                 "hadoop-yarn-server-web-proxy",
                 "commons-collections",
-                "hadoop-common"
+                "hadoop-common-checkservices"
             ]
         },
         {
@@ -1005,6 +1005,7 @@
                 "httpcore",
                 "httpclient",
                 "hadoop-client",
+                "hadoop-common-checkservices",
                 "commons-configuration",
                 "commons-configuration2",
                 "commons-collections",
@@ -1026,6 +1027,7 @@
             "id" : "HIVE-HBASE-LIB-DYNAMIC",
             "description" : "",
             "modules": [
+            	"hadoop-common-checkservices",
                 "hbase-server",
                 "hbase-hadoop-compat",
                 "hive-hbase-handler",
@@ -1036,6 +1038,7 @@
             "id" : "HIVE-LIB-DYNAMIC",
             "description" : "",
             "modules": [
+            	"hadoop-common-checkservices",
                 "hive-exec",
                 "impala-jdbc",
                 "hive-jdbc"
