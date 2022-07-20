@@ -492,8 +492,8 @@
                 REQUIRED_IF="(DB_VERSION=='NEO4J_2_3_X')" />
                 
 <!-- Batch dependencies @since 3.2.X -->
-			<IMPORT NAME="bcpkix-jdk15on-1.53" MODULE="bcpkix-jdk15on-1.53.jar"  MVN="mvn:org.talend.libraries/bcpkix-jdk15on-1.53/6.0.0"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
-			<IMPORT NAME="bcprov-jdk15on-1.69" MODULE="bcprov-jdk15on-1.69.jar"  MVN="mvn:org.bouncycastle/bcprov-jdk15on/1.69"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
+			<IMPORT NAME="bcpkix-jdk15on-1.70" MODULE="bcpkix-jdk15on-1.70.jar"  MVN="mvn:org.bouncycastle/bcpkix-jdk15on/1.70"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
+			<IMPORT NAME="bcprov-jdk15on-1.70" MODULE="bcprov-jdk15on-1.70.jar"  MVN="mvn:org.bouncycastle/bcprov-jdk15on/1.70"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
 			<IMPORT NAME="caffeine-2.3.3" MODULE="caffeine-2.3.3.jar"  MVN="mvn:org.talend.libraries/caffeine-2.3.3/6.0.0"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
 			<IMPORT NAME="commons-compress-1.21" MODULE="commons-compress-1.21.jar"  MVN="mvn:org.apache.commons/commons-compress/1.21"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
 			<IMPORT NAME="commons-lang3-3.8.1" MODULE="commons-lang3-3.8.1.jar"  MVN="mvn:org.apache.commons/commons-lang3/3.8.1"  REQUIRED_IF="(DB_VERSION=='NEO4J_3_2_X') AND (REMOTE_SERVER == 'false')"/>
