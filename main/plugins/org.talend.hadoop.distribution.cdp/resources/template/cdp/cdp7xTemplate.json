@@ -428,7 +428,8 @@
                 { "groupId" : "com.sun", "artifactId" : "tools", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "org.apache.hadoop", "artifactId" : "hadoop-common", "classifier" : "", "extension" : "", "description" : "" },
                 { "groupId" : "io.netty", "artifactId" : "netty-transport-native-kqueue", "classifier" : "", "extension" : "", "description" : "" },
-                { "groupId" : "io.netty", "artifactId" : "netty-tcnative", "classifier" : "", "extension" : "", "description" : "" }
+                { "groupId" : "io.netty", "artifactId" : "netty-tcnative", "classifier" : "", "extension" : "", "description" : "" },
+                { "groupId" : "io.netty", "artifactId" : "netty-transport-native-epoll", "classifier" : "", "extension" : "", "description" : "" }
             ]
         },
         {
