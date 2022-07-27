@@ -4,7 +4,8 @@ Bundle-Name: Hadoop library
 Bundle-SymbolicName: org.talend.libraries.hadoop;singleton:=true
 Bundle-Version: 8.0.1.qualifier
 Bundle-ClassPath: .,
- lib/hadoop-core-1.2.1.jar
+ lib/hadoop-common-3.3.3.jar,
+ lib/hadoop-mapreduce-client-core-3.3.3.jar
 Require-Bundle: org.talend.libraries.apache
 Eclipse-BundleShape: dir
 Export-Package: org.apache.hadoop.conf,
