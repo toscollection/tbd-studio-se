@@ -309,7 +309,7 @@
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-exec-2.3.7-core.jar" name="hive-exec-2.3.7-core.jar"
-          mvn_uri="mvn:org.apache.hive/hive-exec/2.3.7-core"/>
+          mvn_uri="mvn:org.apache.hive/hive-exec/2.3.7/jar/core"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-jdbc-2.3.7.jar" name="hive-jdbc-2.3.7.jar"
@@ -333,7 +333,7 @@
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-shims-0.23-2.3.7.jar" name="hive-shims-0.23-2.3.7.jar"
-          mvn_uri="mvn:org.apache.hive/hive-shims-0.23/2.3.7"/>
+          mvn_uri="mvn:org.apache.hive.shims/hive-shims-0.23/2.3.7"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="hive-shims-2.3.7.jar" name="hive-shims-2.3.7.jar"
