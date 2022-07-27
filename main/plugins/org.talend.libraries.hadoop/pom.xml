@@ -50,8 +50,13 @@
 							<artifactItems>
 								<artifactItem>
 									<groupId>org.apache.hadoop</groupId>
-								    <artifactId>hadoop-core</artifactId>
-								    <version>1.2.1</version>
+								    <artifactId>hadoop-common</artifactId>
+								    <version>3.3.3</version>
+								</artifactItem>
+								<artifactItem>
+									<groupId>org.apache.hadoop</groupId>
+								    <artifactId>hadoop-mapreduce-client-core</artifactId>
+								    <version>3.3.3</version>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
