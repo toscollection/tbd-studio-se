@@ -210,9 +210,8 @@
 			<IMPORT NAME="commons-logging" MODULE="commons-logging-1.2.jar"
 				MVN="mvn:commons-logging/commons-logging/1.2"
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="commons-configuration" MODULE="commons-configuration-1.6.jar"
-				MVN="mvn:commons-configuration/commons-configuration/1.6"
-				UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-configuration-1.6.jar"
+			<IMPORT NAME="commons-configuration2-2.8.0.jar" MODULE="commons-configuration2-2.8.0.jar"
+				MVN="mvn:org.apache.commons/commons-configuration2/2.8.0"
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="commons-lang" MODULE="commons-lang-2.6.jar"
 				MVN="mvn:commons-lang/commons-lang/2.6"
