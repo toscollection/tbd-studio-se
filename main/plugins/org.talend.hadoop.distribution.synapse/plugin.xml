@@ -152,8 +152,8 @@
           mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-          id="commons-configuration2-2.1.1.jar" name="commons-configuration2-2.1.1.jar"
-          mvn_uri="mvn:org.apache.commons/commons-configuration2/2.1.1"/>
+          id="commons-configuration2-2.8.0.jar" name="commons-configuration2-2.8.0.jar"
+          mvn_uri="mvn:org.apache.commons/commons-configuration2/2.8.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
           id="guava-27.0-jre.jar" name="guava-27.0-jre.jar"
@@ -560,7 +560,7 @@
             <library id="commons-codec-1.11.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.16.jar"/>
-            <library id="commons-configuration2-2.1.1.jar"/>
+            <library id="commons-configuration2-2.8.0.jar"/>
             <library id="commons-io-2.5.jar"/>
             <library id="commons-lang-2.6.jar"/>
             <library id="commons-lang3-3.10.jar"/>
