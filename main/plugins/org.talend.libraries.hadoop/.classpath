@@ -2,7 +2,12 @@
 <classpath>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-configuration2-2.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hadoop-auth-3.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hadoop-common-3.3.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hadoop-mapreduce-client-core-3.3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hadoop-shaded-guava-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/woodstox-core-5.3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/stax2-api-4.2.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
