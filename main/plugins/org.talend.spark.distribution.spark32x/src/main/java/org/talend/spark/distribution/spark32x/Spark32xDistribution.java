@@ -185,7 +185,7 @@ public class Spark32xDistribution extends AbstractSparkDistribution
 
     @Override
     public boolean doSupportSparkYarnClusterMode() {
-        return false;
+        return true;
     }
 
     @Override
