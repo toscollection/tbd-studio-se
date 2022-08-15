@@ -32,10 +32,11 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="flogger-system-backend-0.5.1.jar" name="flogger-system-backend-0.5.1.jar" mvn_uri="mvn:com.google.flogger/flogger-system-backend/0.5.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="guava-27.1-jre.jar" name="guava-27.1-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.1-jre"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0/jar"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-api-3.3.1.jar" name="hadoop-client-api-3.3.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-api/3.3.1"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-runtime-3.3.1.jar" name="hadoop-client-runtime-3.3.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-runtime/3.3.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-api-3.2.2.jar" name="hadoop-client-api-3.2.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-api/3.2.3"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-runtime-3.2.3.jar" name="hadoop-client-runtime-3.2.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-runtime/3.2.3"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-hdfs-client-3.2.3.jar" name="hadoop-hdfs-client-3.2.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.3"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-shaded-guava-1.1.1.jar" name="hadoop-shaded-guava-1.1.1.jar" mvn_uri="mvn:org.apache.hadoop.thirdparty/hadoop-shaded-guava/1.1.1"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-server-web-proxy-3.3.1.jar" name="hadoop-yarn-server-web-proxy-3.3.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-server-web-proxy/3.3.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-server-web-proxy-3.2.3.jar" name="hadoop-yarn-server-web-proxy-3.2.3.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-server-web-proxy/3.2.3"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hbase-client-2.1.0.jar" name="hbase-client-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/2.1.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hbase-common-2.1.0.jar" name="hbase-common-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/2.1.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hbase-hadoop-compat-2.1.0.jar" name="hbase-hadoop-compat-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hadoop-compat/2.1.0"/>
@@ -263,10 +264,11 @@
             <library id="failureaccess-1.0.1.jar"/>
             <library id="guava-27.1-jre.jar"/>
             <library id="gson-2.9.0.jar"/>
-            <library id="hadoop-client-api-3.3.1.jar"/>
-            <library id="hadoop-client-runtime-3.3.1.jar"/>
+            <library id="hadoop-client-api-3.2.3.jar"/>
+            <library id="hadoop-client-runtime-3.2.3.jar"/>
             <library id="hadoop-shaded-guava-1.1.1.jar"/>
-            <library id="hadoop-yarn-server-web-proxy-3.3.1.jar"/>
+            <library id="hadoop-yarn-server-web-proxy-3.2.3.jar"/>
+            <library id="hadoop-hdfs-client-3.2.3.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
             <library id="httpclient-4.5.13.jar"/>
             <library id="httpcore-4.4.13.jar"/>
