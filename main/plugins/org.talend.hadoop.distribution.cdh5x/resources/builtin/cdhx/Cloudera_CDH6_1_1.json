@@ -10687,6 +10687,10 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_text",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_hadoop_aws",
         "tagName" : "library"
       }, {
@@ -11933,6 +11937,14 @@
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_pool2_2_9_0_jar",
       "mvn_uri" : "mvn:org.apache.commons/commons-pool2/2.9.0/jar",
       "name" : "commons-pool2-2.9.0.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_text",
+      "mvn_uri" : "mvn:org.apache.commons/commons-text/1.9/jar",
+      "name" : "commons-text-1.9.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
