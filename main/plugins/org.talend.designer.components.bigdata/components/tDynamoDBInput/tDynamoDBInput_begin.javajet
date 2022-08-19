@@ -133,9 +133,14 @@
 					String valuePlaceHolder1 = null;
 					String valuePlaceHolder2 = null;
 					String keyColumn = subExpression.get("KEY_COLUMN");
+					
+					String validKeyColumnStrForValuePlaceHolder = keyColumn;
+					if(keyColumn!=null && keyColumn.contains("#")) {
+						validKeyColumnStrForValuePlaceHolder = keyColumn.replace("#", "_");
+					}
 
-					valuePlaceHolder1 = ":keyCondition_" + keyColumn +"_1";
-					valuePlaceHolder2 = ":keyCondition_" + keyColumn +"_2";
+					valuePlaceHolder1 = ":keyCondition_" + validKeyColumnStrForValuePlaceHolder +"_1";
+					valuePlaceHolder2 = ":keyCondition_" + validKeyColumnStrForValuePlaceHolder +"_2";
 				
 					for(Map<String,String> subNameMap : nameMap){
 						String placeholder = subNameMap.get("PLACEHOLDER");
@@ -229,8 +234,14 @@
 						String valuePlaceHolder1 = null;
 						String valuePlaceHolder2 = null;
 						String columnName = subExpression.get("COLUMN_NAME");
-						valuePlaceHolder1 = ":filter_" + columnName +"_1";
-						valuePlaceHolder2 = ":filter_" + columnName +"_2";					
+						
+						String validColumnNameStrForValuePlaceHolder = columnName;
+						if(columnName!=null && columnName.contains("#")) {
+							validColumnNameStrForValuePlaceHolder = columnName.replace("#", "_");
+						}
+					
+						valuePlaceHolder1 = ":filter_" + validColumnNameStrForValuePlaceHolder +"_1";
+						valuePlaceHolder2 = ":filter_" + validColumnNameStrForValuePlaceHolder +"_2";					
 						
 						for(Map<String,String> subNameMap : nameMap){
 							String placeholder = subNameMap.get("PLACEHOLDER");
@@ -376,8 +387,14 @@
 						String valuePlaceHolder1 = null;
 						String valuePlaceHolder2 = null;
 						String columnName = subExpression.get("COLUMN_NAME");
-						valuePlaceHolder1 = ":filter_" + columnName +"_1";
-						valuePlaceHolder2 = ":filter_" + columnName +"_2";
+						
+						String validColumnNameStrForValuePlaceHolder = columnName;
+						if(columnName!=null && columnName.contains("#")) {
+							validColumnNameStrForValuePlaceHolder = columnName.replace("#", "_");
+						}
+						
+						valuePlaceHolder1 = ":filter_" + validColumnNameStrForValuePlaceHolder +"_1";
+						valuePlaceHolder2 = ":filter_" + validColumnNameStrForValuePlaceHolder +"_2";
 						
 						for(Map<String,String> subNameMap : nameMap){
 							String placeholder = subNameMap.get("PLACEHOLDER");
