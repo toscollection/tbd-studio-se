@@ -35,8 +35,8 @@ import org.talend.commons.ui.swt.formtools.LabelledText;
 import org.talend.core.database.conn.ConnParameterKeys;
 import org.talend.core.hadoop.repository.HadoopRepositoryUtil;
 import org.talend.core.model.properties.ConnectionItem;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksSubmitMode;
 import org.talend.hadoop.distribution.constants.databricks.IDatabricksDistribution;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -325,13 +325,13 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             cloudProviderCombo.setText(getDatabriksCloudProviderByVaule(providerValue).getProviderLableName());
         } else {
 
-            cloudProviderCombo.setText(EDatabriksCloudProvider.AWS.getProviderLableName());
+            cloudProviderCombo.setText(EDatabricksCloudProvider.AWS.getProviderLableName());
         }
         String runModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE);
         if (runModeValue != null) {
         	runSubmitCombo.setText(getDatabriksRunModeByValue(runModeValue).getRunModeLabel());
         } else {
-        	runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
+        	runSubmitCombo.setText(EDatabricksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
         }
         
         String endPoint = StringUtils
@@ -416,7 +416,7 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private List<String> getProviders() {
         List<String> providerLableNames = new ArrayList<String>();
         if (databricksDistribution != null) {
-            List<EDatabriksCloudProvider> supportCloudProviders = databricksDistribution.getSupportCloudProviders();
+            List<EDatabricksCloudProvider> supportCloudProviders = databricksDistribution.getSupportCloudProviders();
             if (supportCloudProviders != null) {
                 providerLableNames = supportCloudProviders.stream().map(provider -> {
                     return provider.getProviderLableName();
@@ -429,7 +429,7 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private List<String> getRunSubmitModes() {
     	List<String> runSubmitLabelNames = new ArrayList<String>();
         if (databricksDistribution != null) {
-            List<EDatabriksSubmitMode> runSubmitModes = databricksDistribution.getRunSubmitMode();
+            List<EDatabricksSubmitMode> runSubmitModes = databricksDistribution.getRunSubmitMode();
             if (runSubmitModes != null) {
             	runSubmitLabelNames = runSubmitModes.stream().map(mode -> {
                     return mode.getRunModeLabel();
@@ -439,51 +439,51 @@ public class DataBricksInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         return runSubmitLabelNames;
     }
 
-    private EDatabriksCloudProvider getDatabriksCloudProviderByName(String providerLableName) {
+    private EDatabricksCloudProvider getDatabriksCloudProviderByName(String providerLableName) {
         if (databricksDistribution != null) {
-            List<EDatabriksCloudProvider> supportCloudProviders = databricksDistribution.getSupportCloudProviders();
-            for (EDatabriksCloudProvider provider : supportCloudProviders) {
+            List<EDatabricksCloudProvider> supportCloudProviders = databricksDistribution.getSupportCloudProviders();
+            for (EDatabricksCloudProvider provider : supportCloudProviders) {
                 if (StringUtils.equals(provider.getProviderLableName(), providerLableName)) {
                     return provider;
                 }
             }
         }
-        return EDatabriksCloudProvider.AWS;
+        return EDatabricksCloudProvider.AWS;
     }
     
-    private EDatabriksSubmitMode getDatabriksRunModeByName(String runModeLableName) {
+    private EDatabricksSubmitMode getDatabriksRunModeByName(String runModeLableName) {
         if (databricksDistribution != null) {
-            List<EDatabriksSubmitMode> supportRunModes = databricksDistribution.getRunSubmitMode();
-            for (EDatabriksSubmitMode provider : supportRunModes) {
+            List<EDatabricksSubmitMode> supportRunModes = databricksDistribution.getRunSubmitMode();
+            for (EDatabricksSubmitMode provider : supportRunModes) {
                 if (StringUtils.equals(provider.getRunModeLabel(), runModeLableName)) {
                     return provider;
                 }
             }
         }
-        return EDatabriksSubmitMode.CREATE_RUN_JOB;
+        return EDatabricksSubmitMode.CREATE_RUN_JOB;
     }
 
-    private EDatabriksCloudProvider getDatabriksCloudProviderByVaule(String providerValue) {
+    private EDatabricksCloudProvider getDatabriksCloudProviderByVaule(String providerValue) {
         if (databricksDistribution != null) {
-            List<EDatabriksCloudProvider> supportCloudProviders = databricksDistribution.getSupportCloudProviders();
-            for (EDatabriksCloudProvider provider : supportCloudProviders) {
+            List<EDatabricksCloudProvider> supportCloudProviders = databricksDistribution.getSupportCloudProviders();
+            for (EDatabricksCloudProvider provider : supportCloudProviders) {
                 if (StringUtils.equals(provider.getProviderValue(), providerValue)) {
                     return provider;
                 }
             }
         }
-        return EDatabriksCloudProvider.AWS;
+        return EDatabricksCloudProvider.AWS;
     }
     
-    private EDatabriksSubmitMode getDatabriksRunModeByValue(String runModeValue) {
+    private EDatabricksSubmitMode getDatabriksRunModeByValue(String runModeValue) {
         if (databricksDistribution != null) {
-            List<EDatabriksSubmitMode> runModes = databricksDistribution.getRunSubmitMode();
-            for (EDatabriksSubmitMode runMode : runModes) {
+            List<EDatabricksSubmitMode> runModes = databricksDistribution.getRunSubmitMode();
+            for (EDatabricksSubmitMode runMode : runModes) {
                 if (StringUtils.equals(runMode.getRunModeValue(), runModeValue)) {
                     return runMode;
                 }
             }
         }
-        return EDatabriksSubmitMode.CREATE_RUN_JOB;
+        return EDatabricksSubmitMode.CREATE_RUN_JOB;
     }
 }
