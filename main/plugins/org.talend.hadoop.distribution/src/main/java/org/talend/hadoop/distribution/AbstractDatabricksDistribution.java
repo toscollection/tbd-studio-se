@@ -20,8 +20,8 @@ import java.util.Set;
 
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksSubmitMode;
 import org.talend.hadoop.distribution.constants.databricks.IDatabricksDistribution;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -34,12 +34,12 @@ public abstract class AbstractDatabricksDistribution extends AbstractDistributio
         return "3.5.x-scala2.11";
     };
 
-    public List<EDatabriksCloudProvider> getSupportCloudProviders() {
-        return Arrays.asList(EDatabriksCloudProvider.values());
+    public List<EDatabricksCloudProvider> getSupportCloudProviders() {
+        return Arrays.asList(EDatabricksCloudProvider.values());
     }
     
-    public List<EDatabriksSubmitMode> getRunSubmitMode() {
-    	return Arrays.asList(EDatabriksSubmitMode.values());
+    public List<EDatabricksSubmitMode> getRunSubmitMode() {
+    	return Arrays.asList(EDatabricksSubmitMode.values());
     }
     
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(

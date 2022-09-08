@@ -13,16 +13,16 @@
 package org.talend.hadoop.distribution.constants.databricks;
 
 import org.talend.hadoop.distribution.i18n.Messages;
-public enum EDatabriksSubmitMode {
+public enum EDatabricksSubmitMode {
 
-	CREATE_RUN_JOB(Messages.getString("EDatabriksSubmitMode.CREATE_RUN_JOB"), "CREATE_RUN_JOB"),
-    RUN_SUBMIT(Messages.getString("EDatabriksSubmitMode.RUN_SUBMIT"), "RUN_SUBMIT");
+	CREATE_RUN_JOB(Messages.getString("EDatabricksSubmitMode.CREATE_RUN_JOB"), "\"CREATE_RUN_JOB\""),
+    RUN_SUBMIT(Messages.getString("EDatabricksSubmitMode.RUN_SUBMIT"), "\"RUN_SUBMIT\"");
 
     private String runModeLabel;
 
     private String runModeValue;
 
-    EDatabriksSubmitMode(String runModeLabel, String runModeValue) {
+    EDatabricksSubmitMode(String runModeLabel, String runModeValue) {
         this.runModeLabel = runModeLabel;
         this.runModeValue = runModeValue;
     }

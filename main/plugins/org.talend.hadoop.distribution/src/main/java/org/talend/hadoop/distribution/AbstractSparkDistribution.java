@@ -23,8 +23,9 @@ import org.talend.hadoop.distribution.condition.common.HDFSLinkedNodeCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksClusterType ;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksSubmitMode;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
@@ -143,12 +144,16 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         return true;
     }
 
-    public List<EDatabriksCloudProvider> getSupportCloudProviders() {
-        return Arrays.asList(EDatabriksCloudProvider.values());
+    public List<EDatabricksCloudProvider> getSupportCloudProviders() {
+        return Arrays.asList(EDatabricksCloudProvider.values());
+    }
+    
+    public List<EDatabricksClusterType > getClusterTypes() {
+        return Arrays.asList(EDatabricksClusterType.values());
     }
 
-    public List<EDatabriksSubmitMode> getRunSubmitMode() {
-        return Arrays.asList(EDatabriksSubmitMode.values());
+    public List<EDatabricksSubmitMode> getRunSubmitMode() {
+        return Arrays.asList(EDatabricksSubmitMode.values());
     }
     
     @Override

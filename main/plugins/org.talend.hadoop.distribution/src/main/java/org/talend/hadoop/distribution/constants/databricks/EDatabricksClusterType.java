@@ -13,26 +13,25 @@
 package org.talend.hadoop.distribution.constants.databricks;
 
 import org.talend.hadoop.distribution.i18n.Messages;
-public enum EDatabriksCloudProvider {
+public enum EDatabricksClusterType  {
 
-    AWS(Messages.getString("EDatabriksCloudProvider.AWS"), "AWS"),
-    AZURE(Messages.getString("EDatabriksCloudProvider.Azure"), "Azure"),
-    GCP(Messages.getString("EDatabriksCloudProvider.GCP"), "GCP");
+    TRANSIENT(Messages.getString("EDatabricksClusterType.TRANSIENT"), "\"TRANSIENT\""),
+    INTERACTIVE(Messages.getString("EDatabricksClusterType.INTERACTIVE"), "\"INTERACTIVE\"");
 
-    private String providerLableName;
+    private String clusterLabelName;
 
-    private String providerValue;
+    private String clusterValue;
 
-    EDatabriksCloudProvider(String providerName, String providerValue) {
-        this.providerLableName = providerName;
-        this.providerValue = providerValue;
+    EDatabricksClusterType (String clusterLabelName, String clusterValue) {
+        this.clusterLabelName = clusterLabelName;
+        this.clusterValue = clusterValue;
     }
 
-    public String getProviderLableName() {
-        return providerLableName;
+    public String getLabelName() {
+        return clusterLabelName;
     }
 
-    public String getProviderValue() {
-        return providerValue;
+    public String getValue() {
+        return clusterValue;
     }
 }

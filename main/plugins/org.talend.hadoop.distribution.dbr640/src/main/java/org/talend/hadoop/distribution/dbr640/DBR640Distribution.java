@@ -257,6 +257,6 @@ public class DBR640Distribution extends AbstractDatabricksDistribution implement
 
     @Override
     public String getTransientClusterSparkVersion() {
-        return "6.4.x-scala2.11" ;
+        return "\"6.4.x-scala2.11\"" ;
     }
 }

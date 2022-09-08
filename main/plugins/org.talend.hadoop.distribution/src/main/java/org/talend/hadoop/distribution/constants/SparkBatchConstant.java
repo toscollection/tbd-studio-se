@@ -35,6 +35,24 @@ public final class SparkBatchConstant {
     public static final String SPARK_MODE_PARAMETER = "SPARK_MODE"; //$NON-NLS-1$
 
     public static final String DATABRICKS_RUNTIME_VERSION = "DATABRICKS_RUNTIME_VERSION"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_CLOUD_PROVIDER = "DATABRICKS_CLOUD_PROVIDER"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_NODE_TYPE_AZURE = "DATABRICKS_NODE_TYPE_AZURE"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_DRIVER_NODE_TYPE_AZURE = "DATABRICKS_DRIVER_NODE_TYPE_AZURE"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_NODE_TYPE_GCP = "DATABRICKS_NODE_TYPE_GCP"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_DRIVER_NODE_TYPE_GCP = "DATABRICKS_DRIVER_NODE_TYPE_GCP"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_NODE_TYPE = "DATABRICKS_NODE_TYPE"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_DRIVER_NODE_TYPE = "DATABRICKS_DRIVER_NODE_TYPE"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_USE_TRANSIENT_CLUSTER = "DATABRICKS_USE_TRANSIENT_CLUSTER"; //$NON-NLS-1$
+    
+    public static final String DATABRICKS_CLUSTER_TYPE = "DATABRICKS_CLUSTER_TYPE"; //$NON-NLS-1$
 
     public static final String SUPPORTED_SPARK_VERSION_PARAMETER = "SUPPORTED_SPARK_VERSION"; //$NON-NLS-1$
 

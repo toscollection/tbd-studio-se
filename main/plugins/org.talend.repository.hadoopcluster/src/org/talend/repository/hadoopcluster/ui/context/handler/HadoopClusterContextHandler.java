@@ -217,7 +217,18 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case DataBricksDBFSDepFolder:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
-                        break;
+                    case DataBricksClusterType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE));
+                    case DataBricksDriverNodeType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE));
+                    case DataBricksNodeType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE));
+                    case DataBricksRuntimeVersion:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION));
                     case setHadoopConf:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SET_HADOOP_CONF),
@@ -709,6 +720,22 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             break;
         case DataBricksDBFSDepFolder:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksDriverNodeType:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksClusterType:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksNodeType:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksRuntimeVersion:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         case WebHDFSSSLTrustStorePath:
