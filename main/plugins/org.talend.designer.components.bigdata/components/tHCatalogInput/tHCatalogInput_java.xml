@@ -243,6 +243,9 @@
 			<IMPORT NAME="cxf-rt-transports-http-3.4.7" MODULE="cxf-rt-transports-http-3.4.7.jar"
 				MVN="mvn:org.apache.cxf/cxf-rt-transports-http/3.4.7"
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
+			<IMPORT NAME="javax.annotation-api-1.2.jar" MODULE="javax.annotation-api-1.2.jar"
+				MVN="mvn:javax.annotation/javax.annotation-api/1.2" REQUIRED="false"
+				REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />	
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
