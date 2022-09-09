@@ -346,8 +346,8 @@
          <IMPORT NAME="commons-lang-2.6.jar" MODULE="commons-lang-2.6.jar"
                  MVN="mvn:commons-lang/commons-lang/2.6"
                  REQUIRED="true"/>
-         <IMPORT NAME="aws-java-sdk-1.11.848.jar" MODULE="aws-java-sdk-1.11.848.jar"
-                 MVN="mvn:com.amazonaws/aws-java-sdk/1.11.848"
+         <IMPORT NAME="aws-java-sdk-1.12.297.jar" MODULE="aws-java-sdk-1.12.297.jar"
+                 MVN="mvn:com.amazonaws/aws-java-sdk/1.12.297"
                  REQUIRED="true"/>
          <IMPORT NAME="jackson-core-2.13.2.jar" MODULE="jackson-core-2.13.2.jar"
                  MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.13.2"

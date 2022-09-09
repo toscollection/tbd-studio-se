@@ -315,8 +315,8 @@
         <IMPORTS>
             <IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar"
                     MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
-            <IMPORT NAME="aws-java-sdk-1.11.848.jar" MODULE="aws-java-sdk-1.11.848.jar"
-                    MVN="mvn:com.amazonaws/aws-java-sdk/1.11.848"
+            <IMPORT NAME="aws-java-sdk-1.12.297.jar" MODULE="aws-java-sdk-1.12.297.jar"
+                    MVN="mvn:com.amazonaws/aws-java-sdk/1.12.297"
                     REQUIRED="true" />
             <IMPORT NAME="jackson-core-2.13.2.jar" MODULE="jackson-core-2.13.2.jar"
                     MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.13.2"
