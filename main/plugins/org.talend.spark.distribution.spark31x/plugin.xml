@@ -195,11 +195,11 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-aws-3.2.4.jar" name="hadoop-aws-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.2.4"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="aws-java-sdk-bundle-1.11.375.jar" name="aws-java-sdk-bundle-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.375"/>
 
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-azure-3.2.1.jar" name="hadoop-azure-3.2.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.2.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-azure-3.2.4.jar" name="hadoop-azure-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.2.4"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="azure-storage-7.0.0.jar" name="azure-storage-7.0.0.jar" mvn_uri="mvn:com.microsoft.azure/azure-storage/7.0.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jetty-util-ajax-9.3.24.v20180605.jar" name="jetty-util-ajax-9.3.24.v20180605.jar" mvn_uri="mvn:org.eclipse.jetty/jetty-util-ajax/9.3.24.v20180605"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jetty-util-9.3.24.v20180605.jar" name="jetty-util-9.3.24.v20180605.jar" mvn_uri="mvn:org.eclipse.jetty/jetty-util/9.3.24.v20180605"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-azure-datalake-3.2.1.jar" name="hadoop-azure-datalake-3.2.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/3.2.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-azure-datalake-3.2.4.jar" name="hadoop-azure-datalake-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/3.2.4"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="azure-data-lake-store-sdk-2.2.9.jar" name="azure-data-lake-store-sdk-2.2.9.jar" mvn_uri="mvn:com.microsoft.azure/azure-data-lake-store-sdk/2.2.9"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="gcs-connector-hadoop3-2.1.6-shaded" name="gcs-connector-hadoop3-2.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/gcs-connector/hadoop3-2.1.6/jar/shaded"/>
@@ -393,11 +393,11 @@
 
         <!-- Azure group -->
         <libraryNeededGroup description="Azure libraries for spark311" id="AZURE-GROUP-SPARK_3_1_x" name="AZURE-GROUP-SPARK_3_1_x">
-            <library id="hadoop-azure-3.2.1.jar"/>
+            <library id="hadoop-azure-3.2.4.jar"/>
             <library id="azure-storage-7.0.0.jar"/>
             <library id="jetty-util-ajax-9.3.24.v20180605.jar"/>
             <library id="jetty-util-9.3.24.v20180605.jar"/>
-            <library id="hadoop-azure-datalake-3.2.1.jar"/>
+            <library id="hadoop-azure-datalake-3.2.4.jar"/>
             <library id="azure-data-lake-store-sdk-2.2.9.jar"/>
             <library id="wildfly-openssl-java-1.0.4.Final.jar"/>
         </libraryNeededGroup>
