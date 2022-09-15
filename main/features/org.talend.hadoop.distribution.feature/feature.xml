@@ -49,5 +49,7 @@
    <plugin id="org.talend.spark.distribution.spark31x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
    <plugin id="org.talend.spark.distribution.spark32x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   
+   <plugin id="org.talend.spark.distribution.spark33x" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>
