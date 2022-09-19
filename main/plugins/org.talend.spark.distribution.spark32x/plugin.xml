@@ -212,9 +212,9 @@
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
             
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.0.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-5.0.3.jar" name="spark-redshift_2.12-5.0.3.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-avro_2.12-3.2.2.jar" name="spark-avro_2.12-3.2.2.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.2.2"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-snowflake_2.12-2.10.0-spark_3.2.jar" name="spark-snowflake_2.12-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.10.0-spark_3.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snowflake-jdbc-3.13.14.jar" name="snowflake-jdbc-3.13.14.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.14"/>
@@ -234,15 +234,16 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-cloudwatch-1.11.375.jar" name="aws-java-sdk-cloudwatch-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-cloudwatch/1.11.375"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-dynamodb-1.11.375.jar" name="aws-java-sdk-dynamodb-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.375"/>
             
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-client-1.22.0.jar" name="google-api-client-1.22.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.22.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-services-pubsub-v1-rev355-1.22.0.jar" name="google-api-services-pubsub-v1-rev355-1.22.0.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev355-1.22.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-http-client-1.22.0.jar" name="google-http-client-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client/1.22.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson/1.22.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-http-client-jackson2-1.22.0.jar" name="google-http-client-jackson2-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.22.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-oauth-client-1.22.0.jar" name="google-oauth-client-1.22.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/1.22.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-oauth-client-java6-1.20.0.jar" name="google-oauth-client-java6-1.20.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/1.20.0"/>
-           <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/util/1.6.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-api-client-1.22.0.jar" name="google-api-client-1.22.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.22.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-api-services-pubsub-v1-rev355-1.22.0.jar" name="google-api-services-pubsub-v1-rev355-1.22.0.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev355-1.22.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-1.22.0.jar" name="google-http-client-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client/1.22.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson/1.22.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-jackson2-1.22.0.jar" name="google-http-client-jackson2-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.22.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-oauth-client-1.22.0.jar" name="google-oauth-client-1.22.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/1.22.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-oauth-client-java6-1.20.0.jar" name="google-oauth-client-java6-1.20.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/1.20.0"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-extensions-0.5.1.jar" name="google-extensions-0.5.1.jar" mvn_uri="mvn:com.google.flogger/google-extensions/0.5.1"/>
+       		<libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/util/1.6.0"/>
             
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_2_x" name="SPARK-COMPILE-GROUP-SPARK_3_2_x">
@@ -445,11 +446,10 @@
         </libraryNeededGroup>
         
         <!-- Redshift group -->
-        <!-- spark-redshift_2.12-4.2.0.jar requires spark-avro_2.12-3.0.1.jar and not compatible with spark-avro_2.12-3.2.1.jar -->
         <libraryNeededGroup description="Redshift libraries for spark32x" id="REDSHIFT-BATCH-GROUP-SPARK_3_2_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_2_x">
             <library id="snappy-java-1.1.8.2.jar"/>
-            <library id="spark-redshift_2.12-4.2.0.jar"/>
-            <library id="spark-avro_2.12-3.0.1.jar"/>
+            <library id="spark-redshift_2.12-5.0.3.jar"/>
+            <library id="spark-avro_2.12-3.2.2.jar"/>
         </libraryNeededGroup>
         
         <!-- Snowflake group -->
@@ -484,11 +484,10 @@
         </libraryNeededGroup>
 
         <!-- Spark Streaming Redshift group -->
-        <!-- spark-redshift_2.12-4.2.0.jar requires spark-avro_2.12-3.0.1.jar and not compatible with spark-avro_2.12-3.2.1.jar -->
         <libraryNeededGroup description="Spark streaming Redshift libraries for spark32x" id="REDSHIFT-STREAMING-GROUP-SPARK_3_2_x" name="REDSHIFT-STREAMING-GROUP-SPARK_3_2_x">
         	<library id="snappy-java-1.1.8.2.jar"/>
-            <library id="spark-redshift_2.12-4.2.0.jar"/>
-            <library id="spark-avro_2.12-3.0.1.jar"/>
+            <library id="spark-redshift_2.12-5.0.3.jar"/>
+            <library id="spark-avro_2.12-3.2.2.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming DynamoDB group -->

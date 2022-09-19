@@ -49,6 +49,7 @@
         <module>main/plugins/org.talend.spark.distribution.spark30x</module>
         <module>main/plugins/org.talend.spark.distribution.spark31x</module>
         <module>main/plugins/org.talend.spark.distribution.spark32x</module>
+        <module>main/plugins/org.talend.spark.distribution.spark33x</module>
       	<module>main/plugins/org.talend.studio.components.tcompv0.couchbase</module>
         <module>main/features/org.talend.studio.components.tcompv0.couchbase.feature</module>
         <module>test/features/org.talend.bigdata.se.test.feature</module>
