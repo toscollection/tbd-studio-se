@@ -52,28 +52,28 @@
              mvn_uri="mvn:org.scalanlp/breeze_2.12/1.0"/>
 
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-             id="hadoop-common-3.2.3.jar" name="hadoop-common-3.2.3.jar"
-             mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.3"/>
+             id="hadoop-common-3.2.4.jar" name="hadoop-common-3.2.4.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.4"/>
              
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-             id="hadoop-yarn-api-3.2.3.jar" name="hadoop-yarn-api-3.2.3.jar"
-             mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-api/3.2.3"/>
+             id="hadoop-yarn-api-3.2.4.jar" name="hadoop-yarn-api-3.2.4.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-api/3.2.4"/>
              
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-             id="hadoop-yarn-client-3.2.3.jar" name="hadoop-yarn-client-3.2.3.jar"
-             mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-client/3.2.3"/>    
+             id="hadoop-yarn-client-3.2.4.jar" name="hadoop-yarn-client-3.2.4.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-client/3.2.4"/>
                       
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-             id="hadoop-yarn-common-3.2.3.jar" name="hadoop-yarn-common-3.2.3.jar"
-             mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.2.3"/>    
+             id="hadoop-yarn-common-3.2.4.jar" name="hadoop-yarn-common-3.2.4.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.2.4"/>
 
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-             id="hadoop-mapreduce-client-common-3.2.3.jar" name="hadoop-mapreduce-client-common-3.2.3.jar"
-             mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-common/3.2.3"/>
+             id="hadoop-mapreduce-client-common-3.2.4.jar" name="hadoop-mapreduce-client-common-3.2.4.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-common/3.2.4"/>
 
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-             id="hadoop-mapreduce-client-core-3.2.3.jar" name="hadoop-mapreduce-client-core-3.2.3.jar"
-             mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.2.3"/>
+             id="hadoop-mapreduce-client-core-3.2.4.jar" name="hadoop-mapreduce-client-core-3.2.4.jar"
+             mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.2.4"/>
 
          <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
              id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar"
@@ -148,8 +148,8 @@
           mvn_uri="mvn:org.codehaus.woodstox/stax2-api/4.2.1"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-          id="hadoop-auth-3.2.3.jar" name="hadoop-auth-3.2.3.jar"
-          mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.3"/>
+          id="hadoop-auth-3.2.4.jar" name="hadoop-auth-3.2.4.jar"
+          mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.4"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="commons-collections-3.2.2.jar" name="commons-collections-3.2.2.jar"
@@ -290,13 +290,13 @@
           mvn_uri="mvn:org.apache.commons/commons-text/1.4"/>
           
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-          id="hadoop-hdfs-client-3.2.3.jar" name="hadoop-hdfs-client-3.2.3.jar"
-          mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.3"/>
+          id="hadoop-hdfs-client-3.2.4.jar" name="hadoop-hdfs-client-3.2.4.jar"
+          mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.4"/>
          
         <!-- Azure libs -->
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-          id="hadoop-azure-3.2.1.jar" name="hadoop-azure-3.2.1.jar"
-          mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.2.1"/>
+          id="hadoop-azure-3.2.4.jar" name="hadoop-azure-3.2.4.jar"
+          mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.2.4"/>
           
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x" 
         	id="wildfly-openssl-java-1.0.4.Final.jar" name="wildfly-openssl-java-1.0.4.Final.jar" 
@@ -315,8 +315,8 @@
           mvn_uri="mvn:org.eclipse.jetty/jetty-util/9.3.24.v20180605"/>
           
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-          id="hadoop-azure-datalake-3.2.3.jar" name="hadoop-azure-datalake-3.2.3.jar"
-          mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/3.2.3"/>
+          id="hadoop-azure-datalake-3.2.4.jar" name="hadoop-azure-datalake-3.2.4.jar"
+          mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/3.2.4"/>
           
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="azure-data-lake-store-sdk-2.2.9.jar" name="azure-data-lake-store-sdk-2.2.9.jar"
@@ -692,13 +692,13 @@
             <library id="commons-logging-1.1.3.jar"/>
             <library id="failureaccess-1.0.1.jar"/>
             <library id="guava-27.0-jre.jar"/>
-            <library id="hadoop-auth-3.2.3.jar"/>
-            <library id="hadoop-common-3.2.3.jar"/>
-            <library id="hadoop-hdfs-client-3.2.3.jar"/>
-            <library id="hadoop-mapreduce-client-core-3.2.3.jar"/>
-            <library id="hadoop-yarn-api-3.2.3.jar"/>
-            <library id="hadoop-yarn-client-3.2.3.jar"/>
-            <library id="hadoop-yarn-common-3.2.3.jar"/>
+            <library id="hadoop-auth-3.2.4.jar"/>
+            <library id="hadoop-common-3.2.4.jar"/>
+            <library id="hadoop-hdfs-client-3.2.4.jar"/>
+            <library id="hadoop-mapreduce-client-core-3.2.4.jar"/>
+            <library id="hadoop-yarn-api-3.2.4.jar"/>
+            <library id="hadoop-yarn-client-3.2.4.jar"/>
+            <library id="hadoop-yarn-common-3.2.4.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
             <library id="httpclient-4.5.13.jar"/>
             <library id="httpcore-4.4.13.jar"/>
@@ -778,11 +778,11 @@
 
         <!-- Azure group -->
         <libraryNeededGroup description="Azure libraries for spark32x" id="AZURE-GROUP-SPARK_3_0_x" name="AZURE-GROUP-SPARK_3_0_x">
-            <library id="hadoop-azure-3.2.1.jar"/>
+            <library id="hadoop-azure-3.2.4.jar"/>
             <library id="azure-storage-7.0.0.jar"/>
             <library id="jetty-util-ajax-9.3.24.v20180605.jar"/>
             <library id="jetty-util-9.3.24.v20180605.jar"/>
-            <library id="hadoop-azure-datalake-3.2.1.jar"/>
+            <library id="hadoop-azure-datalake-3.2.4.jar"/>
             <library id="azure-data-lake-store-sdk-2.2.9.jar"/>
             <library id="wildfly-openssl-java-1.0.4.Final.jar"/>
         </libraryNeededGroup>
@@ -839,7 +839,7 @@
             <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
             <library id="gson-2.9.0.jar"/>
-            <library id="hadoop-mapreduce-client-common-3.2.3.jar"/>
+            <library id="hadoop-mapreduce-client-common-3.2.4.jar"/>
             <library id="aws-java-sdk-bundle-1.11.760.jar"/>
         </libraryNeededGroup>
         
@@ -974,10 +974,10 @@
             <library id="avro-mapred-1.8.2-hadoop2.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
             <library id="commons-net-3.1.jar"/>
-            <library id="hadoop-client-3.2.3.jar"/>
-            <library id="hadoop-mapreduce-client-common-3.2.3.jar"/>
-            <library id="hadoop-mapreduce-client-jobclient-3.2.3.jar"/>
-            <library id="hadoop-mapreduce-client-shuffle-3.2.3.jar"/>
+            <library id="hadoop-client-3.2.4.jar"/>
+            <library id="hadoop-mapreduce-client-common-3.2.4.jar"/>
+            <library id="hadoop-mapreduce-client-jobclient-3.2.4.jar"/>
+            <library id="hadoop-mapreduce-client-shuffle-3.2.4.jar"/>
             <library id="json-1.8.jar"/>
             <library id="sqoop-1.4.7.jar"/>
         </libraryNeededGroup>
@@ -1006,31 +1006,31 @@
          point="org.talend.core.runtime.classloader_provider">
       <classloader
             index="HIVE:SPARK:SPARK_3_0_x:STANDALONE"
-            libraries="hadoop-client-3.2.3.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;commons-httpclient-3.1.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;commons-httpclient-3.1.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="HIVE2:SPARK:SPARK_3_0_x:STANDALONE"
-            libraries="hadoop-client-3.2.3.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="HBASE:SPARK:SPARK_3_0_x"
-            libraries="hadoop-client-3.2.3.jar;commons-configuration2-2.1.1.jar;htrace-core4-4.2.0-incubating.jar;metrics-core-3.1.5.jar;commons-lang3-3.5.jar;hbase-client-2.1.0.jar;hbase-common-2.1.0.jar;hbase-hadoop-compat-2.1.0.jar;hbase-hadoop2-compat-2.1.0.jar;hbase-http-2.1.0.jar;hbase-metrics-2.1.0.jar;hbase-metrics-api-2.1.0.jar;hbase-procedure-2.1.0.jar;hbase-protocol-2.1.0.jar;hbase-protocol-shaded-2.1.0.jar;hbase-replication-2.1.0.jar;hbase-server-2.1.0.jar;hbase-shaded-miscellaneous-2.1.0.jar;hbase-shaded-netty-2.1.0.jar;hbase-shaded-protobuf-2.1.0.jar;hbase-zookeeper-2.1.0.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="hadoop-client-3.2.4.jar;commons-configuration2-2.1.1.jar;htrace-core4-4.2.0-incubating.jar;metrics-core-3.1.5.jar;commons-lang3-3.5.jar;hbase-client-2.1.0.jar;hbase-common-2.1.0.jar;hbase-hadoop-compat-2.1.0.jar;hbase-hadoop2-compat-2.1.0.jar;hbase-http-2.1.0.jar;hbase-metrics-2.1.0.jar;hbase-metrics-api-2.1.0.jar;hbase-procedure-2.1.0.jar;hbase-protocol-2.1.0.jar;hbase-protocol-shaded-2.1.0.jar;hbase-replication-2.1.0.jar;hbase-server-2.1.0.jar;hbase-shaded-miscellaneous-2.1.0.jar;hbase-shaded-netty-2.1.0.jar;hbase-shaded-protobuf-2.1.0.jar;hbase-zookeeper-2.1.0.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="MAP_REDUCE:SPARK:SPARK_3_0_x"
-            libraries="jaxb-api-2.2.11.jar;jackson-module-jaxb-annotations-2.10.0.jar;jackson-jaxrs-base-2.9.5.jar;jackson-jaxrs-json-provider-2.9.5.jar;jackson-annotations-2.10.0.jar;jackson-core-2.10.0.jar;jackson-databind-2.10.0.jar;hadoop-client-3.2.3.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="jaxb-api-2.2.11.jar;jackson-module-jaxb-annotations-2.10.0.jar;jackson-jaxrs-base-2.9.5.jar;jackson-jaxrs-json-provider-2.9.5.jar;jackson-annotations-2.10.0.jar;jackson-core-2.10.0.jar;jackson-databind-2.10.0.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="HDFS:SPARK:SPARK_3_0_x"
-            libraries="jaxb-api-2.2.11.jar;jackson-module-jaxb-annotations-2.10.0.jar;jackson-jaxrs-base-2.9.5.jar;jackson-jaxrs-json-provider-2.9.5.jar;jackson-annotations-2.10.0.jar;jackson-core-2.10.0.jar;jackson-databind-2.10.0.jar;hadoop-client-3.2.3.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="jaxb-api-2.2.11.jar;jackson-module-jaxb-annotations-2.10.0.jar;jackson-jaxrs-base-2.9.5.jar;jackson-jaxrs-json-provider-2.9.5.jar;jackson-annotations-2.10.0.jar;jackson-core-2.10.0.jar;jackson-databind-2.10.0.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="HDFS:SPARK:SPARK_3_0_x?USE_KRB"
-            libraries="jaxb-api-2.2.11.jar;jackson-module-jaxb-annotations-2.10.0.jar;jackson-jaxrs-base-2.9.5.jar;jackson-jaxrs-json-provider-2.9.5.jar;jackson-annotations-2.10.0.jar;jackson-core-2.10.0.jar;jackson-databind-2.10.0.jar;hadoop-client-3.2.3.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="jaxb-api-2.2.11.jar;jackson-module-jaxb-annotations-2.10.0.jar;jackson-jaxrs-base-2.9.5.jar;jackson-jaxrs-json-provider-2.9.5.jar;jackson-annotations-2.10.0.jar;jackson-core-2.10.0.jar;jackson-databind-2.10.0.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="IMPALA:SPARK:SPARK_3_0_x?USE_KRB"
-            libraries="hadoop-client-3.2.3.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.3.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.2.3.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;hive-metastore-1.2.1.spark2.jar;httpcore-4.4.13.jar;httpclient-4.5.13.jar;libthrift-0.9.3.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.19.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
    </extension>
 
