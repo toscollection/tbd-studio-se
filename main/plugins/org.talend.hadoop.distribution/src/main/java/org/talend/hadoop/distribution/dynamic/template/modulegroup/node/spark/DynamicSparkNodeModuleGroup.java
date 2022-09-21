@@ -30,6 +30,10 @@ public class DynamicSparkNodeModuleGroup extends AbstractNodeModuleGroup {
     }
 
     public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version, IDynamicModuleGroupConstant moduleGroup, String condition) throws Exception {
+    	return getModuleGroups(distribution, version, moduleGroup, condition, true);
+    }
+    
+    public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version, IDynamicModuleGroupConstant moduleGroup, String condition, boolean mrRequired) throws Exception {
         DynamicPluginAdapter pluginAdapter = getPluginAdapter();
 
         String moduleGroupRuntimeId = pluginAdapter
@@ -38,7 +42,7 @@ public class DynamicSparkNodeModuleGroup extends AbstractNodeModuleGroup {
         checkRuntimeId(moduleGroupRuntimeId);
 
         if (StringUtils.isNotBlank(moduleGroupRuntimeId)) {
-            return ModuleGroupsUtils.getModuleGroups(distribution, version, condition, moduleGroupRuntimeId, true);
+            return ModuleGroupsUtils.getModuleGroups(distribution, version, condition, moduleGroupRuntimeId, mrRequired);
         } else {
             return Collections.emptySet();
         }
