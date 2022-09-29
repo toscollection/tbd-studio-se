@@ -15,16 +15,71 @@ class TKafkaCreateTopicUtil {
 	private INode node;
 
 	private INode connNode;
+	
+    private TSetKeystoreUtil tSetKeystoreUtil;
 
 	private Map<String, String> kafkaTopicProperties;
 
 	public TKafkaCreateTopicUtil(INode node) {
 		this.node = node;
-		this.kafkaTopicProperties = findKafkaTopicProperties();
+		
 		this.connNode = Boolean.valueOf(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"))
 			? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__")
 			: node;
+		
+		this.tSetKeystoreUtil = new TSetKeystoreUtil(connNode);
+		this.kafkaTopicProperties = findKafkaTopicProperties();
 	}
+	
+    public TSetKeystoreUtil getTSetKeystoreUtil() {
+        return tSetKeystoreUtil;
+    }
+    
+    private void setSecurityProps(java.util.Map<String, String> result) {
+        if (isKafkaVersion("KAFKA_2_4_0")) {
+            // SSL configuration
+            if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
+                result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
+                result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
+                result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
+                if (tSetKeystoreUtil.needClientAuth()) {
+                    result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
+                    result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath());
+                    result.put("\"ssl.keystore.password\"", tSetKeystoreUtil.getKeyStorePassword());
+                }
+            }
+            result.put("\"security.protocol\"", "\"" + getSecurityProtocol() + "\"");
+        }
+    }
+    
+    public String getSecurityProtocol() {
+			if (useHttps()) {
+				return useKrb() ? "SASL_SSL" : "SSL";
+			} else {
+				return useKrb() ? "SASL_PLAINTEXT" : "PLAINTEXT";
+			}
+    }
+    
+    public boolean useKrb() {
+			return "true".equals(ElementParameterParser.getValue(connNode, "__USE_KRB__"));
+    }
+    
+	public Map<String, String> findKafkaClientProperties() {
+		Map<String, String> result = new HashMap<String, String>(); 
+		setSecurityProps(result);
+		return result;
+	}
+    
+    
+    public boolean useHttps() {
+        return "true".equals(ElementParameterParser.getValue(connNode, "__USE_HTTPS__"));
+    }
+    
+    public boolean isSetKeystore() {
+        return "true".equals(ElementParameterParser.getValue(connNode, "__SET_KEYSTORE__"));
+    }
+    
+    
 
 	public boolean isCreate() {
 		return "CREATE_TOPIC".equals(ElementParameterParser.getValue(node, "__TOPICACTION__")) || isCreateIfNotExists();
