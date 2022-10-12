@@ -905,8 +905,8 @@
             "id": "talend-bigdata-launcher-knox",
             "type": "STANDARD",
             "context": "{properties.context}",
-            "jarName": "talend-bigdata-launcher-knox-2.2.0.jar",
-            "mvnUri": "mvn:org.talend.bigdata.libs/talend-bigdata-launcher-knox/2.2.0/jar",
+            "jarName": "talend-bigdata-launcher-knox-2.5.6.jar",
+            "mvnUri": "mvn:org.talend.bigdata.libs/talend-bigdata-launcher-knox/2.5.6/jar",
             "useStudioRepository": "true"
         },
         {
