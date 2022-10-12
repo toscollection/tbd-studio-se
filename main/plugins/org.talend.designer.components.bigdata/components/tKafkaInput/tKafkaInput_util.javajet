@@ -330,14 +330,14 @@ class TKafkaInputUtil {
 
     private void setConsumerRecordProps(java.util.Map<String, String> result) {
         // If output type is ConsumerRecord - deserialize key, value as byte[] by default
-        if (useConsumerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0")) {
+        if (useConsumerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
             result.put("\"key.deserializer\"", "\"org.apache.kafka.common.serialization.ByteArrayDeserializer\"");
             result.put("\"value.deserializer\"", "\"org.apache.kafka.common.serialization.ByteArrayDeserializer\"");
         }
     }
 
     private void setSchemaRegistryProps(java.util.Map<String, String> result) {
-        if (useSchemaRegistry() && useConsumerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0")) {
+        if (useSchemaRegistry() && useConsumerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
             // Schema registry
             result.put("\"schema.registry.url\"", getSchemaRegistryUrl());
             if (useSchemaRegistryBasicAuth()) {

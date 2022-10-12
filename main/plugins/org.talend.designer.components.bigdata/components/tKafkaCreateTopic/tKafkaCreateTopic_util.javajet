@@ -20,6 +20,8 @@ class TKafkaCreateTopicUtil {
 
 	private Map<String, String> kafkaTopicProperties;
 
+	private Map<String, String> kafkaClientProperties;
+
 	public TKafkaCreateTopicUtil(INode node) {
 		this.node = node;
 		
@@ -29,6 +31,7 @@ class TKafkaCreateTopicUtil {
 		
 		this.tSetKeystoreUtil = new TSetKeystoreUtil(connNode);
 		this.kafkaTopicProperties = findKafkaTopicProperties();
+		this.kafkaClientProperties = findKafkaClientProperties();
 	}
 	
     public TSetKeystoreUtil getTSetKeystoreUtil() {
@@ -36,7 +39,7 @@ class TKafkaCreateTopicUtil {
     }
     
     private void setSecurityProps(java.util.Map<String, String> result) {
-        if (isKafkaVersion("KAFKA_2_4_0")) {
+        if (isKafkaVersion("KAFKA_2_4_0") || isKafkaVersion("KAFKA_3_2_3")) {
             // SSL configuration
             if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
                 result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
@@ -63,14 +66,22 @@ class TKafkaCreateTopicUtil {
     public boolean useKrb() {
 			return "true".equals(ElementParameterParser.getValue(connNode, "__USE_KRB__"));
     }
-    
-	public Map<String, String> findKafkaClientProperties() {
-		Map<String, String> result = new HashMap<String, String>(); 
-		setSecurityProps(result);
-		return result;
-	}
-    
-    
+
+    public Map<String, String> findKafkaClientProperties() {
+        Map<String, String> result = new HashMap<String, String>();
+        setSecurityProps(result);
+        if (isKafkaVersion("KAFKA_3_2_3")) {
+            List<Map<String, String>> properties = (List<Map<String, String>>) ElementParameterParser
+                    .getObjectValue(node, "__KAFKA_PROPERTIES__");
+            if (properties != null) {
+                for (Map<String, String> property : properties) {
+                    result.put(property.get("PROPERTY"), property.get("VALUE"));
+                }
+            }
+        }
+        return result;
+   }
+
     public boolean useHttps() {
         return "true".equals(ElementParameterParser.getValue(connNode, "__USE_HTTPS__"));
     }
@@ -128,6 +139,11 @@ class TKafkaCreateTopicUtil {
 	public Map<String, String> getKafkaTopicProperties(){
 		return this.kafkaTopicProperties;
 	}
+
+    public Map<String, String> getKafkaClientProperties(){
+        return this.kafkaClientProperties;
+    }
+
 	
 	public boolean isKafkaVersion(String version) {
 		return (version != null) ? version.equals(ElementParameterParser.getValue(connNode, "__KAFKA_VERSION__")) : false;

@@ -40,7 +40,7 @@ if(useExistingConnection) {
 }
 boolean isKafka0820Version = "KAFKA_0_8_2_0".equals(kafkaVersion);
 boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
-final boolean isKafkaVersionSupportHeaders = ("KAFKA_2_4_0").equals(kafkaVersion) || ("KAFKA_2_2_1").equals(kafkaVersion) || ("KAFKA_1_1_0").equals(kafkaVersion);
+final boolean isKafkaVersionSupportHeaders = ("KAFKA_3_2_3").equals(kafkaVersion) || ("KAFKA_2_4_0").equals(kafkaVersion) || ("KAFKA_2_2_1").equals(kafkaVersion) || ("KAFKA_1_1_0").equals(kafkaVersion);
 
 
 

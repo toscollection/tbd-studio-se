@@ -36,7 +36,7 @@ if(tKafkaCreateTopicUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaCreateTopic/1.1.x/tKafkaCreateTopic_begin_1.1.x.javajet"%>
 <%
-} else if(tKafkaCreateTopicUtil.isKafkaVersion("KAFKA_2_4_0")) {
+} else if(tKafkaCreateTopicUtil.isKafkaVersion("KAFKA_2_4_0") || tKafkaCreateTopicUtil.isKafkaVersion("KAFKA_3_2_3")) {
 %>
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaCreateTopic/2.4.x/tKafkaCreateTopic_begin_2.4.x.javajet"%>
 <%}%>
