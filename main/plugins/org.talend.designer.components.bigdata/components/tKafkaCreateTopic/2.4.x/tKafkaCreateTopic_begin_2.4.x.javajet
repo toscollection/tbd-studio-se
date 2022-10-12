@@ -26,9 +26,9 @@ java.util.Map<String, String> <%=cid%>_topicProperties = new java.util.HashMap<>
 java.util.Map<String, Object> <%=cid%>_clientConf = new java.util.HashMap<>();
 <%=cid%>_clientConf.put(org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,<%=tKafkaCreateTopicUtil.getKafkaConnect()%>);
 <%
-for(Entry<String, String> topicProperty : tKafkaCreateTopicUtil.findKafkaClientProperties().entrySet()) {
+for(Entry<String, String> property : tKafkaCreateTopicUtil.getKafkaClientProperties().entrySet()) {
 %>
-	<%=cid%>_clientConf.put(<%=topicProperty.getKey()%>, String.valueOf(<%=topicProperty.getValue()%>));
+	<%=cid%>_clientConf.put(<%=property.getKey()%>, <%=property.getValue()%>);
 <%
 }
 %>

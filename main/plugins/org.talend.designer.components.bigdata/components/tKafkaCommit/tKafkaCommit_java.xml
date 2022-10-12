@@ -54,8 +54,19 @@
 				
 			<!-- Kafka libraries for 2.12-2.4.0 -->
 			<IMPORT MODULE_GROUP="KAFKA-LIB-2_12-2_4_0"
-				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_2_4_0') AND (USE_EXISTING_CONNECTION=='false')" />	
-							
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_2_4_0') AND (USE_EXISTING_CONNECTION=='false')" />
+
+			<!-- Kafka client libraries for 3.2.3 -->
+			<IMPORT NAME="kafka-clients-3.2.3" MODULE="kafka-clients-3.2.3.jar" MVN="mvn:org.apache.kafka/kafka-clients/3.2.3"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
+			<IMPORT NAME="zstd-jni-1.5.2-1" MODULE="zstd-jni-1.5.2-1.jar" MVN="mvn:com.github.luben/zstd-jni/1.5.2-1"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
+			<IMPORT NAME="lz4-java-1.8.0" MODULE="lz4-java-1.8.0.jar" MVN="mvn:org.lz4/lz4-java/1.8.0"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
+			<IMPORT NAME="snappy-java-1.1.8.4" MODULE="snappy-java-1.1.8.4.jar" MVN="mvn:org.xerial.snappy/snappy-java/1.1.8.4"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
+			<IMPORT NAME="slf4j-api-1.7.36" MODULE="slf4j-api-1.7.36.jar" MVN="mvn:org.slf4j/slf4j-api/1.7.36"
+				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
 		</IMPORTS>
 	</CODEGENERATION>
 
