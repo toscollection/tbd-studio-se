@@ -41,9 +41,8 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
     private LabelledText knoxUserText;
     private LabelledText knoxPasswordText;
     private LabelledText knoxDirectoryText;
-
+    private LabelledText knoxTimeoutText;
     private UtilsButton checkServicesBtn;
-    
     private final boolean creation;
 
     protected KnoxInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
@@ -71,6 +70,8 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         knoxPasswordText.getTextControl().setEchoChar('*');
 
         knoxDirectoryText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxDirectory"), 1); //$NON-NLS-1$
+
+        knoxTimeoutText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxTimeout"), 1); //$NON-NLS-1$
     }
     
     private void addCheckFields() {
@@ -108,6 +109,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         nnProperties.setKnoxUser(knoxUserText.getText());
         nnProperties.setKnoxPassword(knoxPasswordText.getText());
         nnProperties.setKnoxDirectory(knoxDirectoryText.getText());
+        nnProperties.setKnoxTimeout(knoxTimeoutText.getText());
         
         serviceTypeToProperties.put(EHadoopServiceType.KNOX_RESOURCE_MANAGER, nnProperties);
         serviceTypeToProperties.put(EHadoopServiceType.KNOX_NAMENODE, nnProperties);
@@ -147,7 +149,10 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxDirectory")); //$NON-NLS-1$
             return false;
         }
-        
+        if (!validText(knoxTimeoutText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxTimeoutText")); //$NON-NLS-1$
+            return false;
+        }
         checkServicesBtn.setEnabled(true);
         updateStatus(IStatus.OK, null);
         return true;
@@ -189,6 +194,15 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY,
                         knoxDirectoryText.getText());
+                checkFieldsValue();
+            }
+        });
+        knoxTimeoutText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT,
+                        knoxTimeoutText.getText());
                 checkFieldsValue();
             }
         });
@@ -236,6 +250,10 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         String knoxDirectory = StringUtils.trimToEmpty(getConnection().getParameters().get(
                 ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
         knoxDirectoryText.setText(knoxDirectory);
+
+        String knoxTimeout = StringUtils.trimToEmpty(getConnection().getParameters().get(
+                ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT));
+        knoxTimeoutText.setText(knoxTimeout);
         
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -263,6 +281,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         addContextParams(EHadoopParamName.KnoxUsername, isUse);
         addContextParams(EHadoopParamName.KnoxPassword, isUse);
         addContextParams(EHadoopParamName.KnoxDirectory, isUse);
+        addContextParams(EHadoopParamName.KnoxTimeout, isUse);
     }
     
     @Override
@@ -272,6 +291,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         knoxUserText.setReadOnly(readOnly);
         knoxPasswordText.setReadOnly(readOnly);
         knoxDirectoryText.setReadOnly(readOnly);
+        knoxTimeoutText.setReadOnly(readOnly);
         ((HadoopClusterForm) this.getParent()).adaptFormToReadOnly();
     }
     
@@ -281,6 +301,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         knoxUserText.setReadOnly(!isEditable);
         knoxPasswordText.setReadOnly(!isEditable);
         knoxDirectoryText.setReadOnly(!isEditable);
+        knoxTimeoutText.setReadOnly(!isEditable);
         ((HadoopClusterForm) this.getParent()).updateEditableStatus(isEditable);
     }
     

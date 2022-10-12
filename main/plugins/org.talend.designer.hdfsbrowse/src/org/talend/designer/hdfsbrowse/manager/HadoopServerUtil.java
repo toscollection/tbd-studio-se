@@ -417,6 +417,7 @@ public class HadoopServerUtil {
             serviceProperties.setKnoxUser( connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_USER));
             serviceProperties.setKnoxPassword( connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_PASSWORD));
             serviceProperties.setKnoxDirectory( connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
+            serviceProperties.setKnoxDirectory( connection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT));
             
             CheckedKnoxNamenodeProvider hadoopKnox = new CheckedKnoxNamenodeProvider();
             connectionStatus.setResult(hadoopKnox.checkService(serviceProperties, 1000));
