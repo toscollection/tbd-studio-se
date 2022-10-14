@@ -4,7 +4,7 @@ Bundle-Name: Hadoop library
 Bundle-SymbolicName: org.talend.libraries.hadoop;singleton:=true
 Bundle-Version: 8.0.1.qualifier
 Bundle-ClassPath: .,
- lib/commons-configuration2-2.1.1.jar,
+ lib/commons-configuration2-2.8.0.jar,
  lib/hadoop-auth-3.3.3.jar,
  lib/hadoop-common-3.3.3.jar,
  lib/hadoop-mapreduce-client-core-3.3.3.jar,
