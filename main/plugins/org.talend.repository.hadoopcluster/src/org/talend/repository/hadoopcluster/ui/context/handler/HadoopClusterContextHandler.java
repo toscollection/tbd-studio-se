@@ -268,6 +268,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
                         break;
+                    case KnoxTimeout:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                            conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT));
+                        break;
                     case SynapseHostName:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST));
@@ -775,6 +779,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
         case KnoxDirectory:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case KnoxTimeout:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT,
+                ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
 // CDE
         case CdeApiEndPoint:

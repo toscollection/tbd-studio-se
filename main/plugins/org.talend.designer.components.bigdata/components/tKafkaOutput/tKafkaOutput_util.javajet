@@ -249,14 +249,14 @@ class TKafkaOutputUtil {
 
     private void setProducerRecordProps(Map<String, String> result) {
         // If input type is ProducerRecord - serialize key, value as byte[] by default
-        if (useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0")) {
+        if (useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
             result.put("\"key.serializer\"", "\"org.apache.kafka.common.serialization.ByteArraySerializer\"");
             result.put("\"value.serializer\"", "\"org.apache.kafka.common.serialization.ByteArraySerializer\"");
         }
     }
 
     private void setSchemaRegistryProps(Map<String, String> result) {
-        if (useSchemaRegistry() && useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0")) {
+        if (useSchemaRegistry() && useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
             // Schema registry
             result.put("\"schema.registry.url\"", getSchemaRegistryUrl());
             if (useSchemaRegistryBasicAuth()) {
