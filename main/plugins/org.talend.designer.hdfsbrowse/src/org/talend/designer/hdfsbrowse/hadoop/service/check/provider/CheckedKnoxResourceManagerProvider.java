@@ -36,8 +36,15 @@ public class CheckedKnoxResourceManagerProvider extends AbstractCheckedServicePr
             loader = HadoopClassLoaderFactory2.getHadoopCustomClassLoader(serviceProperties.getUid(), clusterId,
                     EHadoopCategory.HDFS, serviceProperties.getCustomJars(), serviceProperties.isUseKrb());
         } else {
-            loader = HadoopClassLoaderFactory2.getHDFSClassLoader(serviceProperties.getRelativeHadoopClusterId(),
-                    serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb());
+//            loader = HadoopClassLoaderFactory2.getHDFSClassLoader(serviceProperties.getRelativeHadoopClusterId(),
+//                    serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb(), "USE_KNOX");
+            loader = HadoopClassLoaderFactory2.getClassLoader(
+                    serviceProperties.getRelativeHadoopClusterId(),
+                    EHadoopCategory.HDFS,
+                    serviceProperties.getDistribution(),
+                    serviceProperties.getVersion(),
+                    serviceProperties.isUseKrb(),
+                    "USE_KNOX");
             loader = addCustomConfsJarIfNeeded(loader, serviceProperties, EHadoopCategory.HDFS);
         }
         return loader;
