@@ -4,6 +4,7 @@
    <extension
          point="org.talend.core.runtime.librariesNeeded">
 
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="activation-1.1.1.jar" name="activation-1.1.1.jar" mvn_uri="mvn:javax.activation/activation/1.1.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="antlr4-4.8.jar" name="antlr4-4.8.jar" mvn_uri="mvn:org.antlr/antlr4/4.8"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="antlr4-runtime-4.8.jar" name="antlr4-runtime-4.8.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.8"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="aircompressor-0.21.jar" name="aircompressor-0.21.jar" mvn_uri="mvn:io.airlift/aircompressor/0.21"/>
@@ -390,12 +391,13 @@
 
         <!-- Azure group -->
         <libraryNeededGroup description="Azure libraries for spark33x" id="AZURE-GROUP-SPARK_3_3_x" name="AZURE-GROUP-SPARK_3_3_x">
-            <library id="hadoop-azure-3.3.4.jar"/>
+            <library id="activation-1.1.1.jar"/>
+            <library id="azure-data-lake-store-sdk-2.3.9.jar"/>
             <library id="azure-storage-7.0.0.jar"/>
             <library id="jetty-util-ajax-9.3.24.v20180605.jar"/>
             <library id="jetty-util-9.3.24.v20180605.jar"/>
             <library id="hadoop-azure-datalake-3.3.4.jar"/>
-            <library id="azure-data-lake-store-sdk-2.3.9.jar"/>
+            <library id="hadoop-azure-3.3.4.jar"/>
             <library id="wildfly-openssl-java-1.0.4.Final.jar"/>
         </libraryNeededGroup>
 
