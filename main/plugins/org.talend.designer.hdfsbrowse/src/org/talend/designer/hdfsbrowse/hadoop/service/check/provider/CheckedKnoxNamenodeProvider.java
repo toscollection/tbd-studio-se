@@ -56,7 +56,7 @@ public class CheckedKnoxNamenodeProvider extends AbstractCheckedServiceProvider 
             loader = HadoopClassLoaderFactory2.getHadoopCustomClassLoader(serviceProperties.getUid(), clusterId,
                     EHadoopCategory.HDFS, serviceProperties.getCustomJars(), serviceProperties.isUseKrb());
         } else {
-            loader = HadoopClassLoaderFactory2.getHDFSClassLoader(serviceProperties.getRelativeHadoopClusterId(),
+            loader = HadoopClassLoaderFactory2.getHDFSKnoxClassLoader(serviceProperties.getRelativeHadoopClusterId(),
                     serviceProperties.getDistribution(), serviceProperties.getVersion(), serviceProperties.isUseKrb());
             loader = addCustomConfsJarIfNeeded(loader, serviceProperties, EHadoopCategory.HDFS);
             // Add webhdfs extra jars

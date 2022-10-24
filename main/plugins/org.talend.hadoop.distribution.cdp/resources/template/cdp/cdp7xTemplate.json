@@ -1024,6 +1024,27 @@
                 "jackson-annotations",
                 "hadoop-common",
                 "impala-jdbc",
+                "guava-28.1-jre"
+            ]
+        },
+        {
+            "id" : "HDFS-LIB-DYNAMIC-KNOX",
+            "description" : "jars for hdfs with knox, only module.id permitted",
+            "modules": [
+                "commons-httpclient-3.1",
+                "httpcore",
+                "httpclient",
+                "hadoop-client",
+                "commons-configuration",
+                "commons-configuration2",
+                "commons-collections",
+                "woodstox-core",
+                "stax2-api",
+                "jackson-core",
+                "jackson-databind",
+                "jackson-annotations",
+                "hadoop-common",
+                "impala-jdbc",
                 "guava-28.1-jre",
                 "talend-bigdata-launcher-knox",
                 "talend-bigdata-launcher-livy",
@@ -1272,6 +1293,12 @@
             "id" : "hadoop-hdfs-with-krb",
             "index" : "HDFS:CLOUDERA:{dynamicVersion}?USE_KRB",
             "moduleGroup" : "HDFS-LIB-DYNAMIC",
+            "description" : ""
+        },
+        {
+            "id" : "hadoop-hdfs",
+            "index" : "HDFS:CLOUDERA:{dynamicVersion}:USE_KNOX",
+            "moduleGroup" : "HDFS-LIB-DYNAMIC-KNOX",
             "description" : ""
         },
         {
