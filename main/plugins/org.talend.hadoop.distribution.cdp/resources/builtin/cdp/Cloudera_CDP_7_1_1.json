@@ -3556,6 +3556,18 @@
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_zstd_jni_1_4_3_1_jar",
         "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_commons_configuration2_2_1_1_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_woodstox_core_5_0_3_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_stax2_api_3_1_4_jar",
+        "tagName" : "library"
       } ],
       "description" : "",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_HIVE_LIB_DYNAMIC",
