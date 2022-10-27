@@ -217,7 +217,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="snappy-java-1.1.8.4.jar" name="snappy-java-1.1.8.4.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.4"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-redshift_2.12-5.0.3.jar" name="spark-redshift_2.12-5.0.3.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.0.3"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-avro_2.12-3.3.0.jar" name="spark-avro_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.3.0"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-snowflake_2.12-2.10.0-spark_3.2.jar" name="spark-snowflake_2.12-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.10.0-spark_3.2"/>
@@ -458,7 +458,7 @@
         <!-- Redshift group -->
         <libraryNeededGroup description="Redshift libraries for spark33x" id="REDSHIFT-BATCH-GROUP-SPARK_3_3_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_3_x">
             <library id="snappy-java-1.1.8.4.jar"/>
-            <library id="spark-redshift_2.12-5.0.3.jar"/>
+            <library id="spark-redshift_2.12-5.1.0.jar"/>
             <library id="spark-avro_2.12-3.3.0.jar"/>
         </libraryNeededGroup>
         
@@ -496,7 +496,7 @@
         <!-- Spark Streaming Redshift group -->
         <libraryNeededGroup description="Spark streaming Redshift libraries for spark33x" id="REDSHIFT-STREAMING-GROUP-SPARK_3_3_x" name="REDSHIFT-STREAMING-GROUP-SPARK_3_3_x">
             <library id="snappy-java-1.1.8.4.jar"/>
-            <library id="spark-redshift_2.12-5.0.3.jar"/>
+            <library id="spark-redshift_2.12-5.1.0.jar"/>
             <library id="spark-avro_2.12-3.3.0.jar"/>
         </libraryNeededGroup>
 
