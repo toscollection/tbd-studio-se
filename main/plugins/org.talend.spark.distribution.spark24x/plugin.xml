@@ -61,6 +61,7 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="javax.ws.rs-api-2.0.1.jar" name="javax.ws.rs-api-2.0.1.jar" mvn_uri="mvn:javax.ws.rs/javax.ws.rs-api/2.0.1"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jaxb-api-2.2.2.jar" name="jaxb-api-2.2.2.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.2"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jersey-bundle-1.19.3.jar" name="jersey-bundle-1.19.3.jar" mvn_uri="mvn:com.sun.jersey/jersey-bundle/1.19.3"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-admin-1.0.0.jar" name="kerb-admin-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-admin/1.0.0/jar"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-client-1.0.0.jar" name="kerb-client-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-client/1.0.0/jar"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-common-1.0.0.jar" name="kerb-common-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-common/1.0.0/jar"/>
@@ -384,14 +385,17 @@
             <library id="kafka_2.11-2.4.0.jar"/>
             <library id="spark-streaming-kafka-0-10_2.11-2.4.0.jar"/>
         </libraryNeededGroup>
-
+	
         <!-- Spark Streaming Kinesis group -->
-        <libraryNeededGroup description="Spark streaming Kinesis libraries for spark247" id="KINESIS-GROUP-SPARK_2_4_x" name="KINESIS-GROUP-SPARK_2_4_x">
+        <libraryNeededGroup description="Spark streaming Kinesis libraries for spark24x" id="KINESIS-GROUP-SPARK_2_4_x" name="KINESIS-GROUP-SPARK_2_4_x">
             <library id="spark-streaming-kinesis-asl_2.11-2.4.7.jar"/>
             <library id="commons-pool2-2.9.0.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
             <library id="aws-java-sdk-kinesis-1.11.375.jar"/>
             <library id="aws-java-sdk-core-1.11.375.jar"/>
             <library id="jackson-dataformat-cbor-2.10.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
             <library id="amazon-kinesis-client-1.12.0.jar"/>
             <library id="aws-java-sdk-cloudwatch-1.11.375.jar"/>
             <library id="aws-java-sdk-dynamodb-1.11.375.jar"/>
