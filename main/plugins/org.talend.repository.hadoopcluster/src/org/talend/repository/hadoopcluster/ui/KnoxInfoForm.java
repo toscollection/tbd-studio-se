@@ -149,7 +149,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxDirectory")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxTimeoutText.getText())) {
+        if (!validNumbers(knoxTimeoutText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxTimeoutText")); //$NON-NLS-1$
             return false;
         }
