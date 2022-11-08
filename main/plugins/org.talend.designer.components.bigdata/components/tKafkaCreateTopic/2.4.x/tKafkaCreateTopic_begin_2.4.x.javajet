@@ -41,7 +41,7 @@ org.apache.kafka.clients.admin.KafkaAdminClient <%=cid%>_client =  (org.apache.k
 					new org.apache.kafka.clients.admin.NewTopic(<%=tKafkaCreateTopicUtil.getTopic()%>, 
 					Integer.valueOf(<%=tKafkaCreateTopicUtil.getNbPartitions()%>), Integer.valueOf(<%=tKafkaCreateTopicUtil.getReplicationFactor()%>).shortValue());
 			<%=cid%>_newTopic.configs(<%=cid%>_topicProperties);
-	        <%=cid%>_client.createTopics(java.util.Collections.singleton(<%=cid%>_newTopic)).all().get(10, java.util.concurrent.TimeUnit.SECONDS);
+	        <%=cid%>_client.createTopics(java.util.Collections.singleton(<%=cid%>_newTopic)).all().get(<%=tKafkaCreateTopicUtil.getKafkaTimeout()%>, java.util.concurrent.TimeUnit.MILLISECONDS);
 	        
 	        
 			
@@ -78,7 +78,7 @@ org.apache.kafka.clients.admin.KafkaAdminClient <%=cid%>_client =  (org.apache.k
 		java.util.Map <%=cid%>_newTopicProperties = new java.util.HashMap();
 		<%=cid%>_newTopicProperties.put(<%=cid%>_resource,<%=cid%>_list);
 		try{
-		<%=cid%>_client.incrementalAlterConfigs(<%=cid%>_newTopicProperties).all().get(10, java.util.concurrent.TimeUnit.SECONDS);
+		<%=cid%>_client.incrementalAlterConfigs(<%=cid%>_newTopicProperties).all().get(<%=tKafkaCreateTopicUtil.getKafkaTimeout()%>, java.util.concurrent.TimeUnit.MILLISECONDS);
 		}finally {
 			<%=cid%>_client.close();
 		}
