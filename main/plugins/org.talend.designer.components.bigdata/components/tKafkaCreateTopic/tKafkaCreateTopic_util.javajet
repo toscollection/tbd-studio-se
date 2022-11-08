@@ -158,5 +158,23 @@ class TKafkaCreateTopicUtil {
 		}
 		return result;
    }
+
+    public String getZookeeperTimeout() {
+        String timeout = ElementParameterParser.getValue(node, "__ZOOKEEPER_TIMEOUT__");
+
+        if (timeout == null || "".equals(timeout)) {
+            timeout = "10000";
+        }
+        return timeout;
+    }
+
+    public String getKafkaTimeout() {
+        String timeout = ElementParameterParser.getValue(node, "__KAFKA_TIMEOUT__");
+
+        if (timeout == null || "".equals(timeout)) {
+            timeout = "10000";
+        }
+        return timeout;
+    }
 }
 %>

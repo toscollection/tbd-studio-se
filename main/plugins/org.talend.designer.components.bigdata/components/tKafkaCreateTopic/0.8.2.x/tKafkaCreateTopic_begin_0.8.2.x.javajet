@@ -22,7 +22,7 @@ java.util.Properties <%=cid%>_topicProperties = new java.util.Properties();
 	}
 %>
 
-org.I0Itec.zkclient.ZkClient <%=cid%>_zkClient = new org.I0Itec.zkclient.ZkClient(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, 10000, 10000, kafka.utils.ZKStringSerializer$.MODULE$);
+org.I0Itec.zkclient.ZkClient <%=cid%>_zkClient = new org.I0Itec.zkclient.ZkClient(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, <%=tKafkaCreateTopicUtil.getZookeeperTimeout()%>, <%=tKafkaCreateTopicUtil.getZookeeperTimeout()%>, kafka.utils.ZKStringSerializer$.MODULE$);
 
 <%
 	if(tKafkaCreateTopicUtil.isCreate()) {
