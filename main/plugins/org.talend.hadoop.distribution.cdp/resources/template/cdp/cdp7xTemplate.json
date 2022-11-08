@@ -1035,7 +1035,7 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
-                "hadoop-common",
+                "hadoop-common-checkservices",
                 "impala-jdbc",
                 "guava-28.1-jre",
                 "talend-bigdata-launcher-knox",
