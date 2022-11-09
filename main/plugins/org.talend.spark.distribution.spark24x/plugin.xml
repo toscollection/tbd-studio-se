@@ -47,19 +47,20 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-httpclient-3.1.jar" name="commons-httpclient-3.1.jar" mvn_uri="mvn:commons-httpclient/commons-httpclient/3.1"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-annotations-2.6.7.jar" name="jackson-annotations-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.6.7"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-2.6.7.jar" name="jackson-core-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.6.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-2.10.0.jar" name="jackson-core-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-databind-2.6.7.3.jar" name="jackson-databind-2.6.7.3.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.6.7.3"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-databind-2.10.0.jar" name="jackson-databind-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-1.9.13.jar" name="jackson-jaxrs-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-jaxrs/1.9.13"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-json-provider-2.6.7.jar" name="jackson-jaxrs-json-provider-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.6.7"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-base-2.6.7.jar" name="jackson-jaxrs-base-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.6.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-json-provider-2.10.0.jar" name="jackson-jaxrs-json-provider-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.10.0"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-base-2.10.0.jar" name="jackson-jaxrs-base-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-mapper-asl-1.9.13.jar" name="jackson-mapper-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-module-jaxb-annotations-2.6.7.jar" name="jackson-module-jaxb-annotations-2.6.7.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.6.7"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-module-jaxb-annotations-2.10.0.jar" name="jackson-module-jaxb-annotations-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-xc-1.9.13.jar" name="jackson-xc-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-xc/1.9.13"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="javax.ws.rs-api-2.0.1.jar" name="javax.ws.rs-api-2.0.1.jar" mvn_uri="mvn:javax.ws.rs/javax.ws.rs-api/2.0.1"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jaxb-api-2.2.2.jar" name="jaxb-api-2.2.2.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.2"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jersey-bundle-1.19.3.jar" name="jersey-bundle-1.19.3.jar" mvn_uri="mvn:com.sun.jersey/jersey-bundle/1.19.3"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-admin-1.0.0.jar" name="kerb-admin-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-admin/1.0.0/jar"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-client-1.0.0.jar" name="kerb-client-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-client/1.0.0/jar"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-common-1.0.0.jar" name="kerb-common-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-common/1.0.0/jar"/>
@@ -107,8 +108,8 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="chill_2.11-0.9.3.jar" name="chill_2.11-0.9.3.jar" mvn_uri="mvn:com.twitter/chill_2.11/0.9.3"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="chill-java-0.9.3.jar" name="chill-java-0.9.3.jar" mvn_uri="mvn:com.twitter/chill-java/0.9.3"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-compiler-3.0.16.jar" name="commons-compiler-3.0.16.jar" mvn_uri="mvn:org.codehaus.janino/commons-compiler/3.0.16"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-module-paranamer-2.7.9.jar" name="jackson-module-paranamer-2.7.9.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-paranamer/2.7.9"/>
-			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-module-scala_2.11-2.6.7.1.jar" name="jackson-module-scala_2.11-2.6.7.1.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-scala_2.11/2.6.7.1"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-module-paranamer-2.10.0.jar" name="jackson-module-paranamer-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-paranamer/2.10.0"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-module-scala_2.11-2.10.0.jar" name="jackson-module-scala_2.11-2.10.0.jar" mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-scala_2.11/2.10.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="janino-3.0.16.jar" name="janino-3.0.16.jar" mvn_uri="mvn:org.codehaus.janino/janino/3.0.16"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="javax.servlet-api-3.1.0.jar" name="javax.servlet-api-3.1.0.jar" mvn_uri="mvn:javax.servlet/javax.servlet-api/3.1.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jersey-container-servlet-core-2.22.2.jar" name="jersey-container-servlet-core-2.22.2.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.22.2"/>
@@ -241,17 +242,17 @@
 			<library id="httpcore-4.4.13.jar"/>
 			<library id="commons-httpclient-3.1.jar"/>
 			<library id="ivy-2.4.0.jar"/>
-			<library id="jackson-annotations-2.6.7.jar"/>
-			<library id="jackson-core-2.6.7.jar"/>
+			<library id="jackson-annotations-2.10.0.jar"/>
+			<library id="jackson-core-2.10.0.jar"/>
 			<library id="jackson-core-asl-1.9.13.jar"/>
-			<library id="jackson-databind-2.6.7.3.jar"/>
+			<library id="jackson-databind-2.10.0.jar"/>
 			<library id="jackson-jaxrs-1.9.13.jar"/>
-			<library id="jackson-jaxrs-base-2.6.7.jar"/>
-			<library id="jackson-jaxrs-json-provider-2.6.7.jar"/>
+			<library id="jackson-jaxrs-base-2.10.0.jar"/>
+			<library id="jackson-jaxrs-json-provider-2.10.0.jar"/>
 			<library id="jackson-mapper-asl-1.9.13.jar"/>
-			<library id="jackson-module-jaxb-annotations-2.6.7.jar"/>
-			<library id="jackson-module-paranamer-2.7.9.jar"/>
-			<library id="jackson-module-scala_2.11-2.6.7.1.jar"/>
+			<library id="jackson-module-jaxb-annotations-2.10.0.jar"/>
+			<library id="jackson-module-paranamer-2.10.0.jar"/>
+			<library id="jackson-module-scala_2.11-2.10.0.jar"/>
 			<library id="jackson-xc-1.9.13.jar"/>
 			<library id="janino-3.0.16.jar"/>
 			<library id="javax.servlet-api-3.1.0.jar"/>
@@ -384,12 +385,15 @@
         </libraryNeededGroup>
 
         <!-- Spark Streaming Kinesis group -->
-        <libraryNeededGroup description="Spark streaming Kinesis libraries for spark247" id="KINESIS-GROUP-SPARK_2_4_x" name="KINESIS-GROUP-SPARK_2_4_x">
+        <libraryNeededGroup description="Spark streaming Kinesis libraries for spark24x" id="KINESIS-GROUP-SPARK_2_4_x" name="KINESIS-GROUP-SPARK_2_4_x">
             <library id="spark-streaming-kinesis-asl_2.11-2.4.7.jar"/>
             <library id="commons-pool2-2.9.0.jar"/>
+            <library id="httpcore-4.4.13.jar"/>
+            <library id="httpclient-4.5.13.jar"/>
             <library id="aws-java-sdk-kinesis-1.11.375.jar"/>
             <library id="aws-java-sdk-core-1.11.375.jar"/>
             <library id="jackson-dataformat-cbor-2.10.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
             <library id="amazon-kinesis-client-1.12.0.jar"/>
             <library id="aws-java-sdk-cloudwatch-1.11.375.jar"/>
             <library id="aws-java-sdk-dynamodb-1.11.375.jar"/>
@@ -508,15 +512,15 @@
       </classloader>
       <classloader
             index="MAP_REDUCE:SPARK:SPARK_2_4_x"
-            libraries="jackson-databind-2.6.7.3.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="jackson-databind-2.10.0.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="HDFS:SPARK:SPARK_2_4_x"
-            libraries="jackson-databind-2.6.7.3.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="jackson-databind-2.10.0.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="HDFS:SPARK:SPARK_2_4_x?USE_KRB"
-            libraries="jackson-databind-2.6.7.3.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
+            libraries="jackson-databind-2.10.0.jar;hadoop-client-3.2.4.jar;commons-lang3-3.5.jar;commons-configuration2-2.1.1.jar;zookeeper-3.4.6.jar;jackson-mapper-asl-1.9.13.jar;curator-framework-2.7.1.jar;jackson-core-asl-1.9.13.jar;curator-client-2.7.1.jar;jackson-jaxrs-1.9.13.jar;jersey-bundle-1.19.3.jar;commons-io-2.4.jar;commons-cli-1.2.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-configuration-1.6.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.0-jre.jar;hadoop-auth-3.2.4.jar;hadoop-common-3.2.4.jar;hadoop-hdfs-client-3.2.4.jar;hadoop-mapreduce-client-common-3.2.4.jar;hadoop-mapreduce-client-core-3.2.4.jar;hadoop-mapreduce-client-jobclient-3.2.4.jar;hadoop-yarn-api-3.2.4.jar;hadoop-yarn-client-3.2.4.jar;hadoop-yarn-common-3.2.4.jar;hive-common-2.1.1.jar;hive-exec-shade-2.1.1-talend-1.2.jar;hive-jdbc-2.1.1.jar;hive-metastore-2.1.1.jar;hive-serde-2.1.1.jar;hive-service-2.1.1.jar;hive-service-rpc-2.1.1.jar;hive-shims-2.1.1.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-2.5.0.jar;slf4j-api-1.7.25.jar;stax2-api-3.1.4.jar;woodstox-core-5.0.3.jar">
       </classloader>
       <classloader
             index="IMPALA:SPARK:SPARK_2_4_x?USE_KRB"
