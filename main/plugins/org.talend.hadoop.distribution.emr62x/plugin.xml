@@ -774,10 +774,6 @@
             mvn_uri="mvn:org.apache.hive/hive-storage-api/2.7.1"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-            id="hive-standalone-metastore-3.1.2.jar" name="hive-standalone-metastore-3.1.2.jar"
-            mvn_uri="mvn:org.apache.hive/hive-standalone-metastore/3.1.2"/>
-
-        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
             id="snappy-java-1.1.7.5.jar"
             name="snappy-java-1.1.7.5.jar"
             mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.7.5"/>
@@ -916,7 +912,6 @@
             <library id="hive-serde-2.3.7.jar"/>
             <library id="hive-shims-0.23-2.3.7.jar"/>
             <library id="hive-shims-common-2.3.7.jar"/>
-            <library id="hive-standalone-metastore-3.1.2.jar"/>
             <library id="hive-storage-api-2.7.1.jar"/>
             <library id="hive-service-2.3.7.jar"/>
             <library id="hive-service-rpc-2.3.7.jar"/>
