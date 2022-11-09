@@ -205,7 +205,7 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     
     @Override
     public boolean doSupportUniversalDBRMode() {
-        return false;
+        return true;
     }
 
     @Override
