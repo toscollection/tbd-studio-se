@@ -63,7 +63,6 @@ public class EMR62xDistribution extends AbstractDistribution implements HBaseCom
 	
     private final static String LIGHTWEIGHT_CLASSPATH = String.join(CLASSPATH_SEPARATOR, Arrays.asList(
             DEFAULT_LIB_ROOT + "/spark/jars/*",
-            DEFAULT_LIB_ROOT + "/hive/lib/*",
             DEFAULT_LIB_ROOT + "/impala/lib/*",
             DEFAULT_LIB_ROOT + "/hbase/lib/*",
             DEFAULT_LIB_ROOT + "/sqoop/lib/*",
