@@ -233,8 +233,8 @@
     </ADVANCED_PARAMETERS>
     <CODEGENERATION>
         <IMPORTS>
-            <IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar"
-                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
+            <IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
+                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
             <!-- Cassandra 2.1.X with latest == 2.0.8/2.1-->
             <IMPORT
                     NAME="cassandra-all-2.0.14"

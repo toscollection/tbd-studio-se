@@ -168,8 +168,8 @@
 	</PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar"
-					MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
+			<IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
+					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 			<IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
 				<IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR'))">
 					<IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">

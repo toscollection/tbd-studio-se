@@ -296,8 +296,8 @@
 	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar"
-					MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
+			<IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
+					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 			<IMPORT NAME="json" MODULE="json_simple-1.1.jar"
 					MVN="mvn:org.talend.libraries/json_simple-1.1/6.0.0"
 					UrlPath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar"

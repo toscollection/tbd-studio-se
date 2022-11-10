@@ -268,8 +268,8 @@
 	</ADVANCED_PARAMETERS>
 	<CODEGENERATION>
 		<IMPORTS>
-			<IMPORT NAME="reload4j-1.2.19" MODULE="reload4j-1.2.19.jar"
-					MVN="mvn:ch.qos.reload4j/reload4j/1.2.19"/>
+			<IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
+					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
 				REQUIRED_IF="(DISTRIB[DISTRIBUTION, DB_VERSION].doSupportKerberos[] AND (USE_KRB=='true') AND (USE_EXISTING_CONNECTION=='false') AND (DISTRIBUTION!='CUSTOM'))" />

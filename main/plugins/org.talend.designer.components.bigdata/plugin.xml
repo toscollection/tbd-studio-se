@@ -242,7 +242,7 @@
                 id="KAFKA-CLIENT-LIB-2_10-0_8_2_0"
                 name="KAFKA-CLIENT-LIB-2_10-0_8_2_0">
             <library id="kafka-clients-0.8.2.0.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.6.jar"/>
             <library id="slf4j-log4j12-1.6.1.jar"/>
         </libraryNeededGroup>
@@ -261,7 +261,7 @@
             <library id="snappy-java-1.1.1.7.jar"/>
             <library id="zkclient-0.7.jar"/>
             <library id="zookeeper-3.4.6.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.6.jar"/>
             <library id="slf4j-log4j12-1.7.6.jar"/>
         </libraryNeededGroup>
@@ -272,7 +272,7 @@
                 id="KAFKA-CLIENT-LIB-2_10-0_9_0_1"
                 name="KAFKA-CLIENT-LIB-2_10-0_9_0_1">
             <library id="kafka-clients-0.9.0.1.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.6.jar"/>
             <library id="slf4j-log4j12-1.7.6.jar"/>
         </libraryNeededGroup>
@@ -291,7 +291,7 @@
             <library id="snappy-java-1.1.2.6.jar"/>
             <library id="zkclient-0.8.jar"/>
             <library id="zookeeper-3.4.6.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.21.jar"/>
             <library id="slf4j-log4j12-1.7.21.jar"/>
         </libraryNeededGroup>
@@ -302,7 +302,7 @@
                 id="KAFKA-CLIENT-LIB-2_10-0_10_0_1"
                 name="KAFKA-CLIENT-LIB-2_10-0_10_0_1">
             <library id="kafka-clients-0.10.0.1.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.21.jar"/>
             <library id="slf4j-log4j12-1.7.21.jar"/>
         </libraryNeededGroup>
@@ -325,7 +325,7 @@
             <library id="snappy-java-1.1.7.1.jar"/>
             <library id="zkclient-0.10.jar"/>
             <library id="zookeeper-3.4.10.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.29.jar"/>
             <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
@@ -336,7 +336,7 @@
                 id="KAFKA-CLIENT-LIB-2_11-1_1_0"
                 name="KAFKA-CLIENT-LIB-2_11-1_1_0">
             <library id="kafka-clients-1.1.0.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.29.jar"/>
             <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
@@ -360,7 +360,7 @@
             <library id="snappy-java-1.1.7.3.jar"/>
             <library id="zkclient-0.11.jar"/>
             <library id="zookeeper-3.5.6.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.29.jar"/>
             <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
@@ -371,7 +371,7 @@
                 id="KAFKA-CLIENT-LIB-2_12-2_4_0"
                 name="KAFKA-CLIENT-LIB-2_12-2_4_0">
             <library id="kafka-clients-2.4.0.jar"/>
-            <library id="reload4j-1.2.19.jar"/>
+            <library id="reload4j-1.2.22.jar"/>
             <library id="slf4j-api-1.7.29.jar"/>
             <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
