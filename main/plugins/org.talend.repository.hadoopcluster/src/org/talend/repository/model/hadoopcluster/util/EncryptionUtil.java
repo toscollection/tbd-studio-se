@@ -5,7 +5,7 @@ import org.talend.utils.security.StudioEncryption;
 public class EncryptionUtil {
 	
 	public static String getValue(String value, boolean encrypt) {
-        if (!value.startsWith("context.") && value != null && value.length() > 0) {
+        if (value != null && !value.startsWith("context.") && value.length() > 0) {
             StudioEncryption se = StudioEncryption.getStudioEncryption(StudioEncryption.EncryptionKeyName.SYSTEM);
             // Set default encrypt and decrypt methods
         	java.util.function.Function<String, String> encryptFunction = (src) -> se.encrypt(src);
