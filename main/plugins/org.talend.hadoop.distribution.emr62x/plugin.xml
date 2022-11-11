@@ -192,6 +192,14 @@
           mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-paranamer/2.10.1"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+          id="jackson-jaxrs-json-provider-2.10.1.jar" name="jackson-jaxrs-json-provider-2.10.1.jar"
+          mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.10.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+          id="jaxb-api-2.3.1.jar" name="jaxb-api-2.3.1.jar"
+          mvn_uri="mvn:javax.xml.bind/jaxb-api/2.3.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="xbean-asm7-shaded-4.15.jar" name="xbean-asm7-shaded-4.15.jar"
           mvn_uri="mvn:org.apache.xbean/xbean-asm7-shaded/4.15"/>
 
@@ -863,17 +871,20 @@
             <library id="httpcore-4.4.13.jar"/>
             <library id="htrace-core4-4.1.0-incubating.jar"/>
             <library id="jackson-annotations-2.10.1.jar"/>
+            <library id="jaxb-api-2.3.1.jar"/>
             <library id="jackson-core-2.10.1.jar"/>
             <library id="jackson-core-asl-1.9.16-TALEND.jar"/>
             <library id="jackson-databind-2.10.1.jar"/>
             <library id="jackson-dataformat-cbor-2.10.1.jar"/>
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar"/>
             <library id="jackson-jaxrs-1.9.13.jar"/>
+            <library id="jackson-jaxrs-json-provider-2.10.1.jar"/>
             <library id="jackson-module-paranamer-2.10.1.jar"/>
             <library id="jackson-module-scala_2.12-2.10.1.jar"/>
             <library id="jackson-xc-1.9.13.jar"/>
             <library id="javax.inject-1.jar"/>
             <library id="javax.inject-2.4.0.jar"/>
+            <library id="jaxb-api-2.3.1.jar"/>
             <library id="reload4j-1.2.19.jar"/>
             <library id="libthrift-0.12.0.jar"/>
             <library id="metrics-core-4.1.1.jar"/>
