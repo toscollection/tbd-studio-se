@@ -322,6 +322,7 @@ public class HadoopClusterForm extends AbstractHadoopForm<HadoopClusterConnectio
     }
     
     private void updateKnoxContent() {
+        if (useKnoxButton.getSelection()) return;
         boolean isUseKnox = Boolean.getBoolean(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX));
         useKnoxButton.setSelection(isUseKnox);
     }
