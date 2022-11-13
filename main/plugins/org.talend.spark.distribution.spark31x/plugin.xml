@@ -270,6 +270,7 @@
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="chill-java-0.9.5.jar"/>
             <library id="commons-codec-1.15.jar"/>
+            <library id="commons-cli-1.2.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.16.jar"/>
             <library id="commons-configuration2-2.1.1.jar"/>
