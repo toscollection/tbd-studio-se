@@ -167,6 +167,7 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="slf4j-api-1.7.25.jar" name="slf4j-api-1.7.25.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.25/jar"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snakeyaml-1.24.jar" name="snakeyaml-1.24.jar" mvn_uri="mvn:org.yaml/snakeyaml/1.24"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-catalyst_2.12-3.2.1.jar" name="spark-catalyst_2.12-3.2.1.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.2.1"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-avro_2.12-3.2.1.jar" name="spark-avro_2.12-3.2.1.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.2.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-core_2.12-3.2.1.jar" name="spark-core_2.12-3.2.1.jar" mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.2.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-hive_2.12-3.2.1.jar" name="spark-hive_2.12-3.2.1.jar" mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.2.1"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-hive-thriftserver_2.12-3.2.1.jar" name="spark-hive-thriftserver_2.12-3.2.1.jar" mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_2.12/3.2.1"/>
@@ -214,7 +215,6 @@
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-avro_2.12-3.2.2.jar" name="spark-avro_2.12-3.2.2.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.2.2"/>
             
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-snowflake_2.12-2.10.0-spark_3.2.jar" name="spark-snowflake_2.12-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.10.0-spark_3.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snowflake-jdbc-3.13.14.jar" name="snowflake-jdbc-3.13.14.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.14"/>
@@ -349,6 +349,7 @@
             <library id="snakeyaml-1.24.jar"/>
             <library id="snappy-java-1.1.8.2.jar"/>
             <library id="spark-catalyst_2.12-3.2.1.jar"/>
+            <library id="spark-avro_2.12-3.2.1.jar"/>
             <library id="spark-core_2.12-3.2.1.jar"/>
             <library id="spark-hive_2.12-3.2.1.jar"/>
             <library id="spark-kubernetes_2.12-3.2.1.jar"/>
@@ -449,7 +450,7 @@
         <libraryNeededGroup description="Redshift libraries for spark32x" id="REDSHIFT-BATCH-GROUP-SPARK_3_2_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_2_x">
             <library id="snappy-java-1.1.8.2.jar"/>
             <library id="spark-redshift_2.12-5.1.0.jar"/>
-            <library id="spark-avro_2.12-3.2.2.jar"/>
+            <library id="spark-avro_2.12-3.2.1.jar"/>
         </libraryNeededGroup>
         
         <!-- Snowflake group -->
@@ -487,7 +488,7 @@
         <libraryNeededGroup description="Spark streaming Redshift libraries for spark32x" id="REDSHIFT-STREAMING-GROUP-SPARK_3_2_x" name="REDSHIFT-STREAMING-GROUP-SPARK_3_2_x">
         	<library id="snappy-java-1.1.8.2.jar"/>
             <library id="spark-redshift_2.12-5.1.0.jar"/>
-            <library id="spark-avro_2.12-3.2.2.jar"/>
+            <library id="spark-avro_2.12-3.2.1.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming DynamoDB group -->
