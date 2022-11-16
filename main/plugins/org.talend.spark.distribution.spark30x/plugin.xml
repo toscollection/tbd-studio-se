@@ -745,6 +745,7 @@
             <library id="scala-reflect-2.12.10.jar"/>
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="spark-catalyst_2.12-3.0.3.jar"/>
+            <library id="spark-avro_2.12-3.0.3.jar"/>
             <library id="spark-core_2.12-3.0.3.jar"/>
             <library id="spark-hive_2.12-3.0.3.jar"/>
             <library id="spark-kvstore_2.12-3.0.3.jar"/>
