@@ -312,6 +312,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     // Mapping between connection parameter and form field 
     private Map<String, LabelledWidget> fieldByParamKey;
 
+    // knox
+    private Button useKnoxButton;
+
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
         super(parent, SWT.NONE, existingNames);
@@ -534,6 +537,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             updateCdeFieldsVisibility();
             updateStandaloneConfigureExecutors();
             updateDatabricksFields();
+
+        //knox
+        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
+        useKnoxButton.setSelection("true".equals(useKnoxStr));
+        updateKnoxPart();
+
         }
    
 
@@ -679,6 +688,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         ((LabelledText) standaloneMaster).setEditable(isEditable);
         ((LabelledText) standaloneExecCore).setEditable(isEditable);
         ((LabelledText) standaloneExecMemory).setEditable(isEditable);
+
+        useKnoxButton.setEnabled(isEditable);
     }
 
     @Override
@@ -948,6 +959,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         uriPartLayout.marginHeight = 0;
         uriPartComposite.setLayout(uriPartLayout);
         uriPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        useKnoxButton = new Button(uriPartComposite, SWT.CHECK);
+        useKnoxButton.setText(Messages.getString("KnoxInfoForm.useKnox")); //$NON-NLS-1$
+        useKnoxButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+
         namenodeUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.namenodeURI"), 1); //$NON-NLS-1$
         jobtrackerUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.jobtrackerURI"), 1); //$NON-NLS-1$
         rmSchedulerText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.rmScheduler"), 1); //$NON-NLS-1$
@@ -1668,6 +1684,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+        useKnoxButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                String selection = String.valueOf(useKnoxButton.getSelection());
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX, selection);
+                reloadForm();
+            }
+        });
         if (sparkModeCombo != null) {
             sparkModeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
 
@@ -1884,6 +1909,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         });
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY);
+    }
+
+    private void reloadForm() {
+        ((HadoopClusterForm) this.getParent()).switchToInfoForm();
+    }
+
+    private void updateKnoxPart() {
+        hideControl(useKnoxButton, !HCVersionUtil.isExecutedThroughKnox(getConnection()));
     }
 
     /*
