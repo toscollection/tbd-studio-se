@@ -216,7 +216,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private Composite maprTSetComposite;
 
     private Group authGroup;
-    
+
     private Group webHDFSSSLEncryptionGrp;
 
     private Button useWebHDFSSSLEncryptionBtn;
@@ -226,6 +226,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledFileField webHDFSSSLTrustStorePath;
 
     private LabelledText webHDFSSSLTrustStorePassword;
+    // knox
+    private Button useKnoxButton;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -316,6 +318,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
         onUseCustomConfBtnSelected(null);
         onOverrideHadoopConfBtnSelected(null);
+
+        //knox
+        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
+        useKnoxButton.setSelection("true".equals(useKnoxStr));
+        updateKnoxPart();
     }
 
     @Override
@@ -416,6 +423,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         // setHadoopConfBtn.setEnabled(isEditable);
         hadoopConfSpecificJarText.setEditable(isEditable && setHadoopConfBtn.getSelection());
         browseHadoopConfBtn.setEnabled(isEditable && setHadoopConfBtn.getSelection());
+
+        useKnoxButton.setEnabled(isEditable);
     }
 
     @Override
@@ -513,6 +522,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         uriPartLayout.marginHeight = 0;
         uriPartComposite.setLayout(uriPartLayout);
         uriPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        useKnoxButton = new Button(uriPartComposite, SWT.CHECK);
+        useKnoxButton.setText(Messages.getString("KnoxInfoForm.useKnox")); //$NON-NLS-1$
+        useKnoxButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+
         namenodeUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.namenodeURI"), 1); //$NON-NLS-1$
         jobtrackerUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.jobtrackerURI"), 1); //$NON-NLS-1$
         rmSchedulerText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.rmScheduler"), 1); //$NON-NLS-1$
@@ -1235,6 +1249,23 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
         });
 
+        useKnoxButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                String selection = String.valueOf(useKnoxButton.getSelection());
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX, selection);
+                reloadForm();
+            }
+        });
+    }
+
+    private void reloadForm() {
+        ((HadoopClusterForm) this.getParent()).switchToInfoForm();
+    }
+
+    private void updateKnoxPart() {
+        hideControl(useKnoxButton, !HCVersionUtil.isExecutedThroughKnox(getConnection()));
     }
 
     private void onUseCustomConfBtnSelected(SelectionEvent event) {
