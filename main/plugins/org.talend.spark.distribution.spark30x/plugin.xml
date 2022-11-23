@@ -162,7 +162,11 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="json4s-jackson_2.12-3.6.6.jar" name="json4s-jackson_2.12-3.6.6.jar"
           mvn_uri="mvn:org.json4s/json4s-jackson_2.12/3.6.6"/>
-
+          
+	<libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+          id="json-path-2.7.0.jar" name="json-path-2.7.0.jar"
+          mvn_uri="mvn:com.jayway.jsonpath/json-path/2.7.0"/>
+          
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
           id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar"
           mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
@@ -723,6 +727,7 @@
             <library id="json4s-ast_2.12-3.6.6.jar"/>
             <library id="json4s-core_2.12-3.6.6.jar"/>
             <library id="json4s-jackson_2.12-3.6.6.jar"/>
+            <library id="json-path-2.7.0.jar"/>
             <library id="jul-to-slf4j-1.7.16.jar"/>
             <library id="kryo-shaded-4.0.2.jar"/>
             <library id="lz4-java-1.7.1.jar"/>

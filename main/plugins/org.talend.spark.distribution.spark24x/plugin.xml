@@ -62,6 +62,7 @@
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jaxb-api-2.2.2.jar" name="jaxb-api-2.2.2.jar" mvn_uri="mvn:javax.xml.bind/jaxb-api/2.2.2"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jersey-bundle-1.19.3.jar" name="jersey-bundle-1.19.3.jar" mvn_uri="mvn:com.sun.jersey/jersey-bundle/1.19.3"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
+			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="json-path-2.7.0.jar" name="json-path-2.7.0.jar" mvn_uri="mvn:com.jayway.jsonpath/json-path/2.7.0"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-admin-1.0.0.jar" name="kerb-admin-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-admin/1.0.0/jar"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-client-1.0.0.jar" name="kerb-client-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-client/1.0.0/jar"/>
 			<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kerb-common-1.0.0.jar" name="kerb-common-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-common/1.0.0/jar"/>
@@ -267,6 +268,7 @@
 			<library id="json4s-ast_2.11-3.5.3.jar"/>
 			<library id="json4s-core_2.11-3.5.3.jar"/>
 			<library id="json4s-jackson_2.11-3.5.3.jar"/>
+			<library id="json-path-2.7.0.jar"/>
 			<library id="jul-to-slf4j-1.7.16.jar"/>
 			<library id="kryo-shaded-4.0.2.jar"/>
 			<library id="reload4j-1.2.22.jar"/>

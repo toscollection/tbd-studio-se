@@ -98,6 +98,8 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-ast_2.12-3.7.0-M5.jar" name="json4s-ast_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-ast_2.12/3.7.0-M5/jar"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-core_2.12-3.7.0-M5.jar" name="json4s-core_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-core_2.12/3.7.0-M5"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-jackson_2.12-3.7.0-M5.jar" name="json4s-jackson_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-jackson_2.12/3.7.0-M5"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json-path-2.7.0.jar" name="json-path-2.7.0.jar" mvn_uri="mvn:com.jayway.jsonpath/json-path/2.7.0"/>
+
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jsr305-3.0.0.jar" name="jsr305-3.0.0.jar" mvn_uri="mvn:com.google.code.findbugs/jsr305/3.0.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jul-to-slf4j-1.7.30.jar" name="jul-to-slf4j-1.7.30.jar" mvn_uri="mvn:org.slf4j/jul-to-slf4j/1.7.30"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="kerb-admin-1.0.0.jar" name="kerb-admin-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerb-admin/1.0.0/jar"/>
@@ -313,6 +315,7 @@
             <library id="json4s-ast_2.12-3.7.0-M5.jar"/>
             <library id="json4s-core_2.12-3.7.0-M5.jar"/>
             <library id="json4s-jackson_2.12-3.7.0-M5.jar"/>
+            <library id="json-path-2.7.0.jar"/>
             <library id="jsr305-3.0.0.jar"/>
             <library id="jul-to-slf4j-1.7.30.jar"/>
             <library id="kryo-shaded-4.0.2.jar"/>
