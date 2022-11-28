@@ -199,7 +199,7 @@
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="amazon-kinesis-client-1.12.0.jar" name="amazon-kinesis-client-1.12.0.jar" mvn_uri="mvn:com.amazonaws/amazon-kinesis-client/1.12.0"/>
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-cloudwatch-1.11.375.jar" name="aws-java-sdk-cloudwatch-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-cloudwatch/1.11.375"/>
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-dynamodb-1.11.375.jar" name="aws-java-sdk-dynamodb-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.375"/>
-	        
+	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-sts-1.11.375.jar" name="aws-java-sdk-sts-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-sts/1.11.375"/>        
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0" />
 	        
 	        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-mapred-1.8.2-hadoop2.jar" name="avro-mapred-1.8.2-hadoop2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
@@ -401,6 +401,7 @@
             <library id="amazon-kinesis-client-1.12.0.jar"/>
             <library id="aws-java-sdk-cloudwatch-1.11.375.jar"/>
             <library id="aws-java-sdk-dynamodb-1.11.375.jar"/>
+            <library id="aws-java-sdk-sts-1.11.375.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming Redshift group -->
