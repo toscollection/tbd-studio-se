@@ -295,8 +295,7 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
         } else if (EHDFSRepositoryToComponent.KNOX_TIMEOUT.getRepositoryValue().equals(value)) {
-            return getRepositoryValueOfStringType(hcConnection,
-                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT));
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT);
         } else if (EHDFSRepositoryToComponent.SYNAPSE_ENDPOINT.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST));
