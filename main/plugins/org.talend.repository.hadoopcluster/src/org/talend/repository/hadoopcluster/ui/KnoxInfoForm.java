@@ -138,24 +138,28 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
     @Override
     public boolean checkFieldsValue() {
         checkServicesBtn.setEnabled(false);
-        if (!validText(knoxURLText.getText())) {
+        if (!isNotEmpty(knoxURLText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxURL")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxUserText.getText())) {
+        if (!isNotEmpty(knoxUserText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxUser")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxPasswordText.getText())) {
+        if (!isNotEmpty(knoxPasswordText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxPassword")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxDirectoryText.getText())) {
+        if (!isNotEmpty(knoxDirectoryText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxDirectory")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxTimeoutText.getText())) {
+        if (!isNotEmpty(knoxTimeoutText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxTimeoutText")); //$NON-NLS-1$
+            return false;
+        }
+        if (!validNumbers(knoxTimeoutText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxTimeoutText.isnumbers")); //$NON-NLS-1$
             return false;
         }
         checkServicesBtn.setEnabled(true);
