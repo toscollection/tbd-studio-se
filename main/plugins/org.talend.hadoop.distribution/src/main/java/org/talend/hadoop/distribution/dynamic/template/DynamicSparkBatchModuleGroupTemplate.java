@@ -156,7 +156,7 @@ public class DynamicSparkBatchModuleGroupTemplate extends AbstractDynamicModuleG
     }
     
     protected Set<DistributionModuleGroup> buildNodeModuleGroup4Spark4HiveWarehouse(DynamicPluginAdapter pluginAdapter, String distribution, String version) throws Exception {
-        return new DynamicSparkNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, version, DynamicModuleGroupConstant.HIVE_WAREHOUSE_MODULE_GROUP, null);
+        return new DynamicSparkNodeModuleGroup(pluginAdapter).getModuleGroups(distribution, version, DynamicModuleGroupConstant.HIVE_WAREHOUSE_MODULE_GROUP, null, false);
     }
     
     protected Set<DistributionModuleGroup> buildNodeModuleGroup4Spark4Hive(DynamicPluginAdapter pluginAdapter, String distribution, String version) throws Exception {
