@@ -26,7 +26,7 @@ import org.talend.hadoop.distribution.dynamic.template.IDynamicDistributionTempl
  */
 public class DynamicCDPDistribution extends AbstractDynamicCDPDistribution {
 
-	private List<String> templateIds = new ArrayList<>();
+	private final List<String> templateIds = new ArrayList<>();
 	public static final String TEMPLATE_FOLDER_PATH = "resources/template/cdp/"; //$NON-NLS-1$
 	public static final String BUILD_IN_FOLDER_PATH = "resources/builtin/cdp/"; //$NON-NLS-1$
 

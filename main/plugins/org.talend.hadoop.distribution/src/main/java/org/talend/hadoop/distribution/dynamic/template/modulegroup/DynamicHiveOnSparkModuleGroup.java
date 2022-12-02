@@ -12,12 +12,11 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.template.modulegroup;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.apache.commons.lang.StringUtils;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class DynamicHiveOnSparkModuleGroup extends AbstractModuleGroup {
 
@@ -27,18 +26,15 @@ public class DynamicHiveOnSparkModuleGroup extends AbstractModuleGroup {
 
     @Override
     public Set<DistributionModuleGroup> getModuleGroups() throws Exception {
-        Set<DistributionModuleGroup> hs = new HashSet<>();
-        DynamicPluginAdapter pluginAdapter = getPluginAdapter();
+        Set<DistributionModuleGroup> distributionGroups = new HashSet<>();
 
-        String sparkHiveRuntimeId = pluginAdapter
-                .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP.getModuleName());
-        checkRuntimeId(sparkHiveRuntimeId);
+        requiredDistributionGroup(DynamicModuleGroupConstant.SPARK_HIVE_MRREQUIRED_MODULE_GROUP)
+                .ifPresent(distributionGroups::add);
 
-        if (StringUtils.isNotBlank(sparkHiveRuntimeId)) {
-            DistributionModuleGroup dmg = new DistributionModuleGroup(sparkHiveRuntimeId, true);
-            hs.add(dmg);
-        }
-        return hs;
+        optionalDistributionGroup(DynamicModuleGroupConstant.HIVE_WAREHOUSE_MODULE_GROUP)
+                .ifPresent(distributionGroups::add);
+
+        return distributionGroups;
     }
 
 }
