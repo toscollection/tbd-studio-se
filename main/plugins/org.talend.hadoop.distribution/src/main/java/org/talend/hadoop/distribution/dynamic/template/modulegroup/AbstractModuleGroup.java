@@ -12,9 +12,6 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.template.modulegroup;
 
-import java.util.Collections;
-import java.util.Set;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -23,6 +20,10 @@ import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
+
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 
 public abstract class AbstractModuleGroup {
 
@@ -36,7 +37,7 @@ public abstract class AbstractModuleGroup {
     }
 
     public Set<DistributionModuleGroup> getModuleGroups(String distribution, String version) throws Exception {
-        return Collections.EMPTY_SET;
+        return Collections.emptySet();
     }
 
     public AbstractModuleGroup(DynamicPluginAdapter pluginAdapter) {
@@ -65,5 +66,21 @@ public abstract class AbstractModuleGroup {
                 CommonExceptionHandler.warn(message);
             }
         }
+    }
+
+    protected Optional<DistributionModuleGroup> optionalDistributionGroup(final DynamicModuleGroupConstant groupIdentifier) throws Exception {
+        return buildDistributionGroup(groupIdentifier, false);
+    }
+
+    protected Optional<DistributionModuleGroup> requiredDistributionGroup(final DynamicModuleGroupConstant groupIdentifier) throws Exception {
+        return buildDistributionGroup(groupIdentifier, true);
+    }
+
+    private Optional<DistributionModuleGroup> buildDistributionGroup(final DynamicModuleGroupConstant groupIdentifier, boolean required) throws Exception {
+        String groupIdByTemplateId = pluginAdapter
+                .getRuntimeModuleGroupIdByTemplateId(groupIdentifier.getModuleName());
+        checkRuntimeId(groupIdByTemplateId);
+        return Optional.ofNullable(groupIdByTemplateId)
+                .map(id -> new DistributionModuleGroup(id, required, null));
     }
 }
