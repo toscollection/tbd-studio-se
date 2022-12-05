@@ -9,8 +9,8 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.9.2.jar" name="avro-1.9.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.9.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-1.9.2.jar" name="avro-mapred-1.9.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.9.2" />
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk15on-1.68.jar" name="bcpkix-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.68"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk15on-1.68.jar" name="bcprov-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.68"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk15on-1.70.jar" name="bcpkix-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.70"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk15on-1.70.jar" name="bcprov-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.70"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar" mvn_uri="mvn:org.scalanlp/breeze_2.12/1.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="chill_2.12-0.9.5.jar" name="chill_2.12-0.9.5.jar" mvn_uri="mvn:com.twitter/chill_2.12/0.9.5"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="chill-java-0.9.5.jar" name="chill-java-0.9.5.jar" mvn_uri="mvn:com.twitter/chill-java/0.9.5"/>
@@ -264,8 +264,8 @@
             <library id="avro-1.8.2.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
             <library id="antlr4-runtime-4.8-1.jar"/>
-            <library id="bcpkix-jdk15on-1.68.jar"/>
-            <library id="bcprov-jdk15on-1.68.jar"/>
+            <library id="bcpkix-jdk15on-1.70.jar"/>
+            <library id="bcprov-jdk15on-1.70.jar"/>
             <library id="breeze_2.12-1.0.jar"/>
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="chill-java-0.9.5.jar"/>
