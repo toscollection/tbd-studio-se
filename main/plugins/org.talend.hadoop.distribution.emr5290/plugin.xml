@@ -1595,9 +1595,9 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
-            id="bcprov-jdk15on-1.51.jar"
-            name="bcprov-jdk15on-1.51.jar"
-            mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.51"/>
+            id="bcprov-jdk15on-1.70.jar"
+            name="bcprov-jdk15on-1.70.jar"
+            mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.70"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -2118,7 +2118,7 @@
 			<library id="avro-ipc-1.8.2.jar"/>
 			<library id="avro-mapred-1.8.2-hadoop2.jar"/>
 			<library id="base64-2.3.8.jar"/>
-			<library id="bcprov-jdk15on-1.51.jar"/>
+			<library id="bcprov-jdk15on-1.70.jar"/>
 			<library id="bonecp-0.8.0.RELEASE.jar"/>
 			<library id="breeze-macros_2.11-0.13.1.jar"/>
 			<library id="breeze_2.11-0.13.2.jar"/>
