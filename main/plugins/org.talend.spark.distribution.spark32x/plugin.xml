@@ -9,8 +9,8 @@
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aircompressor-0.21.jar" name="aircompressor-0.21.jar" mvn_uri="mvn:io.airlift/aircompressor/0.21"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="avro-1.10.2.jar" name="avro-1.10.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.10.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="avro-mapred-1.10.2.jar" name="avro-mapred-1.10.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.10.2"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="bcpkix-jdk15on-1.68.jar" name="bcpkix-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.68"/>
-            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="bcprov-jdk15on-1.68.jar" name="bcprov-jdk15on-1.68.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.68"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="bcpkix-jdk15on-1.70.jar" name="bcpkix-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.70"/>
+            <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="bcprov-jdk15on-1.70.jar" name="bcprov-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.70"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="breeze_2.12-1.2.jar" name="breeze_2.12-1.2.jar" mvn_uri="mvn:org.scalanlp/breeze_2.12/1.2"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="chill_2.12-0.10.0.jar" name="chill_2.12-0.10.0.jar" mvn_uri="mvn:com.twitter/chill_2.12/0.10.0"/>
             <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="chill-java-0.10.0.jar" name="chill-java-0.10.0.jar" mvn_uri="mvn:com.twitter/chill-java/0.10.0"/>
@@ -251,8 +251,8 @@
             <library id="antlr4-runtime-4.8.jar"/>
             <library id="avro-1.10.2.jar"/>
             <library id="avro-mapred-1.10.2.jar"/>
-            <library id="bcpkix-jdk15on-1.68.jar"/>
-            <library id="bcprov-jdk15on-1.68.jar"/>
+            <library id="bcpkix-jdk15on-1.70.jar"/>
+            <library id="bcprov-jdk15on-1.70.jar"/>
             <library id="breeze_2.12-1.2.jar"/>
             <library id="chill_2.12-0.10.0.jar"/>
             <library id="chill-java-0.10.0.jar"/>

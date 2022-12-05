@@ -427,7 +427,14 @@
 					"classifier": "",
 					"extension": "",
 					"description": ""
-				}
+				},
+                {
+                    "groupId": "org.bouncycastle",
+                    "artifactId": "bcprov-jdk15on",
+                    "classifier": "",
+                    "extension": "",
+                    "description": ""
+                }
             ]
         },
         {
@@ -473,6 +480,13 @@
                     "classifier": "",
                     "extension": "",
                     "description": ""
+                },
+                {
+                    "groupId": "org.bouncycastle",
+                    "artifactId": "bcprov-jdk15on",
+                    "classifier": "",
+                    "extension": "",
+                    "description": ""
                 }
 			]
 		},
@@ -509,6 +523,13 @@
                 {
                     "groupId": "com.sun.jersey",
                     "artifactId": "*",
+                    "classifier": "",
+                    "extension": "",
+                    "description": ""
+                },
+                {
+                    "groupId": "org.bouncycastle",
+                    "artifactId": "bcprov-jdk15on",
                     "classifier": "",
                     "extension": "",
                     "description": ""
@@ -632,7 +653,14 @@
 					"classifier": "",
 					"extension": "",
 					"description": ""
-				}
+				},
+                {
+                    "groupId": "org.bouncycastle",
+                    "artifactId": "bcprov-jdk15on",
+                    "classifier": "",
+                    "extension": "",
+                    "description": ""
+                }
 			]
 		},
 		{
