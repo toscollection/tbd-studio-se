@@ -81,6 +81,6 @@ public abstract class AbstractModuleGroup {
                 .getRuntimeModuleGroupIdByTemplateId(groupIdentifier.getModuleName());
         checkRuntimeId(groupIdByTemplateId);
         return Optional.ofNullable(groupIdByTemplateId)
-                .map(id -> new DistributionModuleGroup(id, required, null));
+                .map(id -> new DistributionModuleGroup(id, required));
     }
 }
