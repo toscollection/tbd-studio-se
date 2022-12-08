@@ -1018,7 +1018,7 @@
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_hadoop_yarn_common_3_0_0_cdh6_1_1_jar",
         "tagName" : "library"
-     }, {
+      }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_htrace_core4_4_2_0_incubating_jar",
         "tagName" : "library"
