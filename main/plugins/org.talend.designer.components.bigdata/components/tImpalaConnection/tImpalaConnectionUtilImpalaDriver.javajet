@@ -24,13 +24,14 @@
 			boolean useLDAP = !("".equals(ElementParameterParser.getValue(node, "__PASS__")) || "\"\"".equals(ElementParameterParser.getValue(node, "__PASS__")));
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 			boolean securityIsEnabled = useKrb && ( this.isCustom || this.distrib.doSupportKerberos() );
-			
+			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
+
 			if (useLDAP) {
 %>
 				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+";UID="+dbUser_<%=cid%>+";PWD="+dbPwd_<%=cid%> );
 <%
 			} else if (securityIsEnabled) {
-			
+				if(useKeytab) {
 %>
 			conn_<%=cid%> = (java.sql.Connection) ugi_<%=cid%>.doAs(new java.security.PrivilegedExceptionAction<Object>() {
 				public Object run() {
@@ -43,14 +44,18 @@
 					}
 					return con;
 				}});
-<%			
+<%				} else {
+%>
+					conn_<%=cid%> = java.sql.DriverManager.getConnection(con_url_<%=cid%>);
+<%
+				}
 			} else {
 %>
 				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
 <%
 			}
 		}
-		
+
       private String getLevelDebug(INode node){
           String res="0";
           boolean customLogLevel  = "true".equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_RUN_ACTIVATE__"));
@@ -252,8 +257,9 @@
 			} else {
 					if (securityIsEnabled) {
 %>
+							<% if(useKeytab) { %>
 							org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
-	
+							<% } %>
 							String krbServiceName_<%=cid%>  = (<%=impalaPrincipal%>.split("/")[0]);
 							String krbHostFQDN_<%=cid%> = (<%=impalaPrincipal%>.split("/")[1].split("@")[0]);
 							String krbRealm_<%=cid%> = (<%=impalaPrincipal%>.split("/")[1].split("@")[1]);
@@ -261,7 +267,7 @@
                             org.apache.hadoop.conf.Configuration conf_<%=cid%> = new org.apache.hadoop.conf.Configuration();
 	                        conf_<%=cid%>.set("hadoop.security.authentication", "kerberos");
 	                        org.apache.hadoop.security.UserGroupInformation.setConfiguration(conf_<%=cid%>);
-	                        
+
 							urlKerberosParameter_<%=cid%> = ";AuthMech=1"
 														+ ";KrbServiceName=" + krbServiceName_<%=cid%>
 														+ ";KrbHostFQDN=" + krbHostFQDN_<%=cid%>
@@ -285,7 +291,7 @@
 <%
 								}
 %>
-							
+
 							url_<%=cid%> += ";ssl=1" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
 							// Does the distrib support only SASL-QOP + KERBEROS
@@ -334,7 +340,7 @@
 					}
 					url_<%=cid%> += additionalJdbcSettings_<%=cid%>;
 				}
-				
+
 				final String con_url_<%=cid%> = url_<%=cid%>;
 <%
 		}
