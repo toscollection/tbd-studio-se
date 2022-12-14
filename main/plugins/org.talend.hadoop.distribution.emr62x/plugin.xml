@@ -761,9 +761,22 @@
                        id="orc-mapreduce-1.5.5.jar" name="orc-mapreduce-1.5.5.jar"
                        mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.5.5"/>
 
+        <!-- Hive libs -->
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
                        id="calcite-core-1.16.0.jar" name="calcite-core-1.16.0.jar"
                        mvn_uri="mvn:org.apache.calcite/calcite-core/1.16.0"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="datanucleus-api-jdo-4.2.5.jar" name="datanucleus-api-jdo-4.2.5.jar"
+                       mvn_uri="mvn:org.datanucleus/datanucleus-api-jdo/4.2.5"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="datanucleus-core-4.1.17.jar" name="datanucleus-core-4.1.17.jar"
+                       mvn_uri="mvn:org.datanucleus/datanucleus-core/4.1.17"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="datanucleus-rdbms-4.1.17.jar" name="datanucleus-rdbms-4.1.17.jar"
+                       mvn_uri="mvn:org.datanucleus/datanucleus-rdbms/4.1.17"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
                        id="hive-metastore-2.3.7.jar" name="hive-metastore-2.3.7.jar"
@@ -904,6 +917,9 @@
         <libraryNeededGroup description="The latest Hive libraries for emr62x" id="HIVE-GROUP-EMR_62_x" name="HIVE-GROUP-EMR_62_x">
             <group id="HDFS-GROUP-EMR_62_x"/>
             <library id="calcite-core-1.16.0.jar"/>
+            <library id="datanucleus-core-4.1.17.jar"/>
+            <library id="datanucleus-rdbms-4.1.17.jar"/>
+            <library id="datanucleus-api-jdo-4.2.5.jar"/>
             <library id="hive-common-2.3.7.jar"/>
             <library id="hive-exec-2.3.7-core.jar"/>
             <library id="hive-jdbc-2.3.7.jar"/>
@@ -1093,4 +1109,3 @@
     </extension>
 
 </plugin>
-
