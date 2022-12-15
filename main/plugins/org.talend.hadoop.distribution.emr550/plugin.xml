@@ -342,12 +342,6 @@
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.emr550"
-            id="apache-log4j-extras-1.2.17.jar"
-            name="apache-log4j-extras-1.2.17.jar"
-            mvn_uri="mvn:log4j/apache-log4j-extras/1.2.17"/>
-
-        <libraryNeeded
-            context="plugin:org.talend.hadoop.distribution.emr550"
             id="hive-cli-1.2.1-spark2-amzn-0.jar"
             name="hive-cli-1.2.1-spark2-amzn-0.jar"
             mvn_uri="mvn:org.talend.libraries/hive-cli-1.2.1-spark2-amzn-0/6.0.0"/>
@@ -1718,7 +1712,6 @@
 			<library id="antlr4-runtime-4.5.3.jar"/>
 			<library id="aopalliance-1.0.jar"/>
 			<library id="aopalliance-repackaged-2.4.0-b34.jar"/>
-			<library id="apache-log4j-extras-1.2.17.jar"/>
 			<library id="apacheds-i18n-2.0.0-M15.jar"/>
 			<library id="apacheds-kerberos-codec-2.0.0-M15.jar"/>
 			<library id="api-asn1-api-1.0.0-M20.jar"/>
