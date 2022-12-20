@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugin [
         <!ENTITY commons-configuration2_version "2.8.0">
+        <!ENTITY ivy_version "2.5.1">
         ]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -74,7 +75,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="httpcore-4.4.14.jar" name="httpcore-4.4.14.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.14"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="ivy-2.5.0.jar" name="ivy-2.5.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.5.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jackson-annotations-2.13.3.jar" name="jackson-annotations-2.13.3.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.13.3"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jackson-core-2.13.3.jar" name="jackson-core-2.13.3.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.13.3"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
@@ -281,7 +282,7 @@
             <library id="htrace-core4-4.1.0-incubating.jar"/>
             <library id="httpclient-4.5.13.jar"/>
             <library id="httpcore-4.4.14.jar"/>
-            <library id="ivy-2.5.0.jar"/>
+            <library id="ivy-&ivy_version;.jar"/>
             <library id="jackson-annotations-2.13.3.jar"/>
             <library id="jackson-core-2.13.3.jar"/>
             <library id="jackson-core-asl-1.9.13.jar"/>
@@ -431,7 +432,7 @@
             <library id="hive-storage-api-2.7.2.jar"/>
             <library id="httpclient-4.5.13.jar"/>
             <library id="httpcore-4.4.14.jar"/>
-            <library id="ivy-2.5.0.jar"/>
+            <library id="ivy-&ivy_version;.jar"/>
             <library id="joda-time-2.10.13.jar"/>
             <library id="libfb303-0.9.3.jar"/>
             <library id="libthrift-0.12.0.jar"/>

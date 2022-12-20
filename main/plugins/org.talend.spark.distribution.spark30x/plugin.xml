@@ -2,6 +2,7 @@
 <!DOCTYPE plugin [
         <!ENTITY commons-configuration2_version "2.8.0">
         <!ENTITY hive_version "2.3.7">
+        <!ENTITY ivy_version "2.5.1">
         ]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -450,8 +451,8 @@
                        mvn_uri="mvn:org.apache.hive/hive-storage-api/2.7.1"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="ivy-2.4.0.jar" name="ivy-2.4.0.jar"
-                       mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
+                       id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar"
+                       mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar"
@@ -679,10 +680,6 @@
                        mvn_uri="mvn:commons-httpclient/commons-httpclient/3.1"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="ivy-2.4.0.jar" name="ivy-2.4.0.jar"
-                       mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
-
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="jackson-annotations-2.10.0.jar" name="jackson-annotations-2.10.0.jar"
                        mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.10.0"/>
 
@@ -744,7 +741,7 @@
             <library id="httpclient-4.5.13.jar"/>
             <library id="httpcore-4.4.13.jar"/>
             <library id="commons-httpclient-3.1.jar"/>
-            <library id="ivy-2.4.0.jar"/>
+            <library id="ivy-&ivy_version;.jar"/>
             <library id="jackson-annotations-2.10.0.jar"/>
             <library id="jackson-core-2.10.0.jar"/>
             <library id="jackson-core-asl-1.9.13.jar"/>
@@ -852,7 +849,7 @@
             <library id="hive-shims-0.23-&hive_version;.jar"/>
             <library id="hive-shims-common-&hive_version;.jar"/>
             <library id="hive-storage-api-2.7.1.jar"/>
-            <library id="ivy-2.4.0.jar"/>
+            <library id="ivy-&ivy_version;.jar"/>
             <library id="joda-time-2.10.5.jar"/>
             <library id="libfb303-0.9.3.jar"/>
             <library id="libthrift-0.12.0.jar"/>

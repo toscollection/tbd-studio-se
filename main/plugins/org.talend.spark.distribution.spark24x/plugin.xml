@@ -2,6 +2,7 @@
 <!DOCTYPE plugin [
 		<!ENTITY commons-configuration2_version "2.8.0">
 		<!ENTITY hive_version "2.3.7">
+		<!ENTITY ivy_version "2.5.1">
 		]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -160,7 +161,7 @@
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/3.1.4"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="ivy-2.4.0.jar" name="ivy-2.4.0.jar" mvn_uri="mvn:org.apache.ivy/ivy/2.4.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-bundle-1.11.760.jar" name="aws-java-sdk-bundle-1.11.760.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.760"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="talend-bigdata-aws-lib-1.1.0.jar" name="talend-bigdata-aws-lib-1.1.0.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-aws-lib/1.1.0"/>
@@ -248,7 +249,7 @@
 			<library id="httpclient-4.5.13.jar"/>
 			<library id="httpcore-4.4.13.jar"/>
 			<library id="commons-httpclient-3.1.jar"/>
-			<library id="ivy-2.4.0.jar"/>
+			<library id="ivy-&ivy_version;.jar"/>
 			<library id="jackson-annotations-2.10.0.jar"/>
 			<library id="jackson-core-2.10.0.jar"/>
 			<library id="jackson-core-asl-1.9.13.jar"/>
