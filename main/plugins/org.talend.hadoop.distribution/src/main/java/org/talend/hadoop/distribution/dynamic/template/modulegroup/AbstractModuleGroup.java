@@ -12,6 +12,10 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic.template.modulegroup;
 
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
@@ -20,10 +24,6 @@ import org.talend.commons.exception.CommonExceptionHandler;
 import org.talend.core.runtime.dynamic.IDynamicPluginConfiguration;
 import org.talend.hadoop.distribution.DistributionModuleGroup;
 import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
-
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
 
 public abstract class AbstractModuleGroup {
 
