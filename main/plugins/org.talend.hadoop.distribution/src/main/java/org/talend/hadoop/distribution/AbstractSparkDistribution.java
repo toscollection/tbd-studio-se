@@ -79,6 +79,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         if (doesJobContain(nodes, "kudu")) {
             classpath += classpathSeparator + "/opt/cloudera/parcels/CDH/lib/kudu/*"; //CDH&CDP hbase lib for spark
         }
+        if (doesJobContain(nodes, "tS3Configuration")) {
+            classpath += classpathSeparator + "/usr/share/aws/emr/s3select/lib/*"; // S3 Select on EMR
+        }
         return classpath;
     }
 
