@@ -51,6 +51,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-service-&hive_version;.jar" name="hive-service-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-service/&hive_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-service-rpc-&hive_version;.jar" name="hive-service-rpc-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-service-rpc/&hive_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-shims-&hive_version;.jar" name="hive-shims-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-shims/&hive_version;"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-shims-common-&hive_version;.jar" name="hive-shims-common-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-shims-common/&hive_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
@@ -437,6 +438,7 @@
 			<library id="hive-service-&hive_version;.jar"/>
 			<library id="hive-service-rpc-&hive_version;.jar"/>
 			<library id="hive-shims-&hive_version;.jar"/>
+			<library id="hive-shims-common-&hive_version;.jar"/>
 			<library id="httpclient-4.5.13.jar"/>
 			<library id="httpcore-4.4.13.jar"/>
 			<library id="libthrift-0.9.3.jar"/>
