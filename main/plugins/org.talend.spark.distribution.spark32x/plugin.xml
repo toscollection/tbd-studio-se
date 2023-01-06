@@ -43,6 +43,13 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="grpc-context-1.19.0.jar" name="grpc-context-1.19.0.jar" mvn_uri="mvn:io.grpc/grpc-context/1.19.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="guava-27.1-jre.jar" name="guava-27.1-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.1-jre"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0/jar"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-auth-3.3.4.jar" name="hadoop-auth-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-3.3.4.jar" name="hadoop-client-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-mapreduce-client-core-3.3.4.jar" name="hadoop-mapreduce-client-core-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-mapreduce-client-jobsclient-3.3.4.jar" name="hadoop-mapreduce-client-jobclient-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-jobclient/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-api-3.3.4.jar" name="hadoop-yarn-api-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-api/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-client-3.3.4.jar" name="hadoop-yarn-client-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-client/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-yarn-common-3.3.4.jar" name="hadoop-yarn-common-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.3.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-api-3.3.4.jar" name="hadoop-client-api-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-api/3.3.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-client-runtime-3.3.4.jar" name="hadoop-client-runtime-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-runtime/3.3.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-hdfs-client-3.3.4.jar" name="hadoop-hdfs-client-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.3.4"/>
