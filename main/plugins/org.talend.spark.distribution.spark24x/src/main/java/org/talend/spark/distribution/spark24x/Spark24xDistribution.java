@@ -111,7 +111,7 @@ public class Spark24xDistribution extends AbstractSparkDistribution
     }
 
     @Override
-    protected Set<DistributionModuleGroup> getHiveOnDIModulesGroups() {
+    protected Set<DistributionModuleGroup> getHiveOnDIModuleGroups() {
         return ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false);
     }
 
