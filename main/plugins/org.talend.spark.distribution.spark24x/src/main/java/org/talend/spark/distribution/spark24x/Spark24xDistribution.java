@@ -41,6 +41,7 @@ import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 import org.talend.spark.distribution.spark24x.modulegroup.node.Spark24xNodeModuleGroup;
 
 public class Spark24xDistribution extends AbstractSparkDistribution
@@ -107,6 +108,11 @@ public class Spark24xDistribution extends AbstractSparkDistribution
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkBatchConstant.S3_CONFIGURATION_COMPONENT), 
 				s3ModuleGroup);	
         return result;
+    }
+
+    @Override
+    protected Set<DistributionModuleGroup> getHiveOnDIModulesGroups() {
+        return ModuleGroupsUtils.getModuleGroups(null, ModuleGroupName.SPARK_COMPILE.get(this.getVersion()), false);
     }
 
     @Override
