@@ -576,7 +576,7 @@
   			<library id="woodstox-core-5.0.3.jar" />
   	    </libraryNeededGroup>
 
-      	<!-- Hive -->
+      	<!-- Hive 2.1 -->
 		<libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-common-2.1.1.jar" name="hive-common-2.1.1.jar" mvn_uri="mvn:org.apache.hive/hive-common/2.1.1"/>
 		<libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-exec-2.1.1.jar" name="hive-exec-2.1.1.jar" mvn_uri="mvn:org.apache.hive/hive-exec/2.1.1"/>
 		<libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-exec-shade-2.1.1-talend-1.2.jar" name="hive-exec-shade-2.1.1-talend-1.2.jar" mvn_uri="mvn:org.talend.bigdata.libs/hive-exec-shade-2.1.1-talend/1.2"/>
@@ -605,12 +605,6 @@
 			<library id="httpcore-4.4.13.jar"/>
 			<library id="libthrift-0.9.3.jar"/>
 		</libraryNeededGroup>
-      	
-      	<!--
-      	2.3.7
-      	-->
-      	
-      
-      
+
    </extension>
 </plugin>
