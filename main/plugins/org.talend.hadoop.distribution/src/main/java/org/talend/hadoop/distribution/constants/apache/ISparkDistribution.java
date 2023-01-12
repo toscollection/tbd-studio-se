@@ -14,8 +14,9 @@ package org.talend.hadoop.distribution.constants.apache;
 
 import java.util.List;
 
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksClusterType ;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksSubmitMode;
 
 public interface ISparkDistribution {
 
@@ -25,9 +26,11 @@ public interface ISparkDistribution {
     
     public List<ESparkMode> getSparkModes();
     
-    List<EDatabriksCloudProvider> getSupportCloudProviders();
+    List<EDatabricksCloudProvider> getSupportCloudProviders();
     
-    List<EDatabriksSubmitMode> getRunSubmitMode();
+    List<EDatabricksClusterType > getClusterTypes();
+    
+    List<EDatabricksSubmitMode> getRunSubmitMode();
     
     public boolean doSupportUniversalDBRMode();
     

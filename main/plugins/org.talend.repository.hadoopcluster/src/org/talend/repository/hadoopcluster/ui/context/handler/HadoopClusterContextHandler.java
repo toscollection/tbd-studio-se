@@ -217,7 +217,18 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case DataBricksDBFSDepFolder:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
-                        break;
+                    case DataBricksClusterType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE));
+                    case DataBricksDriverNodeType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE));
+                    case DataBricksNodeType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE));
+                    case DataBricksRuntimeVersion:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION));
                     case setHadoopConf:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SET_HADOOP_CONF),
@@ -256,6 +267,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                     case KnoxDirectory:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
+                        break;
+                    case KnoxTimeout:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                            conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT));
                         break;
                     case SynapseHostName:
                         ConnectionContextHelper.createParameters(varList, paramName,
@@ -711,6 +726,22 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
+        case DataBricksDriverNodeType:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksClusterType:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksNodeType:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case DataBricksRuntimeVersion:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
         case WebHDFSSSLTrustStorePath:
             hadoopConn.setWebHDFSSSLTrustStorePath(ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
@@ -748,6 +779,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
         case KnoxDirectory:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case KnoxTimeout:
+            hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT,
+                ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
 // CDE
         case CdeApiEndPoint:

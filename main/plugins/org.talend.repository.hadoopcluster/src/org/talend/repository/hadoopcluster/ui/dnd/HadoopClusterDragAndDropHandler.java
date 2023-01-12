@@ -247,7 +247,19 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.DATABRICKS_DBFS_DEP_FOLDER.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
-        } else if (EHDFSRepositoryToComponent.SET_HADOOP_CONF.getRepositoryValue().equals(value)) {
+        } else if (EHDFSRepositoryToComponent.DATABRICKS_CLUSTER_TYPE.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE));
+        }else if (EHDFSRepositoryToComponent.DATABRICKS_NODE_TYPE.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE));
+        }else if (EHDFSRepositoryToComponent.DATABRICKS_DRIVER_NODE_TYPE.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE));
+        }else if (EHDFSRepositoryToComponent.DATABRICKS_RUNTIME_VERSION.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION));
+        }else if (EHDFSRepositoryToComponent.SET_HADOOP_CONF.getRepositoryValue().equals(value)) {
             return Boolean.valueOf(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SET_HADOOP_CONF));
         } else if (EHDFSRepositoryToComponent.HADOOP_CONF_SPECIFIC_JAR.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
@@ -269,6 +281,8 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.KNOX_DIRECTORY.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
+        } else if (EHDFSRepositoryToComponent.KNOX_TIMEOUT.getRepositoryValue().equals(value)) {
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT);
         } else if (EHDFSRepositoryToComponent.SYNAPSE_ENDPOINT.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST));

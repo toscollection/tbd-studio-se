@@ -36,14 +36,14 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 
 
 public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterConnection> {
-    
+
+    private Button useKnoxButton;
     private LabelledText knoxURLText;
     private LabelledText knoxUserText;
     private LabelledText knoxPasswordText;
     private LabelledText knoxDirectoryText;
-
+    private LabelledText knoxTimeoutText;
     private UtilsButton checkServicesBtn;
-    
     private final boolean creation;
 
     protected KnoxInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
@@ -63,6 +63,10 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
     private void addConfigurationFields() {
         Group configGroup = Form.createGroup(this, 2, Messages.getString("KnoxInfoForm.text.configuration"), 110); //$NON-NLS-1$
         configGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        useKnoxButton = new Button(configGroup, SWT.CHECK);
+        useKnoxButton.setText(Messages.getString("KnoxInfoForm.useKnox")); //$NON-NLS-1$
+        useKnoxButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
         
         knoxURLText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxURL"), 1); //$NON-NLS-1$ $NON-NLS-2$
         knoxUserText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxUser"), 1); //$NON-NLS-1$
@@ -71,6 +75,8 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         knoxPasswordText.getTextControl().setEchoChar('*');
 
         knoxDirectoryText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxDirectory"), 1); //$NON-NLS-1$
+
+        knoxTimeoutText = new LabelledText(configGroup, Messages.getString("KnoxInfoForm.text.knoxTimeout"), 1); //$NON-NLS-1$
     }
     
     private void addCheckFields() {
@@ -108,6 +114,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         nnProperties.setKnoxUser(knoxUserText.getText());
         nnProperties.setKnoxPassword(knoxPasswordText.getText());
         nnProperties.setKnoxDirectory(knoxDirectoryText.getText());
+        nnProperties.setKnoxTimeout(knoxTimeoutText.getText());
         
         serviceTypeToProperties.put(EHadoopServiceType.KNOX_RESOURCE_MANAGER, nnProperties);
         serviceTypeToProperties.put(EHadoopServiceType.KNOX_NAMENODE, nnProperties);
@@ -131,23 +138,30 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
     @Override
     public boolean checkFieldsValue() {
         checkServicesBtn.setEnabled(false);
-        if (!validText(knoxURLText.getText())) {
+        if (!isNotEmpty(knoxURLText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxURL")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxUserText.getText())) {
+        if (!isNotEmpty(knoxUserText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxUser")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxPasswordText.getText())) {
+        if (!isNotEmpty(knoxPasswordText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxPassword")); //$NON-NLS-1$
             return false;
         }
-        if (!validText(knoxDirectoryText.getText())) {
+        if (!isNotEmpty(knoxDirectoryText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxDirectory")); //$NON-NLS-1$
             return false;
         }
-        
+        if (!isNotEmpty(knoxTimeoutText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxTimeoutText")); //$NON-NLS-1$
+            return false;
+        }
+        if (!validNumbers(knoxTimeoutText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("KnoxInfoForm.check.configuration.knoxTimeoutText.isnumbers")); //$NON-NLS-1$
+            return false;
+        }
         checkServicesBtn.setEnabled(true);
         updateStatus(IStatus.OK, null);
         return true;
@@ -192,6 +206,28 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
                 checkFieldsValue();
             }
         });
+        knoxTimeoutText.addModifyListener(new ModifyListener() {
+
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT,
+                        knoxTimeoutText.getText());
+                checkFieldsValue();
+            }
+        });
+        useKnoxButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                String selection = String.valueOf(useKnoxButton.getSelection());
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX, selection);
+                reloadForm();
+            }
+        });
+    }
+
+    private void reloadForm() {
+        ((HadoopClusterForm) this.getParent()).switchToInfoForm();
     }
 
     @Override
@@ -220,6 +256,9 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         }
         
         getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,"YARN_CLUSTER");
+
+        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
+        useKnoxButton.setSelection("true".equals(useKnoxStr));
         
         String knoxURL = StringUtils.trimToEmpty(getConnection().getParameters().get(
                 ConnParameterKeys.CONN_PARA_KEY_KNOX_URL));
@@ -236,6 +275,10 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         String knoxDirectory = StringUtils.trimToEmpty(getConnection().getParameters().get(
                 ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY));
         knoxDirectoryText.setText(knoxDirectory);
+
+        String knoxTimeout = StringUtils.trimToEmpty(getConnection().getParameters().get(
+                ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT));
+        knoxTimeoutText.setText(knoxTimeout);
         
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -263,6 +306,7 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         addContextParams(EHadoopParamName.KnoxUsername, isUse);
         addContextParams(EHadoopParamName.KnoxPassword, isUse);
         addContextParams(EHadoopParamName.KnoxDirectory, isUse);
+        addContextParams(EHadoopParamName.KnoxTimeout, isUse);
     }
     
     @Override
@@ -272,15 +316,18 @@ public class KnoxInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterCon
         knoxUserText.setReadOnly(readOnly);
         knoxPasswordText.setReadOnly(readOnly);
         knoxDirectoryText.setReadOnly(readOnly);
+        knoxTimeoutText.setReadOnly(readOnly);
         ((HadoopClusterForm) this.getParent()).adaptFormToReadOnly();
     }
     
     @Override
     protected void updateEditableStatus(boolean isEditable) {
+        useKnoxButton.setEnabled(isEditable);
         knoxURLText.setReadOnly(!isEditable);
         knoxUserText.setReadOnly(!isEditable);
         knoxPasswordText.setReadOnly(!isEditable);
         knoxDirectoryText.setReadOnly(!isEditable);
+        knoxTimeoutText.setReadOnly(!isEditable);
         ((HadoopClusterForm) this.getParent()).updateEditableStatus(isEditable);
     }
     

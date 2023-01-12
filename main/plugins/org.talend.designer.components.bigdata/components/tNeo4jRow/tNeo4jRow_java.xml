@@ -8,8 +8,8 @@
 		<SIGNATURE />
 	</HEADER>
 	<FAMILIES>
-		<FAMILY>Databases NoSQL/Neo4j</FAMILY>
-		<FAMILY>Big Data/Neo4j</FAMILY>
+		<FAMILY>Databases NoSQL/Neo4j (Deprecated)</FAMILY>
+		<FAMILY>Big Data/Neo4j (Deprecated)</FAMILY>
 	</FAMILIES>
 	<DOCUMENTATION>
 		<URL />

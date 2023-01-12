@@ -78,8 +78,11 @@ import org.talend.hadoop.distribution.DistributionFactory;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.constants.apache.ESparkMode;
 import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksCloudProvider;
-import org.talend.hadoop.distribution.constants.databricks.EDatabriksSubmitMode;
+import org.talend.hadoop.distribution.constants.databricks.DatabricksRuntimeVersion;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksNodesType;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksCloudProvider;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksClusterType ;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksSubmitMode;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
 import org.talend.hadoop.distribution.model.DistributionBean;
 import org.talend.hadoop.distribution.model.DistributionVersion;
@@ -263,6 +266,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText tokenText;
 
     private LabelledText dbfsDepFolderText;
+    
+    private LabelledCombo clusterType;
+    
+    private LabelledCombo driverNodeType;
+    
+    private LabelledCombo nodeType;
+    
+    private LabelledCombo clusterRuntimeVersion;
 
     private Group dataProcGroup;
   
@@ -300,6 +311,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledWidget cdeWorkloadPassword;
     // Mapping between connection parameter and form field 
     private Map<String, LabelledWidget> fieldByParamKey;
+
+    // knox
+    private Button useKnoxButton;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -408,19 +422,54 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 sparkModeCombo.setText(ESparkMode.KUBERNETES.getLabel());
             }
 
-           String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
-
-           if (providerValue != null) {
-                cloudProviderCombo.setText(getDatabricksCloudProviderByValue(providerValue).getProviderLableName());
+            String providerValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
+           	if (providerValue != null) {
+           		if (providerValue.startsWith("context.")) {
+           			cloudProviderCombo.setText(providerValue);
+           		} else {
+           			cloudProviderCombo.setText(getDatabricksCloudProviderByValue(providerValue).getProviderLableName());
+           		}
             } else {
-
-                cloudProviderCombo.setText(EDatabriksCloudProvider.AWS.getProviderLableName());
+                cloudProviderCombo.setText(EDatabricksCloudProvider.AWS.getProviderLableName());
             }
+           	
+           	String runtimeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION);
+           	if (providerValue != null) {
+           		clusterRuntimeVersion.setText(runtimeValue);
+            } else {
+            	clusterRuntimeVersion.setText(DatabricksRuntimeVersion.defaultVersion);
+            }
+           
+           	String clusterTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE);
+           	if (providerValue != null) {
+           		clusterType.setText(getDatabricksClusterTypeLabelByValue(clusterTypeValue));
+            } else {
+            	clusterType.setText(EDatabricksClusterType.INTERACTIVE.getLabelName());
+            }
+           	
+           	String driverNodeTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE);
+           	if (providerValue != null) {
+           		driverNodeType.setText(driverNodeTypeValue);
+            } else {
+            	driverNodeType.setText(EDatabricksNodesType.getDefaultNodeTypeByProvider(providerValue));
+            }
+           	
+           	String nodeTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE);
+           	if (providerValue != null) {
+           		nodeType.setText(nodeTypeValue);
+            } else {
+            	nodeType.setText(EDatabricksNodesType.getDefaultNodeTypeByProvider(providerValue));
+            }
+           
             String runModeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE);
             if (runModeValue != null) {
-                runSubmitCombo.setText(getDatabricksRunModeByValue(runModeValue).getRunModeLabel());
+            	if (runModeValue.startsWith("context.")) {
+            		runSubmitCombo.setText(runModeValue);
+            	} else {
+            		runSubmitCombo.setText(getDatabricksRunModeByValue(runModeValue).getRunModeLabel());
+            	}
             } else {
-                runSubmitCombo.setText(EDatabriksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
+                runSubmitCombo.setText(EDatabricksSubmitMode.CREATE_RUN_JOB.getRunModeLabel());
             }
 
             String endPoint = StringUtils
@@ -487,6 +536,13 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             }
             updateCdeFieldsVisibility();
             updateStandaloneConfigureExecutors();
+            updateDatabricksFields();
+
+        //knox
+        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
+        useKnoxButton.setSelection("true".equals(useKnoxStr));
+        updateKnoxPart();
+
         }
    
 
@@ -538,6 +594,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             sparkModeCombo.setEnabled(!readOnly);
             runSubmitCombo.setEnabled(!readOnly);
             cloudProviderCombo.setEnabled(!readOnly);
+            clusterRuntimeVersion.setEnabled(!readOnly);
+            driverNodeType.setEnabled(!readOnly);
+            nodeType.setEnabled(!readOnly);
+            clusterType.setEnabled(!readOnly);
             endpointText.setEnabled(!readOnly);
             clusterIDText.setEnabled(!readOnly);
             tokenText.setEnabled(!readOnly);
@@ -608,6 +668,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         runSubmitCombo.setEnabled(isEditable);
         cloudProviderCombo.setEnabled(isEditable);
+        clusterRuntimeVersion.setEnabled(isEditable);
+        driverNodeType.setEnabled(isEditable);
+        nodeType.setEnabled(isEditable);
+        clusterType.setEnabled(isEditable);
         endpointText.setEnabled(isEditable);
         clusterIDText.setEnabled(isEditable);
         tokenText.setEnabled(isEditable);
@@ -624,6 +688,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         ((LabelledText) standaloneMaster).setEditable(isEditable);
         ((LabelledText) standaloneExecCore).setEditable(isEditable);
         ((LabelledText) standaloneExecMemory).setEditable(isEditable);
+
+        useKnoxButton.setEnabled(isEditable);
     }
 
     @Override
@@ -727,18 +793,51 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private void addDatabricksFields() {
         dataBricksGroup = Form.createGroup(bigComposite, 2, Messages.getString("DataBricksInfoForm.text.configuration"), 110); //$NON-NLS-1$
         dataBricksGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        clusterType = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.clusterType"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		getClusterTypes());
+        String clusterTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE);
+        if (clusterTypeValue != null && clusterTypeValue.startsWith("context.")) {
+        	clusterType.add(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE));
+        }
         runSubmitCombo = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.runSubmitMode"), "", //$NON-NLS-1$ $NON-NLS-2$
                 getRunSubmitModes());
+        String runSubmitValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE);
+        if (runSubmitValue!= null && runSubmitValue.startsWith("context.")) {
+        	runSubmitCombo.add(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE));
+        }
         cloudProviderCombo = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.cloudProvider"), "", //$NON-NLS-1$ $NON-NLS-2$
                 getProviders());
+        String cloudProviderValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER);
+        if (cloudProviderValue!= null && cloudProviderValue.startsWith("context.")) {
+        	cloudProviderCombo.add(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER));
+        }
         endpointText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.endPoint"), 1); //$NON-NLS-1$
-
+        clusterRuntimeVersion = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.runSubmitMode"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		DatabricksRuntimeVersion.getAvailableRuntimeAndSparkVersion().stream()
+        		.filter(x -> ((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDfVersion().equals(x.getSparkVersion()))
+        		.map(x -> x.getRuntimeVersion())
+        		.collect(Collectors.toList()));
+        String custerRuntimeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION);
+        if (custerRuntimeValue != null && custerRuntimeValue.startsWith("context.")) {
+        	clusterRuntimeVersion.add(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION));
+        }
+        driverNodeType = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.driverNodeType"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		EDatabricksNodesType.getNodeTypeByProvider(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER)));
+        String driverNodeTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE);
+        if (driverNodeTypeValue != null && driverNodeTypeValue.startsWith("context.")) {
+        	driverNodeType.add(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE));
+        }
+        nodeType = new LabelledCombo(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.nodeType"), "", //$NON-NLS-1$ $NON-NLS-2$
+        		EDatabricksNodesType.getNodeTypeByProvider(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER)));
+        String nodeTypeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE);
+        if (nodeTypeValue != null && nodeTypeValue.startsWith("context.")) {
+        	nodeType.add(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE));
+        }
         clusterIDText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.clusterID"), 1); //$NON-NLS-1$
-
         tokenText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.token"), 1, //$NON-NLS-1$
                 SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
-
         dbfsDepFolderText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.dbfsDepFolder"), 1); //$NON-NLS-1$
+        
     }
     
     private void addDataprocField() {
@@ -804,7 +903,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private List<String> getRunSubmitModes() {
         List<String> runSubmitLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
-            List<EDatabriksSubmitMode> runSubmitModes = sparkDistribution.getRunSubmitMode();
+            List<EDatabricksSubmitMode> runSubmitModes = sparkDistribution.getRunSubmitMode();
             if (runSubmitModes != null) {
                 runSubmitLabelNames = runSubmitModes.stream().map(mode -> {
                     return mode.getRunModeLabel();
@@ -815,16 +914,29 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
 
     private List<String> getProviders() {
-        List<String> providerLableNames = new ArrayList<String>();
+        List<String> providerLabelNames = new ArrayList<String>();
         if (sparkDistribution != null) {
-            List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
+            List<EDatabricksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
             if (supportCloudProviders != null) {
-                providerLableNames = supportCloudProviders.stream().map(provider -> {
+                providerLabelNames = supportCloudProviders.stream().map(provider -> {
                     return provider.getProviderLableName();
                 }).collect(Collectors.toList());
             }
         }
-        return providerLableNames;
+        return providerLabelNames;
+    }
+    
+    private List<String> getClusterTypes() {
+        List<String> providerLabelNames = new ArrayList<String>();
+        if (sparkDistribution != null) {
+            List<EDatabricksClusterType > supportedClusterTypes = sparkDistribution.getClusterTypes();
+            if (supportedClusterTypes != null) {
+                providerLabelNames = supportedClusterTypes.stream().map(provider -> {
+                    return provider.getLabelName();
+                }).collect(Collectors.toList());
+            }
+        }
+        return providerLabelNames;
     }
 
     private void addCustomFields() {
@@ -847,6 +959,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         uriPartLayout.marginHeight = 0;
         uriPartComposite.setLayout(uriPartLayout);
         uriPartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        useKnoxButton = new Button(uriPartComposite, SWT.CHECK);
+        useKnoxButton.setText(Messages.getString("KnoxInfoForm.useKnox")); //$NON-NLS-1$
+        useKnoxButton.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, false, 2, 1));
+
         namenodeUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.namenodeURI"), 1); //$NON-NLS-1$
         jobtrackerUriText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.jobtrackerURI"), 1); //$NON-NLS-1$
         rmSchedulerText = new LabelledText(uriPartComposite, Messages.getString("HadoopClusterForm.text.rmScheduler"), 1); //$NON-NLS-1$
@@ -1567,6 +1684,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 checkFieldsValue();
             }
         });
+        useKnoxButton.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+
+                String selection = String.valueOf(useKnoxButton.getSelection());
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX, selection);
+                reloadForm();
+            }
+        });
         if (sparkModeCombo != null) {
             sparkModeCombo.getCombo().addSelectionListener(new SelectionAdapter() {
 
@@ -1584,6 +1710,47 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 String providerLableName = cloudProviderCombo.getText();
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER,
                         getDatabricksCloudProviderByName(providerLableName).getProviderValue());
+                nodeType.getCombo().removeAll();
+                driverNodeType.getCombo().removeAll();
+                EDatabricksNodesType.getNodeTypeByProvider(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER))
+                	.forEach(nodeTypes -> {
+                		nodeType.getCombo().add(nodeTypes);
+                		driverNodeType.getCombo().add(nodeTypes);
+                	});
+                
+                checkFieldsValue();
+            }
+        });
+        clusterRuntimeVersion.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION, clusterRuntimeVersion.getText());
+                checkFieldsValue();
+            }
+        });
+        clusterType.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE, getDatabricksClusterTypeValueByLabel(clusterType.getText()));
+                updateDatabricksFields();
+                checkFieldsValue();
+            }
+        });
+        nodeType.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_NODE_TYPE, nodeType.getText());
+                checkFieldsValue();
+            }
+        });
+        driverNodeType.getCombo().addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DRIVER_NODE_TYPE, driverNodeType.getText());
                 checkFieldsValue();
             }
         });
@@ -1744,6 +1911,14 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY);
     }
 
+    private void reloadForm() {
+        ((HadoopClusterForm) this.getParent()).switchToInfoForm();
+    }
+
+    private void updateKnoxPart() {
+        hideControl(useKnoxButton, !HCVersionUtil.isExecutedThroughKnox(getConnection()));
+    }
+
     /*
      * Show/hide required CDE fields according token generation mechanism
      */
@@ -1763,6 +1938,22 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         standaloneExecMemory.setVisible(configureExecutors, !configureExecutors);
         standaloneGroup.layout();
         standaloneGroup.getParent().layout();
+    }
+    
+    private void updateDatabricksFields() {
+    	boolean isTransientMode = "Transient".equals(clusterType.getText());
+    	driverNodeType.setVisible(isTransientMode);
+        nodeType.setVisible(isTransientMode);
+        clusterRuntimeVersion.setVisible(isTransientMode);
+        clusterIDText.setVisible(!isTransientMode, isTransientMode);
+        if (!clusterType.isEnabled()) {
+        	driverNodeType.setVisible(true);
+            nodeType.setVisible(true);
+            clusterRuntimeVersion.setVisible(true);
+            clusterIDText.setVisible(true, false);
+        }
+        dataBricksGroup.layout();
+        dataBricksGroup.getParent().layout();
     }
 
     /*
@@ -2461,7 +2652,7 @@ jtOrRmPrincipalText
             } else if (ESparkMode.CDE.getLabel().equals(sparkModeLabelName)) {
                 collectCDEParameters();
             } else if (ESparkMode.DATAPROC.getLabel().equals(sparkModeLabelName)) {
-            	collectDBRParameters();
+            	collectDataProcParameters();
             } else if (ESparkMode.STANDALONE.getLabel().equals(sparkModeLabelName)) {
             	collectStandaloneParameters();
             }
@@ -2485,19 +2676,27 @@ jtOrRmPrincipalText
     protected void collectDBRParameters() {
         collectConfigurationParameters(true);
     }
+    
+    protected void collectDataProcParameters() {
+    	addContextParams(EHadoopParamName.GoogleProjectId, true);
+        addContextParams(EHadoopParamName.GoogleClusterId, true);
+        addContextParams(EHadoopParamName.GoogleRegion, true);
+        addContextParams(EHadoopParamName.GoogleJarsBucket, true);
+        addContextParams(EHadoopParamName.PathToGoogleCredentials, true);
+        addContextParams(EHadoopParamName.GoogleOauthToken, true);
+    }
 
     private void collectConfigurationParameters(boolean isUse) {
         addContextParams(EHadoopParamName.DataBricksEndpoint, isUse);
         addContextParams(EHadoopParamName.DataBricksClusterId, isUse);
         addContextParams(EHadoopParamName.DataBricksToken, isUse);
         addContextParams(EHadoopParamName.DataBricksDBFSDepFolder, isUse);
-        
-        addContextParams(EHadoopParamName.GoogleProjectId, isUse);
-        addContextParams(EHadoopParamName.GoogleClusterId, isUse);
-        addContextParams(EHadoopParamName.GoogleRegion, isUse);
-        addContextParams(EHadoopParamName.GoogleJarsBucket, isUse);
-        addContextParams(EHadoopParamName.PathToGoogleCredentials, isUse);
-        addContextParams(EHadoopParamName.GoogleOauthToken, isUse);
+        addContextParams(EHadoopParamName.DataBricksRuntimeVersion, isUse);
+        addContextParams(EHadoopParamName.DataBricksClusterType, isUse);
+        addContextParams(EHadoopParamName.DataBricksNodeType, isUse);
+        addContextParams(EHadoopParamName.DataBricksDriverNodeType, isUse);
+        addContextParams(EHadoopParamName.DataBricksCloudProvider, isUse);
+        addContextParams(EHadoopParamName.DatabricksRunMode, isUse);
     }
 
     protected void collectYarnConParameters() {
@@ -2605,51 +2804,71 @@ jtOrRmPrincipalText
         return ESparkMode.YARN_CLUSTER;
     }
 
-    private EDatabriksCloudProvider getDatabricksCloudProviderByValue(String providerValue) {
+    private EDatabricksCloudProvider getDatabricksCloudProviderByValue(String providerValue) {
         if (sparkDistribution != null) {
-            List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
-            for (EDatabriksCloudProvider provider : supportCloudProviders) {
+            List<EDatabricksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
+            for (EDatabricksCloudProvider provider : supportCloudProviders) {
                 if (StringUtils.equals(provider.getProviderValue(), providerValue)) {
                     return provider;
                 }
             }
         }
-        return EDatabriksCloudProvider.AWS;
+        return EDatabricksCloudProvider.AWS;
     }
 
-    private EDatabriksSubmitMode getDatabricksRunModeByValue(String runModeValue) {
+    private EDatabricksSubmitMode getDatabricksRunModeByValue(String runModeValue) {
         if (sparkDistribution != null) {
-            List<EDatabriksSubmitMode> runModes = sparkDistribution.getRunSubmitMode();
-            for (EDatabriksSubmitMode runMode : runModes) {
+            List<EDatabricksSubmitMode> runModes = sparkDistribution.getRunSubmitMode();
+            for (EDatabricksSubmitMode runMode : runModes) {
                 if (StringUtils.equals(runMode.getRunModeValue(), runModeValue)) {
                     return runMode;
                 }
             }
         }
-        return EDatabriksSubmitMode.CREATE_RUN_JOB;
+        return EDatabricksSubmitMode.CREATE_RUN_JOB;
     }
 
-    private EDatabriksCloudProvider getDatabricksCloudProviderByName(String providerLableName) {
+    private EDatabricksCloudProvider getDatabricksCloudProviderByName(String providerLableName) {
         if (sparkDistribution != null) {
-            List<EDatabriksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
-            for (EDatabriksCloudProvider provider : supportCloudProviders) {
+            List<EDatabricksCloudProvider> supportCloudProviders = sparkDistribution.getSupportCloudProviders();
+            for (EDatabricksCloudProvider provider : supportCloudProviders) {
                 if (StringUtils.equals(provider.getProviderLableName(), providerLableName)) {
                     return provider;
                 }
             }
         }
-        return EDatabriksCloudProvider.AWS;
+        return EDatabricksCloudProvider.AWS;
+    }
+    
+    private String getDatabricksClusterTypeValueByLabel(String labelName) {
+    	if (EDatabricksClusterType.INTERACTIVE.getLabelName().equals(labelName)) {
+    		return EDatabricksClusterType.INTERACTIVE.getValue();
+    	} else if (EDatabricksClusterType.TRANSIENT.getLabelName().equals(labelName)) {
+    		return EDatabricksClusterType.TRANSIENT.getValue();
+    	} else {
+    		return labelName;
+    	}
+    }
+    
+    private String getDatabricksClusterTypeLabelByValue(String value) {
+    	if (EDatabricksClusterType.INTERACTIVE.getValue().equals(value)) {
+    		return EDatabricksClusterType.INTERACTIVE.getLabelName();
+    	} else if (EDatabricksClusterType.TRANSIENT.getValue().equals(value)) {
+    		return EDatabricksClusterType.TRANSIENT.getLabelName();
+    	} else {
+    		return value;
+    	}
     }
 
-    private EDatabriksSubmitMode getDatabricksRunModeByName(String runModeLableName) {
+    private EDatabricksSubmitMode getDatabricksRunModeByName(String runModeLableName) {
         if (sparkDistribution != null) {
-            List<EDatabriksSubmitMode> supportRunModes = sparkDistribution.getRunSubmitMode();
-            for (EDatabriksSubmitMode provider : supportRunModes) {
+            List<EDatabricksSubmitMode> supportRunModes = sparkDistribution.getRunSubmitMode();
+            for (EDatabricksSubmitMode provider : supportRunModes) {
                 if (StringUtils.equals(provider.getRunModeLabel(), runModeLableName)) {
                     return provider;
                 }
             }
         }
-        return EDatabriksSubmitMode.CREATE_RUN_JOB;
+        return EDatabricksSubmitMode.CREATE_RUN_JOB;
     }
 }

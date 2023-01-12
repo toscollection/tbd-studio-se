@@ -113,6 +113,8 @@ public class HadoopServiceProperties {
     private String knoxPassword;
     
     private String knoxDirectory;
+
+    private String knoxTimeout;
     
 
     
@@ -477,5 +479,11 @@ public class HadoopServiceProperties {
     public void setKnoxDirectory(String knoxDirectory) {
         this.knoxDirectory = knoxDirectory;
     }
+
+    public String getKnoxTimeout() {
+        return getRealValue(this.knoxTimeout);
+    }
+
+    public void setKnoxTimeout(String knoxTimeout) { this.knoxTimeout = knoxTimeout; }
 
 }

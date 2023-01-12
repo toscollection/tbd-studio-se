@@ -22,7 +22,7 @@ java.util.Properties <%=cid%>_topicProperties = new java.util.Properties();
 	}
 %>
 boolean isZkSecurityEnabled = <%if(tKafkaCreateTopicUtil.isZookeeperSecurityEnabled()) {%>true<%} else {%>false<%}%>;
-kafka.utils.ZkUtils <%=cid%>_zkUtils =  kafka.utils.ZkUtils.apply(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, 10000, 10000, isZkSecurityEnabled);
+kafka.utils.ZkUtils <%=cid%>_zkUtils =  kafka.utils.ZkUtils.apply(<%=tKafkaCreateTopicUtil.getZookeeperConnect()%>, <%=tKafkaCreateTopicUtil.getZookeeperTimeout()%>, <%=tKafkaCreateTopicUtil.getZookeeperTimeout()%>, isZkSecurityEnabled);
 <%
 	if(tKafkaCreateTopicUtil.isCreate()) {
 %>

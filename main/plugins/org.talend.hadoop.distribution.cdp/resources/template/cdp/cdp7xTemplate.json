@@ -905,8 +905,8 @@
             "id": "talend-bigdata-launcher-knox",
             "type": "STANDARD",
             "context": "{properties.context}",
-            "jarName": "talend-bigdata-launcher-knox-2.2.0.jar",
-            "mvnUri": "mvn:org.talend.bigdata.libs/talend-bigdata-launcher-knox/2.2.0/jar",
+            "jarName": "talend-bigdata-launcher-knox-2.5.6.jar",
+            "mvnUri": "mvn:org.talend.bigdata.libs/talend-bigdata-launcher-knox/2.5.6/jar",
             "useStudioRepository": "true"
         },
         {
@@ -1015,6 +1015,27 @@
                 "jackson-core",
                 "jackson-databind",
                 "jackson-annotations",
+                "impala-jdbc",
+                "guava-28.1-jre"
+            ]
+        },
+        {
+            "id" : "HDFS-LIB-DYNAMIC-KNOX",
+            "description" : "jars for hdfs with knox, only module.id permitted",
+            "modules": [
+                "commons-httpclient-3.1",
+                "httpcore",
+                "httpclient",
+                "hadoop-client",
+                "commons-configuration",
+                "commons-configuration2",
+                "commons-collections",
+                "woodstox-core",
+                "stax2-api",
+                "jackson-core",
+                "jackson-databind",
+                "jackson-annotations",
+                "hadoop-common-checkservices",
                 "impala-jdbc",
                 "guava-28.1-jre",
                 "talend-bigdata-launcher-knox",
@@ -1264,6 +1285,12 @@
             "id" : "hadoop-hdfs-with-krb",
             "index" : "HDFS:CLOUDERA:{dynamicVersion}?USE_KRB",
             "moduleGroup" : "HDFS-LIB-DYNAMIC",
+            "description" : ""
+        },
+        {
+            "id" : "hadoop-hdfs",
+            "index" : "HDFS:CLOUDERA:{dynamicVersion}:USE_KNOX",
+            "moduleGroup" : "HDFS-LIB-DYNAMIC-KNOX",
             "description" : ""
         },
         {
