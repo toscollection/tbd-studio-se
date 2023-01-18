@@ -240,7 +240,7 @@
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kafka-clients-&kafka_version;.jar" name="kafka-clients-&kafka_version;.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/&kafka_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kafka_&scala_version;-&kafka_version;.jar" name="kafka_&scala_version;-&kafka_version;.jar" mvn_uri="mvn:org.apache.kafka/kafka_&scala_version;/&kafka_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-streaming-kafka-0-10-assembly_&scala_version;-&spark_version;.jar" name="spark-streaming-kafka-0-10-assembly_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10-assembly_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-streaming-kafka-0-10_&scala_version;-&spark_version;.jar" name="spark-streaming-kafka-0-10_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-token-provider-kafka-0-10_&scala_version;-&spark_version;.jar" name="spark-token-provider-kafka-0-10_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-token-provider-kafka-0-10_&scala_version;/&spark_version;"/>
 
