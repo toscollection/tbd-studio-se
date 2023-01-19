@@ -44,6 +44,8 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-auth-3.2.4.jar" name="hadoop-auth-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-common-3.2.4.jar" name="hadoop-common-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-common/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-client-3.2.4.jar" name="hadoop-client-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client/3.2.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-client-api-3.2.4.jar" name="hadoop-client-api-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-api/3.2.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-client-runtime-3.2.4.jar" name="hadoop-client-runtime-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-runtime/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-hdfs-client-3.2.4.jar" name="hadoop-hdfs-client-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-hdfs-client/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-mapreduce-client-core-3.2.4.jar" name="hadoop-mapreduce-client-core-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-mapreduce-client-core/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="hadoop-yarn-api-3.2.4.jar" name="hadoop-yarn-api-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-api/3.2.4"/>
@@ -278,7 +280,6 @@
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="chill-java-0.9.5.jar"/>
             <library id="commons-codec-1.15.jar"/>
-            <library id="commons-cli-1.2.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
             <library id="commons-compiler-3.0.16.jar"/>
             <library id="commons-configuration2-&commons-configuration2_version;.jar"/>
@@ -290,6 +291,8 @@
             <library id="failureaccess-1.0.1.jar"/>
             <library id="guava-27.1-jre.jar"/>
             <library id="hadoop-auth-3.2.4.jar"/>
+            <library id="hadoop-client-api-3.2.4.jar"/>
+            <library id="hadoop-client-runtime-3.2.4.jar"/>
             <library id="hadoop-common-3.2.4.jar"/>
             <library id="hadoop-hdfs-client-3.2.4.jar"/>
             <library id="hadoop-mapreduce-client-core-3.2.4.jar"/>
