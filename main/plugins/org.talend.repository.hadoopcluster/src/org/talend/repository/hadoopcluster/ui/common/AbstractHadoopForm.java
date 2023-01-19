@@ -95,6 +95,14 @@ public abstract class AbstractHadoopForm<T> extends AbstractForm {
         return StringUtils.isNotEmpty(value);
     }
 
+    protected boolean validNumbers(final String value) {
+        return StringUtils.isNumericSpace(value);
+    }
+
+    public boolean isNotEmpty(final String value){
+        return StringUtils.isNotEmpty(value);
+    }
+
     @Override
     protected void hideControl(Control control, boolean hide) {
         GridData dataBtn = (GridData) control.getLayoutData();
