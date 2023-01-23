@@ -58,6 +58,12 @@
         <libraryNeeded id="jackson-databind-2.6.7.1.jar" name="jackson-databind-2.6.7.1.jar"
                        mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/2.6.7.1"
                        context="plugin:org.talend.hadoop.distribution.dbr640"/>
+        <libraryNeeded id="jackson-annotations-2.6.7.jar" name="jackson-annotations-2.6.7.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.6.7"
+                       context="plugin:org.talend.hadoop.distribution.dbr640"/>
+        <libraryNeeded id="jackson-core-asl-1.9.14-atlassian-6.jar" name="jackson-core-asl-1.9.14-atlassian-6.jar"
+                       mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.14-atlassian-6"
+                       context="plugin:org.talend.hadoop.distribution.dbr640"/>
         <libraryNeeded id="javax.ws.rs-api-2.0.1.jar" name="javax.ws.rs-api-2.0.1.jar"
                        mvn_uri="mvn:javax.ws.rs/javax.ws.rs-api/2.0.1"
                        context="plugin:org.talend.hadoop.distribution.dbr640"/>
@@ -167,6 +173,8 @@
             <library id="hadoop-common-2.7.3.jar"/>
             <library id="hadoop-mapreduce-client-core-2.7.3.jar"/>
             <library id="jackson-core-2.6.7.jar"/>
+            <library id="jackson-core-asl-1.9.14-atlassian-6.jar"/>
+            <library id="jackson-mapper-asl-1.9.14-atlassian-6.jar"/>
             <library id="javax.ws.rs-api-2.0.1.jar"/>
             <library id="json-simple-1.1.1.jar"/>
             <library id="kryo-shaded-4.0.2.jar"/>

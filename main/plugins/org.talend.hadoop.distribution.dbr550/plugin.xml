@@ -3,9 +3,10 @@
 <plugin>
    <extension
          point="org.talend.core.runtime.librariesNeeded">
-		<libraryNeeded id="commons-pool2-2.4.2.jar" name="commons-pool2-2.4.2.jar"
-                       mvn_uri="mvn:org.apache.commons/commons-pool2/2.4.2"
-                       context="plugin:org.talend.hadoop.distribution.dbr550"/>
+		<libraryNeeded
+           id="commons-pool2-2.4.2.jar" name="commons-pool2-2.4.2.jar"
+           mvn_uri="mvn:org.apache.commons/commons-pool2/2.4.2"
+           context="plugin:org.talend.hadoop.distribution.dbr550"/>
 		<libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
             id="azure-data-lake-store-sdk-2.3.1.jar"
@@ -251,7 +252,16 @@
             id="jackson-annotations-2.6.7.jar"
             name="jackson-annotations-2.6.7.jar"
             mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/2.6.7"/>
-            
+       <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.dbr550"
+            id="jackson-core-asl-1.9.14-atlassian-6.jar"
+            name="jackson-core-asl-1.9.14-atlassian-6.jar"
+            mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.14-atlassian-6" />
+       <libraryNeeded
+            context="plugin:org.talend.hadoop.distribution.dbr550"
+            id="jackson-mapper-asl-1.9.14-atlassian-6.jar"
+            name="jackson-mapper-asl-1.9.14-atlassian-6.jar"
+            mvn_uri="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.14-atlassian-6" />
          <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
             id="parquet-hadoop-bundle-1.6.0.jar"
@@ -316,6 +326,8 @@
              <library id="spark-unsafe_2.11-2.4.3.jar"/>
              <library id="wsdl4j-1.6.3.jar"/>
              <library id="jackson-core-2.6.7.jar"/>
+             <library id="jackson-core-asl-1.9.14-atlassian-6.jar"/>
+             <library id="jackson-mapper-asl-1.9.14-atlassian-6.jar"/>
              <library id="javax.ws.rs-api-2.0-m10.jar"/>
              <library id="json_simple-1.1.jar"/>
              <library id="parquet-hadoop-bundle-1.6.0.jar"/>
