@@ -68,13 +68,13 @@
 						<%
 						}else if("timeuuid".equals(dbType) || "uuid".equals(dbType)){
 						%>
-							<%=connName%>.<%=columnName%> = row_<%=cid%>.getUUID("<%=dbColumnName%>").toString();
+							<%=connName%>.<%=columnName%> = row_<%=cid%>.getUuid("<%=dbColumnName%>").toString();
 						<%
 						}
 					}else if(javaType == JavaTypesManager.OBJECT){
 						if("varint".equals(dbType)){
 						%>
-							<%=connName%>.<%=columnName%> = row_<%=cid%>.getVarint("<%=dbColumnName%>");
+							<%=connName%>.<%=columnName%> = row_<%=cid%>.getBigInteger("<%=dbColumnName%>");
 						<%
 						}else if("inet".equals(dbType)){
 						%>
