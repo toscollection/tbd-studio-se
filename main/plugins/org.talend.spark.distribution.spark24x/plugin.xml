@@ -189,8 +189,7 @@
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-redshift_2.12-4.2.0.jar" name="spark-redshift_2.12-4.2.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/4.2.0"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-avro_2.12-3.0.1.jar" name="spark-avro_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-redshift_2.11-2.0.1.jar" name="spark-redshift_2.11-2.0.1.jar" mvn_uri="mvn:org.talend.libraries/spark-redshift_2.11-2.0.1/6.0.0"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-snowflake_2.11-2.9.2-spark_2.4.jar" name="spark-snowflake_2.11-2.9.2-spark_2.4.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.11/2.9.2-spark_2.4"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
@@ -315,6 +314,7 @@
 			<library id="spark-tags_2.11-2.4.7.jar"/>
 			<library id="spark-unsafe_2.11-2.4.7.jar"/>
 			<library id="spark-yarn_2.11-2.4.7.jar"/>
+			<library id="snappy-java-1.1.7.5.jar"/>
 			<library id="stax2-api-3.1.4.jar"/>
 			<library id="univocity-parsers-2.7.3.jar"/>
 			<library id="woodstox-core-5.0.3.jar"/>
@@ -375,8 +375,8 @@
 
 		<!-- Redshift group -->
 		<libraryNeededGroup description="Redshift libraries for spark247" id="REDSHIFT-BATCH-GROUP-SPARK_2_4_x" name="REDSHIFT-BATCH-GROUP-SPARK_2_4_x">
-			<library id="spark-redshift_2.12-4.2.0.jar"/>
-			<library id="spark-avro_2.12-3.1.1.jar"/>
+			<library id="spark-redshift_2.11-2.0.1.jar"/>
+			<library id="spark-avro_2.11-2.4.7.jar"/>
 		</libraryNeededGroup>
 
 		<!-- Snowflake group -->
