@@ -558,7 +558,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hadoop-auth-3.2.4.jar" name="hadoop-auth-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hadoop-client-api-3.3.1.jar" name="hadoop-client-api-3.3.1.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-api/3.3.1"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="stax2-api-3.1.4.jar" name="stax2-api-3.1.4.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/3.1.4"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="woodstox-core-5.0.3.jar" name="woodstox-core-5.0.3.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.0.3"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="woodstox-core-5.4.0.jar" name="woodstox-core-5.4.0.jar" mvn_uri="mvn:com.fasterxml.woodstox/woodstox-core/5.4.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hadoop-client-runtime-3.2.4.jar" name="hadoop-client-runtime-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-client-runtime/3.2.4"/>
        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hadoop-shaded-guava-1.1.1.jar" name="hadoop-shaded-guava-1.1.1.jar" mvn_uri="mvn:org.apache.hadoop.thirdparty/hadoop-shaded-guava/1.1.1"/>
        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hadoop-shaded-protobuf_3_7-1.1.1.jar" name="hadoop-shaded-protobuf_3_7-1.1.1.jar" mvn_uri="mvn:org.apache.hadoop.thirdparty/hadoop-shaded-protobuf_3_7/1.1.1"/>
@@ -573,7 +573,7 @@
             <library id="hadoop-shaded-guava-1.1.1.jar" />
             <library id="hadoop-shaded-protobuf_3_7-1.1.1.jar" />
   			<library id="stax2-api-3.1.4.jar"/>
-  			<library id="woodstox-core-5.0.3.jar" />
+  			<library id="woodstox-core-5.4.0.jar" />
   	    </libraryNeededGroup>
       
    </extension>
