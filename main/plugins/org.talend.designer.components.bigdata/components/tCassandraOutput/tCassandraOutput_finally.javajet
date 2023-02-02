@@ -25,15 +25,53 @@
     String cid = node.getUniqueName();
     %>
     <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
-    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/API_selector.javajet"%>
-    <%
-	if((new API_selector()).useDatastax(ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__") ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node)){
-	%>
-    	<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/tCassandraOutput_datastax_finally.javajet"%>
-    <%
-    }else{
-    %>    
-        <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/tCassandraOutput_hector_finally.javajet"%>    	
+
+	<%
+    IMetadataTable metadata = null;
+    IConnection conn = null;
+    List<IMetadataColumn> columns = null;
+    List<IMetadataTable> metadatas = node.getMetadataList();
+    if((metadatas!=null) && (metadatas.size() > 0)){
+        metadata = metadatas.get(0);
+        if(metadata != null){
+    		columns = metadata.getListColumns();		
+    	}
+    }
+    List<? extends IConnection> conns = node.getIncomingConnections();
+    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+        conn = conns.get(0);
+    }
+    
+    if(columns == null || columns.isEmpty() || conn == null){
+    	return "";
+    }
+    %>
+    <% 
+    boolean useExistConn = "true".equals(ElementParameterParser.getValue(node, "__USE_EXISTING_CONNECTION__"));
+    if(!useExistConn){
+    %>
+    	if(resourceMap.get("finish_<%=cid%>") == null){
+			<%
+			String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+			if("CASSANDRA_4_0".equals(dbVersion)) {
+			%>
+				if(resourceMap.get("connection_<%=cid%>") != null){
+					((com.datastax.oss.driver.api.core.session.Session)resourceMap.get("connection_<%=cid%>")).close();
+				}
+			<%
+			} else {
+			%>
+			
+				if(resourceMap.get("connection_<%=cid%>") != null){
+					((com.datastax.driver.core.Session)resourceMap.get("connection_<%=cid%>")).close();
+				}
+				if(resourceMap.get("cluster_<%=cid%>") != null){
+					((com.datastax.driver.core.Cluster)resourceMap.get("cluster_<%=cid%>")).close();
+				}
+			<%
+			}
+			%>
+    	}
     <%
     }
     %>

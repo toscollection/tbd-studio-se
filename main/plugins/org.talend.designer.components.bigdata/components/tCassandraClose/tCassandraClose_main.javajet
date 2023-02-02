@@ -17,17 +17,28 @@
     String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
     INode connectionNode = NodeUtil.getNodeByUniqueName(node.getProcess(), connection);
     %>
-    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/API_selector.javajet"%>
-    <%
-	if((new API_selector()).useDatastax(connectionNode)){
-    %>
-    	<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraClose/tCassandraClose_datastax_main.javajet"%>
-    <%
-    }else{
-	%>
-		<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraClose/tCassandraClose_hector_main.javajet"%>
+
 	<%
-	}	
+	String dbVersion = ElementParameterParser.getValue(connectionNode, "__DB_VERSION__");
+	if("CASSANDRA_4_0".equals(dbVersion)) {
+	%>
+		com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = (com.datastax.oss.driver.api.core.CqlSession)globalMap.get("connection_<%=connection%>");
+		if(connection_<%=cid%> != null){
+			connection_<%=cid%>.close();
+		}
+	<%
+	} else {
+	%>
+		com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
+		com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
+		if(connection_<%=cid%> != null){
+			connection_<%=cid%>.close();
+		}
+		if(cluster_<%=cid%> != null){
+			cluster_<%=cid%>.close();
+		}
+	<%
+	}
 	%>
 	
 	

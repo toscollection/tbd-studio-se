@@ -21,16 +21,43 @@
     String cid = node.getUniqueName();
     %>
     <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
-    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/API_selector.javajet"%>
+
     <%
-	if((new API_selector()).useDatastax(ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__") ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node)){
+	IMetadataTable metadata = null;
+	IConnection conn = null;
+	List<IMetadataColumn> columns = null;
+	List<IMetadataTable> metadatas = node.getMetadataList();	
+	if((metadatas != null) && (metadatas.size() > 0)){
+    	metadata = metadatas.get(0);
+    	if(metadata != null){
+    		columns = metadata.getListColumns();		
+    	}
+    }
+    
+    List<? extends IConnection> conns = node.getOutgoingSortedConnections();
+	if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
+		conn = conns.get(0);
+    }	
+    
+    if(columns == null || columns.isEmpty() || conn == null){
+    	return "";
+    }
 	%>
-    	<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraInput/tCassandraInput_datastax_end.javajet"%>
-    <%
-    }else{
-    %>    
-        <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraInput/tCassandraInput_hector_end.javajet"%>    	
-    <%
+	}
+	globalMap.put("<%=cid%>_NB_LINE", nb_line_<%=cid%>);
+    <% 
+    boolean useExistConn = ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__");
+    String connection = ElementParameterParser.getValue(node, "__CONNECTION__");
+    if(!useExistConn){
+		String dbVersion = ElementParameterParser.getValue(node, "__DB_VERSION__");
+    %>
+        connection_<%=cid%>.close();
+		<%
+		if(!"CASSANDRA_4_0".equals(dbVersion)) {
+		%>
+			cluster_<%=cid%>.close();
+		<%
+		}
     }
     %>
     
