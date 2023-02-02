@@ -56,17 +56,6 @@
                 <ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
-        <PARAMETER
-            NAME="API_TYPE"
-            FIELD="CLOSED_LIST"
-            REPOSITORY_VALUE="API_TYPE"
-            SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_2_0_0')"
-            NUM_ROW="3">
-            <ITEMS DEFAULT="DATASTAX">
-                <ITEM NAME="HECTOR" VALUE="HECTOR"/>
-                <ITEM NAME="DATASTAX" VALUE="DATASTAX"/>
-            </ITEMS>
-        </PARAMETER>
 		<PARAMETER
 			NAME="HOST"
 			FIELD="TEXT"
@@ -85,8 +74,7 @@
 			NUM_ROW="5"
 			SHOW_IF="USE_EXISTING_CONNECTION == 'false'"
 		>
-			<DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR'))) OR ((USE_EXISTING_CONNECTION == 'true') AND ((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'HECTOR')))">"9160"</DEFAULT>
-			<DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0') OR (DB_VERSION == 'CASSANDRA_4_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (((#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_0_0') AND (#LINK@NODE.CONNECTION.API_TYPE == 'DATASTAX')) OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_2_2') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0') OR (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_4_0')))">"9042"</DEFAULT>
+		    <DEFAULT>"9042"</DEFAULT>
 		</PARAMETER>
 		<PARAMETER FIELD="TEXT" NAME="DATACENTER" REPOSITORY_VALUE="DATACENTER" NUM_ROW="8" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_4_0')">
 			<DEFAULT>""</DEFAULT>
@@ -121,7 +109,7 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-        <PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="12" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0') OR (DB_VERSION == 'CASSANDRA_4_0'))">
+        <PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="12">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
@@ -171,54 +159,7 @@
 			<IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
 					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 			<IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
-				<IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'HECTOR'))">
-					<IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_2_0_0')">
-						<!-- Cassandra 2.1.x with latest = 2.0.8 / 2.1 -->
-						<IMPORT
-								MODULE="hector-core-2.0-0.jar" MVN="mvn:org.talend.libraries/hector-core-2.0-0/6.0.0"
-								NAME="hector-core-2.0-0"
-								UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/hector-core-2.0-0.jar"/>
-						<IMPORT
-								MODULE="cassandra-thrift-2.0.4.jar"
-								MVN="mvn:org.talend.libraries/cassandra-thrift-2.0.4/6.0.0"
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-2.0.4.jar"
-                            NAME="cassandra-thrift-2.0.4"/>
-                        <IMPORT
-                            MODULE="slf4j-api-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-api-1.7.5/6.0.0" 
-                            NAME="slf4j-api-1.7.5"
-                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.5.jar"/>
-                        <IMPORT
-                            MODULE="slf4j-log4j12-1.7.5.jar" MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.5/6.0.0" 
-                            NAME="slf4j-log4j12-1.7.5"
-                            UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.5.jar"/>
-                        <IMPORT
-                            NAME="libthrift-0.9.1"
-                            MODULE="libthrift-0.9.1.jar" MVN="mvn:org.talend.libraries/libthrift-0.9.1/6.0.0" 
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/libthrift-0.9.1.jar"/>
-                        <IMPORT
-                            MODULE="guava-14.0.jar" MVN="mvn:org.talend.libraries/guava-14.0/6.0.0" 
-                            NAME="guava-14.0" />
-                        <IMPORT
-                            MODULE="commons-lang-2.6.jar" MVN="mvn:commons-lang/commons-lang/2.6" 
-                            UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang-2.6.jar"
-                            NAME="commons-lang-2.6"/>
-                    </IMPORTS>
-                    
-                    <!-- Imported for all versions -->
-                    <IMPORT
-                        MODULE="uuid-3.4.jar" MVN="mvn:org.talend.libraries/uuid-3.4/6.0.0" 
-                        NAME="uuid-3.4"
-                        UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/uuid-3.4.jar"/>
-                    <IMPORT
-                        NAME="jackson-core-asl-1.9.16-TALEND"
-                        MODULE="jackson-core-asl-1.9.16-TALEND.jar" MVN="mvn:org.codehaus.jackson/jackson-core-asl/1.9.16-TALEND" 
-                        />
-                    <IMPORT
-                        NAME="jackson-mapper-asl-1.9.16-TALEND"
-                        MODULE="jackson-mapper-asl-1.9.16-TALEND.jar" MVN="mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.16-TALEND" 
-                        />
-                </IMPORTS>
-                <IMPORTS REQUIRED_IF="(((DB_VERSION == 'CASSANDRA_2_0_0') AND (API_TYPE == 'DATASTAX')) OR (DB_VERSION == 'CASSANDRA_2_2') OR (DB_VERSION == 'CASSANDRA_3_0'))">
+                <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0')">
                     <IMPORT MODULE="slf4j-api-1.7.7.jar"
 		                MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
 		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"

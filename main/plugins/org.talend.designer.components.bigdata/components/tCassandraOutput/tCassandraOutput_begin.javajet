@@ -25,15 +25,16 @@
     String cid = node.getUniqueName();
     %>
     <%@ include file="../tCassandraConnection/tCassandraConnection_checker.javajet"%>
-    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/API_selector.javajet"%>
+
+    <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/tCassandraOutput_datastax_helper.javajet"%>
     <%
-	if((new API_selector()).useDatastax(ElementParameterParser.getBooleanValue(node, "__USE_EXISTING_CONNECTION__") ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node)){
-	%>
-    	<%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/tCassandraOutput_datastax_begin.javajet"%>
-    <%
-    }else{
-    %>    
-        <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraOutput/tCassandraOutput_hector_begin.javajet"%>    	
-    <%
+    CassandraOutputGenHelper outputGenHelper = new CassandraOutputGenHelper(node);
+    outputGenHelper.init();
+    if(outputGenHelper.validGen()){
+    	return "";
     }
-    %>
+    outputGenHelper.genConn();
+    outputGenHelper.genKSAction();
+    outputGenHelper.genCFAction();
+	outputGenHelper.genInit();
+    %>  
