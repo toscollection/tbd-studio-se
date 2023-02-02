@@ -651,6 +651,10 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_text",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_curator_client_4_0_0_jar",
         "tagName" : "library"
       }, {
@@ -953,6 +957,10 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_net_3_1_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_text",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
