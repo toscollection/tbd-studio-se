@@ -1,10 +1,13 @@
-<%@ jet 
+<%@ page import="org.talend.core.model.metadata.IMetadataColumn" %>
+<%@ page import="java.util.List" %>
+<%@ jet
 	imports="
 		org.talend.core.model.process.INode 
 		org.talend.core.model.process.ElementParameterParser 
 		org.talend.designer.codegen.config.CodeGeneratorArgument
-		org.talend.core.model.metadata.IMetadataTable 
+		org.talend.core.model.metadata.IMetadataTable
 		org.talend.core.model.metadata.IMetadataColumn
+		org.talend.core.model.metadata.MappingTypeRetriever
 		java.util.List
 		java.util.Map
 	"
@@ -82,8 +85,10 @@
 	boolean storeAsParquet = "PARQUET".equals(storageFormat);
 	boolean storeAsAvro = "AVRO".equals(storageFormat);
 	boolean needToGenerateJarsToRegister = "PARQUET".equals(storageFormat);
-	
-	
+	boolean storeAsKudu = "KUDU".equals(storageFormat);
+	String kuduPartition = ElementParameterParser.getValue(createTableNode, "__KUDU_PARTITION__");
+
+
 	if(needToGenerateJarsToRegister) {
 %>
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/generateJarsToRegister.javajet"%>
@@ -126,6 +131,9 @@
 	    listColumn = metadata.getListColumns();
 	}
 
+	if(storeAsKudu && setPartitioned) {
+		external = false;
+	}
 	StringBuilder createTableSQL = new StringBuilder();
 
 	createTableSQL.append("CREATE ");
@@ -195,19 +203,25 @@
 
 	boolean asSelect = "true".equals(ElementParameterParser.getValue(createTableNode, "__AS_SELECT__"));
 
-	if(!asSelect) {
-		createTableSQL.append("(");
-	}
-
-	final org.talend.core.model.metadata.MappingTypeRetriever mappingType = org.talend.core.model.metadata.MetadataTalendType.getMappingTypeRetriever("hive_id");
+	final MappingTypeRetriever mappingType = org.talend.core.model.metadata.MetadataTalendType.getMappingTypeRetriever("hive_id");
 %>
 	<%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveCreateTable/hiveUtil.javajet"%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaCreateTable/tImpalaCreateTable_KuduUtils.javajet"%>
 <%
 	Util util = new Util();
+	KuduUtils kuduUtils = new KuduUtils(mappingType);
 
 	if(!asSelect) {
-		util.generateColumnsSQL(listColumn,createTableSQL);
-		createTableSQL.append(")");
+		if (storeAsKudu && !external){
+			createTableSQL.append("(");
+			kuduUtils.generateKuduSchema(listColumn,createTableSQL);
+			createTableSQL.append(")");
+		}
+		else {
+			createTableSQL.append("(");
+			util.generateColumnsSQL(listColumn, createTableSQL);
+			createTableSQL.append(")");
+		}
 	}
 
 	String tableComment = ElementParameterParser.getValue(createTableNode, "__TABLE_COMMENT__");
@@ -223,7 +237,17 @@
 	}
 	
 	if(setPartitioned) {
-		if ((metadatas!=null)&&(metadatas.size()>0)) {
+		if(storeAsKudu) {
+%>
+String kuduPartition_<%=cid%> = <%=kuduPartition%>;
+<%
+			createTableSQL.append(" PARTITION BY ");
+			createTableSQL.append(" \" + ");
+			createTableSQL.append("kuduPartition_");
+			createTableSQL.append(cid);
+			createTableSQL.append(" + \"");
+
+		} else if((metadatas!=null)&&(metadatas.size()>0)) {
 			IMetadataTable metadata = metadatas.get(1);
 			if (metadata!=null) {
 				List<IMetadataColumn> columnList = metadata.getListColumns();
@@ -240,7 +264,7 @@
 		util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
 	}
 	
-	if(setRowFormat && !storeAsParquet && !storeAsAvro) {
+	if(setRowFormat && !storeAsParquet && !storeAsAvro && !storeAsKudu) {
 		createTableSQL.append(" ROW FORMAT ");
 		if(setDelimitedRowFormat) {
 			createTableSQL.append("DELIMITED ");
@@ -319,8 +343,9 @@
 		createTableSQL.append(" + \"'");
 	}
 
-	util.generatePros(" TBLPROPERTIES ", tableProps, createTableSQL);
-
+	if(!storeAsKudu){
+		util.generatePros(" TBLPROPERTIES ", tableProps, createTableSQL);
+	}
 	if(asSelect) {
 		String sql = ElementParameterParser.getValue(createTableNode, "__SELECT__");
 		sql = sql.replaceAll("\n"," ");
