@@ -1,0 +1,52 @@
+<%@ jet
+imports="
+        java.util.List
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.core.model.process.INode
+        org.talend.core.model.metadata.IMetadataTable
+        org.talend.core.model.metadata.IMetadataColumn
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.IConnection
+        org.talend.core.model.process.EConnectionType
+        "
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
+INode node = (INode)codeGenArgument.getArgument();
+String cid = node.getUniqueName();
+String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
+final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
+String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+String rowKey = ElementParameterParser.getValue(node, "__ROW_KEY__");
+%>
+
+org.apache.hadoop.hbase.client.Delete p_<%=cid%> = null;
+try{
+
+    List<String> rowKeyString<%=cid%> = new java.util.ArrayList<String>(java.util.Arrays.asList(<%=rowKey%>.split(",")));
+    List<org.apache.hadoop.hbase.client.Delete> listOfBatchDelete<%=cid%> = new java.util.ArrayList<org.apache.hadoop.hbase.client.Delete>();
+    for(String key: rowKeyString<%=cid%>){
+            org.apache.hadoop.hbase.client.Delete d=new org.apache.hadoop.hbase.client.Delete(org.apache.hadoop.hbase.util.Bytes.toBytes(key.trim()));
+            listOfBatchDelete<%=cid%>.add(new org.apache.hadoop.hbase.client.Delete(org.apache.hadoop.hbase.util.Bytes.toBytes(key.trim())));
+    }
+    table_<%=cid%>.delete(listOfBatchDelete<%=cid%>);
+
+}catch(java.lang.Exception e){
+	    <%
+		if(("true").equals(dieOnError)){
+		%>
+		    throw(e);
+		<%
+		}else {
+		%>
+		    System.out.println(e.getMessage());
+			<%
+			if(isLog4jEnabled) {
+			%>
+			    log.error("<%=cid%> - " + e.getMessage());
+			<%
+			}
+		}
+		%>
+}
