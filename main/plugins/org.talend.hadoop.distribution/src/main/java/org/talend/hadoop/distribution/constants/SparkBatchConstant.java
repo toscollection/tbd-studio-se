@@ -24,6 +24,8 @@ public final class SparkBatchConstant {
 
     public static final String VERSION_PARAMETER = "SPARK_VERSION";//$NON-NLS-1$
     
+    public static final String SPARKCONFIGURATION_USE_KNOX = "USE_KNOX";//$NON-NLS-1$
+    
     public static final String VERSION_REPOSITORYVALUE = "DB_VERSION";//$NON-NLS-1$
 
     public static final String SPARK_BATCH_SPARKCONFIGURATION_LINKEDPARAMETER = "SPARK_CONFIGURATION";//$NON-NLS-1$
