@@ -565,7 +565,7 @@ public abstract class AbstractDistribution {
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KAFKA_OUTPUT_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, kafkaCondition, ModuleGroupName.KAFKA.get(this.getVersion()), true ));
 
-
+	
         // Spark Streaming Kinesis nodes
         Set<DistributionModuleGroup> kinesisModuleGroups =  ModuleGroupsUtils.getStreamingModuleGroups(distribution, version, (ComponentCondition) null, ModuleGroupName.KINESIS.get(this.getVersion()), true );
 
@@ -665,7 +665,12 @@ public abstract class AbstractDistribution {
 
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DELTALAKE_INPUT_COMPONENT), deltaBatchConfigurationModuleGroups);
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.DELTALAKE_OUTPUT_COMPONENT), deltaBatchConfigurationModuleGroups);
-
+	
+	//Cassandra nodes in spark batch and streaming
+	Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+	result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
+	result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
+	
         return result;
     }
 

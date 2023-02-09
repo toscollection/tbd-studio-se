@@ -81,6 +81,8 @@ public final class SparkStreamingConstant {
     public static final String DYNAMODB_OUTPUT_COMPONENT = "tDynamoDBOutput"; //$NON-NLS-1$
 
     public static final String DYNAMODB_INPUT_COMPONENT = "tDynamoDBLookupInput"; //$NON-NLS-1$
+    
+    public static final String CASSANDRA_CONFIGURATION_COMPONENT = "tCassandraConfiguration"; //$NON-NLS-1$
 
     public static final String MAPRSTREAMS_INPUT_COMPONENT = "tMapRStreamsInput"; //$NON-NLS-1$
 
