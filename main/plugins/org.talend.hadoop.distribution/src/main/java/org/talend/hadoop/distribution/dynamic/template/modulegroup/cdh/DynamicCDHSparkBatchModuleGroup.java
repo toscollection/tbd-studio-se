@@ -41,8 +41,6 @@ public class DynamicCDHSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
 
     @Override
     protected void initConditions() {
-        conditionSpark1 = new SimpleComponentCondition(new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_1_6.getSparkVersion())); //$NON-NLS-1$
-
         conditionSpark2 = new MultiComponentCondition(
         		new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_2_2.getSparkVersion()), //$NON-NLS-1$
                 BooleanOperator.OR,
@@ -61,8 +59,6 @@ public class DynamicCDHSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
 
         String sparkMrRequiredRuntimeId = pluginAdapter
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.SPARK_MRREQUIRED_MODULE_GROUP.getModuleName());
-        String hdfsSpark1_6RuntimeId = pluginAdapter
-                .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.HDFS_MODULE_GROUP_SPARK1_6.getModuleName());
         String hdfsSpark2_1RuntimeId = pluginAdapter
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.HDFS_MODULE_GROUP_SPARK2_1.getModuleName());
         String hdfsCommonRuntimeId = pluginAdapter
@@ -73,28 +69,21 @@ public class DynamicCDHSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
                 DynamicCDHModuleGroupConstant.TALEND_CLOUDERA_CDH_NAVIGATOR.getModuleName());
 
         checkRuntimeId(sparkMrRequiredRuntimeId);
-        checkRuntimeId(hdfsSpark1_6RuntimeId);
         checkRuntimeId(hdfsSpark2_1RuntimeId);
         checkRuntimeId(hdfsCommonRuntimeId);
         checkRuntimeId(mrRuntimeId);
         checkRuntimeId(talendClouderaNaviRuntimeId);
 
         if (StringUtils.isNotBlank(sparkMrRequiredRuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(sparkMrRequiredRuntimeId, true, conditionSpark1));
             moduleGroups.add(new DistributionModuleGroup(sparkMrRequiredRuntimeId, true, conditionSpark2));
-        }
-        if (StringUtils.isNotBlank(hdfsSpark1_6RuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(hdfsSpark1_6RuntimeId, false, conditionSpark1));
         }
         if (StringUtils.isNotBlank(hdfsSpark2_1RuntimeId)) {
             moduleGroups.add(new DistributionModuleGroup(hdfsSpark2_1RuntimeId, false, conditionSpark2));
         }
         if (StringUtils.isNotBlank(hdfsCommonRuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(hdfsCommonRuntimeId, false, conditionSpark1));
             moduleGroups.add(new DistributionModuleGroup(hdfsCommonRuntimeId, false, conditionSpark2));
         }
         if (StringUtils.isNotBlank(mrRuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(mrRuntimeId, false, conditionSpark1));
             moduleGroups.add(new DistributionModuleGroup(mrRuntimeId, false, conditionSpark2));
         }
         if (StringUtils.isNotBlank(talendClouderaNaviRuntimeId)) {

@@ -28,8 +28,6 @@ import org.talend.hadoop.distribution.dynamic.adapter.DynamicPluginAdapter;
 
 public class DynamicSparkBatchModuleGroup extends AbstractModuleGroup {
 
-    protected ComponentCondition conditionSpark1;
-
     protected ComponentCondition conditionSpark2;
 
     public DynamicSparkBatchModuleGroup(DynamicPluginAdapter pluginAdapter) {
@@ -38,7 +36,6 @@ public class DynamicSparkBatchModuleGroup extends AbstractModuleGroup {
     }
 
     protected void initConditions() {
-        conditionSpark1 = new SimpleComponentCondition(new BasicExpression("SUPPORTED_SPARK_VERSION", EqualityOperator.EQ, ESparkVersion.SPARK_1_6.getSparkVersion())); //$NON-NLS-1$
 
         conditionSpark2 = 
         		new MultiComponentCondition(
@@ -65,17 +62,11 @@ public class DynamicSparkBatchModuleGroup extends AbstractModuleGroup {
         Set<DistributionModuleGroup> moduleGroups = new HashSet<>();
         DynamicPluginAdapter pluginAdapter = getPluginAdapter();
 
-        String sparkRuntimeId = pluginAdapter
-                .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.SPARK_MODULE_GROUP.getModuleName());
         String spark2RuntimeId = pluginAdapter
                 .getRuntimeModuleGroupIdByTemplateId(DynamicModuleGroupConstant.SPARK2_MODULE_GROUP.getModuleName());
 
-        checkRuntimeId(sparkRuntimeId);
         checkRuntimeId(spark2RuntimeId);
 
-        if (StringUtils.isNotBlank(sparkRuntimeId)) {
-            moduleGroups.add(new DistributionModuleGroup(sparkRuntimeId, false, conditionSpark1));
-        }
         if (StringUtils.isNotBlank(spark2RuntimeId)) {
             moduleGroups.add(new DistributionModuleGroup(spark2RuntimeId, false, conditionSpark2));
         }
