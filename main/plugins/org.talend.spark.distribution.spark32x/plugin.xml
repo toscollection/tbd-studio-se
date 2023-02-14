@@ -228,6 +228,7 @@
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="delta-core_2.12-1.1.0.jar" name="delta-core_2.12-1.1.0.jar" mvn_uri="mvn:io.delta/delta-core_2.12/1.1.0"/>
 
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar" name="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/3.2.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
@@ -456,6 +457,7 @@
 
         <!-- Cassandra group -->
         <libraryNeededGroup description="Cassanda libraries for spark32x" id="CASSANDRA-GROUP-SPARK_3_2_x" name="CASSANDRA-GROUP-SPARK_3_2_x">
+            <library id="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar"/>
             <library id="jnr-posix-3.1.0.jar"/>
         </libraryNeededGroup>
 
