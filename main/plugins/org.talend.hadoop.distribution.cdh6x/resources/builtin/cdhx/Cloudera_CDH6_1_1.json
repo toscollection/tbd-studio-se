@@ -11923,7 +11923,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_pool2_2_9_0_jar",
-      "mvn_uri" : "mvn:commons-pool/commons-pool2/2.9.0//jar",
+      "mvn_uri" : "mvn:org.apache.commons/commons-pool2/2.9.0/jar",
       "name" : "commons-pool2-2.9.0.jar",
       "tagName" : "libraryNeeded"
     }, {
