@@ -249,7 +249,7 @@
             FIELD="TEXT"
             NUM_ROW="52"
             REQUIRED="true"
-            SHOW_IF="(isShow[USE_STATEMENT] AND (USE_STATEMENT=='true'))"
+            SHOW_IF="(isShow[USE_STATEMENT] AND (USE_STATEMENT=='true')) OR (DB_VERSION == 'CASSANDRA_3_0')"
         >
           <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
         </PARAMETER>
