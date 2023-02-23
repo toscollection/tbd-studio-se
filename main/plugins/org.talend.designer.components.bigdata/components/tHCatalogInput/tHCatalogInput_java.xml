@@ -221,10 +221,10 @@
 				MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
 				REQUIRED_IF="(USE_KRB=='true') AND (DISTRIBUTION!='CUSTOM')" />
-			<IMPORT NAME="Talend File Enhanced" MODULE="talend_file_enhanced-1.1.jar"
-				MVN="mvn:org.talend.components.lib/talend_file_enhanced/1.1"
-				UrlPath="platform:/plugin/org.talend.libraries.custom/lib/talend_file_enhanced-1.1.jar"
-				REQUIRED="true" />	
+			<IMPORT NAME="Talend File Enhanced" MODULE="talend_file_enhanced-1.2.jar"
+				MVN="mvn:org.talend.components.lib/talend_file_enhanced/1.2"
+				UrlPath="platform:/plugin/org.talend.libraries.custom/lib/talend_file_enhanced-1.2.jar"
+				REQUIRED="true" />
 			<IMPORT NAME="cxf-rt-frontend-jaxrs-3.4.7" MODULE="cxf-rt-frontend-jaxrs-3.4.7.jar"
 				MVN="mvn:org.apache.cxf/cxf-rt-frontend-jaxrs/3.4.7"
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
@@ -245,7 +245,7 @@
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="javax.annotation-api-1.2.jar" MODULE="javax.annotation-api-1.2.jar"
 				MVN="mvn:javax.annotation/javax.annotation-api/1.2" REQUIRED="false"
-				REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />	
+				REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS />
