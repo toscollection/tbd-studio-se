@@ -18,10 +18,12 @@ public class DatabricksRuntimeVersion {
 				new DatabricksRuntimeAndSparkVersion("\"10.3.x-scala2.12\"", "SPARK_3_2_x"),
 				new DatabricksRuntimeAndSparkVersion("\"10.2.x-scala2.12\"", "SPARK_3_2_x"),
 				new DatabricksRuntimeAndSparkVersion("\"10.1.x-scala2.12\"", "SPARK_3_2_x"),
+				new DatabricksRuntimeAndSparkVersion("\"12.1.x-scala2.12\"", "SPARK_3_3_x"),
 				new DatabricksRuntimeAndSparkVersion("\"11.3.x-scala2.12\"", "SPARK_3_3_x"),
 				new DatabricksRuntimeAndSparkVersion("\"11.2.x-scala2.12\"", "SPARK_3_3_x"),
 				new DatabricksRuntimeAndSparkVersion("\"11.1.x-scala2.12\"", "SPARK_3_3_x"),
 				new DatabricksRuntimeAndSparkVersion("\"11.0.x-scala2.12\"", "SPARK_3_3_x")
+				
 		);
 	}
 	
