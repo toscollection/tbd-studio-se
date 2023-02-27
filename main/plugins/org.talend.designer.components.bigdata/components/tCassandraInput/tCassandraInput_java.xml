@@ -196,6 +196,9 @@
 					<IMPORT MODULE="netty-handler-4.1.86.Final.jar"
 	                    MVN="mvn:io.netty/netty-handler/4.1.86.Final"
 	                    NAME="netty-handler-4.1.86.Final.jar" />
+					<IMPORT MODULE="netty-transport-native-unix-common-4.1.86.Final.jar"
+						MVN="mvn:io.netty/netty-transport-native-unix-common/4.1.86.Final"
+						NAME="netty-transport-native-unix-common-4.1.86.Final.jar" />
 					<IMPORT MODULE="netty-codec-4.1.86.Final.jar"
 	                    MVN="mvn:io.netty/netty-codec/4.1.86.Final"
 	                    NAME="netty-codec-4.1.86.Final.jar" />
