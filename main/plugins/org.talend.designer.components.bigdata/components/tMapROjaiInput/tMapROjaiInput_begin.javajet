@@ -135,7 +135,7 @@ imports="
 		java.util.ArrayList<String> cmd2_<%=cid%> = new java.util.ArrayList<String>();
 		
 		String os_<%=cid%> = System.getProperty("os.name");  
-        if(os_<%=cid%>.toLowerCase().startsWith("win")){  
+        if(os_<%=cid%>.toLowerCase(java.util.Locale.US).startsWith("win")){  
            cmd2_<%=cid%>.add("maprlogin.bat");
         }else{
            cmd2_<%=cid%>.add("maprlogin");
