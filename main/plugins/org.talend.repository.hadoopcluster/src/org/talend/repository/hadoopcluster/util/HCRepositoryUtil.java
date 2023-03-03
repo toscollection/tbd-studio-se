@@ -44,6 +44,7 @@ import org.talend.core.repository.model.ProxyRepositoryFactory;
 import org.talend.core.runtime.hd.IHDistribution;
 import org.talend.core.runtime.hd.IHDistributionVersion;
 import org.talend.designer.hdfsbrowse.manager.HadoopParameterUtil;
+import org.talend.hadoop.distribution.constants.apache.ISparkDistribution;
 import org.talend.metadata.managment.ui.utils.ConnectionContextHelper;
 import org.talend.repository.ProjectManager;
 import org.talend.repository.hadoopcluster.node.HadoopFolderRepositoryNode;
@@ -1014,33 +1015,158 @@ public class HCRepositoryUtil {
         if (synapseExecutorMemory != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY, synapseExecutorMemory);
         }
-        String dataBricksEndpoint = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.DATABRICKS_ENDPOINT.getName());
+        String univDistributionString = ISparkDistribution.DISTRIBUTION_NAME;
+        IHDistribution univDistribution = hadoopDistributionService.getHadoopDistribution(univDistributionString, false);
+        if (hiveDistribution == null) {
+            return;
+        }
+        IHDistributionVersion univDefaultVersion = univDistribution.getHDVersion("SPARK_3_1_x", false);
+        if (hiveVersion == null) {
+            return;
+        }
+        
+        String dataBricksEndpoint = univDefaultVersion.getDefaultConfig(univDistributionString, EHadoopProperties.DATABRICKS_ENDPOINT.getName());
         if (dataBricksEndpoint != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_ENDPOINT, dataBricksEndpoint);
         }
-        String dataBricksCloudProvider = hiveVersion.getDefaultConfig(distribution,
+        String dataBricksCloudProvider = univDefaultVersion.getDefaultConfig(univDistributionString,
                 EHadoopProperties.DATABRICKS_CLOUD_PROVIDER.getName());
         if (dataBricksCloudProvider != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLOUD_PROVIDER, dataBricksCloudProvider);
         }
-        String dataBricksSubmitMode = hiveVersion.getDefaultConfig(distribution,
+        String dataBricksSubmitMode = univDefaultVersion.getDefaultConfig(univDistributionString,
                 EHadoopProperties.DATABRICKS_RUN_MODE.getName());
         if (dataBricksSubmitMode != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUN_MODE, dataBricksSubmitMode);
         }
-        String dataBricksClusterID = hiveVersion.getDefaultConfig(distribution,
+        String dataBricksClusterID = univDefaultVersion.getDefaultConfig(univDistributionString,
                 EHadoopProperties.DATABRICKS_CLUSTER_ID.getName());
         if (dataBricksClusterID != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_ID, dataBricksClusterID);
         }
-        String databricksToken = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.DATABRICKS_TOKEN.getName());
+        String databricksToken = univDefaultVersion.getDefaultConfig(univDistributionString, EHadoopProperties.DATABRICKS_TOKEN.getName());
         if (databricksToken != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_TOKEN, EncryptionUtil.getValue(databricksToken, true));
         }
-        String databricksDBFSDepFolder = hiveVersion.getDefaultConfig(distribution,
+        String tempsK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
                 EHadoopProperties.DATABRICKS_DBFS_DEP_FOLDER.getName());
-        if (databricksDBFSDepFolder != null) {
-            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER, databricksDBFSDepFolder);
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER, tempsK8sValue);
+        }
+        String tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_SUBMIT_MODE.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SUBMIT_MODE, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_MASTER.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_INSTANCES.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_REGISTRYSECRET.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_IMAGE.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_NAMESPACE.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_SERVICEACCOUNT.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_DISTUPLOAD.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_S3BUCKET.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_S3FOLDER.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_S3CREDENTIALS.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_S3ACCESSKEY.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_S3SECRETKEY.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_BLOBACCOUNT.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_BLOBCONTAINER.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_BLOBSECRETKEY.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZUREACCOUNT.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZURECREDENTIALS.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZURECONTAINER.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZURESECRETKEY.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZUREAADKEY.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY, EncryptionUtil.getValue(tempK8sValue, true));
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZUREAADCLIENTID.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID, tempK8sValue);
+        }
+        tempK8sValue = univDefaultVersion.getDefaultConfig(univDistributionString,
+                EHadoopProperties.K8S_AZUREAADDIRECTORYID.getName());
+        if (tempsK8sValue != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID, tempK8sValue);
         }
         String univStandaloneMaster = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.UNIV_STANDALONE_MASTER.getName());
