@@ -247,6 +247,77 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EHDFSRepositoryToComponent.DATABRICKS_DBFS_DEP_FOLDER.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_DBFS_DEP_FOLDER));
+        } else if (EHDFSRepositoryToComponent.K8S_SUBMIT_MODE.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_SUBMIT_MODE)).replaceAll("\"", "");
+        } else if (EHDFSRepositoryToComponent.K8S_MASTER.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER));
+        } else if (EHDFSRepositoryToComponent.K8S_INSTANCES.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES));
+        } else if (EHDFSRepositoryToComponent.K8S_REGISTRYSECRET_CHECK.getRepositoryValue().equals(value)) {
+        	return Boolean.valueOf(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET_CHECK));
+        } else if (EHDFSRepositoryToComponent.K8S_REGISTRYSECRET.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET));
+        } else if (EHDFSRepositoryToComponent.K8S_IMAGE.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE));
+        } else if (EHDFSRepositoryToComponent.K8S_NAMESPACE.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE));
+        } else if (EHDFSRepositoryToComponent.K8S_SERVICEACCOUNT.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT));
+        } else if (EHDFSRepositoryToComponent.K8S_DISTUPLOAD.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_DISTUPLOAD));
+        } else if (EHDFSRepositoryToComponent.K8S_S3BUCKET.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET));
+        } else if (EHDFSRepositoryToComponent.K8S_S3FOLDER.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER));
+        } else if (EHDFSRepositoryToComponent.K8S_S3CREDENTIALS.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS));
+        } else if (EHDFSRepositoryToComponent.K8S_S3ACCESSKEY.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY));
+        } else if (EHDFSRepositoryToComponent.K8S_S3SECRETKEY.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY));
+        } else if (EHDFSRepositoryToComponent.K8S_BLOBACCOUNT.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT));
+        } else if (EHDFSRepositoryToComponent.K8S_BLOBCONTAINER.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER));
+        } else if (EHDFSRepositoryToComponent.K8S_BLOBSECRETKEY.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY));
+        } else if (EHDFSRepositoryToComponent.K8S_AZUREACCOUNT.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT));
+        } else if (EHDFSRepositoryToComponent.K8S_AZURECREDENTIALS.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECREDENTIALS));
+        } else if (EHDFSRepositoryToComponent.K8S_AZURECONTAINER.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER));
+        } else if (EHDFSRepositoryToComponent.K8S_AZURESECRETKEY.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY));
+        } else if (EHDFSRepositoryToComponent.K8S_AZUREAADKEY.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY));
+        } else if (EHDFSRepositoryToComponent.K8S_AZUREAADCLIENTID.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID));
+        } else if (EHDFSRepositoryToComponent.K8S_AZUREAADDIRECTORYID.getRepositoryValue().equals(value)) {
+        	return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID));
         } else if (EHDFSRepositoryToComponent.DATABRICKS_CLUSTER_TYPE.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_CLUSTER_TYPE));

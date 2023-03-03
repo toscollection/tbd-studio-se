@@ -344,6 +344,86 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
                         break;
+                    case k8sMaster:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER));
+                    	 break;
+                    case k8sInstances:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES));
+                    	 break;
+                    case k8sRegistrySecret:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET));
+                    	 break;
+                    case k8sImage:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE));
+                    	 break;
+                    case k8sNamespace:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE));
+                    	 break;
+                    case k8sServiceAccount:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT));
+                    	 break;
+                    case k8sS3Bucket:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET));
+                    	 break;
+                    case k8sS3Folder:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER));
+                    	 break;
+                    case k8sS3Credentials:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS));
+                    	 break;
+                    case k8sS3AccessKey:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY));
+                    	 break;
+                    case k8sS3SecretKey:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY), JavaTypesManager.PASSWORD);
+                    	 break;
+                    case k8sBlobAccount:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT));
+                    	 break;
+                    case k8sBlobContainer:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER));
+                    	 break;
+                    case k8sBlobSecretKey:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY), JavaTypesManager.PASSWORD);
+                    	 break;
+                    case k8sAzureAccount:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT));
+                    	 break;
+                    case k8sAzureContainer:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER));
+                    	 break;
+                    case k8sAzureSecretKey:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY), JavaTypesManager.PASSWORD);
+                    	 break;
+                    case k8sAzureAADKey:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY), JavaTypesManager.PASSWORD);
+                    	 break;
+                    case k8sAzureAADClientID:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID));
+                    	 break;
+                    case k8sAzureAADDirectoryID:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID));
+                    	 break;
                     case StandaloneMaster:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER));
@@ -780,6 +860,66 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_DIRECTORY,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
+        case k8sMaster:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_MASTER, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sInstances:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_INSTANCES, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sRegistrySecret:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_REGISTRYSECRET, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sImage:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_IMAGE, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sNamespace:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_NAMESPACE, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sServiceAccount:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_SERVICEACCOUNT, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sS3Bucket:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3BUCKET, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sS3Folder:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3FOLDER, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sS3Credentials:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3CREDENTIALS, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sS3AccessKey:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3ACCESSKEY, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sS3SecretKey:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_S3SECRETKEY, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sBlobAccount:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBACCOUNT, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sBlobContainer:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBCONTAINER, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sBlobSecretKey:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_BLOBSECRETKEY, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sAzureAccount:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREACCOUNT, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sAzureContainer:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURECONTAINER, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sAzureSecretKey:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZURESECRETKEY, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sAzureAADKey:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADKEY, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sAzureAADClientID:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADCLIENTID, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
+        case k8sAzureAADDirectoryID:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_K8S_AZUREAADDIRECTORYID, ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+        	 break;
         case KnoxTimeout:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_KNOX_TIMEOUT,
                 ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
