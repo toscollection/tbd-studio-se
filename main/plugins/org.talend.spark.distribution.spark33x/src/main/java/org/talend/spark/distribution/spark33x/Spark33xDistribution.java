@@ -185,7 +185,7 @@ public class Spark33xDistribution extends AbstractSparkDistribution
 
     @Override
     public boolean doSupportSparkYarnClusterMode() {
-        return false;
+        return true;
     }
 
     @Override
@@ -265,17 +265,17 @@ public class Spark33xDistribution extends AbstractSparkDistribution
 
     @Override
     public String getS3Packages() {
-        return "com.amazonaws:aws-java-sdk-bundle:1.11.375,org.apache.hadoop:hadoop-aws:3.2.0";
+        return "com.amazonaws:aws-java-sdk-bundle:1.12.170,org.apache.hadoop:hadoop-aws:3.3.4";
     }
 
     @Override
     public String getBlobPackages() {
-        return "org.apache.hadoop:hadoop-azure:3.2.0,com.microsoft.azure:azure-storage:7.0.0";
+        return "org.apache.hadoop:hadoop-azure:3.3.4,com.microsoft.azure:azure-storage:7.0.0";
     }
 
     @Override
     public String getADLS2Packages() {
-        return "org.apache.hadoop:hadoop-azure-datalake:3.2.1,org.apache.hadoop:hadoop-azure:3.2.1";
+        return "org.apache.hadoop:hadoop-azure-datalake:3.3.4,org.apache.hadoop:hadoop-azure:3.3.4";
     }
 
     @Override
