@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugin [
+        <!ENTITY aws_sdk_version "1.12.170">
         <!ENTITY spark_version "3.2.2">
         <!ENTITY scala_version "2.12">
         <!ENTITY jetty_version "9.4.44.v20210927">
@@ -212,8 +213,6 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="zstd-jni-1.5.0-4.jar" name="zstd-jni-1.5.0-4.jar" mvn_uri="mvn:com.github.luben/zstd-jni/1.5.0-4"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-aws-3.3.4.jar" name="hadoop-aws-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-aws/3.3.4"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-bundle-1.11.375.jar" name="aws-java-sdk-bundle-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/1.11.375"/>
-
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="hadoop-azure-3.3.4.jar" name="hadoop-azure-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.3.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="azure-storage-7.0.0.jar" name="azure-storage-7.0.0.jar" mvn_uri="mvn:com.microsoft.azure/azure-storage/7.0.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jetty-util-ajax-&jetty_version;.jar" name="jetty-util-ajax-&jetty_version;.jar" mvn_uri="mvn:org.eclipse.jetty/jetty-util-ajax/&jetty_version;"/>
@@ -231,7 +230,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar" name="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/3.2.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
 
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.16.0.jar" name="emr-dynamodb-hadoop-4.16.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.16.0"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
@@ -247,12 +246,14 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-token-provider-kafka-0-10_&scala_version;-&spark_version;.jar" name="spark-token-provider-kafka-0-10_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-token-provider-kafka-0-10_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-streaming-kinesis-asl_&scala_version;-&spark_version;.jar" name="spark-streaming-kinesis-asl_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kinesis-asl_&scala_version;/&spark_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-kinesis-1.11.375.jar" name="aws-java-sdk-kinesis-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-kinesis/1.11.375"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-core-1.11.375.jar" name="aws-java-sdk-core-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-core/1.11.375"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-kinesis-&aws_sdk_version;.jar" name="aws-java-sdk-kinesis-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-kinesis/&aws_sdk_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-core-&aws_sdk_version;.jar" name="aws-java-sdk-core-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-core/&aws_sdk_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-dataformat-cbor-&jackson_version;.jar" name="jackson-dataformat-cbor-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-cbor/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="amazon-kinesis-client-1.12.0.jar" name="amazon-kinesis-client-1.12.0.jar" mvn_uri="mvn:com.amazonaws/amazon-kinesis-client/1.12.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-cloudwatch-1.11.375.jar" name="aws-java-sdk-cloudwatch-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-cloudwatch/1.11.375"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-dynamodb-1.11.375.jar" name="aws-java-sdk-dynamodb-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.375"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-cloudwatch-&aws_sdk_version;.jar" name="aws-java-sdk-cloudwatch-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-cloudwatch/&aws_sdk_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-dynamodb-&aws_sdk_version;.jar" name="aws-java-sdk-dynamodb-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-dynamodb/&aws_sdk_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="aws-java-sdk-s3-&aws_sdk_version;.jar" name="aws-java-sdk-s3-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-s3/&aws_sdk_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jmespath-java-&aws_sdk_version;.jar" name="jmespath-java-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/jmespath-java/&aws_sdk_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-client-1.22.0.jar" name="google-api-client-1.22.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.22.0"/>
@@ -463,8 +464,12 @@
 
         <!-- DynamoDB group -->
         <libraryNeededGroup description="DynamoDB libraries for spark32x" id="DYNAMODB-BATCH-GROUP-SPARK_3_2_x" name="DYNAMODB-BATCH-GROUP-SPARK_3_2_x">
-            <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
-            <library id="aws-java-sdk-bundle-1.11.375.jar"/>
+            <library id="aws-java-sdk-core-&aws_sdk_version;.jar"/>
+            <library id="aws-java-sdk-dynamodb-&aws_sdk_version;.jar"/>
+            <library id="aws-java-sdk-s3-&aws_sdk_version;.jar"/>
+            <library id="emr-dynamodb-hadoop-4.16.0.jar"/>
+            <library id="jackson-databind-&jackson_databind_version;.jar"/>
+            <library id="jmespath-java-&aws_sdk_version;.jar"/>
         </libraryNeededGroup>
 
         <!-- Redshift group -->
@@ -497,12 +502,12 @@
         <libraryNeededGroup description="Spark streaming Kinesis libraries for spark32x" id="KINESIS-GROUP-SPARK_3_2_x" name="KINESIS-GROUP-SPARK_3_2_x">
             <library id="spark-streaming-kinesis-asl_&scala_version;-&spark_version;.jar"/>
             <library id="commons-pool2-2.9.0.jar"/>
-            <library id="aws-java-sdk-kinesis-1.11.375.jar"/>
-            <library id="aws-java-sdk-core-1.11.375.jar"/>
+            <library id="aws-java-sdk-kinesis-&aws_sdk_version;.jar"/>
+            <library id="aws-java-sdk-core-&aws_sdk_version;.jar"/>
             <library id="jackson-dataformat-cbor-2.10.0.jar"/>
             <library id="amazon-kinesis-client-1.12.0.jar"/>
-            <library id="aws-java-sdk-cloudwatch-1.11.375.jar"/>
-            <library id="aws-java-sdk-dynamodb-1.11.375.jar"/>
+            <library id="aws-java-sdk-cloudwatch-&aws_sdk_version;.jar"/>
+            <library id="aws-java-sdk-dynamodb-&aws_sdk_version;.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming Redshift group -->
