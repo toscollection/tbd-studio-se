@@ -2,10 +2,13 @@
 <!DOCTYPE plugin [
         <!ENTITY aws_sdk_version "1.12.170">
         <!ENTITY commons-configuration2_version "2.8.0">
+        <!ENTITY google_version "1.33.3">
         <!ENTITY ivy_version "2.5.1">
+        <!ENTITY jackson_databind_version "2.13.4.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.13.3">
-        <!ENTITY jackson_databind_version "2.13.4.1">
+        <!ENTITY scala_version "2.12">
+        <!ENTITY snakeyaml_version "1.33">
         <!ENTITY scala_version "2.12">
 ]>
 <?eclipse version="3.4"?>
@@ -163,6 +166,8 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="objenesis-3.2.jar" name="objenesis-3.2.jar" mvn_uri="mvn:org.objenesis/objenesis/3.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="okhttp-3.12.12.jar" name="okhttp-3.12.12.jar" mvn_uri="mvn:com.squareup.okhttp3/okhttp/3.12.12"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="okio-1.14.0.jar" name="okio-1.14.0.jar" mvn_uri="mvn:com.squareup.okio/okio/1.14.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="opencensus-api-0.31.1.jar" name="opencensus-api-0.31.1.jar" mvn_uri="mvn:io.opencensus/opencensus-api/0.31.1"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="opencensus-contrib-http-util-0.31.1.jar" name="opencensus-contrib-http-util-0.31.1.jar" mvn_uri="mvn:io.opencensus/opencensus-contrib-http-util/0.31.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="oro-2.0.8.jar" name="oro-2.0.8.jar" mvn_uri="mvn:oro/oro/2.0.8"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="orc-core-1.7.4.jar" name="orc-core-1.7.4.jar" mvn_uri="mvn:org.apache.orc/orc-core/1.7.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="orc-mapreduce-1.7.4.jar" name="orc-mapreduce-1.7.4.jar" mvn_uri="mvn:org.apache.orc/orc-mapreduce/1.7.4"/>
@@ -182,7 +187,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="scala-reflect-2.12.15.jar" name="scala-reflect-2.12.15.jar" mvn_uri="mvn:org.scala-lang/scala-reflect/2.12.15"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="scala-xml_2.12-1.2.0.jar" name="scala-xml_2.12-1.2.0.jar" mvn_uri="mvn:org.scala-lang.modules/scala-xml_2.12/1.2.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="slf4j-api-1.7.32.jar" name="slf4j-api-1.7.32.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.32"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="snakeyaml-1.30.jar" name="snakeyaml-1.30.jar" mvn_uri="mvn:org.yaml/snakeyaml/1.30"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="snakeyaml-&snakeyaml_version;.jar" name="snakeyaml-&snakeyaml_version;.jar" mvn_uri="mvn:org.yaml/snakeyaml/&snakeyaml_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-catalyst_2.12-3.3.0.jar" name="spark-catalyst_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.3.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-core_2.12-3.3.0.jar" name="spark-core_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.3.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-hive_2.12-3.3.0.jar" name="spark-hive_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.3.0"/>
@@ -246,13 +251,13 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jmespath-java-&aws_sdk_version;.jar" name="jmespath-java-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/jmespath-java/&aws_sdk_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-api-client-1.22.0.jar" name="google-api-client-1.22.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.22.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-api-services-pubsub-v1-rev355-1.22.0.jar" name="google-api-services-pubsub-v1-rev355-1.22.0.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev355-1.22.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-1.22.0.jar" name="google-http-client-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client/1.22.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson/1.22.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-jackson2-1.22.0.jar" name="google-http-client-jackson2-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.22.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-oauth-client-1.22.0.jar" name="google-oauth-client-1.22.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/1.22.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-oauth-client-java6-1.20.0.jar" name="google-oauth-client-java6-1.20.0.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/1.20.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-api-client-1.33.0.jar" name="google-api-client-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.33.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" name="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev20220718-1.32.1"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-1.41.7.jar" name="google-http-client-1.41.7.jar" mvn_uri="mvn:com.google.http-client/google-http-client/1.41.7"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:org.talend.libraries/google-http-client-jackson-1.22.0/6.0.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-http-client-jackson2-1.33.0.jar" name="google-http-client-jackson2-1.33.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.33.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-oauth-client-&google_version;.jar" name="google-oauth-client-&google_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/&google_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-oauth-client-java6-&google_version;.jar" name="google-oauth-client-java6-&google_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/&google_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-extensions-0.5.1.jar" name="google-extensions-0.5.1.jar" mvn_uri="mvn:com.google.flogger/google-extensions/0.5.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/util/1.6.0"/>
 
@@ -366,7 +371,7 @@
             <library id="scala-library-2.12.15.jar"/>
             <library id="scala-reflect-2.12.15.jar"/>
             <library id="scala-xml_2.12-1.2.0.jar"/>
-            <library id="snakeyaml-1.30.jar"/>
+            <library id="snakeyaml-&snakeyaml_version;.jar"/>
             <library id="snappy-java-1.1.8.2.jar"/>
             <library id="spark-catalyst_2.12-3.3.0.jar"/>
             <library id="spark-avro_2.12-3.3.0.jar"/>
@@ -532,15 +537,15 @@
             <group id="SPARK-COMPILE-GROUP-SPARK_3_3_x" />
             <library id="spark-streaming-pubsub_2.12-2.4.0.jar"/>
             <library id="grpc-context-1.19.0.jar"/>
-            <library id="google-api-client-1.22.0.jar"/>
-            <library id="google-api-services-pubsub-v1-rev355-1.22.0.jar"/>
-            <library id="google-http-client-1.22.0.jar"/>
+            <library id="google-api-client-1.33.0.jar"/>
+            <library id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar"/>
+            <library id="google-http-client-1.41.7.jar"/>
             <library id="google-http-client-jackson-1.22.0.jar"/>
-            <library id="google-http-client-jackson2-1.22.0.jar"/>
-            <library id="google-oauth-client-1.22.0.jar"/>
-            <library id="google-oauth-client-java6-1.20.0.jar"/>
-            <library id="opencensus-api-0.21.0.jar"/>
-            <library id="opencensus-contrib-http-util-0.21.0.jar"/>
+            <library id="google-http-client-jackson2-1.33.0.jar"/>
+            <library id="google-oauth-client-&google_version;.jar"/>
+            <library id="google-oauth-client-java6-&google_version;.jar"/>
+            <library id="opencensus-api-0.31.0.jar"/>
+            <library id="opencensus-contrib-http-util-0.31.1.jar"/>
             <library id="util-1.6.0.jar"/>
         </libraryNeededGroup>
 
