@@ -530,8 +530,8 @@
           mvn_uri="mvn:org.apache.kafka/kafka-clients/2.7.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
-          id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar"
-          mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
+          id="spark-streaming-kafka-0-10-assembly_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10-assembly_2.12-3.0.1.jar"
+          mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10-assembly_2.12/3.0.1"/>
         
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.spl30x"
           id="spark-token-provider-kafka-0-10_2.12-3.0.1.jar" name="spark-token-provider-kafka-0-10_2.12-3.0.1.jar"
@@ -847,7 +847,7 @@
         <!-- Spark Streaming Kafka group -->
         <libraryNeededGroup description="Spark streaming Kafka libraries for spl30x" id="KAFKA-GROUP-SPARK_3_0_x" name="KAFKA-GROUP-SPARK_3_0_x">
             <library id="kafka-clients-2.7.0.jar"/>
-            <library id="spark-streaming-kafka-0-10_2.12-3.0.1.jar"/>
+            <library id="spark-streaming-kafka-0-10-assembly_2.12-3.0.1.jar"/>
             <library id="spark-token-provider-kafka-0-10_2.12-3.0.1.jar"/>
         </libraryNeededGroup>
 
