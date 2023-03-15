@@ -2526,10 +2526,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             visibleGroupsBySparkMode.put(ESparkMode.DATABRICKS, Arrays.asList(dataBricksGroup));
             visibleGroupsBySparkMode.put(ESparkMode.CDE, Arrays.asList(cdeGroup));
             visibleGroupsBySparkMode.put(ESparkMode.DATAPROC, Arrays.asList(dataProcGroup));
-            visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup));
-            visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesS3Group));
-            visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesAzureGroup));
-            visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesBlobGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup));
             visibleGroupsBySparkMode.put(ESparkMode.STANDALONE, Arrays.asList(standaloneGroup));
 
             // Compute current visible groups
