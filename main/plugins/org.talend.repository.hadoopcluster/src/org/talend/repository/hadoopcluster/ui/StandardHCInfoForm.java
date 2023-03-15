@@ -2540,6 +2540,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             hideControl(dataBricksGroup, true);
             hideControl(cdeGroup, true);
             hideControl(dataProcGroup, true);
+            hideControl(kubernetesGroup, true);
+            hideControl(kubernetesS3Group, true);
+            hideControl(kubernetesAzureGroup, true);
+            hideControl(kubernetesBlobGroup, true);
             hideControl(standaloneGroup, true);
         }
 
