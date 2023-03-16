@@ -176,7 +176,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-column-1.12.2.jar" name="parquet-column-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-column/1.12.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-common-1.12.2.jar" name="parquet-common-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-common/1.12.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-encoding-1.12.2.jar" name="parquet-encoding-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-encoding/1.12.2"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-format-structures-1.12.2.jar" name="parquet-format-structures-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-structures/1.12.2"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-format-structures-1.12.2.jar" name="parquet-format-structures-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-format-structures/1.12.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-hadoop-1.12.2.jar" name="parquet-hadoop-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-hadoop/1.12.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="parquet-jackson-1.12.2.jar" name="parquet-jackson-1.12.2.jar" mvn_uri="mvn:org.apache.parquet/parquet-jackson/1.12.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="protobuf-java-3.19.6.jar" name="protobuf-java-3.19.6.jar" mvn_uri="mvn:com.google.protobuf/protobuf-java/3.19.6"/>
