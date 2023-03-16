@@ -2518,7 +2518,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                     getSparkModeByName(sparkModeLabelName).getValue());
 
             // List of possible configuration groups
-            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, standaloneGroup);
+                 List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup);
 
             // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
@@ -2526,7 +2526,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             visibleGroupsBySparkMode.put(ESparkMode.DATABRICKS, Arrays.asList(dataBricksGroup));
             visibleGroupsBySparkMode.put(ESparkMode.CDE, Arrays.asList(cdeGroup));
             visibleGroupsBySparkMode.put(ESparkMode.DATAPROC, Arrays.asList(dataProcGroup));
-            visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup));
+                 visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup));
             visibleGroupsBySparkMode.put(ESparkMode.STANDALONE, Arrays.asList(standaloneGroup));
 
             // Compute current visible groups
@@ -2541,6 +2541,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             hideControl(cdeGroup, true);
             hideControl(dataProcGroup, true);
             hideControl(kubernetesGroup, true);
+            hideControl(kubernetesS3Group, true);
+            hideControl(kubernetesAzureGroup, true);
+            hideControl(kubernetesBlobGroup, true);
             hideControl(standaloneGroup, true);
         }
 
