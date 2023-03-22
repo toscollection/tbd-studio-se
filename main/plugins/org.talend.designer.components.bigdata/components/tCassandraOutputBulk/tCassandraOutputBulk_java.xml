@@ -237,10 +237,10 @@
         <IMPORTS>
             <IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
                     MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
-			<IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_4_0'))">
-				<IMPORT NAME="Talend_CSV" MODULE="talendcsv-1.0.0.jar" MVN="mvn:org.talend.components/talendcsv/1.0.0"  UrlPath="platform:/plugin/org.talend.libraries.csv/lib/talendcsv-1.0.0.jar"
-					REQUIRED="true"/>
-			</IMPORTS>
+            <IMPORTS REQUIRED_IF="((DB_VERSION == 'CASSANDRA_4_0'))">
+                <IMPORT NAME="Talend_CSV" MODULE="talendcsv-1.1.0.jar" MVN="mvn:org.talend.components/talendcsv/1.1.0"  UrlPath="platform:/plugin/org.talend.libraries.csv/lib/talendcsv-1.1.0.jar"
+                    REQUIRED="true"/>
+            </IMPORTS>
             <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0')">
                     <IMPORT
                         NAME="cassandra-all-3.4"
