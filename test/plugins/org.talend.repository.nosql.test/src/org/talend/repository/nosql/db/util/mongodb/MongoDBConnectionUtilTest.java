@@ -12,8 +12,13 @@
 // ============================================================================
 package org.talend.repository.nosql.db.util.mongodb;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +31,6 @@ import org.talend.core.utils.TalendQuoteUtils;
 import org.talend.repository.model.nosql.NoSQLConnection;
 import org.talend.repository.model.nosql.NosqlFactory;
 import org.talend.repository.nosql.constants.INoSQLCommonAttributes;
-import org.talend.repository.nosql.db.common.cassandra.ICassandraConstants;
 import org.talend.repository.nosql.db.common.mongodb.IMongoConstants;
 
 /**
@@ -95,6 +99,40 @@ public class MongoDBConnectionUtilTest {
 
         connection.getAttributes().put(INoSQLCommonAttributes.DB_VERSION, "MONGODB_4_5_X");
         Assert.assertTrue(MongoDBConnectionUtil.isUpgradeVersion(connection));
+    }
+    
+    @Test
+    public void testGetUsernamePassword() throws UnsupportedEncodingException {
+        /// mongo connection string prefix: mongodb://
+        String connectionStrings = "mongodb://mongouser001:mongopassword001@example.com/test";
+        String[] expectedUsernamePassword = { "mongouser001", "mongopassword001" };
+        String[] usernamePassword = MongoDBConnectionUtil.getUsernamePassword(connectionStrings);
+        assertArrayEquals(expectedUsernamePassword, usernamePassword);
+
+        // url encoded username,password
+        char[] specialChar = { ':', '/', '?', '#', '[', ']', '@', '+' }; //ref mongodb's document about connection string
+        String specialStr = new String(specialChar);
+        expectedUsernamePassword = new String[] { "mongouser001" + specialStr, "mongopassword001" + specialStr };
+        String encodedUsername = URLEncoder.encode(expectedUsernamePassword[0], StandardCharsets.UTF_8.toString());
+        String encodedPassword = URLEncoder.encode(expectedUsernamePassword[1], StandardCharsets.UTF_8.toString());
+        connectionStrings = "mongodb://" + encodedUsername +":"+encodedPassword + "@example.com/test";
+        
+        usernamePassword = MongoDBConnectionUtil.getUsernamePassword(connectionStrings);
+        assertArrayEquals(expectedUsernamePassword, usernamePassword);
+        
+        ///mongo connection string prefix: mongodb+srv://
+        connectionStrings = "mongodb+srv://mongouser001:mongopassword001@cluster001.lqm73q7.mongodb.net/test";
+        expectedUsernamePassword = new String[]{ "mongouser001", "mongopassword001" };
+        usernamePassword = MongoDBConnectionUtil.getUsernamePassword(connectionStrings);
+        assertArrayEquals(expectedUsernamePassword, usernamePassword);
+        
+        //url encoded username,password
+        expectedUsernamePassword = new String[] { "mongouser001" + specialStr, "mongopassword001" + specialStr };
+        encodedUsername = URLEncoder.encode(expectedUsernamePassword[0], StandardCharsets.UTF_8.toString());
+        encodedPassword = URLEncoder.encode(expectedUsernamePassword[1], StandardCharsets.UTF_8.toString());
+        connectionStrings = "mongodb://" + encodedUsername +":"+encodedPassword + "@example.com/test";
+        usernamePassword = MongoDBConnectionUtil.getUsernamePassword(connectionStrings);
+        assertArrayEquals(expectedUsernamePassword, usernamePassword);
     }
 
 }

@@ -12,11 +12,16 @@
 // ============================================================================
 package org.talend.repository.nosql.db.util.mongodb;
 
+import static java.lang.String.format;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Proxy;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.KeyFactory;
@@ -417,8 +422,16 @@ public class MongoDBConnectionUtil {
         } else {
             pass = connection.getValue(pass, false);
         }
+        
         try {
             String connString = extractFromContext(connection, IMongoDBAttributes.CONN_STRING);
+            String[] usernamePassword = getUsernamePassword(connString);
+            if(usernamePassword != null) {
+                if(StringUtils.isBlank(user) || StringUtils.isBlank(pass)) {
+                    user = usernamePassword[0];
+                    pass = usernamePassword[1];
+                }
+            }
             
             Object clientSettingsBuilder = NoSQLReflection.invokeStaticMethod("com.mongodb.MongoClientSettings", "builder", //$NON-NLS-1$ //$NON-NLS-2$
                     new Object[0], classLoader);
@@ -487,6 +500,83 @@ public class MongoDBConnectionUtil {
             throw new NoSQLServerException(e);
         }
         return mongo;
+    }
+    
+    public static String[] getUsernamePassword(String connectionString) {
+        boolean isMongoDBProtocol = connectionString.startsWith(IMongoConstants.MONGODB_PREFIX);
+        boolean isSrvProtocol = connectionString.startsWith(IMongoConstants.MONGODB_SRV_PREFIX);
+        if (!isMongoDBProtocol && !isSrvProtocol) {
+            throw new IllegalArgumentException(format("The connection string is invalid. "
+                    + "Connection strings must start with either '%s' or '%s", IMongoConstants.MONGODB_PREFIX, IMongoConstants.MONGODB_SRV_PREFIX));
+        }
+
+        String unprocessedConnectionString;
+        if (isMongoDBProtocol) {
+            unprocessedConnectionString = connectionString.substring(IMongoConstants.MONGODB_PREFIX.length());
+        } else {
+            unprocessedConnectionString = connectionString.substring(IMongoConstants.MONGODB_SRV_PREFIX.length());
+        }
+
+        // Split out the user and host information
+        String userAndHostInformation;
+        int idx = unprocessedConnectionString.indexOf("/");
+        if (idx == -1) {
+            if (unprocessedConnectionString.contains("?")) {
+                throw new IllegalArgumentException("The connection string contains options without trailing slash");
+            }
+            userAndHostInformation = unprocessedConnectionString;
+            unprocessedConnectionString = "";
+        } else {
+            userAndHostInformation = unprocessedConnectionString.substring(0, idx);
+            unprocessedConnectionString = unprocessedConnectionString.substring(idx + 1);
+        }
+
+        // Split the user and host information
+        String userInfo;
+        String hostIdentifier;
+        String userName = null;
+        String password = null;
+        idx = userAndHostInformation.lastIndexOf("@");
+        if (idx > 0) {
+            userInfo = userAndHostInformation.substring(0, idx).replace("+", "%2B");
+            hostIdentifier = userAndHostInformation.substring(idx + 1);
+            int colonCount = countOccurrences(userInfo, ":");
+            if (userInfo.contains("@") || colonCount > 1) {
+                throw new IllegalArgumentException("The connection string contains invalid user information. "
+                        + "If the username or password contains a colon (:) or an at-sign (@) then it must be urlencoded");
+            }
+            if (colonCount == 0) {
+                userName = urldecode(userInfo, false);
+            } else {
+                idx = userInfo.indexOf(":");
+                if (idx == 0) {
+                    throw new IllegalArgumentException("No username is provided in the connection string");
+                }
+                userName = urldecode(userInfo.substring(0, idx), false);
+                password = urldecode(userInfo.substring(idx + 1), true);
+            }
+            
+            return new String[] {userName, password};
+        }
+        
+        return null;
+    }
+    
+    private static int countOccurrences(final String haystack, final String needle) {
+        return haystack.length() - haystack.replace(needle, "").length();
+    }
+    
+    private static String urldecode(final String input, final boolean password) {
+        try {
+            return URLDecoder.decode(input, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            if (password) {
+                throw new IllegalArgumentException("The connection string contained unsupported characters in the password.");
+            } else {
+                throw new IllegalArgumentException(format("The connection string contained unsupported characters: '%s'."
+                        + "Decoding produced the following error: %s", input, e.getMessage()));
+            }
+        }
     }
     
     public static SSLContext mongoX509SSLContext(NoSQLConnection connection) {
