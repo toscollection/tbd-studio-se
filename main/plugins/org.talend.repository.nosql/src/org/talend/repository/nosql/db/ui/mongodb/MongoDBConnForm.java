@@ -239,7 +239,11 @@ public class MongoDBConnForm extends AbstractNoSQLConnForm {
         conn.getAttributes().put(IMongoDBAttributes.REQUIRED_ENCRYPTION,
                 String.valueOf(checkRequireEncryptionBtn.getSelection()));
         conn.getAttributes().put(IMongoDBAttributes.USE_REPLICA_SET, String.valueOf(checkUseReplicaBtn.getSelection()));
-        conn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM, getAuthMechanismValue(authMechanismCombo.getText()));
+        if(checkRequireAuthBtn.getSelection()) {
+            conn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM, getAuthMechanismValue(authMechanismCombo.getText()));
+        } else {
+            conn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_MECHANISM, IMongoConstants.SCRAMSHA1_MEC);
+        }
         conn.getAttributes().put(IMongoDBAttributes.SET_AUTHENTICATION_DATABASE, String.valueOf(checkSetAuthDatabaseBtn.getSelection()));
         conn.getAttributes().put(IMongoDBAttributes.AUTHENTICATION_DATABASE, authDatabaseText.getText());
         conn.getAttributes().put(IMongoDBAttributes.KRB_USER_PRINCIPAL, authKrbUserPrincipalText.getText());

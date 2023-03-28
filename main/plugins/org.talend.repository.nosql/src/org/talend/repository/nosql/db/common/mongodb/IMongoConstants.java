@@ -17,6 +17,9 @@ package org.talend.repository.nosql.db.common.mongodb;
  *
  */
 public interface IMongoConstants {
+    public static final String MONGODB_PREFIX = "mongodb://";
+    
+    public static final String MONGODB_SRV_PREFIX = "mongodb+srv://";
 
     public final static String DATABASE = "Database"; //$NON-NLS-1$
 
