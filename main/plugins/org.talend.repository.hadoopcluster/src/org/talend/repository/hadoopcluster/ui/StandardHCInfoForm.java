@@ -2477,7 +2477,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
     
     private void updateDatabricksFields() {
-    	boolean isTransientMode = "Transient".equals(clusterType.getText());
+    	boolean isTransientMode = "Job clusters".equals(clusterType.getText());
     	driverNodeType.setVisible(isTransientMode);
         nodeType.setVisible(isTransientMode);
         clusterRuntimeVersion.setVisible(isTransientMode);
