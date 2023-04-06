@@ -12,6 +12,7 @@
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY woodstox_version "6.4.0">
         <!ENTITY scala_version "2.12">
+        <!ENTITY spark_version "3.0.0">
         <!ENTITY kafka_version "2.8.2">
         ]>
 <?eclipse version="3.4"?>
@@ -493,9 +494,9 @@
                        mvn_uri="mvn:org.slf4j/jul-to-slf4j/1.7.30"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="spark-cassandra-connector-assembly_2.12/3.0.0.jar"
-                       name="spark-cassandra-connector-assembly_2.12/3.0.0.jar"
-                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.0.0"/>
+                       id="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar"
+                       name="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;-&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar"
@@ -885,7 +886,7 @@
 
         <!-- Cassandra group -->
         <libraryNeededGroup description="Cassanda libraries for spl30x" id="CASSANDRA-GROUP-SPARK_3_0_x" name="CASSANDRA-GROUP-SPARK_3_0_x">
-            <library id="spark-cassandra-connector-assembly_2.12/3.0.0.jar"/>
+            <library id="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar"/>
             <library id="jnr-posix-3.1.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
         </libraryNeededGroup>
