@@ -496,7 +496,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar"
                        name="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar"
-                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;-&spark_version;"/>
+                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar"
