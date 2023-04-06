@@ -86,6 +86,7 @@ def get_directories_on_filesystem(plugin_path, source_directory_in_pom, output_d
 
 
 def check_consistency(plugin_path):
+    print("INFO : Checking %s" % (yellow(plugin_name(plugin_path))))
     result = 0
     source_directory_in_pom, output_directory_in_pom = get_directories_in_pom(plugin_path)
     source_directory_in_properties, output_directory_in_properties = get_directories_in_properties(plugin_path)
