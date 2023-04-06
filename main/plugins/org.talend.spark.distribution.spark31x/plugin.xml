@@ -467,6 +467,7 @@
         <libraryNeededGroup description="Cassanda libraries for spark311" id="CASSANDRA-GROUP-SPARK_3_1_x" name="CASSANDRA-GROUP-SPARK_3_1_x">
             <library id="spark-cassandra-connector-assembly_&scala_version;-3.1.0.jar"/>
             <library id="jnr-posix-3.1.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
         </libraryNeededGroup>
 
         <!-- DynamoDB group -->
