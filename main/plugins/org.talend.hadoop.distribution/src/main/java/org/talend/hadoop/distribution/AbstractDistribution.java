@@ -745,4 +745,8 @@ public abstract class AbstractDistribution {
     public boolean doSupportUniversalCDEMode() {
         return false;
     }
+
+    public boolean doSupportUniversalSynapseMode() {
+        return false;
+    }
 }

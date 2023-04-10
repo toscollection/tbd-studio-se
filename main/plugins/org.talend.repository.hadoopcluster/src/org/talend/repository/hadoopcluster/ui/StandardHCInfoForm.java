@@ -107,6 +107,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnection;
 import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl;
 import org.talend.repository.model.hadoopcluster.util.EncryptionUtil;
+import org.talend.hadoop.distribution.constants.synapse.ESynapseAuthType;
 
 /**
  *
@@ -374,6 +375,44 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     // knox
     private Button useKnoxButton;
+
+    //Synapse widgets
+    private Group synapseGroup;
+    private LabelledText synapseHostname;
+
+    private LabelledWidget synapseToken;
+
+    private LabelledWidget synapseSparkPools;
+
+    private LabelledCombo storage;
+
+    private LabelledWidget azureHostname;
+
+    private LabelledWidget azureContainer;
+
+    private LabelledCombo storageAuthType;
+
+    private LabelledWidget azureUsername;
+
+    private LabelledWidget azurePassword;
+
+    private LabelledWidget azureClientId;
+
+    private LabelledWidget azureDirectoryId;
+
+    private LabelledWidget azureClientKey;
+
+    private LabelledWidget useSynapseCertificate;
+
+    private LabelledFileField azureClientCertificate;
+
+    private LabelledWidget azureDeployBlob;
+
+    private LabelledWidget driverMemory;
+
+    private LabelledWidget driverCores;
+
+    private LabelledWidget executorMemory;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
@@ -691,7 +730,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             oauthTokenText.setText(oauthTokenValue);
             oauthTokenText.setVisible(credentialsBtn.getSelection() && EDataprocAuthType.OAUTH_API.getDisplayName().equals(credentialName));
 
-          // CDE - Set widget values from connection
+            // CDE - Set widget values from connection
             for (Entry<String, LabelledWidget> entry : fieldByParamKey.entrySet())
             {
                 String value = StringUtils.trimToEmpty(getConnection().getParameters().get(entry.getKey()));
@@ -700,11 +739,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             updateCdeFieldsVisibility();
             updateStandaloneConfigureExecutors();
             updateDatabricksFields();
+            updateSynapseFieldsVisibility();
 
-        //knox
-        String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
-        useKnoxButton.setSelection("true".equals(useKnoxStr));
-        updateKnoxPart();
+            //knox
+            String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
+            useKnoxButton.setSelection("true".equals(useKnoxStr));
+            updateKnoxPart();
 
         }
 	}
@@ -910,6 +950,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addDataprocField();
         addCdeFields();
         addStandaloneFields();
+        addSynapseFields();
 
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
@@ -1104,6 +1145,57 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC, standaloneConfigureExec);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY, standaloneExecMemory);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE, standaloneExecCore);
+    }
+
+    private void addSynapseFields() {
+        synapseGroup = Form.createGroup(bigComposite, 2, Messages.getString("SynapseInfoForm.text.synapseSettings"), 110);
+        synapseGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        synapseHostname = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.synapse.hostname"));
+        synapseSparkPools = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.sparkPools"));
+        synapseToken = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.synapse.token"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        azureHostname = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.hostname"));
+        storageAuthType = new LabelledCombo(synapseGroup, Messages.getString("SynapseInfoForm.text.authentication"), "", ESynapseAuthType.getAllSynapseAuthTypes());
+        azureContainer = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.container"));
+        azureDeployBlob = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.deployBlob"));
+        driverMemory = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.driverMemory"));
+        driverCores = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.driverCores"));
+        executorMemory = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.executorMemory"));
+        azureUsername = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.username"));
+        azurePassword = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        azureDirectoryId = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.directoryId"));
+        azureClientId = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.clientId"));
+        useSynapseCertificate = new LabelledCheckbox(synapseGroup, Messages.getString("SynapseInfoForm.text.useSynapseCertButton"));
+        azureClientKey = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        String[] extensions = { "*.*" };
+        azureClientCertificate = new LabelledFileField(synapseGroup, Messages.getString("SynapseInfoForm.text.azure.clientCertificate"), extensions);
+
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST, synapseHostname);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_SPARK_POOLS, synapseSparkPools);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN, synapseToken);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME, azureHostname);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER, azureContainer);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB, azureDeployBlob);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY, driverMemory);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES, driverCores);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY, executorMemory);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME, azureUsername);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD, azurePassword);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID, azureDirectoryId);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID, azureClientId);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_USE_SYNAPSE_CLIENT_CERTIFICATE, useSynapseCertificate);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY, azureClientKey);
+        azureClientCertificate.setText(StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE)));
+
+        String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE));
+        ESynapseAuthType authType = ESynapseAuthType.getSynapseAuthTypeByName(authModeValue, false);
+        if ((authModeValue != null)  && (authType != null)) {
+            storageAuthType.setText(authType.getDisplayName());
+        } else {
+            storageAuthType.select(0);
+        }
+
+        updateSynapseFieldsVisibility();
     }
 
     private List<String> getRunSubmitModes() {
@@ -2445,6 +2537,45 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         });
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY);
+
+        //Synapse listeners
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_SPARK_POOLS);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER);
+
+        storageAuthType.getCombo().addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateSynapseFieldsVisibility();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE, ESynapseAuthType.getSynapseAuthTypeByDisplayName(storageAuthType.getText()).getName());
+              }
+        });
+
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID);
+        ((LabelledCheckbox) useSynapseCertificate).addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                updateSynapseFieldsVisibility();
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_SYNAPSE_CLIENT_CERTIFICATE, Boolean.valueOf(((LabelledCheckbox) useSynapseCertificate).getSelection()).toString());
+            }
+        });
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY);
+        azureClientCertificate.addModifyListener(new ModifyListener() {
+         @Override
+         public void modifyText(final ModifyEvent e) {
+            updateSynapseFieldsVisibility();
+            getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE, azureClientCertificate.getText());
+              }
+        });
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY);
     }
 
     private void reloadForm() {
@@ -2492,6 +2623,20 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         dataBricksGroup.getParent().layout();
     }
 
+    private void updateSynapseFieldsVisibility() {
+        boolean isAAD = ESynapseAuthType.AAD.getDisplayName().equals(storageAuthType.getText());
+        boolean useCertificate = ((LabelledCheckbox) useSynapseCertificate).getSelection() && isAAD;
+        azureUsername.setVisible(!isAAD, isAAD);
+        azurePassword.setVisible(!isAAD, isAAD);
+        azureClientId.setVisible(isAAD, !isAAD);
+        azureDirectoryId.setVisible(isAAD, !isAAD);
+        azureClientKey.setVisible(!useCertificate, useCertificate);
+        useSynapseCertificate.setVisible(isAAD, !isAAD);
+        azureClientCertificate.setVisible(useCertificate);
+        synapseGroup.layout();
+        synapseGroup.getParent().layout();
+    }
+
     /*
      * Add a listener to update paramKey connection parameter with value from associated widget
      */
@@ -2518,8 +2663,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                     getSparkModeByName(sparkModeLabelName).getValue());
 
             // List of possible configuration groups
-            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup);
-
+            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup, synapseGroup);
             // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
             visibleGroupsBySparkMode.put(ESparkMode.YARN_CLUSTER, Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp));
@@ -2528,6 +2672,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             visibleGroupsBySparkMode.put(ESparkMode.DATAPROC, Arrays.asList(dataProcGroup));
             visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup));
             visibleGroupsBySparkMode.put(ESparkMode.STANDALONE, Arrays.asList(standaloneGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.SYNAPSE, Arrays.asList(synapseGroup));
 
             // Compute current visible groups
             ESparkMode currentSparkMode = ESparkMode.getByLabel(sparkModeLabelName);
@@ -2545,6 +2690,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             hideControl(kubernetesAzureGroup, true);
             hideControl(kubernetesBlobGroup, true);
             hideControl(standaloneGroup, true);
+            hideControl(synapseGroup, true);
         }
 
     }
@@ -3246,6 +3392,8 @@ jtOrRmPrincipalText
             	collectK8SParameters();
             } else if (ESparkMode.STANDALONE.getLabel().equals(sparkModeLabelName)) {
             	collectStandaloneParameters();
+            } else if (ESparkMode.SYNAPSE.getLabel().equals(sparkModeLabelName)) {
+                collectSynapseParameters();
             }
         }
     }
@@ -3307,6 +3455,12 @@ jtOrRmPrincipalText
         addContextParams(EHadoopParamName.GoogleJarsBucket, true);
         addContextParams(EHadoopParamName.PathToGoogleCredentials, true);
         addContextParams(EHadoopParamName.GoogleOauthToken, true);
+    }
+
+    private void collectSynapseParameters() {
+        addContextParams(EHadoopParamName.SynapseHostName, true);
+        addContextParams(EHadoopParamName.SynapseAuthToken, true);
+        addContextParams(EHadoopParamName.SynapseSparkPools, true);
     }
 
     private void collectConfigurationParameters(boolean isUse) {
