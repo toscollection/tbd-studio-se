@@ -375,4 +375,9 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     public String getSqoopPackageName() {
         return ESqoopPackageName.ORG_APACHE_SQOOP.toString();
     }
+
+    @Override
+    public boolean doSupportUniversalSynapseMode() {
+        return true;
+    }
 }

@@ -280,7 +280,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     }
 
     private void addSynapseFields() {
-    	Group synapseGroup = Form.createGroup(this, 2, Messages.getString("SynapseInfoForm.synapseSettings"), 110);
+    	Group synapseGroup = Form.createGroup(this, 2, Messages.getString("SynapseInfoForm.text.synapseSettings"), 110);
         synapseGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         synapseHostnameText = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.hostname"), 1);
