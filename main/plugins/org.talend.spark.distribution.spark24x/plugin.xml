@@ -192,7 +192,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="delta-core_2.11-0.6.1.jar" name="delta-core_2.11-0.6.1.jar" mvn_uri="mvn:io.delta/delta-core_2.11/0.6.1"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snappy-java-1.1.7.5.jar" name="snappy-java-1.1.7.5.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.7.5"/>
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-cassandra-connector-assembly_2.12-3.0.1.jar" name="spark-cassandra-connector-assembly_2.12-3.0.1.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.0.1"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-cassandra-connector-assembly_2.11-2.5.2.jar" name="spark-cassandra-connector-assembly_2.11-2.5.2.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.11/2.5.2"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
@@ -375,7 +375,7 @@
 
 		<!-- Cassandra group -->
 		<libraryNeededGroup description="Cassanda libraries for spark247" id="CASSANDRA-GROUP-SPARK_2_4_x" name="CASSANDRA-GROUP-SPARK_2_4_x">
-			<library id="spark-cassandra-connector-assembly_2.12-3.0.1.jar"/>
+			<library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
 			<library id="jnr-posix-3.1.0.jar"/>
 		</libraryNeededGroup>
 
