@@ -43,6 +43,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-lang3-3.12.jar" name="commons-lang3-3.12.jar" mvn_uri="mvn:org.apache.commons/commons-lang3/3.12"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-text-1.10.0.jar" name="commons-text-1.10.0.jar" mvn_uri="mvn:org.apache.commons/commons-text/1.10.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="compress-lzf-1.0.3.jar" name="compress-lzf-1.0.3.jar" mvn_uri="mvn:com.ning/compress-lzf/1.0.3"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="curator-client-2.13.0.jar" name="curator-client-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-client/2.13.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="curator-framework-2.13.0.jar" name="curator-framework-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-framework/2.13.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="failureaccess-1.0.1.jar" name="failureaccess-1.0.1.jar" mvn_uri="mvn:com.google.guava/failureaccess/1.0.1"/>
@@ -294,6 +295,7 @@
             <library id="commons-lang3-3.12.jar"/>
             <library id="commons-logging-1.1.3.jar"/>
             <library id="commons-text-1.10.0.jar"/>
+            <library id="compress-lzf-1.0.3.jar"/>
             <library id="failureaccess-1.0.1.jar"/>
             <library id="guava-27.1-jre.jar"/>
             <library id="gson-2.9.0.jar"/>
