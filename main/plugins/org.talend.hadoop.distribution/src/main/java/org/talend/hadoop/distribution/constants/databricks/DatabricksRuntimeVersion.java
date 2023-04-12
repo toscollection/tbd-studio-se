@@ -9,20 +9,13 @@ public class DatabricksRuntimeVersion {
 	
 	public static String showIfCondition = "(SPARK_MODE=='DATABRICKS' AND (DATABRICKS_CLUSTER_TYPE=='TRANSIENT' OR isContext[DATABRICKS_CLUSTER_TYPE]))";
 	
-	public static String defaultVersion = "\"10.5.x-scala2.12\"";
+	public static String defaultVersion = "\"10.4.x-scala2.12\"";
 
 	private static List<DatabricksRuntimeAndSparkVersion> initAvailableRuntimeAndSparkVersion() {
 		return Arrays.asList(new DatabricksRuntimeAndSparkVersion("\"9.1.x-scala2.12\"", "SPARK_3_1_x"),
-				new DatabricksRuntimeAndSparkVersion("\"10.5.x-scala2.12\"", "SPARK_3_2_x"), 
 				new DatabricksRuntimeAndSparkVersion("\"10.4.x-scala2.12\"", "SPARK_3_2_x"),
-				new DatabricksRuntimeAndSparkVersion("\"10.3.x-scala2.12\"", "SPARK_3_2_x"),
-				new DatabricksRuntimeAndSparkVersion("\"10.2.x-scala2.12\"", "SPARK_3_2_x"),
-				new DatabricksRuntimeAndSparkVersion("\"10.1.x-scala2.12\"", "SPARK_3_2_x"),
-				new DatabricksRuntimeAndSparkVersion("\"12.1.x-scala2.12\"", "SPARK_3_3_x"),
-				new DatabricksRuntimeAndSparkVersion("\"11.3.x-scala2.12\"", "SPARK_3_3_x"),
-				new DatabricksRuntimeAndSparkVersion("\"11.2.x-scala2.12\"", "SPARK_3_3_x"),
-				new DatabricksRuntimeAndSparkVersion("\"11.1.x-scala2.12\"", "SPARK_3_3_x"),
-				new DatabricksRuntimeAndSparkVersion("\"11.0.x-scala2.12\"", "SPARK_3_3_x")
+				new DatabricksRuntimeAndSparkVersion("\"12.2.x-scala2.12\"", "SPARK_3_3_x"),
+				new DatabricksRuntimeAndSparkVersion("\"11.3.x-scala2.12\"", "SPARK_3_3_x")
 				
 		);
 	}
