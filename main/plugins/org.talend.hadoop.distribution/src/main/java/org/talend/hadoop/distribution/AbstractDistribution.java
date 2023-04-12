@@ -668,8 +668,11 @@ public abstract class AbstractDistribution {
 	
 	//Cassandra nodes in spark batch and streaming
 	Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
-	result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
+    Set<DistributionModuleGroup> cassandraLookupInputModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, "USE_EXISTING_CONNECTION == 'false'", ModuleGroupName.CASSANDRA_LOOKUPINPUT.get(this.getVersion()), true );
+
+    result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
 	result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
+    result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_STREAM_INPUT_COMPONENT), cassandraLookupInputModuleGroups);
 	
         return result;
     }

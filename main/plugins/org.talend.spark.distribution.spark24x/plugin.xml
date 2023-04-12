@@ -217,6 +217,10 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="aws-java-sdk-sts-1.11.375.jar" name="aws-java-sdk-sts-1.11.375.jar" mvn_uri="mvn:com.amazonaws/aws-java-sdk-sts/1.11.375"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-pool2-2.9.0.jar" name="commons-pool2-2.9.0.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.9.0" />
 
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-pool2-2.4.2.jar" name="commons-pool2-2.4.2.jar" mvn_uri="mvn:org.apache.commons/commons-pool2/2.4.2" />
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="cassandra-driver-core-3.11.1.jar" name="cassandra-driver-core-3.11.1.jar" mvn_uri="mvn:com.datastax.cassandra/cassandra-driver-core/3.11.1" />
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="metrics-core-3.2.2.jar" name="metrics-core-3.2.2.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-core/3.2.2" />
+
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-mapred-1.8.2-hadoop2.jar" name="avro-mapred-1.8.2-hadoop2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-net-&commons-net_version;.jar" name="commons-net-&commons-net_version;.jar" mvn_uri="mvn:commons-net/commons-net/&commons-net_version;"/>
@@ -380,6 +384,13 @@
 			<library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
 			<library id="jnr-posix-3.1.0.jar"/>
 			<library id="joda-time-2.10.5.jar"/>
+		</libraryNeededGroup>
+
+		<!-- Cassandra group -->
+		<libraryNeededGroup description="Cassanda LookupInput libraries for spark247" id="CASSANDRA-LOOKUPINPUT-GROUP-SPARK_2_4_x" name="CASSANDRA-LOOKUPINPUT-GROUP-SPARK_2_4_x">
+			<library id="commons-pool2-2.4.2.jar"/>
+			<library id="cassandra-driver-core-3.11.1.jar"/>
+			<library id="metrics-core-3.2.2.jar"/>
 		</libraryNeededGroup>
 
 		<!-- DynamoDB group -->
