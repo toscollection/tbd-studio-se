@@ -84,7 +84,7 @@ public final class SparkStreamingConstant {
     
     public static final String CASSANDRA_CONFIGURATION_COMPONENT = "tCassandraConfiguration"; //$NON-NLS-1$
 
-    public static final String CASSANDRA_STREAM_INPUT_COMPONENT = "tCassandraLookupInput";//$NON-NLS-1$
+    public static final String CASSANDRA_LOOKUPINPUT_COMPONENT = "tCassandraLookupInput";//$NON-NLS-1$
 
     public static final String MAPRSTREAMS_INPUT_COMPONENT = "tMapRStreamsInput"; //$NON-NLS-1$
 

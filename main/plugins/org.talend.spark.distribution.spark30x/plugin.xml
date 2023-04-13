@@ -732,6 +732,19 @@
                        id="hive-metastore-1.2.1.spark2.jar" name="hive-metastore-1.2.1.spark2.jar"
                        mvn_uri="mvn:org.spark-project.hive/hive-metastore/1.2.1.spark2"/>
 
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+                       id="commons-pool2-2.4.2.jar" name="commons-pool2-2.4.2.jar"
+                       mvn_uri="mvn:org.apache.commons/commons-pool2/2.4.2" />
+
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+                       id="cassandra-driver-core-3.11.1.jar"
+                       name="cassandra-driver-core-3.11.1.jar"
+                       mvn_uri="mvn:com.datastax.cassandra/cassandra-driver-core/3.11.1" />
+
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
+                       id="metrics-core-3.2.2.jar" name="metrics-core-3.2.2.jar"
+                       mvn_uri="mvn:io.dropwizard.metrics/metrics-core/3.2.2" />
+
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK-COMPILE-GROUP-SPARK_3_0_x" name="SPARK-BATCH-GROUP-SPARK_3_0_x">
             <library id="jodd-core-3.5.2.jar"/>
@@ -894,6 +907,12 @@
             <library id="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar"/>
             <library id="jnr-posix-3.1.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
+        </libraryNeededGroup>
+
+        <libraryNeededGroup description="Cassanda LookupInput libraries for spl30x" id="CASSANDRA-LOOKUPINPUT-GROUP-SPARK_3_0_x" name="CASSANDRA-LOOKUPINPUT-GROUP-SPARK_3_0_x">
+            <library id="commons-pool2-2.4.2.jar"/>
+            <library id="cassandra-driver-core-3.11.1.jar"/>
+            <library id="metrics-core-3.2.2.jar"/>
         </libraryNeededGroup>
 
         <!-- DynamoDB group -->
