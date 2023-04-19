@@ -14,7 +14,8 @@ package org.talend.hadoop.distribution.constants.databricks;
 
 import org.talend.hadoop.distribution.i18n.Messages;
 public enum EDatabricksCloudProvider {
-
+	
+	EMPTY("", ""),
     AWS(Messages.getString("EDatabricksCloudProvider.AWS"), "\"AWS\""),
     AZURE(Messages.getString("EDatabricksCloudProvider.Azure"), "\"Azure\""),
     GCP(Messages.getString("EDatabricksCloudProvider.GCP"), "\"GCP\"");
