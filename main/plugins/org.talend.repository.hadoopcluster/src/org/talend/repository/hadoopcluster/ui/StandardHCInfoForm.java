@@ -528,9 +528,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
            		} else {
            			cloudProviderCombo.setText(getDatabricksCloudProviderByValue(providerValue).getProviderLableName());
            		}
-            } else {
-                cloudProviderCombo.setText(EDatabricksCloudProvider.AWS.getProviderLableName());
-            }
+            } 
            	
            	String runtimeValue = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DATABRICKS_RUNTIME_VERSION);
            	if (providerValue != null) {
@@ -2608,7 +2606,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
     
     private void updateDatabricksFields() {
-    	boolean isTransientMode = "Job clusters".equals(clusterType.getText());
+    	boolean isTransientMode = 0 == clusterType.getSelectionIndex();
     	driverNodeType.setVisible(isTransientMode);
         nodeType.setVisible(isTransientMode);
         clusterRuntimeVersion.setVisible(isTransientMode);
@@ -3590,7 +3588,7 @@ jtOrRmPrincipalText
                 }
             }
         }
-        return EDatabricksCloudProvider.AWS;
+        return EDatabricksCloudProvider.EMPTY;
     }
 
     private EDatabricksSubmitMode getDatabricksRunModeByValue(String runModeValue) {
@@ -3710,7 +3708,7 @@ jtOrRmPrincipalText
                 }
             }
         }
-        return EDatabricksCloudProvider.AWS;
+        return EDatabricksCloudProvider.EMPTY;
     }
     
     private String getDatabricksClusterTypeValueByLabel(String labelName) {
