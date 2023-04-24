@@ -27,7 +27,7 @@ public class HadoopResourceController extends AbstractHDFSBrowseController {
     }
 
     @Override
-    protected String getControllerName() {
+    public String getControllerName() {
         return BOTH_HADOOP;
     }
 

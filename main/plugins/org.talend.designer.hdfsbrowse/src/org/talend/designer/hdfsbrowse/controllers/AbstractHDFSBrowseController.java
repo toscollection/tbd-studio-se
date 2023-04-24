@@ -116,7 +116,8 @@ public abstract class AbstractHDFSBrowseController extends AbstractElementProper
 
     protected abstract EHadoopFileTypes getHDFSType();
 
-    protected abstract String getControllerName();
+    @Override
+    public abstract String getControllerName();
 
     protected HDFSConnectionBean getHDFSConnectionBean() {
         INode node = (INode) elem;
