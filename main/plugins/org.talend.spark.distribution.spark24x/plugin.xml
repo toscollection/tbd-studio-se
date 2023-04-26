@@ -386,6 +386,7 @@
 		<libraryNeededGroup description="DynamoDB libraries for spark247" id="DYNAMODB-BATCH-GROUP-SPARK_2_4_x" name="DYNAMODB-BATCH-GROUP-SPARK_2_4_x">
 			<library id="emr-dynamodb-hadoop-4.7.0.jar"/>
 			<library id="aws-java-sdk-bundle-1.11.760.jar"/>
+			<library id="hadoop-mapreduce-client-common-3.2.4.jar"/>
 		</libraryNeededGroup>
 
 		<!-- Redshift group -->
@@ -436,6 +437,8 @@
 		<!-- Spark Streaming DynamoDB group -->
 		<libraryNeededGroup description="Spark streaming DynamoDB libraries for spark247" id="DYNAMODB-STREAMING-GROUP-SPARK_2_4_x" name="DYNAMODB-STREAMING-GROUP-SPARK_2_4_x">
 			<group id="DYNAMODB-BATCH-GROUP-SPARK_2_4_x" />
+			<library id="joda-time-2.10.5.jar"/>
+			<library id="gson-2.9.0.jar"/>
 			<library id="commons-pool2-2.9.0.jar"/>
 		</libraryNeededGroup>
 
