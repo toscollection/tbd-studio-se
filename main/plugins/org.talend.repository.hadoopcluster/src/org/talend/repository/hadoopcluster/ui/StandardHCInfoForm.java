@@ -738,6 +738,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             updateStandaloneConfigureExecutors();
             updateDatabricksFields();
             updateSynapseFieldsVisibility();
+            updateKubernetesFieldsVisibility();
 
             //knox
             String useKnoxStr = getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_KNOX);
@@ -2635,6 +2636,17 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         synapseGroup.getParent().layout();
     }
 
+    private void updateKubernetesFieldsVisibility() {
+        kubernetesGroup.layout();
+        kubernetesS3Group.layout();
+        kubernetesAzureGroup.layout();
+        kubernetesBlobGroup.layout();
+
+        kubernetesGroup.getParent().layout();
+        kubernetesS3Group.getParent().layout();
+        kubernetesAzureGroup.getParent().layout();
+        kubernetesBlobGroup.getParent().layout();
+    }
     /*
      * Add a listener to update paramKey connection parameter with value from associated widget
      */
