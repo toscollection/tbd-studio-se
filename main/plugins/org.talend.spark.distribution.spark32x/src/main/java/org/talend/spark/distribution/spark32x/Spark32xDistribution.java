@@ -367,6 +367,11 @@ public class Spark32xDistribution extends AbstractSparkDistribution
     public boolean doSupportNewHBaseAPI() {
         return true;
     }
+
+    @Override
+    public boolean doSupportUniversalSynapseMode() {
+        return true;
+    }
     
     @Override
     /**

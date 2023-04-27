@@ -6,6 +6,5 @@
   <requires>
     <import feature="org.talend.libraries.jdbc.feature" version="0.0.0" match="greaterOrEqual"/>
   </requires>
-  <plugin id="org.talend.libraries.couchdb" download-size="0" install-size="0" version="0.0.0"/>
   <plugin id="org.talend.libraries.neo4j" download-size="0" install-size="0" version="0.0.0"/>
 </feature>
