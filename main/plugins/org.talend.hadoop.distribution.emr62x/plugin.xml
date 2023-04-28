@@ -352,8 +352,12 @@
           mvn_uri="mvn:org.slf4j/jul-to-slf4j/1.7.30"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-          id="spark-cassandra-connector-assembly_2.12-3.0.0-beta.jar" name="spark-cassandra-connector-assembly_2.12-3.0.0-beta.jar"
-          mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.0.0-beta"/>
+          id="spark-cassandra-connector-assembly_2.12-3.0.0.jar" name="spark-cassandra-connector-assembly_2.12-3.0.0.jar"
+          mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.0.0"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+          id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar"
+          mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
           id="commons-lang-2.6.jar" name="commons-lang-2.6.jar"
@@ -1065,6 +1069,12 @@
             <group id="HDFS-GROUP-EMR_62_x"/>
         </libraryNeededGroup>
 
+        <!-- Cassandra group -->
+        <libraryNeededGroup description="Cassanda libraries for emr62x" id="CASSANDRA-GROUP-EMR_62_x" name="CASSANDRA-GROUP-EMR_62_x">
+            <library id="spark-cassandra-connector-assembly_2.12-3.0.0.jar"/>
+            <library id="jnr-posix-3.1.0.jar"/>
+            <library id="joda-time-2.10.5.jar"/>
+        </libraryNeededGroup>
     </extension>
 
     <!--Class loaders used in the Metadata-->

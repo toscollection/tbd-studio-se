@@ -643,6 +643,11 @@ public abstract class AbstractDistribution {
         // Spark Streaming tSQLRow nodes
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.SPARK_SQL_ROW_COMPONENT),
                 ModuleGroupsUtils.getModuleGroups(distribution, version, hiveContextCondition, ModuleGroupName.HIVE.get(this.getVersion()), true));
+
+        //Cassandra nodes in spark batch and streaming
+        Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH, SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_CONFIGURATION_COMPONENT), cassandraConfigurationModuleGroups);
        
         return result;
     }

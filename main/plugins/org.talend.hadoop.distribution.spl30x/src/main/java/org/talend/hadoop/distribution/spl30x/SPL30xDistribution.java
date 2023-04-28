@@ -372,6 +372,11 @@ public class SPL30xDistribution extends AbstractDistribution
                         SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER,
                         SPL30xDistribution.SPARK_VERSION));
 
+        // Spark Streaming Cassandra
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.CASSANDRA_CONFIGURATION_COMPONENT),
+                SPL30xNodeModuleGroup.getModuleGroup(ModuleGroupName.CASSANDRA.get(getVersion()),
+                        SparkStreamingConstant.SPARK_STREAMING_SPARKCONFIGURATION_LINKEDPARAMETER, SPL30xDistribution.SPARK_VERSION));
+
         return result;
 
     }
