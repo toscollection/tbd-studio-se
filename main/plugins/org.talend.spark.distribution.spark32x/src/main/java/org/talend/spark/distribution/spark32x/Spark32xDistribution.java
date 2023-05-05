@@ -369,15 +369,18 @@ public class Spark32xDistribution extends AbstractSparkDistribution
     }
 
     @Override
-    public boolean doSupportUniversalSynapseMode() {
-        return true;
-    }
-    
-    @Override
     /**
      * sqoop 1.4.7+ is using apache package
      */
     public String getSqoopPackageName() {
         return ESqoopPackageName.ORG_APACHE_SQOOP.toString();
+    }
+
+    @Override
+    /**
+     * Azure Synapse Analytics is only supported in spark batch
+     */
+    public boolean doSupportUniversalSynapseMode() {
+        return true;
     }
 }

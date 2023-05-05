@@ -412,6 +412,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     private LabelledWidget driverCores;
 
+    private LabelledWidget executorCores;
+
     private LabelledWidget executorMemory;
 
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
@@ -1159,6 +1161,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         driverMemory = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.driverMemory"));
         driverCores = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.driverCores"));
         executorMemory = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.executorMemory"));
+        executorCores = new LabelledText(synapseGroup, Messages.getString("SynapseInfoForm.text.synapse.executorCores"));
         azureUsername = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.username"));
         azurePassword = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
         azureDirectoryId = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.directoryId"));
@@ -1177,6 +1180,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY, driverMemory);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES, driverCores);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY, executorMemory);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_CORES, executorCores);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME, azureUsername);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD, azurePassword);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID, azureDirectoryId);
@@ -2562,18 +2566,19 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_SYNAPSE_CLIENT_CERTIFICATE, Boolean.valueOf(((LabelledCheckbox) useSynapseCertificate).getSelection()).toString());
             }
         });
+
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_KEY);
         azureClientCertificate.addModifyListener(new ModifyListener() {
          @Override
          public void modifyText(final ModifyEvent e) {
             updateSynapseFieldsVisibility();
             getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE, azureClientCertificate.getText());
-              }
-        });
+         } });
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_CORES);
     }
 
     private void reloadForm() {
@@ -2624,11 +2629,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private void updateSynapseFieldsVisibility() {
         boolean isAAD = ESynapseAuthType.AAD.getDisplayName().equals(storageAuthType.getText());
         boolean useCertificate = ((LabelledCheckbox) useSynapseCertificate).getSelection() && isAAD;
+        boolean useClientKey = !((LabelledCheckbox) useSynapseCertificate).getSelection() && isAAD;
         azureUsername.setVisible(!isAAD, isAAD);
         azurePassword.setVisible(!isAAD, isAAD);
         azureClientId.setVisible(isAAD, !isAAD);
         azureDirectoryId.setVisible(isAAD, !isAAD);
-        azureClientKey.setVisible(!useCertificate, useCertificate);
+        azureClientKey.setVisible(useClientKey, !useClientKey);
         useSynapseCertificate.setVisible(isAAD, !isAAD);
         azureClientCertificate.setVisible(useCertificate);
         synapseGroup.layout();

@@ -34,9 +34,13 @@ public enum ESparkMode {
     DATAPROC(Messages.getString("ESparkMode.DATAPROC"),
             "DATAPROC",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDataprocMode[])"),
+    /*Synapse spark mode should only be enabled in spark batch jobs.
+    Details are in: https://jira.talendforge.org/browse/TBD-15126
+    'isShow[USE_DATASET_API]' was added to condition since it's always shown in batch jobs and dpesn't exist in streaming
+    */
     SYNAPSE(Messages.getString("ESparkMode.SYNAPSE"),
             "SYNAPSE",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalSynapseMode[])"),
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalSynapseMode[]) AND isShow[USE_DATASET_API]"),
     DATABRICKS(Messages.getString("ESparkMode.DATABRICKS"),
             "DATABRICKS",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalDBRMode[])"),

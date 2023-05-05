@@ -1015,6 +1015,11 @@ public class HCRepositoryUtil {
         if (synapseExecutorMemory != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY, synapseExecutorMemory);
         }
+        String synapseExecutorCores = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.SPARK_EXECUTOR_CORES.getName());
+        if (synapseExecutorMemory != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_CORES, synapseExecutorCores);
+        }
         String univDistributionString = ISparkDistribution.DISTRIBUTION_NAME;
         IHDistribution univDistribution = hadoopDistributionService.getHadoopDistribution(univDistributionString, false);
         if (hiveDistribution == null) {
