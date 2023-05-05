@@ -80,5 +80,6 @@
     "DEPLOY_FOLDER": "/tmp",
     "SPARK_DRIVER_MEM": "2g",
     "SPARK_DRIVER_CORES": "1",
-    "SPARK_EXECUTOR_MEMORY": "2g"
+    "SPARK_EXECUTOR_MEMORY": "2g",
+    "SPARK_EXECUTOR_CORES": "1"
 }

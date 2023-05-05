@@ -377,6 +377,9 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     }
 
     @Override
+    /**
+     * Azure Synapse Analytics is only supported in spark batch
+     */
     public boolean doSupportUniversalSynapseMode() {
         return true;
     }
