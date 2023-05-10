@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin [
+        <!ENTITY scala_version "2.12">
+        <!ENTITY spark_version "3.1.2">
+        ]>
 <?eclipse version="3.4"?>
-<plugin>
+<plugin xmlns="">
     <extension point="org.talend.core.runtime.librariesNeeded">
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1"/>
+                       id="spark-core_&scala_version;-&spark_version;.jar" name="spark-core_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-core_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-hive_2.12-3.0.1.jar" name="spark-hive_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.0.1"/>
+                       id="spark-hive_&scala_version;-&spark_version;.jar" name="spark-hive_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-hive_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-mllib_2.12-3.0.1.jar" name="spark-mllib_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.0.1"/>
+                       id="spark-mllib_&scala_version;-&spark_version;.jar" name="spark-mllib_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-mllib_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-mllib-local_2.12-3.0.1.jar" name="spark-mllib-local_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.0.1"/>
+                       id="spark-mllib-local_&scala_version;-&spark_version;.jar" name="spark-mllib-local_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-mllib-local_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-network-common_2.12-3.0.1.jar" name="spark-network-common_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.0.1"/>
+                       id="spark-network-common_&scala_version;-&spark_version;.jar" name="spark-network-common_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-network-common_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-sql_2.12-3.0.1.jar" name="spark-sql_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.0.1"/>
+                       id="spark-sql_&scala_version;-&spark_version;.jar" name="spark-sql_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-sql_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-unsafe_2.12-3.0.1.jar" name="spark-unsafe_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.0.1"/>
+                       id="spark-unsafe_&scala_version;-&spark_version;.jar" name="spark-unsafe_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-unsafe_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-catalyst_2.12-3.0.1.jar" name="spark-catalyst_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.0.1"/>
+                       id="spark-catalyst_&scala_version;-&spark_version;.jar" name="spark-catalyst_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-catalyst_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
+                       id="spark-kvstore_&scala_version;-&spark_version;.jar" name="spark-kvstore_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-kvstore_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-tags_2.12-3.0.1.jar" name="spark-tags_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-tags_2.12/3.0.1"/>
+                       id="spark-network-shuffle_&scala_version;-&spark_version;.jar" name="spark-network-shuffle_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-network-shuffle_&scala_version;/&spark_version;"/>
+
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
+                       id="spark-tags_&scala_version;-&spark_version;.jar" name="spark-tags_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-tags_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
                        id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar"
@@ -80,14 +92,6 @@
                        mvn_uri="mvn:com.esotericsoftware/minlog/1.3.0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-kvstore_2.12-3.0.1.jar" name="spark-kvstore_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-kvstore_2.12/3.0.1"/>
-
-        <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-network-shuffle_2.12-3.0.1.jar" name="spark-network-shuffle_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.12/3.0.1"/>
-
-        <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
                        id="netty-all-4.1.47.Final.jar" name="netty-all-4.1.47.Final.jar"
                        mvn_uri="mvn:io.netty/netty-all/4.1.47.Final"/>
 
@@ -116,8 +120,8 @@
                        mvn_uri="mvn:org.objenesis/objenesis/2.6"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-launcher_2.12-3.0.1.jar" name="spark-launcher_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-launcher_2.12/3.0.1"/>
+                       id="spark-launcher_&scala_version;-&spark_version;.jar" name="spark-launcher_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-launcher_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
                        id="stax2-api-4.2.1.jar" name="stax2-api-4.2.1.jar"
@@ -475,8 +479,8 @@
                        mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
-                       id="spark-streaming_2.12-3.0.1.jar" name="spark-streaming_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.0.1"/>
+                       id="spark-streaming_&scala_version;-&spark_version;.jar" name="spark-streaming_&scala_version;-&spark_version;.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-streaming_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
                        id="py4j-0.10.9.1.jar" name="py4j-0.10.9.1.jar"
@@ -600,17 +604,17 @@
             <library id="scala-library-2.12.10.jar"/>
             <library id="scala-reflect-2.12.10.jar"/>
             <library id="scala-xml_2.12-1.2.0.jar"/>
-            <library id="spark-catalyst_2.12-3.0.1.jar"/>
-            <library id="spark-core_2.12-3.0.1.jar"/>
-            <library id="spark-kvstore_2.12-3.0.1.jar"/>
-            <library id="spark-launcher_2.12-3.0.1.jar"/>
-            <library id="spark-mllib_2.12-3.0.1.jar"/>
-            <library id="spark-mllib-local_2.12-3.0.1.jar"/>
-            <library id="spark-network-common_2.12-3.0.1.jar"/>
-            <library id="spark-network-shuffle_2.12-3.0.1.jar"/>
-            <library id="spark-sql_2.12-3.0.1.jar"/>
-            <library id="spark-tags_2.12-3.0.1.jar"/>
-            <library id="spark-unsafe_2.12-3.0.1.jar"/>
+            <library id="spark-catalyst_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-core_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-kvstore_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-launcher_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-mllib_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-mllib-local_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-network-common_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-network-shuffle_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-sql_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-tags_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-unsafe_&scala_version;-&spark_version;.jar"/>
             <library id="stax2-api-4.2.1.jar"/>
             <library id="stream-2.9.6.jar"/>
             <library id="univocity-parsers-2.9.1.jar"/>
@@ -675,15 +679,15 @@
 
         <!-- spark 3 ML group -->
         <libraryNeededGroup description="ML libraries for synapse" id="ML-GROUP-SYNAPSE" name="ML-GROUP-SYNAPSE">
-            <library id="spark-mllib_2.12-3.0.1.jar"/>
-            <library id="spark-mllib-local_2.12-3.0.1.jar"/>
+            <library id="spark-mllib_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-mllib-local_&scala_version;-&spark_version;.jar"/>
             <library id="arpack_combined_all-0.1.jar"/>
             <library id="core-1.1.2.jar"/>
         </libraryNeededGroup>
 
         <!-- Spark Streaming group -->
         <libraryNeededGroup description="Spark streaming libraries for synapse" id="SPARK-STREAMING-GROUP-SYNAPSE" name="SPARK-STREAMING-GROUP-SYNAPSE">
-            <library id="spark-streaming_2.12-3.0.1.jar"/>
+            <library id="spark-streaming_&scala_version;-&spark_version;.jar"/>
             <group id="SPARK-BATCH-GROUP-SYNAPSE"/>
             <library id="py4j-0.10.9.1.jar"/>
         </libraryNeededGroup>

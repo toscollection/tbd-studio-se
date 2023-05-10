@@ -37,9 +37,9 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
 
     public static final String VERSION = "SYNAPSE";
 
-    public static final String VERSION_DISPLAY = "Azure Synapse Runtime for Apache Spark 3.0";
+    public static final String VERSION_DISPLAY = "Azure Synapse Runtime";
     
-    public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_0;
+    public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_1;
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
