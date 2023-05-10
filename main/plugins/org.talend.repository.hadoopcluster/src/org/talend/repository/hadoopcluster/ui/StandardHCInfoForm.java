@@ -944,7 +944,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addConnectionFields(bigComposite);
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
-        
+
         addKubernetesFields();
         addDatabricksFields();
         addDataprocField();
@@ -2954,8 +2954,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         if (isContextMode()) {
             adaptFormToEditable();
         }
-        hideFieldsOnSparkMode();
         hideK8sFieldsOnDistUpload();
+        hideFieldsOnSparkMode();
         k8sRegistrySecret.setVisible(k8sUseRegistrySecret.getSelection());
         
     }
