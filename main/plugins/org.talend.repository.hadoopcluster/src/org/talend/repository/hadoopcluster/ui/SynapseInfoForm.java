@@ -338,7 +338,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     }
     
     private void addTuningFields() {
-    	Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 70);
+        Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 110);
     	tuningGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
     	
     	tuningPropButton = new Button(tuningGroup, SWT.CHECK);
