@@ -6,7 +6,7 @@
 		<!ENTITY google_version "1.33.3">
 		<!ENTITY hive_version "2.1.1">
 		<!ENTITY ivy_version "2.5.1">
-		<!ENTITY jackson-databind_version "2.6.7.3">
+		<!ENTITY jackson-databind_version "2.6.7.5">
 		<!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
 		<!ENTITY jackson_version "2.6.7">
 		<!ENTITY jackson-module-scala_version "2.6.7.1">
