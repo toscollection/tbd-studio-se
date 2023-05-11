@@ -308,8 +308,8 @@
 			<IMPORT NAME="cxf-rt-bindings-xml-3.4.7" MODULE="cxf-rt-bindings-xml-3.4.7.jar"
 				MVN="mvn:org.apache.cxf/cxf-rt-bindings-xml/3.4.7"				
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
-			<IMPORT NAME="cxf-rt-transports-http-3.4.7" MODULE="cxf-rt-transports-http-3.4.7.jar"
-				MVN="mvn:org.apache.cxf/cxf-rt-transports-http/3.4.7"				
+			<IMPORT NAME="cxf-rt-transports-http-3.5.5" MODULE="cxf-rt-transports-http-3.5.5.jar"
+				MVN="mvn:org.apache.cxf/cxf-rt-transports-http/3.5.5"
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 				MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"

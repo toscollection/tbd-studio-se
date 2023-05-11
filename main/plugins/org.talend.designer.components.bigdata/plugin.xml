@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plugin [
+        <!ENTITY google-oauth_version "1.33.3">
+        ]>
 <?eclipse version="3.2"?>
-<plugin>
+<plugin xmlns="">
    <extension
          point="org.talend.core.components_provider">
       <ComponentsProvider
@@ -450,7 +453,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-api-client-1.30.1" name="google-api-client-1.30.1.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.30.1"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-http-client-jackson2-1.30.1" name="google-http-client-jackson2-1.30.1.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.30.1"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-http-client-1.30.1" name="google-http-client-1.30.1.jar" mvn_uri="mvn:com.google.http-client/google-http-client/1.30.1"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-1.30.1" name="google-oauth-client-1.30.1.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/1.30.1"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-&google-oauth_version;" name="google-oauth-client-&google-oauth_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/&google-oauth_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-cloud-datastore-1.83.0.jar" name="google-cloud-datastore-1.83.0.jar" mvn_uri="mvn:com.google.cloud/google-cloud-datastore/1.83.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-cloud-storage-1.73.0" name="google-cloud-storage-1.73.0.jar" mvn_uri="mvn:com.google.cloud/google-cloud-storage/1.73.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-cloud-core-1.73.0" name="google-cloud-core-1.73.0.jar" mvn_uri="mvn:com.google.cloud/google-cloud-core/1.73.0"/>
@@ -469,10 +472,10 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-http-client-appengine-1.30.2" name="google-http-client-appengine-1.30.2.jar" mvn_uri="mvn:com.google.http-client/google-http-client-appengine/1.30.2"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-http-client-gson-1.30.2.jar" name="google-http-client-gson-1.30.2.jar" mvn_uri="mvn:com.google.http-client/google-http-client-gson/1.30.2"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-http-client-protobuf-1.30.2.jar" name="google-http-client-protobuf-1.30.2.jar" mvn_uri="mvn:com.google.http-client/google-http-client-protobuf/1.30.2"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-appengine-1.30.1.jar" name="google-oauth-client-appengine-1.30.1.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-appengine/1.30.1"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-java6-1.30.1.jar" name="google-oauth-client-java6-1.30.1.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/1.30.1"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-jetty-1.30.1.jar" name="google-oauth-client-jetty-1.30.1.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-jetty/1.30.1"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-servlet-1.30.1.jar" name="google-oauth-client-servlet-1.30.1.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-servlet/1.30.1"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-appengine-&google-oauth_version;.jar" name="google-oauth-client-appengine-&google-oauth_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-appengine/&google-oauth_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-java6-&google-oauth_version;.jar" name="google-oauth-client-java6-&google-oauth_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/&google-oauth_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-jetty-&google-oauth_version;.jar" name="google-oauth-client-jetty-&google-oauth_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-jetty/&google-oauth_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-servlet-&google-oauth_version;.jar" name="google-oauth-client-servlet-&google-oauth_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-servlet/&google-oauth_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="grpc-context-1.19.0.jar" name="grpc-context-1.19.0.jar" mvn_uri="mvn:io.grpc/grpc-context/1.19.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="guava-27.0-jre.jar" name="guava-27.0-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.0-jre" />
@@ -482,7 +485,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jetty-util-6.1.26.jar" name="jetty-util-6.1.26.jar" mvn_uri="mvn:org.mortbay.jetty/jetty-util/6.1.26"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jsr305-3.0.2.jar" name="jsr305-3.0.2.jar" mvn_uri="mvn:com.google.code.findbugs/jsr305/3.0.2"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jackson-core-2.8.6.jar" name="jackson-core-2.8.6.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.8.6"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="json-20170516" name="json-20170516.jar" mvn_uri="mvn:org.json/json/20170516"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="json-20230227" name="json-20230227.jar" mvn_uri="mvn:org.json/json/20230227"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="opencensus-api-0.21.0.jar" name="opencensus-api-0.21.0.jar" mvn_uri="mvn:io.opencensus/opencensus-api/0.21.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="opencensus-contrib-http-util-0.21.0.jar" name="opencensus-contrib-http-util-0.21.0.jar" mvn_uri="mvn:io.opencensus/opencensus-contrib-http-util/0.21.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="protobuf-java-3.19.6.jar" name="protobuf-java-3.19.6.jar" mvn_uri="mvn:com.google.protobuf/protobuf-java/3.19.6"/>
@@ -534,18 +537,18 @@
             <library id="google-http-client-gson-1.30.2.jar" />
             <library id="google-http-client-jackson2-1.30.1" />
             <library id="google-http-client-protobuf-1.30.2.jar" />
-            <library id="google-oauth-client-1.30.1" />
-            <library id="google-oauth-client-appengine-1.30.1.jar" />
-            <library id="google-oauth-client-java6-1.30.1.jar" />
-            <library id="google-oauth-client-jetty-1.30.1.jar" />
-            <library id="google-oauth-client-servlet-1.30.1.jar" />
+            <library id="google-oauth-client-&google-oauth_version;" />
+            <library id="google-oauth-client-appengine-&google-oauth_version;.jar" />
+            <library id="google-oauth-client-java6-&google-oauth_version;.jar" />
+            <library id="google-oauth-client-jetty-&google-oauth_version;.jar" />
+            <library id="google-oauth-client-servlet-&google-oauth_version;.jar" />
             <library id="grpc-context-1.19.0.jar" />
             <library id="gson-2.9.0.jar" />
             <library id="guava-27.0-jre.jar"/>
             <library id="jackson-core-2.8.6.jar" />
             <library id="jackson-core-asl-1.9.16-TALEND.jar" />
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar" />
-            <library id="json-20170516.jar" />
+            <library id="json-20230227.jar" />
             <library id="failureaccess-1.0.1.jar" />
             <library id="talend-bigdata-launcher-dataproc-2.4.6.jar"/>
             <library id="talend-bigdata-launcher-core-2.4.6.jar"/>
