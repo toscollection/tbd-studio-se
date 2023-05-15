@@ -359,6 +359,9 @@ public class Spark31xDistribution extends AbstractSparkDistribution
         return true;
     }
 
+    public boolean doSupportUniversalHDIMode() {
+        return true;
+    }
     @Override
     public boolean doJavaAPISupportStorePasswordInFile() {
         return true;
