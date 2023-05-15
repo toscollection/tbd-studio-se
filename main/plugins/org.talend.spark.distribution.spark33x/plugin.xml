@@ -525,9 +525,7 @@
 
         <!-- Spark Streaming Redshift group -->
         <libraryNeededGroup description="Spark streaming Redshift libraries for spark33x" id="REDSHIFT-STREAMING-GROUP-SPARK_3_3_x" name="REDSHIFT-STREAMING-GROUP-SPARK_3_3_x">
-            <library id="snappy-java-1.1.8.4.jar"/>
-            <library id="spark-redshift_2.12-5.1.0.jar"/>
-            <library id="spark-avro_2.12-3.3.0.jar"/>
+            <group id="REDSHIFT-BATCH-GROUP-SPARK_3_3_x" />
         </libraryNeededGroup>
 
         <!-- Spark Streaming DynamoDB group -->

@@ -433,7 +433,7 @@
 
 		<!-- Spark Streaming Redshift group -->
 		<libraryNeededGroup description="Spark streaming Redshift libraries for spark247" id="REDSHIFT-STREAMING-GROUP-SPARK_2_4_x" name="REDSHIFT-STREAMING-GROUP-SPARK_2_4_x">
-			<!-- To be completed when deps are moved away from the components -->
+			<group id="REDSHIFT-BATCH-GROUP-SPARK_2_4_x" />
 		</libraryNeededGroup>
 
 		<!-- Spark Streaming DynamoDB group -->
