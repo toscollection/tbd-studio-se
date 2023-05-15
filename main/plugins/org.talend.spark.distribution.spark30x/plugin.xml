@@ -952,11 +952,7 @@
 
         <!-- Spark Streaming Redshift group -->
         <libraryNeededGroup description="Spark streaming Redshift libraries for spl30x" id="REDSHIFT-STREAMING-GROUP-SPARK_3_0_x" name="REDSHIFT-STREAMING-GROUP-SPARK_3_0_x">
-            <library id="spark-redshift_2.12-4.2.0.jar"/>
-            <library id="spark-avro_2.12-3.0.3.jar"/>
-            <library id="gson-2.9.0.jar"/>
-            <library id="snappy-java-1.1.8.2.jar"/>
-            <library id="avro-mapred-1.8.2.jar"/>
+            <group id="REDSHIFT-BATCH-GROUP-SPARK_3_0_x" />
         </libraryNeededGroup>
 
         <!-- Spark Streaming DynamoDB group -->
