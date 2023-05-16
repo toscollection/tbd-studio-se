@@ -587,16 +587,20 @@ if(storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
     }
 } else {
     String storageClass = ElementParameterParser.getValue(node, "__STORAGE_CLASS__");
-%>
-    String storageClass_<%=cid%> = <%=storageClass%>;
-<%
-    createTableSQL.append(" STORED BY '");
-    createTableSQL.append("\" + ");
-    createTableSQL.append("storageClass_");
-    createTableSQL.append(cid);
-    createTableSQL.append(" + \"'");
-
-    util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
+        boolean useIceberg = "true".equals(ElementParameterParser.getValue(node, "__USE_ICEBERG__"));
+    %>
+        String storageClass_<%=cid%> = <%=storageClass%>;
+    <%
+        createTableSQL.append(" STORED BY '");
+        if (useIceberg) {
+            createTableSQL.append("org.apache.iceberg.mr.hive.HiveIcebergStorageHandler'");
+        } else {
+            createTableSQL.append("\" + ");
+            createTableSQL.append("storageClass_");
+            createTableSQL.append(cid);
+            createTableSQL.append(" + \"'");
+        }
+        util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
 }
 
 if(setLocation) {
