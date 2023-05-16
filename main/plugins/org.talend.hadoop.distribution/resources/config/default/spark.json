@@ -81,5 +81,13 @@
     "SPARK_DRIVER_MEM": "2g",
     "SPARK_DRIVER_CORES": "1",
     "SPARK_EXECUTOR_MEMORY": "2g",
-    "SPARK_EXECUTOR_CORES": "1"
+    "SPARK_EXECUTOR_CORES": "1",
+    "HD_WEBHCAT_HOSTNAME": "clustername.azurehdinsight.net", 
+    "HD_WEBHCAT_PORT": "443", 
+    "HD_WEBHCAT_USERNAME": "admin", 
+    "HD_INSIGHT_USERNAME": "admin",
+    "HD_AZURE_HOSTNAME": "storage.blob.core.windows.net",
+    "HD_AZURE_CONTAINER": "clustername",
+    "HD_AZURE_USERNAME": "storage",
+    "HD_AZURE_DEPLOYBOLB": ""
 }

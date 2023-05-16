@@ -416,6 +416,35 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     private LabelledWidget executorMemory;
 
+    //HDI widgets
+
+    private Group hdiGroup;
+    private Group fsGroup;
+    private LabelledWidget livyHostname;
+
+    private LabelledWidget livyPort;
+
+    private LabelledWidget livyUsername;
+
+    private LabelledWidget hdiUsername;
+
+    private LabelledWidget hdiPassword;
+
+    private Composite storagePartComposite;
+
+    private LabelledCombo storageCombo;
+
+    private LabelledWidget azureHostname;
+
+    private LabelledWidget azureContainer;
+
+    private LabelledWidget azureUsername;
+
+    private LabelledWidget azurePassword;
+
+    private LabelledWidget azureDeployBlob;
+
+
     public StandardHCInfoForm(Composite parent, ConnectionItem connectionItem, String[] existingNames, boolean creation,
             DistributionBean hadoopDistribution, DistributionVersion hadoopVersison) {
         super(parent, SWT.NONE, existingNames);
@@ -1198,6 +1227,35 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
 
         updateSynapseFieldsVisibility();
+    }
+
+    private void addHDIFields() {
+        hdiGroup = Form.createGroup(bigComposite, 4, Messages.getString("HadoopClusterForm.hdiSettings"), 110);
+        fsGroup = Form.createGroup(bigComposite, 4, Messages.getString("HadoopClusterForm.azureSettings"), 110);
+        hdiGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        fsGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        hdiUsername = new LabelledText(hdiGroup,  Messages.getString("HadoopClusterForm.text.hdi.username"));
+        hdiPassword = new LabelledText(hdiGroup,  Messages.getString("HadoopClusterForm.text.hdi.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        livyHostname = new LabelledText(hdiGroup,  Messages.getString("HadoopClusterForm.text.webHCat.hostname"));
+        livyPort = new LabelledText(hdiGroup, Messages.getString("HadoopClusterForm.text.webHCat.port"));
+        livyUsername = new LabelledText(hdiGroup,  Messages.getString("HadoopClusterForm.text.webHCat.username"));
+        azureHostname = new LabelledText(fsGroup,  Messages.getString("HadoopClusterForm.text.azure.hostname"));
+        azureContainer = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.container"));
+        azureUsername = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.username"));
+        azurePassword = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        azureDeployBlob = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.deployBlob"));
+
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_USERNAME, hdiUsername);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD, hdiPassword);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_HOSTNAME, livyHostname);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_PORT, livyPort);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_USERNAME, livyUsername);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_HOSTNAME, azureHostname);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_CONTAINER, azureContainer);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_USERNAME, azureUsername);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_PASSWORD, azurePassword);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB, azureDeployBlob);
     }
 
     private List<String> getRunSubmitModes() {
@@ -2579,7 +2637,23 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY);
         addBasicListener(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_CORES);
+
+        // HDI listeners
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_CDE_TOKEN);
+
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_HDI_USERNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_HOSTNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_PORT);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_USERNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_AZURE_HOSTNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_AZURE_CONTAINER);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_AZURE_USERNAME);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_AZURE_PASSWORD);
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB);
     }
+}
 
     private void reloadForm() {
         ((HadoopClusterForm) this.getParent()).switchToInfoForm();
@@ -2667,7 +2741,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                     getSparkModeByName(sparkModeLabelName).getValue());
 
             // List of possible configuration groups
-            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup, synapseGroup);
+            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup, synapseGroup, hdiGroup, fsGroup);
 
             // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
@@ -2678,8 +2752,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup));
             visibleGroupsBySparkMode.put(ESparkMode.STANDALONE, Arrays.asList(standaloneGroup));
             visibleGroupsBySparkMode.put(ESparkMode.SYNAPSE, Arrays.asList(synapseGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.HDI, Arrays.asList(hdiGroup, fsGroup));
 
-            // Compute current visible groups
+                 // Compute current visible groups
             ESparkMode currentSparkMode = ESparkMode.getByLabel(sparkModeLabelName);
             List<Group> currentVisibleGroups = visibleGroupsBySparkMode.get(currentSparkMode);
             // Hide required groups
@@ -2696,6 +2771,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             hideControl(kubernetesBlobGroup, true);
             hideControl(standaloneGroup, true);
             hideControl(synapseGroup, true);
+            hideControl(hdiGroup, true);
+            hideControl(fsGroup, true);
         }
 
     }
