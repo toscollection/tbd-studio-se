@@ -5,7 +5,7 @@
 		<!ENTITY commons-text_version "1.10.0">
 		<!ENTITY commons-net_version "3.9.0">
 		<!ENTITY google_version "1.33.3">
-		<!ENTITY hive_version "2.1.1">
+		<!ENTITY hive_version "2.3.8">
 		<!ENTITY ivy_version "2.5.1">
 		<!ENTITY jackson-databind_version "2.6.7.5">
 		<!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
