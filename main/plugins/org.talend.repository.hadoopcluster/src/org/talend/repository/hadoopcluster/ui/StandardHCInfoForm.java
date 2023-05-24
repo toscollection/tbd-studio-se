@@ -1632,21 +1632,18 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
 
     private void addCheckFields() {
-        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
-                || (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
-            Composite checkGroup = new Composite(this, SWT.NONE);
-            GridLayout checkGridLayout = new GridLayout(1, false);
-            checkGroup.setLayout(checkGridLayout);
-            GridData checkGridData = new GridData(GridData.FILL_HORIZONTAL);
-            checkGridData.minimumHeight = 5;
-            checkGroup.setLayoutData(checkGridData);
-            Composite checkButtonComposite = Form.startNewGridLayout(checkGroup, 1, false, SWT.CENTER, SWT.BOTTOM);
-            GridLayout checkButtonLayout = (GridLayout) checkButtonComposite.getLayout();
-            checkButtonLayout.marginHeight = 0;
-            checkButtonLayout.marginWidth = 0;
-            checkServicesBtn = new UtilsButton(checkButtonComposite, Messages.getString("HadoopClusterForm.button.check"), true); //$NON-NLS-1$
-            checkServicesBtn.setEnabled(false);
-        }
+        Composite checkGroup = new Composite(this, SWT.NONE);
+        GridLayout checkGridLayout = new GridLayout(1, false);
+        checkGroup.setLayout(checkGridLayout);
+        GridData checkGridData = new GridData(GridData.FILL_HORIZONTAL);
+        checkGridData.minimumHeight = 5;
+        checkGroup.setLayoutData(checkGridData);
+        Composite checkButtonComposite = Form.startNewGridLayout(checkGroup, 1, false, SWT.CENTER, SWT.BOTTOM);
+        GridLayout checkButtonLayout = (GridLayout) checkButtonComposite.getLayout();
+        checkButtonLayout.marginHeight = 0;
+        checkButtonLayout.marginWidth = 0;
+        checkServicesBtn = new UtilsButton(checkButtonComposite, Messages.getString("HadoopClusterForm.button.check"), true); //$NON-NLS-1$
+        checkServicesBtn.setEnabled(false);
     }
 
     @Override
