@@ -2637,6 +2637,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         azureClientKey.setVisible(useClientKey, !useClientKey);
         useSynapseCertificate.setVisible(isAAD, !isAAD);
         azureClientCertificate.setVisible(useCertificate);
+        checkServicesBtn.setVisible(false);
         synapseGroup.layout();
         synapseGroup.getParent().layout();
     }
