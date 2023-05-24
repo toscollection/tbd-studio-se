@@ -945,13 +945,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
 
-        addKubernetesFields();
-        addDatabricksFields();
-        addDataprocField();
-        addCdeFields();
-        addStandaloneFields();
-        addSynapseFields();
-
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
         propertiesScroll.setExpandVertical(true);
@@ -970,7 +963,12 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addNavigatorFields();
         addHadoopConfsFields();
 
-        addCheckFields();
+        addKubernetesFields();
+        addDatabricksFields();
+        addDataprocField();
+        addCdeFields();
+        addStandaloneFields();
+        addSynapseFields();
 
         hideFieldsOnSparkMode();
 
@@ -1043,7 +1041,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         tokenText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.token"), 1, //$NON-NLS-1$
                 SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
         dbfsDepFolderText = new LabelledText(dataBricksGroup, Messages.getString("DataBricksInfoForm.text.dbfsDepFolder"), 1); //$NON-NLS-1$
-        
+        checkServicesBtn.setVisible(false);
     }
     
     private void addKubernetesFields() {
@@ -1085,6 +1083,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     	k8sAzureAADKey = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE); //$NON-NLS-1$
     	k8sAzureAADClientID = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADClientID"), 1); //$NON-NLS-1$
     	k8sAzureAADDirectoryID = new LabelledText(kubernetesAzureGroup, Messages.getString("KubernetesInfoForm.text.k8sAzureAADDirectoryID"), 1); //$NON-NLS-1$
+        checkServicesBtn.setVisible(false);
     }
     
     private void addDataprocField() {
@@ -1111,7 +1110,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         String[] extensions = { "*.*" }; //$NON-NLS-1$
         pathToCredentials = new LabelledFileField(dataProcGroup,
                 Messages.getString("GoogleDataprocInfoForm.text.authentication.credentials"), extensions); //$NON-NLS-1$
-    	
+        checkServicesBtn.setVisible(false);
     }
 
     private void addCdeFields() {
@@ -1123,6 +1122,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         cdeTokenEndpoint = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeTokenEndpoint"));  //$NON-NLS-1$
         cdeWorkloadUser = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadUser"));  //$NON-NLS-1$
         cdeWorkloadPassword = new LabelledText(cdeGroup,  Messages.getString("CdeInfoForm.text.cdeWorkloadPassword"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);  //$NON-NLS-1$
+        checkServicesBtn.setVisible(false);
 
         fieldByParamKey = new HashMap<String, LabelledWidget>();
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT, cdeApiEndPoint);
@@ -1140,6 +1140,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         standaloneConfigureExec = new LabelledCheckbox(standaloneGroup, Messages.getString("StandaloneInfoForm.checkbox.configureExecutors")); //$NON-NLS-1$
         standaloneExecCore = new LabelledText(standaloneGroup,  Messages.getString("StandaloneInfoForm.text.executorCores"));  //$NON-NLS-1$
         standaloneExecMemory = new LabelledText(standaloneGroup,  Messages.getString("StandaloneInfoForm.text.executorMemory"));  //$NON-NLS-1$
+        checkServicesBtn.setVisible(false);
 
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_MASTER, standaloneMaster);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_CONFIGURE_EXEC, standaloneConfigureExec);
@@ -1196,7 +1197,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         } else {
             storageAuthType.select(0);
         }
-
+        checkServicesBtn.setVisible(false);
         updateSynapseFieldsVisibility();
     }
 
@@ -1632,8 +1633,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
 
     private void addCheckFields() {
-        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
-                || (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
             Composite checkGroup = new Composite(this, SWT.NONE);
             GridLayout checkGridLayout = new GridLayout(1, false);
             checkGroup.setLayout(checkGridLayout);
@@ -1646,7 +1645,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             checkButtonLayout.marginWidth = 0;
             checkServicesBtn = new UtilsButton(checkButtonComposite, Messages.getString("HadoopClusterForm.button.check"), true); //$NON-NLS-1$
             checkServicesBtn.setEnabled(false);
-        }
     }
 
     @Override
