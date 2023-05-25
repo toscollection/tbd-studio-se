@@ -945,13 +945,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addWebHDFSEncryptionFields(bigComposite);
         addAuthenticationFields(bigComposite);
 
-        addKubernetesFields();
-        addDatabricksFields();
-        addDataprocField();
-        addCdeFields();
-        addStandaloneFields();
-        addSynapseFields();
-
         propertiesScroll = new ScrolledComposite(downsash, SWT.V_SCROLL | SWT.H_SCROLL);
         propertiesScroll.setExpandHorizontal(true);
         propertiesScroll.setExpandVertical(true);
@@ -971,6 +964,13 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addHadoopConfsFields();
 
         addCheckFields();
+
+        addKubernetesFields();
+        addDatabricksFields();
+        addDataprocField();
+        addCdeFields();
+        addStandaloneFields();
+        addSynapseFields();
 
         hideFieldsOnSparkMode();
 
