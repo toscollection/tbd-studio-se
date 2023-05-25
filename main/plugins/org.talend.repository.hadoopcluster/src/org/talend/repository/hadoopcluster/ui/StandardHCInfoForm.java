@@ -962,9 +962,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addSparkPropertiesFields();
         addNavigatorFields();
         addHadoopConfsFields();
-        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
-            addCheckFields();
-        }
+        addCheckFields();
 
         addKubernetesFields();
         addDatabricksFields();
@@ -3356,6 +3354,10 @@ jtOrRmPrincipalText
                 }
             }
             checkServicesBtn.setEnabled(true);
+        }
+        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
+                || (sparkModeCombo != null && !ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
+            checkServicesBtn.visible(false);
         }
         return true;
     }
