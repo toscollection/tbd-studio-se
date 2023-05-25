@@ -963,7 +963,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addNavigatorFields();
         addHadoopConfsFields();
 
-        addCheckFields();
+        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
+                || (sparkModeCombo != null && ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
+            addCheckFields();
+        }
 
         addKubernetesFields();
         addDatabricksFields();
@@ -2637,7 +2640,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         azureClientKey.setVisible(useClientKey, !useClientKey);
         useSynapseCertificate.setVisible(isAAD, !isAAD);
         azureClientCertificate.setVisible(useCertificate);
-        checkServicesBtn.setVisible(false);
         synapseGroup.layout();
         synapseGroup.getParent().layout();
     }
