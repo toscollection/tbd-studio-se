@@ -3357,7 +3357,7 @@ jtOrRmPrincipalText
         }
         if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
                 || (sparkModeCombo != null && !ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
-            checkServicesBtn.visible(false);
+            checkServicesBtn.setVisible(false);
         }
         return true;
     }
