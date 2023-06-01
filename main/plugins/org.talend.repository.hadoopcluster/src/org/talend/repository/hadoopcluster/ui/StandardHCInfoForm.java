@@ -3353,12 +3353,9 @@ jtOrRmPrincipalText
                     return false;
                 }
             }
-            checkServicesBtn.setEnabled(true);
-        }
-        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())
-                || (sparkModeCombo != null && !ESparkMode.YARN_CLUSTER.getLabel().equals(sparkModeCombo.getText()))) {
-            checkServicesBtn.setVisible(false);
-        }
+            checkServicesBtn.setVisible(true);
+            checkServicesBtn.setEnabled(true);}
+
         return true;
     }
 
