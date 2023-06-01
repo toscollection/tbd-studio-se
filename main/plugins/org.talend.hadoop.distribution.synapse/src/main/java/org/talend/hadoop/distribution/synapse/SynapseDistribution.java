@@ -26,14 +26,13 @@ import org.talend.hadoop.distribution.EHadoopVersion;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.NodeComponentTypeBean;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
-import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.synapse.ISynapseDistribution;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
 
 @SuppressWarnings("nls")
-public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, SparkBatchComponent, SparkStreamingComponent {
+public class SynapseDistribution extends AbstractDistribution implements ISynapseDistribution, SparkBatchComponent {
 
     public static final String VERSION = "SYNAPSE";
 
@@ -184,12 +183,10 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
         return true;
     }
 
-    @Override
     public boolean doSupportCheckpointing() {
         return true;
     }
 
-    @Override
     public boolean doSupportBackpressure() {
         return true;
     }
@@ -218,4 +215,5 @@ public class SynapseDistribution extends AbstractDistribution implements ISynaps
     public boolean doSupportAzureDataLakeStorageGen2() {
         return true;
     }
+
 }
