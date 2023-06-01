@@ -141,6 +141,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         if (this.doSupportUniversalSynapseMode()) {
             result.add(ESparkMode.SYNAPSE);
         }
+        if (this.doSupportUniversalHDIMode()) {
+            result.add(ESparkMode.HDI);
+        }
         return result;
     }
 

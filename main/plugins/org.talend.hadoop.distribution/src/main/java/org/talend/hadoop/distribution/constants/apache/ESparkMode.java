@@ -47,6 +47,9 @@ public enum ESparkMode {
     STANDALONE(Messages.getString("ESparkMode.STANDALONE"),
             "STANDALONE",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalStandaloneMode[])"),
+    HDI(Messages.getString("ESparkMode.HDI"),
+            "HDI",
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalHDIMode[])"),
     SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
             "SPARK_LOCAL",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])");
