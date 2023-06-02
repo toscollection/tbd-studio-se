@@ -179,6 +179,11 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     }
 
     @Override
+    public boolean doSupportUniversalEMRServerlessMode() {
+        return true;
+    }
+
+    @Override
     public boolean doSupportSparkYarnClientMode() {
         return false;
     }

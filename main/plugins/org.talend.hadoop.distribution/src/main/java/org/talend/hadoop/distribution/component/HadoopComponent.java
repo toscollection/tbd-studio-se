@@ -251,5 +251,5 @@ public interface HadoopComponent {
     /**
      * @return a boolean that indicates if the distribution supports Knox.
      */
-    public boolean isExecutedThroughKnox();
+    boolean isExecutedThroughKnox();
 }

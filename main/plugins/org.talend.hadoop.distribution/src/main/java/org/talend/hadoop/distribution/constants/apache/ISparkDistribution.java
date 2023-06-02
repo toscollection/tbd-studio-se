@@ -12,48 +12,51 @@
 // ============================================================================
 package org.talend.hadoop.distribution.constants.apache;
 
-import java.util.List;
-
 import org.talend.hadoop.distribution.constants.databricks.EDatabricksCloudProvider;
-import org.talend.hadoop.distribution.constants.databricks.EDatabricksClusterType ;
+import org.talend.hadoop.distribution.constants.databricks.EDatabricksClusterType;
 import org.talend.hadoop.distribution.constants.databricks.EDatabricksSubmitMode;
 import org.talend.hadoop.distribution.constants.kubernetes.EKubernetesAzureCredentials;
 import org.talend.hadoop.distribution.constants.kubernetes.EKubernetesBucketCloudProvider;
 import org.talend.hadoop.distribution.constants.kubernetes.EKubernetesS3Credentials;
 import org.talend.hadoop.distribution.constants.kubernetes.EKubernetesSubmitMode;
 
+import java.util.List;
+
 public interface ISparkDistribution {
 
     static final String DISTRIBUTION_NAME = "SPARK";
 
     static final String DISTRIBUTION_DISPLAY_NAME = "Universal";
-    
+
     public List<ESparkMode> getSparkModes();
-    
+
     List<EDatabricksCloudProvider> getSupportCloudProviders();
-    
-    List<EDatabricksClusterType > getClusterTypes();
-    
+
+    List<EDatabricksClusterType> getClusterTypes();
+
     List<EDatabricksSubmitMode> getRunSubmitMode();
-    
+
     List<EKubernetesSubmitMode> getK8sRunSubmitModes();
-    
+
     List<EKubernetesBucketCloudProvider> getK8sCloudProviders();
-    
+
     List<EKubernetesAzureCredentials> getK8sAzureCredentials();
-    
+
     List<EKubernetesS3Credentials> getK8sS3Credentials();
 
-    public boolean doSupportUniversalDBRMode();
-    
-    public boolean doSupportUniversalDataprocMode();
-    
-    public boolean doSupportUniversalLocalMode();
-    
-    public boolean doSupportSparkYarnK8SMode();
-    
-    public boolean doSupportSparkYarnClusterMode();
-    
-    public boolean doSupportUniversalStandaloneMode();
-    
+    boolean doSupportUniversalDBRMode();
+
+    boolean doSupportUniversalDataprocMode();
+
+    boolean doSupportUniversalLocalMode();
+
+    boolean doSupportSparkYarnK8SMode();
+
+    boolean doSupportSparkYarnClusterMode();
+
+    boolean doSupportUniversalStandaloneMode();
+
+    default boolean doSupportUniversalEMRServerlessMode() {
+        return false;
+    }
 }

@@ -52,7 +52,12 @@ public enum ESparkMode {
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalHDIMode[])"),
     SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
             "SPARK_LOCAL",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])");
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])"),
+
+    EMR_SERVERLESS(Messages.getString("ESparkMode.EMR_SERVERLESS"),
+            "EMR_SERVERLESS",
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalEMRServerlessMode[])")
+    ;
 	// we want spark local by default if possible so please let it last in this list
 
     private String runModeLabel;
