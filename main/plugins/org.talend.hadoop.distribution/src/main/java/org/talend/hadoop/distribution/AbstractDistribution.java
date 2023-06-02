@@ -749,6 +749,10 @@ public abstract class AbstractDistribution {
     public boolean doSupportUniversalSynapseMode() {
         return false;
     }
+
+    public boolean doSupportUniversalEMRServerlessMode() {
+        return false;
+    }
     public boolean doSupportUniversalHDIMode() {
         return false;
     }

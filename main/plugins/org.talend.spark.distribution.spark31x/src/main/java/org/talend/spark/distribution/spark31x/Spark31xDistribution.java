@@ -189,6 +189,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     }
 
     @Override
+    public boolean doSupportUniversalEMRServerlessMode() {
+        return false;
+    }
+
+    @Override
     public boolean doSupportSparkYarnK8SMode() {
         return true;
     }

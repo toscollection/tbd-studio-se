@@ -12,16 +12,8 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dynamic;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 import org.osgi.framework.BundleContext;
@@ -217,7 +209,9 @@ public abstract class AbstractDynamicDistributionsGroup implements IDynamicDistr
         }
         for (IDynamicDistribution dynamicDistribution : allRegistedDynamicDistributions) {
             try {
-                dynamicDistribution.registerAllBuiltin(monitor);
+                if(dynamicDistribution != null) {
+                    dynamicDistribution.registerAllBuiltin(monitor);
+                }
             } catch (Throwable e) {
                 ExceptionHandler.process(e);
             }
