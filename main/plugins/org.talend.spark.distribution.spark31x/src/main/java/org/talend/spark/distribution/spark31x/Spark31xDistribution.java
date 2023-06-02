@@ -388,9 +388,4 @@ public class Spark31xDistribution extends AbstractSparkDistribution
         return ESqoopPackageName.ORG_APACHE_SQOOP.toString();
     }
 
-    @Override
-    public boolean doSupportUniversalCDEMode() {
-        return true;
-    }
-    
 }
