@@ -18,12 +18,14 @@ imports="
         "
 %>
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jDBConnUtil.javajet"%>
+<%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveCreateTable/THiveCreateTableComponent.javajet"%>
 
 <%
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     final String cid = node.getUniqueName();
     String processId = node.getProcess().getId();
+    THiveCreateTableComponent tHiveCreateTableComponent = new THiveCreateTableComponent(node);
 
     String dbhost = ElementParameterParser.getValue(node, "__HOST__");
     String dbport = ElementParameterParser.getValue(node, "__PORT__");
@@ -266,8 +268,8 @@ imports="
 <%
     }
 %>
-    String query_<%=cid %> = "";
-    String tableName_<%=cid%> = <%=tableName%>;
+
+String tableName_<%=cid%> = <%=tableName%>;
 <%
 List<IMetadataColumn> listColumn = null;
 List<IMetadataTable> metadatas = node.getMetadataList();
@@ -279,7 +281,7 @@ if(metadatas != null && metadatas.size() > 0) {
 StringBuilder createTableSQL = new StringBuilder();
 
 createTableSQL.append("CREATE ");
-createTableSQL.append(external || isS3Location ?"EXTERNAL":"");
+createTableSQL.append(tHiveCreateTableComponent.isExternal() ?"EXTERNAL":"");
 createTableSQL.append(" TABLE ");
 createTableSQL.append(createIfNotExist?"IF NOT EXISTS":"");
 createTableSQL.append(" \" + ");
@@ -299,7 +301,11 @@ if(likeTable) {
     createTableSQL.append(cid);
     createTableSQL.append(" + \"");
 
-    if(setLocation) {
+    if (tHiveCreateTableComponent.useIceberg()) {
+        createTableSQL.append(" STORED BY 'org.apache.iceberg.mr.hive.HiveIcebergStorageHandler'");
+    }
+
+    if (setLocation) {
 %>
         String location_<%=cid%> = <%=location%>;
 <%
@@ -417,10 +423,6 @@ throw new Exception("The Hive job failed. Please read the logs for more details"
 
 boolean asSelect = "true".equals(ElementParameterParser.getValue(node, "__AS_SELECT__"));
 
-if(!storeAsAvro && !asSelect) {
-    createTableSQL.append("(");
-}
-
 final MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetriever("hive_id");
 %>
 <%@ include file="@{org.talend.designer.components.bigdata}/components/tHiveCreateTable/hiveUtil.javajet"%>
@@ -428,7 +430,9 @@ final MappingTypeRetriever mappingType = MetadataTalendType.getMappingTypeRetrie
 
 Util util = new Util();
 
-if(!storeAsAvro && !asSelect) {
+// Columns list 
+if(!storeAsAvro && !asSelect || tHiveCreateTableComponent.useIceberg()) {
+    createTableSQL.append("(");
     util.generateColumnsSQL(listColumn,createTableSQL);
     createTableSQL.append(")");
 }
@@ -473,7 +477,7 @@ if(clustededOrSkewed) {
     createTableSQL.append(" + \"");
 }
 
-if(storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
+if(!tHiveCreateTableComponent.useIceberg() && (storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet)) {
     createTableSQL.append(" ROW FORMAT SERDE '" + (storeAsAvro?"org.apache.hadoop.hive.serde2.avro.AvroSerDe":"parquet.hive.serde.ParquetHiveSerDe") + "'");
     util.generatePros(" WITH SERDEPROPERTIES ", serdeProps, createTableSQL);
 } else if(setRowFormat) {
@@ -559,7 +563,13 @@ if(storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
         }
     }
 
-    if (storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
+    // Storage format
+    if (tHiveCreateTableComponent.useIceberg()) {
+        createTableSQL.append(" STORED BY 'org.apache.iceberg.mr.hive.HiveIcebergStorageHandler'");
+        if (tHiveCreateTableComponent.setStorageFormat()) {
+            createTableSQL.append(" STORED AS " + storedFormat);
+        }
+    } else if (storeAsAvro || !hiveDistrib.doSupportStoreAsParquet() && storeAsParquet) {
         createTableSQL.append(" STORED AS INPUTFORMAT '" + (storeAsAvro ? "org.apache.hadoop.hive.ql.io.avro.AvroContainerInputFormat" : "parquet.hive.DeprecatedParquetInputFormat") + "'");
         createTableSQL.append(" OUTPUTFORMAT '" + (storeAsAvro ? "org.apache.hadoop.hive.ql.io.avro.AvroContainerOutputFormat" : parquetPrefixPackageName + "parquet.hive.DeprecatedParquetOutputFormat") + "'");
     } else if (!"STORAGE".equals(storedFormat)) {
@@ -632,7 +642,7 @@ if(setLocation) {
     createTableSQL.append(" + \"'");
 }
 
-if(storeAsAvro) {
+if(storeAsAvro && !tHiveCreateTableComponent.useIceberg()) {
     StringBuilder avroSchemaBuilder = new StringBuilder();
     String quote = "\\\"";
     avroSchemaBuilder.append("'avro.schema.literal'='{").append(quote).append("name").append(quote).append(" : ").append(quote).append("row").append(quote)
