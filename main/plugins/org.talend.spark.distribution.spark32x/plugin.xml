@@ -13,7 +13,7 @@
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
-        <!ENTITY kubernetes-client_version "5.4.2">
+        <!ENTITY kubernetes_version "5.4.2">
         <!ENTITY snakeyaml_version "1.33">
         <!ENTITY netty_version "4.1.68.Final">
         <!ENTITY woodstox_version "6.4.0">
@@ -96,6 +96,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-annotations-&jackson_version;.jar" name="jackson-annotations-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/&jackson_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-bom-&jackson_version;.jar" name="jackson-bom-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-bom/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-core-&jackson_version;.jar" name="jackson-core-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-databind-&jackson_databind_version;.jar" name="jackson-databind-&jackson_databind_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/&jackson_databind_version;"/>
@@ -141,25 +142,25 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kerby-util-1.0.0.jar" name="kerby-util-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerby-util/1.0.0/jar"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kerby-xdr-1.0.0.jar" name="kerby-xdr-1.0.0.jar" mvn_uri="mvn:org.apache.kerby/kerby-xdr/1.0.0/jar"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kryo-shaded-4.0.2.jar" name="kryo-shaded-4.0.2.jar" mvn_uri="mvn:com.esotericsoftware/kryo-shaded/4.0.2"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-client-&kubernetes-client_version;.jar" name="kubernetes-client-&kubernetes-client_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-client/&kubernetes-client_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-admissionregistration-5.4.1.jar" name="kubernetes-model-admissionregistration-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-admissionregistration/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-apiextensions-5.4.1.jar" name="kubernetes-model-apiextensions-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apiextensions/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-apps-5.4.1.jar" name="kubernetes-model-apps-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apps/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-autoscaling-5.4.1.jar" name="kubernetes-model-autoscaling-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-autoscaling/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-batch-5.4.1.jar" name="kubernetes-model-batch-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-batch/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-certificates-5.4.1.jar" name="kubernetes-model-certificates-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-certificates/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-common-5.4.1.jar" name="kubernetes-model-common-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-common/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-coordination-5.4.1.jar" name="kubernetes-model-coordination-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-coordination/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-core-5.4.1.jar" name="kubernetes-model-core-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-core/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-discovery-5.4.1.jar" name="kubernetes-model-discovery-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-discovery/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-events-5.4.1.jar" name="kubernetes-model-events-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-events/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-extensions-5.4.1.jar" name="kubernetes-model-extensions-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-extensions/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-metrics-5.4.1.jar" name="kubernetes-model-metrics-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-metrics/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-networking-5.4.1.jar" name="kubernetes-model-networking-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-networking/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-policy-5.4.1.jar" name="kubernetes-model-policy-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-policy/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-rbac-5.4.1.jar" name="kubernetes-model-rbac-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-rbac/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-scheduling-5.4.1.jar" name="kubernetes-model-scheduling-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-scheduling/5.4.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-storageclass-5.4.1.jar" name="kubernetes-model-storageclass-5.4.1.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-storageclass/5.4.1"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-client-&kubernetes_version;.jar" name="kubernetes-client-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-client/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-admissionregistration-&kubernetes_version;.jar" name="kubernetes-model-admissionregistration-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-admissionregistration/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-apiextensions-&kubernetes_version;.jar" name="kubernetes-model-apiextensions-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apiextensions/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-apps-&kubernetes_version;.jar" name="kubernetes-model-apps-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-apps/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-autoscaling-&kubernetes_version;.jar" name="kubernetes-model-autoscaling-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-autoscaling/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-batch-&kubernetes_version;.jar" name="kubernetes-model-batch-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-batch/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-certificates-&kubernetes_version;.jar" name="kubernetes-model-certificates-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-certificates/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-common-&kubernetes_version;.jar" name="kubernetes-model-common-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-common/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-coordination-&kubernetes_version;.jar" name="kubernetes-model-coordination-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-coordination/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-core-&kubernetes_version;.jar" name="kubernetes-model-core-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-core/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-discovery-&kubernetes_version;.jar" name="kubernetes-model-discovery-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-discovery/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-events-&kubernetes_version;.jar" name="kubernetes-model-events-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-events/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-extensions-&kubernetes_version;.jar" name="kubernetes-model-extensions-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-extensions/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-metrics-&kubernetes_version;.jar" name="kubernetes-model-metrics-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-metrics/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-networking-&kubernetes_version;.jar" name="kubernetes-model-networking-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-networking/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-policy-&kubernetes_version;.jar" name="kubernetes-model-policy-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-policy/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-rbac-&kubernetes_version;.jar" name="kubernetes-model-rbac-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-rbac/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-scheduling-&kubernetes_version;.jar" name="kubernetes-model-scheduling-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-scheduling/&kubernetes_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kubernetes-model-storageclass-&kubernetes_version;.jar" name="kubernetes-model-storageclass-&kubernetes_version;.jar" mvn_uri="mvn:io.fabric8/kubernetes-model-storageclass/&kubernetes_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="libfb303-0.9.3.jar" name="libfb303-0.9.3.jar" mvn_uri="mvn:org.apache.thrift/libfb303/0.9.3"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="libthrift-0.14.0.jar" name="libthrift-0.14.0.jar" mvn_uri="mvn:org.apache.thrift/libthrift/0.14.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="reload4j-1.2.22.jar" name="reload4j-1.2.22.jar" mvn_uri="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
@@ -308,6 +309,7 @@
             <library id="httpcore-4.4.13.jar"/>
             <library id="ivy-&ivy_version;.jar"/>
             <library id="jackson-annotations-&jackson_version;.jar"/>
+            <library id="jackson-bom-&jackson_version;.jar"/>
             <library id="jackson-core-&jackson_version;.jar"/>
             <library id="jackson-core-asl-1.9.13.jar"/>
             <library id="jackson-databind-&jackson_databind_version;.jar"/>
@@ -336,25 +338,25 @@
             <library id="jsr305-3.0.0.jar"/>
             <library id="jul-to-slf4j-1.7.30.jar"/>
             <library id="kryo-shaded-4.0.2.jar"/>
-            <library id="kubernetes-client-&kubernetes-client_version;.jar"/>
-            <library id="kubernetes-model-admissionregistration-5.4.1.jar"/>
-            <library id="kubernetes-model-apiextensions-5.4.1.jar"/>
-            <library id="kubernetes-model-apps-5.4.1.jar"/>
-            <library id="kubernetes-model-autoscaling-5.4.1.jar"/>
-            <library id="kubernetes-model-batch-5.4.1.jar"/>
-            <library id="kubernetes-model-certificates-5.4.1.jar"/>
-            <library id="kubernetes-model-common-5.4.1.jar"/>
-            <library id="kubernetes-model-coordination-5.4.1.jar"/>
-            <library id="kubernetes-model-core-5.4.1.jar"/>
-            <library id="kubernetes-model-discovery-5.4.1.jar"/>
-            <library id="kubernetes-model-events-5.4.1.jar"/>
-            <library id="kubernetes-model-extensions-5.4.1.jar"/>
-            <library id="kubernetes-model-metrics-5.4.1.jar"/>
-            <library id="kubernetes-model-networking-5.4.1.jar"/>
-            <library id="kubernetes-model-policy-5.4.1.jar"/>
-            <library id="kubernetes-model-rbac-5.4.1.jar"/>
-            <library id="kubernetes-model-scheduling-5.4.1.jar"/>
-            <library id="kubernetes-model-storageclass-5.4.1.jar"/>
+            <library id="kubernetes-client-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-admissionregistration-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-apiextensions-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-apps-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-autoscaling-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-batch-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-certificates-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-common-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-coordination-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-core-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-discovery-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-events-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-extensions-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-metrics-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-networking-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-policy-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-rbac-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-scheduling-&kubernetes_version;.jar"/>
+            <library id="kubernetes-model-storageclass-&kubernetes_version;.jar"/>
             <library id="logging-interceptor-3.12.12.jar"/>
             <library id="lz4-java-1.7.1.jar"/>
             <library id="metrics-core-4.1.1.jar"/>
