@@ -42,9 +42,12 @@ class TKafkaCreateTopicUtil {
         if (isKafkaVersion("KAFKA_2_4_0") || isKafkaVersion("KAFKA_3_2_3")) {
             // SSL configuration
             if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
-                result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
-                result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
-                result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
+                if (tSetKeystoreUtil.needTrustStore()) {
+                    result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
+                    result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
+                    result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
+                }
+                
                 if (tSetKeystoreUtil.needClientAuth()) {
                     result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
                     result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath());
