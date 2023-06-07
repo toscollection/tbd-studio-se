@@ -114,7 +114,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jersey-container-servlet-core-2.30.jar" name="jersey-container-servlet-core-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.30"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jersey-server-2.30.jar" name="jersey-server-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/2.30"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="joda-time-2.10.5.jar" name="joda-time-2.10.5.jar" mvn_uri="mvn:joda-time/joda-time/2.10.5"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="jodd-core-5.0.5.jar" name="jodd-core-5.0.5.jar" mvn_uri="mvn:org.jodd/jodd-core/5.0.5"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-ast_2.12-3.7.0-M5.jar" name="json4s-ast_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-ast_2.12/3.7.0-M5/jar"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-core_2.12-3.7.0-M5.jar" name="json4s-core_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-core_2.12/3.7.0-M5"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="json4s-jackson_2.12-3.7.0-M5.jar" name="json4s-jackson_2.12-3.7.0-M5.jar" mvn_uri="mvn:org.json4s/json4s-jackson_2.12/3.7.0-M5"/>
@@ -333,7 +333,7 @@
             <library id="janino-3.0.16.jar"/>
             <library id="jersey-container-servlet-core-2.30.jar"/>
             <library id="jersey-server-2.30.jar"/>
-            <library id="jodd-core-3.5.2.jar"/>
+            <library id="jodd-core-5.0.5.jar"/>
             <library id="json4s-ast_2.12-3.7.0-M5.jar"/>
             <library id="json4s-core_2.12-3.7.0-M5.jar"/>
             <library id="json4s-jackson_2.12-3.7.0-M5.jar"/>

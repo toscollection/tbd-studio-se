@@ -20,7 +20,7 @@
 	<extension
 			point="org.talend.core.runtime.librariesNeeded">
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jodd-core-5.0.5.jar" name="jodd-core-5.0.5.jar" mvn_uri="mvn:org.jodd/jodd-core/5.0.5"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="antlr4-runtime-4.7.jar" name="antlr4-runtime-4.7.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-cli-1.2.jar" name="commons-cli-1.2.jar" mvn_uri="mvn:commons-cli/commons-cli/1.2/jar"/>
@@ -55,7 +55,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-yarn-common-3.2.4.jar" name="hadoop-yarn-common-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-common/3.2.4"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hadoop-yarn-server-web-proxy-3.2.4.jar" name="hadoop-yarn-server-web-proxy-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-yarn-server-web-proxy/3.2.4"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-common-&hive_version;.jar" name="hive-common-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-common/&hive_version;"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-exec-&hive_version;.jar" name="hive-exec-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-exec/&hive_version;"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-exec-3.2.5.jar" name="hive-exec-3.2.5.jar" mvn_uri="mvn:org.apache.hive/hive-exec/3.2.5"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-jdbc-&hive_version;.jar" name="hive-jdbc-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-jdbc/&hive_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-metastore-&hive_version;.jar" name="hive-metastore-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-metastore/&hive_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="hive-serde-&hive_version;.jar" name="hive-serde-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-serde/&hive_version;"/>
@@ -234,7 +234,7 @@
 
 		<!-- Spark group -->
 		<libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
-			<library id="jodd-core-3.5.2.jar"/>
+			<library id="jodd-core-5.0.5.jar"/>
 			<library id="antlr4-runtime-4.7.jar"/>
 			<library id="avro-1.8.2.jar"/>
 			<library id="avro-mapred-1.8.2.jar"/>

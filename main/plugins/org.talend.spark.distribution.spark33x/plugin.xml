@@ -110,7 +110,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jersey-common-2.34.jar" name="jersey-common-2.34.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-common/2.34"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jersey-container-servlet-core-2.34.jar" name="jersey-container-servlet-core-2.34.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.34"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jersey-server-2.34.jar" name="jersey-server-2.34.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/2.34"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jodd-core-5.0.5.jar" name="jodd-core-5.0.5.jar" mvn_uri="mvn:org.jodd/jodd-core/5.0.5"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="joda-time-2.10.13.jar" name="joda-time-2.10.13.jar" mvn_uri="mvn:joda-time/joda-time/2.10.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="json4s-ast_2.12-3.7.0-M11.jar" name="json4s-ast_2.12-3.7.0-M11.jar" mvn_uri="mvn:org.json4s/json4s-ast_2.12/3.7.0-M11"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="json4s-core_2.12-3.7.0-M11.jar" name="json4s-core_2.12-3.7.0-M11.jar" mvn_uri="mvn:org.json4s/json4s-core_2.12/3.7.0-M11"/>
@@ -320,7 +320,7 @@
             <library id="janino-3.0.16.jar"/>
             <library id="jersey-container-servlet-core-2.34.jar"/>
             <library id="jersey-server-2.34.jar"/>
-            <library id="jodd-core-3.5.2.jar"/>
+            <library id="jodd-core-5.0.5.jar"/>
             <library id="joda-time-2.10.13.jar"/>
             <library id="json4s-ast_2.12-3.7.0-M11.jar"/>
             <library id="json4s-core_2.12-3.7.0-M11.jar"/>
