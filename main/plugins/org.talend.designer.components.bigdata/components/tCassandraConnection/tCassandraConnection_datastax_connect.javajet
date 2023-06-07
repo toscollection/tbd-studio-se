@@ -22,13 +22,16 @@
 			kmf_<%=cid%>.init(ks_<%=cid%>, <%=sslHelper.getKSPwd()%>.toCharArray());
 		<%}%>
 		
-		java.security.KeyStore ts_<%=cid%> = java.security.KeyStore.getInstance("<%=sslHelper.getTSType()%>");
-		ts_<%=cid%>.load(new java.io.FileInputStream(<%=sslHelper.getTSPath()%>), <%=sslHelper.getTSPwd()%>.toCharArray());
-		javax.net.ssl.TrustManagerFactory tmf_<%=cid%> = javax.net.ssl.TrustManagerFactory.getInstance(javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm());
-		tmf_<%=cid%>.init(ts_<%=cid%>);
+		javax.net.ssl.TrustManagerFactory tmf_<%=cid%> = null;
+		<%if(sslHelper.needTrustStore()){%>
+			java.security.KeyStore ts_<%=cid%> = java.security.KeyStore.getInstance("<%=sslHelper.getTSType()%>");
+			ts_<%=cid%>.load(new java.io.FileInputStream(<%=sslHelper.getTSPath()%>), <%=sslHelper.getTSPwd()%>.toCharArray());
+			tmf_<%=cid%> = javax.net.ssl.TrustManagerFactory.getInstance(javax.net.ssl.TrustManagerFactory.getDefaultAlgorithm());
+			tmf_<%=cid%>.init(ts_<%=cid%>);
+		<%}%>
 		
 		javax.net.ssl.SSLContext sslContext_<%=cid%> = javax.net.ssl.SSLContext.getInstance("TLS");
-		sslContext_<%=cid%>.init(kmf_<%=cid%> == null ? null : kmf_<%=cid%>.getKeyManagers(), tmf_<%=cid%>.getTrustManagers(), new java.security.SecureRandom());
+		sslContext_<%=cid%>.init(kmf_<%=cid%> == null ? null : kmf_<%=cid%>.getKeyManagers(), tmf_<%=cid%> == null ? null : tmf_<%=cid%>.getTrustManagers(), new java.security.SecureRandom());
 	<%
 	}
 	if("CASSANDRA_4_0".equals(dbVersion_connection)) {

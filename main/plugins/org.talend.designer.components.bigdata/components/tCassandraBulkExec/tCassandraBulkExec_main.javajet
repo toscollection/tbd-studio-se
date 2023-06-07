@@ -174,12 +174,16 @@ if("CASSANDRA_4_0".equals(version)) {
 			args_<%=cid%>.add("-kspw");
 			args_<%=cid%>.add(<%=sslHelper.getKSPwd()%>);
 		<%}%>
+		
 		args_<%=cid%>.add("-prtcl");
 		args_<%=cid%>.add("TLS");
-		args_<%=cid%>.add("-ts");
-		args_<%=cid%>.add(<%=sslHelper.getTSPath()%>);
-		args_<%=cid%>.add("-tspw");
-		args_<%=cid%>.add(<%=sslHelper.getTSPwd()%>);
+		
+		<%if(sslHelper.needTrustStore()){%>
+			args_<%=cid%>.add("-ts");
+			args_<%=cid%>.add(<%=sslHelper.getTSPath()%>);
+			args_<%=cid%>.add("-tspw");
+			args_<%=cid%>.add(<%=sslHelper.getTSPwd()%>);
+		<%}%>
 	<%
 	}
 	boolean useConfFile = ElementParameterParser.getBooleanValue(node, "__USE_CONF_FILE__");
