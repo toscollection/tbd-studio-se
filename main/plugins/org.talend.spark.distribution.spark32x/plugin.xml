@@ -96,7 +96,6 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-annotations-&jackson_version;.jar" name="jackson-annotations-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/&jackson_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-bom-&jackson_version;.jar" name="jackson-bom-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-bom/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-core-&jackson_version;.jar" name="jackson-core-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-databind-&jackson_databind_version;.jar" name="jackson-databind-&jackson_databind_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/&jackson_databind_version;"/>
@@ -309,7 +308,6 @@
             <library id="httpcore-4.4.13.jar"/>
             <library id="ivy-&ivy_version;.jar"/>
             <library id="jackson-annotations-&jackson_version;.jar"/>
-            <library id="jackson-bom-&jackson_version;.jar"/>
             <library id="jackson-core-&jackson_version;.jar"/>
             <library id="jackson-core-asl-1.9.13.jar"/>
             <library id="jackson-databind-&jackson_databind_version;.jar"/>
