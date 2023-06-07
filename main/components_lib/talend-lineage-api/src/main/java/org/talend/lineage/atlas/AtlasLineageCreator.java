@@ -11,11 +11,10 @@ import java.util.UUID;
 import javax.annotation.Nullable;
 
 import org.apache.atlas.AtlasServiceException;
-import org.apache.atlas.typesystem.Referenceable;
-import org.apache.atlas.typesystem.TypesDef;
-import org.apache.atlas.typesystem.persistence.Id;
-import org.apache.commons.lang3.tuple.Pair;
-import org.codehaus.jettison.json.JSONObject;
+import org.apache.atlas.model.instance.AtlasEntity.AtlasEntityWithExtInfo;
+import org.apache.atlas.model.instance.AtlasObjectId;
+import org.apache.atlas.model.typedef.AtlasTypesDef;
+import org.apache.atlas.v1.typesystem.types.utils.TypesUtil;
 import org.talend.lineage.common.AbstractLineageCreator;
 import org.talend.lineage.common.ILineageCreator;
 
@@ -24,19 +23,19 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
     private static final org.apache.log4j.Logger LOG  = org.apache.log4j.Logger.getLogger(AtlasLineageCreator.class);
 
     @Nullable
-    private Referenceable                        jobRef;
+    private AtlasEntityWithExtInfo jobEntity;
 
-    private List<Referenceable>                  refs = new ArrayList<>();
+    private List<AtlasEntityWithExtInfo> entities = new ArrayList<>();
 
     // only for testing / debugging purposes
     // the get re-initialized on each invocation of sendToLineageProvider
-    private Map<String, Pair<Referenceable, Id>> persistedComponents;
+    private Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedComponents;
 
-    private Map<String, Pair<Referenceable, Id>> persistedArtificialComponents;
+    private Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedArtificialComponents;
 
-    private Map<String, Pair<Referenceable, Id>> persistedJobs;
+    private Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedJobs;
 
-    private final TalendAtlasClient              client;
+    private final TalendAtlasClient client;
 
     /**
      *
@@ -95,7 +94,7 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
 
         // Notice that the job components are not put in creation, since we don't have
         // the ids of the components yet, it is sendToLineageProvider who does it
-        this.jobRef = TalendModelFactory.buildTalendJob(values);
+        this.jobEntity = TalendModelFactory.buildTalendJob(values);
 
     }
 
@@ -104,8 +103,8 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
             final List<String> outputNodes, final Map<String, Object> metadata) {
         // Do not create lineage nodes for components with empty schemas (tConfiguration, ...)
         if (schema.size() > 0) {
-            Referenceable ref = TalendModelFactory.buildTalendComponent(name, schema, metadata, inputNodes, outputNodes);
-            this.refs.add(ref);
+            AtlasEntityWithExtInfo entity = TalendModelFactory.buildTalendComponent(name, schema, metadata, inputNodes, outputNodes);
+            this.entities.add(entity);
         }
     }
 
@@ -113,35 +112,35 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
     public void sendToLineageProvider(final Boolean dieOnError) {
         try {
             // First we persist the instances
-            Map<String, Pair<Referenceable, Id>> persistedArtificialInstances = persistWithArtificialComponents(this.refs);
+            Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedArtificialInstances = persistWithArtificialComponents(this.entities);
             // then with the ids we persist the job info
-            if (jobRef != null) {
-                List<Id> instancesIds = new ArrayList<>();
+            if (jobEntity != null) {
+                List<AtlasObjectId> instancesIds = new ArrayList<>();
                 // Notice that we don't add the artificial instances to avoid
                 // type + visualization problems
-                for (Pair<Referenceable, Id> pair : this.persistedComponents.values()) {
-                    instancesIds.add(pair.getRight());
+                for (TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId> pair : this.persistedComponents.values()) {
+                    instancesIds.add(pair.right);
                 }
-                jobRef.set("components", instancesIds);
+                jobEntity.getEntity().setAttribute("components", instancesIds);
 
-                Id idJobRef = client.persistInstanceWithLog(jobRef);
-                String jobName = (String) jobRef.get("name");
+                AtlasObjectId jobEntityId = client.persistInstanceWithLog(jobEntity);
+                String jobName = (String) jobEntity.getEntity().getAttribute("name");
                 this.persistedJobs = new HashMap<>();
-                this.persistedJobs.put(jobName, Pair.of(jobRef, idJobRef));
+                this.persistedJobs.put(jobName, TypesUtil.Pair.of(jobEntity, jobEntityId));
 
                 // we find the input components
-                List<Id> inputInstanceIds = new ArrayList<>();
-                for (Pair<Referenceable, Id> pair : this.persistedComponents.values()) {
-                    Referenceable ref = pair.getLeft();
-                    List<String> inputs = (List<String>) ref.get("inputs");
+                List<AtlasObjectId> inputInstanceIds = new ArrayList<>();
+                for (TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId> pair : this.persistedComponents.values()) {
+                    AtlasEntityWithExtInfo ref = pair.left;
+                    List<String> inputs = (List<String>) ref.getEntity().getAttribute("inputs");
                     if (inputs == null || inputs.size() == 0) {
-                        inputInstanceIds.add(pair.getRight());
+                        inputInstanceIds.add(pair.right);
                     }
                 }
                 // we create an artificial instance to link the job with the input components
-                Referenceable artificialRef = TalendModelFactory.buildTalendArtificialComponent(jobName, Arrays.asList(idJobRef),
+                AtlasEntityWithExtInfo artificialRef = TalendModelFactory.buildTalendArtificialComponent(jobName, Arrays.asList(jobEntityId),
                         inputInstanceIds);
-                Id idArtificialRef = client.persistInstanceWithLog(artificialRef);
+                AtlasObjectId idArtificialRef = client.persistInstanceWithLog(artificialRef);
             }
         } catch (Throwable e) {
             if (dieOnError) {
@@ -158,19 +157,19 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
      * <li>the corresponding types for the Talend Model (if they don't exist)</li>
      * <li>the artificial components to connect the refs (they are persisted too)</li>
      * </ul>
-     * 
-     * @param refs
+     *
+     * @param entities
      * @return the instance corresponding to the artificial nodes
      */
-    private Map<String, Pair<Referenceable, Id>> persistWithArtificialComponents(final List<Referenceable> refs)
+    private Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistWithArtificialComponents(final List<AtlasEntityWithExtInfo> entities)
             throws Exception {
         findOrCreateTypes(TalendModelFactory.TALEND_CLASS_TYPES);
 
-        Map<String, Pair<Referenceable, Id>> persistedInstances = persist(refs);
+        Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedInstances = persist(entities);
         // Now we create the artificial components to connect the references (edges)
-        List<Referenceable> artificialRefs = TalendModelFactory.buildTalendArtificialComponents(persistedInstances);
+        List<AtlasEntityWithExtInfo> artificialRefs = TalendModelFactory.buildTalendArtificialComponents(persistedInstances);
         // We persist the artificial processes
-        Map<String, Pair<Referenceable, Id>> persistedArtificialInstances = persist(artificialRefs);
+        Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedArtificialInstances = persist(artificialRefs);
         // This is done for debugging/test purposes
         this.persistedComponents = persistedInstances;
         this.persistedArtificialComponents = persistedArtificialInstances;
@@ -180,16 +179,16 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
     /**
      * Persists the refs in Atlas, it assumes that the refs have different names (identity)
      * 
-     * @param refs
+     * @param entities
      * @return
      */
-    private Map<String, Pair<Referenceable, Id>> persist(final List<Referenceable> refs) throws Exception {
-        Map<String, Pair<Referenceable, Id>> persistedEntities = new HashMap<>();
-        for (final Referenceable ref : refs) {
+    private Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persist(final List<AtlasEntityWithExtInfo> entities) throws Exception {
+        Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> persistedEntities = new HashMap<>();
+        for (final AtlasEntityWithExtInfo entity : entities) {
             // We persisted with the modified Ref if it was modified
-            Id idRef = client.persistInstanceWithLog(ref);
-            String name = ref.getValuesMap().get("name").toString();
-            persistedEntities.put(name, Pair.of(ref, idRef));
+            AtlasObjectId entityId = client.persistInstanceWithLog(entity);
+            String name = (String) entity.getEntity().getAttribute("name");
+            persistedEntities.put(name, TypesUtil.Pair.of(entity, entityId));
         }
         return persistedEntities;
     }
@@ -203,8 +202,8 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
         Collection<String> missingTypes = client.getMissingTypes(types);
         if (!missingTypes.isEmpty()) {
             // notice that we force the creation of the types if they don't exist
-            TypesDef typesDef = TalendModelFactory.buildTypesDef(missingTypes);
-            List<String> typesIds = client.persistTypes(typesDef);
+            AtlasTypesDef typesDef = TalendModelFactory.buildTypesDef(missingTypes);
+            client.persistTypes(typesDef);
         }
     }
 
@@ -217,18 +216,18 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
     }
 
     private void logPersistedEntities(final String msg, @Nullable
-    final Map<String, Pair<Referenceable, Id>> entries) {
+    final Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> entries) {
         LOG.debug(msg);
         if (entries != null) {
-            for (Map.Entry<String, Pair<Referenceable, Id>> entry : entries.entrySet()) {
-                Referenceable ref = entry.getValue().getLeft();
-                Id id = entry.getValue().getRight();
-                String name = (String) ref.get("name");
-                String typeName = ref.getTypeName();
-                LOG.debug(name + " [" + typeName + "] : " + id._getId());
+            for (Map.Entry<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> entry : entries.entrySet()) {
+                AtlasEntityWithExtInfo ref = entry.getValue().left;
+                AtlasObjectId id = entry.getValue().right;
+                String name = (String) ref.getEntity().getAttribute("name");
+                String typeName = ref.getEntity().getTypeName();
+                LOG.debug(name + " [" + typeName + "] : " + id);
                 if ("tArtificialComponent".equals(typeName)) {
-                    List<String> inputs = (List<String>) ref.get("inputs");
-                    List<String> outputs = (List<String>) ref.get("outputs");
+                    List<String> inputs = (List<String>) ref.getEntity().getAttribute("inputs");
+                    List<String> outputs = (List<String>) ref.getEntity().getAttribute("outputs");
                     LOG.debug(name + " inputs  : [" + inputs + "]");
                     LOG.debug(name + " outputs : [" + outputs + "]");
                 }
@@ -236,24 +235,24 @@ public class AtlasLineageCreator extends AbstractLineageCreator implements ILine
         }
     }
 
-    protected List<Referenceable> getRefs() {
-        return refs;
+    protected List<AtlasEntityWithExtInfo> getRefs() {
+        return entities;
     }
 
     @Nullable
-    protected Referenceable getJobRef() {
-        return jobRef;
+    protected AtlasEntityWithExtInfo getJobEntity() {
+        return jobEntity;
     }
 
-    protected Map<String, Pair<Referenceable, Id>> getPersistedComponents() {
+    protected Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> getPersistedComponents() {
         return persistedComponents;
     }
 
-    protected Map<String, Pair<Referenceable, Id>> getPersistedArtificialComponents() {
+    protected Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> getPersistedArtificialComponents() {
         return persistedArtificialComponents;
     }
 
-    protected Map<String, Pair<Referenceable, Id>> getPersistedJobs() {
+    protected Map<String, TypesUtil.Pair<AtlasEntityWithExtInfo, AtlasObjectId>> getPersistedJobs() {
         return persistedJobs;
     }
 }

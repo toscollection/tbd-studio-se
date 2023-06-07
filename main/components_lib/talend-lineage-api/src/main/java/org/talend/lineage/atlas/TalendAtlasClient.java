@@ -1,16 +1,20 @@
 package org.talend.lineage.atlas;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.atlas.AtlasClientV2;
+import org.apache.atlas.AtlasServiceException;
+import org.apache.atlas.model.SearchFilter;
+import org.apache.atlas.model.instance.AtlasEntity.AtlasEntityWithExtInfo;
+import org.apache.atlas.model.instance.AtlasObjectId;
+import org.apache.atlas.model.instance.EntityMutationResponse;
+import org.apache.atlas.model.typedef.AtlasTypeDefHeader;
+import org.apache.atlas.model.typedef.AtlasTypesDef;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
-import org.apache.atlas.AtlasClient;
-import org.apache.atlas.AtlasServiceException;
-import org.apache.atlas.typesystem.Referenceable;
-import org.apache.atlas.typesystem.TypesDef;
-import org.apache.atlas.typesystem.json.InstanceSerialization;
-import org.apache.atlas.typesystem.json.TypesSerialization;
-import org.apache.atlas.typesystem.persistence.Id;
-import org.apache.commons.collections.CollectionUtils;
+import java.util.stream.Collectors;
 
 /**
  * This is a client access class for all the communication with Atlas. It encapsulates the original AtlasClient and
@@ -23,53 +27,41 @@ final class TalendAtlasClient {
 
     private static final org.apache.log4j.Logger LOG = org.apache.log4j.Logger.getLogger(TalendAtlasClient.class);
 
-    private final AtlasClient                    client;
+    private final AtlasClientV2 client;
 
     TalendAtlasClient(final String url, final String login, final String password) {
-        client = new AtlasClient(new String[] { url }, new String[] { login, password });
+        client = new AtlasClientV2(new String[] { url }, new String[] { login, password });
     }
 
-    /**
-     *
-     * @param referenceable
-     * @return
-     * @throws Exception
-     */
-    private Id persistInstance(final Referenceable referenceable) throws Exception {
-        String typeName = referenceable.getTypeName();
-
-        String entityJSON = InstanceSerialization.toJson(referenceable, true);
-        System.out.println("Submitting new entity= " + entityJSON);
-        List<String> guids = this.client.createEntity(entityJSON);
-        System.out.println("created instance for type " + typeName + ", guid: " + guids);
-
-        // return the Id for created instance with guid
-        return new Id(guids.get(guids.size() - 1), referenceable.getId().getVersion(), referenceable.getTypeName());
+    public AtlasObjectId persistInstance(final AtlasEntityWithExtInfo atlasEntityWithExtInfo) throws AtlasServiceException {
+        EntityMutationResponse response = client.createEntity(atlasEntityWithExtInfo);
+        return new AtlasObjectId(response.getGuidAssignments().get(atlasEntityWithExtInfo.getEntity().getGuid()), atlasEntityWithExtInfo.getEntity().getTypeName());
     }
 
     /**
      * This method is just a wrapper to log the invocation of AtlasUtil.createInstance It only exists for debugging
      * purposes and can be replaced with the direct call
      *
-     * @param ref
+     * @param atlasEntityWithExtInfo
      * @return
      * @throws Exception
      */
-    public Id persistInstanceWithLog(final Referenceable ref) throws Exception {
-        String entityJSON = InstanceSerialization.toJson(ref, true);
-        LOG.debug("Submitting new entity= " + entityJSON);
-        Id idRef = persistInstance(ref);
-        LOG.debug("created instance for type " + ref.getTypeName() + ", guid: " + idRef);
-        return idRef;
+    public AtlasObjectId persistInstanceWithLog(final AtlasEntityWithExtInfo atlasEntityWithExtInfo) throws Exception {
+        AtlasObjectId id = persistInstance(atlasEntityWithExtInfo);
+        LOG.debug("created instance for type " + id.getTypeName() + ", guid: " + id.getGuid());
+        return id;
     }
 
     /**
      * @param typesDef object to persist
      * @return the Id corresponding to the created types
      */
-    public List<String> persistTypes(final TypesDef typesDef) throws AtlasServiceException {
-        String typeAsJson = TypesSerialization.toJson(typesDef);
-        return this.client.createType(typeAsJson);
+    public void persistTypes(final AtlasTypesDef typesDef) throws AtlasServiceException {
+        AtlasTypesDef atlasTypesDef = this.client.createAtlasTypeDefs(typesDef);
+    }
+
+    public void deleteTypes(final AtlasTypesDef typesDef) throws AtlasServiceException {
+        this.client.deleteAtlasTypeDefs(typesDef);
     }
 
     /**
@@ -77,8 +69,11 @@ final class TalendAtlasClient {
      * @return the collection of types that don't exist in Atlas
      */
     public Collection<String> getMissingTypes(final Collection<String> types) throws AtlasServiceException {
-        Collection<String> allTypes = this.client.listTypes();
-        return CollectionUtils.subtract(types, allTypes);
+        ObjectMapper mapper = new ObjectMapper();
+        List<AtlasTypeDefHeader> existingTypes = mapper.convertValue(this.client.getAllTypeDefHeaders(new SearchFilter()), new TypeReference<List<AtlasTypeDefHeader>>() {});
+        List<String> existingTypesNames = existingTypes.stream().map(AtlasTypeDefHeader::getName).collect(Collectors.toList());
+        return types.stream()
+                .filter(t -> !existingTypesNames.contains(t))
+                .collect(Collectors.toList());
     }
-
 }

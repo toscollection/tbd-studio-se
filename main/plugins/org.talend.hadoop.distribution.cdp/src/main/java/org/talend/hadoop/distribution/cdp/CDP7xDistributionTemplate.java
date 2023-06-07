@@ -193,10 +193,14 @@ public class CDP7xDistributionTemplate extends AbstractDynamicCDPDistributionTem
 		return true;
 	}
 
-	@Override
-	public boolean doSupportClouderaNavigator() {
-		return true;
-	}
+    @Override
+    public boolean doSupportAtlas() {
+        return true;
+    }
+
+    public boolean doSupportBasicAtlasAuthentification() {
+        return true;
+    }
 
 	@Override
 	public boolean doSupportParquetOutput() {

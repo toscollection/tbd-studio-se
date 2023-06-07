@@ -12,23 +12,18 @@
 // ============================================================================
 package org.talend.lineage.atlas;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import org.apache.atlas.typesystem.Referenceable;
-import org.apache.atlas.typesystem.persistence.Id;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.atlas.model.instance.AtlasEntity;
+import org.apache.atlas.model.instance.AtlasObjectId;
+import org.apache.atlas.v1.typesystem.types.utils.TypesUtil;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import java.io.InputStream;
+import java.util.*;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @Ignore("Depends on local navigator so this should be in Integration test which haven't been implemented yet")
 public class AtlasLineageCreatorIT {
@@ -53,6 +48,8 @@ public class AtlasLineageCreatorIT {
             InputStream stream = loader.getResourceAsStream("atlas-application.properties");
             prop.load(stream);
             ENDPOINT_URL = prop.getProperty("atlas.http.address");
+            ATLAS_LOGIN = prop.getProperty("atlas.login");
+            ATLAS_PASSWORD = prop.getProperty("atlas.password");
         } catch (Exception e) {
             // Nothing
         }
@@ -110,7 +107,7 @@ public class AtlasLineageCreatorIT {
         schema2.put("c", "int");
 
         addJobInfo("test_simple");
-        Referenceable jobRef = atlasLineageCreator.getJobRef();
+        AtlasEntity.AtlasEntityWithExtInfo jobRef = atlasLineageCreator.getJobEntity();
         assertNotNull(jobRef);
 
         atlasLineageCreator.addNodeToLineage("input", schema1, new ArrayList<String>(), Arrays.asList("out"),
@@ -118,7 +115,7 @@ public class AtlasLineageCreatorIT {
         atlasLineageCreator.addNodeToLineage("out", schema2, Arrays.asList("input"), new ArrayList<String>(),
                 createInputMetadata());
 
-        List<Referenceable> refs = atlasLineageCreator.getRefs();
+        List<AtlasEntity.AtlasEntityWithExtInfo> refs = atlasLineageCreator.getRefs();
         assertNotNull(refs);
         assertEquals(refs.size(), 2);
 
@@ -192,15 +189,15 @@ public class AtlasLineageCreatorIT {
     }
 
     private void testPersistence(int numPersistedJobInstances, int numPersistedInstances, int numPersistedArticialInstances) {
-        Map<String, Pair<Referenceable, Id>> persistedJobs = atlasLineageCreator.getPersistedJobs();
+        Map<String, TypesUtil.Pair<AtlasEntity.AtlasEntityWithExtInfo, AtlasObjectId>> persistedJobs = atlasLineageCreator.getPersistedJobs();
         assertNotNull(persistedJobs);
         assertEquals(persistedJobs.values().size(), numPersistedJobInstances);
 
-        Map<String, Pair<Referenceable, Id>> persistedComponents = atlasLineageCreator.getPersistedComponents();
+        Map<String, TypesUtil.Pair<AtlasEntity.AtlasEntityWithExtInfo, AtlasObjectId>> persistedComponents = atlasLineageCreator.getPersistedComponents();
         assertNotNull(persistedComponents);
         assertEquals(persistedComponents.values().size(), numPersistedInstances);
 
-        Map<String, Pair<Referenceable, Id>> persistedArtificialComponents = atlasLineageCreator
+        Map<String, TypesUtil.Pair<AtlasEntity.AtlasEntityWithExtInfo, AtlasObjectId>> persistedArtificialComponents = atlasLineageCreator
                 .getPersistedArtificialComponents();
         assertNotNull(persistedArtificialComponents);
         assertEquals(persistedArtificialComponents.values().size(), numPersistedArticialInstances);

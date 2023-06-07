@@ -401,10 +401,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_ws_rs_api_2_0_1_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jaxb_api_2_2_12_jar",
         "tagName" : "library"
       }, {
@@ -458,10 +454,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -1964,10 +1956,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_ws_rs_api_2_0_1_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jaxb_api_2_2_12_jar",
         "tagName" : "library"
       }, {
@@ -2021,10 +2009,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -2954,10 +2938,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_ws_rs_api_2_0_1_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javolution_5_5_1_jar",
         "tagName" : "library"
       }, {
@@ -3023,10 +3003,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -4224,10 +4200,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_ws_rs_api_2_0_1_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javolution_5_5_1_jar",
         "tagName" : "library"
       }, {
@@ -4289,10 +4261,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -5974,10 +5942,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_ws_rs_api_2_0_1_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jaxb_api_2_2_12_jar",
         "tagName" : "library"
       }, {
@@ -6019,10 +5983,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_media_jaxb_2_29_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -7466,10 +7426,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jakarta_ws_rs_api_2_1_5_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jakarta_xml_bind_api_2_3_2_jar",
         "tagName" : "library"
       }, {
@@ -7515,10 +7471,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_servlet_jsp_api_2_3_1_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_javax_ws_rs_api_2_0_1_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -7599,10 +7551,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -8960,10 +8908,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_servlet_api_2_5_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_slf4j_api_1_7_30_jar",
         "tagName" : "library"
       }, {
@@ -8985,6 +8929,26 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_talend_lineage_api",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_atlas_intg",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_atlas_client_common",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_atlas_client_v2",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_multipart",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jsr311_api_1_1_1_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -11927,14 +11891,6 @@
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_servlet_api_2_5_jar",
-      "mvn_uri" : "mvn:javax.servlet/servlet-api/2.5/jar",
-      "name" : "servlet-api-2.5.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdp",
-      "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_shapeless_2_11_2_3_2_jar",
       "mvn_uri" : "mvn:com.chuusai/shapeless_2.11/2.3.2/jar",
       "name" : "shapeless_2.11-2.3.2.jar",
@@ -12305,10 +12261,42 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_talend_lineage_api",
-      "mvn_uri" : "mvn:org.talend.libraries/talend-lineage-api-0.2.0/6.0.0",
-      "name" : "talend-lineage-api-0.2.0.jar",
+      "mvn_uri" : "mvn:org.talend.bigdata.libs/talend-lineage-api/1.0.0",
+      "name" : "talend-lineage-api-1.0.0.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_atlas_intg",
+      "mvn_uri" : "mvn:org.apache.atlas/atlas-intg/2.3.0",
+      "name" : "atlas-intg-2.3.0.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_atlas_client_common",
+      "mvn_uri" : "mvn:org.apache.atlas/atlas-client-common/2.3.0",
+      "name" : "atlas-client-common-2.3.0.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_atlas_client_v2",
+      "mvn_uri" : "mvn:org.apache.atlas/atlas-client-v2/2.3.0",
+      "name" : "atlas-client-v2-2.3.0.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_multipart",
+      "mvn_uri" : "mvn:com.sun.jersey.contribs/jersey-multipart/1.19",
+      "name" : "jersey-multipart-1.19.jar",
+      "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
