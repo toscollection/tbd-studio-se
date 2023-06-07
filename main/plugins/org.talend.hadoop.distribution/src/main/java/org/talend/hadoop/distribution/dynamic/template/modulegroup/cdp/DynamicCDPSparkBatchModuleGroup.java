@@ -81,9 +81,8 @@ public class DynamicCDPSparkBatchModuleGroup extends DynamicSparkBatchModuleGrou
             moduleGroups.add(new DistributionModuleGroup(mrRuntimeId, false, conditionSpark2));
         }
         if (StringUtils.isNotBlank(talendClouderaNaviRuntimeId)) {
-            ComponentCondition conditionUseNavigator = new SimpleComponentCondition(
-                    new BasicExpression(SparkBatchConstant.USE_CLOUDERA_NAVIGATOR));
-            moduleGroups.add(new DistributionModuleGroup(talendClouderaNaviRuntimeId, true, conditionUseNavigator));
+            ComponentCondition useAtlas = new SimpleComponentCondition(new BasicExpression(SparkBatchConstant.USE_ATLAS));
+            moduleGroups.add(new DistributionModuleGroup(talendClouderaNaviRuntimeId, true, useAtlas));
         }
 
         return moduleGroups;
