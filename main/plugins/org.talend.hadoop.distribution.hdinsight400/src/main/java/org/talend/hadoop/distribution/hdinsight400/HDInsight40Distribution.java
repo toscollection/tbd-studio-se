@@ -30,6 +30,7 @@ import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.hdinsight.IMicrosoftHDInsightDistribution;
@@ -43,6 +44,7 @@ import org.talend.hadoop.distribution.hdinsight400.modulegroup.node.sparkbatch.H
 import org.talend.hadoop.distribution.hdinsight400.modulegroup.node.sparkbatch.HDInsight40SparkBatchTModelEncoderNodeModuleGroup;
 import org.talend.hadoop.distribution.hdinsight400.modulegroup.node.sparkstreaming.HDInsight40SparkStreamingParquetNodeModuleGroup;
 import org.talend.hadoop.distribution.hdinsight400.modulegroup.node.sparkstreaming.HDInsight40SparkStreamingTModelEncoderNodeModuleGroup;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 public class HDInsight40Distribution extends HDIDistribution  implements SparkBatchComponent, SparkStreamingComponent,
         IMicrosoftHDInsightDistribution, HiveOnSparkComponent, HiveComponent, MRComponent {
@@ -100,6 +102,12 @@ public class HDInsight40Distribution extends HDIDistribution  implements SparkBa
         nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.TMODEL_ENCODER_COMPONENT), HDInsight40SparkStreamingTModelEncoderNodeModuleGroup
                 .getModuleGroups(distribution, version));
+
+        //Cassandra
+        Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+        nodeModuleGroups.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT),
+                cassandraConfigurationModuleGroups);
     }
 
     @Override

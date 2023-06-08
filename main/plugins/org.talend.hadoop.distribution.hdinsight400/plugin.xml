@@ -300,6 +300,14 @@
             name="bigquery-connector-hadoop3-1.1.6-shaded.jar"
             mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop3-1.1.6/jar/shaded">
         </libraryNeeded>
+
+        <!-- Cassandra -->
+        <libraryNeeded
+                context="plugin:org.talend.hadoop.distribution.hdinsight400"
+                id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"
+                name="spark-cassandra-connector-assembly_2.11-2.5.2.jar"
+                mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.11/2.5.2">
+        </libraryNeeded>
                 
         <!-- Groups -->
 
@@ -529,6 +537,13 @@
                 name="BIGQUERY-MICROSOFT_HD_INSIGHT_4_0">
             <library id="gcs-connector-hadoop3-2.1.6-shaded"/>
             <library id="bigquery-connector-hadoop3-1.1.6-shaded"/>
+        </libraryNeededGroup>
+
+        <libraryNeededGroup
+                id="CASSANDRA-GROUP-MICROSOFT_HD_INSIGHT_4_0"
+                name="CASSANDRA-GROUP-MICROSOFT_HD_INSIGHT_4_0"
+                description="Cassandra libraries for MICROSOFT_HD_INSIGHT_4_0">
+            <library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
         </libraryNeededGroup>
 
     </extension>
