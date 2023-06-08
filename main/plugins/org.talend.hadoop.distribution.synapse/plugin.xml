@@ -548,6 +548,11 @@
                        id="commons-logging-1.2.jar" name="commons-logging-1.2.jar"
                        mvn_uri="mvn:commons-logging/commons-logging/1.2"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.synapse"
+                       id="spark-cassandra-connector-assembly_&scala_version;-3.1.0.jar"
+                       name="spark-cassandra-connector-assembly_&scala_version;-3.1.0.jar"
+                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/3.1.0"/>
+
 
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for synapse" id="SPARK-BATCH-GROUP-SYNAPSE" name="SPARK-BATCH-GROUP-SYNAPSE">
@@ -699,6 +704,12 @@
             <library id="logback-classic-1.2.3"/>
             <library id="commons-logging-1.2"/>
         </libraryNeededGroup>
+
+        <!-- Cassandra group -->
+        <libraryNeededGroup description="Cassanda libraries for synapse" id="CASSANDRA-GROUP-SYNAPSE" name="CASSANDRA-GROUP-SYNAPSE">
+            <library id="spark-cassandra-connector-assembly_&scala_version;-3.1.0.jar"/>
+        </libraryNeededGroup>
+
     </extension>
 
     <extension
