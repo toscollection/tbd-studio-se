@@ -35,6 +35,7 @@ import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.component.SqoopComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
 import org.talend.hadoop.distribution.constants.HDFSConstant;
+import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
@@ -63,6 +64,7 @@ import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkstreaming.EM
 import org.talend.hadoop.distribution.emr5290.modulegroup.node.sparkbatch.EMR5290SnowflakeModuleGroup;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
 import org.talend.hadoop.distribution.spark.SparkClassPathUtils;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 @SuppressWarnings("nls")
 public class EMR5290Distribution extends EMRDistribution implements HBaseComponent, HDFSComponent, MRComponent,
@@ -228,6 +230,12 @@ public class EMR5290Distribution extends EMRDistribution implements HBaseCompone
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.AZURE_CONFIGURATION_COMPONENT), EMR5290SparkBatchAzureNodeModuleGroup
                 .getModuleGroups(distribution, version));
+
+		//Cassandra
+		Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(
+				distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+		result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT),
+				cassandraConfigurationModuleGroups);
 
 		return result;
 	}

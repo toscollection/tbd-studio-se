@@ -1859,6 +1859,12 @@
                        mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3">
         </libraryNeeded>
 
+        <!-- Cassandra -->
+        <libraryNeeded context="plugin:org.talend.spark.distribution.emr5290"
+                       id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"
+                       name="spark-cassandra-connector-assembly_2.11-2.5.2.jar"
+                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.11/2.5.2"/>
+
         <!-- Groups -->
 
         <!-- HDFS group -->
@@ -2411,6 +2417,11 @@
                 name="BIGQUERY-GROUP-EMR_5_29_0">
             <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
             <library id="bigquery-connector-hadoop2-1.1.6-shaded.jar"/>
+        </libraryNeededGroup>
+
+        <!-- Cassandra group -->
+        <libraryNeededGroup description="Cassanda libraries for emr529" id="CASSANDRA-GROUP-EMR_5_29_0" name="CASSANDRA-GROUP-EMR_5_29_0">
+            <library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
         </libraryNeededGroup>
 
     </extension>
