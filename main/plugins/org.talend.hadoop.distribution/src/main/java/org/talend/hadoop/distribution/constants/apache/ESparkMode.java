@@ -53,10 +53,12 @@ public enum ESparkMode {
     SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
             "SPARK_LOCAL",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])"),
-
+    /*EMR_SERVERLESS spark mode should only be enabled in spark batch jobs.
+    'isShow[USE_DATASET_API]' was added to condition since it's always shown in batch jobs and dpesn't exist in streaming
+    */
     EMR_SERVERLESS(Messages.getString("ESparkMode.EMR_SERVERLESS"),
             "EMR_SERVERLESS",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalEMRServerlessMode[])")
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalEMRServerlessMode[]) AND isShow[USE_DATASET_API]")
     ;
 	// we want spark local by default if possible so please let it last in this list
 
