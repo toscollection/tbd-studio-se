@@ -2741,7 +2741,6 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
 
     private void updateHDIFieldsVisibility() {
-        checkServicesBtn.setVisible(false);
         hdiGroup.layout();
         hdiGroup.getParent().layout();
         livyGroup.layout();
