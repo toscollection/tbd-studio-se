@@ -7,6 +7,10 @@ import org.apache.hadoop.hbase.client.*;
 import org.immutables.value.Value;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import static org.apache.hadoop.hbase.util.Bytes.toBytes;
 
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PUBLIC)
@@ -16,9 +20,10 @@ public abstract class THbaseTable {
     abstract String tableName();
 
     abstract String tableAction();
+    abstract List<Map<String,String>> familyParameters();
 
     public void doTableAction() throws IOException {
-        if (!namespaceName().equals("") && tableName().equals("")){
+        if (!namespaceName().equals("") && !tableName().equals("")){
             Connection connection = ConnectionFactory.createConnection(configuration());
             Admin admin = connection.getAdmin();
             try {
@@ -55,13 +60,25 @@ public abstract class THbaseTable {
         }
     }
 
-    private static void createTable(TableName tableName, Admin admin) throws IOException {
+    private ColumnFamilyDescriptor getColumnFamily() {
+        ColumnFamilyDescriptor family = null;
+        for(int familyParamNum=0;familyParamNum<familyParameters().size();familyParamNum++) {
+            Map<String, String> mapParamLine = familyParameters().get(familyParamNum);
+            String family_name = mapParamLine.get("FAMILY_NAME");
+            family = new ColumnFamilyDescriptorBuilder.ModifyableColumnFamilyDescriptor(toBytes(family_name));
+        }
+        return family;
+    }
+
+    private void createTable(TableName tableName, Admin admin) throws IOException {
         TableDescriptorBuilder tableDesBuilder = TableDescriptorBuilder.newBuilder(tableName);
+        ColumnFamilyDescriptor family = getColumnFamily();
+        tableDesBuilder.setColumnFamily(family);
         org.apache.hadoop.hbase.client.TableDescriptor tableDes = tableDesBuilder.build();
         admin.createTable(tableDes);
     }
 
-    private static void deleteTable(TableName tableName, Admin admin) throws IOException {
+    private void deleteTable(TableName tableName, Admin admin) throws IOException {
         admin.disableTable(tableName);
         admin.deleteTable(tableName);
     }

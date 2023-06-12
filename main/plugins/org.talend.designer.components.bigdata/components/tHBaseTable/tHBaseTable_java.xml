@@ -134,10 +134,13 @@
             </ITEMS>
         </PARAMETER>
 
-        <PARAMETER NAME="FAMILIES" FIELD="TABLE" REQUIRED="true"
-                   NUM_ROW="80">
-            <ITEMS BASED_ON_SCHEMA="true">
-                <ITEM NAME="FAMILY_COLUMN" />
+        <PARAMETER NAME="FAMILY_PARAMETERS"
+                   FIELD="TABLE"
+                   NUM_ROW="80"
+                   REQUIRED="true"
+                   SHOW_IF="(TABLE_ACTION != 'DROP')">
+            <ITEMS>
+                <ITEM NAME="FAMILY_NAME" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
 
