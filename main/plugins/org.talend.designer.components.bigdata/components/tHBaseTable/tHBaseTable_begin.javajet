@@ -40,6 +40,19 @@ org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Con
 <% } %>
 
 int nb_line_<%=cid%> = 0;
+//set familyParametersList
+java.util.List<java.util.Map<String, String>> familyParameters = new java.util.ArrayList();
+java.util.Map map = new java.util.HashMap();
+<%
+for (Map map: thbase_table.getFamilyParameters()){
+    for (Map.Entry<String, Integer> entry : (Iterable<Map.Entry<String, Integer>>) map.entrySet()) {
+%>
+        map.put("<%=entry.getKey()%>",<%=entry.getValue()%>);
+<%
+     } %>
+     familyParameters.add(map);
+<% }
+%>
 
 // table action
 org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
@@ -48,15 +61,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .namespaceName(<%=thbase_table.getNamespace()%>)
 .tableName(<%=thbase_table.getTableName()%>)
 .tableAction("<%=thbase_table.getTableAction()%>")
-<%
-for (Map map: thbase_table.getFamilyParameters()){
-    for (Map.Entry<String, String> entry : map.entrySet()) {
-%>
-        .addFamilyParameters(<%=entry.getKey()%>,<%=entry.getValue()%>)
-<%
-    }
-}
-%>
+.addAllFamilyParametersMapList(familyParameters)
 .build()
 .doTableAction();
 
@@ -73,4 +78,3 @@ globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 <%
 log4jFileUtil.writeDataFinishInfo(thbase_table.getNode());
 %>
-

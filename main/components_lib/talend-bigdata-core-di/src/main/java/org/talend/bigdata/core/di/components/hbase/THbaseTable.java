@@ -7,8 +7,7 @@ import org.apache.hadoop.hbase.client.*;
 import org.immutables.value.Value;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.apache.hadoop.hbase.util.Bytes.toBytes;
 
@@ -20,7 +19,7 @@ public abstract class THbaseTable {
     abstract String tableName();
 
     abstract String tableAction();
-    abstract List<Map<String,String>> familyParameters();
+    abstract List<Map<String,String>> familyParametersMapList();
 
     public void doTableAction() throws IOException {
         if (!namespaceName().equals("") && !tableName().equals("")){
@@ -62,9 +61,8 @@ public abstract class THbaseTable {
 
     private ColumnFamilyDescriptor getColumnFamily() {
         ColumnFamilyDescriptor family = null;
-        for(int familyParamNum=0;familyParamNum<familyParameters().size();familyParamNum++) {
-            Map<String, String> mapParamLine = familyParameters().get(familyParamNum);
-            String family_name = mapParamLine.get("FAMILY_NAME");
+        for (Map<String, String> map: familyParametersMapList()) {
+            String family_name = map.get("FAMILY_NAME");
             family = new ColumnFamilyDescriptorBuilder.ModifyableColumnFamilyDescriptor(toBytes(family_name));
         }
         return family;
