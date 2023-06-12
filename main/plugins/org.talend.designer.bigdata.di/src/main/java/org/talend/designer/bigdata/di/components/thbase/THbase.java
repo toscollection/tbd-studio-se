@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class THbase implements DesignerDIComponent.BigDataDIComponent,
+public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         DesignerDIComponent.WithDieOnErrorOption {
 
     protected CodeGeneratorArgument codeGeneratorArgument;

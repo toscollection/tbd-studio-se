@@ -1,0 +1,67 @@
+<%@ jet
+imports="
+        java.util.Map
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.INode
+        org.talend.designer.bigdata.di.components.thbase.THbaseNamespace
+        org.talend.designer.bigdata.di.components.thbase.THbase
+        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
+        "
+%>
+<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+    THbaseTable thbase_table = new THbaseTable((CodeGeneratorArgument) argument);
+    String cid = thbase_table.getCid();
+    THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
+    log4jFileUtil.componentStartInfo(thbase_table.getNode());
+
+    if(!thbase_table.isUseExistingConnection()){
+%>
+// create hbase configuration
+org.apache.hadoop.conf.Configuration conn_<%=cid%> = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConfiguration
+.builder()
+.globalMap(globalMap)
+<%
+for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfiguration(thbase_table).entrySet()) {
+%>
+  .putHBaseConfigurationOptions(<%=entry.getKey()%>,<%=entry.getValue()%>)
+<%
+}
+%>
+.existingConnectionName("<%=thbase_table.getExistingConnection()%>")
+.isUseExistingConnection(<%=thbase_table.isUseExistingConnection()%>)
+.build()
+.createAndGetConfiguration();
+
+resourceMap.put("conn_<%=cid%>", conn_<%=cid%>);
+ <%=tHBaseConfiguration.getKeytab(thbase)%>
+<% } else { %>
+org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Configuration) globalMap.get("conn_<%=thbase_table.getExistingConnection()%>");
+<% } %>
+
+int nb_line_<%=cid%> = 0;
+
+// table action
+org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseNamespace
+.builder()
+.configuration(conn_<%=cid%>)
+.namespaceName(<%=thbase_table.getNamespace()%>)
+.tableName(<%=thbase_table.getTableName()%>);
+.tableAction(<%=thbase_table.getTableAction()%>);
+.build()
+.doTableAction();
+
+// close hbase connection and configuration
+<%
+if(!thbase_namespace.isUseExistingConnection()){
+%>
+    resourceMap.put("finish_<%=cid%>", true);
+<%
+}
+%>
+globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
+
+<%
+log4jFileUtil.writeDataFinishInfo(thbase_namespace.getNode());
+%>
+
