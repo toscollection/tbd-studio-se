@@ -22,7 +22,7 @@ public abstract class THbaseTable {
     abstract List<Map<String,String>> familyParameters();
 
     public void doTableAction() throws IOException {
-        if (!namespaceName().equals("") && !tableName().equals("")){
+        if (!"".equals(namespaceName()) && !"".equals(tableName()){
             Connection connection = ConnectionFactory.createConnection(configuration());
             Admin admin = connection.getAdmin();
             try {
