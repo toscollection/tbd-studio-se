@@ -19,7 +19,7 @@ public abstract class THbaseTable {
     abstract String tableName();
 
     abstract String tableAction();
-    abstract List<Map<String,String>> familyParametersMapList();
+    abstract List<Map<String,String>> familyParameters();
 
     public void doTableAction() throws IOException {
         if (!namespaceName().equals("") && !tableName().equals("")){
