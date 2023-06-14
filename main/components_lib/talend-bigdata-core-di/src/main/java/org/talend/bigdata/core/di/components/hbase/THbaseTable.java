@@ -19,56 +19,58 @@ public abstract class THbaseTable {
     abstract String tableName();
 
     abstract String tableAction();
-    abstract List<Map<String,String>> familyParameters();
+    abstract List<Map<String, String>> familyParameters();
+    private Admin admin;
 
     public void doTableAction() throws IOException {
-        if (!"".equals(namespaceName()) && !"".equals(tableName()){
-            Connection connection = ConnectionFactory.createConnection(configuration());
-            Admin admin = connection.getAdmin();
-            try {
-                NamespaceDescriptor nd = admin.getNamespaceDescriptor(namespaceName());
-            } catch (org.apache.hadoop.hbase.NamespaceNotFoundException e) {
-                return;
-            }
+        if ("".equals(tableName())) throw new RuntimeException("Table should be entered");
 
-            TableName tableName = TableName.valueOf(namespaceName() + ":" + tableName());
-            switch (tableAction()){
-                case "CREATE_IF_NOT_EXISTS":
-                    if (!admin.tableExists(tableName)) {
-                        createTable(tableName, admin);
-                    }
-                    break;
-                case "CREATE":
-                   createTable(tableName, admin);
-                    break;
-                case "DROP_CREATE":
-                    deleteTable(tableName, admin);
-                    createTable(tableName, admin);
-                    break;
-                case "DROP_IF_EXISTS_AND_CREATE":
-                    if(admin.isTableDisabled(tableName)){
-                        deleteTable(tableName,admin);
-                        createTable(tableName, admin);
-                    }
-                    break;
-                case "DROP":
-                    deleteTable(tableName, admin);
-                    break;
-            }
-            connection.close();
+        Connection connection = ConnectionFactory.createConnection(configuration());
+        admin = connection.getAdmin();
+
+        String tableNameString = tableName();
+        if (!"".equals(namespaceName())) {
+            NamespaceDescriptor nd = admin.getNamespaceDescriptor(namespaceName());
+            tableNameString = namespaceName() + ":" + tableName();
         }
+        TableName tableName = TableName.valueOf(tableNameString);
+        switch (tableAction()) {
+            case "CREATE_IF_NOT_EXISTS":
+                if (!admin.tableExists(tableName)) {
+                    createTable(tableName);
+                }
+                break;
+            case "CREATE":
+                createTable(tableName);
+                break;
+            case "DROP_CREATE":
+                deleteTable(tableName);
+                createTable(tableName);
+                break;
+            case "DROP_IF_EXISTS_AND_CREATE":
+                if (admin.tableExists(tableName)) {
+                    deleteTable(tableName);
+                    createTable(tableName);
+                }
+                break;
+            case "DROP":
+                deleteTable(tableName);
+                break;
+        }
+        connection.close();
+
     }
 
     private ColumnFamilyDescriptor getColumnFamily() {
         ColumnFamilyDescriptor family = null;
-        for (Map<String, String> map: familyParametersMapList()) {
+        for (Map<String, String> map : familyParameters()) {
             String family_name = map.get("FAMILY_NAME");
             family = new ColumnFamilyDescriptorBuilder.ModifyableColumnFamilyDescriptor(toBytes(family_name));
         }
         return family;
     }
 
-    private void createTable(TableName tableName, Admin admin) throws IOException {
+    private void createTable(TableName tableName) throws IOException {
         TableDescriptorBuilder tableDesBuilder = TableDescriptorBuilder.newBuilder(tableName);
         ColumnFamilyDescriptor family = getColumnFamily();
         tableDesBuilder.setColumnFamily(family);
@@ -76,7 +78,7 @@ public abstract class THbaseTable {
         admin.createTable(tableDes);
     }
 
-    private void deleteTable(TableName tableName, Admin admin) throws IOException {
+    private void deleteTable(TableName tableName) throws IOException {
         admin.disableTable(tableName);
         admin.deleteTable(tableName);
     }
