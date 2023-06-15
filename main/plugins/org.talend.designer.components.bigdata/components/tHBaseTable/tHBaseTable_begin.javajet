@@ -61,7 +61,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .namespaceName(<%=thbase_table.getNamespace()%>)
 .tableName(<%=thbase_table.getTableName()%>)
 .tableAction("<%=thbase_table.getTableAction()%>")
-.addAllFamilyParametersMapList(familyParameters)
+.addAllFamilyParameters(familyParameters)
 .build()
 .doTableAction();
 

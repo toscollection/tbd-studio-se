@@ -23,14 +23,13 @@ public abstract class THbaseTable {
     private Admin admin;
 
     public void doTableAction() throws IOException {
-        if ("".equals(tableName())) throw new RuntimeException("Table should be entered");
+        if ("".equals(tableName())) throw new RuntimeException("Table name can not be empty");
 
         Connection connection = ConnectionFactory.createConnection(configuration());
         admin = connection.getAdmin();
 
         String tableNameString = tableName();
         if (!"".equals(namespaceName())) {
-            NamespaceDescriptor nd = admin.getNamespaceDescriptor(namespaceName());
             tableNameString = namespaceName() + ":" + tableName();
         }
         TableName tableName = TableName.valueOf(tableNameString);
@@ -50,8 +49,8 @@ public abstract class THbaseTable {
             case "DROP_IF_EXISTS_AND_CREATE":
                 if (admin.tableExists(tableName)) {
                     deleteTable(tableName);
-                    createTable(tableName);
                 }
+                createTable(tableName);
                 break;
             case "DROP":
                 deleteTable(tableName);

@@ -115,11 +115,16 @@
             <DEFAULT>"/tmp/hdfs.headless.keytab"</DEFAULT>
         </PARAMETER>
 
-        <PARAMETER NAME="NAMESPACE" FIELD="TEXT" NUM_ROW="60">
+        <PARAMETER NAME="SPECIFY_NAMESPACE" FIELD="CHECK"
+                   NUM_ROW="55">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER NAME="NAMESPACE" FIELD="TEXT" NUM_ROW="60" SHOW_IF="(SPECIFY_NAMESPACE == 'true')">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 
-        <PARAMETER NAME="TABLE_NAME" FIELD="TEXT" REQUIRED="true" NUM_ROW="65">
+        <PARAMETER NAME="TABLE_NAME" FIELD="TEXT" NUM_ROW="65" >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 
