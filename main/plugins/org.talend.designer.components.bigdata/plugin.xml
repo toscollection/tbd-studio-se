@@ -385,7 +385,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core4-4.2.0-incubating.jar" name="htrace-core4-4.2.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.2.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-3.1.5.jar" name="metrics-core-3.1.5.jar" mvn_uri="mvn:io.dropwizard.metrics/metrics-core/3.1.5"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="zookeeper-3.4.12.jar" name="zookeeper-3.4.12.jar" mvn_uri="mvn:org.apache.zookeeper/zookeeper/3.4.12"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-core-di-1.1.0.jar" name="talend-bigdata-core-di-1.1.0.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.1.0"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="talend-bigdata-core-di-1.1.0.jar" name="talend-bigdata-core-di-1.1.0.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.1.0"/>
 
         <!-- HBase2 group  -->
         <libraryNeededGroup description="HBASE 2.1.0" id="HBASE-2.1.0" name="HBASE-2.1.0">
