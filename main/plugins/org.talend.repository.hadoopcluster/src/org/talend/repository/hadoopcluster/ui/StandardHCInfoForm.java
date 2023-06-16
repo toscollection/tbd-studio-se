@@ -993,7 +993,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addNavigatorFields();
         addHadoopConfsFields();
 
-        addCheckFields();
+        if (!"SPARK".equals(((HadoopClusterConnectionImpl) this.connectionItem.getConnection()).getDistribution())) {
+            addCheckFields();
+        }
 
         addKubernetesFields();
         addDatabricksFields();
