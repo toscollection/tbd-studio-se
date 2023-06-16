@@ -171,7 +171,12 @@
             <IMPORT MODULE_GROUP="HBASE-1.4.10" REQUIRED_IF="(DISTRIBUTION=='SPARK' AND USE_EXISTING_CONNECTION=='false' AND HBASE_API_VERSION=='HBASE_1')" />
 
             <IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
-                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
+                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"
+                    REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')"/>
+            <IMPORT NAME="talend-bigdata-core-di-1.1.0" MODULE="talend-bigdata-core-di-1.1.0.jar"
+                    MVN="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.1.0"
+                    REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')" />
+
             <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
                     MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
                     UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
