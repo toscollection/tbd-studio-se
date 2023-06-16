@@ -148,10 +148,6 @@
                 <ITEM NAME="FAMILY_NAME" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
-
-        <PARAMETER NAME="DIE_ON_ERROR" FIELD="CHECK" NUM_ROW="90">
-            <DEFAULT>false</DEFAULT>
-        </PARAMETER>
     </PARAMETERS>
 
     <ADVANCED_PARAMETERS>
