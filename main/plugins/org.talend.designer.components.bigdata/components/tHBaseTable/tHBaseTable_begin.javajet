@@ -62,6 +62,22 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .tableName(<%=thbase_table.getTableName()%>)
 .tableAction("<%=thbase_table.getTableAction()%>")
 .addAllFamilyParameters(familyParameters)
+.isHbase2x(<%=thbase_table.isHBase2x()%>)
+                    .createTableFunction(((tableName, admin, isHbase2, family)->{
+                        <% if (thbase_table.isHBase2x()){ %>
+                            org.apache.hadoop.hbase.client.TableDescriptorBuilder tableDesBuilder =
+                                       org.apache.hadoop.hbase.client.TableDescriptorBuilder.newBuilder(tableName);
+                            tableDesBuilder.setColumnFamily(family);
+                            org.apache.hadoop.hbase.client.TableDescriptor tableDes = tableDesBuilder.build();
+                            admin.createTable(tableDes);
+                       <% } else { %>
+                            org.apache.hadoop.hbase.client.HTableDescriptor tableDes =
+                                        new org.apache.hadoop.hbase.client.HTableDescriptor(tableName);
+                            tableDes.addFamily(family);
+                            admin.createTable(tableDes);
+                       <% } %>
+
+                    }))
 .build()
 .doTableAction();
 
