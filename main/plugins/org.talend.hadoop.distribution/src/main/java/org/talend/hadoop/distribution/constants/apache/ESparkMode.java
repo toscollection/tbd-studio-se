@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.talend.hadoop.distribution.i18n.Messages;
+
 public enum ESparkMode {
 
     CLUSTER(Messages.getString("ESparkMode.CLUSTER"),
@@ -50,23 +51,17 @@ public enum ESparkMode {
     HDI(Messages.getString("ESparkMode.HDINSIGHT"),
             "HDI",
             "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalHDIMode[])"),
-    SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
-            "SPARK_LOCAL",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])"),
+
     /*EMR_SERVERLESS spark mode should only be enabled in spark batch jobs.
-    'isShow[USE_DATASET_API]' was added to condition since it's always shown in batch jobs and dpesn't exist in streaming
-    */
+'isShow[USE_DATASET_API]' was added to condition since it's always shown in batch jobs and dpesn't exist in streaming
+*/
     EMR_SERVERLESS(Messages.getString("ESparkMode.EMR_SERVERLESS"),
             "EMR_SERVERLESS",
-            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalEMRServerlessMode[]) AND isShow[USE_DATASET_API]")
-    ;
-	// we want spark local by default if possible so please let it last in this list
-
-    private String runModeLabel;
-
-    private String runModeValue;
-
-    private String displayCondition;
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalEMRServerlessMode[]) AND isShow[USE_DATASET_API]"),
+    SPARK_LOCAL(Messages.getString("ESparkMode.SPARK_LOCAL"),
+            "SPARK_LOCAL",
+            "(DISTRIB[DISTRIBUTION, SPARK_VERSION].doSupportUniversalLocalMode[])");
+    // we want spark local by default if possible so please let it last in this list
 
     private static final Map<String, ESparkMode> sparkModeByLabel = new HashMap<String, ESparkMode>();
 
@@ -75,11 +70,19 @@ public enum ESparkMode {
             sparkModeByLabel.put(m.getLabel(), m);
         }
     }
-    
+
+    private final String runModeLabel;
+    private final String runModeValue;
+    private final String displayCondition;
+
     ESparkMode(String runModeLabel, String runModeValue, String displayCondition) {
         this.runModeLabel = runModeLabel;
         this.runModeValue = runModeValue;
         this.displayCondition = displayCondition;
+    }
+
+    public static ESparkMode getByLabel(String label) {
+        return sparkModeByLabel.get(label);
     }
 
     public String getLabel() {
@@ -92,10 +95,6 @@ public enum ESparkMode {
 
     public String getDisplayCondition() {
         return displayCondition;
-    }
-
-    public static ESparkMode getByLabel(String label) {
-        return sparkModeByLabel.get(label);
     }
 
 }
