@@ -11,14 +11,6 @@ public class THbaseTable extends THbase {
         super(codeGeneratorArgument);
     }
 
-    public String getNamespace(){
-        return BigDataDIComponent.getParameter(node, "__NAMESPACE__", "");
-    }
-
-    public String getTableName(){
-        return BigDataDIComponent.getParameter(node, "__TABLE_NAME__", "");
-    }
-
     public String getTableAction(){
         return BigDataDIComponent.getParameter(node, "__TABLE_ACTION__", "NONE");
     }

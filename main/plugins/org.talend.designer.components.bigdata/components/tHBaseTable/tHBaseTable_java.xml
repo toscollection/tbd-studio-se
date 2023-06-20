@@ -124,7 +124,7 @@
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 
-        <PARAMETER NAME="TABLE_NAME" FIELD="TEXT" NUM_ROW="65" >
+        <PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="65" >
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 

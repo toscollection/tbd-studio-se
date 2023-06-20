@@ -1,151 +1,44 @@
 <%@ jet
 imports="
-        java.util.List
         java.util.Map
-        org.talend.core.model.process.ElementParameterParser
-        org.talend.core.model.process.INode
         org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.INode
+        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
+        org.talend.designer.bigdata.di.components.thbase.THbaseDeleteRows
         "
 %>
-
     <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
-
 <%
-    CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-    INode node = (INode)codeGenArgument.getArgument();
-    String cid = node.getUniqueName();
-    String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
-    String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
-    String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
-    String table_name = ElementParameterParser.getValue(node, "__TABLE__");
+    final THbaseDeleteRows thbaseDeleteRows = new THbaseDeleteRows((CodeGeneratorArgument) argument);
+    THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
+    final String cid = thbaseDeleteRows.getCid();
+    log4jFileUtil.componentStartInfo(thbaseDeleteRows.getNode());
 
-    boolean setTableNsMapping = "true".equals(ElementParameterParser.getValue(node, "__SET_TABLE_NS_MAPPING__"));
-    String tableNsMapping = ElementParameterParser.getValue(node, "__TABLE_NS_MAPPING__");
-    boolean useTableNsMapping = setTableNsMapping && ((tableNsMapping != null)&&(!tableNsMapping.equals("")));
-
-    String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
-
-    final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-
-    String distribution = null;
-    String hbaseVersion = null;
-    boolean isHadoop2 = false;
-    boolean isHBase2x = false;
-
-    if(!"true".equals(useExistingConn)) {
-        distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-        hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
-        isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
-        try {
-            isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
-        } finally {
-            //NPE if not spark
-        }
-    } else {
-        String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
-        List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
-        for(INode targetNode : nodes){
-            if (targetNode.getUniqueName().equals(connectionSid)) {
-                distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
-                hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-                isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
-                try {
-                    isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"));
-                } finally {
-                    //NPE if not spark
-                }
-                break;
-            }
-        }
-    }
-
-    log4jFileUtil.componentStartInfo(node);
-
-    org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
-    try {
-        hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
-        boolean isSparkDistrib = "SPARK".equals(distribution);
-        isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
-    } catch (java.lang.Exception e) {
-        e.printStackTrace();
-        return "";
-    }
-
-    boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
-
+    if(!thbaseDeleteRows.isUseExistingConnection()){
 %>
+// create hbase configuration
+org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConfiguration immutableTHbaseConfiguration = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConfiguration.builder()
+.globalMap(globalMap)
+<%
+for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfiguration(thbaseDeleteRows).entrySet()) {
+%>
+  .putHBaseConfigurationOptions(<%=entry.getKey()%>,<%=entry.getValue()%>)
+<%
+}
+%>
+.existingConnectionName("<%=thbaseDeleteRows.getExistingConnection()%>")
+.isUseExistingConnection(<%=thbaseDeleteRows.isUseExistingConnection()%>)
+.build();
+immutableTHbaseConfiguration.createConfiguration();
+immutableTHbaseConfiguration.createConnection();
+org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = immutableTHbaseConfiguration.getConnection();
+ <%=tHBaseConfiguration.getKeytab(thbaseDeleteRows)%>
+<% } else { %>
+org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Configuration) globalMap.get("conn_<%=thbaseDeleteRows.getExistingConnection()%>");
+org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = org.apache.hadoop.hbase.client.ConnectionFactory.createConnection(conn_<%=cid%>);
+<% } %>
+
+resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
 int nb_line_<%=cid%> = 0;
-org.apache.hadoop.conf.Configuration conn_<%=cid%>=null;
-<%
-// not use existing connection
-if(!"true".equals(useExistingConn)){
-    boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-    boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
-    String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
-    String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
-    String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
-    String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
-
-%>
-    conn_<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
-    resourceMap.put("conn_<%=cid%>", conn_<%=cid%>);
-    conn_<%=cid%>.clear();
-    conn_<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>);
-    conn_<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>);
-    conn_<%=cid%>.set("hbase.cluster.distributed","true");
-<%
-    boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
-    String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
-    if(setZNodeParent) {
-%>
-    conn_<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>);
-<%
-    }
-    if(hbaseDistrib.doSupportKerberos() && useKrb){
-%>
-        conn_<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
-        conn_<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);
-        conn_<%=cid%>.set("hbase.security.authorization","true");
-        conn_<%=cid%>.set("hbase.security.authentication","kerberos");
-<%
-        if(useKeytab){
-%>
-            org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
-<%
-        }
-
-    }
-    List<Map<String, String>> properties =
-        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
-       for(int i=0;i<properties.size();i++){
-           Map<String, String> map = properties.get(i);
-           String property = map.get("PROPERTY");
-           String value= map.get("VALUE");
-%>
-        conn_<%=cid%>.set(<%=property%>,<%=value%>);
-<%
-   }
-}else{// use existing connection
-    String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
-    String conn = "conn_" + connection;
-%>
-    conn_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
-    if(conn_<%=cid%> == null){
-        throw new RuntimeException("<%=cid%>'s connection is null!");
-    }
-<%
-}
-
-if (!isHBase2x) {
-%>
-    org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
-    table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid%>,<%=table_name%>);
-<%
-} else {
-%>
-    org.apache.hadoop.hbase.client.Table table_<%=cid%> = org.apache.hadoop.hbase.client.ConnectionFactory.createConnection(conn_<%=cid%>).getTable(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
-<%
-}
-%>
 
 

@@ -39,8 +39,8 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         return this.node;
     }
     @Override
-    public boolean dieOnError() {
-        return WithDieOnErrorOption.super.dieOnError();
+    public boolean getDieOnError() {
+        return WithDieOnErrorOption.super.getDieOnError();
     }
 
     public HBaseComponent getHbaseDistrib() {
@@ -142,6 +142,12 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
             sb.deleteCharAt(inputString.length()-1);
         }
         return sb.toString();
+    }
+    public String getNamespace(){
+        return BigDataDIComponent.getParameter(node, "__NAMESPACE__", "");
+    }
+    public String getTableName(){
+        return BigDataDIComponent.getParameter(node, "__TABLE__", "");
     }
 
 }

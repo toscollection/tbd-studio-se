@@ -43,10 +43,13 @@ public interface DesignerDIComponent {
             return ((INode) codeGeneratorArgument().getArgument()).getComponent().getName();
         }
 
+        default boolean getIsLog4jEnabled(){
+            return ("true").equals(ElementParameterParser.getValue(((INode)codeGeneratorArgument().getArgument()).getProcess(), "__LOG4J_ACTIVATE__"));
+        }
     }
 
     interface WithDieOnErrorOption extends BigDataDIComponent {
-        default boolean dieOnError() {
+        default boolean getDieOnError() {
             return this.getParameter("__DIE_ON_ERROR__", false);
         }
     }

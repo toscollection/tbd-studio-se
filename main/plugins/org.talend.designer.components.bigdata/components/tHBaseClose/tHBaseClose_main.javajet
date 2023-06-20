@@ -19,6 +19,7 @@ imports="
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 
     String conn = "conn_" + connection;
+    String hbase_connection = "connection_" + connection;
     
     String distribution = null;
     String hbaseVersion = null;
@@ -56,3 +57,11 @@ imports="
 		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
 		globalMap.remove("<%=conn%>");
 	}
+
+//new connection close
+	org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = (org.apache.hadoop.hbase.client.Connection)globalMap.get("<%=hbase_connection%>");
+    	if(connection_<%=cid%> != null )
+    	{
+    		connection_<%=cid%>.close();
+    		globalMap.remove("<%=hbase_connection%>");
+    	}
