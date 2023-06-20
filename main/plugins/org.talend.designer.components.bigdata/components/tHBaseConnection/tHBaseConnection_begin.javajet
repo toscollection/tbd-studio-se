@@ -1,62 +1,22 @@
 <%@ jet
-	imports="
-	java.util.List
-	java.util.Map
-	org.talend.core.model.process.ElementParameterParser	
-	org.talend.core.model.process.INode
-	org.talend.designer.codegen.config.CodeGeneratorArgument
-	"
+imports="
+        java.util.Map
+        org.talend.designer.codegen.config.CodeGeneratorArgument
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.core.model.process.INode
+        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
+        org.talend.designer.bigdata.di.components.thbase.THbaseConnection
+        "
 %>
-
-	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
-	
-<%	CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-
-    INode node = (INode)codeGenArgument.getArgument();
-    String cid = node.getUniqueName();
-	String zookeeper_quorum = ElementParameterParser.getValue(node, "__ZOOKEEPER_QUORUM__");
-	String zookeeper_client_port = ElementParameterParser.getValue(node, "__ZOOKEEPER_CLIENT_PORT__");
-	
-	boolean setZNodeParent = "true".equals(ElementParameterParser.getValue(node, "__SET_ZNODE_PARENT__"));
-	String zNodeParent = ElementParameterParser.getValue(node, "__ZNODE_PARENT__");
-
-	String distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-	String hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
-	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-	boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
-	String userPrincipal = ElementParameterParser.getValue(node, "__PRINCIPAL__");
-	String keytabPath = ElementParameterParser.getValue(node, "__KEYTAB_PATH__");
-	String hbaseMasterPrincipal = ElementParameterParser.getValue(node, "__HBASE_MASTER_PRINCIPAL__");
-	String hbaseRegionServerPrincipal = ElementParameterParser.getValue(node, "__HBASE_REGIONSERVER_PRINCIPAL__");
-	boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-	boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
-
-    boolean useMapRTicket = ElementParameterParser.getBooleanValue(node, "__USE_MAPRTICKET__");
-    String username = ElementParameterParser.getValue(node, "__USERNAME__");
-    String mapRTicketCluster = ElementParameterParser.getValue(node, "__MAPRTICKET_CLUSTER__");
-    String mapRTicketDuration = ElementParameterParser.getValue(node, "__MAPRTICKET_DURATION__");
-
-    boolean setMapRHomeDir = ElementParameterParser.getBooleanValue(node, "__SET_MAPR_HOME_DIR__");
-    String mapRHomeDir = ElementParameterParser.getValue(node, "__MAPR_HOME_DIR__");
-
-    boolean setMapRHadoopLogin = ElementParameterParser.getBooleanValue(node, "__SET_HADOOP_LOGIN__");
-    String mapRHadoopLogin = ElementParameterParser.getValue(node, "__HADOOP_LOGIN__");
-    
-
-	
-	org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
-	try {
-		hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
-	} catch (java.lang.Exception e) {
-		e.printStackTrace();
-		return "";
-	}
-
-    boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
-
-	log4jFileUtil.componentStartInfo(node);
-	// BEGIN IF01
-	if(configureFromClassPath){
+    <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+    final THbaseConnection thbase = new THbaseConnection((CodeGeneratorArgument) argument);
+    THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
+    final String cid = thbase.getCid();
+    final INode node = thbase.getNode();
+    log4jFileUtil.componentStartInfo(thbase.getNode());
+   	// BEGIN IF01
+    if(thbase.isConfigureFromClassPath()){
 %>
 		// Add HADOOP_CONF_DIR to the classpath if it's present
 		String hadoopConfDir_<%=cid%> = System.getenv("HADOOP_CONF_DIR");
@@ -74,9 +34,8 @@
 		String tldKerberosKtPrincipal_<%=cid%> = config<%=cid%>.get("talend.kerberos.keytab.principal", "");
 		String tldKerberosKtPath_<%=cid%> = config<%=cid%>.get("talend.kerberos.keytab.path", "");
 
-<%
-		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
-		if(isLog4jEnabled){
+<%		// log all loaded xxx-site.xml files and all of the key value pairs for debugging
+		if(thbase.isLog4jEnabled()){
 		%>
 			log.debug("CLASSPATH_CONFIGURATION_<%=cid%>" + " Loaded : " + config<%=cid%>);
 			log.debug("CLASSPATH_CONFIGURATION_<%=cid%>" + " key value pairs : ");
@@ -99,91 +58,78 @@
 	// END IF01
 	else{
 %>
-		org.apache.hadoop.conf.Configuration config<%=cid%> = org.apache.hadoop.hbase.HBaseConfiguration.create();
-		config<%=cid%>.clear();
-		config<%=cid%>.set("hbase.zookeeper.quorum", <%=zookeeper_quorum%>); 
-		config<%=cid%>.set("hbase.zookeeper.property.clientPort",<%=zookeeper_client_port%>); 
-		config<%=cid%>.set("hbase.cluster.distributed","true"); 
+// create hbase configuration
+org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection immutableTHbaseConnection = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection.builder()
+.globalMap(globalMap)
 <%
-		if(setZNodeParent) {
+for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfiguration(thbase).entrySet()) {
 %>
-			config<%=cid%>.set("zookeeper.znode.parent",<%=zNodeParent%>); 
+  .putHBaseConfigurationOptions(<%=entry.getKey()%>,<%=entry.getValue()%>)
 <%
-		}
-
-		if(hbaseDistrib.doSupportKerberos() && useKrb){
-            if ((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
-                %>
-                System.setProperty("pname", "MapRLogin");
-                System.setProperty("https.protocols", "TLSv1.2");
-                System.setProperty("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
-                System.setProperty("hadoop.login", <%=setMapRHadoopLogin ? mapRHadoopLogin : "\"kerberos\""%>);
-                <%
-            }
+}
 %>
-			config<%=cid%>.set("hbase.master.kerberos.principal",<%=hbaseMasterPrincipal%>);
-			config<%=cid%>.set("hbase.regionserver.kerberos.principal",<%=hbaseRegionServerPrincipal%>);
-			config<%=cid%>.set("hbase.security.authorization","true");
-			config<%=cid%>.set("hbase.security.authentication","kerberos");
+.existingConnectionName("<%=thbase.getExistingConnection()%>")
+.isUseExistingConnection(false)
+.build();
 
-<%
-			if(useKeytab){
+immutableTHbaseConnection.createConfiguration();
+org.apache.hadoop.conf.Configuration config<%=cid%>  = immutableTHbaseConnection.getConfiguration();
+<%=tHBaseConfiguration.getKeytab(thbase)%>
+
+<% if(thbase.getHbaseDistrib().doSupportKerberos() && thbase.useKrb()){
+    if ((thbase.isCustom() || thbase.getHbaseDistrib().doSupportMapRTicket()) && thbase.isUseMapRTicket()) {
+        %>
+        System.setProperty("pname", "MapRLogin");
+        System.setProperty("https.protocols", "TLSv1.2");
+        System.setProperty("mapr.home.dir", <%=thbase.isSetMapRHomeDir() ? thbase.getMapRHomeDir() : "\"/opt/mapr\"" %>);
+        System.setProperty("hadoop.login", <%=thbase.isSetMapRHadoopLogin() ? thbase.getMapRHadoopLogin() : "\"kerberos\""%>);
+        <%
+    }
+    if ((thbase.isCustom() || thbase.getHbaseDistrib().doSupportMapRTicket()) && thbase.isUseMapRTicket()) {
+    %>
+        com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
+        maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=thbase.getMapRTicketCluster()%>, <%=thbase.getMapRTicketDuration()%>);
+    <%
+    }
+} else {
+// MapR ticket
+    if ((thbase.isCustom() || thbase.getHbaseDistrib().doSupportMapRTicket()) && thbase.isUseMapRTicket()) {
+        String passwordFieldName = "__MAPRTICKET_PASSWORD__";
+        %>
+        System.setProperty("pname", "MapRLogin");
+        System.setProperty("https.protocols", "TLSv1.2");
+        System.setProperty("mapr.home.dir", <%=thbase.isSetMapRHomeDir() ? thbase.getMapRHomeDir() : "\"/opt/mapr\"" %>);
+        com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
+        <%
+        if (thbase.isSetMapRHadoopLogin()) {
+        %>
+            System.setProperty("hadoop.login", <%=thbase.getMapRHadoopLogin()%>);
+        <%
+        } else {
+        %>
+            maprLogin_<%=cid%>.setCheckUGI(false);
+        <%
+        }
+        %>
+        <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
+        <%
+        if(thbase.getHbaseDistrib().doSupportMaprTicketV52API()){
+            %>
+            maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=thbase.getMapRTicketCluster()%>, <%=thbase.getMapRUserName()%>, decryptedPassword_<%=cid%>, <%=thbase.getMapRTicketDuration()%>, "");
+            <%
+        } else {
+           	%>
+           	maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=thbase.getMapRTicketCluster()%>, <%=thbase.getMapRUserName()%>, decryptedPassword_<%=cid%>, <%=thbase.getMapRTicketDuration()%>);
+          	<%
+        }
+    }
+  }
+}
 %>
-				org.apache.hadoop.security.UserGroupInformation.loginUserFromKeytab(<%=userPrincipal%>, <%=keytabPath%>);
-<%
-			}
-            if ((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
-                %>
-                com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
-                maprLogin_<%=cid%>.getMapRCredentialsViaKerberos(<%=mapRTicketCluster%>, <%=mapRTicketDuration%>);
-                <%
-            }
-		} else {
-		    // MapR ticket
-		    if ((isCustom || hbaseDistrib.doSupportMapRTicket()) && useMapRTicket) {
-                String passwordFieldName = "__MAPRTICKET_PASSWORD__";
-                %>
-                System.setProperty("pname", "MapRLogin");
-                System.setProperty("https.protocols", "TLSv1.2");
-                System.setProperty("mapr.home.dir", <%=setMapRHomeDir ? mapRHomeDir : "\"/opt/mapr\"" %>);
-                com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
-                <%
-                if (setMapRHadoopLogin) {
-                    %>
-                    System.setProperty("hadoop.login", <%=mapRHadoopLogin%>);
-                    <%
-                } else {
-                    %>
-                    maprLogin_<%=cid%>.setCheckUGI(false);
-                    <%
-                }
-                %>
-                <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>
 
-                <%
-                if(hbaseDistrib.doSupportMaprTicketV52API()){
-                	%>
-                	maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>, "");
-                	<%
-                } else {
-                	%>
+globalMap.put("conn_<%=cid%>",config<%=cid%>);
 
-                	maprLogin_<%=cid%>.getMapRCredentialsViaPassword(<%=mapRTicketCluster%>, <%=username%>, decryptedPassword_<%=cid%>, <%=mapRTicketDuration%>);
-                	<%
-                }
-            }
-		}
-	}
+immutableTHbaseConnection.createConnection();
+org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = immutableTHbaseConnection.getConnection();
+globalMap.put("connection_<%=cid%>", connection_<%=cid%>);
 
-	List<Map<String, String>> properties =
-        (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__HBASE_PARAMETERS__");
-   for(int i=0;i<properties.size();i++){
-   		Map<String, String> map = properties.get(i);
-   		String property = map.get("PROPERTY");
-   		String value= map.get("VALUE");
-%>
-		config<%=cid%>.set(<%=property%>,<%=value%>);
-<%
-   }
-%>
-	globalMap.put("conn_<%=cid%>",config<%=cid%>);

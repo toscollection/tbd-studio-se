@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PUBLIC)
-public abstract class THbaseConfiguration {
+public abstract class THbaseConnection {
     abstract boolean isUseExistingConnection();
     abstract Map<String, Object> globalMap();
     abstract Map<String, String> hBaseConfigurationOptions();

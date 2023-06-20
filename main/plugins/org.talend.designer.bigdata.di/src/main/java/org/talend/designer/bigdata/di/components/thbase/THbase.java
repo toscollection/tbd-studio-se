@@ -150,4 +150,31 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         return BigDataDIComponent.getParameter(node, "__TABLE__", "");
     }
 
+    public boolean isConfigureFromClassPath(){
+        return BigDataDIComponent.getBooleanParameter(node,"__CONFIGURATIONS_FROM_CLASSPATH__");
+    }
+    public boolean isUseMapRTicket(){
+        return BigDataDIComponent.getBooleanParameter(node,"__USE_MAPRTICKET__");
+    }
+    public String getMapRUserName(){
+        return BigDataDIComponent.getParameter(node,"__USERNAME__","");
+    }
+    public String getMapRTicketCluster(){
+        return BigDataDIComponent.getParameter(node,"__MAPRTICKET_CLUSTER__","");
+    }
+    public String getMapRTicketDuration(){
+        return BigDataDIComponent.getParameter(node,"__MAPRTICKET_DURATION__","");
+    }
+    public boolean isSetMapRHomeDir(){
+        return BigDataDIComponent.getBooleanParameter(node,"__SET_MAPR_HOME_DIR__");
+    }
+    public String getMapRHomeDir(){
+        return BigDataDIComponent.getParameter(node,"__MAPR_HOME_DIR__","");
+    }
+    public boolean isSetMapRHadoopLogin(){
+        return BigDataDIComponent.getBooleanParameter(node,"__SET_HADOOP_LOGIN__");
+    }
+    public String getMapRHadoopLogin(){
+        return BigDataDIComponent.getParameter(node,"__HADOOP_LOGIN__","");
+    }
 }

@@ -12,7 +12,7 @@ public class THbaseConfigurationTest {
     public void checkConfiguration() {
         Map<String, Object> globalMap = new HashMap<>();
 
-        ImmutableTHbaseConfiguration immutableTHbaseConfiguration = ImmutableTHbaseConfiguration.builder()
+        ImmutableTHbaseConnection immutableTHbaseConfiguration = ImmutableTHbaseConnection.builder()
                 .globalMap(globalMap)
                 .putHBaseConfigurationOptions("hbase.zookeeper.quorum","localhost")
                 .putHBaseConfigurationOptions("hbase.zookeeper.property.clientPort","2108")

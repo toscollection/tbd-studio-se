@@ -17,7 +17,7 @@ imports="
     if(!thbaseDeleteRows.isUseExistingConnection()){
 %>
 // create hbase configuration
-org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConfiguration immutableTHbaseConfiguration = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConfiguration.builder()
+org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection immutableTHbaseConnection = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection.builder()
 .globalMap(globalMap)
 <%
 for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfiguration(thbaseDeleteRows).entrySet()) {
@@ -29,13 +29,12 @@ for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfigur
 .existingConnectionName("<%=thbaseDeleteRows.getExistingConnection()%>")
 .isUseExistingConnection(<%=thbaseDeleteRows.isUseExistingConnection()%>)
 .build();
-immutableTHbaseConfiguration.createConfiguration();
-immutableTHbaseConfiguration.createConnection();
-org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = immutableTHbaseConfiguration.getConnection();
+immutableTHbaseConnection.createConfiguration();
+immutableTHbaseConnection.createConnection();
+org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = immutableTHbaseConnection.getConnection();
  <%=tHBaseConfiguration.getKeytab(thbaseDeleteRows)%>
 <% } else { %>
-org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Configuration) globalMap.get("conn_<%=thbaseDeleteRows.getExistingConnection()%>");
-org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = org.apache.hadoop.hbase.client.ConnectionFactory.createConnection(conn_<%=cid%>);
+org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = (org.apache.hadoop.hbase.client.Connection) globalMap.get("connection_<%=thbaseDeleteRows.getExistingConnection()%>");
 <% } %>
 
 resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);

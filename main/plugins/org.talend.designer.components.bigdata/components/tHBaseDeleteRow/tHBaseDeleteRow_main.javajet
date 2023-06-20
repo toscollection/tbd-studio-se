@@ -22,7 +22,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseDeleteRows
 .tableName(<%=thbaseDeleteRows.getTableName()%>)
 .rowKeys(<%=thbaseDeleteRows.getDeleteRows()%>)
 .dieOnError(<%=thbaseDeleteRows.getDieOnError()%>)
-.isLog4jEnabled(<%=thbaseDeleteRows.getIsLog4jEnabled()%>)
+.isLog4jEnabled(<%=thbaseDeleteRows.isLog4jEnabled()%>)
 .cid("<%=cid%>")
 .build()
 .doDeleteRows();

@@ -17,7 +17,7 @@ imports="
     if(!thbase_namespace.isUseExistingConnection()){
 %>
 // create hbase configuration
-org.apache.hadoop.conf.Configuration conn_<%=cid%> = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConfiguration
+org.apache.hadoop.conf.Configuration conn_<%=cid%> = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection
 .builder()
 .globalMap(globalMap)
 <%
