@@ -2,7 +2,6 @@ package org.talend.bigdata.core.di.components.hbase;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
-import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
 import org.immutables.value.Value;
@@ -11,71 +10,71 @@ import java.util.*;
 
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PUBLIC)
-public abstract class THbaseTable {
-    abstract Configuration configuration();
-    abstract String namespaceName();
-    abstract String tableName();
+public interface THbaseTable {
+    Configuration configuration();
+    String namespaceName();
+    String tableName();
 
-    abstract String tableAction();
-    abstract List<Map<String, String>> familyParameters();
-    private Admin admin;
+    String tableAction();
+    List<Map<String, String>> familyParameters();
+    boolean isHbase2x();
+    CreateTableFunction createTableFunction();
 
-    public void doTableAction() throws IOException {
+    default void doTableAction() throws IOException {
         if ("".equals(tableName())) throw new RuntimeException("Table name can not be empty");
 
         Connection connection = ConnectionFactory.createConnection(configuration());
-        admin = connection.getAdmin();
+        Admin admin = connection.getAdmin();
 
         String tableNameString = tableName();
         if (!"".equals(namespaceName())) {
             tableNameString = namespaceName() + ":" + tableName();
         }
         TableName tableName = TableName.valueOf(tableNameString);
+
         switch (tableAction()) {
             case "CREATE_IF_NOT_EXISTS":
                 if (!admin.tableExists(tableName)) {
-                    createTable(tableName);
+                    createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
                 }
                 break;
             case "CREATE":
-                createTable(tableName);
+                createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
                 break;
             case "DROP_CREATE":
-                deleteTable(tableName);
-                createTable(tableName);
+                deleteTable(tableName, admin);
+                createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
                 break;
             case "DROP_IF_EXISTS_AND_CREATE":
                 if (admin.tableExists(tableName)) {
-                    deleteTable(tableName);
+                    deleteTable(tableName, admin);
                 }
-                createTable(tableName);
+                createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
                 break;
             case "DROP":
-                deleteTable(tableName);
+                deleteTable(tableName, admin);
                 break;
         }
         connection.close();
 
     }
 
-    private HColumnDescriptor getColumnFamily() {
+    default HColumnDescriptor getColumnFamily() {
         HColumnDescriptor family = null;
         for (Map<String, String> map : familyParameters()) {
             String family_name = map.get("FAMILY_NAME");
-            family = new org.apache.hadoop.hbase.HColumnDescriptor(family_name);
+            family = new HColumnDescriptor(family_name);
         }
         return family;
     }
 
-    private void createTable(TableName tableName) throws IOException {
-        HTableDescriptor tableDes = new org.apache.hadoop.hbase.HTableDescriptor(tableName);
-        HColumnDescriptor family = getColumnFamily();
-        tableDes.addFamily(family);
-        admin.createTable(tableDes);
-    }
-
-    private void deleteTable(TableName tableName) throws IOException {
+     default void deleteTable(TableName tableName, Admin admin) throws IOException {
         admin.disableTable(tableName);
         admin.deleteTable(tableName);
     }
+
+    interface CreateTableFunction {
+        void doCreateTable(TableName tableName, Admin admin, boolean isHbase2x, HColumnDescriptor columnFamily) throws IOException;
+    }
+
 }

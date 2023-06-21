@@ -196,7 +196,8 @@
 					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 
 			<IMPORT NAME="talend-bigdata-core-di-1.1.0" MODULE="talend-bigdata-core-di-1.1.0.jar"
-					MVN="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.1.0"/>
+					MVN="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.1.0"
+					REQUIRED_IF="true"/>
 
 			<IMPORT MODULE_GROUP="HBASE-2.1.0" REQUIRED_IF="(DISTRIBUTION=='SPARK' AND HBASE_API_VERSION=='HBASE_2')" />
 			
