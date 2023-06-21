@@ -3,38 +3,25 @@ imports="
         java.util.Map
         org.talend.designer.codegen.config.CodeGeneratorArgument
         org.talend.core.model.process.INode
-        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
+        org.talend.core.model.process.ElementParameterParser
+        org.talend.designer.bigdata.di.components.thbase.THbaseConnection
         org.talend.designer.bigdata.di.components.thbase.THbaseDeleteRows
+        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
         "
 %>
     <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
-    final THbaseDeleteRows thbaseDeleteRows = new THbaseDeleteRows((CodeGeneratorArgument) argument);
+    final THbaseDeleteRows thbase = new THbaseDeleteRows((CodeGeneratorArgument) argument);
+    INode node = thbase.getNode();
+    String cid = thbase.getCid();
     THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
-    final String cid = thbaseDeleteRows.getCid();
-    log4jFileUtil.componentStartInfo(thbaseDeleteRows.getNode());
+    log4jFileUtil.componentStartInfo(node);
 
-    if(!thbaseDeleteRows.isUseExistingConnection()){
+    if(!thbase.isUseExistingConnection()){
 %>
-// create hbase configuration
-org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection immutableTHbaseConnection = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection.builder()
-.globalMap(globalMap)
-<%
-for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfiguration(thbaseDeleteRows).entrySet()) {
-%>
-  .putHBaseConfigurationOptions(<%=entry.getKey()%>,<%=entry.getValue()%>)
-<%
-}
-%>
-.existingConnectionName("<%=thbaseDeleteRows.getExistingConnection()%>")
-.isUseExistingConnection(<%=thbaseDeleteRows.isUseExistingConnection()%>)
-.build();
-immutableTHbaseConnection.createConfiguration();
-immutableTHbaseConnection.createConnection();
-org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = immutableTHbaseConnection.getConnection();
- <%=tHBaseConfiguration.getKeytab(thbaseDeleteRows)%>
+    <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CreateHBaseConnection.javajet"%>
 <% } else { %>
-org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = (org.apache.hadoop.hbase.client.Connection) globalMap.get("connection_<%=thbaseDeleteRows.getExistingConnection()%>");
+org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = (org.apache.hadoop.hbase.client.Connection) globalMap.get("connection_<%=thbase.getExistingConnection()%>");
 <% } %>
 
 resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);

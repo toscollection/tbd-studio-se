@@ -25,7 +25,7 @@ public interface DesignerDIComponent {
             return getParameter(((INode) codeGeneratorArgument().getArgument()), code, defaultValue);
         }
 
-        static boolean getBooleanParameter(final INode node, final String string){
+        static boolean getBooleanParameter(final INode node, final String string) throws ClassCastException{
             return Optional.ofNullable(ElementParameterParser.getBooleanValue(node, string))
                     .orElse(false);
         }
