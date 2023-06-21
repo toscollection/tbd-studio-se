@@ -51,13 +51,6 @@ imports="
 	    }
     }
 %>
-	org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
-	if(conn_<%=cid%> != null )
-	{
-		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
-		globalMap.remove("<%=conn%>");
-	}
-
 //new connection close
 	org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = (org.apache.hadoop.hbase.client.Connection)globalMap.get("<%=hbase_connection%>");
     	if(connection_<%=cid%> != null )
@@ -65,3 +58,10 @@ imports="
     		connection_<%=cid%>.close();
     		globalMap.remove("<%=hbase_connection%>");
     	}
+
+	org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
+	if(conn_<%=cid%> != null )
+	{
+		<%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
+		globalMap.remove("<%=conn%>");
+	}

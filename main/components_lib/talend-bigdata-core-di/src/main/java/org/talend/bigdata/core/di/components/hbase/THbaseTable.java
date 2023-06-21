@@ -1,6 +1,5 @@
 package org.talend.bigdata.core.di.components.hbase;
 
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
@@ -11,20 +10,17 @@ import java.util.*;
 @Value.Immutable
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PUBLIC)
 public interface THbaseTable {
-    Configuration configuration();
+    Connection connection();
     String namespaceName();
     String tableName();
-
     String tableAction();
     List<Map<String, String>> familyParameters();
-    boolean isHbase2x();
     CreateTableFunction createTableFunction();
 
     default void doTableAction() throws IOException {
         if ("".equals(tableName())) throw new RuntimeException("Table name can not be empty");
 
-        Connection connection = ConnectionFactory.createConnection(configuration());
-        Admin admin = connection.getAdmin();
+        Admin admin = connection().getAdmin();
 
         String tableNameString = tableName();
         if (!"".equals(namespaceName())) {
@@ -35,28 +31,26 @@ public interface THbaseTable {
         switch (tableAction()) {
             case "CREATE_IF_NOT_EXISTS":
                 if (!admin.tableExists(tableName)) {
-                    createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
+                    createTableFunction().doCreateTable(tableName, admin, getColumnFamily());
                 }
                 break;
             case "CREATE":
-                createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
+                createTableFunction().doCreateTable(tableName, admin,getColumnFamily());
                 break;
             case "DROP_CREATE":
                 deleteTable(tableName, admin);
-                createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
+                createTableFunction().doCreateTable(tableName, admin,getColumnFamily());
                 break;
             case "DROP_IF_EXISTS_AND_CREATE":
                 if (admin.tableExists(tableName)) {
                     deleteTable(tableName, admin);
                 }
-                createTableFunction().doCreateTable(tableName, admin, isHbase2x(),getColumnFamily());
+                createTableFunction().doCreateTable(tableName, admin,getColumnFamily());
                 break;
             case "DROP":
                 deleteTable(tableName, admin);
                 break;
         }
-        connection.close();
-
     }
 
     default HColumnDescriptor getColumnFamily() {
@@ -74,7 +68,7 @@ public interface THbaseTable {
     }
 
     interface CreateTableFunction {
-        void doCreateTable(TableName tableName, Admin admin, boolean isHbase2x, HColumnDescriptor columnFamily) throws IOException;
+        void doCreateTable(TableName tableName, Admin admin, HColumnDescriptor columnFamily) throws IOException;
     }
 
 }

@@ -6,4 +6,7 @@ public class THbaseConnection extends THbase{
     public THbaseConnection(CodeGeneratorArgument codeGeneratorArgument) {
         super(codeGeneratorArgument);
     }
+    public boolean isUseExistingConnection(){
+        return false;
+    }
 }
