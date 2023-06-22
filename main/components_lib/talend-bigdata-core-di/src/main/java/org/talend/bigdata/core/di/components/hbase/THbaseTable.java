@@ -3,6 +3,8 @@ package org.talend.bigdata.core.di.components.hbase;
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.*;
+import org.apache.hadoop.hbase.io.compress.Compression;
+import org.apache.hadoop.hbase.regionserver.BloomType;
 import org.immutables.value.Value;
 import java.io.IOException;
 import java.util.*;
@@ -11,6 +13,7 @@ import java.util.*;
 @Value.Style(visibility = Value.Style.ImplementationVisibility.PUBLIC)
 public interface THbaseTable {
     Connection connection();
+    boolean isSpecifyNamespace();
     String namespaceName();
     String tableName();
     String tableAction();
@@ -23,7 +26,7 @@ public interface THbaseTable {
         Admin admin = connection().getAdmin();
 
         String tableNameString = tableName();
-        if (!"".equals(namespaceName())) {
+        if (isSpecifyNamespace() && !"".equals(namespaceName())) {
             tableNameString = namespaceName() + ":" + tableName();
         }
         TableName tableName = TableName.valueOf(tableNameString);
@@ -58,6 +61,44 @@ public interface THbaseTable {
         for (Map<String, String> map : familyParameters()) {
             String family_name = map.get("FAMILY_NAME");
             family = new HColumnDescriptor(family_name);
+
+            String family_inmemory = map.get("FAMILY_INMEMORY");
+            String family_blockcacheenabled = map.get("FAMILY_BLOCKCACHEENABLED");
+            String family_bloomfiltertype = map.get("FAMILY_BLOOMFILTERTYPE");
+            String family_blocksize = map.get("FAMILY_BLOCKSIZE");
+            String family_compactioncompressiontype = map.get("FAMILY_COMPACTIONCOMPRESSIONTYPE");
+            String family_compressiontype = map.get("FAMILY_COMPRESSIONTYPE");
+            String family_maxversions = map.get("FAMILY_MAXVERSIONS");
+            String family_scope = map.get("FAMILY_SCOPE");
+            String family_timetolive = map.get("FAMILY_TIMETOLIVE");
+
+            if(family_inmemory!=null && !"".equals(family_inmemory)){
+                family.setInMemory(Boolean.parseBoolean(family_inmemory));
+            }
+            if(family_blockcacheenabled !=null && !"".equals(family_blockcacheenabled)){
+                family.setBlockCacheEnabled(Boolean.parseBoolean(family_blockcacheenabled));
+            }
+            if(family_bloomfiltertype!=null && !"".equals(family_bloomfiltertype)){
+                family.setBloomFilterType(BloomType.valueOf(family_bloomfiltertype));
+            }
+            if(family_blocksize!=null && !"".equals(family_blocksize)){
+                family.setBlocksize(Integer.parseInt(family_blocksize));
+            }
+            if(family_compactioncompressiontype!=null && !"".equals(family_compactioncompressiontype)){
+                family.setCompactionCompressionType(Compression.Algorithm.valueOf(family_compactioncompressiontype));
+            }
+            if(family_compressiontype!=null && !"".equals(family_compressiontype)){
+                family.setCompressionType(Compression.Algorithm.valueOf(family_compressiontype));
+            }
+            if(family_maxversions!=null && !"".equals(family_maxversions)){
+                family.setMaxVersions(Integer.parseInt(family_maxversions));
+            }
+            if(family_scope!=null && !"".equals(family_scope)){
+                family.setScope(Integer.parseInt(family_scope));
+            }
+            if(family_timetolive!=null && !"".equals(family_timetolive)){
+                family.setTimeToLive(Integer.parseInt(family_timetolive));
+            }
         }
         return family;
     }

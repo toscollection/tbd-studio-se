@@ -11,14 +11,15 @@ imports="
 %>
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
-    THbaseTable thbase = new THbaseTable((CodeGeneratorArgument) argument);
-    THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
-    String cid = thbase.getCid();
-    INode node = thbase.getNode();
+    final THbaseConnection thbase = new THbaseConnection((CodeGeneratorArgument) argument);
+    final THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
+    final String cid = thbase.getCid();
+    final INode node = thbase.getNode();
+    final THbaseTable thbaseTable = new THbaseTable((CodeGeneratorArgument) argument);
 
     log4jFileUtil.componentStartInfo(thbase.getNode());
 
-   if(!thbase.isUseExistingConnection()){
+   if(!thbaseTable.isUseExistingConnection()){
  %>
      <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CreateHBaseConnection.javajet"%>
  <% } else { %>
@@ -33,8 +34,8 @@ int nb_line_<%=cid%> = 0;
 java.util.List<java.util.Map<String, String>> familyParameters = new java.util.ArrayList();
 java.util.Map map = new java.util.HashMap();
 <%
-for (Map map: thbase.getFamilyParameters()){
-    for (Map.Entry<String, Integer> entry : (Iterable<Map.Entry<String, Integer>>) map.entrySet()) {
+for (Map map: thbaseTable.getFamilyParameters()){
+    for (Map.Entry<String, String> entry : (Iterable<Map.Entry<String, String>>) map.entrySet()) {
 %>
         map.put("<%=entry.getKey()%>",<%=entry.getValue()%>);
 <%
@@ -47,20 +48,21 @@ for (Map map: thbase.getFamilyParameters()){
 org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .builder()
 .connection(connection_<%=cid%>)
-.namespaceName(<%=thbase.getNamespace()%>)
-.tableName(<%=thbase.getTableName()%>)
-.tableAction("<%=thbase.getTableAction()%>")
+.isSpecifyNamespace(<%=thbaseTable.isSpecifyNamespace()%>)
+.namespaceName(<%=thbaseTable.getNamespace()%>)
+.tableName(<%=thbaseTable.getTableName()%>)
+.tableAction("<%=thbaseTable.getTableAction()%>")
 .addAllFamilyParameters(familyParameters)
                     .createTableFunction(((tableName, admin, family)->{
-                        <% if (thbase.isHBase2x()){ %>
+                        <% if (thbaseTable.isHBase2x()){ %>
                             org.apache.hadoop.hbase.client.TableDescriptorBuilder tableDesBuilder =
                                        org.apache.hadoop.hbase.client.TableDescriptorBuilder.newBuilder(tableName);
                             tableDesBuilder.setColumnFamily(family);
                             org.apache.hadoop.hbase.client.TableDescriptor tableDes = tableDesBuilder.build();
                             admin.createTable(tableDes);
                        <% } else { %>
-                            org.apache.hadoop.hbase.client.HTableDescriptor tableDes =
-                                        new org.apache.hadoop.hbase.client.HTableDescriptor(tableName);
+                            org.apache.hadoop.hbase.HTableDescriptor tableDes =
+                                        new org.apache.hadoop.hbase.HTableDescriptor(tableName);
                             tableDes.addFamily(family);
                             admin.createTable(tableDes);
                        <% } %>
@@ -71,7 +73,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 
 // close hbase connection
 <%
-if(!thbase.isUseExistingConnection()){
+if(!thbaseTable.isUseExistingConnection()){
 %>
     connection_<%=cid%>.close();
     resourceMap.put("finish_<%=cid%>", true);

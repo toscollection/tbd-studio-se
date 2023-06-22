@@ -64,10 +64,8 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         return BigDataDIComponent.getParameter(node,"__ZOOKEEPER_CLIENT_PORT__","");
     }
     public boolean isHBase2x(){
-        if (isSparkDistrib()){
-            if (getHbaseDistrib() != null) {
-                return getHbaseDistrib().doSupportHBase2x();
-            }
+        if (getHbaseDistrib() != null) {
+            return getHbaseDistrib().doSupportHBase2x();
         }
         return BigDataDIComponent.getParameter(node, "__HBASE_API_VERSION__","").equals("HBASE_2");
     }
@@ -143,8 +141,11 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         }
         return sb.toString();
     }
+    public boolean isSpecifyNamespace(){
+        return BigDataDIComponent.getBooleanParameter(node,"__SPECIFY_NAMESPACE__");
+    }
     public String getNamespace(){
-        return BigDataDIComponent.getParameter(node, "__NAMESPACE__", "");
+            return BigDataDIComponent.getParameter(node, "__NAMESPACE__", "");
     }
     public String getTableName(){
         return BigDataDIComponent.getParameter(node, "__TABLE__", "");
