@@ -4,7 +4,6 @@ imports="
         org.talend.designer.codegen.config.CodeGeneratorArgument
         org.talend.core.model.process.ElementParameterParser
         org.talend.core.model.process.INode
-        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
         org.talend.designer.bigdata.di.components.thbase.THbaseConnection
         "
 %>
@@ -12,7 +11,6 @@ imports="
   <%
       final THbaseConnection thbase = new THbaseConnection((CodeGeneratorArgument) argument);
       String cid = thbase.getCid();
-      THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
       INode node = thbase.getNode();
       log4jFileUtil.componentStartInfo(thbase.getNode());
   %>

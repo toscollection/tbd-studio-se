@@ -3,9 +3,9 @@ package org.talend.designer.bigdata.di.components.thbase;
 import java.util.HashMap;
 import java.util.Map;
 
-public class THBaseConfiguration {
+public class THBaseConfiguration<T extends THbase> {
 
-    public Map<String, String> getConnectionConfiguration(THbase tHbase) {
+    public Map<String, String> getConnectionConfiguration(T tHbase) {
 
         Map<String, String> hbaseConf = new HashMap<>();
         if (tHbase.isUseExistingConnection()) return hbaseConf;
@@ -25,13 +25,16 @@ public class THBaseConfiguration {
                 hbaseConf.put("\"hbase.security.authentication\"", "\"kerberos\"");
 
             }
+            if(tHbase.getHbaseDistrib().doSupportMapRDB() && tHbase.isSetTableNsMapping()){
+                hbaseConf.put("hbase.table.namespace.mappings", tHbase.getTableNsMapping());
+            }
         }
         hbaseConf.putAll(tHbase.getHbaseParameters());
 
         return hbaseConf;
     }
 
-    public String getKeytab(THbase tHbase) {
+    public String getKeytab(T tHbase) {
         StringBuilder stringBuilder = new StringBuilder("");
         if (tHbase.getHbaseDistrib() != null) {
             if(tHbase.getHbaseDistrib().doSupportKerberos() && tHbase.useKrb()){

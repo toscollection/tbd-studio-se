@@ -143,7 +143,7 @@
                    REQUIRED="true" SHOW_IF="(TABLE_ACTION != 'DROP')">
             <ITEMS>
                 <ITEM NAME="FAMILY_NAME" FIELD="TEXT" />
-                <!--
+                <!-- check this list in tHbaseOutput component and TBD-14995
                 <ITEM NAME="FAMILY_INMEMORY" FIELD="CLOSED_LIST">
                     <ITEMS DEFAULT="NULL">
                         <ITEM NAME="NULL" VALUE="" />

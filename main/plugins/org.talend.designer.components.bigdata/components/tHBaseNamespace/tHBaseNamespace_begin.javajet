@@ -6,7 +6,6 @@ imports="
         org.talend.core.model.process.ElementParameterParser
         org.talend.designer.bigdata.di.components.thbase.THbaseConnection
         org.talend.designer.bigdata.di.components.thbase.THbaseNamespace
-        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
         "
 %>
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
@@ -15,7 +14,6 @@ imports="
     final String cid = thbase.getCid();
     final INode node = thbase.getNode();
     final THbaseNamespace thbaseNamespace = new THbaseNamespace((CodeGeneratorArgument) argument);
-    final THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
 
 
     log4jFileUtil.componentStartInfo(thbase.getNode());

@@ -13,7 +13,6 @@ import java.util.Map;
 
 public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         DesignerDIComponent.WithDieOnErrorOption {
-
     protected CodeGeneratorArgument codeGeneratorArgument;
     protected INode node;
     protected INode connNode;
@@ -39,8 +38,8 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         return this.node;
     }
     @Override
-    public boolean getDieOnError() {
-        return WithDieOnErrorOption.super.getDieOnError();
+    public boolean isDieOnError() {
+        return WithDieOnErrorOption.super.isDieOnError();
     }
 
     public HBaseComponent getHbaseDistrib() {
@@ -177,5 +176,13 @@ public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
     }
     public String getMapRHadoopLogin(){
         return BigDataDIComponent.getParameter(node,"__HADOOP_LOGIN__","");
+    }
+    abstract public Map<String, String> getConnectionConfiguration();
+    abstract String getKeytab();
+    public boolean isSetTableNsMapping(){
+        return false;
+    }
+    public String getTableNsMapping(){
+        return "";
     }
 }

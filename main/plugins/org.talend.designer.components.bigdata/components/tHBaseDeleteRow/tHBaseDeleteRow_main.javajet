@@ -21,7 +21,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseDeleteRows
 .namespaceName(<%=thbaseDeleteRows.getNamespace()%>)
 .tableName(<%=thbaseDeleteRows.getTableName()%>)
 .rowKeys(<%=thbaseDeleteRows.getDeleteRows()%>)
-.dieOnError(<%=thbaseDeleteRows.getDieOnError()%>)
+.dieOnError(<%=thbaseDeleteRows.isDieOnError()%>)
 .isLog4jEnabled(<%=thbaseDeleteRows.isLog4jEnabled()%>)
 .cid("<%=cid%>")
 .build()

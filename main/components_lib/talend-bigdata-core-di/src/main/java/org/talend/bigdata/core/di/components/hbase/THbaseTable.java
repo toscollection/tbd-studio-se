@@ -104,7 +104,9 @@ public interface THbaseTable {
     }
 
      default void deleteTable(TableName tableName, Admin admin) throws IOException {
-        admin.disableTable(tableName);
+         if(!admin.isTableDisabled(tableName)){
+             admin.disableTable(tableName);
+         }
         admin.deleteTable(tableName);
     }
 

@@ -8,10 +8,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class THbaseTable extends THbase {
+    private final THBaseConfiguration<THbaseTable> thBaseConfiguration;
+
     public THbaseTable(CodeGeneratorArgument codeGeneratorArgument) {
         super(codeGeneratorArgument);
+        this.thBaseConfiguration = new THBaseConfiguration<>();
     }
-
+    public Map<String, String> getConnectionConfiguration() {
+        return this.thBaseConfiguration.getConnectionConfiguration(this);
+    }
+    public String getKeytab(){
+        return thBaseConfiguration.getKeytab(this);
+    }
     public String getTableAction(){
         return BigDataDIComponent.getParameter(node, "__TABLE_ACTION__", "NONE");
     }
@@ -25,11 +33,23 @@ public class THbaseTable extends THbase {
     }
 
     private String updateString(String string){
-        if (string.isEmpty()) {
-            return "";
-        } else if ((string.charAt(0) != '\"') && (string.charAt(string.length()-1) == '\"')) {
-            return "\""+string+"\"";
+        if ((string.charAt(0) == '\"') && (string.charAt(string.length()-1) == '\"')) {
+            return string.substring(1,string.length()-1);
         }
         return string;
+    }
+
+    public String getTableNameWithNamespace(){
+        String tableNameString = trimString(getTableName());
+        if (isSpecifyNamespace() && !"".equals(getNamespace())) {
+            tableNameString = trimString(getNamespace()) + ":" + tableNameString;
+        }
+        return "\""+tableNameString+"\"";
+    }
+    private String trimString(String inputString){
+        if ( inputString.charAt(0) == '\"' &&  inputString.charAt(inputString.length()-1) == '\"'){
+            return inputString.substring(1,inputString.length()-1);
+        }
+        return inputString;
     }
 }

@@ -70,3 +70,26 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .build()
 .doTableAction();
 
+<%
+if (!thbaseOutput.isHBase2x()) {
+%>
+    org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
+    table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(
+                    org.apache.hadoop.hbase.TableName.valueOf(<%=thbaseOutput.getTableNameWithNamespace()%>),
+                    connection_<%=cid%>);
+<%
+} else {
+%>
+    org.apache.hadoop.hbase.client.Table table_<%=cid%> = connection_<%=cid%>.getTable(org.apache.hadoop.hbase.TableName.valueOf(<%=thbaseOutput.getTableNameWithNamespace()%>));
+<%
+}
+%>
+byte[] temp_<%=cid%> = null;
+
+<%
+if (thbaseOutput.isUseBatchMode()) {
+    %>
+    java.util.ArrayList<org.apache.hadoop.hbase.client.Put> batchPuts_<%=cid%> = new java.util.ArrayList<org.apache.hadoop.hbase.client.Put>();
+    <%
+}
+%>

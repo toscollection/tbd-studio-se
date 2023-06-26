@@ -58,7 +58,7 @@
 org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection immutableTHbaseConnection = org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseConnection.builder()
 .globalMap(globalMap)
 <%
-for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfiguration(thbase).entrySet()) {
+for (Map.Entry<String, String> entry : thbase.getConnectionConfiguration().entrySet()) {
 %>
   .putHBaseConfigurationOptions(<%=entry.getKey()%>,<%=entry.getValue()%>)
 <%
@@ -79,10 +79,8 @@ for (Map.Entry<String, String> entry : tHBaseConfiguration.getConnectionConfigur
                 <%
             }
 %>
-	 <%=tHBaseConfiguration.getKeytab(thbase)%>
-
+	 <%=thbase.getKeytab()%>
 <%
-
             if ((thbase.isCustom() || thbase.getHbaseDistrib().doSupportMapRTicket()) && thbase.isUseMapRTicket()) {
                 %>
                 com.mapr.login.client.MapRLoginHttpsClient maprLogin_<%=cid%> = new com.mapr.login.client.MapRLoginHttpsClient();
