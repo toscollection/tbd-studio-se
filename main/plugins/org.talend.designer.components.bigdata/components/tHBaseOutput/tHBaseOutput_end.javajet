@@ -1,66 +1,27 @@
 <%@ jet
         imports="
-        org.talend.core.model.process.INode
         org.talend.designer.codegen.config.CodeGeneratorArgument
-        org.talend.core.model.process.ElementParameterParser
+        org.talend.core.model.process.INode
+        org.talend.designer.bigdata.di.components.thbase.THbaseOutput
         "
 %>
-
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
+<%
+    final THbaseOutput thbaseOutput = new THbaseOutput((CodeGeneratorArgument) argument);
+    String cid = thbaseOutput.getCid();
+%>
+
+// close hbase connection and configuration
+<%
+if(!thbaseOutput.isUseExistingConnection()){
+%>
+    connection_<%=cid%>.close();
+    resourceMap.put("finish_<%=cid%>", true);
+<%
+}
+%>
+globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
 
 <%
-CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
-INode node = (INode)codeGenArgument.getArgument();
-String cid = node.getUniqueName();
-String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
-
-boolean useBatchMode = ElementParameterParser.getBooleanValue(node, "__USE_BATCH_MODE__");
+log4jFileUtil.writeDataFinishInfo(thbaseOutput.getNode());
 %>
-        if(table_<%=cid%>!=null){
-            <%
-            if (useBatchMode) {
-                %>
-                if (batchPuts_<%=cid%>.size() > 0) {
-                    table_<%=cid%>.put(batchPuts_<%=cid%>);
-                }
-                <%
-            }
-            %>
-            table_<%=cid%>.close();
-        }
-    <%
-    //use local connection
-    if(!"true".equals(useExistingConn)){
-        String distribution = ElementParameterParser.getValue(node,"__DISTRIBUTION__");
-        String hbaseVersion = ElementParameterParser.getValue(node,"__HBASE_VERSION__");
-        boolean isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
-        boolean isHBase2x = false;
-        try {
-            isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
-        } finally {
-            //NPE if not spark
-        }
-        org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
-        try {
-            hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
-            boolean isSparkDistrib = "SPARK".equals(distribution);
-            isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
-        } catch (java.lang.Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-
-        boolean isCustom = hbaseDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
-    %>
-        if(conn_<%=cid%>!=null){
-            <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CloseHBaseConnection.javajet"%>
-        }
-        resourceMap.put("finish_<%=cid%>", true);
-    <%
-    }
-    %>
-    globalMap.put("<%=cid %>_NB_LINE",nb_line_<%=cid%>);
-
-    <%
-    log4jFileUtil.writeDataFinishInfo(node);
-    %>
