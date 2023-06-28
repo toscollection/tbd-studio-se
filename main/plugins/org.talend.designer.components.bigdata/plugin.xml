@@ -363,8 +363,19 @@
             <library id="slf4j-api-1.7.29.jar"/>
             <library id="slf4j-log4j12-1.7.29.jar"/>
         </libraryNeededGroup>
-        
-        
+
+       <libraryNeeded
+               context="org.talend.designer.components.bigdata"
+               id="talend-bigdata-core-di-1.2.0"
+               name="talend-bigdata-core-di-1.2.0"
+               mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.2.0"/>
+
+       <libraryNeededGroup
+               description="Talend-bigdata-core-di group"
+               id="TALEND_BIGDATA_CORE_DI_LIB"
+               name="TALEND_BIGDATA_CORE_DI_LIB">
+       <library id="talend-bigdata-core-di-1.2.0"/>
+       </libraryNeededGroup>
       
       <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-2.1.0.jar" name="hbase-client-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/2.1.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-2.1.0.jar" name="hbase-common-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/2.1.0"/>
