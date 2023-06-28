@@ -293,6 +293,15 @@
             "description" : ""
         },
         {
+            "id" : "talend-bigdata-core-di",
+            "type" : "BASE",
+            "context" : "{properties.context}",
+            "jarName" : "talend-bigdata-core-di-1.2.0.jar",
+            "mvnUri" : "mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.2.0/jar",
+            "useStudioRepository" : "true",
+            "description" : ""
+        },
+        {
             "id" : "hbase-server",
             "type" : "BASE",
             "context" : "{properties.context}",
@@ -979,6 +988,13 @@
         }
     ],
     "moduleGroups": [
+        {
+            "id" : "TALEND_BIGDATA_CORE_DI_LIB",
+            "description" : "",
+            "modules": [
+                "talend-bigdata-core-di"
+            ]
+        },
         {
             "id" : "HBASE-LIB-DYNAMIC",
             "description" : "",

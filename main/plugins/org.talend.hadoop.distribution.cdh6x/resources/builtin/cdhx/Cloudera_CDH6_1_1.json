@@ -588,7 +588,19 @@
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_HBASE_LIB_DYNAMIC",
       "tagName" : "libraryNeededGroup",
       "templateId" : "HBASE-LIB-DYNAMIC"
-    }, {
+    },{
+        "childNodes": [
+          {
+            "childNodes": [],
+            "id": ":DYNAMIC_Cloudera_CDH6_1_1_talend_bigdata_core_di_1_2_0_jar",
+            "tagName": "library"
+          }
+        ],
+        "description": "",
+        "id": "DYNAMIC_Cloudera_CDH6_1_1_TALEND_BIGDATA_CORE_DI_LIB",
+        "tagName": "libraryNeededGroup",
+        "templateId": "TALEND_BIGDATA_CORE_DI_LIB"
+      },{
       "childNodes" : [ {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_accessors_smart_1_2_jar",
@@ -12402,6 +12414,14 @@
       "name" : "hbase-client-2.1.0-cdh6.1.1-tests.jar",
       "tagName" : "libraryNeeded"
     }, {
+      "childNodes": [],
+      "context": "plugin:org.talend.hadoop.distribution.cdh6x",
+      "excludeDependencies": "true",
+      "id": "DYNAMIC_Cloudera_CDH6_1_1_talend_bigdata_core_di_1_2_0_jar",
+      "mvn_uri": "mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.2.0/jar",
+      "name": "talend-bigdata-core-di-1.2.0.jar",
+      "tagName": "libraryNeeded"
+    },{
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",

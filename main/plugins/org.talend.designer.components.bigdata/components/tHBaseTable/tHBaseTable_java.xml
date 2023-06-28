@@ -216,9 +216,7 @@
                     MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"
                     REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')"/>
 
-<!--            <IMPORT NAME="talend-bigdata-core-di-1.2.0" MODULE="talend-bigdata-core-di-1.2.0.jar"-->
-<!--                    MVN="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.2.0"-->
-<!--                    REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')" />-->
+            <IMPORT MODULE_GROUP="TALEND_BIGDATA_CORE_DI_LIB" REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')"/>
 
             <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
                     MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
