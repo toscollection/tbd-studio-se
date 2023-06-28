@@ -23,4 +23,9 @@ public class THbaseUtils {
         }
         return string;
     }
+    public static String AddQuotesIfNotContainContext(String string){
+        if(string.isEmpty()) return "\"\"";
+        if(string.contains("context")) return string;
+        return "\""+string+"\"";
+    }
 }

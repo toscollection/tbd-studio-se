@@ -36,7 +36,7 @@ java.util.Map map = new java.util.HashMap();
 for (Map map: thbaseOutput.getFamilyParameters()){
     for (Map.Entry<String, String> entry : (Iterable<Map.Entry<String, String>>) map.entrySet()) {
 %>
-        map.put("<%=entry.getKey()%>","<%=entry.getValue()%>");
+        map.put("<%=entry.getKey()%>",<%=entry.getValue()%>);
 <%
      } %>
      familyParameters.add(map);

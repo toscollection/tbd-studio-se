@@ -75,7 +75,7 @@ public class THbaseTable implements THbase {
         return BigDataDIComponent.tableParameter(node, "__FAMILY_PARAMETERS__", Collections.emptyList())
                 .stream()
                 .map(m -> m.entrySet().stream()
-                        .collect(Collectors.toMap(Map.Entry::getKey, p -> THbaseUtils.trimQuotes(p.getValue()))))
+                        .collect(Collectors.toMap(Map.Entry::getKey, p -> THbaseUtils.AddQuotesIfNotContainContext(p.getValue()))))
                 .collect(Collectors.toList());
     }
 }
