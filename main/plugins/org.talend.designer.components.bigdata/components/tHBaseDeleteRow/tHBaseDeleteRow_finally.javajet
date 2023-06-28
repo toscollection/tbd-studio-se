@@ -9,12 +9,12 @@ imports="
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     final THbaseDeleteRows thbaseDeleteRows = new THbaseDeleteRows((CodeGeneratorArgument) argument);
-    String cid = thbaseDeleteRows.getCid();
+    final String cid = thbaseDeleteRows.getCid();
 %>
 
 // close hbase connection and configuration
 <%
-if(!thbaseDeleteRows.isUseExistingConnection()){
+if(!thbaseDeleteRows.useExistingConnection()){
 %>
     if(resourceMap.get("finish_<%=cid%>") == null){
     org.apache.hadoop.hbase.client.Connection connection = (org.apache.hadoop.hbase.client.Connection)resourceMap.get("connection_<%=cid%>");

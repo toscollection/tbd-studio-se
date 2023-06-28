@@ -13,7 +13,7 @@
 
 // close hbase connection and configuration
 <%
-if(!thbaseOutput.isUseExistingConnection()){
+if(!thbaseOutput.useExistingConnection()){
 %>
     if(resourceMap.get("finish_<%=cid%>") == null){
         org.apache.hadoop.hbase.client.Connection connection =

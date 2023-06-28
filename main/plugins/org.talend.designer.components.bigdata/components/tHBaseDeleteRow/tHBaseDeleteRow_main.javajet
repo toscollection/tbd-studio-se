@@ -10,8 +10,7 @@ imports="
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
     final THbaseDeleteRows thbaseDeleteRows = new THbaseDeleteRows((CodeGeneratorArgument) argument);
-    THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
-    String cid = thbaseDeleteRows.getCid();
+    final String cid = thbaseDeleteRows.getCid();
 %>
 
 // table action
@@ -21,7 +20,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseDeleteRows
 .namespaceName(<%=thbaseDeleteRows.getNamespace()%>)
 .tableName(<%=thbaseDeleteRows.getTableName()%>)
 .rowKeys(<%=thbaseDeleteRows.getDeleteRows()%>)
-.dieOnError(<%=thbaseDeleteRows.isDieOnError()%>)
+.dieOnError(<%=thbaseDeleteRows.dieOnError()%>)
 .isLog4jEnabled(<%=thbaseDeleteRows.isLog4jEnabled()%>)
 .cid("<%=cid%>")
 .build()

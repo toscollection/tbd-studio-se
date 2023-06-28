@@ -4,22 +4,20 @@ imports="
         org.talend.designer.codegen.config.CodeGeneratorArgument
         org.talend.core.model.process.INode
         org.talend.core.model.process.ElementParameterParser
-        org.talend.designer.bigdata.di.components.thbase.THbaseConnection
-        org.talend.designer.bigdata.di.components.thbase.THBaseConfiguration
+        org.talend.designer.bigdata.di.components.thbase.THbase
         org.talend.designer.bigdata.di.components.thbase.THbaseOutput
         "
 %>
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
-    final THbaseConnection thbase = new THbaseConnection((CodeGeneratorArgument) argument);
-    final THBaseConfiguration tHBaseConfiguration = new THBaseConfiguration();
+    final THbaseOutput thbaseOutput = new THbaseOutput((CodeGeneratorArgument) argument);
+    final THbase thbase = thbaseOutput;
     final String cid = thbase.getCid();
     final INode node = thbase.getNode();
-    final THbaseOutput thbaseOutput = new THbaseOutput((CodeGeneratorArgument) argument);
 
     log4jFileUtil.componentStartInfo(thbase.getNode());
 
-   if(!thbaseOutput.isUseExistingConnection()){
+   if(!thbaseOutput.useExistingConnection()){
  %>
      <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CreateHBaseConnection.javajet"%>
  <% } else { %>
@@ -30,6 +28,7 @@ imports="
 
 int nb_line_<%=cid%> = 0;
 
+<% if (!thbaseOutput.isSpecifyNamespace()) { %>
 //set familyParametersList
 java.util.List<java.util.Map<String, String>> familyParameters = new java.util.ArrayList();
 java.util.Map map = new java.util.HashMap();
@@ -69,18 +68,25 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 }))
 .build()
 .doTableAction();
+<% } %>
+
+
+String tableNameString = <%=thbaseOutput.getTableName()%>;
+if (<%=thbaseOutput.isSpecifyNamespace()%> && !"".equals(<%=thbaseOutput.getNamespace()%>)) {
+    tableNameString = <%=thbaseOutput.getNamespace()%> + ":" + tableNameString;
+}
 
 <%
 if (!thbaseOutput.isHBase2x()) {
 %>
     org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
     table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(
-                    org.apache.hadoop.hbase.TableName.valueOf(<%=thbaseOutput.getTableNameWithNamespace()%>),
+                    org.apache.hadoop.hbase.TableName.valueOf(tableNameString),
                     connection_<%=cid%>);
 <%
 } else {
 %>
-    org.apache.hadoop.hbase.client.Table table_<%=cid%> = connection_<%=cid%>.getTable(org.apache.hadoop.hbase.TableName.valueOf(<%=thbaseOutput.getTableNameWithNamespace()%>));
+    org.apache.hadoop.hbase.client.Table table_<%=cid%> = connection_<%=cid%>.getTable(org.apache.hadoop.hbase.TableName.valueOf(tableNameString));
 <%
 }
 %>

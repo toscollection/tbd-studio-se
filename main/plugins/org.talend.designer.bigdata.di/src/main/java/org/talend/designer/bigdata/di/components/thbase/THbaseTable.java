@@ -1,56 +1,81 @@
 package org.talend.designer.bigdata.di.components.thbase;
 
-import org.talend.core.model.process.ElementParameterParser;
+import org.talend.core.model.process.INode;
 import org.talend.designer.codegen.config.CodeGeneratorArgument;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class THbaseTable extends THbase {
-    private final THBaseConfiguration<THbaseTable> thBaseConfiguration;
+public class THbaseTable implements THbase {
+    private final CodeGeneratorArgument codeGeneratorArgument;
+    private final INode node;
+    private final INode connNode;
+    private final THBaseConfiguration tHBaseConfiguration;
+
 
     public THbaseTable(CodeGeneratorArgument codeGeneratorArgument) {
-        super(codeGeneratorArgument);
-        this.thBaseConfiguration = new THBaseConfiguration<>();
+        this.codeGeneratorArgument = codeGeneratorArgument;
+        this.node = (INode) codeGeneratorArgument().getArgument();
+        this.connNode = setTargetNode();
+        this.tHBaseConfiguration = new THBaseConfiguration();
     }
+
+    @Override
+    public CodeGeneratorArgument codeGeneratorArgument() {
+        return this.codeGeneratorArgument;
+    }
+
+    @Override
+    public INode node() {
+        return this.node;
+    }
+
+    @Override
+    public INode connNode() {
+        return this.connNode;
+    }
+
+    @Override
     public Map<String, String> getConnectionConfiguration() {
-        return this.thBaseConfiguration.getConnectionConfiguration(this);
+        return tHBaseConfiguration.getConnectionConfiguration(this);
     }
-    public String getKeytab(){
-        return thBaseConfiguration.getKeytab(this);
+
+    @Override
+    public String getKeytab() {
+        return tHBaseConfiguration.getKeytab(this);
     }
-    public String getTableAction(){
+
+    @Override
+    public boolean isConfigureFromClassPath() {
+        return false;
+    }
+
+    @Override
+    public boolean isSetTableNsMapping() {
+        return false;
+    }
+
+    @Override
+    public String getTableNsMapping() {
+        return null;
+    }
+
+    @Override
+    public INode getNode() {
+        return node;
+    }
+
+    public String getTableAction() {
         return BigDataDIComponent.getParameter(node, "__TABLE_ACTION__", "NONE");
     }
 
-    public List<Map<String,String>> getFamilyParameters(){
-        return ElementParameterParser.getTableValue(node,"__FAMILY_PARAMETERS__")
+    public List<Map<String, String>> getFamilyParameters() {
+        return BigDataDIComponent.tableParameter(node, "__FAMILY_PARAMETERS__", Collections.emptyList())
                 .stream()
                 .map(m -> m.entrySet().stream()
-                        .collect(Collectors.toMap(Map.Entry::getKey, p -> updateString(p.getValue()))))
+                        .collect(Collectors.toMap(Map.Entry::getKey, p -> THbaseUtils.trimQuotes(p.getValue()))))
                 .collect(Collectors.toList());
-    }
-
-    private String updateString(String string){
-        if (string.length() < 2) return string;
-        if ((string.charAt(0) == '\"') && (string.charAt(string.length()-1) == '\"')) {
-            return string.substring(1,string.length()-1);
-        }
-        return string;
-    }
-
-    public String getTableNameWithNamespace(){
-        String tableNameString = trimString(getTableName());
-        if (isSpecifyNamespace() && !"".equals(getNamespace())) {
-            tableNameString = trimString(getNamespace()) + ":" + tableNameString;
-        }
-        return "\""+tableNameString+"\"";
-    }
-    private String trimString(String inputString){
-        if ( inputString.charAt(0) == '\"' &&  inputString.charAt(inputString.length()-1) == '\"'){
-            return inputString.substring(1,inputString.length()-1);
-        }
-        return inputString;
     }
 }

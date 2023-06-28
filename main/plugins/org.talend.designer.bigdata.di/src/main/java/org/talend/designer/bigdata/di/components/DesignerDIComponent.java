@@ -5,6 +5,8 @@ import org.talend.core.model.process.ElementParameterParser;
 import org.talend.core.model.process.INode;
 import org.talend.designer.codegen.config.CodeGeneratorArgument;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface DesignerDIComponent {
@@ -23,9 +25,15 @@ public interface DesignerDIComponent {
         default <T> T getParameter(final String code, @NotNull T defaultValue) throws ClassCastException {
             return getParameter(((INode) codeGeneratorArgument().getArgument()), code, defaultValue);
         }
+        @NotNull
         static boolean getBooleanParameter(final INode node, final String string) throws ClassCastException{
             return Optional.ofNullable(ElementParameterParser.getBooleanValue(node, string))
                     .orElse(false);
+        }
+        @NotNull
+        static List<Map<String, String>> tableParameter(final INode node, final String code, @NotNull
+        List<Map<String, String>> defaultValue) throws ClassCastException {
+            return Optional.ofNullable(ElementParameterParser.getTableValue(node, code)).orElse(defaultValue);
         }
         @Override
         default String name() {
@@ -43,7 +51,7 @@ public interface DesignerDIComponent {
     }
 
     interface WithDieOnErrorOption extends BigDataDIComponent {
-        default boolean isDieOnError() {
+        default boolean dieOnError() {
             return this.getParameter("__DIE_ON_ERROR__", false);
         }
     }

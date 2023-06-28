@@ -4,21 +4,20 @@ imports="
         org.talend.designer.codegen.config.CodeGeneratorArgument
         org.talend.core.model.process.INode
         org.talend.core.model.process.ElementParameterParser
-        org.talend.designer.bigdata.di.components.thbase.THbaseConnection
+        org.talend.designer.bigdata.di.components.thbase.THbase
         org.talend.designer.bigdata.di.components.thbase.THbaseNamespace
         "
 %>
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 <%
-    final THbaseConnection thbase = new THbaseConnection((CodeGeneratorArgument) argument);
+    final THbaseNamespace thbaseNamespace = new THbaseNamespace((CodeGeneratorArgument) argument);
+    final THbase thbase = thbaseNamespace;
     final String cid = thbase.getCid();
     final INode node = thbase.getNode();
-    final THbaseNamespace thbaseNamespace = new THbaseNamespace((CodeGeneratorArgument) argument);
-
 
     log4jFileUtil.componentStartInfo(thbase.getNode());
 
-    if(!thbaseNamespace.isUseExistingConnection()){
+    if(!thbaseNamespace.useExistingConnection()){
 %>
     <%@ include file="@{org.talend.designer.components.bigdata}/components/templates/HBase/CreateHBaseConnection.javajet"%>
 <% } else { %>
@@ -40,7 +39,7 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseNamespace
 
 // close hbase connection and configuration
 <%
-if(!thbaseNamespace.isUseExistingConnection()){
+if(!thbaseNamespace.useExistingConnection()){
 %>
     connection_<%=cid%>.close();
     resourceMap.put("finish_<%=cid%>", true);

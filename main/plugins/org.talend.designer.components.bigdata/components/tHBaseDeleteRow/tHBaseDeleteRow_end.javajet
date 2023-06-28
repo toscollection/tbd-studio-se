@@ -14,7 +14,7 @@ imports="
 
 // close hbase connection and configuration
 <%
-if(!thbaseDeleteRows.isUseExistingConnection()){
+if(!thbaseDeleteRows.useExistingConnection()){
 %>
     connection_<%=cid%>.close();
     resourceMap.put("finish_<%=cid%>", true);
