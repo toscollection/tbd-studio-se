@@ -62,6 +62,7 @@
 	boolean dieOnError = "true".equals(ElementParameterParser.getValue(node, "__DIE_ON_ERROR__"));
 %>
 	<%@ include file="../templates/Sqoop/GetConfig.javajet"%>
+	configuration_<%=cid%>.set("mapreduce.job.user.classpath.first","true");
 	
 <%
 	String sqoopPackageName = ((org.talend.hadoop.distribution.AbstractDistribution) sqoopDistrib).getSqoopPackageName();
