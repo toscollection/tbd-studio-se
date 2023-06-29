@@ -10,12 +10,14 @@
     <artifactId>org.talend.designer.bigdata.di</artifactId>
     <packaging>eclipse-plugin</packaging>
     <properties>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
         <immutables.version>2.9.2</immutables.version>
         <jetbrains.version>17.0.0</jetbrains.version>
     </properties>
-
+    <!-- ************************************************** -->
+    <!--Project dependencies -->
+    <!-- ************************************************** -->
     <dependencies>
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
         <!-- Plugin inner Libraries -->

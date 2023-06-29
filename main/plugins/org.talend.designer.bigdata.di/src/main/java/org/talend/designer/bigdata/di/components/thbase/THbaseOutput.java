@@ -1,17 +1,22 @@
 package org.talend.designer.bigdata.di.components.thbase;
 
+import org.immutables.value.Value;
+import org.talend.core.model.metadata.types.JavaType;
+import org.talend.core.model.metadata.types.JavaTypesManager;
 import org.talend.core.model.process.INode;
 import org.talend.designer.bigdata.di.components.DesignerDIComponent;
 import org.talend.designer.codegen.config.CodeGeneratorArgument;
 
 import java.util.*;
 
-public class THbaseOutput implements THbase, DesignerDIComponent.WithDieOnErrorOption {
+public class THbaseOutput implements THbase, DesignerDIComponent.WithDieOnErrorOption,
+                                            DesignerDIComponent.WithOneInput {
     private final CodeGeneratorArgument codeGeneratorArgument;
     private final INode node;
     private final INode connNode;
     private final THBaseConfiguration tHBaseConfiguration;
     private final THbaseTable tHbaseTable;
+    private final JavaVariable javaVariable;
 
     public THbaseOutput(CodeGeneratorArgument codeGeneratorArgument) {
         this.codeGeneratorArgument = codeGeneratorArgument;
@@ -19,6 +24,7 @@ public class THbaseOutput implements THbase, DesignerDIComponent.WithDieOnErrorO
         this.connNode = setTargetNode();
         tHbaseTable = new THbaseTable(codeGeneratorArgument);
         tHBaseConfiguration = new THBaseConfiguration();
+        javaVariable = inputVariable();
     }
 
     @Override
