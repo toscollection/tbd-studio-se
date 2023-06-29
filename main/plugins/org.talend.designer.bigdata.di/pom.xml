@@ -5,7 +5,7 @@
         <groupId>org.talend.studio</groupId>
         <artifactId>tbd-studio-se</artifactId>
         <version>8.0.1-SNAPSHOT</version>
-        <relativePath>../../../</relativePath>
+        <relativePath>../../../pom.xml</relativePath>
     </parent>
     <artifactId>org.talend.designer.bigdata.di</artifactId>
     <packaging>eclipse-plugin</packaging>
@@ -15,6 +15,7 @@
         <immutables.version>2.9.2</immutables.version>
         <jetbrains.version>17.0.0</jetbrains.version>
     </properties>
+
     <!-- ************************************************** -->
     <!--Project dependencies -->
     <!-- ************************************************** -->
@@ -168,23 +169,23 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.basedir}/lib</outputDirectory>
-                            <includeArtifactIds>annotations</includeArtifactIds>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-dependency-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>copy-dependencies</id>-->
+<!--                        <phase>generate-sources</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>copy-dependencies</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <outputDirectory>${project.basedir}/lib</outputDirectory>-->
+<!--                            <includeArtifactIds>annotations</includeArtifactIds>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
