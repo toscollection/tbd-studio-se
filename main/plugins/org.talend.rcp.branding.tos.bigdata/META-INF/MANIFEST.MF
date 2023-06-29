@@ -19,6 +19,8 @@ Require-Bundle: org.eclipse.ui.intro,
  org.talend.designer.components.bigdata,
  org.eclipse.ui.navigator,
  org.talend.repository.view.di,
- org.talend.core.runtime
+ org.talend.core.runtime,
+ org.eclipse.jface,
+ org.talend.commons.runtime
 Eclipse-LazyStart: true
 Eclipse-BundleShape: dir

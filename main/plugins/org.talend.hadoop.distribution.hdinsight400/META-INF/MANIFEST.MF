@@ -6,5 +6,6 @@ Bundle-Version: 8.8.8.qualifier
 Bundle-Vendor: .Talend SA.
 Service-Component: OSGI-INF/hdinsight400.xml
 Require-Bundle: org.talend.core.runtime,
- org.talend.hadoop.distribution
+ org.talend.hadoop.distribution,
+ org.talend.studio.studio-utils
 Bundle-ActivationPolicy: lazy

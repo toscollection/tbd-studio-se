@@ -14,6 +14,8 @@ Require-Bundle: org.eclipse.ui,
  org.talend.common.ui.runtime,
  org.talend.core.runtime,
  org.talend.libraries.apache,
- org.talend.repository.metadata
+ org.talend.repository.metadata,
+ org.talend.cwm.mip,
+ org.talend.commons.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .

@@ -14,7 +14,12 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jface,
  org.talend.model,
  org.eclipse.ui.workbench,
- org.eclipse.m2e.maven.runtime
+ org.eclipse.m2e.maven.runtime,
+ org.talend.commons.runtime,
+ org.talend.studio.studio-utils,
+ org.apache.commons.lang,
+ org.apache.commons.lang3,
+ org.apache.log4j
 Export-Package: org.talend.hadoop.distribution,
  org.talend.hadoop.distribution.cdh,
  org.talend.hadoop.distribution.component,

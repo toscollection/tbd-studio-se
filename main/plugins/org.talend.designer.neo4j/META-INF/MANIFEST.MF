@@ -24,4 +24,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.databinding.beans,
  org.eclipse.core.databinding.observable,
  org.eclipse.core.databinding.property,
- org.talend.components.api
+ org.talend.components.api,
+ org.talend.common.ui.runtime,
+ org.talend.commons.runtime
