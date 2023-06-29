@@ -11,7 +11,20 @@ import java.util.Optional;
 
 public interface DesignerDIComponent {
 
+    BigDataDIComponent.JavaVariable UNDEFINED_JAVA_VARIABLE = ImmutableDesignerDIComponent.JavaVariable.of("Void", "unknownVariable", "unknownVariable");
+
     String name();
+    @Value.Immutable
+    interface JavaVariable {
+        @Value.Parameter
+        String type();
+
+        @Value.Parameter
+        String name();
+
+        @Value.Parameter
+        String alias();
+    }
 
     interface BigDataDIComponent extends DesignerDIComponent {
         CodeGeneratorArgument codeGeneratorArgument();
@@ -54,5 +67,48 @@ public interface DesignerDIComponent {
         default boolean dieOnError() {
             return this.getParameter("__DIE_ON_ERROR__", false);
         }
+    }
+
+    interface WithOneInput extends BigDataDIComponent {
+//        default JavaVariable inputVariable() {
+//            INode node = (INode) codeGeneratorArgument().getArgument();
+//            List<String> inputEntries = Optional.ofNullable(node.getExternalData())
+//                    .map(externalData ->
+//                            externalData.getInputTables().stream()
+//                                    .map(IExternalMapTable::getName)
+//                                    .collect(Collectors.toList()))
+//                    .orElse(new ArrayList<>());
+//            return node.getIncomingConnections(EConnectionType.FLOW_MAIN).stream()
+//                    .findFirst()
+//                    .map(connection -> {
+//                        INode source = connection.getSource();
+//                        String alias = inputEntries.stream().
+//                                filter(input -> input.equals(connection.getName()))
+//                                .findFirst()
+//                                .orElse(Optional.ofNullable(source).map(INode::getIncomingConnections)
+//                                        .orElse(new ArrayList<>())
+//                                        .stream()
+//                                        .map(IConnection::getName)
+//                                        .findFirst()
+//                                        .orElse(connection.getName()));
+//                        return ImmutableDesignerDIComponent.JavaVariable.of(
+//                                //codeGeneratorArgument().getRecordStructName(connection, nodeUseDataset(source)),
+//                                //TODO: change this null
+//                                null,
+//                                connection.getName(),
+//                                alias
+//                        );
+//                    })
+//                    .orElse(ImmutableDesignerDIComponent.JavaVariable.of("Object", "unknown", "unknown"));
+ //       }
+
+//        default List<IMetadataColumn> getListOutputVariable(){
+////            INode node = (INode) codeGeneratorArgument().getArgument();
+////            return node.getMetadataList().stream()
+////                    .findFirst()
+////                    .orElseThrow(UnsupportedOperationException::new)
+////                    .getListColumns();
+//        }
+
     }
 }

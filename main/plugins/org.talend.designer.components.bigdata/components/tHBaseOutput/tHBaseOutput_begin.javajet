@@ -70,32 +70,4 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .doTableAction();
 <% } %>
 
-
-String tableNameString = <%=thbaseOutput.getTableName()%>;
-if (<%=thbaseOutput.isSpecifyNamespace()%> && !"".equals(<%=thbaseOutput.getNamespace()%>)) {
-    tableNameString = <%=thbaseOutput.getNamespace()%> + ":" + tableNameString;
-}
-
-<%
-if (!thbaseOutput.isHBase2x()) {
-%>
-    org.apache.hadoop.hbase.client.HTable table_<%=cid%> = null;
-    table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(
-                    org.apache.hadoop.hbase.TableName.valueOf(tableNameString),
-                    connection_<%=cid%>);
-<%
-} else {
-%>
-    org.apache.hadoop.hbase.client.Table table_<%=cid%> = connection_<%=cid%>.getTable(org.apache.hadoop.hbase.TableName.valueOf(tableNameString));
-<%
-}
-%>
-byte[] temp_<%=cid%> = null;
-
-<%
-if (thbaseOutput.isUseBatchMode()) {
-    %>
-    java.util.ArrayList<org.apache.hadoop.hbase.client.Put> batchPuts_<%=cid%> = new java.util.ArrayList<org.apache.hadoop.hbase.client.Put>();
-    <%
-}
-%>
+<% ImmutableHbaseData hbaseData = thbaseOutput.getData(); %>
