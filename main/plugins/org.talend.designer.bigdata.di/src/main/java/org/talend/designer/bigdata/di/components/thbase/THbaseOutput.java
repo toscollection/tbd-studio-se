@@ -16,7 +16,7 @@ public class THbaseOutput implements THbase, DesignerDIComponent.WithDieOnErrorO
     private final INode connNode;
     private final THBaseConfiguration tHBaseConfiguration;
     private final THbaseTable tHbaseTable;
-    private final JavaVariable javaVariable;
+   // private final JavaVariable javaVariable;
 
     public THbaseOutput(CodeGeneratorArgument codeGeneratorArgument) {
         this.codeGeneratorArgument = codeGeneratorArgument;
@@ -24,7 +24,7 @@ public class THbaseOutput implements THbase, DesignerDIComponent.WithDieOnErrorO
         this.connNode = setTargetNode();
         tHbaseTable = new THbaseTable(codeGeneratorArgument);
         tHBaseConfiguration = new THBaseConfiguration();
-        javaVariable = inputVariable();
+        //javaVariable = inputVariable();
     }
 
     @Override

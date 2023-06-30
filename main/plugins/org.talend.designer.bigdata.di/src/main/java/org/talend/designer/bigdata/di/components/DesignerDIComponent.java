@@ -75,8 +75,8 @@ public interface DesignerDIComponent {
         }
     }
 
-//    interface WithOneInput extends BigDataDIComponent {
-//        default JavaVariable inputVariable() {
+    interface WithOneInput extends BigDataDIComponent {
+     //   default JavaVariable inputVariable() {
 //            INode node = (INode) codeGeneratorArgument().getArgument();
 //            List<String> inputEntries = Optional.ofNullable(node.getExternalData())
 //                    .map(externalData ->
@@ -114,7 +114,7 @@ public interface DesignerDIComponent {
 ////                    .findFirst()
 ////                    .orElseThrow(UnsupportedOperationException::new)
 ////                    .getListColumns();
-//        }
+    //    }
 
-    //}
+    }
 }
