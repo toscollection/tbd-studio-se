@@ -99,55 +99,55 @@ public class THbaseOutput implements THbase, DesignerDIComponent.WithDieOnErrorO
     public String getBatchSize() {
         return BigDataDIComponent.getParameter(node, "__BATCH_SIZE__", "");
     }
-    public ImmutableHbaseData getData() {
-        final ImmutableHbaseData.Builder hbaseData = ImmutableHbaseData.builder();
-        final String customTimestamp = getCustomTimestampColumn();
-
-        INode node = (INode) codeGeneratorArgument().getArgument();
-        node.getMetadataList().stream()
-                .findFirst()
-                .orElseThrow(UnsupportedOperationException::new)
-                .getListColumns()
-                .forEach(iMetadataColumn -> {
-                            if (isUseCustomTimestampColumn() && iMetadataColumn.getLabel().equals(customTimestamp)) {
-                                if (JavaTypesManager.getJavaTypeFromId(iMetadataColumn.getTalendType()) == JavaTypesManager.LONG) {
-                                    hbaseData.customTimestampColumn(javaVariable.name() + "." + customTimestamp);
-                                } else {
-                                    throw new RuntimeException("Custom Timestamp Column should be long-typed");
-                                }
-                            }
-                            JavaType javaType = JavaTypesManager.getJavaTypeFromId(iMetadataColumn.getTalendType());
-                            String pattern = iMetadataColumn.getPattern() == null || iMetadataColumn.getPattern().trim().length() == 0 ? null : iMetadataColumn.getPattern();
-                            Map<String, String> mapLine = getFamilyParameters().get(0);
-                            String schema_column = mapLine.get("SCHEMA_COLUMN");
-                            String family_column = mapLine.get("FAMILY_COLUMN");
-                            if (family_column != null || family_column.trim().length() != 0) {
-                                boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, iMetadataColumn.isNullable());
-
-                                if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
-                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
-                                            "FormatterUtils.format_Date("+javaVariable.name()+"."+iMetadataColumn.getLabel()+", "+pattern+")");
-                                } else if (javaType == JavaTypesManager.BYTE_ARRAY){
-                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
-                                            javaVariable.name()+"."+iMetadataColumn.getLabel());
-                                }else if (javaType == JavaTypesManager.BYTE){
-                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
-                                            javaVariable.name()+"."+iMetadataColumn.getLabel()+"+\"\"");
-                                } else if (isPrimitive) {
-                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
-                                            javaVariable.name()+"."+iMetadataColumn.getLabel());
-                                } else {
-                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
-                                            javaVariable.name()+"."+iMetadataColumn.getLabel()+".toString()");
-                                }
-
-                            }
-                            hbaseData.family(family_column);
-                        }
-                );
-
-        return hbaseData.build();
-    }
+//    public ImmutableHbaseData getData() {
+//        final ImmutableHbaseData.Builder hbaseData = ImmutableHbaseData.builder();
+//        final String customTimestamp = getCustomTimestampColumn();
+//
+//        INode node = (INode) codeGeneratorArgument().getArgument();
+//        node.getMetadataList().stream()
+//                .findFirst()
+//                .orElseThrow(UnsupportedOperationException::new)
+//                .getListColumns()
+//                .forEach(iMetadataColumn -> {
+//                            if (isUseCustomTimestampColumn() && iMetadataColumn.getLabel().equals(customTimestamp)) {
+//                                if (JavaTypesManager.getJavaTypeFromId(iMetadataColumn.getTalendType()) == JavaTypesManager.LONG) {
+//                                    hbaseData.customTimestampColumn(javaVariable.name() + "." + customTimestamp);
+//                                } else {
+//                                    throw new RuntimeException("Custom Timestamp Column should be long-typed");
+//                                }
+//                            }
+//                            JavaType javaType = JavaTypesManager.getJavaTypeFromId(iMetadataColumn.getTalendType());
+//                            String pattern = iMetadataColumn.getPattern() == null || iMetadataColumn.getPattern().trim().length() == 0 ? null : iMetadataColumn.getPattern();
+//                            Map<String, String> mapLine = getFamilyParameters().get(0);
+//                            String schema_column = mapLine.get("SCHEMA_COLUMN");
+//                            String family_column = mapLine.get("FAMILY_COLUMN");
+//                            if (family_column != null || family_column.trim().length() != 0) {
+//                                boolean isPrimitive = JavaTypesManager.isJavaPrimitiveType( javaType, iMetadataColumn.isNullable());
+//
+//                                if (javaType == JavaTypesManager.DATE && pattern != null && pattern.trim().length() != 0) {
+//                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
+//                                            "FormatterUtils.format_Date("+javaVariable.name()+"."+iMetadataColumn.getLabel()+", "+pattern+")");
+//                                } else if (javaType == JavaTypesManager.BYTE_ARRAY){
+//                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
+//                                            javaVariable.name()+"."+iMetadataColumn.getLabel());
+//                                }else if (javaType == JavaTypesManager.BYTE){
+//                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
+//                                            javaVariable.name()+"."+iMetadataColumn.getLabel()+"+\"\"");
+//                                } else if (isPrimitive) {
+//                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
+//                                            javaVariable.name()+"."+iMetadataColumn.getLabel());
+//                                } else {
+//                                    hbaseData.putColumn(iMetadataColumn.getOriginalDbColumnName(),
+//                                            javaVariable.name()+"."+iMetadataColumn.getLabel()+".toString()");
+//                                }
+//
+//                            }
+//                            hbaseData.family(family_column);
+//                        }
+//                );
+//
+//        return hbaseData.build();
+//    }
 
     @Value.Immutable
     @Value.Style(builderVisibility = Value.Style.BuilderVisibility.PACKAGE)
