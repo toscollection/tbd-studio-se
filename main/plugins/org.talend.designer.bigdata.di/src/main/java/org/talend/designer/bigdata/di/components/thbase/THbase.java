@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class THbase implements DesignerDIComponent.BigDataDIComponent,
+public abstract class THbase implements DesignerDIComponent.BigDataDIComponent,
         DesignerDIComponent.WithDieOnErrorOption {
 
     protected CodeGeneratorArgument codeGeneratorArgument;
@@ -64,10 +64,8 @@ public class THbase implements DesignerDIComponent.BigDataDIComponent,
         return BigDataDIComponent.getParameter(node,"__ZOOKEEPER_CLIENT_PORT__","");
     }
     public boolean isHBase2x(){
-        if (isSparkDistrib()){
-            if (getHbaseDistrib() != null) {
-                return getHbaseDistrib().doSupportHBase2x();
-            }
+        if (getHbaseDistrib() != null) {
+            return getHbaseDistrib().doSupportHBase2x();
         }
         return BigDataDIComponent.getParameter(node, "__HBASE_API_VERSION__","").equals("HBASE_2");
     }
@@ -142,6 +140,15 @@ public class THbase implements DesignerDIComponent.BigDataDIComponent,
             sb.deleteCharAt(inputString.length()-1);
         }
         return sb.toString();
+    }
+    public boolean isSpecifyNamespace(){
+        return BigDataDIComponent.getBooleanParameter(node,"__SPECIFY_NAMESPACE__");
+    }
+    public String getNamespace(){
+            return BigDataDIComponent.getParameter(node, "__NAMESPACE__", "");
+    }
+    public String getTableName(){
+        return BigDataDIComponent.getParameter(node, "__TABLE__", "");
     }
 
 }
