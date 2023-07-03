@@ -5,7 +5,7 @@
         <!ENTITY jetty_version "9.4.44.v20210927">
         <!ENTITY orc_version "1.6.14">
         <!ENTITY kafka_version "2.8.2">
-        <!ENTITY aws_sdk_version "1.12.170">
+        <!ENTITY aws_sdk_version "1.12.261">
         <!ENTITY commons-configuration2_version "2.8.0">
         <!ENTITY google_version "1.33.3">
         <!ENTITY hadoop_version "3.3.1">
