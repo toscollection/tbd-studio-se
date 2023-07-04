@@ -237,7 +237,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar" name="spark-cassandra-connector-assembly_&scala_version;-3.2.0.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/3.2.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
 
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.16.0.jar" name="emr-dynamodb-hadoop-4.16.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.16.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
@@ -477,7 +477,7 @@
             <library id="aws-java-sdk-core-&aws_sdk_version;.jar"/>
             <library id="aws-java-sdk-dynamodb-&aws_sdk_version;.jar"/>
             <library id="aws-java-sdk-s3-&aws_sdk_version;.jar"/>
-            <library id="emr-dynamodb-hadoop-4.16.0.jar"/>
+            <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
             <library id="jackson-databind-&jackson_databind_version;.jar"/>
             <library id="jmespath-java-&aws_sdk_version;.jar"/>
         </libraryNeededGroup>
