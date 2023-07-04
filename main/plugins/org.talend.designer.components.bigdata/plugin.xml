@@ -481,7 +481,6 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="guava-27.0-jre.jar" name="guava-27.0-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.0-jre" />
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="j2objc-annotations-1.3.jar" name="j2objc-annotations-1.3.jar" mvn_uri="mvn:com.google.j2objc/j2objc-annotations/1.3"/>        
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jdo2-api-2.3-eb.jar" name="jdo2-api-2.3-eb.jar" mvn_uri="mvn:javax.jdo/jdo2-api/2.3-eb"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jetty-6.1.26.jar" name="jetty-6.1.26.jar" mvn_uri="mvn:org.mortbay.jetty/jetty/6.1.26"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jetty-util-6.1.26.jar" name="jetty-util-6.1.26.jar" mvn_uri="mvn:org.mortbay.jetty/jetty-util/6.1.26"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jsr305-3.0.2.jar" name="jsr305-3.0.2.jar" mvn_uri="mvn:com.google.code.findbugs/jsr305/3.0.2"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jackson-core-2.8.6.jar" name="jackson-core-2.8.6.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.8.6"/>
@@ -524,7 +523,6 @@
             <library id="j2objc-annotations-1.3.jar" />
             <library id="jdo2-api-2.3-eb.jar" />
             <library id="jets3t-0.9.4.jar" />
-            <library id="jetty-6.1.26.jar" />
             <library id="jetty-util-6.1.26.jar" />
             <library id="jsr305-3.0.2.jar" />
             <library id="opencensus-api-0.21.0.jar" />

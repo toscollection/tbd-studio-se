@@ -7,10 +7,10 @@
 		<!ENTITY google_version "1.33.3">
 		<!ENTITY hive_version "2.3.8">
 		<!ENTITY ivy_version "2.5.1">
-		<!ENTITY jackson-databind_version "2.6.7.5">
+		<!ENTITY jackson-databind_version "2.13.4.1">
 		<!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
-		<!ENTITY jackson_version "2.6.7">
-		<!ENTITY jackson-module-scala_version "2.6.7.1">
+		<!ENTITY jackson_version "2.13.4">
+		<!ENTITY jackson-module-scala_version "2.13.4">
 		<!ENTITY woodstox_version "6.4.0">
 		<!ENTITY kafka_version "2.8.2">
 		<!ENTITY commons_io_version "2.7">
@@ -20,7 +20,7 @@
 	<extension
 			point="org.talend.core.runtime.librariesNeeded">
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar" mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jodd-core-5.0.5.jar" name="jodd-core-5.0.5.jar" mvn_uri="mvn:org.jodd/jodd-core/5.0.5"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="antlr4-runtime-4.7.jar" name="antlr4-runtime-4.7.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="commons-cli-1.2.jar" name="commons-cli-1.2.jar" mvn_uri="mvn:commons-cli/commons-cli/1.2/jar"/>
@@ -68,7 +68,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-annotations-&jackson_version;.jar" name="jackson-annotations-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/&jackson_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-&jackson_version;.jar" name="jackson-core-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/&jackson_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-core-asl-1.9.13.jar" name="jackson-core-asl-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-core-asl/1.9.13"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-databind-&jackson-databind_version;.jar" name="jackson-databind-&jackson-databind_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/&jackson_version;"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-databind-&jackson-databind_version;.jar" name="jackson-databind-&jackson-databind_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-databind/&jackson-databind_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-dataformat-cbor-&jackson_version;.jar" name="jackson-dataformat-cbor-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.dataformat/jackson-dataformat-cbor/&jackson_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-1.9.13.jar" name="jackson-jaxrs-1.9.13.jar" mvn_uri="mvn:org.codehaus.jackson/jackson-jaxrs/1.9.13"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jackson-jaxrs-json-provider-&jackson_version;.jar" name="jackson-jaxrs-json-provider-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/&jackson_version;"/>
@@ -234,7 +234,7 @@
 
 		<!-- Spark group -->
 		<libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_2_4_x" name="SPARK-COMPILE-GROUP-SPARK_2_4_x">
-			<library id="jodd-core-3.5.2.jar"/>
+			<library id="jodd-core-5.0.5.jar"/>
 			<library id="antlr4-runtime-4.7.jar"/>
 			<library id="avro-1.8.2.jar"/>
 			<library id="avro-mapred-1.8.2.jar"/>
