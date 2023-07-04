@@ -19,6 +19,7 @@ imports="
     String connection = ElementParameterParser.getValue(node,"__CONNECTION__");
 
     String conn = "conn_" + connection;
+    String hbase_connection = "connection_" + connection;
     
     String distribution = null;
     String hbaseVersion = null;
@@ -50,6 +51,14 @@ imports="
 	    }
     }
 %>
+//new connection close
+	org.apache.hadoop.hbase.client.Connection connection_<%=cid%> = (org.apache.hadoop.hbase.client.Connection)globalMap.get("<%=hbase_connection%>");
+    	if(connection_<%=cid%> != null )
+    	{
+    		connection_<%=cid%>.close();
+    		globalMap.remove("<%=hbase_connection%>");
+    	}
+
 	org.apache.hadoop.conf.Configuration conn_<%=cid%> = (org.apache.hadoop.conf.Configuration)globalMap.get("<%=conn%>");
 	if(conn_<%=cid%> != null )
 	{

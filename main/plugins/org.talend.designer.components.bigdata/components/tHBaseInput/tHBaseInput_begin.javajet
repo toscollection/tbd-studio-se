@@ -11,12 +11,14 @@ imports="
         org.talend.core.model.process.IConnectionCategory
         org.talend.core.model.metadata.types.JavaTypesManager
         org.talend.core.model.metadata.types.JavaType
+        org.talend.designer.bigdata.di.components.thbase.THbaseInput
         "
 %>
 
     <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
     
 <%
+    final THbaseInput thbaseInput = new THbaseInput((CodeGeneratorArgument) argument);
     CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument) argument;
     INode node = (INode)codeGenArgument.getArgument();
     String cid = node.getUniqueName();
@@ -200,6 +202,10 @@ if(defineSelection) {
 }
 List<IMetadataTable> metadatas = node.getMetadataList();
 %>
+String tableNameString = <%=thbaseInput.getTableName()%>;
+if (<%=thbaseInput.isSpecifyNamespace()%> && !"".equals(<%=thbaseInput.getNamespace()%>)) {
+    tableNameString = <%=thbaseInput.getNamespace()%> + ":" + tableNameString;
+}
 <%
 if ((metadatas!=null) && (metadatas.size() > 0)) {
     IMetadataTable metadata = metadatas.get(0);
@@ -366,11 +372,13 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
         
         if (!isHBase2x) {
 %>		
-            org.apache.hadoop.hbase.client.HTable table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid%>, <%=table_name%>);
+            org.apache.hadoop.hbase.client.HTable table_<%=cid%> = new org.apache.hadoop.hbase.client.HTable(conn_<%=cid%>, tableNameString);
 <% 
         } else { 
 %>
-                    org.apache.hadoop.hbase.client.Table table_<%=cid%> = org.apache.hadoop.hbase.client.ConnectionFactory.createConnection(conn_<%=cid%>).getTable(org.apache.hadoop.hbase.TableName.valueOf(<%=table_name%>));
+                    org.apache.hadoop.hbase.client.Table table_<%=cid%> =
+                                    org.apache.hadoop.hbase.client.ConnectionFactory.createConnection(conn_<%=cid%>)
+                                    .getTable(org.apache.hadoop.hbase.TableName.valueOf(tableNameString));
 <% 
         }
 %>
