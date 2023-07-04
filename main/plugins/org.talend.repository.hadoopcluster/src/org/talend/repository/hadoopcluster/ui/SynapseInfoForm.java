@@ -52,9 +52,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     private LabelledText synapseSparkPoolsText;
 
     private Composite storagePartComposite;
-
-    private LabelledCombo storageCombo;
-
     private LabelledText azureHostnameText;
 
     private LabelledText azureContainerText;
@@ -76,16 +73,17 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
     private LabelledFileField azureClientCertificateText;
 
     private LabelledText azureDeployBlobText;
-    
+
+    private Composite tuningComposite;
     private LabelledText driverMemoryText;
     
     private LabelledText driverCoresText;
     
     private LabelledText executorMemoryText;
-    
-    private Button tuningPropButton;
-    
-    protected Composite propertiesComposite;
+
+    private LabelledText executorCoresText;
+
+     protected Composite propertiesComposite;
 
     private boolean creation;
     
@@ -130,7 +128,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         if (isNeedFillDefaults()) {
             fillDefaults();
         }
-        
+        //Synapse configuration
         getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SPARK_MODE,"YARN_CLUSTER");
         
         String synapseHostName = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_HOST));
@@ -141,47 +139,51 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         String synapseToken = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN));
         synapseTokenText.setText(synapseToken);
-        
-        String synapseStorage = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_STORAGE));
-        if (synapseStorage != null) {
-        	ESynapseStorage storage = ESynapseStorage.getSynapseStorageByName(synapseStorage, false);
-            if (storage != null) {
-                storageCombo.setText(storage.getDisplayName());
-            } else {
-                storageCombo.select(0);
-            }
-        } else {
-            storageCombo.select(0);
-        }
-        
-        String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE));
-        if (authModeValue != null) {
-        	ESynapseAuthType type = ESynapseAuthType.getSynapseAuthTypeByName(authModeValue, false);
-            if (type != null) {
-            	storageAuthTypeCombo.setText(type.getDisplayName());
-            } else {
-            	storageAuthTypeCombo.select(0);
-            }
-        } else {
-        	storageAuthTypeCombo.select(0);
-        }
-        
+
         String synapseFSHostname = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_HOSTNAME));
         azureHostnameText.setText(synapseFSHostname);
         
         String synapseFSContainer = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_CONTAINER));
         azureContainerText.setText(synapseFSContainer);
-        
+
+        String azureDeployBlob = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
+        azureDeployBlobText.setText(azureDeployBlob);
+
+        //Tuning properties
+        String driverMemory = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY));
+        driverMemoryText.setText(driverMemory);
+
+        String driverCores = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES));
+        driverCoresText.setText(driverCores);
+
+        String executorMemory = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY));
+        executorMemoryText.setText(executorMemory);
+
+        String executorCores = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_CORES));
+        executorCoresText.setText(executorCores);
+
+        //Authentication
+        String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE));
+        if (authModeValue != null) {
+            ESynapseAuthType type = ESynapseAuthType.getSynapseAuthTypeByName(authModeValue, false);
+            if (type != null) {
+                storageAuthTypeCombo.setText(type.getDisplayName());
+            } else {
+                storageAuthTypeCombo.select(0);
+            }
+        } else {
+            storageAuthTypeCombo.select(0);
+        }
         String credentialName = storageAuthTypeCombo.getText();
-        
+
         String synapseFSUsername = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_USERNAME));
         azureUsernameText.setText(synapseFSUsername);
         azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
-        
+
         String azurePassword = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_PASSWORD));
         azurePasswordText.setText(azurePassword);
         azureUsernameText.setVisible(ESynapseAuthType.SECRETKEY.getDisplayName().equals(credentialName));
-        
+
         String azureDirectoryId = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID));
         azureDirectoryIdText.setText(azureDirectoryId);
         azureDirectoryIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
@@ -201,22 +203,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         String azureClientCertificate = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE));
         azureClientCertificateText.setText(azureClientCertificate);
         azureClientCertificateText.setVisible(useSynapseCertButton.getSelection() && useSynapseCertButton.getSelection());
-        
-        String azureDeployBlob = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DEPLOY_BLOB));
-        azureDeployBlobText.setText(azureDeployBlob);
-        
-        String driverMemory = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY));
-        driverMemoryText.setText(driverMemory);
-        
-        String driverCores = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES));
-        driverCoresText.setText(driverCores);
-        
-        String executorMemory = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY));
-        executorMemoryText.setText(executorMemory);
-       
-        boolean checkedTuningProp = Boolean.parseBoolean(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES));
-        tuningPropButton.setSelection(checkedTuningProp);
-        
         updatePasswordFields();
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -239,16 +225,15 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         azureDeployBlobText.setReadOnly(readOnly);
         driverMemoryText.setReadOnly(readOnly);
         driverCoresText.setReadOnly(readOnly);
+        executorCoresText.setReadOnly(readOnly);
         executorMemoryText.setReadOnly(readOnly);
-        tuningPropButton.setEnabled(!readOnly);
-    }
+     }
 
     @Override
     protected void updateEditableStatus(boolean isEditable) {
         synapseHostnameText.setEditable(isEditable);
         synapseSparkPoolsText.setEditable(isEditable);
         synapseTokenText.setEditable(isEditable);
-        storageCombo.setEnabled(isEditable);
         azureHostnameText.setEditable(isEditable);
         azureContainerText.setEditable(isEditable);
         azureUsernameText.setEditable(isEditable);
@@ -262,16 +247,16 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         driverMemoryText.setEditable(isEditable);
         driverCoresText.setEditable(isEditable);
         executorMemoryText.setEditable(isEditable);
-        tuningPropButton.setEnabled(isEditable);
+        executorCoresText.setEditable(isEditable);
         ((HadoopClusterForm) this.getParent()).updateEditableStatus(isEditable);
     }
 
     @Override
     protected void addFields() {
     	addSynapseFields();
-    	addFSFields();
-    	addTuningFields();
-        propertiesComposite = new Composite(this, SWT.NONE);
+        addTuningFields();
+        addFSFields();
+    	propertiesComposite = new Composite(this, SWT.NONE);
         GridLayout propertiesLayout = new GridLayout(3, false);
         propertiesLayout.marginWidth = 0;
         propertiesLayout.marginHeight = 0;
@@ -300,19 +285,16 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         storagePartComposite.setLayout(storagePartLayout);
         storagePartComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
-        storageCombo = new LabelledCombo(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.storage"),
-                Messages.getString("SynapseInfoForm.text.azure.storage.tip"),
-                ESynapseStorage.getAllSynapseStorageDisplayNames().toArray(new String[0]), 1, true);
-        
         azureHostnameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.hostname"), 1); //$NON-NLS-1$
-        
-        storageAuthTypeCombo = new LabelledCombo(storagePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
-        		ESynapseAuthType.getAllSynapseAuthTypes());
-        
+
         azureContainerText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.container"), 1); //$NON-NLS-1$
         
         azureDeployBlobText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.deployBlob"), 1);
-        
+
+
+        storageAuthTypeCombo = new LabelledCombo(storagePartComposite, Messages.getString("SynapseInfoForm.text.authentication"), "", //$NON-NLS-1$ $NON-NLS-2$
+                ESynapseAuthType.getAllSynapseAuthTypes());
+
         azureUsernameText = new LabelledText(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.username"), 1); //$NON-NLS-1$
         
         azurePasswordText = new LabelledText(storagePartComposite,
@@ -334,22 +316,26 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         String[] extensions = { "*.*" };
         azureClientCertificateText = new LabelledFileField(storagePartComposite, Messages.getString("SynapseInfoForm.text.azure.clientCertificate"), extensions);
-        
+
     }
-    
+
     private void addTuningFields() {
-    	Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 70);
-    	tuningGroup.setLayoutData(new GridData(GridData.FILL_BOTH));
-    	
-    	tuningPropButton = new Button(tuningGroup, SWT.CHECK);
-    	tuningPropButton.setText(Messages.getString("SynapseInfoForm.useTuningProperties"));
-    	tuningPropButton.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, true, false, 2, 1));
-        
-        driverMemoryText = new LabelledText(tuningGroup, Messages.getString("SynapseInfoForm.text.synapse.driverMemory"), 1); //$NON-NLS-1$
-        driverCoresText = new LabelledText(tuningGroup, Messages.getString("SynapseInfoForm.text.synapse.driverCores"), 1); //$NON-NLS-1$;
-        executorMemoryText = new LabelledText(tuningGroup, Messages.getString("SynapseInfoForm.text.synapse.executorMemory"), 1); //$NON-NLS-1$;       
+        Group tuningGroup = Form.createGroup(this, 4, Messages.getString("SynapseInfoForm.tuningSettings"), 110);
+        tuningGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        tuningComposite = new Composite(tuningGroup, SWT.NULL);
+        GridLayout tuningLayout = new GridLayout(4, false);
+        tuningLayout.marginWidth = 0;
+        tuningLayout.marginHeight = 0;
+        tuningComposite.setLayout(tuningLayout);
+        tuningComposite.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        driverMemoryText = new LabelledText(tuningComposite, Messages.getString("SynapseInfoForm.text.synapse.driverMemory"), 1);
+        driverCoresText = new LabelledText(tuningComposite, Messages.getString("SynapseInfoForm.text.synapse.driverCores"), 1);
+        executorMemoryText = new LabelledText(tuningComposite, Messages.getString("SynapseInfoForm.text.synapse.executorMemory"), 1);
+        executorCoresText = new LabelledText(tuningComposite, Messages.getString("SynapseInfoForm.text.synapse.executorCores"), 1);
     }
-    
+
     @Override
     protected void addFieldsListeners() {
         synapseHostnameText.addModifyListener(new ModifyListener() {
@@ -372,16 +358,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_TOKEN, synapseTokenText.getText());
-                checkFieldsValue();
-            }
-        });
-
-        storageCombo.getCombo().addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                String storage = storageCombo.getText();
-                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_FS_STORAGE,
-                        ESynapseStorage.getSynapseStoragenByDisplayName(storage).getName());
                 checkFieldsValue();
             }
         });
@@ -489,25 +465,11 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
                 checkFieldsValue();
             }
         });
-        
-        tuningPropButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-            	String selection = String.valueOf(tuningPropButton.getSelection());            	
-            	getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_TUNING_PROPERTIES, selection);
-            	
-            	driverMemoryText.setVisible(tuningPropButton.getSelection());
-            	driverCoresText.setVisible(tuningPropButton.getSelection());
-            	executorMemoryText.setVisible(tuningPropButton.getSelection());
-            	checkFieldsValue();
-            }
-        });
-        
+
         driverMemoryText.addModifyListener(new ModifyListener() {
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_MEMORY, driverMemoryText.getText());
-                driverMemoryText.setVisible(tuningPropButton.getSelection());
                 checkFieldsValue();
             }
         });
@@ -516,7 +478,6 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_DRIVER_CORES, driverCoresText.getText());
-                driverCoresText.setVisible(tuningPropButton.getSelection());
                 checkFieldsValue();
             }
         });
@@ -525,7 +486,14 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
             @Override
             public void modifyText(final ModifyEvent e) {
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_MEMORY, executorMemoryText.getText());
-                executorMemoryText.setVisible(tuningPropButton.getSelection());
+                checkFieldsValue();
+            }
+        });
+
+        executorCoresText.addModifyListener(new ModifyListener() {
+            @Override
+            public void modifyText(final ModifyEvent e) {
+                getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_EXECUTOR_CORES, executorCoresText.getText());
                 checkFieldsValue();
             }
         });
@@ -589,6 +557,11 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         }
         if (!validText(executorMemoryText.getText())) {
             updateStatus(IStatus.ERROR, Messages.getString("SynapseInfoForm.check.synapse.executorMemory")); //$NON-NLS-1$
+            return false;
+        }
+
+        if (!validText(executorCoresText.getText())) {
+            updateStatus(IStatus.ERROR, Messages.getString("SynapseInfoForm.check.synapse.executorCores")); //$NON-NLS-1$
             return false;
         }
 
