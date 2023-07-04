@@ -22,7 +22,7 @@
             point="org.talend.core.runtime.librariesNeeded">
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="jodd-core-3.5.2.jar" name="jodd-core-3.5.2.jar"
+                       id="jodd-core-5.0.5.jar" name="jodd-core-5.0.5.jar"
                        mvn_uri="mvn:org.jodd/jodd-core/3.5.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="spark-core_2.12-3.0.3.jar" name="spark-core_2.12-3.0.3.jar"
@@ -731,7 +731,7 @@
 
         <!-- Spark group -->
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK-COMPILE-GROUP-SPARK_3_0_x" name="SPARK-BATCH-GROUP-SPARK_3_0_x">
-            <library id="jodd-core-3.5.2.jar"/>
+            <library id="jodd-core-5.0.5.jar"/>
             <library id="antlr4-runtime-4.7.1.jar"/>
             <library id="avro-1.8.2.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
