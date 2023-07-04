@@ -1,81 +1,28 @@
-<%@ jet 
+<%@ jet
 imports="
         java.util.List
         java.util.Map
-        org.talend.core.model.process.ElementParameterParser	
+        org.talend.core.model.process.ElementParameterParser
         org.talend.core.model.process.INode
-        org.talend.core.model.metadata.IMetadataTable 
-        org.talend.core.model.metadata.IMetadataColumn 
+        org.talend.core.model.metadata.IMetadataTable
+        org.talend.core.model.metadata.IMetadataColumn
         org.talend.designer.codegen.config.CodeGeneratorArgument
         org.talend.core.model.process.IConnection
         org.talend.core.model.process.EConnectionType
         org.talend.core.model.metadata.types.JavaTypesManager
         org.talend.core.model.metadata.types.JavaType
+        org.talend.designer.bigdata.di.components.thbase.THbaseOutput
         "
 %>
 
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/Log4j/Log4jFileUtil.javajet"%>
 
 <%
-CodeGeneratorArgument codeGenArgument = (CodeGeneratorArgument)argument;
-INode node = (INode)codeGenArgument.getArgument();
-String cid = node.getUniqueName();
-List<Map<String,String>> families = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILIES__");
-String customUseRowKey = ElementParameterParser.getValue(node, "__CUSTOM_ROW_KEY__");
-boolean useCustomTimestampColumn = ElementParameterParser.getBooleanValue(node, "__CUSTOM_TIMESTAMP_COLUMN__");
-String customTimestampColumn = ElementParameterParser.getValue(node, "__TIMESTAMP_COLUMN__");
-String dieOnError = ElementParameterParser.getValue(node, "__DIE_ON_ERROR__");
-
-final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
-
-boolean useBatchMode = ElementParameterParser.getBooleanValue(node, "__USE_BATCH_MODE__");
-String batchSize = ElementParameterParser.getValue(node, "__BATCH_SIZE__");
-
+final THbaseOutput thbaseOutput = new THbaseOutput((CodeGeneratorArgument) argument);
+final INode node = thbaseOutput.getNode();
+final String cid = thbaseOutput.getCid();
 List<IMetadataTable> metadatas = node.getMetadataList();
-
-String useExistingConn = ElementParameterParser.getValue(node,"__USE_EXISTING_CONNECTION__");
-
-String distribution = null;
-String hbaseVersion = null;
-boolean isHadoop2 = false;
-boolean isHBase2x = false;
-
-if(!"true".equals(useExistingConn)) {
-    distribution = ElementParameterParser.getValue(node, "__DISTRIBUTION__");
-    hbaseVersion = ElementParameterParser.getValue(node, "__HBASE_VERSION__");
-    isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(node, "__HADOOP_CUSTOM_VERSION__"));
-    try {
-        isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(node, "__HBASE_API_VERSION__"));
-    } finally {
-        //NPE if not spark
-    }
-} else {
-    String connectionSid = ElementParameterParser.getValue(node, "__CONNECTION__");
-    List<? extends INode> nodes = node.getProcess().getGeneratingNodes();
-    for(INode targetNode : nodes){
-        if (targetNode.getUniqueName().equals(connectionSid)) {
-            distribution = ElementParameterParser.getValue(targetNode, "__DISTRIBUTION__");
-            hbaseVersion = ElementParameterParser.getValue(targetNode, "__HBASE_VERSION__");
-            isHadoop2 = "HADOOP_2".equals(ElementParameterParser.getValue(targetNode, "__HADOOP_CUSTOM_VERSION__"));
-            try {
-                isHBase2x = "HBASE_2".equals(ElementParameterParser.getValue(targetNode, "__HBASE_API_VERSION__"));
-            } finally {
-                //NPE if not spark
-            }
-            break;
-        }
-    }
-}
-
-org.talend.hadoop.distribution.component.HBaseComponent hbaseDistrib = null;
-try {
-    hbaseDistrib = (org.talend.hadoop.distribution.component.HBaseComponent) org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distribution, hbaseVersion);
-    boolean isSparkDistrib = "SPARK".equals(distribution);
-    isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
-} catch (java.lang.Exception e) {
-    e.printStackTrace();
-    return "";
-}
+List<Map<String,String>> families = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node,"__FAMILIES__");
 
 if ((metadatas!=null) && (metadatas.size() > 0)) {
     IMetadataTable metadata = metadatas.get(0);
@@ -90,7 +37,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                 org.apache.hadoop.hbase.client.Put p_<%=cid%> = null;
                 try{
                     <%
-                    if("true".equals(customUseRowKey)){
+                    if(thbaseOutput.isCustomRowKey()){
                     String rowKey = ElementParameterParser.getValue(node, "__ROW_KEY__");
                     %>
                         byte[] rowKey_<%=cid%> = org.apache.hadoop.hbase.util.Bytes.toBytes(<%=rowKey%>);
@@ -100,18 +47,18 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                         byte[] rowKey_<%=cid%> = org.apache.hadoop.hbase.util.Bytes.toBytes("myRow_"+<%=connName %>.toString());
                     <%
                     }
-                    if(useCustomTimestampColumn){
+                    if(thbaseOutput.isUseCustomTimestampColumn()){
                         IMetadataColumn localTimestampColumn = null;
                         for(int familyNum = 0 ; familyNum < families.size() ; familyNum++){
                             IMetadataColumn localColumn = columns.get(familyNum);
-                            if(localColumn.getLabel().equals(customTimestampColumn)){
+                            if(localColumn.getLabel().equals(thbaseOutput.getCustomTimestampColumn())){
                                 localTimestampColumn = localColumn;
                                 break;
                             }
                         }
                         if(localTimestampColumn != null && JavaTypesManager.getJavaTypeFromId(localTimestampColumn.getTalendType()) == JavaTypesManager.LONG){
                         %>
-                            p_<%=cid%> = new org.apache.hadoop.hbase.client.Put(rowKey_<%=cid%>, <%=connName%>.<%=customTimestampColumn%>);
+                            p_<%=cid%> = new org.apache.hadoop.hbase.client.Put(rowKey_<%=cid%>, <%=connName%>.<%=thbaseOutput.getCustomTimestampColumn()%>);
                         <%
                         }else{
                         %>
@@ -125,7 +72,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                     }
                     for(int familyNum = 0 ; familyNum < families.size() ; familyNum++){
                         IMetadataColumn column = columns.get(familyNum);
-                        if(useCustomTimestampColumn && column.getLabel().equals(customTimestampColumn)){
+                        if(thbaseOutput.isUseCustomTimestampColumn() && column.getLabel().equals(thbaseOutput.getCustomTimestampColumn())){
                             continue;
                         }
                         JavaType javaType = JavaTypesManager.getJavaTypeFromId(column.getTalendType());
@@ -169,22 +116,22 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                             }
                         <%
                         }
-                        if (!isHBase2x) {
+                        if (!thbaseOutput.isHBase2x()) {
                         %>
                             p_<%=cid%>.add(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid%>);
-                        <% 
+                        <%
                         } else {
                         %>
-                            p_<%=cid%>.addColumn(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid%>);						
-                        <% 
+                            p_<%=cid%>.addColumn(org.apache.hadoop.hbase.util.Bytes.toBytes(<%=family_column%>), org.apache.hadoop.hbase.util.Bytes.toBytes("<%=column.getOriginalDbColumnName()%>"), temp_<%=cid%>);
+                        <%
                         }
                         %>
                     <%
                     }
-                    if (useBatchMode) {
+                    if (thbaseOutput.isUseBatchMode()) {
                         %>
                         batchPuts_<%=cid%>.add(p_<%=cid%>);
-                        if (batchPuts_<%=cid%>.size() >= <%=batchSize%>) {
+                        if (batchPuts_<%=cid%>.size() >= <%=thbaseOutput.getBatchSize()%>) {
                             table_<%=cid%>.put(batchPuts_<%=cid%>);
                             nb_line_<%=cid%> += batchPuts_<%=cid%>.size();
                             batchPuts_<%=cid%>.clear();
@@ -200,7 +147,7 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                     %>
                 }catch(java.lang.Exception e){
                     <%
-                    if(("true").equals(dieOnError)){
+                    if(thbaseOutput.dieOnError()){
                     %>
                         throw(e);
                     <%
@@ -208,13 +155,13 @@ if ((metadatas!=null) && (metadatas.size() > 0)) {
                     %>
                         System.out.println(e.getMessage());
                     <%
-                        if(isLog4jEnabled) {
+                        if(thbaseOutput.isLog4jEnabled()) {
                     %>
                         log.error("<%=cid%> - " + e.getMessage());
                     <%
                         }
                     }
-                    %>             
+                    %>
                 }
             <%
             }//if (conns.size()>0)

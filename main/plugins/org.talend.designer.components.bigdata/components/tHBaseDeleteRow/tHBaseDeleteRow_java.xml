@@ -122,7 +122,16 @@
             <DEFAULT>"/tmp/hdfs.headless.keytab"</DEFAULT>
         </PARAMETER>
 
-        <PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="60">
+        <PARAMETER NAME="SPECIFY_NAMESPACE" FIELD="CHECK"
+                   NUM_ROW="55">
+            <DEFAULT>false</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER NAME="NAMESPACE" FIELD="TEXT" NUM_ROW="60" SHOW_IF="(SPECIFY_NAMESPACE == 'true')">
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
+
+        <PARAMETER NAME="TABLE" FIELD="TEXT" NUM_ROW="65">
             <DEFAULT>""</DEFAULT>
         </PARAMETER>
 
@@ -156,7 +165,11 @@
             <IMPORT MODULE_GROUP="HBASE-1.4.10" REQUIRED_IF="(DISTRIBUTION=='SPARK' AND USE_EXISTING_CONNECTION=='false' AND HBASE_API_VERSION=='HBASE_1')" />
 
             <IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
-                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
+                    MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"
+                    REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')"/>
+
+            <IMPORT MODULE_GROUP="TALEND_BIGDATA_CORE_DI_LIB" REQUIRED_IF="(USE_EXISTING_CONNECTION=='false')"/>
+
             <IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
                     MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
                     UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
