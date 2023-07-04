@@ -33,7 +33,10 @@ Require-Bundle: org.talend.libraries.apache.cxf,
  org.talend.hadoop.distribution,
  org.eclipse.gef,
  org.eclipse.emf.ecore,
- org.apache.log4j
+ org.apache.log4j,
+ com.fasterxml.jackson.core.jackson-databind,
+ com.fasterxml.jackson.core.jackson-core,
+ com.fasterxml.jackson.core.jackson-annotations
 Import-Package: org.eclipse.ui,
  org.talend.designer.core.generic.model,
  org.talend.hadoop.distribution.model

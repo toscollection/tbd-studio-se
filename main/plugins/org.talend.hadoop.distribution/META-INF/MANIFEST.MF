@@ -19,7 +19,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.talend.studio.studio-utils,
  org.apache.commons.lang,
  org.apache.commons.lang3,
- org.apache.log4j
+ org.apache.log4j,
+ com.fasterxml.jackson.core.jackson-databind,
+ com.fasterxml.jackson.core.jackson-core
 Export-Package: org.talend.hadoop.distribution,
  org.talend.hadoop.distribution.cdh,
  org.talend.hadoop.distribution.component,
