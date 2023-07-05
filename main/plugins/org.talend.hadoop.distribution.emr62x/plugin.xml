@@ -794,6 +794,10 @@
                       id="datanucleus-rdbms-4.1.17.jar" name="datanucleus-rdbms-4.1.17.jar"
                       mvn_uri="mvn:org.datanucleus/datanucleus-rdbms/4.1.17"/>
 
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="hadoop-lzo-0.4.19.jar"
+                       name="hadoop-lzo-0.4.19.jar"
+                       mvn_uri="mvn:com.hadoop.gplcompression/hadoop-lzo/0.4.19"/>
         <!-- Spark Azure group -->
         <libraryNeededGroup description="Spark Azure libraries for emr62x" id="AZURE-GROUP-EMR_62_x" name="AZURE-GROUP-EMR_62_x">
             <library id="azure-data-lake-store-sdk-2.2.9.jar"/>
@@ -865,6 +869,7 @@
             <library id="hadoop-common-3.2.1-amzn-2.1.jar"/>
             <library id="hadoop-hdfs-3.2.1-amzn-2.jar"/>
             <library id="hadoop-hdfs-client-3.2.1-amzn-2.jar"/>
+            <library id="hadoop-lzo-0.4.19.jar"/>
             <library id="hadoop-mapreduce-client-app-3.2.1-amzn-2.jar"/>
             <library id="hadoop-mapreduce-client-common-3.2.1-amzn-2.jar"/>
             <library id="hadoop-mapreduce-client-core-3.2.1-amzn-2.jar"/>
