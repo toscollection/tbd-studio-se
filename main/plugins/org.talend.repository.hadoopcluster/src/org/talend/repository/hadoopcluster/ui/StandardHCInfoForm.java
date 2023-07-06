@@ -2795,6 +2795,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             for (Group group : groups) {
                 hideControl(group, currentVisibleGroups == null || !currentVisibleGroups.contains(group));
             }
+            checkServicesBtn.setVisible("yarn cluster".contentEquals(sparkModeLabelName.toLowerCase()));
         } else {
             hideControl(dataBricksGroup, true);
             hideControl(cdeGroup, true);
