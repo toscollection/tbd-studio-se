@@ -155,4 +155,4 @@ Export-Package: org.hamcrest,
  org.powermock.tests.utils,
  org.powermock.tests.utils.impl,
  org.powermock.utils
-Require-Bundle: org.junit;visibility:=reexport
+Require-Bundle: org.junit
