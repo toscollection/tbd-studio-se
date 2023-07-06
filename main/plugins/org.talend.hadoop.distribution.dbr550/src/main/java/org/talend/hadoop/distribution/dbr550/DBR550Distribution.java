@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dbr550;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.talend.hadoop.distribution.AbstractDatabricksDistribution;
 import org.talend.hadoop.distribution.ComponentType;
@@ -27,6 +24,7 @@ import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.dbr550.modulegroup.DBR550HiveOnSparkModuleGroup;
@@ -34,6 +32,7 @@ import org.talend.hadoop.distribution.dbr550.modulegroup.DBR550SparkBatchModuleG
 import org.talend.hadoop.distribution.dbr550.modulegroup.DBR550SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.dbr550.modulegroup.node.sparkbatch.DBR550SparkBatchAzureNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr550.modulegroup.node.sparkstreaming.DBR550SparkStreamingKinesisNodeModuleGroup;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 public class DBR550Distribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
         SparkStreamingComponent, HiveOnSparkComponent {
@@ -90,6 +89,13 @@ public class DBR550Distribution extends AbstractDatabricksDistribution implement
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_OUTPUT_COMPONENT), DBR550SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_COMPONENT), DBR550SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
         result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING, SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT), DBR550SparkStreamingKinesisNodeModuleGroup.getKinesisModuleGroups(distribution, version, null));
+
+        //Cassandra
+        Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()), true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT),
+                cassandraConfigurationModuleGroups);
+
         return result;
 
     }
