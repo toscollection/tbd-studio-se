@@ -65,7 +65,8 @@
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0-shaded-for-kafka-0.10.jar" name="kafka-clients-2.6.0-shaded-for-kafka-0.10.jar" mvn_uri="mvn:org.talend.libraries/kafka-clients-2.6.0-shaded-for-kafka/0.10"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="spark-streaming-kafka-0-10_2.12-3.0.1.jar" name="spark-streaming-kafka-0-10_2.12-3.0.1.jar" mvn_uri="mvn:org.apache.spark/spark-streaming-kafka-0-10_2.12/3.0.1"/>
     <libraryNeeded context="plugin:org.talend.hadoop.distribution.dbr73x" id="kafka-clients-2.6.0.jar" name="kafka-clients-2.6.0.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/2.6.0"/>
-    
+    <libraryNeeded context="plugin:org.talend.spark.distribution.dbr73x" id="spark-cassandra-connector-assembly_2.12-3.0.1.jar" name="spark-cassandra-connector-assembly_2.12-3.0.1.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.12/3.0.1"/>
+
     <libraryNeededGroup id="BIGDATA-LAUNCHER-LIB-DBR73X" name="BIGDATA-LAUNCHER-LIB-DBR73X" description="Big Data launcher libraries for DBR73X">
       <library id="gson-2.9.0.jar"/>
       <library id="jackson-annotations-2.10.0.jar"/>
@@ -177,6 +178,10 @@
         <library id="jersey-hk2-2.30.jar"/>
       </libraryNeededGroup>
 
+    <libraryNeededGroup id="CASSANDRA-GROUP-Databricks_7_3" name="CASSANDRA-GROUP-Databricks_7_3"
+                        description="Cassandra libraries for DBR73x">
+      <library id="spark-cassandra-connector-assembly_2.12-3.0.1.jar"/>
+    </libraryNeededGroup>
     
   </extension>
   <extension point="org.talend.core.runtime.classloader_provider"/>

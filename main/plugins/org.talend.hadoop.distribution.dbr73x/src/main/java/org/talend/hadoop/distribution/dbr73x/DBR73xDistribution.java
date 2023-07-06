@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dbr73x;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.talend.hadoop.distribution.AbstractDatabricksDistribution;
 import org.talend.hadoop.distribution.ComponentType;
@@ -27,6 +24,7 @@ import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 import org.talend.hadoop.distribution.dbr73x.modulegroup.DBR73xHiveOnSparkModuleGroup;
@@ -40,6 +38,7 @@ import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xTopByNodeMod
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xRedshiftNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr73x.modulegroup.node.DBR73xRestNodeModuleGroup;
 import org.talend.hadoop.distribution.kafka.SparkStreamingKafkaVersion;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 public class DBR73xDistribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
         SparkStreamingComponent, HiveOnSparkComponent {
@@ -200,6 +199,11 @@ public class DBR73xDistribution extends AbstractDatabricksDistribution implement
                 ComponentType.SPARKSTREAMING,
                 SparkStreamingConstant.REST_WS_INPUT_COMPONENT
         ), DBR73xRestNodeModuleGroup.getModuleGroups(distribution, version));
+
+        Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()),true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT),
+                cassandraConfigurationModuleGroups);
 
       return result;
 

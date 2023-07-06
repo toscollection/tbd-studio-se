@@ -282,6 +282,11 @@
             mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop2-1.1.6/jar/shaded">
         </libraryNeeded>
 
+       <!-- Cassandra -->
+       <libraryNeeded id="spark-cassandra-connector-assembly_2.11-2.5.2.jar" name="spark-cassandra-connector-assembly_2.11-2.5.2.jar"
+                      mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.11/2.5.2"
+                      context="plugin:org.talend.hadoop.distribution.dbr550"/>
+
         <!-- Big Data launcher group -->
         <libraryNeededGroup
                 description="Big Data launcher libraries for DBR550"
@@ -384,6 +389,11 @@
             <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
             <library id="bigquery-connector-hadoop2-1.1.6-shaded.jar"/>
         </libraryNeededGroup>
+
+       <libraryNeededGroup id="CASSANDRA-GROUP-Databricks_5_5" name="CASSANDRA-GROUP-Databricks_5_5"
+                           description="Cassandra libraries for DBR550">
+           <library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
+       </libraryNeededGroup>
 
    </extension>
    <extension

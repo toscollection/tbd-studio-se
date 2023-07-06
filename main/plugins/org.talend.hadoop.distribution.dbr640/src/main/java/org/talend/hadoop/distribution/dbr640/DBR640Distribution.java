@@ -12,10 +12,7 @@
 // ============================================================================
 package org.talend.hadoop.distribution.dbr640;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.talend.hadoop.distribution.AbstractDatabricksDistribution;
 import org.talend.hadoop.distribution.ComponentType;
@@ -27,6 +24,7 @@ import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
 import org.talend.hadoop.distribution.condition.ComponentCondition;
+import org.talend.hadoop.distribution.constants.ModuleGroupName;
 import org.talend.hadoop.distribution.constants.SparkBatchConstant;
 import org.talend.hadoop.distribution.constants.SparkStreamingConstant;
 
@@ -35,6 +33,7 @@ import org.talend.hadoop.distribution.dbr640.modulegroup.DBR640SparkBatchModuleG
 import org.talend.hadoop.distribution.dbr640.modulegroup.DBR640SparkStreamingModuleGroup;
 import org.talend.hadoop.distribution.dbr640.modulegroup.node.DBR640AzureNodeModuleGroup;
 import org.talend.hadoop.distribution.dbr640.modulegroup.node.DBR640KinesisNodeModuleGroup;
+import org.talend.hadoop.distribution.utils.ModuleGroupsUtils;
 
 
 public class DBR640Distribution extends AbstractDatabricksDistribution implements SparkBatchComponent,
@@ -113,6 +112,13 @@ public class DBR640Distribution extends AbstractDatabricksDistribution implement
                 SparkStreamingConstant.KINESIS_INPUT_AVRO_COMPONENT
         ), DBR640KinesisNodeModuleGroup
                 .getModuleGroups(distribution, version));
+
+        //Cassandra
+        Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()),true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT),
+                cassandraConfigurationModuleGroups);
+
         return result;
 
     }

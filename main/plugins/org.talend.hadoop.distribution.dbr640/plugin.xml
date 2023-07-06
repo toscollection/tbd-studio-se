@@ -132,8 +132,13 @@
         <libraryNeeded id="guava-27.1-jre.jar" name="guava-27.1-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.1-jre"
                        context="plugin:org.talend.hadoop.distribution.dbr640"/>
  		<!-- GCS libraries -->
-        <libraryNeeded id="gcs-connector-hadoop2-2.1.6-shaded.jar" name="gcs-connector-hadoop2-2.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/gcs-connector/hadoop2-2.1.6/jar/shaded"
-                       context="plugin:org.talend.hadoop.distribution.dbr640"/> 
+        <libraryNeeded id="gcs-connector-hadoop2-2.1.6-shaded.jar" name="gcs-connector-hadoop2-2.1.6-shaded.jar"
+                       mvn_uri="mvn:com.google.cloud.bigdataoss/gcs-connector/hadoop2-2.1.6/jar/shaded"
+                       context="plugin:org.talend.hadoop.distribution.dbr640"/>
+        <!-- Cassandra -->
+        <libraryNeeded id="spark-cassandra-connector-assembly_2.11-2.5.2.jar" name="spark-cassandra-connector-assembly_2.11-2.5.2.jar"
+                       mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.11/2.5.2"
+                       context="plugin:org.talend.hadoop.distribution.dbr640"/>
 
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr640"
@@ -222,7 +227,12 @@
             <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
             <library id="bigquery-connector-hadoop2-1.1.6-shaded.jar"/>
         </libraryNeededGroup>
-        
+
+        <libraryNeededGroup id="CASSANDRA-GROUP-Databricks_6_4" name="CASSANDRA-GROUP-Databricks_6_4"
+                            description="Cassandra libraries for DBR640">
+            <library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
+        </libraryNeededGroup>
+
     </extension>
     <extension point="org.talend.core.runtime.classloader_provider"/>
 </plugin>
