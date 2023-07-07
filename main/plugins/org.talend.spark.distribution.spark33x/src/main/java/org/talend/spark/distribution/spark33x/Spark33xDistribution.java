@@ -205,7 +205,7 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     
     @Override 
     public boolean doSupportUniversalDataprocMode() {
-        return false;
+        return true;
     }
     
     @Override
@@ -387,5 +387,20 @@ public class Spark33xDistribution extends AbstractSparkDistribution
      */
     public boolean doSupportUniversalSynapseMode() {
         return true;
+    }
+    
+    @Override
+    public boolean doSupportStandaloneMode() {
+        return true;
+    }
+
+    @Override
+    public boolean doSupportEmbeddedMode() {
+        return false;
+    }
+    
+    @Override
+    public boolean doSupportHive1Standalone() {
+        return false;
     }
 }
