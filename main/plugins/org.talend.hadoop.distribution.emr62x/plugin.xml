@@ -4,8 +4,8 @@
     <extension point="org.talend.core.runtime.librariesNeeded">
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-                       id="spark-core_2.12-3.0.1.jar" name="spark-core_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1"/>
+                       id="spark-core_2.12-3.0.1-amzn-0.jar" name="spark-core_2.12-3.0.1-amzn-0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.0.1-amzn-0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
                        id="spark-hive_2.12-3.0.1.jar" name="spark-hive_2.12-3.0.1.jar"
@@ -524,8 +524,8 @@
                        mvn_uri="mvn:org.apache.sqoop/sqoop/1.4.7"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-                       id="spark-yarn_2.12-3.0.1.jar" name="spark-yarn_2.12-3.0.1.jar"
-                       mvn_uri="mvn:org.apache.spark/spark-yarn_2.12/3.0.1"/>
+                       id="spark-yarn_2.12-3.0.1-amzn-0.jar" name="spark-yarn_2.12-3.0.1-amzn-0.jar"
+                       mvn_uri="mvn:org.apache.spark/spark-yarn_2.12/3.0.1-amzn-0"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
                        id="jackson-core-asl-1.9.16-TALEND.jar" name="jackson-core-asl-1.9.16-TALEND.jar"
@@ -1061,7 +1061,7 @@
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="spark-avro_2.12-3.0.1-amzn-0.jar"/>
             <library id="spark-catalyst_2.12-3.0.1.jar"/>
-            <library id="spark-core_2.12-3.0.1.jar"/>
+            <library id="spark-core_2.12-3.0.1-amzn-0.jar"/>
             <library id="spark-kvstore_2.12-3.0.1.jar"/>
             <library id="spark-launcher_2.12-3.0.1.jar"/>
             <library id="spark-mllib_2.12-3.0.1.jar"/>
@@ -1072,7 +1072,7 @@
             <library id="spark-sql_2.12-3.0.1.jar"/>
             <library id="spark-tags_2.12-3.0.1.jar"/>
             <library id="spark-unsafe_2.12-3.0.1.jar"/>
-            <library id="spark-yarn_2.12-3.0.1.jar"/>
+            <library id="spark-yarn_2.12-3.0.1-amzn-0.jar"/>
 
             <library id="stream-2.9.6.jar"/>
             <library id="talend-mapred-lib-7.2.2.jar"/>
