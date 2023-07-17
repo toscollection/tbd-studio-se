@@ -540,6 +540,18 @@
                        mvn_uri="mvn:org.codehaus.jackson/jackson-jaxrs/1.9.13"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="jackson-module-jaxb-annotations-2.10.1.jar" name="jackson-module-jaxb-annotations-2.10.1.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.module/jackson-module-jaxb-annotations/2.10.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="jackson-jaxrs-base-2.10.1.jar" name="jackson-jaxrs-base-2.10.1.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-base/2.10.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
+                       id="jackson-jaxrs-json-provider-2.10.1.jar" name="jackson-jaxrs-json-provider-2.10.1.jar"
+                       mvn_uri="mvn:com.fasterxml.jackson.jaxrs/jackson-jaxrs-json-provider/2.10.1"/>
+
+        <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
                        id="hadoop-auth-3.2.1-amzn-2.jar" name="hadoop-auth-3.2.1-amzn-2.jar"
                        mvn_uri="mvn:org.apache.hadoop/hadoop-auth/3.2.1-amzn-2"/>
 
@@ -891,6 +903,9 @@
             <library id="jackson-dataformat-cbor-2.10.1.jar"/>
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar"/>
             <library id="jackson-jaxrs-1.9.13.jar"/>
+            <library id="jackson-module-jaxb-annotations-2.10.1.jar"/>
+            <library id="jackson-jaxrs-base-2.10.1.jar"/>
+            <library id="jackson-jaxrs-json-provider-2.10.1.jar"/>
             <library id="jackson-module-paranamer-2.10.1.jar"/>
             <library id="jackson-module-scala_2.12-2.10.1.jar"/>
             <library id="jackson-xc-1.9.13.jar"/>
