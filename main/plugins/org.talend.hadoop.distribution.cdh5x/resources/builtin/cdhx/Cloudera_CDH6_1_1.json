@@ -6373,10 +6373,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_slf4j_api_1_7_25_jar",
         "tagName" : "library"
       }, {
@@ -7023,14 +7019,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_6_1_14_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_slf4j_api_1_7_25_jar",
         "tagName" : "library"
       }, {
@@ -7627,10 +7615,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_slf4j_api_1_7_25_jar",
         "tagName" : "library"
       }, {
@@ -8012,10 +7996,6 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_libthrift_0_9_3_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -11349,10 +11329,6 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_jar",
-        "tagName" : "library"
-      }, {
-        "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDH6_1_1_slf4j_api_1_7_25_jar",
         "tagName" : "library"
       }, {
@@ -14144,22 +14120,6 @@
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_scala_xml_2_11_1_0_6_jar",
       "mvn_uri" : "mvn:org.scala-lang.modules/scala-xml_2.11/1.0.6/jar",
       "name" : "scala-xml_2.11-1.0.6.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_6_1_14_jar",
-      "mvn_uri" : "mvn:org.mortbay.jetty/servlet-api-2.5/6.1.14/jar",
-      "name" : "servlet-api-2.5-6.1.14.jar",
-      "tagName" : "libraryNeeded"
-    }, {
-      "childNodes" : [ ],
-      "context" : "plugin:org.talend.hadoop.distribution.cdh5x",
-      "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDH6_1_1_servlet_api_2_5_jar",
-      "mvn_uri" : "mvn:javax.servlet/servlet-api/2.5/jar",
-      "name" : "servlet-api-2.5.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
