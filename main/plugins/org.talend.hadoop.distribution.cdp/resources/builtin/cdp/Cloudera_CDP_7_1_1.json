@@ -8374,7 +8374,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_8_42_1_hadoop_aws_3_1_1_7_1_8_42_1_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_aws_3_1_1_7_1_1_0_565_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -8652,7 +8652,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_8_42_1_hadoop_aws_3_1_1_7_1_8_42_1_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_aws_3_1_1_7_1_1_0_565_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -9949,9 +9949,9 @@
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
-      "id" : "DYNAMIC_Cloudera_CDP7_1_8_42_1_hadoop_aws_3_1_1_7_1_8_42_1_jar",
-      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-aws/3.1.1.7.1.8.42-1",
-      "name" : "hadoop-aws-3.1.1.7.1.8.42-1.jar",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hadoop_aws_3_1_1_7_1_1_0_565_jar",
+      "mvn_uri" : "mvn:org.apache.hadoop/hadoop-aws/3.1.1.7.1.1.0-565",
+      "name" : "hadoop-aws-3.1.1.7.1.1.0-565.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
