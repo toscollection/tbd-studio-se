@@ -202,7 +202,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
         
         String azureClientCertificate = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_CLIENT_CERTIFICATE));
         azureClientCertificateText.setText(azureClientCertificate);
-        azureClientCertificateText.setVisible(useSynapseCertButton.getSelection() && useSynapseCertButton.getSelection());
+        azureClientCertificateText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName) && useSynapseCertButton.getSelection());
         updatePasswordFields();
         updateStatus(IStatus.OK, EMPTY_STRING);
     }
@@ -393,6 +393,7 @@ public class SynapseInfoForm extends AbstractHadoopClusterInfoForm<HadoopCluster
                 azureClientIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
                 azureDirectoryIdText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
                 azureClientKeyText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName));
+                azureClientCertificateText.setVisible(ESynapseAuthType.AAD.getDisplayName().equals(credentialName) && useSynapseCertButton.getSelection());
                 
                 checkFieldsValue();
             }
