@@ -11,7 +11,7 @@
 	boolean verbose = "true".equals(ElementParameterParser.getValue(node,"__VERBOSE__"));
 	boolean append = "true".equals(ElementParameterParser.getValue(node,"__APPEND__"));
 	boolean direct = "true".equals(ElementParameterParser.getValue(node,"__DIRECT__"));
-	
+
 	boolean compress = "true".equals(ElementParameterParser.getValue(node,"__COMPRESS__"));
 	boolean useHadoopCodec = "true".equals(ElementParameterParser.getValue(node,"__DEFINE_HADOOP_CODEC__"));
 	String hadoopCodec = ElementParameterParser.getValue(node,"__HADOOP_CODEC__");
@@ -91,7 +91,7 @@ String passwordFieldName = "__PASSWORD__";
 
 <%@ include file="@{org.talend.designer.components.localprovider}/components/templates/password.javajet"%>	
 
-String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "-Dmapreduce.job.user.classpath.first=true" 
+String[] cmd_<%=cid %> = new String[] {"sqoop", "import", "-Dmapreduce.job.user.classpath.first="+"<%=userClassPath%>"
 <%
 for (Map<String,String> genericArg : genericArgs) {
 	String value = genericArg.get("ADDITIONAL_VALUE");

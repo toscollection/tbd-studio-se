@@ -19,6 +19,8 @@
 	final boolean isLog4jEnabled = ("true").equals(ElementParameterParser.getValue(node.getProcess(), "__LOG4J_ACTIVATE__"));
 	
 	boolean useCommandLine = "true".equals(ElementParameterParser.getValue(node,"__USE_COMMANDLINE__"));
+	boolean isUserClassPath = "true".equals(ElementParameterParser.getValue(node,"__USER_CLASSPATH_FIRST__"));
+	String userClassPath = isUserClassPath ? "true" : "false";
 	
 	if(useCommandLine) {
 %>
