@@ -405,6 +405,11 @@
             <library id="xbean-asm9-shaded-4.20.jar"/>
             <library id="zstd-jni-1.5.0-4.jar"/>
         </libraryNeededGroup>
+        
+        <!-- Spark Avro group -->
+        <libraryNeededGroup description="avro dependencies if spark avro is not in classpath" id="AVRO-GROUP-SPARK_3_2_x" name="AVRO-GROUP-SPARK_3_2_x">
+            <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
+        </libraryNeededGroup>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="talend-bigdata-aws-lib-1.1.0.jar" name="talend-bigdata-aws-lib-1.1.0.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-aws-lib/1.1.0"/>
 
