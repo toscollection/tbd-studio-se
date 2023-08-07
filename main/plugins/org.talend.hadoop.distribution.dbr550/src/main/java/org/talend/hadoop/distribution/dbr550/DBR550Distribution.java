@@ -96,6 +96,25 @@ public class DBR550Distribution extends AbstractDatabricksDistribution implement
         result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.CASSANDRA_CONFIGURATION_COMPONENT),
                 cassandraConfigurationModuleGroups);
 
+        //Dynamo DB
+        Set<DistributionModuleGroup> dynamoDBBatchModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.DYNAMODB_BATCH.get(this.getVersion()), true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.DYNAMODB_CONFIGURATION_COMPONENT),
+                dynamoDBBatchModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.DYNAMODB_INPUT_COMPONENT),
+                dynamoDBBatchModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.DYNAMODB_OUTPUT_COMPONENT),
+                dynamoDBBatchModuleGroups);
+
+        Set<DistributionModuleGroup> dynamoDBStreamingModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.DYNAMODB_STREAMING.get(this.getVersion()), true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,SparkStreamingConstant.DYNAMODB_CONFIGURATION_COMPONENT),
+                dynamoDBStreamingModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,SparkStreamingConstant.DYNAMODB_INPUT_COMPONENT),
+                dynamoDBStreamingModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,SparkStreamingConstant.DYNAMODB_OUTPUT_COMPONENT),
+                dynamoDBStreamingModuleGroups);
+
         return result;
 
     }
