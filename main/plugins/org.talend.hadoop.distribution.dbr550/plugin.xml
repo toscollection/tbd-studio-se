@@ -3,7 +3,17 @@
 <plugin>
    <extension
          point="org.talend.core.runtime.librariesNeeded">
-		<libraryNeeded
+       <libraryNeeded
+           context="org.talend.hadoop.distribution.dbr550"
+           id="aws-java-sdk-dynamodb-1.11.760.jar" name="aws-java-sdk-dynamodb-1.11.760.jar"
+           mvn_uri="mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.760">
+       </libraryNeeded>
+       <libraryNeeded
+           context="org.talend.hadoop.distribution.dbr550"
+           id="aws-java-sdk-core-1.11.760.jar" name="aws-java-sdk-core-1.11.760.jar"
+           mvn_uri="mvn:com.amazonaws/aws-java-sdk-core/1.11.760">
+       </libraryNeeded>
+       <libraryNeeded
            id="commons-pool2-2.4.2.jar" name="commons-pool2-2.4.2.jar"
            mvn_uri="mvn:org.apache.commons/commons-pool2/2.4.2"
            context="plugin:org.talend.hadoop.distribution.dbr550"/>
@@ -73,7 +83,13 @@
             name="commons-logging-1.1.3.jar"
             mvn_uri="mvn:commons-logging/commons-logging/1.1.3">
         </libraryNeeded>
-        
+
+       <libraryNeeded
+               context="org.talend.hadoop.distribution.dbr550"
+               id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar"
+               mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0">
+       </libraryNeeded>
+
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
             id="hadoop-common-2.7.3.jar"
@@ -360,39 +376,57 @@
         </libraryNeededGroup>
         <!-- HiveOnSpark group -->
         <libraryNeededGroup
-                description="Hive On SPARK libraries for DBR550"
-                id="HIVEONSPARK-LIB-MRREQUIRED-DBR550"
-                name="HIVEONSPARK-LIB-MRREQUIRED-DBR550">
+               description="Hive On SPARK libraries for DBR550"
+               id="HIVEONSPARK-LIB-MRREQUIRED-DBR550"
+               name="HIVEONSPARK-LIB-MRREQUIRED-DBR550">
              <library id="spark-hive_2.11-2.4.3.jar"/>
         </libraryNeededGroup>
         
         <!-- Spark Azure group -->
         <libraryNeededGroup
-                description="Hive On SPARK libraries for DBR550"
-                id="SPARK-AZURE-LIB-MRREQUIRED-DBR550"
-                name="SPARK-AZURE-LIB-MRREQUIRED-DBR550">
+               description="Hive On SPARK libraries for DBR550"
+               id="SPARK-AZURE-LIB-MRREQUIRED-DBR550"
+               name="SPARK-AZURE-LIB-MRREQUIRED-DBR550">
              <library id="hadoop-azure-datalake-2.8.1.jar"/>
              <library id="azure-data-lake-store-sdk-2.3.1.jar"/>            
         </libraryNeededGroup>
 
         <libraryNeededGroup
-                description="Libraries for GCS"
-                id="GCS-GROUP-Databricks_5_5"
-                name="GCS-GROUP-Databricks_5_5">
+               description="Libraries for GCS"
+               id="GCS-GROUP-Databricks_5_5"
+               name="GCS-GROUP-Databricks_5_5">
             <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
         </libraryNeededGroup>
 
         <libraryNeededGroup
-                description="Libraries for BigQuery"
-                id="BIGQUERY-GROUP-Databricks_5_5"
-                name="BIGQUERY-GROUP-Databricks_5_5">
+               description="Libraries for BigQuery"
+               id="BIGQUERY-GROUP-Databricks_5_5"
+               name="BIGQUERY-GROUP-Databricks_5_5">
             <library id="gcs-connector-hadoop2-2.1.6-shaded.jar"/>
             <library id="bigquery-connector-hadoop2-1.1.6-shaded.jar"/>
         </libraryNeededGroup>
 
-       <libraryNeededGroup id="CASSANDRA-GROUP-Databricks_5_5" name="CASSANDRA-GROUP-Databricks_5_5"
-                           description="Cassandra libraries for DBR550">
+       <libraryNeededGroup
+               description="Cassandra libraries for DBR550"
+               id="CASSANDRA-GROUP-Databricks_5_5"
+               name="CASSANDRA-GROUP-Databricks_5_5">
            <library id="spark-cassandra-connector-assembly_2.11-2.5.2.jar"/>
+       </libraryNeededGroup>
+
+       <libraryNeededGroup
+               description="Dynamo DB libraries for DBR550 in batch"
+               id="DYNAMODB-BATCH-GROUP-Databricks_5_5"
+               name="DYNAMODB-BATCH-GROUP-Databricks_5_5">
+           <library id="aws-java-sdk-core-1.11.760.jar"/>
+           <library id="aws-java-sdk-dynamodb-1.11.760.jar"/>
+           <library id="emr-dynamodb-hadoop-4.7.0.jar"/>
+       </libraryNeededGroup>
+
+       <libraryNeededGroup
+               description="Dynamo DB libraries for DBR550 in streaming"
+               id="DYNAMODB-STREAMING-GROUP-Databricks_5_5"
+               name="DYNAMODB-STREAMING-GROUP-Databricks_5_5">
+           <group id="DYNAMODB-BATCH-GROUP-Databricks_5_5"/>
        </libraryNeededGroup>
 
    </extension>

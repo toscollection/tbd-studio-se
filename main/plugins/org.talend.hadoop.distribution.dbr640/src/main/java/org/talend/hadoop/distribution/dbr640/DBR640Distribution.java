@@ -113,6 +113,25 @@ public class DBR640Distribution extends AbstractDatabricksDistribution implement
         ), DBR640KinesisNodeModuleGroup
                 .getModuleGroups(distribution, version));
 
+        //Dynamo DB
+        Set<DistributionModuleGroup> dynamoDBBatchModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.DYNAMODB_BATCH.get(this.getVersion()), true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.DYNAMODB_CONFIGURATION_COMPONENT),
+                dynamoDBBatchModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.DYNAMODB_INPUT_COMPONENT),
+                dynamoDBBatchModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKBATCH,SparkBatchConstant.DYNAMODB_OUTPUT_COMPONENT),
+                dynamoDBBatchModuleGroups);
+
+        Set<DistributionModuleGroup> dynamoDBStreamingModuleGroups = ModuleGroupsUtils.getModuleGroups(
+                distribution, version, (String) null, ModuleGroupName.DYNAMODB_STREAMING.get(this.getVersion()), true );
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,SparkStreamingConstant.DYNAMODB_CONFIGURATION_COMPONENT),
+                dynamoDBStreamingModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,SparkStreamingConstant.DYNAMODB_INPUT_COMPONENT),
+                dynamoDBStreamingModuleGroups);
+        result.put(new NodeComponentTypeBean(ComponentType.SPARKSTREAMING,SparkStreamingConstant.DYNAMODB_OUTPUT_COMPONENT),
+                dynamoDBStreamingModuleGroups);
+
         //Cassandra
         Set<DistributionModuleGroup> cassandraConfigurationModuleGroups = ModuleGroupsUtils.getModuleGroups(
                 distribution, version, (String) null, ModuleGroupName.CASSANDRA.get(this.getVersion()),true );
