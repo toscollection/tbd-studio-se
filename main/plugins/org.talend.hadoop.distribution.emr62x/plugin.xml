@@ -916,6 +916,13 @@
         <!-- HBase group  -->
         <libraryNeededGroup description="HBase libraries for emr62x" id="HBASE-GROUP-EMR_62_x" name="HBASE-GROUP-EMR_62_x"  >
             <group id="HDFS-GROUP-EMR_62_x"/>
+            <library id="hbase-common-2.2.6-amzn-0.jar" />
+            <library id="hbase-hadoop-compat-2.2.6-amzn-0.jar"/>
+            <library id="hbase-server-2.2.6-amzn-0.jar" />
+            <library id="hbase-shaded-miscellaneous-2.2.1.jar"/>
+            <library id="hbase-shaded-client-2.2.6-amzn-0.jar"/>
+            <library id="hbase-protocol-shaded-2.2.6-amzn-0.jar"/>
+            <library id="hive-hbase-handler-3.1.2-amzn-3.jar"/>
             <library id="zookeeper-3.4.14.jar"/>
         </libraryNeededGroup>
 
