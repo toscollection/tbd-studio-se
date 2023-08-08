@@ -8,8 +8,8 @@
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.13.3">
         <!ENTITY scala_version "2.12">
+        <!ENTITY spark_version "3.3.1">
         <!ENTITY snakeyaml_version "1.33">
-        <!ENTITY scala_version "2.12">
         <!ENTITY netty_version "4.1.68.Final">
         <!ENTITY woodstox_version "6.4.0">
         <!ENTITY kafka_version "2.8.2">
@@ -193,22 +193,22 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="scala-xml_2.12-1.2.0.jar" name="scala-xml_2.12-1.2.0.jar" mvn_uri="mvn:org.scala-lang.modules/scala-xml_2.12/1.2.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="slf4j-api-1.7.32.jar" name="slf4j-api-1.7.32.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.32"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="snakeyaml-&snakeyaml_version;.jar" name="snakeyaml-&snakeyaml_version;.jar" mvn_uri="mvn:org.yaml/snakeyaml/&snakeyaml_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-catalyst_2.12-3.3.0.jar" name="spark-catalyst_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-core_2.12-3.3.0.jar" name="spark-core_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-core_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-hive_2.12-3.3.0.jar" name="spark-hive_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-hive_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-hive-thriftserver_2.12-3.3.0.jar" name="spark-hive-thriftserver_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-kubernetes_2.12-3.3.0.jar" name="spark-kubernetes_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-kubernetes_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-kvstore_2.12-3.3.0.jar" name="spark-kvstore_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-kvstore_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-launcher_2.12-3.3.0.jar" name="spark-launcher_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-launcher_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-mllib_2.12-3.3.0.jar" name="spark-mllib_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-mllib_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-mllib-local_2.12-3.3.0.jar" name="spark-mllib-local_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-local_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-network-common_2.12-3.3.0.jar" name="spark-network-common_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-network-shuffle_2.12-3.3.0.jar" name="spark-network-shuffle_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-network-shuffle_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-sql_2.12-3.3.0.jar" name="spark-sql_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-tags_2.12-3.3.0.jar" name="spark-tags_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-tags_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-streaming_2.12-3.3.0.jar" name="spark-streaming_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-unsafe_2.12-3.3.0.jar" name="spark-unsafe_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.12/3.3.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-yarn_2.12-3.3.0.jar" name="spark-yarn_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_2.12/3.3.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-catalyst_&scala_version;-&spark_version;.jar" name="spark-catalyst_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-core_&scala_version;-&spark_version;.jar" name="spark-core_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-core_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-hive_&scala_version;-&spark_version;.jar" name="spark-hive_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-hive_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-hive-thriftserver_&scala_version;-&spark_version;.jar" name="spark-hive-thriftserver_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-hive-thriftserver_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-kubernetes_&scala_version;-&spark_version;.jar" name="spark-kubernetes_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-kubernetes_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-kvstore_&scala_version;-&spark_version;.jar" name="spark-kvstore_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-kvstore_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-launcher_&scala_version;-&spark_version;.jar" name="spark-launcher_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-launcher_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-mllib_&scala_version;-&spark_version;.jar" name="spark-mllib_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-mllib_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-mllib-local_&scala_version;-&spark_version;.jar" name="spark-mllib-local_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-mllib-local_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-network-common_&scala_version;-&spark_version;.jar" name="spark-network-common_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-network-shuffle_&scala_version;-&spark_version;.jar" name="spark-network-shuffle_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-network-shuffle_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-sql_&scala_version;-&spark_version;.jar" name="spark-sql_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-sql_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-tags_&scala_version;-&spark_version;.jar" name="spark-tags_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-tags_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-streaming_&scala_version;-&spark_version;.jar" name="spark-streaming_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-unsafe_&scala_version;-&spark_version;.jar" name="spark-unsafe_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_&scala_version;/&spark_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-yarn_&scala_version;-&spark_version;.jar" name="spark-yarn_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_&scala_version;/&spark_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="stax2-api-4.2.1.jar" name="stax2-api-4.2.1.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/4.2.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="stream-2.9.6.jar" name="stream-2.9.6.jar" mvn_uri="mvn:com.clearspring.analytics/stream/2.9.6"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="univocity-parsers-2.9.1.jar" name="univocity-parsers-2.9.1.jar" mvn_uri="mvn:com.univocity/univocity-parsers/2.9.1"/>
@@ -235,7 +235,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="snappy-java-1.1.8.4.jar" name="snappy-java-1.1.8.4.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-avro_2.12-3.3.0.jar" name="spark-avro_2.12-3.3.0.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.12/3.3.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-avro_&scala_version;-&spark_version;.jar" name="spark-avro_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-avro_&scala_version;/&spark_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-snowflake_2.12-2.10.0-spark_3.2.jar" name="spark-snowflake_2.12-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.10.0-spark_3.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="snowflake-jdbc-3.13.14.jar" name="snowflake-jdbc-3.13.14.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.14"/>
@@ -381,22 +381,22 @@
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="snakeyaml-&snakeyaml_version;.jar"/>
             <library id="snappy-java-1.1.8.2.jar"/>
-            <library id="spark-catalyst_2.12-3.3.0.jar"/>
-            <library id="spark-avro_2.12-3.3.0.jar"/>
-            <library id="spark-core_2.12-3.3.0.jar"/>
-            <library id="spark-hive_2.12-3.3.0.jar"/>
-            <library id="spark-kubernetes_2.12-3.3.0.jar"/>
-            <library id="spark-kvstore_2.12-3.3.0.jar"/>
-            <library id="spark-launcher_2.12-3.3.0.jar"/>
-            <library id="spark-mllib_2.12-3.3.0.jar"/>
-            <library id="spark-mllib-local_2.12-3.3.0.jar"/>
-            <library id="spark-network-common_2.12-3.3.0.jar"/>
-            <library id="spark-network-shuffle_2.12-3.3.0.jar"/>
-            <library id="spark-sql_2.12-3.3.0.jar"/>
-            <library id="spark-streaming_2.12-3.3.0.jar"/>
-            <library id="spark-tags_2.12-3.3.0.jar"/>
-            <library id="spark-unsafe_2.12-3.3.0.jar"/>
-            <library id="spark-yarn_2.12-3.3.0.jar"/>
+            <library id="spark-catalyst_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-core_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-hive_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-kubernetes_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-kvstore_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-launcher_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-mllib_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-mllib-local_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-network-common_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-network-shuffle_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-sql_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-streaming_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-tags_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-unsafe_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-yarn_&scala_version;-&spark_version;.jar"/>
             <library id="stax2-api-4.2.1.jar"/>
             <library id="stream-2.9.6.jar"/>
             <library id="univocity-parsers-2.9.1.jar"/>
@@ -458,8 +458,8 @@
             <library id="orc-core-1.7.4.jar"/>
             <library id="orc-mapreduce-1.7.4.jar"/>
             <library id="orc-shims-1.7.4.jar"/>
-            <library id="spark-hive_2.12-3.3.0.jar"/>
-            <library id="spark-hive-thriftserver_2.12-3.3.0.jar"/>
+            <library id="spark-hive_&scala_version;-&spark_version;.jar"/>
+            <library id="spark-hive-thriftserver_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
 
         <!-- DeltaLake group -->
@@ -488,7 +488,7 @@
         <libraryNeededGroup description="Redshift libraries for spark33x" id="REDSHIFT-BATCH-GROUP-SPARK_3_3_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_3_x">
             <library id="snappy-java-1.1.8.4.jar"/>
             <library id="spark-redshift_2.12-5.1.0.jar"/>
-            <library id="spark-avro_2.12-3.3.0.jar"/>
+            <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
 
         <!-- Snowflake group -->
@@ -560,19 +560,19 @@
             point="org.talend.core.runtime.classloader_provider">
         <classloader
                 index="HIVE:SPARK:SPARK_3_3_x:STANDALONE"
-                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;`pper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.9.jar;httpcore-4.4.15.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.7.jar;hive-serde-2.3.7.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_2.12-3.3.0.jar;spark-hive_2.12-3.3.0.jar">
+                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;`pper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.9.jar;httpcore-4.4.15.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.7.jar;hive-serde-2.3.7.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_&scala_version;-&spark_version;.jar;spark-hive_&scala_version;-&spark_version;.jar">
         </classloader>
         <classloader
                 index="HIVE2:SPARK:SPARK_3_3_x:STANDALONE"
-                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;jackson-mapper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.7.jar;httpcore-4.4.14.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.9.jar;hive-serde-2.3.9.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_2.12-3.3.0.jar;spark-hive_2.12-3.3.0.jar">
+                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;jackson-mapper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.7.jar;httpcore-4.4.14.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.9.jar;hive-serde-2.3.9.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_&scala_version;-&spark_version;.jar;spark-hive_&scala_version;-&spark_version;.jar">
         </classloader>
         <classloader
                 index="HIVE:SPARK:SPARK_3_3_x:STANDALONE?USE_KRB"
-                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;jackson-mapper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.7.jar;httpcore-4.4.14.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.9.jar;hive-serde-2.3.9.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_2.12-3.3.0.jar;spark-hive_2.12-3.3.0.jar">
+                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;jackson-mapper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.7.jar;httpcore-4.4.14.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.9.jar;hive-serde-2.3.9.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_&scala_version;-&spark_version;.jar;spark-hive_&scala_version;-&spark_version;.jar">
         </classloader>
         <classloader
                 index="HIVE2:SPARK:SPARK_3_3_x:STANDALONE?USE_KRB"
-                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;jackson-mapper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.7.jar;httpcore-4.4.14.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.9.jar;hive-serde-2.3.9.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_2.12-3.3.0.jar;spark-hive_2.12-3.3.0.jar">
+                libraries="hadoop-client-3.2.3.jar;commons-lang3-3.12.0.jar;commons-configuration2-&commons-configuration2_version;.jar;zookeeper-3.6.2.jar;jackson-mapper-asl-&jackson-mapper-asl_version;.jar;curator-framework-2.13.0.jar;jackson-core-asl-1.9.13.jar;curator-client-2.13.0.jar;jersey-client-2.34.jar;jersey-common-2.34.jar;commons-io-2.11.0.jar;hive-metastore-2.3.7.jar;httpcore-4.4.14.jar;httpclient-4.5.13.jar;libthrift-0.14.0.jar;commons-cli-1.5.jar;commons-codec-1.15.jar;commons-collections-3.2.2.jar;commons-lang-2.6.jar;commons-logging-1.1.3.jar;guava-27.1-jre.jar;hadoop-auth-3.2.3.jar;hadoop-client-api-3.3.4.jar;hadoop-common-3.2.3.jar;hadoop-hdfs-client-3.3.4.jar;hadoop-mapreduce-client-common-3.2.3.jar;hadoop-mapreduce-client-core-3.2.3.jar;hadoop-mapreduce-client-jobclient-3.2.3.jar;hadoop-yarn-api-3.2.3.jar;hadoop-yarn-client-3.2.3.jar;hadoop-yarn-common-3.2.3.jar;hive-beeline-2.3.9.jar;hive-cli-2.3.9.jar;hive-common-2.3.9.jar;hive-jdbc-2.3.9.jar;hive-metastore-2.3.9.jar;hive-serde-2.3.9.jar;hive-service-rpc-3.1.2.jar;hive-shims-2.3.9.jar;htrace-core4-4.1.0-incubating.jar;kerb-admin-1.0.0.jar;kerb-client-1.0.0.jar;kerb-common-1.0.0.jar;kerb-core-1.0.0.jar;kerb-crypto-1.0.0.jar;kerb-identity-1.0.0.jar;kerb-server-1.0.0.jar;kerb-simplekdc-1.0.0.jar;kerb-util-1.0.0.jar;kerby-asn1-1.0.0.jar;kerby-config-1.0.0.jar;kerby-pkix-1.0.0.jar;kerby-util-1.0.0.jar;kerby-xdr-1.0.0.jar;reload4j-1.2.22.jar;protobuf-java-3.19.6.jar;slf4j-api-1.7.32.jar;stax2-api-4.2.1.jar;woodstox-core-&woodstox_version;.jar;spark-hive-thriftserver_&scala_version;-&spark_version;.jar;spark-hive_&scala_version;-&spark_version;.jar">
         </classloader>
         <classloader
                 index="HBASE:SPARK:SPARK_3_3_x"
