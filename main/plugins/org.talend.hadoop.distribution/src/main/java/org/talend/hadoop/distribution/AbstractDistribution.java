@@ -163,6 +163,10 @@ public abstract class AbstractDistribution {
     public boolean doSupportUniversalStandaloneMode() {
         return false;
     }
+    
+    public boolean doSupportSparkSubmitScripts() {
+    	return false;
+    }
 
     public boolean doSupportS3() {
         return false;

@@ -66,6 +66,7 @@
     "UNIV_STANDALONE_MASTER": "spark://localhost:7077",
     "UNIV_STANDALONE_EXEC_MEMORY": "20G",
     "UNIV_STANDALONE_EXEC_CORE": "100",
+    "UNIV_SPARK_SUBMIT_SCRIPT_HOME": "/opt/mapr/spark/spark-3.3.1/",
     "SYNAPSE_ENDPOINT":   "https://xxxx.dev.azuresynapse.net", 
     "SYNAPSE_TOKEN": "token",
     "SPARK_POOL_NAME": "sparkpools",
