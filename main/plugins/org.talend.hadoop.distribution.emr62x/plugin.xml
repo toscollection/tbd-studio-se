@@ -488,8 +488,8 @@
                        mvn_uri="mvn:org.apache.hbase.thirdparty/hbase-shaded-miscellaneous/2.2.1"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
-                       id="hbase-shaded-client-2.2.6-amzn-0.jar" name="hbase-shaded-client-2.2.6-amzn-0.jar"
-                       mvn_uri="mvn:org.apache.hbase/hbase-shaded-client/2.2.6-amzn-0"/>
+                       id="hbase-shaded-protobuf-2.2.1.jar" name="hbase-shaded-protobuf-2.2.1.jar"
+                       mvn_uri="mvn:org.apache.hbase/hbase-shaded-protobuf/2.2.1"/>
 
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.emr62x"
                        id="hbase-protocol-shaded-2.2.6-amzn-0.jar" name="hbase-protocol-shaded-2.2.6-amzn-0.jar"
@@ -928,6 +928,7 @@
             <library id="hbase-protocol-shaded-2.2.6-amzn-0.jar"/>
             <library id="hive-hbase-handler-3.1.2-amzn-3.jar"/>
             <library id="zookeeper-3.4.14.jar"/>
+            <library id="hbase-shaded-protobuf-2.2.1.jar"/>
         </libraryNeededGroup>
 
         <!-- Hive group -->
