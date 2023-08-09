@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.talend.core.hadoop.IHadoopDistributionService;
+import org.talend.core.model.general.Project;
 import org.talend.core.runtime.hd.IDistributionsManager;
 import org.talend.core.runtime.hd.IDynamicDistributionManager;
 import org.talend.core.runtime.hd.IHDistribution;
@@ -26,6 +27,7 @@ import org.talend.hadoop.distribution.constants.apache.IApacheDistribution;
 import org.talend.hadoop.distribution.constants.emr.IAmazonEMRDistribution;
 import org.talend.hadoop.distribution.dynamic.DynamicDistributionManager;
 import org.talend.hadoop.distribution.dynamic.template.IDynamicDistributionTemplate;
+import org.talend.hadoop.distribution.dynamic.util.DynamicDistributionUtils;
 import org.talend.hadoop.distribution.helper.DistributionHelper;
 import org.talend.hadoop.distribution.helper.DistributionsManager;
 import org.talend.hadoop.distribution.helper.HadoopDistributionsHelper;
@@ -153,5 +155,10 @@ public class HadoopDistributionService implements IHadoopDistributionService {
     @Override
     public IDynamicDistributionManager getDynamicDistributionManager() {
         return DynamicDistributionManager.getInstance();
+    }
+
+    @Override
+    public void checkAndMigrateDistributionProxyCredential(Project project) throws Exception {
+        DynamicDistributionUtils.checkAndMigrateDistributionProxyCredential(project);
     }
 }

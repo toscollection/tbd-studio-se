@@ -18,6 +18,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.preference.IPersistentPreferenceStore;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.preferences.ScopedPreferenceStore;
+import org.talend.core.nexus.TalendLibsServerManager;
 import org.talend.core.runtime.CoreRuntimePlugin;
 import org.talend.core.runtime.projectsetting.ProjectPreferenceManager;
 import org.talend.utils.security.StudioEncryption;
@@ -28,6 +29,8 @@ import org.talend.utils.security.StudioEncryption;
 public abstract class AbstractDynamicDistributionPreference implements IDynamicDistributionPreference {
 
     private IPreferenceStore prefStore;
+
+    private TalendLibsServerManager libsManager = TalendLibsServerManager.getInstance();
 
     abstract protected String getPrefKeyOverrideDefaultSetup();
 
@@ -110,7 +113,14 @@ public abstract class AbstractDynamicDistributionPreference implements IDynamicD
 
     @Override
     public String getUsername() {
-        return prefStore.getString(getPrefKeyUsername());
+        String[] credentials = getCredentialsFromSecureStorage();
+        if (credentials != null && StringUtils.isNotBlank(credentials[0])) {
+            return credentials[0];
+        }
+        if (getDefaultRepository().equals(getRepository())) {
+            return getDefaultUsername();
+        }
+        return "";
     }
 
     @Override
@@ -120,16 +130,20 @@ public abstract class AbstractDynamicDistributionPreference implements IDynamicD
 
     @Override
     public void setUsername(String username) {
-        prefStore.setValue(getPrefKeyUsername(), username);
+        setUsernameToSecureStorage(username);
     }
 
     @Override
     public String getPassword() {
-        String password = prefStore.getString(getPrefKeyPassword());
-        if (StringUtils.isNotEmpty(password)) {
-            password = decrypt(password);
+        String[] credentials = getCredentialsFromSecureStorage();
+        if (credentials != null && StringUtils.isNotBlank(credentials[0])) {
+            // username exist in storage, return pair password
+            return credentials[1];
         }
-        return password;
+        if (getDefaultRepository().equals(getRepository())) {
+            return decrypt(getDefaultPassword());
+        }
+        return "";
     }
 
     @Override
@@ -142,12 +156,13 @@ public abstract class AbstractDynamicDistributionPreference implements IDynamicD
         if (password == null) {
             password = ""; //$NON-NLS-1$
         }
-        prefStore.setValue(getPrefKeyPassword(), encrypt(password));
+        setPasswordToSecureStorage(password);
     }
 
     @Override
     public void save() throws Exception {
         ((IPersistentPreferenceStore) prefStore).save();
+        saveCredentialsToSecureStorage();
     }
 
     @Override
@@ -168,12 +183,32 @@ public abstract class AbstractDynamicDistributionPreference implements IDynamicD
         // save();
     }
 
-    protected String encrypt(String str) {
+    public String[] getCredentialsFromSecureStorage() {
+        return libsManager.getProxyArtifactCredentials(getRepository(), null, getPrefKeyUsername(), getPrefKeyPassword());
+    }
+
+    public void setUsernameToSecureStorage(String username) {
+        libsManager.saveProxyArtifactCredentialsUserName(getRepository(), null, getPrefKeyUsername(), username, false);
+    }
+
+    public void setPasswordToSecureStorage(String password) {
+        libsManager.saveProxyArtifactCredentialsPassword(getRepository(), null, getPrefKeyPassword(), password, false);
+    }
+
+    public void saveCredentialsToSecureStorage() {
+        libsManager.flushSecurityStorage();
+    }
+
+    public IPreferenceStore getPrefStore() {
+        return prefStore;
+    }
+
+    public String encrypt(String str) {
         return StudioEncryption.getStudioEncryption(StudioEncryption.EncryptionKeyName.SYSTEM).encrypt(str);
     }
 
 
-    protected String decrypt(String str) {
+    public String decrypt(String str) {
         return StudioEncryption.getStudioEncryption(StudioEncryption.EncryptionKeyName.SYSTEM).decrypt(str);
     }
 }

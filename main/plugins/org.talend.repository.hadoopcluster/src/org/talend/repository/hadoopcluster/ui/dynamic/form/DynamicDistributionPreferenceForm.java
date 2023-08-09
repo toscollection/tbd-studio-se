@@ -859,17 +859,18 @@ public class DynamicDistributionPreferenceForm extends AbstractDynamicDistributi
                     changed = changed || dynamicDistributionPreference.overrideDefaultSetup() != overrideDefaultSetup;
                     dynamicDistributionPreference.setOverrideDefaultSetup(overrideDefaultSetup);
 
-                    String password = passwordText.getText();
-                    changed = changed || !StringUtils.equals(dynamicDistributionPreference.getPassword(), password);
-                    dynamicDistributionPreference.setPassword(password);
-
                     String repository = repositoryText.getText();
                     changed = changed || !StringUtils.equals(dynamicDistributionPreference.getRepository(), repository);
                     dynamicDistributionPreference.setRepository(repository);
 
+                    // save username password to secure storage according repository
                     String username = userText.getText();
                     changed = changed || !StringUtils.equals(dynamicDistributionPreference.getUsername(), username);
                     dynamicDistributionPreference.setUsername(username);
+
+                    String password = passwordText.getText();
+                    changed = changed || !StringUtils.equals(dynamicDistributionPreference.getPassword(), password);
+                    dynamicDistributionPreference.setPassword(password);
 
                     dynamicDistributionPreference.save();
                     isComplete();
@@ -920,10 +921,6 @@ public class DynamicDistributionPreferenceForm extends AbstractDynamicDistributi
                     dynamicDistributionPreference
                             .setOverrideDefaultSetup(overrideDefaultSetup);
 
-                    String password = dynamicDistributionPreference.getDefaultPassword();
-                    changed = changed || !StringUtils.equals(dynamicDistributionPreference.getPassword(), password);
-                    dynamicDistributionPreference.setPassword(password);
-
                     String repository = dynamicDistributionPreference.getDefaultRepository();
                     changed = changed || !StringUtils.equals(dynamicDistributionPreference.getRepository(), repository);
                     dynamicDistributionPreference.setRepository(repository);
@@ -931,6 +928,10 @@ public class DynamicDistributionPreferenceForm extends AbstractDynamicDistributi
                     String username = dynamicDistributionPreference.getDefaultUsername();
                     changed = changed || !StringUtils.equals(dynamicDistributionPreference.getUsername(), username);
                     dynamicDistributionPreference.setUsername(username);
+
+                    String password = dynamicDistributionPreference.getDefaultPassword();
+                    changed = changed || !StringUtils.equals(dynamicDistributionPreference.getPassword(), password);
+                    dynamicDistributionPreference.setPassword(password);
 
                     dynamicDistributionPreference.save();
                     loadRepositorySetupGroup();

@@ -23,12 +23,24 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.talend.commons.exception.ExceptionHandler;
+import org.talend.core.model.general.Project;
 import org.talend.core.runtime.maven.MavenUrlHelper;
 import org.talend.designer.maven.aether.IDynamicMonitor;
 import org.talend.designer.maven.aether.node.DependencyNode;
 import org.talend.hadoop.distribution.ESparkVersion;
 import org.talend.hadoop.distribution.dynamic.bean.IVariable;
+import org.talend.hadoop.distribution.dynamic.pref.IDynamicDistributionPreference;
+import org.talend.hadoop.distribution.dynamic.pref.cdh.AbstractDynamicCDHDistributionPreference;
+import org.talend.hadoop.distribution.dynamic.pref.cdh.DynamicCDHDistributionPreferenceFactory;
+import org.talend.hadoop.distribution.dynamic.pref.cdh.IDynamicCDHDistributionPreference;
+import org.talend.hadoop.distribution.dynamic.pref.cdp.AbstractDynamicCDPDistributionPreference;
+import org.talend.hadoop.distribution.dynamic.pref.cdp.DynamicCDPDistributionPreferenceFactory;
+import org.talend.hadoop.distribution.dynamic.pref.cdp.IDynamicCDPDistributionPreference;
+import org.talend.hadoop.distribution.dynamic.pref.hdp.AbstractDynamicHDPDistributionPreference;
+import org.talend.hadoop.distribution.dynamic.pref.hdp.DynamicHDPDistributionPreferenceFactory;
+import org.talend.hadoop.distribution.dynamic.pref.hdp.IDynamicHDPDistributionPreference;
 import org.talend.hadoop.distribution.i18n.Messages;
 
 /**
@@ -242,6 +254,87 @@ public class DynamicDistributionUtils {
             if (monitor.isCanceled()) {
                 throw new InterruptedException(Messages.getString("DynamicDistributionUtils.monitor.userCancel")); //$NON-NLS-1$
             }
+        }
+    }
+
+    public static void checkAndMigrateDistributionProxyCredential(Project project) throws Exception {
+        IDynamicDistributionPreference preference = DynamicCDHDistributionPreferenceFactory.getInstance()
+                .getDynamicDistributionPreference(project);
+        if (preference instanceof AbstractDynamicCDHDistributionPreference) {
+            AbstractDynamicCDHDistributionPreference cdhPreference = (AbstractDynamicCDHDistributionPreference) preference;
+            IPreferenceStore cdhPrefStore = cdhPreference.getPrefStore();
+            String repository = cdhPrefStore.getString(IDynamicCDHDistributionPreference.PREF_REPOSITORY);
+            String username = cdhPrefStore.getString(IDynamicCDHDistributionPreference.PREF_USERNAME);
+            String password = cdhPreference.decrypt(cdhPrefStore.getString(IDynamicCDHDistributionPreference.PREF_PASSWORD));
+            String defaultRepository = cdhPreference.getDefaultRepository();
+            String defaultUsername = cdhPreference.getDefaultUsername();
+            String defaultPassword = cdhPreference.decrypt(cdhPreference.getDefaultUsername());
+            if (!defaultRepository.equals(repository) || !defaultUsername.equals(username) || !defaultPassword.equals(password)) {
+                if (StringUtils.isNotBlank(repository) && cdhPreference.getCredentialsFromSecureStorage() == null) {
+                    // credential not exist then store to secure storage
+                    cdhPreference.setUsernameToSecureStorage(username);
+                    cdhPreference.setPasswordToSecureStorage(password);
+                }
+                // set to default to remove from preference
+                if (!defaultUsername.equals(username) || !defaultPassword.equals(password)) {
+                    cdhPrefStore.setDefault(IDynamicCDHDistributionPreference.PREF_PASSWORD, defaultPassword);
+                    cdhPrefStore.setValue(IDynamicCDHDistributionPreference.PREF_USERNAME, defaultUsername);
+                    cdhPrefStore.setValue(IDynamicCDHDistributionPreference.PREF_PASSWORD, defaultPassword);
+                    cdhPreference.save();
+                }
+            }
+            // clean
+            DynamicCDHDistributionPreferenceFactory.getInstance().clearAllPreferenceCache();
+        }
+
+        preference = DynamicCDPDistributionPreferenceFactory.getInstance().getDynamicDistributionPreference(project);
+        if (preference instanceof AbstractDynamicCDPDistributionPreference) {
+            AbstractDynamicCDPDistributionPreference cdpPreferecne = (AbstractDynamicCDPDistributionPreference) preference;
+            IPreferenceStore cdpPrefStore = cdpPreferecne.getPrefStore();
+            String repository = cdpPrefStore.getString(IDynamicCDPDistributionPreference.PREF_REPOSITORY);
+            String username = cdpPrefStore.getString(IDynamicCDPDistributionPreference.PREF_USERNAME);
+            String password = cdpPreferecne.decrypt(cdpPrefStore.getString(IDynamicCDPDistributionPreference.PREF_PASSWORD));
+            String defaultRepository = cdpPreferecne.getDefaultRepository();
+            String defaultUsername = cdpPreferecne.getDefaultUsername();
+            String defaultPassword = cdpPreferecne.decrypt(cdpPreferecne.getDefaultPassword());
+            if (!defaultRepository.equals(repository) || !defaultUsername.equals(username) || !defaultPassword.equals(password)) {
+                if (StringUtils.isNotBlank(repository) && cdpPreferecne.getCredentialsFromSecureStorage() == null) {
+                    cdpPreferecne.setUsernameToSecureStorage(username);
+                    cdpPreferecne.setPasswordToSecureStorage(password);
+                }
+                if (!defaultUsername.equals(username) || !defaultPassword.equals(password)) {
+                    cdpPrefStore.setDefault(IDynamicCDPDistributionPreference.PREF_PASSWORD, defaultPassword);
+                    cdpPrefStore.setValue(IDynamicCDPDistributionPreference.PREF_USERNAME, defaultUsername);
+                    cdpPrefStore.setValue(IDynamicCDPDistributionPreference.PREF_PASSWORD, defaultPassword);
+                    cdpPreferecne.save();
+                }
+            }
+            DynamicCDPDistributionPreferenceFactory.getInstance().clearAllPreferenceCache();
+        }
+
+        preference = DynamicHDPDistributionPreferenceFactory.getInstance().getDynamicDistributionPreference(project);
+        if (preference instanceof AbstractDynamicHDPDistributionPreference) {
+            AbstractDynamicHDPDistributionPreference hdpPreference = (AbstractDynamicHDPDistributionPreference) preference;
+            IPreferenceStore hdpPrefStore = hdpPreference.getPrefStore();
+            String repository = hdpPrefStore.getString(IDynamicHDPDistributionPreference.PREF_REPOSITORY);
+            String username = hdpPrefStore.getString(IDynamicHDPDistributionPreference.PREF_USERNAME);
+            String password = hdpPreference.decrypt(hdpPrefStore.getString(IDynamicHDPDistributionPreference.PREF_PASSWORD));
+            String defaultRepository = hdpPreference.getDefaultRepository();
+            String defaultUsername = hdpPreference.getDefaultUsername();
+            String defaultPassword = hdpPreference.decrypt(hdpPreference.getDefaultPassword());
+            if (!defaultRepository.equals(repository) || !defaultUsername.equals(username) || !defaultPassword.equals(password)) {
+                if (StringUtils.isNotBlank(repository) && hdpPreference.getCredentialsFromSecureStorage() == null) {
+                    hdpPreference.setUsernameToSecureStorage(username);
+                    hdpPreference.setPasswordToSecureStorage(password);
+                }
+                if (!defaultUsername.equals(username) || !defaultPassword.equals(password)) {
+                    hdpPrefStore.setDefault(IDynamicHDPDistributionPreference.PREF_PASSWORD, defaultPassword);
+                    hdpPrefStore.setValue(IDynamicHDPDistributionPreference.PREF_USERNAME, defaultUsername);
+                    hdpPrefStore.setValue(IDynamicHDPDistributionPreference.PREF_PASSWORD, defaultPassword);
+                    hdpPreference.save();
+                }
+            }
+            DynamicHDPDistributionPreferenceFactory.getInstance().clearAllPreferenceCache();
         }
     }
 
