@@ -100,6 +100,11 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     public String getVersion() {
         return VERSION;
     }
+    
+    @Override
+    public boolean doSupportSparkSubmitScripts() {
+    	return true;
+    }
 
     @Override
     public EHadoopVersion getHadoopVersion() {

@@ -138,6 +138,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         if (this.doSupportUniversalStandaloneMode()) {
             result.add(ESparkMode.STANDALONE);
         }
+        if (this.doSupportSparkSubmitScripts()) {
+            result.add(ESparkMode.SPARK_SUBMIT);
+        }
         if (this.doSupportUniversalSynapseMode()) {
             result.add(ESparkMode.SYNAPSE);
         }
@@ -209,6 +212,11 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
     
     @Override
     public boolean doSupportUniversalStandaloneMode() {
+    	return false;
+    }
+    
+    @Override
+    public boolean doSupportSparkSubmitScripts() {
     	return false;
     }
     

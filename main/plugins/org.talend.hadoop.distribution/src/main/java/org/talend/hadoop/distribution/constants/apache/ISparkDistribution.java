@@ -44,18 +44,20 @@ public interface ISparkDistribution {
 
     List<EKubernetesS3Credentials> getK8sS3Credentials();
 
-    boolean doSupportUniversalDBRMode();
-
-    boolean doSupportUniversalDataprocMode();
-
-    boolean doSupportUniversalLocalMode();
-
-    boolean doSupportSparkYarnK8SMode();
-
-    boolean doSupportSparkYarnClusterMode();
-
-    boolean doSupportUniversalStandaloneMode();
-
+    public boolean doSupportUniversalDBRMode();
+    
+    public boolean doSupportUniversalDataprocMode();
+    
+    public boolean doSupportUniversalLocalMode();
+    
+    public boolean doSupportSparkYarnK8SMode();
+    
+    public boolean doSupportSparkYarnClusterMode();
+    
+    public boolean doSupportUniversalStandaloneMode();
+    
+    public boolean doSupportSparkSubmitScripts();
+    
     default boolean doSupportUniversalEMRServerlessMode() {
         return false;
     }

@@ -363,6 +363,11 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledWidget standaloneConfigureExec;
     private LabelledWidget standaloneExecCore;
     private LabelledWidget standaloneExecMemory;
+    
+    // Spark Submit scripts
+    
+    private Group sparkSubmitScriptGroup;
+    private LabelledWidget sparkSubmitScriptHome;
 
     // CDE widgets
     private LabelledWidget cdeApiEndPoint;
@@ -923,6 +928,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         ((LabelledText) standaloneExecCore).setEditable(isEditable);
         ((LabelledText) standaloneExecMemory).setEditable(isEditable);
 
+        ((LabelledText) sparkSubmitScriptHome).setEditable(isEditable);
+        
         useKnoxButton.setEnabled(isEditable);
     }
 
@@ -1002,6 +1009,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addStandaloneFields();
         addSynapseFields();
         addHDIFields();
+        addSparkSubmitScriptFields();
 
         hideFieldsOnSparkMode();
 
@@ -1177,7 +1185,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY, standaloneExecMemory);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_CORE, standaloneExecCore);
     }
+    
+    private void addSparkSubmitScriptFields() {
+    	sparkSubmitScriptGroup = Form.createGroup(bigComposite, 2, Messages.getString("SparkSubmitScriptInfoForm.text.configuration"), 110); //$NON-NLS-1$
+    	sparkSubmitScriptGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+        sparkSubmitScriptHome = new LabelledText(sparkSubmitScriptGroup,  Messages.getString("SparkSubmitScriptInfoForm.text.master"));  //$NON-NLS-1$
 
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_UNIV_SPARK_SUBMIT_SCRIPT_HOME, sparkSubmitScriptHome);
+    }
+    
     private void addSynapseFields() {
         synapseGroup = Form.createGroup(bigComposite, 2, Messages.getString("SynapseInfoForm.text.synapseSettings"), 110);
         synapseGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -2678,6 +2694,8 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                 getConnection().getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_HDINSIGHT_STORAGE, EHdinsightStorage.getHdinsightStoragenByDisplayName(hdiStorageType.getText()).getName());
             }
         });
+        
+        addBasicListener(ConnParameterKeys.CONN_PARA_KEY_UNIV_SPARK_SUBMIT_SCRIPT_HOME);
     }
 
     private void reloadForm() {
@@ -2775,7 +2793,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
                     getSparkModeByName(sparkModeLabelName).getValue());
 
             // List of possible configuration groups
-            List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup, synapseGroup, livyGroup, hdiGroup, fsGroup);
+             List<Group> groups = Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp, dataBricksGroup, cdeGroup, 
+            		 dataProcGroup, kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup, standaloneGroup,
+            		 sparkSubmitScriptGroup, synapseGroup, livyGroup, hdiGroup, fsGroup);
+
             // Group visibility depends on Spark mode
             Map<ESparkMode, List<Group>> visibleGroupsBySparkMode = new HashMap<ESparkMode, List<Group>>();
             visibleGroupsBySparkMode.put(ESparkMode.YARN_CLUSTER, Arrays.asList(connectionGroup, authGroup, webHDFSSSLEncryptionGrp));
@@ -2784,6 +2805,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             visibleGroupsBySparkMode.put(ESparkMode.DATAPROC, Arrays.asList(dataProcGroup));
             visibleGroupsBySparkMode.put(ESparkMode.KUBERNETES, Arrays.asList(kubernetesGroup, kubernetesS3Group, kubernetesAzureGroup, kubernetesBlobGroup));
             visibleGroupsBySparkMode.put(ESparkMode.STANDALONE, Arrays.asList(standaloneGroup));
+            visibleGroupsBySparkMode.put(ESparkMode.SPARK_SUBMIT, Arrays.asList(sparkSubmitScriptGroup));
             visibleGroupsBySparkMode.put(ESparkMode.SYNAPSE, Arrays.asList(synapseGroup));
             visibleGroupsBySparkMode.put(ESparkMode.HDI, Arrays.asList(hdiGroup, livyGroup, fsGroup));
 
@@ -2804,6 +2826,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             hideControl(kubernetesAzureGroup, true);
             hideControl(kubernetesBlobGroup, true);
             hideControl(standaloneGroup, true);
+            hideControl(sparkSubmitScriptGroup, true);
             hideControl(synapseGroup, true);
             hideControl(hdiGroup, true);
             hideControl(livyGroup, true);
@@ -3508,7 +3531,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
             } else if (ESparkMode.KUBERNETES.getLabel().equals(sparkModeLabelName)) {
                 collectK8SParameters();
             } else if (ESparkMode.STANDALONE.getLabel().equals(sparkModeLabelName)) {
-                collectStandaloneParameters();
+            	collectStandaloneParameters();
+            } else if (ESparkMode.SPARK_SUBMIT.getLabel().equals(sparkModeLabelName)) {
+            	collectSparkSubmitScriptParameters();
             } else if (ESparkMode.SYNAPSE.getLabel().equals(sparkModeLabelName)) {
                 collectSynapseParameters();
             }
@@ -3559,6 +3584,10 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         addContextParams(EHadoopParamName.StandaloneMaster, true);
         addContextParams(EHadoopParamName.StandaloneExecutorCore, true);
         addContextParams(EHadoopParamName.StandaloneExecutorMemory, true);
+    }
+    
+    private void collectSparkSubmitScriptParameters() {
+    	addContextParams(EHadoopParamName.SparkSubmitScriptHome, true);
     }
 
     protected void collectDBRParameters() {

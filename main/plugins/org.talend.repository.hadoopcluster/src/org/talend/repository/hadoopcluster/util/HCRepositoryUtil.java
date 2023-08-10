@@ -1188,6 +1188,12 @@ public class HCRepositoryUtil {
         if (univStandaloneExecMemory != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY, univStandaloneExecMemory);
         }
+        
+        String univSparkSubmitScriptHome = hiveVersion.getDefaultConfig(distribution,
+                EHadoopProperties.UNIV_SPARK_SUBMIT_SCRIPT_HOME.getName());
+        if (univStandaloneExecMemory != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_SPARK_SUBMIT_SCRIPT_HOME, univSparkSubmitScriptHome);
+        }
     }
 
     public static String getRepositoryTypeOfHadoopSubItem(Item item) {

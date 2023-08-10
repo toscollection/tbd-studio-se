@@ -441,6 +441,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY));
                         break;
+                    case SparkSubmitScriptHome:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_UNIV_SPARK_SUBMIT_SCRIPT_HOME));
+                        break;
                     case CdeApiEndPoint:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_CDE_API_ENDPOINT));
@@ -959,6 +963,10 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             break;
         case StandaloneExecutorMemory:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_STANDALONE_EXEC_MEMORY,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case SparkSubmitScriptHome:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_UNIV_SPARK_SUBMIT_SCRIPT_HOME,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
         default:
