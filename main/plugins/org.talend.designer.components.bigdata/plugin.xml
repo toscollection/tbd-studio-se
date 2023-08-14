@@ -47,9 +47,9 @@
             mvn_uri="mvn:org.talend.libraries/scala-library-2.10.5/6.0.0"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.1.7.jar"
-            name="snappy-java-1.1.1.7.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.1.7"/>
+            id="snappy-java-1.1.10.1.jar"
+            name="snappy-java-1.1.10.1.jar" 
+            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="zkclient-0.7.jar"
@@ -84,9 +84,9 @@
             mvn_uri="mvn:org.talend.libraries/scala-library-2.10.6/6.3.0"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.2.6.jar"
-            name="snappy-java-1.1.2.6.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.2.6"/>
+            id="snappy-java-1.1.10.1.jar"
+            name="snappy-java-1.1.10.1.jar" 
+            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="zkclient-0.8.jar"
@@ -136,9 +136,9 @@
             mvn_uri="mvn:com.typesafe.scala-logging/scala-logging_2.11/3.7.2"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.7.1.jar"
-            name="snappy-java-1.1.7.1.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.7.1"/>
+            id="snappy-java-1.1.10.1.jar"
+            name="snappy-java-1.1.10.1.jar" 
+            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="zkclient-0.10.jar"
@@ -193,9 +193,9 @@
             mvn_uri="mvn:com.typesafe.scala-logging/scala-logging_2.12/3.9.2"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.7.3.jar"
-            name="snappy-java-1.1.7.3.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.7.3"/>
+            id="snappy-java-1.1.10.1.jar"
+            name="snappy-java-1.1.10.1.jar" 
+            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="zkclient-0.11.jar"
@@ -246,7 +246,7 @@
             <library id="kafka-clients-0.9.0.1.jar"/>
             <library id="lz4-1.2.0.jar"/>
             <library id="metrics-core-2.2.0.jar"/>
-            <library id="snappy-java-1.1.1.7.jar"/>
+            <library id="snappy-java-1.1.10.1.jar"/>
             <library id="zkclient-0.10.jar"/>
             <library id="zookeeper-3.4.10.jar"/>
             <library id="reload4j-1.2.22.jar"/>
@@ -276,7 +276,7 @@
             <library id="kafka-clients-0.10.0.1.jar"/>
             <library id="lz4-1.3.0.jar"/>
             <library id="metrics-core-2.2.0.jar"/>
-            <library id="snappy-java-1.1.2.6.jar"/>
+            <library id="snappy-java-1.1.10.1.jar"/>
             <library id="zkclient-0.10.jar"/>
             <library id="zookeeper-3.4.10.jar"/>
             <library id="reload4j-1.2.22.jar"/>
@@ -310,7 +310,7 @@
             <library id="kafka-clients-1.1.0.jar"/>
             <library id="lz4-java-1.4.jar"/>
             <library id="metrics-core-2.2.0.jar"/>
-            <library id="snappy-java-1.1.7.1.jar"/>
+            <library id="snappy-java-1.1.10.1.jar"/>
             <library id="zkclient-0.10.jar"/>
             <library id="zookeeper-3.4.10.jar"/>
             <library id="reload4j-1.2.22.jar"/>
@@ -345,7 +345,7 @@
             <library id="kafka-clients-2.4.0.jar"/>
             <library id="lz4-java-1.6.0.jar"/>
             <library id="metrics-core-2.2.0.jar"/>
-            <library id="snappy-java-1.1.7.3.jar"/>
+            <library id="snappy-java-1.1.10.1.jar"/>
             <library id="zkclient-0.11.jar"/>
             <library id="zookeeper-3.5.6.jar"/>
             <library id="reload4j-1.2.22.jar"/>
