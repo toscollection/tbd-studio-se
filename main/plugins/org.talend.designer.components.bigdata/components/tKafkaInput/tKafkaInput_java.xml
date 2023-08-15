@@ -397,7 +397,7 @@
 			<IMPORT NAME="jersey-common-2.33" MODULE="jersey-common-2.33.jar" MVN="mvn:org.glassfish.jersey.core/jersey-common/2.33"
 				REQUIRED_IF="(OUTPUT_TYPE == 'CONSUMER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_DESERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_DESERIALIZER == 'AVRO')" />
 
-			<!-- Additional schema registry dependencies for Kafka 3.2.3 -->
+			<!-- Additional schema registry dependencies for Kafka 3.5.1 -->
 			<!-- (for previous Kafka versions the same dependencies are loaded in a KAFKA-LIB module group) -->
 			<IMPORT NAME="jackson-core-2.13.4" MODULE="jackson-core-2.13.4.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.13.4"
 				REQUIRED_IF="((USE_EXISTING_CONNECTION == 'false' AND KAFKA_VERSION=='KAFKA_3_2_3') OR (USE_EXISTING_CONNECTION == 'true' AND #LINK@NODE.CONNECTION.KAFKA_VERSION == 'KAFKA_3_2_3'))
@@ -413,10 +413,10 @@
 			<IMPORT MODULE_GROUP="KAFKA-LIB-2_12-2_4_0"
 				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_2_4_0') AND (USE_EXISTING_CONNECTION=='false')" />
 
-			<!-- Kafka client libraries for 3.2.3 -->
-			<IMPORT NAME="kafka-clients-3.2.3" MODULE="kafka-clients-3.2.3.jar" MVN="mvn:org.apache.kafka/kafka-clients/3.2.3"
+			<!-- Kafka client libraries for 3.5.1 -->
+			<IMPORT NAME="kafka-clients-3.5.1" MODULE="kafka-clients-3.5.1.jar" MVN="mvn:org.apache.kafka/kafka-clients/3.5.1"
 					REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
-			<IMPORT NAME="zstd-jni-1.5.2-1" MODULE="zstd-jni-1.5.2-1.jar" MVN="mvn:com.github.luben/zstd-jni/1.5.2-1"
+			<IMPORT NAME="zstd-jni-1.5.5-1" MODULE="zstd-jni-1.5.5-1.jar" MVN="mvn:com.github.luben/zstd-jni/1.5.5-1"
 					REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
 			<IMPORT NAME="lz4-java-1.8.0" MODULE="lz4-java-1.8.0.jar" MVN="mvn:org.lz4/lz4-java/1.8.0"
 					REQUIRED_IF="(KAFKA_VERSION=='KAFKA_3_2_3') AND (USE_EXISTING_CONNECTION=='false')" />
