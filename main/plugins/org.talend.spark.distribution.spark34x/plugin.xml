@@ -23,7 +23,7 @@
         <!ENTITY scala_version "2.12">
         <!ENTITY snakeyaml_version "1.33">
         <!ENTITY spark_version "3.4.1">
-        <!ENTITY snowflake-jdbc_version "3.13.29">b
+        <!ENTITY snowflake-jdbc_version "3.13.29">
         <!ENTITY netty_version "4.1.87.Final">
         <!ENTITY woodstox_version "6.4.0">
         ]>
