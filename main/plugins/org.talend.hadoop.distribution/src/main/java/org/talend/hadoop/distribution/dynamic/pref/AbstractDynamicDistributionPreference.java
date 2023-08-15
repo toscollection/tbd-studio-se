@@ -130,7 +130,9 @@ public abstract class AbstractDynamicDistributionPreference implements IDynamicD
 
     @Override
     public void setUsername(String username) {
-        setUsernameToSecureStorage(username);
+        if (StringUtils.isNotBlank(username)) {
+            setUsernameToSecureStorage(username);
+        }
     }
 
     @Override

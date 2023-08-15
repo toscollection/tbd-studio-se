@@ -270,7 +270,9 @@ public class DynamicDistributionUtils {
             String defaultUsername = cdhPreference.getDefaultUsername();
             String defaultPassword = cdhPreference.decrypt(cdhPreference.getDefaultUsername());
             if (!defaultRepository.equals(repository) || !defaultUsername.equals(username) || !defaultPassword.equals(password)) {
-                if (StringUtils.isNotBlank(repository) && cdhPreference.getCredentialsFromSecureStorage() == null) {
+                if (StringUtils.isNotBlank(repository)
+                        && !isStorageCredentialExist(cdhPreference.getCredentialsFromSecureStorage())
+                        && isValidCredential(username, defaultUsername) && isValidCredential(password, defaultPassword)) {
                     // credential not exist then store to secure storage
                     cdhPreference.setUsernameToSecureStorage(username);
                     cdhPreference.setPasswordToSecureStorage(password);
@@ -298,7 +300,9 @@ public class DynamicDistributionUtils {
             String defaultUsername = cdpPreferecne.getDefaultUsername();
             String defaultPassword = cdpPreferecne.decrypt(cdpPreferecne.getDefaultPassword());
             if (!defaultRepository.equals(repository) || !defaultUsername.equals(username) || !defaultPassword.equals(password)) {
-                if (StringUtils.isNotBlank(repository) && cdpPreferecne.getCredentialsFromSecureStorage() == null) {
+                if (StringUtils.isNotBlank(repository)
+                        && !isStorageCredentialExist(cdpPreferecne.getCredentialsFromSecureStorage())
+                        && isValidCredential(username, defaultUsername) && isValidCredential(password, defaultPassword)) {
                     cdpPreferecne.setUsernameToSecureStorage(username);
                     cdpPreferecne.setPasswordToSecureStorage(password);
                 }
@@ -323,7 +327,9 @@ public class DynamicDistributionUtils {
             String defaultUsername = hdpPreference.getDefaultUsername();
             String defaultPassword = hdpPreference.decrypt(hdpPreference.getDefaultPassword());
             if (!defaultRepository.equals(repository) || !defaultUsername.equals(username) || !defaultPassword.equals(password)) {
-                if (StringUtils.isNotBlank(repository) && hdpPreference.getCredentialsFromSecureStorage() == null) {
+                if (StringUtils.isNotBlank(repository)
+                        && !isStorageCredentialExist(hdpPreference.getCredentialsFromSecureStorage())
+                        && isValidCredential(username, defaultUsername) && isValidCredential(password, defaultPassword)) {
                     hdpPreference.setUsernameToSecureStorage(username);
                     hdpPreference.setPasswordToSecureStorage(password);
                 }
@@ -336,6 +342,22 @@ public class DynamicDistributionUtils {
             }
             DynamicHDPDistributionPreferenceFactory.getInstance().clearAllPreferenceCache();
         }
+    }
+
+    private static boolean isStorageCredentialExist(String[] storage) {
+        boolean exist = false;
+        if (storage != null && StringUtils.isNotBlank(storage[0])) {
+            exist = true;
+        }
+        return exist;
+    }
+
+    private static boolean isValidCredential(String value, String defaultValue) {
+        boolean isValid = false;
+        if (StringUtils.isNotBlank(value) && !value.equals(defaultValue)) {
+            isValid = true;
+        }
+        return isValid;
     }
 
     private static class MapVariable implements IVariable {
