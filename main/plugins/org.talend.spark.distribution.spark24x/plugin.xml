@@ -2,18 +2,18 @@
 <!DOCTYPE plugin [
 		<!ENTITY aws-java-sdk-bundle_version "1.12.261">
 		<!ENTITY commons-configuration2_version "2.8.0">
+		<!ENTITY commons_io_version "2.7">
 		<!ENTITY commons-text_version "1.10.0">
 		<!ENTITY commons-net_version "3.9.0">
 		<!ENTITY google_version "1.33.3">
-		<!ENTITY hive_version "2.3.8">
-		<!ENTITY ivy_version "2.5.1">
 		<!ENTITY jackson-databind_version "2.6.7.5">
 		<!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
 		<!ENTITY jackson_version "2.6.7">
 		<!ENTITY jackson-module-scala_version "2.6.7.1">
-		<!ENTITY woodstox_version "6.4.0">
 		<!ENTITY kafka_version "2.8.2">
-		<!ENTITY commons_io_version "2.7">
+		<!ENTITY hive_version "2.3.8">
+		<!ENTITY snowflake-jdbc_version "3.13.29">
+		<!ENTITY woodstox_version "6.4.0">
 		]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -202,7 +202,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-redshift_2.11-2.0.1.jar" name="spark-redshift_2.11-2.0.1.jar" mvn_uri="mvn:org.talend.libraries/spark-redshift_2.11-2.0.1/6.0.0"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-snowflake_2.11-2.9.2-spark_2.4.jar" name="spark-snowflake_2.11-2.9.2-spark_2.4.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.11/2.9.2-spark_2.4"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-jdbc-3.13.12.jar" name="snowflake-jdbc-3.13.12.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.12"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-jdbc-&snowflake-jdbc_version;.jar" name="snowflake-jdbc-&snowflake-jdbc_version;.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/&snowflake-jdbc_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar" mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="kafka-clients-&kafka_version;.jar" name="kafka-clients-&kafka_version;.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/&kafka_version;"/>
@@ -400,7 +400,7 @@
 		<!-- Snowflake group -->
 		<libraryNeededGroup description="Snowflake libraries for spark247" id="SNOWFLAKE-GROUP-SPARK_2_4_x" name="SNOWFLAKE-GROUP-SPARK_2_4_x">
 			<library id="spark-snowflake_2.11-2.9.2-spark_2.4.jar"/>
-			<library id="snowflake-jdbc-3.13.12.jar"/>
+			<library id="snowflake-jdbc-&snowflake-jdbc_version;.jar"/>
 			<library id="snowflake-ingest-sdk-0.10.3.jar"/>
 		</libraryNeededGroup>
 

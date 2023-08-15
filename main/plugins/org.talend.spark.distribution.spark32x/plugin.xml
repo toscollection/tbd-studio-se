@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugin [
-        <!ENTITY spark_version "3.2.2">
-        <!ENTITY scala_version "2.12">
-        <!ENTITY jetty_version "9.4.44.v20210927">
-        <!ENTITY orc_version "1.6.14">
-        <!ENTITY kafka_version "2.8.2">
         <!ENTITY aws_sdk_version "1.12.170">
         <!ENTITY commons-configuration2_version "2.8.0">
         <!ENTITY google_version "1.33.3">
@@ -13,8 +8,14 @@
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
+        <!ENTITY jetty_version "9.4.44.v20210927">
+        <!ENTITY kafka_version "2.8.2">
         <!ENTITY kubernetes_version "5.12.2">
+        <!ENTITY orc_version "1.6.14">
+        <!ENTITY scala_version "2.12">
         <!ENTITY snakeyaml_version "1.33">
+        <!ENTITY spark_version "3.2.2">
+        <!ENTITY snowflake-jdbc_version "3.13.29">
         <!ENTITY netty_version "4.1.68.Final">
         <!ENTITY woodstox_version "6.4.0">
         ]>
@@ -244,7 +245,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-snowflake_2.12-2.10.0-spark_3.2.jar" name="spark-snowflake_2.12-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.10.0-spark_3.2"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snowflake-jdbc-3.13.14.jar" name="snowflake-jdbc-3.13.14.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.14"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snowflake-jdbc-&snowflake-jdbc_version;.jar" name="snowflake-jdbc-&snowflake-jdbc_version;.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/&snowflake-jdbc_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar" mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="kafka-clients-&kafka_version;.jar" name="kafka-clients-&kafka_version;.jar" mvn_uri="mvn:org.apache.kafka/kafka-clients/&kafka_version;"/>
@@ -498,7 +499,7 @@
         <!-- Snowflake group -->
         <libraryNeededGroup description="Snowflake libraries for spark32x" id="SNOWFLAKE-GROUP-SPARK_3_2_x" name="SNOWFLAKE-GROUP-SPARK_3_2_x">
             <library id="spark-snowflake_2.12-2.10.0-spark_3.2.jar"/>
-            <library id="snowflake-jdbc-3.13.14.jar"/>
+            <library id="snowflake-jdbc-&snowflake-jdbc_version;.jar"/>
             <library id="snowflake-ingest-sdk-0.10.3.jar"/>
         </libraryNeededGroup>
 
