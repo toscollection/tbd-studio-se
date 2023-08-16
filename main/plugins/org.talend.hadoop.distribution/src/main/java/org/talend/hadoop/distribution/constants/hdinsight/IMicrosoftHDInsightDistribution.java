@@ -20,5 +20,5 @@ public interface IMicrosoftHDInsightDistribution {
 
     static final String DISTRIBUTION_NAME = "MICROSOFT_HD_INSIGHT";
 
-    static final String DISTRIBUTION_DISPLAY_NAME = "Microsoft HD Insight";
+    static final String DISTRIBUTION_DISPLAY_NAME = "Microsoft HDInsight";
 }
