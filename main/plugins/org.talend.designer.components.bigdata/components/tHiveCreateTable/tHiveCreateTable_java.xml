@@ -363,7 +363,7 @@
 			SHOW_IF="isShow[SET_RESOURCE_MANAGER]" GROUP="HADOOP_PROPS">
 			<DEFAULT>true</DEFAULT>
 		</PARAMETER>
-		<!-- HD Insight through HCatalog parameters -->
+		<!-- HDInsight through HCatalog parameters -->
 
 		<PARAMETER NAME="WEBHCAT_HOST" FIELD="TEXT" REQUIRED="true"
 			NUM_ROW="16" GROUP="WEBHCAT_CONF"

@@ -387,7 +387,7 @@
 			</ITEMS>
 		</PARAMETER>
 
-		<!-- HD Insight through HCatalog parameters -->
+		<!-- HDInsight through HCatalog parameters -->
 
 		<PARAMETER NAME="WEBHCAT_HOST" FIELD="TEXT" REQUIRED="true"
 			NUM_ROW="16" GROUP="WEBHCAT_CONF"

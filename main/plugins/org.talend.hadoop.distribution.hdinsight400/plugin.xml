@@ -38,7 +38,7 @@
         </libraryNeeded>
 
 
-        <!-- hd insight filesystem libraries -->
+        <!-- HDInsight filesystem libraries -->
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdinsight400" id="httpcore-4.4.12"
                        name="httpcore-4.4.12.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.12"/>
         <libraryNeeded context="plugin:org.talend.hadoop.distribution.hdinsight400" id="httpclient-4.5.13"
@@ -473,10 +473,10 @@
             <library id="parquet-hive-bundle-1.6.0.jar"/>
         </libraryNeededGroup>
 
-        <!-- group of HD Insight 4.0.0 common libraries -->
+        <!-- group of HDInsight 4.0.0 common libraries -->
         <!-- note that indentation is used here to show the dependencies tree -->
         <libraryNeededGroup
-                description="HD Insight common libraries"
+                description="HDInsight common libraries"
                 id="HD_INSIGHT_4_0_0_COMMON_LIBRARIES"
                 name="HD_INSIGHT_4_0_0_COMMON_LIBRARIES">
             <!-- azure dependencies for Filesystems API -->

@@ -368,7 +368,7 @@
 			</ITEMS>
 		</PARAMETER>
 
-		<!-- HD Insight through HCatalog parameters -->
+		<!-- HDInsight through HCatalog parameters -->
 
 		<PARAMETER NAME="WEBHCAT_HOST" FIELD="TEXT" REQUIRED="true"
 			NUM_ROW="12" GROUP="WEBHCAT_CONF"
@@ -680,7 +680,7 @@
 		</PARAMETER>
 
 		
-		<!-- REQUIRED FOR HD INSIGHT AND DATAPROC-->
+		<!-- REQUIRED FOR HDInsight AND DATAPROC-->
 		<PARAMETER NAME="IS_VIRTUAL_COMPONENT" FIELD="CHECK" SHOW="false"
 			NUM_ROW="130"
 			REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false' AND DISTRIB[DISTRIBUTION, HIVE_VERSION].useCloudLauncher[]) 

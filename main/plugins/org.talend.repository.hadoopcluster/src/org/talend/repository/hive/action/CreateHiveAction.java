@@ -62,7 +62,7 @@ public class CreateHiveAction extends CreateHadoopDBNodeAction {
                 IHDistributionVersion hdVersion = hiveDistribution.getHDVersion(hcConnection.getDfVersion(), false);
                 if (hdVersion != null
                         && !IMicrosoftHDInsightDistribution.DISTRIBUTION_NAME.equals(hdVersion.getDistribution().getName())) {
-                    // found and not HD Insight, don't hide
+                    // found and not HDInsight, don't hide
                     return false;
                 }
             }
