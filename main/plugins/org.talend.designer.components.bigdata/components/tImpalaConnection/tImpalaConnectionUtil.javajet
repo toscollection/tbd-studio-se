@@ -15,18 +15,13 @@
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 			boolean securityIsEnabled = useKrb && (isCustom || this.hiveDistrib.doSupportKerberos());
 			boolean useLDAP = !("".equals(ElementParameterParser.getValue(node, "__PASS__")) || "\"\"".equals(ElementParameterParser.getValue(node, "__PASS__")));
-			
-			if (useLDAP) {
 %>
+			if (<%=ElementParameterParser.getValue(node, "__PASS__")%> != null && <%=useLDAP%>){
 				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+";user="+dbUser_<%=cid%>+";password="+dbPwd_<%=cid%> );
-<%
 			} else {
-			
-%>
-			conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
-<%			
+				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
 			}
-		}
+<%	}
 
 		public void createURL(INode node) {
 			super.createURL(node);
@@ -275,13 +270,14 @@
 %>
 							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ ";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-						} else if (useLDAP) {
-%>
-							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
-<%
 						} else {
 %>
-							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";auth=noSasl";
+							String url_<%=cid%> = "";
+							if (<%=ElementParameterParser.getValue(node, "__PASS__")%> != null && <%=useLDAP%>){
+								url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>;
+							} else {
+								url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";auth=noSasl";
+							}
 <%
 						}
 					// END IF07

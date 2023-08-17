@@ -25,12 +25,8 @@
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
 			boolean securityIsEnabled = useKrb && ( this.isCustom || this.distrib.doSupportKerberos() );
 			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
-			
-			if (useLDAP) {
-%>
-				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+";UID="+dbUser_<%=cid%>+";PWD="+dbPwd_<%=cid%> );
-<%
-			} else if (securityIsEnabled) {
+
+			if (securityIsEnabled) {
 				if(useKeytab) {
 %>
 			conn_<%=cid%> = (java.sql.Connection) ugi_<%=cid%>.doAs(new java.security.PrivilegedExceptionAction<Object>() {
@@ -51,7 +47,11 @@
 				}
 			} else {
 %>
-				conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
+				if (<%=ElementParameterParser.getValue(node, "__PASS__")%> != null && <%=useLDAP%>){
+					conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>+";UID="+dbUser_<%=cid%>+";PWD="+dbPwd_<%=cid%> );
+				} else {
+					conn_<%=cid%> = java.sql.DriverManager.getConnection(url_<%=cid%>, dbUser_<%=cid%> , dbPwd_<%=cid%> );
+				}
 <%
 			}
 		}
@@ -322,13 +322,14 @@
 %>
 							String url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>"+ ";ssl=1"+";UID=" + <%=userName%> +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-						} else if (useLDAP) {
-%>
-							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+";AuthMech=3";
-<%
 						} else {
 %>
-							String url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>" + ";auth=noSasl";
+							String url_<%=cid%> = "";
+							if (<%=ElementParameterParser.getValue(node, "__PASS__")%> != null && <%=useLDAP%>){
+								url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+";AuthMech=3";
+							} else {
+								url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>" + ";auth=noSasl";
+							}
 <%
 						}
 					}
