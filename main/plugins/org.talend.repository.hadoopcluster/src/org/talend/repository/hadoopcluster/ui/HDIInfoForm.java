@@ -236,10 +236,10 @@ public class HDIInfoForm extends AbstractHadoopClusterInfoForm<HadoopClusterConn
     private void addWebHCatFields() {
         Group whcGroup = Form.createGroup(this, 4, Messages.getString("HadoopClusterForm.LivySettings"), 110); //$NON-NLS-1$
         whcGroup.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-        whcHostnameText = new LabelledText(whcGroup, Messages.getString("HadoopClusterForm.LivySettings.hostname"), 1); //$NON-NLS-1$
+        whcHostnameText = new LabelledText(whcGroup, Messages.getString("HadoopClusterForm.text.Livy.hostname"), 1); //$NON-NLS-1$
         whcPortText = new LabelledText(whcGroup, Messages.getString("HadoopClusterForm.text.Livy.port"), 1); //$NON-NLS-1$
         whcUsernameText = new LabelledText(whcGroup, Messages.getString("HadoopClusterForm.text.Livy.username"), 1); //$NON-NLS-1$
-        whcJobResultFolderText = new LabelledText(whcGroup, Messages.getString("HadoopClusterForm.text.webHCat.jobResultFolder"), //$NON-NLS-1$
+        whcJobResultFolderText = new LabelledText(whcGroup, Messages.getString("HadoopClusterForm.text.Livy.jobResultFolder"), //$NON-NLS-1$
                 1);
 
     }
