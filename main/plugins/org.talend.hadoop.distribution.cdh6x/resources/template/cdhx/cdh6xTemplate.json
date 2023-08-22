@@ -3,7 +3,7 @@
     "name": "Cloudera CDH6.X.2 template",
     "distribution": "CLOUDERA",
     "templateId": "CDH6xDistributionTemplate",
-    "baseVersion": "6.0.0",
+    "baseVersion": "6.1.0",
     "topVersion": "7.0.0",
     "dynamicVersion": "will be filled during runtime",
     "properties": {
