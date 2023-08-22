@@ -49,7 +49,7 @@ public class CreateHCatalogAction extends CreateHadoopNodeAction {
         if (hcConnectionItem != null) {
             HadoopClusterConnection hcConnection = (HadoopClusterConnection) hcConnectionItem.getConnection();
 
-            // First check if the Distribution is a HD Insight one.
+            // First check if the Distribution is a HDInsight one.
             DistributionBean hadoopDistribution = HadoopDistributionsHelper.HADOOP.getDistribution(
                     hcConnection.getDistribution(), false);
             if (hadoopDistribution != null) {

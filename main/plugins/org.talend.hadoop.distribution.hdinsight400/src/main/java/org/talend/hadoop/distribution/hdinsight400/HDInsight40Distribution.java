@@ -49,7 +49,7 @@ public class HDInsight40Distribution extends HDIDistribution  implements SparkBa
 
     public final static String VERSION = "MICROSOFT_HD_INSIGHT_4_0"; //$NON-NLS-1$
 
-    public static final String VERSION_DISPLAY = "Microsoft HD Insight 4.0"; //$NON-NLS-1$
+    public static final String VERSION_DISPLAY = "Microsoft HDInsight 4.0"; //$NON-NLS-1$
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,/usr/hdp/current/hadoop-client/*,/usr/hdp/current/hadoop-client/lib/*,/usr/hdp/current/hadoop-hdfs-client/*,/usr/hdp/current/hadoop-hdfs-client/lib/*,/usr/hdp/current/hadoop-yarn-client/*,/usr/hdp/current/hadoop-yarn-client/lib/*"; //$NON-NLS-1$
 
