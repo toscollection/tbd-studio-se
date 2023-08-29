@@ -91,10 +91,14 @@ public abstract class THbaseAbstract implements DesignerDIComponent.BigDataDICom
     }
 
     public boolean isHBase2x() {
-        if (getHbaseDistrib() != null) {
-            return getHbaseDistrib().doSupportHBase2x();
+        boolean isHBase2x = BigDataDIComponent.getParameter(connNode(), "__HBASE_API_VERSION__", "").equals("HBASE_2");
+        HBaseComponent hbaseDistrib = getHbaseDistrib();
+
+        if (hbaseDistrib != null) {
+            boolean isSparkDistrib = "SPARK".equals(getDistribution());
+            isHBase2x = isSparkDistrib ? isHBase2x : hbaseDistrib.doSupportHBase2x();
         }
-        return BigDataDIComponent.getParameter(node(), "__HBASE_API_VERSION__", "").equals("HBASE_2");
+        return isHBase2x;
     }
 
     public boolean isCustom() {
@@ -105,7 +109,7 @@ public abstract class THbaseAbstract implements DesignerDIComponent.BigDataDICom
     }
 
     public boolean isHadoop2() {
-        return BigDataDIComponent.getParameter(node(), "__HADOOP_CUSTOM_VERSION__",false);
+        return BigDataDIComponent.getParameter(connNode(), "__HADOOP_CUSTOM_VERSION__",false);
     }
 
     public boolean isZNodeParentSet() {
