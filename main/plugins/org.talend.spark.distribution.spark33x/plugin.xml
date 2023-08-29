@@ -13,6 +13,7 @@
         <!ENTITY netty_version "4.1.68.Final">
         <!ENTITY woodstox_version "6.4.0">
         <!ENTITY kafka_version "2.8.2">
+        <!ENTITY deltalake_version "2.1.0">
         ]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -229,7 +230,8 @@
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="bigquery-connector-hadoop3-1.1.6-shaded" name="bigquery-connector-hadoop3-1.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop3-1.1.6/jar/shaded"/>
 
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="delta-core_2.12-1.1.0.jar" name="delta-core_2.12-1.1.0.jar" mvn_uri="mvn:io.delta/delta-core_2.12/1.1.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="delta-core_&scala_version;-&deltalake_version;.jar" name="delta-core_&scala_version;-&deltalake_version;.jar" mvn_uri="mvn:io.delta/delta-core_&scala_version;/&deltalake_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="delta-storage-&deltalake_version;.jar" name="delta-storage-&deltalake_version;.jar" mvn_uri="mvn:io.delta/delta-storage/&deltalake_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="spark-cassandra-connector-assembly_&scala_version;-3.3.0.jar" name="spark-cassandra-connector-assembly_&scala_version;-3.3.0.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/3.3.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
@@ -464,7 +466,8 @@
 
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark33x" id="DELTALAKE-GROUP-SPARK_3_3_x" name="DELTALAKE-GROUP-SPARK_3_3_x">
-            <library id="delta-core_2.12-1.1.0.jar"/>
+            <library id="delta-core_&scala_version;-&deltalake_version;.jar"/>
+            <library id="delta-storage-&deltalake_version;.jar" />
             <library id="snappy-java-1.1.8.4.jar"/>
         </libraryNeededGroup>
 
