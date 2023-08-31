@@ -47,7 +47,7 @@ public class DBR73xDistribution extends AbstractDatabricksDistribution implement
     
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_0;
 
-    public static final String VERSION_DISPLAY = "7.3 LTS (includes Apache Spark 3.0.1, Scala 2.12)" ;
+    public static final String VERSION_DISPLAY = "7.3 LTS (Deprecated) (includes Apache Spark 3.0.1, Scala 2.12)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*,$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*,$HADOOP_MAPRED_HOME/lib/*,$YARN_HOME/*,$YARN_HOME/lib/*,$HADOOP_YARN_HOME/*,$HADOOP_YARN_HOME/lib/*,$HADOOP_COMMON_HOME/share/hadoop/common/*,$HADOOP_COMMON_HOME/share/hadoop/common/lib/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/*,$HADOOP_HDFS_HOME/share/hadoop/hdfs/lib/*,$HADOOP_YARN_HOME/share/hadoop/yarn/*,$HADOOP_YARN_HOME/share/hadoop/yarn/lib/*" ; //$NON-NLS-1$
 
