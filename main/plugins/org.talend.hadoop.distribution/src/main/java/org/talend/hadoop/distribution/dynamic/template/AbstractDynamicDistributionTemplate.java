@@ -76,9 +76,9 @@ public abstract class AbstractDynamicDistributionTemplate extends AbstractDistri
         IDynamicPluginConfiguration configuration = pluginAdapter.getPluginConfiguration();
         versionId = configuration.getId();
         versionDisplay = configuration.getName();
-        if ("HDP2xxDistributionTemplate".equals(configuration.getTemplateId())
-                || ("HDP3xxDistributionTemplate".equals(configuration.getTemplateId())
-                        && configuration.getVersion().startsWith("3.0"))) {
+        if 	(("HDP3xxDistributionTemplate".equals(configuration.getTemplateId())
+                        && configuration.getVersion().startsWith("3.1")) ||
+                ("CDH6xDistributionTemplate".equals(configuration.getTemplateId()))) {
             versionDisplay = versionDisplay.replaceAll("Dynamic", "Deprecated");
         }
 

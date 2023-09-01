@@ -50,7 +50,7 @@ public class DynamicCDHDistributionsGroup extends AbstractDynamicDistributionsGr
 
     @Override
     public String generateVersionName(String version) {
-        return "Cloudera CDH" + version + " (Dynamic)"; //$NON-NLS-1$//$NON-NLS-2$
+        return "Cloudera CDH" + version + " (Deprecated)"; //$NON-NLS-1$//$NON-NLS-2$
     }
 
     @Override

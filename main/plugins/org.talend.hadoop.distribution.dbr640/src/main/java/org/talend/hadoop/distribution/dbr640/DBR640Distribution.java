@@ -41,7 +41,7 @@ public class DBR640Distribution extends AbstractDatabricksDistribution implement
 
     public final static String VERSION = "Databricks_6_4" ;
 
-    public static final String VERSION_DISPLAY = "6.4 (includes Apache Spark 2.4.5, Scala 2.11)" ;
+    public static final String VERSION_DISPLAY = "6.4 (Deprecated) (includes Apache Spark 2.4.5, Scala 2.11)";
 
     private final static String YARN_APPLICATION_CLASSPATH = "$HADOOP_CONF_DIR,$HADOOP_COMMON_HOME/*," +
             "$HADOOP_COMMON_HOME/lib/*,$HADOOP_HDFS_HOME/*,$HADOOP_HDFS_HOME/lib/*,$HADOOP_MAPRED_HOME/*," +
