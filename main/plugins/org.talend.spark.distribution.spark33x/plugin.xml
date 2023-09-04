@@ -268,6 +268,11 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="google-extensions-0.5.1.jar" name="google-extensions-0.5.1.jar" mvn_uri="mvn:com.google.flogger/google-extensions/0.5.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/util/1.6.0"/>
 
+		<!-- Spark Avro group -->
+        <libraryNeededGroup description="avro dependencies if spark avro is not in classpath" id="AVRO-GROUP-SPARK_3_3_x" name="AVRO-GROUP-SPARK_3_3_x">
+            <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
+        </libraryNeededGroup>
+
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_3_x" name="SPARK-COMPILE-GROUP-SPARK_3_3_x">
             <library id="antlr4-4.8.jar"/>

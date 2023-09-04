@@ -96,6 +96,11 @@ public class Spark24xDistribution extends AbstractSparkDistribution
     public List<String> getSupportedHCatalogVersion() {
     	return null;
     }
+    
+    @Override
+    public boolean isSpark2() {
+    	return true;
+    }
 
     protected Map<NodeComponentTypeBean, Set<DistributionModuleGroup>> buildNodeModuleGroups(String distribution,
             String version) {

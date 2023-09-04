@@ -63,7 +63,10 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
     public String getSparkClasspath(List<? extends INode> nodes) {
         String hadoopHome = "${HADOOP_HOME}";
         String classpathSeparator = ",";
-        String classpath = "/opt/cloudera/parcels/CDH/lib/spark/jars/*"//CDH&CDP base classpath
+        String cdhSpark2Jars = "/opt/cloudera/parcels/CDH/lib/spark/jars/*";
+        String cdhSpark3Jars = "/opt/cloudera/parcels/SPARK3/lib/spark3/jars/*";
+        String baseCdhSparkJars = this.isSpark2() ? cdhSpark2Jars : cdhSpark3Jars;
+        String classpath = baseCdhSparkJars//CDH&CDP base classpath
                 + classpathSeparator + hadoopHome + "/../spark2/jars/*" //HDP base classpath
                 + classpathSeparator + "/usr/lib/spark/jars/*" + classpathSeparator + "/usr/lib/hadoop-lzo/lib/*" + classpathSeparator + "/usr/lib/hadoop-lzo/lib/native/*"; //EMR base classpath
         if (doesJobContain(nodes, "hive")) {
