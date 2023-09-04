@@ -61,4 +61,8 @@ public interface ISparkDistribution {
     default boolean doSupportUniversalEMRServerlessMode() {
         return false;
     }
+    
+    default boolean isSpark2() {
+        return false;
+    }
 }
