@@ -23,6 +23,7 @@
         <!ENTITY scala_version "2.12">
         <!ENTITY snakeyaml_version "1.33">
         <!ENTITY spark_version "3.4.1">
+        <!ENTITY snowflake-jdbc_version "3.13.29">
         <!ENTITY netty_version "4.1.87.Final">
         <!ENTITY woodstox_version "6.4.0">
         ]>
@@ -235,7 +236,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="slf4j-api-1.7.32.jar" name="slf4j-api-1.7.32.jar" mvn_uri="mvn:org.slf4j/slf4j-api/1.7.32"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="snakeyaml-&snakeyaml_version;.jar" name="snakeyaml-&snakeyaml_version;.jar" mvn_uri="mvn:org.yaml/snakeyaml/&snakeyaml_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="snappy-java-1.1.10.1.jar" name="snappy-java-1.1.10.1.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="snowflake-jdbc-3.13.14.jar" name="snowflake-jdbc-3.13.14.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/3.13.14"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="snowflake-jdbc-&snowflake-jdbc_version;.jar" name="snowflake-jdbc-&snowflake-jdbc_version;.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/&snowflake-jdbc_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-avro_&scala_version;-&spark_version;.jar" name="spark-avro_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-avro_&scala_version;/&spark_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar" name="spark-cassandra-connector-assembly_&scala_version;-&spark_version;.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_&scala_version;/&spark_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-catalyst_&scala_version;-&spark_version;.jar" name="spark-catalyst_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-catalyst_&scala_version;/&spark_version;"/>
@@ -497,7 +498,7 @@
         <!-- Snowflake group -->
         <libraryNeededGroup description="Snowflake libraries for spark33x" id="SNOWFLAKE-GROUP-SPARK_3_4_x" name="SNOWFLAKE-GROUP-SPARK_3_4_x">
             <library id="spark-snowflake_&scala_version;-2.10.0-spark_3.2.jar"/>
-            <library id="snowflake-jdbc-3.13.14.jar"/>
+            <library id="snowflake-jdbc-&snowflake-jdbc_version;.jar"/>
             <library id="snowflake-ingest-sdk-0.10.3.jar"/>
         </libraryNeededGroup>
 
