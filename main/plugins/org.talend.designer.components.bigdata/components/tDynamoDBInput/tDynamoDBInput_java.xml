@@ -364,14 +364,14 @@
 		 <IMPORT NAME="jmespath-java-1.12.315.jar" MODULE="jmespath-java-1.12.315.jar"
 				 MVN="mvn:com.amazonaws/jmespath-java/1.12.315"
 				 REQUIRED="true" />
-         <IMPORT NAME="jackson-core-2.13.4.jar" MODULE="jackson-core-2.13.4.jar"
-                 MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.13.4"
+         <IMPORT NAME="jackson-core-2.14.3.jar" MODULE="jackson-core-2.14.3.jar"
+                 MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.14.3"
                  REQUIRED="true"/>
-         <IMPORT NAME="jackson-databind-2.13.4.2.jar" MODULE="jackson-databind-2.13.4.2.jar"
-			MVN="mvn:com.fasterxml.jackson.core/jackson-databind/2.13.4.2"
+         <IMPORT NAME="jackson-databind-2.14.3.jar" MODULE="jackson-databind-2.14.3.jar"
+			MVN="mvn:com.fasterxml.jackson.core/jackson-databind/2.14.3"
 			REQUIRED="true" />
-		<IMPORT NAME="jackson-annotations-2.13.4.jar" MODULE="jackson-annotations-2.13.4.jar"
-			MVN="mvn:com.fasterxml.jackson.core/jackson-annotations/2.13.4"
+		<IMPORT NAME="jackson-annotations-2.14.3.jar" MODULE="jackson-annotations-2.14.3.jar"
+			MVN="mvn:com.fasterxml.jackson.core/jackson-annotations/2.14.3"
 			REQUIRED="true" />
 		<IMPORT NAME="httpcore-4.4.13.jar" MODULE="httpcore-4.4.13.jar"
                 MVN="mvn:org.apache.httpcomponents/httpcore/4.4.13"
