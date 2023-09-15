@@ -22,7 +22,7 @@ public class HiveMetadataHelper4HortonworksTest extends AbstractDistributionTest
 
     // An exhaustive list of all the versions Studio has been supported, some old versions may have been removed.
     private static final String[] VERSIONS_NON_DYNAMIC = new String[] {
-    	"Hortonworks Data Platform V3.1.4.12-1 [Built in]"};
+    	"Hortonworks Data Platform V3.1.4.12-1 (Deprecated) [Built in]"}; //$NON-NLS-1$
 
     @Override
     protected String getDistribution() {
