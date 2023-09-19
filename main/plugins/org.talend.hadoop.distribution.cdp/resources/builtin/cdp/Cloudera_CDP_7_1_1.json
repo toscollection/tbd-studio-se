@@ -8988,6 +8988,73 @@
       "tagName" : "libraryNeededGroup",
       "templateId" : "TALEND_CLOUDERA_NAVIGATOR-DYNAMIC"
     }, {
+        "childNodes": [ {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_commons_pool2_2_6_0_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_joda_time_2_9_9_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_httpcore_4_4_13_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_commons_httpclient_3_1_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_8_42_1_hadoop_mapreduce_client_common_3_1_1_7_1_8_42_1_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_8_42_1_hadoop_mapreduce_client_shuffle_2_6_0_cdh5_4_0_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_8_42_1_hadoop_mapreduce_client_jobclient_3_1_1_7_1_8_42_1_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_emr-dynamodb-hadoop",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_aws_java_sdk_core_1_11_271_jar",
+            "tagName": "library"
+          }, {
+            "childNodes": [],
+            "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_aws_java_sdk_dynamodb_1_11_271_jar",
+            "tagName": "library"
+          }, {
+          "childNodes": [],
+          "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_0_jar",
+          "tagName": "library"
+          }
+        ],
+        "description": "",
+        "id": "DYNAMIC_Cloudera_CDP7_1_1_0_565_SPARK_DYNAMODB_LIB_MRREQUIRED_DYNAMIC",
+        "tagName" : "libraryNeededGroup",
+        "templateId": "SPARK-DYNAMODB-LIB-MRREQUIRED-DYNAMIC"
+      }, {
+        "childNodes" : [ ],
+        "context" : "plugin:org.talend.hadoop.distribution.cdp",
+        "excludeDependencies" : "true",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_emr-dynamodb-hadoop",
+        "mvn_uri" : "mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0/jar",
+        "name" : "emr-dynamodb-hadoop-4.7.0.jar",
+        "tagName" : "libraryNeeded"
+      }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdp",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_0_jar",
+      "mvn_uri" : "mvn:com.sun.jersey/jersey-server/2.0/jar",
+      "name" : "jersey-server-2.0.jar",
+      "tagName" : "libraryNeeded"
+    }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
