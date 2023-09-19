@@ -985,9 +985,42 @@
             "jarName": "fluent-hc-4.5.13.jar",
             "mvnUri": "mvn:org.apache.httpcomponents/fluent-hc/4.5.13/jar",
             "useStudioRepository": "true"
+        },
+        {
+            "id": "aws-java-sdk-dynamodb",
+            "type": "STANDARD",
+            "context": "{properties.context}",
+            "jarName": "aws-java-sdk-dynamodb-1.11.271.jar",
+            "mvnUri": "mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.271/jar",
+            "useStudioRepository": "true"
+        },
+        {
+            "id": "emr-dynamodb-hadoop",
+            "type": "STANDARD",
+            "context": "{properties.context}",
+            "jarName": "emr-dynamodb-hadoop-4.7.0.jar",
+            "mvnUri": "mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0/jar",
+            "useStudioRepository": "true"
+        },
+        {
+            "id": "aws-java-sdk-core",
+            "type": "STANDARD",
+            "context": "{properties.context}",
+            "jarName": "aws-java-sdk-core-1.11.271.jar",
+            "mvnUri": "mvn:com.amazonaws/aws-java-sdk-core/1.11.271/jar",
+            "useStudioRepository": "true"
         }
     ],
     "moduleGroups": [
+        {
+            "id": "SPARK-DYNAMODB-LIB-MRREQUIRED-DYNAMIC",
+            "description": "",
+            "modules": [
+                "aws-java-sdk-dynamodb",
+                "emr-dynamodb-hadoop",
+                "aws-java-sdk-core"
+            ]
+        },
         {
             "id" : "TALEND_BIGDATA_CORE_DI_LIB",
             "description" : "",

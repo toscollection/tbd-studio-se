@@ -11413,6 +11413,48 @@
       "tagName" : "libraryNeededGroup",
       "templateId" : "TALEND_CLOUDERA_NAVIGATOR-DYNAMIC"
     }, {
+      "childNodes" : [ {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_aws_java_sdk_core_1_11_271_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_emr_dynamodb_hadoop",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_aws_java_sdk_dynamodb_1_11_271_jar",
+        "tagName" : "library"
+      } ],
+      "description" : "",
+      "id" : "DYNAMIC_Cloudera_CDH6_1_1_SPARK-DYNAMODB-LIB-MRREQUIRED-DYNAMIC",
+      "tagName" : "libraryNeededGroup",
+      "templateId" : "SPARK-DYNAMODB-LIB-MRREQUIRED-DYNAMIC"
+    }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDH6_1_1_aws_java_sdk_dynamodb_1_11_271_jar",
+      "mvn_uri" : "mvn:com.amazonaws/aws-java-sdk-dynamodb/1.11.271/jar",
+      "name" : "aws-java-sdk-dynamodb-1.11.271.jar",
+      "tagName" : "libraryNeeded"
+    }, {
+        "childNodes" : [ ],
+        "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
+        "excludeDependencies" : "true",
+        "id" : "DYNAMIC_Cloudera_CDH6_1_1_emr_dynamodb_hadoop",
+        "mvn_uri" : "mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0/jar",
+        "name" : "emr-dynamodb-hadoop-4.7.0.jar",
+        "tagName" : "libraryNeeded"
+      }, {
+      "childNodes" : [ ],
+      "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
+      "excludeDependencies" : "true",
+      "id" : "DYNAMIC_Cloudera_CDH6_1_1_aws_java_sdk_core_1_11_271_jar",
+      "mvn_uri" : "mvn:com.amazonaws/aws-java-sdk-core/1.11.271/jar",
+      "name" : "aws-java-sdk-core-1.11.271.jar",
+      "tagName" : "libraryNeeded"
+    }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
