@@ -5,6 +5,7 @@
         <!ENTITY aws_sdk_version "1.12.170">
         <!ENTITY commons-configuration2_version "2.8.0">
         <!ENTITY google_version "1.33.3">
+        <!ENTITY google_http_version "1.41.7">
         <!ENTITY ivy_version "2.5.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.14.2">
@@ -77,8 +78,10 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="guava-27.1-jre.jar" name="guava-27.1-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.1-jre"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-api-client-1.33.0.jar" name="google-api-client-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.33.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-api-client-gson-1.33.0.jar" name="google-api-client-gson-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client-gson/1.33.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" name="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev20220718-1.32.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-http-client-1.41.7.jar" name="google-http-client-1.41.7.jar" mvn_uri="mvn:com.google.http-client/google-http-client/1.41.7"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-http-client-&google_http_version;.jar" name="google-http-client-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client/&google_http_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-http-client-gson-&google_http_version;.jar" name="google-http-client-gson-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client-gson/&google_http_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:org.talend.libraries/google-http-client-jackson-1.22.0/6.0.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-http-client-jackson2-1.33.0.jar" name="google-http-client-jackson2-1.33.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.33.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="google-oauth-client-&google_version;.jar" name="google-oauth-client-&google_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/&google_version;"/>
@@ -548,8 +551,10 @@
             <library id="spark-streaming-pubsub_&scala_version;-2.4.0.jar"/>
             <library id="grpc-context-1.19.0.jar"/>
             <library id="google-api-client-1.33.0.jar"/>
+            <library id="google-api-client-gson-1.33.0.jar"/>
             <library id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar"/>
-            <library id="google-http-client-1.41.7.jar"/>
+            <library id="google-http-client-&google_http_version;.jar"/>
+            <library id="google-http-client-gson-&google_http_version;.jar"/>
             <library id="google-http-client-jackson-1.22.0.jar"/>
             <library id="google-http-client-jackson2-1.33.0.jar"/>
             <library id="google-oauth-client-&google_version;.jar"/>
