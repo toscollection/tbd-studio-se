@@ -180,7 +180,7 @@
       </classloader>
       <classloader
             index="NOSQL:MONGODB:MONGODB_4_4_X"
-            libraries="mongodb-driver-core-4.2.3.jar;mongodb-driver-sync-4.2.3.jar;bson-4.2.3.jar">
+            libraries="mongodb-driver-core-4.10.2.jar;mongodb-driver-sync-4.10.2.jar;bson-4.10.2.jar">
       </classloader>
       <classloader
             index="NOSQL:CASSANDRA:CASSANDRA_3_0"
@@ -300,6 +300,24 @@
         id="mongo-java-driver-2.14.3.jar"
         name="mongo-java-driver-2.14.3.jar"
         mvn_uri="mvn:org.mongodb/mongo-java-driver/2.14.3">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for MongoDB Connection"
+        id="mongodb-driver-sync-4.10.2.jar"
+        name="mongodb-driver-sync-4.10.2.jar"
+        mvn_uri="mvn:org.mongodb/mongodb-driver-sync/4.10.2">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for MongoDB Connection"
+        id="mongodb-driver-core-4.10.2.jar"
+        name="mongodb-driver-core-4.10.2.jar"
+        mvn_uri="mvn:org.mongodb/mongodb-driver-core/4.10.2">
+      </libraryNeeded>
+      <libraryNeeded
+        context="Needed for MongoDB Connection"
+        id="bson-4.10.2.jar"
+        name="bson-4.10.2.jar"
+        mvn_uri="mvn:org.mongodb/bson/4.10.2">
       </libraryNeeded>
 
    </extension>
