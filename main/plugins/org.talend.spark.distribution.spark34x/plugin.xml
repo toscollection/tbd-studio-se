@@ -51,7 +51,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="bcpkix-jdk15on-1.70.jar" name="bcpkix-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.70"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="bcprov-jdk15on-1.70.jar" name="bcprov-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.70"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="bigquery-connector-hadoop3-1.1.6-shaded" name="bigquery-connector-hadoop3-1.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop3-1.1.6/jar/shaded"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="breeze_&scala_version;-1.2.jar" name="breeze_&scala_version;-1.2.jar" mvn_uri="mvn:org.scalanlp/breeze_&scala_version;/1.2"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="breeze_&scala_version;-2.1.0.jar" name="breeze_&scala_version;-2.1.0.jar" mvn_uri="mvn:org.scalanlp/breeze_&scala_version;/2.1.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="chill_&scala_version;-0.10.0.jar" name="chill_&scala_version;-0.10.0.jar" mvn_uri="mvn:com.twitter/chill_&scala_version;/0.10.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="chill-java-0.10.0.jar" name="chill-java-0.10.0.jar" mvn_uri="mvn:com.twitter/chill-java/0.10.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="commons-cli-1.5.jar" name="commons-cli-1.5.jar" mvn_uri="mvn:commons-cli/commons-cli/1.5"/>
@@ -284,7 +284,7 @@
             <library id="avro-mapred-&avro_version;.jar"/>
             <library id="bcpkix-jdk15on-1.70.jar"/>
             <library id="bcprov-jdk15on-1.70.jar"/>
-            <library id="breeze_&scala_version;-1.2.jar"/>
+            <library id="breeze_&scala_version;-2.1.0.jar"/>
             <library id="chill_&scala_version;-0.10.0.jar"/>
             <library id="chill-java-0.10.0.jar"/>
             <library id="commons-codec-1.15.jar"/>
