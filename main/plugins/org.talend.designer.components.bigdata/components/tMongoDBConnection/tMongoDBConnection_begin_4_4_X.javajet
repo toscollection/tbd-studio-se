@@ -74,35 +74,35 @@
         if(connectionAttributesKeySet.contains("MAINTENANCE_FREQUENCY")) {
             isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maintenanceFrequency(<%=optionalConnectionAttributesMap.get("MAINTENANCE_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            connPoolSettingsBuilder_<%=cid%>.maintenanceFrequency((long)<%=optionalConnectionAttributesMap.get("MAINTENANCE_FREQUENCY")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("MAINTENANCE_INITIAL_DELAY")) {
             isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maintenanceInitialDelay(<%=optionalConnectionAttributesMap.get("MAINTENANCE_INITIAL_DELAY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            connPoolSettingsBuilder_<%=cid%>.maintenanceInitialDelay((long)<%=optionalConnectionAttributesMap.get("MAINTENANCE_INITIAL_DELAY")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("MAX_CONNECTION_IDLE_TIME")) {
             isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxConnectionIdleTime(<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_IDLE_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            connPoolSettingsBuilder_<%=cid%>.maxConnectionIdleTime((long)<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_IDLE_TIME")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("MAX_CONNECTION_LIFE_TIME")) {
             isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxConnectionLifeTime(<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_LIFE_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            connPoolSettingsBuilder_<%=cid%>.maxConnectionLifeTime((long)<%=optionalConnectionAttributesMap.get("MAX_CONNECTION_LIFE_TIME")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("MAX_WAIT_TIME")) {
             isConnPoolBuilderUsed = true;
             %>
-            connPoolSettingsBuilder_<%=cid%>.maxWaitTime(<%=optionalConnectionAttributesMap.get("MAX_WAIT_TIME")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            connPoolSettingsBuilder_<%=cid%>.maxWaitTime((long)<%=optionalConnectionAttributesMap.get("MAX_WAIT_TIME")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("LOCAL_THRESHOLD")) {%>
-            clusterSettingsBuilder_<%=cid%>.localThreshold(<%=optionalConnectionAttributesMap.get("LOCAL_THRESHOLD")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            clusterSettingsBuilder_<%=cid%>.localThreshold((long)<%=optionalConnectionAttributesMap.get("LOCAL_THRESHOLD")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("REQUIRED_REPLICA_SET_NAME")) {%>
@@ -110,19 +110,19 @@
             <%
         }
         if(connectionAttributesKeySet.contains("SERVER_SELECTION_TIMEOUT")) {%>
-            clusterSettingsBuilder_<%=cid%>.serverSelectionTimeout(<%=optionalConnectionAttributesMap.get("SERVER_SELECTION_TIMEOUT")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            clusterSettingsBuilder_<%=cid%>.serverSelectionTimeout((long)<%=optionalConnectionAttributesMap.get("SERVER_SELECTION_TIMEOUT")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("HEARTBEAT_FREQUENCY")) {
             isServSettingsBuilderUsed = true;
             %>
-            serverSettingsBuilder_<%=cid%>.heartbeatFrequency(<%=optionalConnectionAttributesMap.get("HEARTBEAT_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            serverSettingsBuilder_<%=cid%>.heartbeatFrequency((long)<%=optionalConnectionAttributesMap.get("HEARTBEAT_FREQUENCY")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("MIN_HEARTBEAT_FREQUENCY")) {
             isServSettingsBuilderUsed = true;
             %>
-            serverSettingsBuilder_<%=cid%>.minHeartbeatFrequency(<%=optionalConnectionAttributesMap.get("MIN_HEARTBEAT_FREQUENCY")%>L, java.util.concurrent.TimeUnit.MILLISECONDS);
+            serverSettingsBuilder_<%=cid%>.minHeartbeatFrequency((long)<%=optionalConnectionAttributesMap.get("MIN_HEARTBEAT_FREQUENCY")%>, java.util.concurrent.TimeUnit.MILLISECONDS);
             <%
         }
         if(connectionAttributesKeySet.contains("SOCKET_CONNECT_TIMEOUT")) {
