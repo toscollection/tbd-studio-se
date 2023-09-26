@@ -15,20 +15,6 @@
    </extension>
    <extension
          point="org.talend.core.runtime.librariesNeeded">
-      <libraryNeeded
-            context="plugin:"
-            id="jersey-core-1.17.jar"
-            mvn_uri="mvn:org.talend.libraries/jersey-core-1.17/6.1.0"
-            name="jersey-core-1.17.jar"
-            required="true">
-      </libraryNeeded>
-      <libraryNeeded
-            context="plugin:"
-            id="jersey-core-1.8.jar"
-            mvn_uri="mvn:org.talend.libraries/jersey-core-1.8/6.0.0"
-            name="jersey-core-1.8.jar"
-            required="true">
-      </libraryNeeded>
       
       <!-- Kafka 0.9.0.1 libraries -->
         <libraryNeeded
@@ -51,11 +37,6 @@
             id="snappy-java-1.1.10.1.jar"
             name="snappy-java-1.1.10.1.jar" 
             mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
-        <libraryNeeded
-            context="org.talend.designer.components.bigdata"
-            id="zkclient-0.7.jar"
-            name="zkclient-0.7.jar" 
-            mvn_uri="mvn:org.talend.libraries/zkclient-0.7/6.0.0"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="slf4j-log4j12-1.7.6.jar"
@@ -88,11 +69,6 @@
             id="snappy-java-1.1.10.1.jar"
             name="snappy-java-1.1.10.1.jar" 
             mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
-        <libraryNeeded
-            context="org.talend.designer.components.bigdata"
-            id="zkclient-0.8.jar"
-            name="zkclient-0.8.jar" 
-            mvn_uri="mvn:org.talend.libraries/zkclient-0.8/6.3.0"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="slf4j-log4j12-1.7.21.jar"

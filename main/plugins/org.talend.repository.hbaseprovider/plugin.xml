@@ -26,26 +26,12 @@
    </extension>
       <extension
          point="org.talend.core.runtime.librariesNeeded">
-            <libraryNeeded
-            context="HBase wizard"
-            language="java"
-            message="Wizard use for HBase"
-            name="commons-lang3-3.0.jar" mvn_uri="mvn:org.talend.libraries/commons-lang3-3.0/6.0.0" 
-            required="true"
-            uripath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang3-3.0.jar">
       </libraryNeeded>
             <libraryNeeded
             context="HBase wizard"
             language="java"
             message="Wizard use for HBase"
             name="zookeeper-3.4.8.jar" mvn_uri="mvn:org.talend.libraries/zookeeper-3.4.8/6.0.0" 
-            required="true">
-      </libraryNeeded>
-            <libraryNeeded
-            context="HBase wizard"
-            language="java"
-            message="Wizard use for HBase"
-            name="hbase-0.90.1-cdh3u0.jar" mvn_uri="mvn:org.talend.libraries/hbase-0.90.1-cdh3u0/6.0.0" 
             required="true">
       </libraryNeeded>
    </extension>
