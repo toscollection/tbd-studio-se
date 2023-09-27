@@ -370,7 +370,7 @@ public class Spark34xDistribution extends AbstractSparkDistribution
     
     @Override
     public boolean doSupportStandaloneMode() {
-        return false;
+        return true;
     }
 
     @Override
