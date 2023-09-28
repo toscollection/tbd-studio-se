@@ -26,7 +26,6 @@
    </extension>
       <extension
          point="org.talend.core.runtime.librariesNeeded">
-      </libraryNeeded>
             <libraryNeeded
             context="MapRDB wizard"
             language="java"
