@@ -118,7 +118,8 @@ public class HadoopImportConfsOptionPage extends AbstractHadoopImportConfsPage {
                 && (IHortonworksDistribution.DISTRIBUTION_NAME.equals(distribution.name) || IClouderaDistribution.DISTRIBUTION_NAME
                         .equals(distribution.name));
         remoteBtn.setEnabled(supportRemote);
-        
+        localBtn.setEnabled(true);
+
         //Synapse supports only manually configured wizard
         boolean supportManualOnly = distribution != null && ISynapseDistribution.DISTRIBUTION_NAME.equals(distribution.name);
         if (supportManualOnly) {
