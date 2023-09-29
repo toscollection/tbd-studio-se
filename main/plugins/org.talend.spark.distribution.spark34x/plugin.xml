@@ -4,6 +4,7 @@
         <!ENTITY avro_version "1.11.1">
         <!ENTITY aws_sdk_version "1.12.170">
         <!ENTITY commons-configuration2_version "2.8.0">
+        <!ENTITY deltalake_version "2.4.0">
         <!ENTITY google_version "1.33.3">
         <!ENTITY google_http_version "1.41.7">
         <!ENTITY ivy_version "2.5.1">
@@ -69,7 +70,8 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="compress-lzf-1.0.3.jar" name="compress-lzf-1.0.3.jar" mvn_uri="mvn:com.ning/compress-lzf/1.0.3"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="curator-client-2.13.0.jar" name="curator-client-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-client/2.13.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="curator-framework-2.13.0.jar" name="curator-framework-2.13.0.jar" mvn_uri="mvn:org.apache.curator/curator-framework/2.13.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="delta-core_&scala_version;-1.1.0.jar" name="delta-core_&scala_version;-1.1.0.jar" mvn_uri="mvn:io.delta/delta-core_&scala_version;/1.1.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="delta-core_&scala_version;-&deltalake_version;.jar" name="delta-core_&scala_version;-&deltalake_version;.jar" mvn_uri="mvn:io.delta/delta-core_&scala_version;/&deltalake_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="delta-storage-&deltalake_version;.jar" name="delta-storage-&deltalake_version;.jar" mvn_uri="mvn:io.delta/delta-storage/&deltalake_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="emr-dynamodb-hadoop-4.16.0.jar" name="emr-dynamodb-hadoop-4.16.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.16.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="failureaccess-1.0.1.jar" name="failureaccess-1.0.1.jar" mvn_uri="mvn:com.google.guava/failureaccess/1.0.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="flogger-0.5.1.jar" name="flogger-0.5.1.jar" mvn_uri="mvn:com.google.flogger/flogger/0.5.1"/>
@@ -471,7 +473,8 @@
 
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark33x" id="DELTALAKE-GROUP-SPARK_3_4_x" name="DELTALAKE-GROUP-SPARK_3_4_x">
-            <library id="delta-core_&scala_version;-1.1.0.jar"/>
+            <library id="delta-core_&scala_version;-&deltalake_version;.jar"/>
+            <library id="delta-storage-&deltalake_version;.jar"/>
             <library id="snappy-java-1.1.8.4.jar"/>
         </libraryNeededGroup>
 
