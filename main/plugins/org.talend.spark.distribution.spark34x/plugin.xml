@@ -25,6 +25,7 @@
         <!ENTITY scala_version "2.12">
         <!ENTITY snakeyaml_version "1.33">
         <!ENTITY spark_version "3.4.1">
+        <!ENTITY spark_redshift "6.0.0-spark_3.4">
         <!ENTITY snowflake-jdbc_version "3.13.29">
         <!ENTITY netty_version "4.1.87.Final">
         <!ENTITY woodstox_version "6.4.0">
@@ -264,7 +265,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-snowflake_&scala_version;-2.10.0-spark_3.2.jar" name="spark-snowflake_&scala_version;-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_&scala_version;/2.10.0-spark_3.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="snowflake-ingest-sdk-0.10.3.jar" name="snowflake-ingest-sdk-0.10.3.jar" mvn_uri="mvn:net.snowflake/snowflake-ingest-sdk/0.10.3"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-streaming-pubsub_&scala_version;-2.4.0.jar" name="spark-streaming-pubsub_&scala_version;-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_&scala_version;/2.4.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-redshift_&scala_version;-5.1.0.jar" name="spark-redshift_&scala_version;-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_&scala_version;/5.1.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-redshift_&scala_version;-&spark_redshift;.jar" name="spark-redshift_&scala_version;-&spark_redshift;.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_&scala_version;/&spark_redshift;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-unsafe_&scala_version;-&spark_version;.jar" name="spark-unsafe_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_&scala_version;/&spark_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="spark-yarn_&scala_version;-&spark_version;.jar" name="spark-yarn_&scala_version;-&spark_version;.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_&scala_version;/&spark_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="stax2-api-4.2.1.jar" name="stax2-api-4.2.1.jar" mvn_uri="mvn:org.codehaus.woodstox/stax2-api/4.2.1"/>
@@ -497,7 +498,7 @@
         <!-- Redshift group -->
         <libraryNeededGroup description="Redshift libraries for spark33x" id="REDSHIFT-BATCH-GROUP-SPARK_3_4_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_4_x">
             <library id="snappy-java-1.1.8.4.jar"/>
-            <library id="spark-redshift_&scala_version;-5.1.0.jar"/>
+            <library id="spark-redshift_&scala_version;-&spark_redshift;.jar"/>
             <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
 
