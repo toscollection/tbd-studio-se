@@ -89,6 +89,9 @@ public abstract class AbstractSparkDistribution extends AbstractDistribution imp
         if (doesJobContain(nodes, "tS3Configuration")) {
             classpath += classpathSeparator + "/usr/share/aws/emr/s3select/lib/*"; // S3 Select on EMR
         }
+        if (doesJobContain(nodes,"avro")){
+            classpath += classpathSeparator + "/usr/lib/spark/external/lib/*";
+        }
         return classpath;
     }
 
