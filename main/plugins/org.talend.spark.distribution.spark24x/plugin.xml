@@ -13,9 +13,10 @@
 		<!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
 		<!ENTITY jackson_version "2.6.7">
 		<!ENTITY jackson-module-scala_version "2.6.7.1">
-		<!ENTITY kafka_version "2.8.2">
+		<!ENTITY kafka_version "3.4.0">
 		<!ENTITY snowflake-jdbc_version "3.13.29">
 		<!ENTITY woodstox_version "6.4.0">
+		<!ENTITY snappy-java_version "1.1.10.1">
 		]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -196,7 +197,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="delta-core_2.11-0.6.1.jar" name="delta-core_2.11-0.6.1.jar" mvn_uri="mvn:io.delta/delta-core_2.11/0.6.1"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snappy-java-1.1.7.5.jar" name="snappy-java-1.1.7.5.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.7.5"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snappy-java-&snappy-java_version;.jar" name="snappy-java-&snappy-java_version;.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/&snappy-java_version;"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-cassandra-connector-assembly_2.11-2.5.2.jar" name="spark-cassandra-connector-assembly_2.11-2.5.2.jar" mvn_uri="mvn:com.datastax.spark/spark-cassandra-connector-assembly_2.11/2.5.2"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="jnr-posix-3.1.0.jar" name="jnr-posix-3.1.0.jar" mvn_uri="mvn:com.github.jnr/jnr-posix/3.1.0"/>
@@ -333,7 +334,7 @@
 			<library id="spark-unsafe_2.11-2.4.7.jar"/>
 			<library id="spark-yarn_2.11-2.4.7.jar"/>
 			<library id="stax2-api-4.2.1.jar"/>
-			<library id="snappy-java-1.1.7.5.jar"/>
+			<library id="snappy-java-&snappy-java_version;.jar"/>
 			<library id="univocity-parsers-2.7.3.jar"/>
 			<library id="woodstox-core-&woodstox_version;.jar"/>
 			<library id="xbean-asm6-shaded-4.10.jar"/>
@@ -376,7 +377,7 @@
 		<!-- DeltaLake group -->
 		<libraryNeededGroup description="DeltaLake libraries for spark247" id="DELTALAKE-GROUP-SPARK_2_4_x" name="DELTALAKE-GROUP-SPARK_2_4_x">
 			<library id="delta-core_2.11-0.6.1.jar"/>
-			<library id="snappy-java-1.1.7.5.jar"/>
+			<library id="snappy-java-&snappy-java_version;.jar"/>
 		</libraryNeededGroup>
 
 		<!-- Cassandra group -->
@@ -500,7 +501,7 @@
 		<!-- Parquet group -->
 		<libraryNeededGroup description="Parquet" id="PARQUET-GROUP-SPARK_2_4_x" name="PARQUET-GROUP-SPARK_2_4_x">
 			<library id="parquet-common-1.10.1.jar"/>
-			<library id="snappy-java-1.1.7.5.jar"/>
+			<library id="snappy-java-&snappy-java_version;.jar"/>
 		</libraryNeededGroup>
 
 		<!-- Sqoop group -->

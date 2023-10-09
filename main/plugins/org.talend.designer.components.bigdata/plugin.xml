@@ -66,11 +66,6 @@
             mvn_uri="mvn:org.talend.libraries/scala-library-2.10.6/6.3.0"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.10.1.jar"
-            name="snappy-java-1.1.10.1.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
-        <libraryNeeded
-            context="org.talend.designer.components.bigdata"
             id="slf4j-log4j12-1.7.21.jar"
             name="slf4j-log4j12-1.7.21.jar" 
             mvn_uri="mvn:org.talend.libraries/slf4j-log4j12-1.7.21/6.3.0"/>
@@ -111,11 +106,6 @@
             id="scala-logging_2.11-3.7.2.jar"
             name="scala-logging_2.11-3.7.2.jar" 
             mvn_uri="mvn:com.typesafe.scala-logging/scala-logging_2.11/3.7.2"/>
-        <libraryNeeded
-            context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.10.1.jar"
-            name="snappy-java-1.1.10.1.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="zkclient-0.10.jar"
@@ -168,11 +158,6 @@
             id="scala-logging_2.12-3.9.2.jar"
             name="scala-logging_2.12-3.9.2.jar" 
             mvn_uri="mvn:com.typesafe.scala-logging/scala-logging_2.12/3.9.2"/>
-        <libraryNeeded
-            context="org.talend.designer.components.bigdata"
-            id="snappy-java-1.1.10.1.jar"
-            name="snappy-java-1.1.10.1.jar" 
-            mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.10.1"/>
         <libraryNeeded
             context="org.talend.designer.components.bigdata"
             id="zkclient-0.11.jar"

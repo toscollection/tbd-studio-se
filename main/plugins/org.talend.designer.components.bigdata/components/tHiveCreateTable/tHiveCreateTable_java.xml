@@ -831,8 +831,8 @@
 				MVN="mvn:org.talend.libraries/parquet-hive-bundle-1.3.2/6.0.0"
 				UrlPath="platform:/plugin/org.talend.libraries.hadoop/lib/parquet-hive-bundle-1.3.2.jar"
 				REQUIRED_IF="(DISTRIB[DISTRIBUTION, HIVE_VERSION].doSupportOldImportMode[] AND USE_EXISTING_CONNECTION=='false' AND (STORAGE_FORMAT=='PARQUET'))" />
-			<IMPORT NAME="snappy-java-1.0.5.jar" MODULE="snappy-java-1.0.5.jar"
-				MVN="mvn:org.talend.libraries/snappy-java-1.0.5/6.0.0"				
+			<IMPORT NAME="snappy-java-1.1.10.1.jar" MODULE="snappy-java-1.1.10.1.jar"
+				MVN="mvn:org.xerial.snappy/snappy-java/1.1.10.1"
 				REQUIRED_IF="(DISTRIB[DISTRIBUTION, HIVE_VERSION].doSupportOldImportMode[] AND USE_EXISTING_CONNECTION=='false' AND (STORAGE_FORMAT=='PARQUET') AND DISTRIBUTION!='CUSTOM')" />
 			
 			<!-- Dataproc 2.x -->	
