@@ -470,7 +470,7 @@
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="hive-shims-common-&hive_version;.jar" name="hive-shims-common-&hive_version;.jar"
-                       mvn_uri="mvn:org.apache.hive/hive-shims-common/&hive_version;"/>
+                       mvn_uri="mvn:org.apache.hive.shims/hive-shims-common/&hive_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="hive-storage-api-2.7.1.jar" name="hive-storage-api-2.7.1.jar"
@@ -701,7 +701,7 @@
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="aws-java-sdk-bundle-&aws-java-sdk-bundle_version;.jar" name="aws-java-sdk-bundle-&aws-java-sdk-bundle_version;.jar"
-                       mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/&aws-java-sdk-bundle_version;.jar"/>
+                       mvn_uri="mvn:com.amazonaws/aws-java-sdk-bundle/&aws-java-sdk-bundle_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar"
