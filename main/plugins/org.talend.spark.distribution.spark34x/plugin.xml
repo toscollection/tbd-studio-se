@@ -11,7 +11,7 @@
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.14.2">
         <!ENTITY janino_version "3.1.9">
-        <!ENTITY jersey_version "2.36">
+        <!ENTITY jersey_version "2.37">
         <!ENTITY json4s_version "3.7.0-M11">
         <!ENTITY kafka_version "2.8.2">
         <!ENTITY kerb_version "1.0.0">
@@ -147,8 +147,8 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jakarta.xml.bind-api-2.3.2.jar" name="jakarta.xml.bind-api-2.3.2.jar" mvn_uri="mvn:jakarta.xml.bind/jakarta.xml.bind-api/2.3.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="javax.servlet-api-3.1.0.jar" name="javax.servlet-api-3.1.0.jar" mvn_uri="mvn:javax.servlet/javax.servlet-api/3.1.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="janino-&janino_version;.jar" name="janino-&janino_version;.jar" mvn_uri="mvn:org.codehaus.janino/janino/&janino_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jersey-client-&jersey_version;.jar" name="jersey-client-&jersey_version;.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-client/&jersey_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jersey-common-&jersey_version;.jar" name="jersey-common-&jersey_version;.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-common/&jersey_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jersey-client-&jersey_version;.jar" name="jersey-client-&jersey_version;.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-client/&jersey_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jersey-common-&jersey_version;.jar" name="jersey-common-&jersey_version;.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-common/&jersey_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jersey-container-servlet-core-&jersey_version;.jar" name="jersey-container-servlet-core-&jersey_version;.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/&jersey_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jersey-server-&jersey_version;.jar" name="jersey-server-&jersey_version;.jar" mvn_uri="mvn:org.glassfish.jersey.core/jersey-server/&jersey_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark34x" id="jetty-util-ajax-9.3.24.v20180605.jar" name="jetty-util-ajax-9.3.24.v20180605.jar" mvn_uri="mvn:org.eclipse.jetty/jetty-util-ajax/9.3.24.v20180605"/>
