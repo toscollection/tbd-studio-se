@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugin [
-        <!ENTITY aws_sdk_version "1.12.170">
+        <!ENTITY aws_sdk_version "1.12.261">
         <!ENTITY commons-configuration2_version "2.8.0">
         <!ENTITY google_version "1.33.3">
         <!ENTITY google_http_version "1.41.7">
@@ -10,7 +10,7 @@
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
         <!ENTITY jetty_version "9.4.44.v20210927">
-        <!ENTITY kafka_version "2.8.2">
+        <!ENTITY kafka_version "3.4.0">
         <!ENTITY kubernetes_version "5.12.2">
         <!ENTITY orc_version "1.6.14">
         <!ENTITY scala_version "2.12">
@@ -19,6 +19,7 @@
         <!ENTITY snowflake-jdbc_version "3.13.29">
         <!ENTITY netty_version "4.1.68.Final">
         <!ENTITY woodstox_version "6.4.0">
+        <!ENTITY snappy-java_version "1.1.10.1">
         ]>
 <?eclipse version="3.4"?>
 <plugin xmlns="">
@@ -242,7 +243,7 @@
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="emr-dynamodb-hadoop-4.16.0.jar" name="emr-dynamodb-hadoop-4.16.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.16.0"/>
 
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snappy-java-1.1.8.2.jar" name="snappy-java-1.1.8.2.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/1.1.8.2"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="snappy-java-&snappy-java_version;.jar" name="snappy-java-&snappy-java_version;.jar" mvn_uri="mvn:org.xerial.snappy/snappy-java/&snappy-java_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-redshift_2.12-5.1.0.jar" name="spark-redshift_2.12-5.1.0.jar" mvn_uri="mvn:io.github.spark-redshift-community/spark-redshift_2.12/5.1.0"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-snowflake_2.12-2.10.0-spark_3.2.jar" name="spark-snowflake_2.12-2.10.0-spark_3.2.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.12/2.10.0-spark_3.2"/>
@@ -382,7 +383,7 @@
             <library id="scala-reflect-2.12.15.jar"/>
             <library id="scala-xml_2.12-1.2.0.jar"/>
             <library id="snakeyaml-&snakeyaml_version;.jar"/>
-            <library id="snappy-java-1.1.8.2.jar"/>
+            <library id="snappy-java-&snappy-java_version;.jar"/>
             <library id="spark-catalyst_&scala_version;-&spark_version;.jar"/>
             <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
             <library id="spark-core_&scala_version;-&spark_version;.jar"/>
@@ -471,7 +472,7 @@
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark32x" id="DELTALAKE-GROUP-SPARK_3_2_x" name="DELTALAKE-GROUP-SPARK_3_2_x">
             <library id="delta-core_2.12-1.1.0.jar"/>
-            <library id="snappy-java-1.1.8.2.jar"/>
+            <library id="snappy-java-&snappy-java_version;.jar"/>
         </libraryNeededGroup>
 
         <!-- Cassandra group -->
@@ -492,7 +493,7 @@
 
         <!-- Redshift group -->
         <libraryNeededGroup description="Redshift libraries for spark32x" id="REDSHIFT-BATCH-GROUP-SPARK_3_2_x" name="REDSHIFT-BATCH-GROUP-SPARK_3_2_x">
-            <library id="snappy-java-1.1.8.2.jar"/>
+            <library id="snappy-java-&snappy-java_version;.jar"/>
             <library id="spark-redshift_2.12-5.1.0.jar"/>
             <library id="spark-avro_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
