@@ -225,12 +225,13 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="zookeeper-3.6.2.jar" name="zookeeper-3.6.2.jar" mvn_uri="mvn:org.apache.zookeeper/zookeeper/3.6.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="zstd-jni-1.5.2-1.jar" name="zstd-jni-1.5.2-1.jar" mvn_uri="mvn:com.github.luben/zstd-jni/1.5.2-1"/>
 
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="hadoop-azure-3.3.4.jar" name="hadoop-azure-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.3.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="hadoop-azure-3.2.4.jar" name="hadoop-azure-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure/3.2.4"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="azure-storage-7.0.0.jar" name="azure-storage-7.0.0.jar" mvn_uri="mvn:com.microsoft.azure/azure-storage/7.0.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jetty-util-ajax-9.3.24.v20180605.jar" name="jetty-util-ajax-9.3.24.v20180605.jar" mvn_uri="mvn:org.eclipse.jetty/jetty-util-ajax/9.3.24.v20180605"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jetty-util-9.3.24.v20180605.jar" name="jetty-util-9.3.24.v20180605.jar" mvn_uri="mvn:org.eclipse.jetty/jetty-util/9.3.24.v20180605"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="hadoop-azure-datalake-3.3.4.jar" name="hadoop-azure-datalake-3.3.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/3.2.1"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="azure-data-lake-store-sdk-2.3.9.jar" name="azure-data-lake-store-sdk-2.3.9.jar" mvn_uri="mvn:com.microsoft.azure/azure-data-lake-store-sdk/2.3.9"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="hadoop-azure-datalake-3.2.4.jar" name="hadoop-azure-datalake-3.2.4.jar" mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/3.2.4"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="azure-data-lake-store-sdk-2.2.9.jar" name="azure-data-lake-store-sdk-2.2.9.jar" mvn_uri="mvn:com.microsoft.azure/azure-data-lake-store-sdk/2.2.9"/>
+
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="gcs-connector-hadoop3-2.1.6-shaded" name="gcs-connector-hadoop3-2.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/gcs-connector/hadoop3-2.1.6/jar/shaded"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="bigquery-connector-hadoop3-1.1.6-shaded" name="bigquery-connector-hadoop3-1.1.6-shaded.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/bigquery-connector/hadoop3-1.1.6/jar/shaded"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="delta-core_&scala_version;-&deltalake_version;.jar" name="delta-core_&scala_version;-&deltalake_version;.jar" mvn_uri="mvn:io.delta/delta-core_&scala_version;/&deltalake_version;"/>
@@ -425,14 +426,15 @@
         </libraryNeededGroup>
 
         <!-- Azure group -->
+        <!-- Please do not upgrade hadoop-azure-datalake libraries. Because CDP spark3 uses hadoop 3.1.1 version.
+         The tAzureConfiguration component stopped working after the hadoop-azure-datalake upgrade. See TBD-15584-->
         <libraryNeededGroup description="Azure libraries for spark33x" id="AZURE-GROUP-SPARK_3_3_x" name="AZURE-GROUP-SPARK_3_3_x">
-            <library id="activation-1.1.1.jar"/>
-            <library id="azure-data-lake-store-sdk-&hive_version;.jar"/>
+            <library id="azure-data-lake-store-sdk-2.2.9.jar"/>
             <library id="azure-storage-7.0.0.jar"/>
             <library id="jetty-util-ajax-9.3.24.v20180605.jar"/>
             <library id="jetty-util-9.3.24.v20180605.jar"/>
-            <library id="hadoop-azure-datalake-3.3.4.jar"/>
-            <library id="hadoop-azure-3.3.4.jar"/>
+            <library id="hadoop-azure-datalake-3.2.4.jar"/>
+            <library id="hadoop-azure-3.2.4.jar"/>
             <library id="wildfly-openssl-java-1.0.4.Final.jar"/>
         </libraryNeededGroup>
 
@@ -472,7 +474,7 @@
             <library id="spark-hive_&scala_version;-&spark_version;.jar"/>
             <library id="spark-hive-thriftserver_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
-		
+
 		<!-- Impala group -->
 		<libraryNeededGroup description="Impala" id="IMPALA-GROUP-SPARK_3_3_x" name="IMPALA-GROUP-SPARK_3_3_x">
 			<group id="HIVE-GROUP-SPARK_3_3_x" />
@@ -500,7 +502,7 @@
 			<library id="metrics-core-3.1.5.jar"/>
 			<library id="stax2-api-4.2.1.jar"/>
 			<library id="woodstox-core-&woodstox_version;.jar"/>
-		</libraryNeededGroup>        
+		</libraryNeededGroup>
 
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark33x" id="DELTALAKE-GROUP-SPARK_3_3_x" name="DELTALAKE-GROUP-SPARK_3_3_x">
