@@ -222,6 +222,11 @@ public class Spark33xDistribution extends AbstractSparkDistribution
     public boolean doSupportUniversalCDEMode() {
         return false;
     }
+    
+    @Override
+    public boolean doSupportImpalaConnector() {
+    	return true;
+    }
 
     @Override
     public boolean doSupportImpersonation() {
