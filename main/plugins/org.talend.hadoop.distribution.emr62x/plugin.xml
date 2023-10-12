@@ -1110,7 +1110,6 @@
             <library id="jnr-posix-3.1.0.jar"/>
             <library id="joda-time-2.10.5.jar"/>
         </libraryNeededGroup>
-
     </extension>
 
     <!--Class loaders used in the Metadata-->
