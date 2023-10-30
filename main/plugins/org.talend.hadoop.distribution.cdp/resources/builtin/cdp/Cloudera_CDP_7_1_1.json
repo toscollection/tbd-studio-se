@@ -453,7 +453,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -975,7 +975,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -1325,6 +1325,10 @@
       }, {
         "childNodes" : [ ],
         "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_jdbc_3_1_3000_7_1_1_0_565_jar",
+        "tagName" : "library"
+      }, {
+        "childNodes" : [ ],
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_hive_common_3_1_3000_7_1_1_0_565_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -2008,7 +2012,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -3002,7 +3006,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -4260,7 +4264,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -6618,7 +6622,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
@@ -7550,7 +7554,7 @@
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
-        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_1_19_jar",
+        "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_jersey_server_2_29_jar",
         "tagName" : "library"
       }, {
         "childNodes" : [ ],
