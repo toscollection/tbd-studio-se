@@ -4,6 +4,7 @@ import org.immutables.value.Value;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public interface Component {
@@ -21,6 +22,9 @@ public interface Component {
         String name();
 
         String type();
+
+        Optional<Integer> scale();
+        Optional<Integer> precision();
 
         @Value.Default
         default String pattern() {

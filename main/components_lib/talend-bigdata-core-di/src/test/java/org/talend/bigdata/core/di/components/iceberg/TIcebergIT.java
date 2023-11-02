@@ -11,11 +11,11 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TIcebergIT {
-
 
     private final String JDBC_URL=System.getProperty("JDBC_URL");
     private final String USER=System.getProperty("USER");
@@ -28,8 +28,8 @@ public class TIcebergIT {
     @Before
     public void testGetConnection() throws SQLException {
 
-        log.log(Level.INFO, "JDBC_URL : " + JDBC_URL);
-        log.log(Level.INFO, "USER : " + USER);
+        log.fine("JDBC_URL : " + JDBC_URL);
+        log.fine("USER : " + USER);
 
         ImmutableTIcebergConnection tIcebergConnection = ImmutableTIcebergConnection.builder()
                 .jdbcUrl(JDBC_URL).user(USER).password(PASSWORD).build();
@@ -131,6 +131,122 @@ public class TIcebergIT {
             Integer tShort = (Integer) record.get("t_Short");
             String tString = (String) record.get("t_String");
         }
+    }
+
+    private void dropTable(String name) throws SQLException {
+        ImmutableTIcebergTable table = ImmutableTIcebergTable.builder()
+                .table("mytable")
+                .connection(connection)
+                .build();
+        table.drop();
+    }
+
+    @Test
+    public void testCreateTable() throws SQLException {
+        ImmutableTIcebergTable table = ImmutableTIcebergTable.builder()
+                .table("mytable")
+                .connection(connection)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Boolean")
+                        .type("Boolean").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Byte")
+                        .type("Integer").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Date")
+                        .type("Date").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_TimeStamp")
+                        .type("Date").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Double")
+                        .type("Double").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Float")
+                        .type("Float").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_BigDecimal")
+                        .type("BigDecimal").scale(9).precision(7).build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Integer")
+                        .type("Integer").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Long")
+                        .type("Long").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Short")
+                        .type("Integer").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_String")
+                        .type("String").build())
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Char")
+                        .type("Character").build())
+                .build();
+        table.drop(true);
+        table.create();
+
+        ImmutableTIcebergTable tableLike = ImmutableTIcebergTable.builder()
+                .table("mytablelike")
+                .connection(connection)
+                .createLikeSourceTable("mytable")
+                .format(TIcebergTable.Format.ORC)
+                .build();
+        tableLike.drop(true);
+        tableLike.create();
+
+        ImmutableTIcebergTable tableAsSelect = ImmutableTIcebergTable.builder()
+                .table("mytableselect")
+                .connection(connection)
+                .createAsSelectQuery("SELECT * FROM mytablelike")
+                .external(true)
+                .build();
+        tableAsSelect.drop(true);
+        tableAsSelect.create();
+
+        ImmutableTIcebergTable tableExternal = ImmutableTIcebergTable.builder()
+                .table("mytableexternal")
+                .external(true)
+                .connection(connection)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Boolean")
+                        .type("Boolean").build())
+                .build();
+        tableExternal.drop(true);
+        tableExternal.create();
+
+        ImmutableTIcebergTable tablePartitions = ImmutableTIcebergTable.builder()
+                .table("mytablepartitions")
+                .connection(connection)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Boolean")
+                        .type("Boolean").build())
+                .addPartitions(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Integer")
+                        .type("Integer").build())
+                .addPartitions(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Byte")
+                        .type("Integer").build())
+                .build();
+        tablePartitions.drop(true);
+        tablePartitions.create();
+
+        ImmutableTIcebergTable tableProperties = ImmutableTIcebergTable.builder()
+                .table("mytableproperties")
+                .connection(connection)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Boolean")
+                        .type("Boolean").build())
+                .putTableProperties("mykey1", "myvalue1")
+                .putTableProperties("mykey2", "myvalue2")
+                .build();
+        tableProperties.drop(true);
+        tableProperties.create();
+
+        ImmutableTIcebergTable tableFormat = ImmutableTIcebergTable.builder()
+                .table("mytableformat")
+                .connection(connection)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Boolean")
+                        .type("Boolean").build())
+                .format(TIcebergTable.Format.AVRO)
+                .build();
+        tableFormat.drop(true);
+        tableFormat.create();
+
+        ImmutableTIcebergTable tableLocation = ImmutableTIcebergTable.builder()
+                .table("mytablelocation")
+                .connection(connection)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("t_Boolean")
+                        .type("Boolean").build())
+                .location("s3a://lbourgeois-cde-bucket/location_test")
+                .purge(true)
+                .build();
+        tableLocation.truncate();
+        tableLocation.drop(true);
+        tableLocation.create();
     }
 
     @After
