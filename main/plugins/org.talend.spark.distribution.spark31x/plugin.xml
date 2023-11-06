@@ -26,7 +26,7 @@
             point="org.talend.core.runtime.librariesNeeded">
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="antlr4-runtime-4.8-1.jar" name="antlr4-runtime-4.8-1.jar" mvn_uri="mvn:org.antlr/antlr4-runtime/4.8-1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="aircompressor-0.10.jar" name="aircompressor-0.10.jar" mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.8.2.jar" name="avro-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.10.2.jar" name="avro-1.10.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.10.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-1.8.2.jar" name="avro-mapred-1.8.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.8.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-1.9.2.jar" name="avro-1.9.2.jar" mvn_uri="mvn:org.apache.avro/avro/1.9.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-1.9.2.jar" name="avro-mapred-1.9.2.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/1.9.2" />
@@ -274,8 +274,8 @@
 
         <!-- Avro group -->
         <libraryNeededGroup description="S3 libraries for spark311" id="AVRO-GROUP-SPARK_3_1_x" name="AVRO-GROUP-SPARK_3_1_x">
-            <library id="avro-1.8.2.jar"/>
-            <library id="avro-mapred-1.8.2.jar"/>
+            <library id="avro-1.10.2.jar"/>
+            <library id="avro-mapred-1.10.2.jar"/>
         </libraryNeededGroup>
 
         <!-- Avro group for Dataproc-->
@@ -286,8 +286,7 @@
 
         <!-- Spark group -->
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_1_x" name="SPARK-COMPILE-GROUP-SPARK_3_1_x">
-            <library id="avro-1.8.2.jar"/>
-            <library id="avro-mapred-1.8.2.jar"/>
+            <group id="AVRO-GROUP-SPARK_3_1_x" />
             <library id="antlr4-runtime-4.8-1.jar"/>
             <library id="bcpkix-jdk15on-1.70.jar"/>
             <library id="bcprov-jdk15on-1.70.jar"/>

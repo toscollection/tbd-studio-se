@@ -229,8 +229,8 @@
                        mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="avro-1.8.2.jar" name="avro-1.8.2.jar"
-                       mvn_uri="mvn:org.apache.avro/avro/1.8.2"/>
+                       id="avro-1.10.2.jar" name="avro-1.10.2.jar"
+                       mvn_uri="mvn:org.apache.avro/avro/1.10.2"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="jackson-databind-&jackson_databind_version;.jar" name="jackson-databind-&jackson_databind_version;.jar"
@@ -745,7 +745,7 @@
         <libraryNeededGroup description="SPARK libraries for spl30x" id="SPARK-COMPILE-GROUP-SPARK_3_0_x" name="SPARK-BATCH-GROUP-SPARK_3_0_x">
             <library id="jodd-core-5.0.5.jar"/>
             <library id="antlr4-runtime-4.7.1.jar"/>
-            <library id="avro-1.8.2.jar"/>
+            <library id="avro-1.10.2.jar"/>
             <library id="avro-mapred-1.8.2.jar"/>
             <library id="breeze_2.12-1.0.jar"/>
             <library id="chill_2.12-0.9.5.jar"/>
