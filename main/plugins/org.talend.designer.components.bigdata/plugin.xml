@@ -407,9 +407,9 @@
         </libraryNeededGroup>
 
        <!-- Bigdata laucher group for Google Dataproc -->
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-launcher-core-2.4.6.jar" name="talend-bigdata-launcher-core-2.4.6.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.4.6"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-launcher-dataproc-2.4.6.jar" name="talend-bigdata-launcher-dataproc-2.4.6.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-dataproc/2.4.6"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-launcher-jobserver-2.4.6.jar" name="talend-bigdata-launcher-jobserver-2.4.6.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.4.6"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-launcher-core-2.7.1.jar" name="talend-bigdata-launcher-core-2.7.1.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-core/2.7.1"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-launcher-dataproc-2.7.1.jar" name="talend-bigdata-launcher-dataproc-2.7.1.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-dataproc/2.7.1"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="talend-bigdata-launcher-jobserver-2.7.1.jar" name="talend-bigdata-launcher-jobserver-2.7.1.jar" mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-launcher-jobserver/2.7.1"/>
        
         <!-- Google Dataproc group -->
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="animal-sniffer-annotations-1.14.jar" name="animal-sniffer-annotations-1.14.jar" mvn_uri="mvn:org.codehaus.mojo/animal-sniffer-annotations/1.14"/>
@@ -520,9 +520,9 @@
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar" />
             <library id="json-20230227.jar" />
             <library id="failureaccess-1.0.1.jar" />
-            <library id="talend-bigdata-launcher-dataproc-2.4.6.jar"/>
-            <library id="talend-bigdata-launcher-core-2.4.6.jar"/>
-            <library id="talend-bigdata-launcher-jobserver-2.4.6.jar"/>
+            <library id="talend-bigdata-launcher-dataproc-2.7.1.jar"/>
+            <library id="talend-bigdata-launcher-core-2.7.1.jar"/>
+            <library id="talend-bigdata-launcher-jobserver-2.7.1.jar"/>
         </libraryNeededGroup>
         
         <!-- Universal 3.1.X group -->
