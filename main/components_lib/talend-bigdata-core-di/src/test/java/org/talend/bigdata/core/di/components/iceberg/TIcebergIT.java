@@ -133,6 +133,21 @@ public class TIcebergIT {
         }
     }
 
+    @Test
+    public void testRow() throws SQLException {
+        ImmutableTIcebergRow tIcebergRowCreate = ImmutableTIcebergRow.builder()
+                .connection(connection)
+                .sqlQuery("CREATE TABLE testrow (mycol string)")
+                .build();
+        tIcebergRowCreate.execute();
+
+        ImmutableTIcebergRow tIcebergRowDrop = ImmutableTIcebergRow.builder()
+                .connection(connection)
+                .sqlQuery("DROP TABLE testrow")
+                .build();
+        tIcebergRowDrop.execute();
+    }
+
     private void dropTable(String name) throws SQLException {
         ImmutableTIcebergTable table = ImmutableTIcebergTable.builder()
                 .table("mytable")
