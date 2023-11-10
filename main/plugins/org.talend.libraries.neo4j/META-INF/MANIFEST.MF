@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.talend.libraries.neo4j
 Bundle-Version: 8.8.8.qualifier
 Bundle-ActivationPolicy: lazy
 Eclipse-BundleShape: dir
+Automatic-Module-Name: org.talend.libraries.neo4j

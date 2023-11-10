@@ -27,3 +27,4 @@ Require-Bundle: org.eclipse.ui,
  org.talend.components.api,
  org.talend.common.ui.runtime,
  org.talend.commons.runtime
+Automatic-Module-Name: org.talend.designer.neo4j

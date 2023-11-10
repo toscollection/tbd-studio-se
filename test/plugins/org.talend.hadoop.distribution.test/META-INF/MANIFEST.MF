@@ -9,3 +9,4 @@ Require-Bundle: org.talend.hadoop.distribution.test.base,
  org.talend.bigdata.se.test.base
 Import-Package: org.apache.commons.io,
  org.junit
+Automatic-Module-Name: org.talend.hadoop.distribution.test

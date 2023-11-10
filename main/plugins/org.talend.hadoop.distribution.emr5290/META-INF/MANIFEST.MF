@@ -8,3 +8,4 @@ Service-Component: OSGI-INF/emr5290.xml
 Require-Bundle: org.talend.core.runtime,
  org.talend.hadoop.distribution
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.talend.hadoop.distribution.emr5290

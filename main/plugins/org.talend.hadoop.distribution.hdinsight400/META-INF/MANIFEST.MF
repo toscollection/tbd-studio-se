@@ -9,3 +9,4 @@ Require-Bundle: org.talend.core.runtime,
  org.talend.hadoop.distribution,
  org.talend.studio.studio-utils
 Bundle-ActivationPolicy: lazy
+Automatic-Module-Name: org.talend.hadoop.distribution.hdinsight400

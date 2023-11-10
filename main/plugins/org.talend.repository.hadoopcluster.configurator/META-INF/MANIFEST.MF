@@ -28,7 +28,7 @@ Require-Bundle: org.talend.libraries.apache.cxf,
  org.talend.model,
  org.talend.designer.core,
  org.talend.core.ui;bundle-version="6.4.0",
- javax.xml.bind,
+ jakarta.xml.bind,
  org.talend.core.runtime,
  org.talend.hadoop.distribution,
  org.eclipse.gef,
@@ -40,3 +40,4 @@ Require-Bundle: org.talend.libraries.apache.cxf,
 Import-Package: org.eclipse.ui,
  org.talend.designer.core.generic.model,
  org.talend.hadoop.distribution.model
+Automatic-Module-Name: org.talend.repository.hadoopcluster.configurator

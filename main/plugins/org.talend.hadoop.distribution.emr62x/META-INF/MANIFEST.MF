@@ -12,6 +12,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui,
  org.talend.designer.maven.aether,
  org.talend.libraries.jackson
-Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.talend.hadoop.distribution.emr62x
+Automatic-Module-Name: org.talend.hadoop.distribution.emr62x

@@ -40,3 +40,4 @@ Export-Package: org.talend.repository.hdfs.action,
  org.talend.repository.hdfs.ui,
  org.talend.repository.hdfs.ui.metadata,
  org.talend.repository.model.hdfs
+Automatic-Module-Name: org.talend.repository.hdfs

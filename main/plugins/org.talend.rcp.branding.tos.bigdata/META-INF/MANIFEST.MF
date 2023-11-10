@@ -24,3 +24,4 @@ Require-Bundle: org.eclipse.ui.intro,
  org.talend.commons.runtime
 Eclipse-LazyStart: true
 Eclipse-BundleShape: dir
+Automatic-Module-Name: org.talend.rcp.branding.tos.bigdata
