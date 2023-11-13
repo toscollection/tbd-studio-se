@@ -327,7 +327,8 @@
 							if (<%=ElementParameterParser.getValue(node, "__PASS__")%> != null && <%=useLDAP%>){
 								url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+";AuthMech=3";
 							} else {
-								url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>" + ";auth=noSasl";
+							    <%//impala url no need ;auth=noSasl%>
+								url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>";
 							}
 <%
 						}

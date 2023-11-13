@@ -386,6 +386,11 @@ public class Spark31xDistribution extends AbstractSparkDistribution
     }
     
     @Override
+    public boolean doSupportImpalaConnector() {
+        return true;
+    }
+
+    @Override
     /**
      * sqoop 1.4.7+ is using apache package
      */
