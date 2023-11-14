@@ -3,6 +3,7 @@
         <!ENTITY google-oauth_version "1.33.3">
         <!ENTITY hive_version "2.3.8">
         <!ENTITY zookeeper_version "3.6.2">
+        <!ENTITY hbase1_version "1.4.10">
         ]>
 <?eclipse version="3.2"?>
 <plugin xmlns="">
@@ -409,23 +410,24 @@
             <library id="zookeeper-3.4.14.jar"/>
         </libraryNeededGroup>
         
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-1.4.10.jar" name="hbase-common-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/1.4.10"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-1.4.10.jar" name="hbase-client-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/1.4.10"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-protocol-1.4.10.jar" name="hbase-protocol-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-protocol/1.4.10"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-server-1.4.10.jar" name="hbase-server-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-server/1.4.10"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop-compat-1.4.10.jar" name="hbase-hadoop-compat-1.4.10.jar" mvn_uri="mvn:org.apache.hbase/hbase-hadoop-compat/1.4.10"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-&hbase1_version;.jar" name="hbase-common-&hbase1_version;.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/&hbase1_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-&hbase1_version;.jar" name="hbase-client-&hbase1_version;.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/&hbase1_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-protocol-&hbase1_version;.jar" name="hbase-protocol-&hbase1_version;.jar" mvn_uri="mvn:org.apache.hbase/hbase-protocol/&hbase1_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-server-&hbase1_version;.jar" name="hbase-server-&hbase1_version;.jar" mvn_uri="mvn:org.apache.hbase/hbase-server/&hbase1_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop-compat-&hbase1_version;.jar" name="hbase-hadoop-compat-&hbase1_version;.jar" mvn_uri="mvn:org.apache.hbase/hbase-hadoop-compat/&hbase1_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hive-hbase-handler-2.3.6.jar" name="hive-hbase-handler-2.3.6.jar" mvn_uri="mvn:org.apache.hive/hive-hbase-handler/2.3.6"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core-3.1.0-incubating.jar" name="htrace-core-3.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core/3.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="netty-all-4.1.17.Final.jar" name="netty-all-4.1.17.Final.jar" mvn_uri="mvn:io.netty/netty-all/4.1.17.Final"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-2.2.0.jar" name="metrics-core-2.2.0.jar" mvn_uri="mvn:com.yammer.metrics/metrics-core/2.2.0"/>
-        
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="protobuf-java-2.5.0.jar" name="protobuf-java-2.5.0.jar" mvn_uri="mvn:com.google.protobuf/protobuf-java/2.5.0" />
+
         <!-- HBase1 group with spark3.x  -->
         <libraryNeededGroup description="HBASE 1.4.10" id="HBASE-1.4.10" name="HBASE-1.4.10">
-            <library id="hbase-common-1.4.10.jar" />
-            <library id="hbase-client-1.4.10.jar" />
-            <library id="hbase-protocol-1.4.10.jar" />
-            <library id="hbase-server-1.4.10.jar" />
-            <library id="hbase-hadoop-compat-1.4.10.jar" />
+            <library id="hbase-common-&hbase1_version;.jar" />
+            <library id="hbase-client-&hbase1_version;.jar" />
+            <library id="hbase-protocol-&hbase1_version;.jar" />
+            <library id="hbase-server-&hbase1_version;.jar" />
+            <library id="hbase-hadoop-compat-&hbase1_version;.jar" />
             <library id="hive-hbase-handler-2.3.6-amzn-1.jar"/>
             <library id="htrace-core-3.1.0-incubating.jar"/>
             <library id="netty-all-4.1.17.Final.jar"/>
@@ -436,16 +438,17 @@
         
          <!-- HBase1 group with spark2.4.x  -->
         <libraryNeededGroup description="HBASE 1.4.10 spark2" id="HBASE-1.4.10-spark2" name="HBASE-1.4.10-spark2">
-            <library id="hbase-common-1.4.10.jar" />
-            <library id="hbase-client-1.4.10.jar" />
-            <library id="hbase-protocol-1.4.10.jar" />
-            <library id="hbase-server-1.4.10.jar" />
-            <library id="hbase-hadoop-compat-1.4.10.jar" />
+            <library id="hbase-common-&hbase1_version;.jar" />
+            <library id="hbase-client-&hbase1_version;.jar" />
+            <library id="hbase-protocol-&hbase1_version;.jar" />
+            <library id="hbase-server-&hbase1_version;.jar" />
+            <library id="hbase-hadoop-compat-&hbase1_version;.jar" />
             <library id="hive-hbase-handler-2.3.6-amzn-1.jar"/>
             <library id="htrace-core-3.1.0-incubating.jar"/>
             <library id="netty-all-4.1.17.Final.jar"/>
             <library id="metrics-core-2.2.0.jar"/>
             <library id="zookeeper-3.4.14.jar"/>
+            <library id="protobuf-java-2.5.0.jar"/>
         </libraryNeededGroup>
 
        <!-- Bigdata laucher group for Google Dataproc -->
