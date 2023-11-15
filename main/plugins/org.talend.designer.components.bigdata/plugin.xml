@@ -419,7 +419,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="htrace-core-3.1.0-incubating.jar" name="htrace-core-3.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core/3.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="netty-all-4.1.17.Final.jar" name="netty-all-4.1.17.Final.jar" mvn_uri="mvn:io.netty/netty-all/4.1.17.Final"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="metrics-core-2.2.0.jar" name="metrics-core-2.2.0.jar" mvn_uri="mvn:com.yammer.metrics/metrics-core/2.2.0"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="protobuf-java-2.5.0.jar" name="protobuf-java-2.5.0.jar" mvn_uri="mvn:com.google.protobuf/protobuf-java/2.5.0" />
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="protobuf-java-2.6.1.jar" name="protobuf-java-2.6.1.jar" mvn_uri="mvn:com.google.protobuf/protobuf-java/2.6.1" />
 
         <!-- HBase1 group with spark3.x  -->
         <libraryNeededGroup description="HBASE 1.4.10" id="HBASE-1.4.10" name="HBASE-1.4.10">
@@ -434,6 +434,7 @@
             <library id="metrics-core-2.2.0.jar"/>
             <library id="zookeeper-&zookeeper_version;.jar"/>
             <library id="zookeeper-jute-&zookeeper_version;.jar"/>
+            <library id="protobuf-java-2.6.1.jar"/>
         </libraryNeededGroup>
         
          <!-- HBase1 group with spark2.4.x  -->
@@ -448,7 +449,7 @@
             <library id="netty-all-4.1.17.Final.jar"/>
             <library id="metrics-core-2.2.0.jar"/>
             <library id="zookeeper-3.4.14.jar"/>
-            <library id="protobuf-java-2.5.0.jar"/>
+            <library id="protobuf-java-2.6.1.jar"/>
         </libraryNeededGroup>
 
        <!-- Bigdata laucher group for Google Dataproc -->
