@@ -144,6 +144,7 @@
 							<outputDirectory>${project.basedir}/tmp</outputDirectory>
 							<includeScope>runtime</includeScope>
 							<useRepositoryLayout>true</useRepositoryLayout>
+							<excludeGroupIds>p2.eclipse-plugin,org.talend.studio</excludeGroupIds>
 						</configuration>
 					</execution>
 				</executions>
