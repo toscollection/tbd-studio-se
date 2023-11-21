@@ -13,6 +13,7 @@
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
+        <!ENTITY janino_version "3.1.10">
         <!ENTITY kafka_version "3.4.0">
         <!ENTITY scala_library_version "2.12.15">
         <!ENTITY scala_version "2.12">
@@ -262,12 +263,12 @@
                        mvn_uri="mvn:org.antlr/antlr4-runtime/4.7.1"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="janino-3.0.16.jar" name="janino-3.0.16.jar"
-                       mvn_uri="mvn:org.codehaus.janino/janino/3.0.16"/>
+                       id="janino-&janino_version;.jar" name="janino-&janino_version;.jar"
+                       mvn_uri="mvn:org.codehaus.janino/janino/&janino_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
-                       id="commons-compiler-3.0.16.jar" name="commons-compiler-3.0.16.jar"
-                       mvn_uri="mvn:org.codehaus.janino/commons-compiler/3.0.16"/>
+                       id="commons-compiler-&janino_version;.jar" name="commons-compiler-&janino_version;.jar"
+                       mvn_uri="mvn:org.codehaus.janino/commons-compiler/&janino_version;"/>
 
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark30x"
                        id="univocity-parsers-2.9.1.jar" name="univocity-parsers-2.9.1.jar"
@@ -753,7 +754,7 @@
             <library id="chill-java-0.9.5.jar"/>
             <library id="commons-codec-1.15.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
-            <library id="commons-compiler-3.0.16.jar"/>
+            <library id="commons-compiler-&janino_version;.jar"/>
             <library id="commons-configuration2-&commons-configuration2_version;.jar"/>
             <library id="commons-io-&commons-io_version;.jar"/>
             <library id="commons-lang-2.6.jar"/>
@@ -786,7 +787,7 @@
             <library id="jackson-module-paranamer-&jackson_version;.jar"/>
             <library id="jackson-module-scala_2.12-&jackson_version;.jar"/>
             <library id="jakarta.ws.rs-api-2.1.6.jar"/>
-            <library id="janino-3.0.16.jar"/>
+            <library id="janino-&janino_version;.jar"/>
             <library id="javax.servlet-api-3.1.0.jar"/>
             <library id="jaxb-api-2.2.11.jar"/>
             <library id="jersey-container-servlet-core-2.30.jar"/>

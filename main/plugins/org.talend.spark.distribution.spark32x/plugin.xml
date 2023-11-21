@@ -12,6 +12,7 @@
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
+        <!ENTITY janino_version "3.1.10">
         <!ENTITY jetty_version "9.4.44.v20210927">
         <!ENTITY kafka_version "3.4.0">
         <!ENTITY kubernetes_version "5.12.2">
@@ -43,7 +44,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-cli-1.2.jar" name="commons-cli-1.2.jar" mvn_uri="mvn:commons-cli/commons-cli/1.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-codec-1.15.jar" name="commons-codec-1.15.jar" mvn_uri="mvn:commons-codec/commons-codec/1.15"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-collections-3.2.2.jar" name="commons-collections-3.2.2.jar" mvn_uri="mvn:commons-collections/commons-collections/3.2.2"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-compiler-3.0.16.jar" name="commons-compiler-3.0.16.jar" mvn_uri="mvn:org.codehaus.janino/commons-compiler/3.0.16"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-compiler-&janino_version;.jar" name="commons-compiler-&janino_version;.jar" mvn_uri="mvn:org.codehaus.janino/commons-compiler/&janino_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-configuration2-&commons-configuration2_version;.jar" name="commons-configuration2-&commons-configuration2_version;.jar" mvn_uri="mvn:org.apache.commons/commons-configuration2/&commons-configuration2_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-io-2.8.jar" name="commons-io-2.8.jar" mvn_uri="mvn:commons-io/commons-io/2.8"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="commons-lang-2.6.jar" name="commons-lang-2.6.jar" mvn_uri="mvn:commons-lang/commons-lang/2.6"/>
@@ -120,7 +121,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jakarta.ws.rs-api-2.1.6.jar" name="jakarta.ws.rs-api-2.1.6.jar" mvn_uri="mvn:jakarta.ws.rs/jakarta.ws.rs-api/2.1.6"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jakarta.xml.bind-api-2.3.2.jar" name="jakarta.xml.bind-api-2.3.2.jar" mvn_uri="mvn:jakarta.xml.bind/jakarta.xml.bind-api/2.3.2"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="javax.servlet-api-3.1.0.jar" name="javax.servlet-api-3.1.0.jar" mvn_uri="mvn:javax.servlet/javax.servlet-api/3.1.0"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="janino-3.0.16.jar" name="janino-3.0.16.jar" mvn_uri="mvn:org.codehaus.janino/janino/3.0.16"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="janino-&janino_version;.jar" name="janino-&janino_version;.jar" mvn_uri="mvn:org.codehaus.janino/janino/&janino_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jersey-client-2.30.jar" name="jersey-client-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-client/2.30"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jersey-common-2.30.jar" name="jersey-common-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-common/2.30"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jersey-container-servlet-core-2.30.jar" name="jersey-container-servlet-core-2.30.jar" mvn_uri="mvn:org.glassfish.jersey.containers/jersey-container-servlet-core/2.30"/>
@@ -295,7 +296,7 @@
             <library id="chill-java-0.10.0.jar"/>
             <library id="commons-codec-1.15.jar"/>
             <library id="commons-collections-3.2.2.jar"/>
-            <library id="commons-compiler-3.0.16.jar"/>
+            <library id="commons-compiler-&janino_version;.jar"/>
             <library id="commons-configuration2-&commons-configuration2_version;.jar"/>
             <library id="commons-io-2.8.jar"/>
             <library id="commons-lang-2.6.jar"/>
@@ -332,7 +333,7 @@
             <library id="jakarta.ws.rs-api-2.1.6.jar"/>
             <library id="jakarta.xml.bind-api-2.3.2.jar"/>
             <library id="javax.servlet-api-3.1.0.jar"/>
-            <library id="janino-3.0.16.jar"/>
+            <library id="janino-&janino_version;.jar"/>
             <library id="jersey-container-servlet-core-2.30.jar"/>
             <library id="jersey-server-2.30.jar"/>
             <library id="jodd-core-5.0.5.jar"/>
