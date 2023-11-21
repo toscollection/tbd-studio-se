@@ -34,21 +34,21 @@ public interface THbaseTable {
         switch (tableAction()) {
             case "CREATE_IF_NOT_EXISTS":
                 if (!admin.tableExists(tableName)) {
-                    createTableFunction().doCreateTable(tableName, admin, getColumnFamily());
+                    createTableFunction().doCreateTable(tableName, admin, getColumnFamilies());
                 }
                 break;
             case "CREATE":
-                createTableFunction().doCreateTable(tableName, admin,getColumnFamily());
+                createTableFunction().doCreateTable(tableName, admin, getColumnFamilies());
                 break;
             case "DROP_CREATE":
                 deleteTable(tableName, admin);
-                createTableFunction().doCreateTable(tableName, admin,getColumnFamily());
+                createTableFunction().doCreateTable(tableName, admin, getColumnFamilies());
                 break;
             case "DROP_IF_EXISTS_AND_CREATE":
                 if (admin.tableExists(tableName)) {
                     deleteTable(tableName, admin);
                 }
-                createTableFunction().doCreateTable(tableName, admin,getColumnFamily());
+                createTableFunction().doCreateTable(tableName, admin, getColumnFamilies());
                 break;
             case "DROP":
                 deleteTable(tableName, admin);
@@ -56,9 +56,10 @@ public interface THbaseTable {
         }
     }
 
-    default HColumnDescriptor getColumnFamily() {
-        HColumnDescriptor family = null;
+    default List<HColumnDescriptor> getColumnFamilies() {
+        List<HColumnDescriptor> descriptorList = new ArrayList<>();
         for (Map<String, String> map : familyParameters()) {
+            HColumnDescriptor family = null;
             String family_name = map.get("FAMILY_NAME");
             family = new HColumnDescriptor(family_name);
 
@@ -99,8 +100,9 @@ public interface THbaseTable {
             if(family_timetolive!=null && !"".equals(family_timetolive)){
                 family.setTimeToLive(Integer.parseInt(family_timetolive));
             }
+            descriptorList.add(family);
         }
-        return family;
+        return descriptorList;
     }
 
      default void deleteTable(TableName tableName, Admin admin) throws IOException {
@@ -111,7 +113,7 @@ public interface THbaseTable {
     }
 
     interface CreateTableFunction {
-        void doCreateTable(TableName tableName, Admin admin, HColumnDescriptor columnFamily) throws IOException;
+        void doCreateTable(TableName tableName, Admin admin, List<HColumnDescriptor> columnFamilies) throws IOException;
     }
 
 }
