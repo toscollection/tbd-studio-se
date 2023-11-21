@@ -2,6 +2,7 @@
 <!DOCTYPE plugin [
 		<!ENTITY avro_version "1.10.2">
         <!ENTITY aws-java-sdk-bundle_version "1.12.566">
+        <!ENTITY bcpXXX-jdk18on_version "1.77">
         <!ENTITY commons-configuration2_version "2.8.0">
         <!ENTITY commons-text_version "1.10.0">
         <!ENTITY commons-io_version "2.7">
@@ -32,8 +33,8 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="aircompressor-0.10.jar" name="aircompressor-0.10.jar" mvn_uri="mvn:io.airlift/aircompressor/0.10"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-&avro_version;.jar" name="avro-&avro_version;.jar" mvn_uri="mvn:org.apache.avro/avro/&avro_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="avro-mapred-&avro_version;.jar" name="avro-mapred-&avro_version;.jar" mvn_uri="mvn:org.apache.avro/avro-mapred/&avro_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk15on-1.70.jar" name="bcpkix-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk15on/1.70"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk15on-1.70.jar" name="bcprov-jdk15on-1.70.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk15on/1.70"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcpkix-jdk18on-&bcpXXX-jdk18on_version;.jar" name="bcpkix-jdk18on-&bcpXXX-jdk18on_version;.jar" mvn_uri="mvn:org.bouncycastle/bcpkix-jdk18on/&bcpXXX-jdk18on_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="bcprov-jdk18on-&bcpXXX-jdk18on_version;.jar" name="bcprov-jdk18on-&bcpXXX-jdk18on_version;.jar" mvn_uri="mvn:org.bouncycastle/bcprov-jdk18on/&bcpXXX-jdk18on_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="breeze_2.12-1.0.jar" name="breeze_2.12-1.0.jar" mvn_uri="mvn:org.scalanlp/breeze_2.12/1.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="chill_2.12-0.9.5.jar" name="chill_2.12-0.9.5.jar" mvn_uri="mvn:com.twitter/chill_2.12/0.9.5"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="chill-java-0.9.5.jar" name="chill-java-0.9.5.jar" mvn_uri="mvn:com.twitter/chill-java/0.9.5"/>
@@ -293,8 +294,8 @@
         <libraryNeededGroup description="libraries required to compile job locally and to do the spark submit with only spark provided components" id="SPARK-COMPILE-GROUP-SPARK_3_1_x" name="SPARK-COMPILE-GROUP-SPARK_3_1_x">
             <group id="AVRO-GROUP-SPARK_3_1_x" />
             <library id="antlr4-runtime-4.8-1.jar"/>
-            <library id="bcpkix-jdk15on-1.70.jar"/>
-            <library id="bcprov-jdk15on-1.70.jar"/>
+            <library id="bcpkix-jdk18on-&bcpXXX-jdk18on_version;.jar"/>
+            <library id="bcprov-jdk18on-&bcpXXX-jdk18on_version;.jar"/>
             <library id="breeze_2.12-1.0.jar"/>
             <library id="chill_2.12-0.9.5.jar"/>
             <library id="chill-java-0.9.5.jar"/>
