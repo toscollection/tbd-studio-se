@@ -9,7 +9,7 @@
         <!ENTITY google_http_version "1.41.7">
         <!ENTITY guava_version "27.0-jre">
         <!ENTITY hive_version "2.3.8">	
-        <!ENTITY ivy_version "2.5.1">
+        <!ENTITY ivy_version "2.5.2">
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
