@@ -10,6 +10,7 @@
         <!ENTITY google_http_version "1.41.7">
         <!ENTITY hbase_version "2.1.0">
         <!ENTITY guava_version "27.0-jre">
+        <!ENTITY impala_version "2.6.32.1041">
         <!ENTITY ivy_version "2.5.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
         <!ENTITY jackson_version "2.12.7">
@@ -275,7 +276,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="google-oauth-client-java6-&google_version;.jar" name="google-oauth-client-java6-&google_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/&google_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="google-extensions-0.5.1.jar" name="google-extensions-0.5.1.jar" mvn_uri="mvn:com.google.flogger/google-extensions/0.5.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/util/1.6.0"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="ImpalaJDBC42-2.6.30.1036.jar" name="ImpalaJDBC42-2.6.30.1036.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/2.6.30.1036"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="ImpalaJDBC42-&impala_version;.jar" name="ImpalaJDBC42-&impala_version;.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/&impala_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="htrace-core4-4.2.0-incubating.jar" name="htrace-core4-4.2.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.2.0-incubating"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark31x" id="commons-lang3-3.5.jar" name="commons-lang3-3.5.jar" mvn_uri="mvn:org.apache.commons/commons-lang3/3.5"/>
 
@@ -497,7 +498,7 @@
 			<library id="hbase-zookeeper-&hbase_version;.jar"/>
 			<library id="hbase-zookeeper-&hbase_version;.jar"/>
 			<library id="htrace-core4-4.2.0-incubating.jar"/>
-			<library id="ImpalaJDBC42-2.6.30.1036.jar"/>
+			<library id="ImpalaJDBC42-&impala_version;.jar"/>
 			<library id="metrics-core-4.1.1.jar"/>
 			<library id="stax2-api-4.2.1.jar"/>
 			<library id="woodstox-core-&woodstox_version;.jar"/>

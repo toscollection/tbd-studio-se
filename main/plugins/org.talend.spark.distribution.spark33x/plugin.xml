@@ -8,6 +8,7 @@
         <!ENTITY google_version "1.33.3">
         <!ENTITY google_http_version "1.41.7">
         <!ENTITY guava_version "32.0.1-jre">
+        <!ENTITY impala_version "2.6.32.1041">
         <!ENTITY ivy_version "2.5.1">
         <!ENTITY hbase_version "2.1.0">
         <!ENTITY hive_version "2.3.9">
@@ -97,7 +98,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="httpcore-4.4.14.jar" name="httpcore-4.4.14.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.14"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="ImpalaJDBC42-2.6.17.1017.jar" name="ImpalaJDBC42-2.6.17.1017.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/2.6.15.1017"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="ImpalaJDBC42-&impala_version;.jar" name="ImpalaJDBC42-&impala_version;.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/&impala_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jackson-annotations-&jackson_version;.jar" name="jackson-annotations-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark33x" id="jackson-core-&jackson_version;.jar" name="jackson-core-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/&jackson_version;"/>
@@ -503,7 +504,7 @@
 			<library id="hbase-zookeeper-&hbase_version;.jar"/>
 			<library id="hbase-zookeeper-&hbase_version;.jar"/>
 			<library id="htrace-core4-4.2.0-incubating.jar"/>
-			<library id="ImpalaJDBC42-2.6.17.1017.jar"/>
+			<library id="ImpalaJDBC42-&impala_version;.jar"/>
 			<library id="metrics-core-3.1.5.jar"/>
 			<library id="stax2-api-4.2.1.jar"/>
 			<library id="woodstox-core-&woodstox_version;.jar"/>
