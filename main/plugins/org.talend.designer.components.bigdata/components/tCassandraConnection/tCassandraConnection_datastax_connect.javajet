@@ -40,55 +40,32 @@
 	%>
 		java.util.List<java.net.InetSocketAddress> contactPoints = new java.util.ArrayList<>();
 	
-	for(String host : <%=host%>.split(",")) {
-		contactPoints.add(java.net.InetSocketAddress.createUnresolved(host, Integer.parseInt(<%=port%>)));
-	}
-	
-	com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = com.datastax.oss.driver.api.core.CqlSession.builder()
-																.addContactPoints(contactPoints)
-																<%
-																if(dataCenterIsSet) {
-																%>
-																.withLocalDatacenter(<%=dataCenter%>)
-																<%
-																}
-																%>
-																<%
-																if(authentication){
-																%>
-																	.withAuthCredentials(<%=userName%>, <%=passWord%>)
-																<%
-																}
-																if(useSSL){
-																%>
-																	.withSslContext(sslContext_<%=cid%>)
-																<%
-																}
-																%>
-																.build();
-	<%
-	} else {
-	%>
-		com.datastax.driver.core.Cluster cluster_<%=cid%> = com.datastax.driver.core.Cluster.builder()
-																	.addContactPoints(<%=host%>.split(","))
-																	.withPort(Integer.valueOf(<%=port%>))
-																	<%
-																	if(authentication){
-																	%>
-																		.withCredentials(<%=userName%>, <%=passWord%>)
-																	<%
-																	}
-																	if(useSSL){
-																	%>
-																		.withSSL(com.datastax.driver.core.JdkSSLOptions.builder()
-																					.withSSLContext(sslContext_<%=cid%>).build())
-																	<%
-																	}
-																	%>
-																	.build();
-		
-		com.datastax.driver.core.Session connection_<%=cid%> = null;
-		connection_<%=cid%> = cluster_<%=cid%>.connect();
+    	for(String host : <%=host%>.split(",")) {
+    		contactPoints.add(java.net.InetSocketAddress.createUnresolved(host, Integer.parseInt(<%=port%>)));
+    	}
+    	
+    	com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = com.datastax.oss.driver.api.core.CqlSession.builder()
+    																.addContactPoints(contactPoints)
+    																<%
+    																if(dataCenterIsSet) {
+    																%>
+    																.withLocalDatacenter(<%=dataCenter%>)
+    																<%
+    																}
+    																%>
+    																<%
+    																if(authentication){
+    																%>
+    																	.withAuthCredentials(<%=userName%>, <%=passWord%>)
+    																<%
+    																}
+    																if(useSSL){
+    																%>
+    																	.withSslContext(sslContext_<%=cid%>)
+    																<%
+    																}
+    																%>
+    																.build();
 	<%
 	}
 	%>

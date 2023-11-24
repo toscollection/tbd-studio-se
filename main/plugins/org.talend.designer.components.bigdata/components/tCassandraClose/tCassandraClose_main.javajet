@@ -27,17 +27,6 @@
 			connection_<%=cid%>.close();
 		}
 	<%
-	} else {
-	%>
-		com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
-		com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
-		if(connection_<%=cid%> != null){
-			connection_<%=cid%>.close();
-		}
-		if(cluster_<%=cid%> != null){
-			cluster_<%=cid%>.close();
-		}
-	<%
 	}
 	%>
 	
