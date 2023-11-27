@@ -53,7 +53,8 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .tableName(<%=thbaseOutput.getTableName()%>)
 .tableAction("<%=thbaseOutput.getTableAction()%>")
 .addAllFamilyParameters(familyParameters)
-.createTableFunction(((tableName, admin, families)->{
+.regionSplitKeys("")
+.createTableFunction(((tableName, admin, families, regionSplitKeysByteArr)->{
         <% if (thbaseOutput.isHBase2x()){ %>
             org.apache.hadoop.hbase.client.TableDescriptorBuilder tableDesBuilder =
                     org.apache.hadoop.hbase.client.TableDescriptorBuilder.newBuilder(tableName);

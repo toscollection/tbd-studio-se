@@ -29,7 +29,8 @@ public class THbaseTableTest {
                 .tableName("table")
                 .tableAction("NONE")
                 .addAllFamilyParameters(familyParameters)
-                .createTableFunction(((tableName, admin, family)->{
+                .regionSplitKeys("")
+                .createTableFunction(((tableName, admin, family, regionSplitKeysByteArr)->{
                     System.out.println("create table");
                 }))
                 .build();
@@ -37,6 +38,7 @@ public class THbaseTableTest {
         List<HColumnDescriptor> expectedFamilyParameters = immutableTHbaseTableEmptyParam.getColumnFamilies();
         Assert.assertEquals(expectedFamilyParameters.size(), 1);
         Assert.assertEquals(expectedFamilyParameters.get(0).getNameAsString(), "f1");
+        Assert.assertNull(immutableTHbaseTableEmptyParam.convertRegionSplitKeys());
     }
 
     @Test
@@ -68,6 +70,8 @@ public class THbaseTableTest {
         map.put("FAMILY_TIMETOLIVE","22222");
         familyParameters.add(map);
 
+        String str_keys = "key1, key2, key3";
+
         ImmutableTHbaseTable immutableTHbaseTable = ImmutableTHbaseTable
                 .builder()
                 .connection(ConnectionFactory.createConnection(new Configuration()))
@@ -75,8 +79,9 @@ public class THbaseTableTest {
                 .namespaceName("ns")
                 .tableName("table")
                 .tableAction("NONE")
+                .regionSplitKeys(str_keys)
                 .addAllFamilyParameters(familyParameters)
-                .createTableFunction(((tableName, admin, family)->{
+                .createTableFunction(((tableName, admin, family, regionSplitKeysByteArr)->{
                     System.out.println("create table");
                 }))
                 .build();
@@ -103,6 +108,16 @@ public class THbaseTableTest {
         Assert.assertEquals(expectedFamilyParameters.get(1).getMaxVersions(), 222);
         Assert.assertEquals(expectedFamilyParameters.get(1).getScope(),0);
         Assert.assertEquals(expectedFamilyParameters.get(1).getTimeToLive(),22222);
+
+        String[] regSplitKeyArray = str_keys.split(",");
+        byte[][] byteArr = new byte[regSplitKeyArray.length][];
+        for (int i = 0; i < regSplitKeyArray.length; i++) {
+            byte[] b = regSplitKeyArray[i].getBytes();
+            byteArr[i] = b;
+        }
+
+        Assert.assertEquals(immutableTHbaseTable.convertRegionSplitKeys().length, 3);
+        Assert.assertArrayEquals(immutableTHbaseTable.convertRegionSplitKeys(), byteArr);
     }
 
 }
