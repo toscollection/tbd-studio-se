@@ -53,7 +53,8 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
 .tableName(<%=thbaseTable.getTableName()%>)
 .tableAction("<%=thbaseTable.getTableAction()%>")
 .addAllFamilyParameters(familyParameters)
-                    .createTableFunction(((tableName, admin, families)->{
+.regionSplitKeys(<%=thbaseTable.getRegionSplitKeys()%>)
+                    .createTableFunction(((tableName, admin, families, regionSplitKeysByteArr)->{
                         <% if (thbaseTable.isHBase2x()){ %>
                             org.apache.hadoop.hbase.client.TableDescriptorBuilder tableDesBuilder =
                                        org.apache.hadoop.hbase.client.TableDescriptorBuilder.newBuilder(tableName);
@@ -68,7 +69,11 @@ org.talend.bigdata.core.di.components.hbase.ImmutableTHbaseTable
                                 tableDes.addFamily(family);
                             }
                        <% } %>
-                        admin.createTable(tableDes);
+                       if (regionSplitKeysByteArr != null){
+                            admin.createTable(tableDes, regionSplitKeysByteArr);
+                       } else {
+                            admin.createTable(tableDes);
+                       }
                     }))
 .build()
 .doTableAction();

@@ -188,6 +188,10 @@
                 <ITEM NAME="FAMILY_TIMETOLIVE" FIELD="TEXT" />
             </ITEMS>
         </PARAMETER>
+        <PARAMETER NAME="SPLIT_REGIONS_KEYS" FIELD="TEXT" NUM_ROW="90"
+                   SHOW_IF="(TABLE_ACTION != 'DROP')">
+            <DEFAULT>""</DEFAULT>
+        </PARAMETER>
     </PARAMETERS>
 
     <ADVANCED_PARAMETERS>
