@@ -52,7 +52,6 @@
             NUM_ROW="3"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
             <ITEMS DEFAULT="CASSANDRA_4_0">
-                <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>
                 <ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
@@ -159,20 +158,6 @@
 			<IMPORT NAME="reload4j-1.2.22" MODULE="reload4j-1.2.22.jar"
 					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 			<IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
-                <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0')">
-                    <IMPORT MODULE="slf4j-api-1.7.7.jar"
-		                MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
-		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
-		                NAME="slf4j-api-1.7.7.jar" />
-	                <IMPORT MODULE="cassandra-driver-core-3.0.0-shaded.jar"
-	                    MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0-shaded/6.0.0"
-	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0-shaded.jar"
-	                    NAME="cassandra-driver-core-3.0.0-shaded.jar" />
-	                <IMPORT MODULE="metrics-core-3.1.2.jar"
-	                    MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
-	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
-	                    NAME="metrics-core-3.1.2.jar" />
-                </IMPORTS>
 				<IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_4_0')">
                     <IMPORT MODULE="netty-common-4.1.97.Final.jar"
 	                    MVN="mvn:io.netty/netty-common/4.1.97.Final"

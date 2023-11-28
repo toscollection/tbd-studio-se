@@ -19,11 +19,8 @@ class CassandraOutputGenHelper{
 		%>
 		//dbVersion=<%=dbVersion%>
 		<%
-		if("CASSANDRA_4_0".equals(dbVersion)) {
-			cqlPackage = "com.datastax.oss.driver.api.core.cql";
-		} else {
-			cqlPackage = "com.datastax.driver.core";
-		}
+		cqlPackage = "com.datastax.oss.driver.api.core.cql";
+		
 	}
 	
 	public void init(){
@@ -39,11 +36,7 @@ class CassandraOutputGenHelper{
 	    if(conns != null && conns.size() > 0 && conns.get(0).getLineStyle().hasConnectionCategory(IConnectionCategory.DATA)){
 	        conn = conns.get(0);
 	    }
-		if("CASSANDRA_4_0".equals(dbVersion)) {
-			cqlManager = new CQLManagerV4Driver(node, columns);
-		} else {
-			cqlManager = new CQLManager(node, columns);
-		}
+		cqlManager = new CQLManagerV4Driver(node, columns);
 	}
 	public String getCid(){
 		return cid;
@@ -71,22 +64,10 @@ class CassandraOutputGenHelper{
 			%>
 				com.datastax.oss.driver.api.core.CqlSession connection_<%=cid%> = (com.datastax.oss.driver.api.core.CqlSession)globalMap.get("connection_<%=connection%>");
 			<%
-			} else {
-			%>
-				com.datastax.driver.core.Cluster cluster_<%=cid%> = (com.datastax.driver.core.Cluster)globalMap.get("cluster_<%=connection%>");
-				com.datastax.driver.core.Session connection_<%=cid%> = (com.datastax.driver.core.Session)globalMap.get("connection_<%=connection%>");
-			<%
 			}
 	    }else{  
 	    %>
 	        <%@ include file="@{org.talend.designer.components.bigdata}/components/tCassandraConnection/tCassandraConnection_datastax_connect.javajet"%>
-            <%
-            if(!"CASSANDRA_4_0".equals(dbVersion)) {
-            %>
-                resourceMap.put("cluster_<%=cid%>", cluster_<%=cid%>);
-            <%
-            }
-            %>
 	        resourceMap.put("connection_<%=cid%>", connection_<%=cid%>);
 	    <%
 	    }
@@ -216,10 +197,6 @@ class CassandraOutputGenHelper{
         %>
             boundStmt_<%=cid%> = prepareStmt_<%=cid%>.bind();
         <%
-            } else {
-        %>
-                boundStmt_<%=cid%> = new <%=cqlPackage%>.BoundStatement(prepareStmt_<%=cid%>);
-	    <%
             }
 	    }
 	}
