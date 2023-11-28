@@ -1693,7 +1693,7 @@
                 context="plugin:org.talend.hadoop.distribution.emr5290"
                 id="fastutil-6.5.7.jar"
                 name="fastutil-6.5.7.jar"
-                mvn_uri="mvn:org.talend.libraries/fastutil-6.5.7/6.0.0"/>
+                mvn_uri="mvn:it.unimi.dsi/fastutil/6.5.7"/>
 
         <libraryNeeded
                 context="plugin:org.talend.hadoop.distribution.emr5290"
@@ -1717,7 +1717,7 @@
                 context="plugin:org.talend.hadoop.distribution.emr5290"
                 id="commons-crypto-1.0.0.jar"
                 name="commons-crypto-1.0.0.jar"
-                mvn_uri="mvn:org.talend.libraries/commons-crypto-1.0.0/6.0.0"/>
+                mvn_uri="mvn:org.apache.commons/commons-crypto/1.0.0"/>
 
         <libraryNeeded
                 context="plugin:org.talend.hadoop.distribution.emr5290"

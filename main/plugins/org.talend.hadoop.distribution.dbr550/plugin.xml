@@ -27,7 +27,7 @@
             context="plugin:org.talend.hadoop.distribution.dbr550"
             id="hadoop-azure-datalake-2.8.1.jar"
             name="hadoop-azure-datalake-2.8.1.jar"
-            mvn_uri="mvn:org.talend.libraries/hadoop-azure-datalake-2.8.1/6.0.0">
+            mvn_uri="mvn:org.apache.hadoop/hadoop-azure-datalake/2.8.1">
         </libraryNeeded>
         <libraryNeeded
             context="plugin:org.talend.hadoop.distribution.dbr550"
@@ -217,13 +217,13 @@
             context=""
             id="javax.ws.rs-api-2.0-m10.jar"
             name="javax.ws.rs-api-2.0-m10.jar"
-            mvn_uri="mvn:org.talend.libraries/javax.ws.rs-api-2.0-m10/6.0.0">
+            mvn_uri="mvn:javax.ws.rs/javax.ws.rs-api/2.0-m10">
         </libraryNeeded>
         <libraryNeeded
             context="plugin:org.talend.libraries.jackson"
-            id="json_simple-1.1.jar"
-            name="json_simple-1.1.jar"
-            mvn_uri="mvn:org.talend.libraries/json_simple-1.1/6.0.0"
+            id="json-simple-1.1.jar"
+            name="json-simple-1.1.jar"
+            mvn_uri="mvn:com.googlecode.json-simple/json-simple/1.1"
             uripath="platform:/plugin/org.talend.libraries.jackson/lib/json_simple-1.1.jar">
         </libraryNeeded>
         

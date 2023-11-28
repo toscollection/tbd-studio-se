@@ -244,25 +244,25 @@
             <IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_3_0')">
                     <IMPORT
                         NAME="cassandra-all-3.4"
-                        MODULE="cassandra-all-3.4.jar" MVN="mvn:org.talend.libraries/cassandra-all-3.4/6.0.0" 
+                        MODULE="cassandra-all-3.4.jar" MVN="mvn:org.apache.cassandra/cassandra-all/3.4" 
                         UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-all-3.4.jar" />
                     <IMPORT
                         NAME="cassandra-thrift-3.4"
-                        MODULE="cassandra-thrift-3.4.jar" MVN="mvn:org.talend.libraries/cassandra-thrift-3.4/6.0.0" 
+                        MODULE="cassandra-thrift-3.4.jar" MVN="mvn:org.apache.cassandra/cassandra-thrift/3.4" 
                         UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-thrift-3.4.jar" />
                 <IMPORT
                     NAME="antlr-3.5.2"
-                    MODULE="antlr-3.5.2.jar" MVN="mvn:org.talend.libraries/antlr-3.5.2/6.0.0" />
+                    MODULE="antlr-3.5.2.jar" MVN="mvn:org.antlr/antlr/3.5.2" />
                 <IMPORT
                     NAME="antlr-runtime-3.5.2"
-                    MODULE="antlr-runtime-3.5.2.jar" MVN="mvn:org.talend.libraries/antlr-runtime-3.5.2/6.0.0" />
+                    MODULE="antlr-runtime-3.5.2.jar" MVN="mvn:org.antlr/antlr-runtime/3.5.2" />
                 <IMPORT
                     NAME="cassandra-driver-core-3.0.0"
-                    MODULE="cassandra-driver-core-3.0.0.jar" MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0/6.0.0" 
+                    MODULE="cassandra-driver-core-3.0.0.jar" MVN="mvn:com.datastax.cassandra/cassandra-driver-core/3.0.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0.jar" />
                 <IMPORT
                     NAME="commons-cli-1.1"
-                    MODULE="commons-cli-1.1.jar" MVN="mvn:org.talend.libraries/commons-cli-1.1/6.0.0" 
+                    MODULE="commons-cli-1.1.jar" MVN="mvn:commons-cli/commons-cli/1.1" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-cli-1.1.jar" />
                 <IMPORT
                     NAME="commons-lang3-3.8.1"
@@ -270,22 +270,22 @@
                     UrlPath="platform:/plugin/org.talend.libraries.apache.common/lib/commons-lang3-3.8.1.jar" />
                 <IMPORT
                     NAME="compress-lzf-0.8.4"
-                    MODULE="compress-lzf-0.8.4.jar" MVN="mvn:org.talend.libraries/compress-lzf-0.8.4/6.0.0" 
+                    MODULE="compress-lzf-0.8.4.jar" MVN="mvn:com.ning/compress-lzf/0.8.4" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/compress-lzf-0.8.4.jar" />
                 <IMPORT
                     NAME="concurrentlinkedhashmap-lru-1.4"
-                    MODULE="concurrentlinkedhashmap-lru-1.4.jar" MVN="mvn:org.talend.libraries/concurrentlinkedhashmap-lru-1.4/6.0.0" 
+                    MODULE="concurrentlinkedhashmap-lru-1.4.jar" MVN="mvn:com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.4" 
                     UrlPath="platform:/plugin/org.talend.libraries.neo4j/lib/concurrentlinkedhashmap-lru-1.4.jar" />
                 <IMPORT
                     NAME="fastutil-6.5.7"
-                    MODULE="fastutil-6.5.7.jar" MVN="mvn:org.talend.libraries/fastutil-6.5.7/6.0.0" 
+                    MODULE="fastutil-6.5.7.jar" MVN="mvn:it.unimi.dsi/fastutil/6.5.7" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/fastutil-6.5.7.jar" />
                 <IMPORT
                     NAME="guava-16.0.1"
                     MODULE="guava-16.0.1.jar" MVN="mvn:com.google.guava/guava/16.0.1" />
                 <IMPORT
                     NAME="high-scale-lib-1.0.6"
-                    MODULE="high-scale-lib-1.0.6.jar" MVN="mvn:org.talend.libraries/high-scale-lib-1.0.6/6.0.0" />
+                    MODULE="high-scale-lib-1.0.6.jar" MVN="mvn:com.boundary/high-scale-lib/1.0.6" />
                 <IMPORT
                     NAME="jackson-core-asl-1.9.16-TALEND"
                     MODULE="jackson-core-asl-1.9.16-TALEND.jar" MVN="mvn:org.codehaus.jackson/jackson-core-asl/1.9.16-TALEND" 
@@ -296,29 +296,29 @@
                     />
                 <IMPORT
                     NAME="jamm-0.3.0"
-                    MODULE="jamm-0.3.0.jar" MVN="mvn:org.talend.libraries/jamm-0.3.0/6.0.0" 
+                    MODULE="jamm-0.3.0.jar" MVN="mvn:com.github.jbellis/jamm/0.3.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jamm-0.3.0.jar" />
                 <IMPORT
                     NAME="jna-4.0.0"
-                    MODULE="jna-4.0.0.jar" MVN="mvn:org.talend.libraries/jna-4.0.0/6.0.0" 
+                    MODULE="jna-4.0.0.jar" MVN="mvn:net.java.dev.jna/jna/4.0.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/jna-4.0.0.jar" />    
                 <IMPORT
                     NAME="libthrift-0.9.2"
-                    MODULE="libthrift-0.9.2.jar" MVN="mvn:org.talend.libraries/libthrift-0.9.2/6.0.0" />
+                    MODULE="libthrift-0.9.2.jar" MVN="mvn:org.apache.thrift/libthrift/0.9.2/jar" />
                 <IMPORT
                     NAME="lz4-1.3.0"
-                    MODULE="lz4-1.3.0.jar" MVN="mvn:org.talend.libraries/lz4-1.3.0/6.0.0" 
+                    MODULE="lz4-1.3.0.jar" MVN="mvn:net.jpountz.lz4/lz4/1.3.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/lz4-1.3.0.jar" />
                 <IMPORT MODULE="slf4j-api-1.7.7.jar"
-                    MVN="mvn:org.talend.libraries/slf4j-api-1.7.7/6.0.0"
+                    MVN="mvn:org.slf4j/slf4j-api/1.7.7"
                     UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
                     NAME="slf4j-api-1.7.7.jar" />
                 <IMPORT MODULE="slf4j-log4j12-1.7.10.jar"
-                    MVN="mvn:org.talend.libraries/slf4j-log4j12-1.7.10/6.0.0"
+                    MVN="mvn:org.slf4j/slf4j-log4j12/1.7.10"
                     UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-log4j12-1.7.10.jar"
                     NAME="slf4j-log4j12-1.7.10.jar" />    
                 <IMPORT MODULE="metrics-core-3.1.2.jar"
-                    MVN="mvn:org.talend.libraries/metrics-core-3.1.2/6.0.0"
+                    MVN="mvn:io.dropwizard.metrics/metrics-core/3.1.2"
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
                     NAME="metrics-core-3.1.2.jar" />
                 <IMPORT MODULE="netty-buffer-4.1.97.Final.jar"
@@ -344,15 +344,15 @@
                     NAME="netty-resolver-4.1.97.Final.jar" />
                 <IMPORT
                     NAME="stream-2.5.2"
-                    MODULE="stream-2.5.2.jar" MVN="mvn:org.talend.libraries/stream-2.5.2/6.0.0" 
+                    MODULE="stream-2.5.2.jar" MVN="mvn:com.clearspring.analytics/stream/2.5.2" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/stream-2.5.2.jar" />
                 <IMPORT
                     NAME="super-csv-2.1.0"
-                    MODULE="super-csv-2.1.0.jar" MVN="mvn:org.talend.libraries/super-csv-2.1.0/6.0.0" 
+                    MODULE="super-csv-2.1.0.jar" MVN="mvn:net.sf.supercsv/super-csv/2.1.0" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/super-csv-2.1.0.jar" />
                 <IMPORT
                     NAME="sigar-1.6.4"
-                    MODULE="sigar-1.6.4.jar" MVN="mvn:org.talend.libraries/sigar-1.6.4/6.0.0" 
+                    MODULE="sigar-1.6.4.jar" MVN="mvn:org.fusesource/sigar/1.6.4/jar" 
                     UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/sigar-1.6.4.jar" />
             </IMPORTS>
         </IMPORTS>

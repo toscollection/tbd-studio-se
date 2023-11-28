@@ -277,10 +277,10 @@
 					MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
 			
 			<IMPORT NAME="JSR-API-1_1_1" MODULE="jsr311-api-1.1.1.jar"
-				MVN="mvn:org.talend.libraries/jsr311-api-1.1.1/6.0.0" REQUIRED="false"
+				MVN="mvn:javax.ws.rs/jsr311-api/1.1.1" REQUIRED="false"
 				REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="NEETHI_3_0_1" MODULE="neethi-3.0.1.jar"
-				MVN="mvn:org.talend.libraries/neethi-3.0.1/6.0.0"
+				MVN="mvn:org.apache.neethi/neethi/3.0.1"
 				UrlPath="platform:/plugin/org.talend.libraries.apache.axis2/lib/neethi-3.0.1.jar"
 				REQUIRED="false" REQUIRED_IF="DISTRIBUTION!='CUSTOM'" />
 			<IMPORT NAME="WSDL4J-1_6_3" MODULE="wsdl4j-1.6.3.jar"

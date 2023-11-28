@@ -45,7 +45,7 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" name="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev20220718-1.32.1"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-http-client-&google_http_version;.jar" name="google-http-client-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client/&google_http_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-http-client-gson-&google_http_version;.jar" name="google-http-client-gson-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client-gson/&google_http_version;"/>
-        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:org.talend.libraries/google-http-client-jackson-1.22.0/6.0.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson/1.22.0"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-http-client-jackson2-1.33.0.jar" name="google-http-client-jackson2-1.33.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson2/1.33.0"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-oauth-client-&google_version;.jar" name="google-oauth-client-&google_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client/&google_version;"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-oauth-client-java6-&google_version;.jar" name="google-oauth-client-java6-&google_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-java6/&google_version;"/>
@@ -122,12 +122,12 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-network-common_2.11-2.4.7.jar" name="spark-network-common_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-network-common_2.11/2.4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-sql_2.11-2.4.7.jar" name="spark-sql_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-sql_2.11/2.4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming_2.11-2.4.7.jar" name="spark-streaming_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-streaming_2.11/2.4.7"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming-pubsub_2.11-2.4.0.jar" name="spark-streaming-pubsub_2.11-2.4.0.jar" mvn_uri="mvn:org.talend.libraries/spark-streaming-pubsub_2.11-2.4.0/6.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-streaming-pubsub_2.11-2.4.0.jar" name="spark-streaming-pubsub_2.11-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.11/2.4.0"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-unsafe_2.11-2.4.7.jar" name="spark-unsafe_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-unsafe_2.11/2.4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-yarn_2.11-2.4.7.jar" name="spark-yarn_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-yarn_2.11/2.4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-tags_2.11-2.4.7.jar" name="spark-tags_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-tags_2.11/2.4.7"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-avro_2.11-2.4.7.jar" name="spark-avro_2.11-2.4.7.jar" mvn_uri="mvn:org.apache.spark/spark-avro_2.11/2.4.7"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:org.talend.libraries/util-1.6.0/6.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="util-1.6.0.jar" name="util-1.6.0.jar" mvn_uri="mvn:com.google.cloud.bigdataoss/util/1.6.0"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="zookeeper-3.4.6.jar" name="zookeeper-3.4.6.jar" mvn_uri="mvn:org.apache.zookeeper/zookeeper/3.4.6"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="breeze_2.11-0.13.2.jar" name="breeze_2.11-0.13.2.jar" mvn_uri="mvn:org.scalanlp/breeze_2.11/0.13.2"/>
@@ -205,7 +205,7 @@
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="emr-dynamodb-hadoop-4.7.0.jar" name="emr-dynamodb-hadoop-4.7.0.jar" mvn_uri="mvn:com.amazon.emr/emr-dynamodb-hadoop/4.7.0"/>
 
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-redshift_2.11-2.0.1.jar" name="spark-redshift_2.11-2.0.1.jar" mvn_uri="mvn:org.talend.libraries/spark-redshift_2.11-2.0.1/6.0.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-redshift_2.11-2.0.1.jar" name="spark-redshift_2.11-2.0.1.jar" mvn_uri="mvn:com.databricks/spark-redshift_2.11/2.0.1"/>
 
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="spark-snowflake_2.11-2.9.2-spark_2.4.jar" name="spark-snowflake_2.11-2.9.2-spark_2.4.jar" mvn_uri="mvn:net.snowflake/spark-snowflake_2.11/2.9.2-spark_2.4"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="snowflake-jdbc-&snowflake-jdbc_version;.jar" name="snowflake-jdbc-&snowflake-jdbc_version;.jar" mvn_uri="mvn:net.snowflake/snowflake-jdbc/&snowflake-jdbc_version;"/>

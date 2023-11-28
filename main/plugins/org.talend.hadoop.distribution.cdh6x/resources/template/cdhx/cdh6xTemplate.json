@@ -19,7 +19,7 @@
             "type": "STANDARD",
             "context": "{properties.context}",
             "jarName": "commons-lang3-3.4.jar",
-            "mvnUri": "mvn:org.talend.libraries/commons-lang3-3.4/6.2.0",
+            "mvnUri": "mvn:org.apache.commons/commons-lang3/3.4",
             "useStudioRepository": "true",
             "supportedSparkVersions": [
                 "SPARK_2_2",
@@ -33,7 +33,7 @@
             "type": "STANDARD",
             "context": "{properties.context}",
             "jarName": "commons-httpclient-3.1.jar",
-            "mvnUri": "mvn:org.talend.libraries/commons-httpclient-3.1/6.0.0",
+            "mvnUri": "mvn:commons-httpclient/commons-httpclient/3.1",
             "useStudioRepository": "true"
         },
         {
@@ -1206,7 +1206,7 @@
 			"type": "STANDARD",
 			"context": "{properties.context}",
 			"jarName": "httpclient-4.5.3.jar",
-			"mvnUri": "mvn:org.talend.libraries/httpclient-4.5.3/6.0.0",
+			"mvnUri": "mvn:org.apache.httpcomponents/httpclient/4.5.3",
 			"useStudioRepository": "true",
 			"description": ""
 		},
@@ -1215,7 +1215,7 @@
 			"type": "STANDARD",
 			"context": "{properties.context}",
 			"jarName": "httpcore-4.4.6.jar",
-			"mvnUri": "mvn:org.talend.libraries/httpcore-4.4.6/6.3.0",
+			"mvnUri": "mvn:org.apache.httpcomponents/httpcore/4.4.6",
 			"useStudioRepository": "true",
 			"description": ""
 		},
@@ -1692,7 +1692,7 @@
             "type": "STANDARD",
             "context": "{properties.context}",
             "jarName": "azure-common-1.7.1.jar",
-            "mvnUri": "mvn:org.talend.libraries/azure-common-1.7.1/6.0.0",
+            "mvnUri": "mvn:org.apache.jclouds.common/azure-common/1.7.1",
             "useStudioRepository": "true",
             "description": ""
         },

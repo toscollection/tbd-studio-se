@@ -591,7 +591,7 @@
 
 			<IMPORT NAME="avro-mapred-1.8.1.jar" MODULE="avro-mapred-1.8.1.jar"
 				UrlPath="platform:/plugin/org.talend.libraries.apache/lib/avro-mapred-1.8.1.jar"
-				MVN="mvn:org.talend.libraries/avro-mapred-1.8.1/6.0.0"
+				MVN="mvn:org.apache.avro/avro-mapred/1.8.1"
 				REQUIRED_IF="(FILE_FORMAT=='avrofile' AND (USE_JAVAAPI == 'false' OR (USE_JAVAAPI == 'true' AND DISTRIB[DISTRIBUTION, DB_VERSION].doSupportOldImportMode[])))" />
 
 		</IMPORTS>
