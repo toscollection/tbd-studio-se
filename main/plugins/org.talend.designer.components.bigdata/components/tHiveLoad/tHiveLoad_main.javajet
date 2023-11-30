@@ -219,7 +219,7 @@ imports="
                                     bw_<%=cid%>.write("ADD JAR " + wasbPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
                                     libjars_<%=cid%>.append(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>") + ",");
 <%
-                            	} else { // dataproc
+                            	} else if ("DATAPROC".equalsIgnoreCase(connMode)){ // dataproc
                                     if(isLog4jEnabled) {
 %>
                                         log.debug("Query for <%=cid%>: " + "ADD JAR " + stagingBucketPath_<%=cid%> + new java.io.File(getJarsToRegister_<%=cid %>.replaceJarPaths("<%=jars.get(j)%>")).getName() + ";");
