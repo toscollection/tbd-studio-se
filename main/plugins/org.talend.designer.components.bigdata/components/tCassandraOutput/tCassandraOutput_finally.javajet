@@ -59,16 +59,6 @@
 					((com.datastax.oss.driver.api.core.session.Session)resourceMap.get("connection_<%=cid%>")).close();
 				}
 			<%
-			} else {
-			%>
-			
-				if(resourceMap.get("connection_<%=cid%>") != null){
-					((com.datastax.driver.core.Session)resourceMap.get("connection_<%=cid%>")).close();
-				}
-				if(resourceMap.get("cluster_<%=cid%>") != null){
-					((com.datastax.driver.core.Cluster)resourceMap.get("cluster_<%=cid%>")).close();
-				}
-			<%
 			}
 			%>
     	}

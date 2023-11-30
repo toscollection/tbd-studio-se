@@ -51,21 +51,16 @@
 	INode nodeWithVersion = useExistConn ? ElementParameterParser.getLinkedNodeValue(node, "__CONNECTION__") : node;
 	String dbVersion = ElementParameterParser.getValue(nodeWithVersion, "__DB_VERSION__");
     Boolean dieOnError = ElementParameterParser.getBooleanValue(node, "__DIE_ON_ERROR__");
-    CQLManager cqlManager;
+    CQLManager cqlManager = null;
+    //Only CASSANDRA_4_0
 	if("CASSANDRA_4_0".equals(dbVersion)) {
 		cqlManager = new CQLManagerV4Driver(node, columns);
-	} else {
-		cqlManager = new CQLManager(node, columns);
 	}
     boolean useBatch = ElementParameterParser.getBooleanValue(node, "__USE_UNLOGGED_BATCH__");
     if(useBatch){
 		if("CASSANDRA_4_0".equals(dbVersion)) {
 		%>
 			boundStmt_<%=cid%> = prepareStmt_<%=cid%>.bind();
-		<%
-		} else {
-		%>
-			boundStmt_<%=cid%> = new com.datastax.driver.core.BoundStatement(prepareStmt_<%=cid%>);
 		<%
 		}
     }

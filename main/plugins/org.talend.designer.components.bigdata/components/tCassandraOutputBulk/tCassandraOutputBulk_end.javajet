@@ -50,10 +50,6 @@ if("CASSANDRA_4_0".equals(version)) {
 			csvWriter_<%=cid %>.close();
 		}
 	<%
-} else {
-%>
-	writer_<%=cid%>.close();
-<%
 }
 log4jFileUtil.writeDataFinishInfo(node);
 %>
