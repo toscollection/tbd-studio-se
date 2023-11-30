@@ -36,7 +36,6 @@
             NUM_ROW="2"
             SHOW="false"
         >
-            <DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_3_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_3_0'))">cassandra22_datastax_id</DEFAULT>
 			<DEFAULT IF="((USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_4_0')) OR ((USE_EXISTING_CONNECTION == 'true') AND (#LINK@NODE.CONNECTION.DB_VERSION == 'CASSANDRA_4_0'))">cassandra40_datastax_id</DEFAULT>
         </PARAMETER>
 		<PARAMETER
@@ -60,7 +59,6 @@
             NUM_ROW="4"
             SHOW_IF="USE_EXISTING_CONNECTION == 'false'">
             <ITEMS DEFAULT="CASSANDRA_4_0">
-                <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>
                 <ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
@@ -118,7 +116,7 @@
 		>
 			<DEFAULT>""</DEFAULT>
 		</PARAMETER>
-		<PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="13" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND ((DB_VERSION == 'CASSANDRA_3_0') OR (DB_VERSION == 'CASSANDRA_4_0'))">
+		<PARAMETER NAME="USE_HTTPS" FIELD="CHECK" NUM_ROW="13" SHOW_IF="(USE_EXISTING_CONNECTION == 'false') AND (DB_VERSION == 'CASSANDRA_4_0')">
             <DEFAULT>false</DEFAULT>
         </PARAMETER>
         <PARAMETER NAME="HTTPS_SETTING" FIELD="COMPONENT_LIST" FILTER="tSetKeystore"
@@ -166,20 +164,6 @@
                     MVN="mvn:ch.qos.reload4j/reload4j/1.2.22"/>
             <IMPORTS REQUIRED_IF="(USE_EXISTING_CONNECTION == 'false')">
 
-	            <IMPORTS REQUIRED_IF="DB_VERSION == 'CASSANDRA_3_0'">
-                    <IMPORT MODULE="slf4j-api-1.7.7.jar"
-		                MVN="mvn:org.slf4j/slf4j-api/1.7.7"
-		                UrlPath="platform:/plugin/org.talend.libraries.slf4j/lib/slf4j-api-1.7.7.jar"
-		                NAME="slf4j-api-1.7.7.jar" />
-	                <IMPORT MODULE="cassandra-driver-core-3.0.0-shaded.jar"
-	                    MVN="mvn:org.talend.libraries/cassandra-driver-core-3.0.0-shaded/6.0.0"
-	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/cassandra-driver-core-3.0.0-shaded.jar"
-	                    NAME="cassandra-driver-core-3.0.0-shaded.jar" />
-	                <IMPORT MODULE="metrics-core-3.1.2.jar"
-	                    MVN="mvn:io.dropwizard.metrics/metrics-core/3.1.2"
-	                    UrlPath="platform:/plugin/org.talend.libraries.apache.cassandra/lib/metrics-core-3.1.2.jar"
-	                    NAME="metrics-core-3.1.2.jar" />
-	            </IMPORTS>
 				<IMPORTS REQUIRED_IF="(DB_VERSION == 'CASSANDRA_4_0')">
                     <IMPORT MODULE="netty-common-4.1.97.Final.jar"
 	                    MVN="mvn:io.netty/netty-common/4.1.97.Final"

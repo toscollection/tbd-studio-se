@@ -43,7 +43,6 @@
             NUM_ROW="3"
             SHOW="false"
         >
-            <DEFAULT IF="(DB_VERSION == 'CASSANDRA_3_0')">cassandra22_datastax_id</DEFAULT>
 			<DEFAULT IF="(DB_VERSION == 'CASSANDRA_4_0')">cassandra40_datastax_id</DEFAULT>
         </PARAMETER>
 
@@ -54,7 +53,6 @@
             NUM_ROW="5"
             >
             <ITEMS DEFAULT="CASSANDRA_4_0">
-                <ITEM NAME="CASSANDRA_3_0" VALUE="CASSANDRA_3_0"/>
                 <ITEM NAME="CASSANDRA_4_0" VALUE="CASSANDRA_4_0"/>
             </ITEMS>
         </PARAMETER>
@@ -249,7 +247,7 @@
             FIELD="TEXT"
             NUM_ROW="52"
             REQUIRED="true"
-            SHOW_IF="(isShow[USE_STATEMENT] AND (USE_STATEMENT=='true')) OR (DB_VERSION == 'CASSANDRA_3_0')"
+            SHOW_IF="(isShow[USE_STATEMENT] AND (USE_STATEMENT=='true'))"
         >
           <DEFAULT>"insert into ks.tb (id, name, birthday) values (?, ?, ?)"</DEFAULT>
         </PARAMETER>
