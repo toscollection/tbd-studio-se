@@ -11689,7 +11689,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_azure_common_1_7_1",
-      "mvn_uri" : "mvn:org.talend.libraries/azure-common-1.7.1/6.0.0",
+      "mvn_uri" : "mvn:org.apache.jclouds.common/azure-common/1.7.1",
       "name" : "azure-common-1.7.1.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
@@ -11875,7 +11875,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_httpclient_3_1",
-      "mvn_uri" : "mvn:org.talend.libraries/commons-httpclient-3.1/6.0.0",
+      "mvn_uri" : "mvn:commons-httpclient/commons-httpclient/3.1",
       "name" : "commons-httpclient-3.1.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
@@ -11908,7 +11908,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_commons_lang3_3_4",
-      "mvn_uri" : "mvn:org.talend.libraries/commons-lang3-3.4/6.2.0",
+      "mvn_uri" : "mvn:org.apache.commons/commons-lang3/3.4",
       "name" : "commons-lang3-3.4.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
@@ -12833,7 +12833,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_httpclient_4_5_3",
-      "mvn_uri" : "mvn:org.talend.libraries/httpclient-4.5.3/6.0.0",
+      "mvn_uri" : "mvn:org.apache.httpcomponents/httpclient/4.5.3",
       "name" : "httpclient-4.5.3.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
@@ -12850,7 +12850,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdh6x",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDH6_1_1_httpcore_4_4_6",
-      "mvn_uri" : "mvn:org.talend.libraries/httpcore-4.4.6/6.3.0",
+      "mvn_uri" : "mvn:org.apache.httpcomponents/httpcore/4.4.6",
       "name" : "httpcore-4.4.6.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"

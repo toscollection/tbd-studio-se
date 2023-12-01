@@ -9380,7 +9380,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_azure_common_1_7_1",
-      "mvn_uri" : "mvn:org.talend.libraries/azure-common-1.7.1/6.0.0",
+      "mvn_uri" : "mvn:org.apache.jclouds.common/azure-common/1.7.1",
       "name" : "azure-common-1.7.1.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"
@@ -9622,7 +9622,7 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_commons_httpclient_3_1",
-      "mvn_uri" : "mvn:org.talend.libraries/commons-httpclient-3.1/6.0.0",
+      "mvn_uri" : "mvn:commons-httpclient/commons-httpclient/3.1",
       "name" : "commons-httpclient-3.1.jar",
       "tagName" : "libraryNeeded",
       "useStudioRepository" : "true"

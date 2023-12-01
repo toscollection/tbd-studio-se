@@ -20,7 +20,7 @@
                 context="plugin:org.talend.hadoop.distribution.hdinsight400"
                 id="parquet-hive-bundle-1.6.0.jar"
                 name="parquet-hive-bundle-1.6.0.jar"
-                mvn_uri="mvn:org.talend.libraries/parquet-hive-bundle-1.6.0/6.0.0">
+                mvn_uri="mvn:com.twitter/parquet-hive-bundle/1.6.0">
         </libraryNeeded>
 
         <!-- GraphFrames libraries -->
