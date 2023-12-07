@@ -286,7 +286,7 @@
 				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_2_4_0') AND (USE_EXISTING_CONNECTION=='false')" />
 
 			<!-- Schema registry, Avro serializer -->
-			<IMPORT NAME="avro-1.11.2" MODULE="avro-1.11.2.jar" MVN="mvn:org.apache.avro/avro/1.11.2"
+			<IMPORT NAME="avro-1.11.3" MODULE="avro-1.11.3.jar" MVN="mvn:org.apache.avro/avro/1.11.3"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
 			<IMPORT NAME="jackson-core-2.14.3" MODULE="jackson-core-2.14.3.jar" MVN="mvn:com.fasterxml.jackson.core/jackson-core/2.14.3"
 				REQUIRED_IF="(INPUT_TYPE == 'PRODUCER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_SERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_SERIALIZER == 'AVRO')" />
