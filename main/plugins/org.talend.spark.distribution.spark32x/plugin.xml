@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plugin [
-		<!ENTITY avro_version "1.10.2">
+        <!ENTITY avro_version "1.10.2">
         <!ENTITY aws_sdk_version "1.12.566">
         <!ENTITY azure-data-lake-store-sdk_version "2.3.9">
         <!ENTITY bcpXXX-jdk18on_version "1.77">
@@ -107,7 +107,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ImpalaJDBC42-&impala_version;.jar" name="ImpalaJDBC42-&impala_version;.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/&impala_version;"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ImpalaJDBC42-&impala_version;.jar" name="ImpalaJDBC42-&impala_version;.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/&impala_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-annotations-&jackson_version;.jar" name="jackson-annotations-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-core-&jackson_version;.jar" name="jackson-core-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/&jackson_version;"/>
@@ -278,7 +278,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jmespath-java-&aws_sdk_version;.jar" name="jmespath-java-&aws_sdk_version;.jar" mvn_uri="mvn:com.amazonaws/jmespath-java/&aws_sdk_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="spark-streaming-pubsub_2.12-2.4.0.jar" name="spark-streaming-pubsub_2.12-2.4.0.jar" mvn_uri="mvn:org.apache.bahir/spark-streaming-pubsub_2.12/2.4.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-client-1.33.0.jar" name="google-api-client-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.33.0"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-client-gson-1.33.0.jar" name="google-api-client-gson-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client-gson/1.33.0"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-client-gson-1.33.0.jar" name="google-api-client-gson-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client-gson/1.33.0"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" name="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev20220718-1.32.1"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-http-client-&google_http_version;.jar" name="google-http-client-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client/&google_http_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-http-client-gson-&google_http_version;.jar" name="google-http-client-gson-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client-gson/&google_http_version;"/><libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="google-http-client-jackson-1.22.0.jar" name="google-http-client-jackson-1.22.0.jar" mvn_uri="mvn:com.google.http-client/google-http-client-jackson/1.22.0"/>
@@ -479,10 +479,10 @@
             <library id="spark-hive-thriftserver_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
 
-		<!-- Impala group -->
-		<libraryNeededGroup description="Impala" id="IMPALA-GROUP-SPARK_3_2_x" name="IMPALA-GROUP-SPARK_3_2_x">
-			<library id="ImpalaJDBC42-&impala_version;.jar"/>
-		</libraryNeededGroup>
+        <!-- Impala group -->
+        <libraryNeededGroup description="Impala" id="IMPALA-GROUP-SPARK_3_2_x" name="IMPALA-GROUP-SPARK_3_2_x">
+            <library id="ImpalaJDBC42-&impala_version;.jar"/>
+        </libraryNeededGroup>
 
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark32x" id="DELTALAKE-GROUP-SPARK_3_2_x" name="DELTALAKE-GROUP-SPARK_3_2_x">
