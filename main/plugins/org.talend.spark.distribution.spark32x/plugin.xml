@@ -9,6 +9,7 @@
         <!ENTITY google_http_version "1.41.7">
         <!ENTITY guava_version "27.0-jre">
         <!ENTITY hadoop_version "3.3.1">
+        <!ENTITY impala_version "2.6.30.1036">
         <!ENTITY ivy_version "2.5.2">
         <!ENTITY jackson_databind_version "2.12.7.1">
         <!ENTITY jackson-mapper-asl_version "1.9.14-atlassian-6">
@@ -106,6 +107,7 @@
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="htrace-core4-4.1.0-incubating.jar" name="htrace-core4-4.1.0-incubating.jar" mvn_uri="mvn:org.apache.htrace/htrace-core4/4.1.0-incubating"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="httpclient-4.5.13.jar" name="httpclient-4.5.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpclient/4.5.13"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="httpcore-4.4.13.jar" name="httpcore-4.4.13.jar" mvn_uri="mvn:org.apache.httpcomponents/httpcore/4.4.13"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ImpalaJDBC42-&impala_version;.jar" name="ImpalaJDBC42-&impala_version;.jar" mvn_uri="mvn:Impala/ImpalaJDBC42/&impala_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="ivy-&ivy_version;.jar" name="ivy-&ivy_version;.jar" mvn_uri="mvn:org.apache.ivy/ivy/&ivy_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-annotations-&jackson_version;.jar" name="jackson-annotations-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-annotations/&jackson_version;"/>
         <libraryNeeded context="plugin:org.talend.spark.distribution.spark32x" id="jackson-core-&jackson_version;.jar" name="jackson-core-&jackson_version;.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/&jackson_version;"/>
@@ -476,6 +478,11 @@
             <library id="spark-hive_&scala_version;-&spark_version;.jar"/>
             <library id="spark-hive-thriftserver_&scala_version;-&spark_version;.jar"/>
         </libraryNeededGroup>
+
+		<!-- Impala group -->
+		<libraryNeededGroup description="Impala" id="IMPALA-GROUP-SPARK_3_2_x" name="IMPALA-GROUP-SPARK_3_2_x">
+			<library id="ImpalaJDBC42-&impala_version;.jar"/>
+		</libraryNeededGroup>
 
         <!-- DeltaLake group -->
         <libraryNeededGroup description="DeltaLake libraries for spark32x" id="DELTALAKE-GROUP-SPARK_3_2_x" name="DELTALAKE-GROUP-SPARK_3_2_x">
