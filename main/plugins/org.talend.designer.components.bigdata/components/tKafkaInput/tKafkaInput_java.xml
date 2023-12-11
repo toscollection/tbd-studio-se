@@ -382,7 +382,7 @@
 				REQUIRED_IF="(KAFKA_VERSION=='KAFKA_2_2_1') AND (USE_EXISTING_CONNECTION=='false')" />
 
 			<!-- Schema registry, Avro deserializer -->
-			<IMPORT NAME="avro-1.11.2" MODULE="avro-1.11.2.jar" MVN="mvn:org.apache.avro/avro/1.11.2"
+			<IMPORT NAME="avro-1.11.3" MODULE="avro-1.11.3.jar" MVN="mvn:org.apache.avro/avro/1.11.3"
 				REQUIRED_IF="(OUTPUT_TYPE == 'CONSUMER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_DESERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_DESERIALIZER == 'AVRO')" />
 			<IMPORT NAME="commons-compress-1.21" MODULE="commons-compress-1.21.jar" MVN="mvn:org.apache.commons/commons-compress/1.21"
 				REQUIRED_IF="(OUTPUT_TYPE == 'CONSUMER_RECORD') AND (USE_SCHEMA_REGISTRY == 'true') AND (SCHEMA_REGISTRY_KEY_DESERIALIZER == 'AVRO' OR SCHEMA_REGISTRY_VALUE_DESERIALIZER == 'AVRO')" />
