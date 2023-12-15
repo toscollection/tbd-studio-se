@@ -22,7 +22,7 @@ Bundle-ClassPath: .,
  lib/swagger-annotations-1.5.15.jar
 Export-Package: org.talend.repository.hadoopcluster.configurator
 Require-Bundle: org.talend.libraries.apache.cxf,
- org.talend.libraries.guava,
+ org.talend.libraries.guava;bundle-version="32.0.1-jre",
  org.talend.libraries.hadoop,
  org.talend.libraries.jackson,
  org.talend.model,
