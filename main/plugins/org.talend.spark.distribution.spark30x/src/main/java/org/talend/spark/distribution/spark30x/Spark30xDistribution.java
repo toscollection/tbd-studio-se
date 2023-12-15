@@ -32,7 +32,6 @@ import org.talend.hadoop.distribution.component.HCatalogComponent;
 import org.talend.hadoop.distribution.component.HDFSComponent;
 import org.talend.hadoop.distribution.component.HiveComponent;
 import org.talend.hadoop.distribution.component.HiveOnSparkComponent;
-import org.talend.hadoop.distribution.component.ImpalaComponent;
 import org.talend.hadoop.distribution.component.MRComponent;
 import org.talend.hadoop.distribution.component.SparkBatchComponent;
 import org.talend.hadoop.distribution.component.SparkStreamingComponent;
@@ -46,7 +45,7 @@ import org.talend.spark.distribution.spark30x.modulegroup.node.Spark30xNodeModul
 
 public class Spark30xDistribution extends AbstractSparkDistribution
 implements ISparkDistribution, SparkBatchComponent, SparkStreamingComponent, HiveOnSparkComponent, HBaseComponent,
-			HDFSComponent, HCatalogComponent, MRComponent, HiveComponent, ImpalaComponent, SqoopComponent {
+			HDFSComponent, HCatalogComponent, MRComponent, HiveComponent, SqoopComponent {
 
     public final static ESparkVersion SPARK_VERSION = ESparkVersion.SPARK_3_0;
 
