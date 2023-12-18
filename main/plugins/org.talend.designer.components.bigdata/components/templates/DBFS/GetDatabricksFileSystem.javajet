@@ -23,4 +23,4 @@ if(useExistingConnection) { // We re use the existing connection, coming from th
 }
 %>
 
-	org.talend.bigdata.launcher.fs.DatabricksFileSystem dbfs_<%=cid%> = new org.talend.bigdata.launcher.fs.DatabricksFileSystem(<%=endpoint%>, <%=token%>, routines.system.Constant.getUserAgent("<%=org.talend.commons.utils.VersionUtils.getDisplayVersion()%>"));
+	org.talend.bigdata.launcher.fs.DatabricksFileSystem dbfs_<%=cid%> = new org.talend.bigdata.launcher.fs.DatabricksFileSystem(<%=endpoint%>, <%=token%>, "Talend Studio/<%=org.talend.commons.utils.VersionUtils.getTalendVersion()%>");
