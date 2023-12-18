@@ -186,7 +186,8 @@
 			<IMPORT NAME="hadoop-conf-kerberos" MODULE="hadoop-conf-kerberos.jar"
 					MVN="mvn:org.talend.libraries/hadoop-conf-kerberos/6.0.0"
 					UrlPath="platform:/plugin/org.talend.libraries.hadoop.mapr2/lib/hadoop-conf-kerberos.jar"
-					REQUIRED_IF="(USE_EXISTING_CONNECTION=='false' AND DISTRIBUTION!='CUSTOM' AND USE_KRB=='true')"/>		
+					REQUIRED_IF="(USE_EXISTING_CONNECTION=='false' AND DISTRIBUTION!='CUSTOM' AND USE_KRB=='true')"/>
+			<IMPORT MODULE_GROUP="IMPALA_GROUP" REQUIRED="true" MRREQUIRED="true"/>			
 		</IMPORTS>
 	</CODEGENERATION>
 	<RETURNS>
