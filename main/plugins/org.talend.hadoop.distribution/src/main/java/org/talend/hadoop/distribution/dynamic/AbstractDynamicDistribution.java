@@ -395,6 +395,7 @@ public abstract class AbstractDynamicDistribution implements IDynamicDistributio
                 libService.resetModulesNeeded();
             }
         }
+        builtinPluginsCache = null;
     }
 
     abstract protected IDynamicDistributionTemplate initTemplate(DynamicPluginAdapter pluginAdapter, IDynamicMonitor monitor)
