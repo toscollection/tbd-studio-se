@@ -7,7 +7,7 @@
         <!ENTITY commons-io_version "2.7">
         <!ENTITY google_version "1.33.3">
         <!ENTITY google_http_version "1.41.7">
-        <!ENTITY guava_version "27.0-jre">
+        <!ENTITY guava_version "32.0.1-jre">
         <!ENTITY hive_version "2.3.8">	
         <!ENTITY ivy_version "2.5.2">
         <!ENTITY jackson_databind_version "2.12.7.1">

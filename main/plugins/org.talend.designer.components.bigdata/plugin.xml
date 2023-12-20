@@ -2,7 +2,7 @@
 <!DOCTYPE plugin [
         <!ENTITY google-oauth_version "1.33.3">
         <!ENTITY hive_version "2.3.8">
-        <!ENTITY zookeeper_version "3.6.2">
+        <!ENTITY zookeeper_version "3.7.2">
         ]>
 <?eclipse version="3.2"?>
 <plugin xmlns="">
@@ -335,10 +335,10 @@
 
        <libraryNeededGroup description="Talend-bigdata-core-di group" id="TALEND_BIGDATA_CORE_DI_LIB" name="TALEND_BIGDATA_CORE_DI_LIB">
             <library id="talend-bigdata-core-di-1.6.0.jar"/>
-            <library id="guava-27.0-jre.jar"/>
+            <library id="guava-32.1.3-jre.jar"/>
        </libraryNeededGroup>
 
-      <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-2.1.0.jar" name="hbase-client-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/2.1.0"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-client-2.1.0.jar" name="hbase-client-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-client/2.1.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-common-2.1.0.jar" name="hbase-common-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-common/2.1.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop-compat-2.1.0.jar" name="hbase-hadoop-compat-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hadoop-compat/2.1.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.mrprovider" id="hbase-hadoop2-compat-2.1.0.jar" name="hbase-hadoop2-compat-2.1.0.jar" mvn_uri="mvn:org.apache.hbase/hbase-hadoop2-compat/2.1.0"/>
@@ -492,7 +492,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="google-oauth-client-servlet-&google-oauth_version;.jar" name="google-oauth-client-servlet-&google-oauth_version;.jar" mvn_uri="mvn:com.google.oauth-client/google-oauth-client-servlet/&google-oauth_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="grpc-context-1.19.0.jar" name="grpc-context-1.19.0.jar" mvn_uri="mvn:io.grpc/grpc-context/1.19.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="gson-2.9.0.jar" name="gson-2.9.0.jar" mvn_uri="mvn:com.google.code.gson/gson/2.9.0"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="guava-27.0-jre.jar" name="guava-27.0-jre.jar" mvn_uri="mvn:com.google.guava/guava/27.0-jre" />
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="guava-32.1.3-jre.jar" name="guava-32.1.3-jre.jar" mvn_uri="mvn:com.google.guava/guava/32.1.3-jre" />
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="j2objc-annotations-1.3.jar" name="j2objc-annotations-1.3.jar" mvn_uri="mvn:com.google.j2objc/j2objc-annotations/1.3"/>        
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jdo2-api-2.3-eb.jar" name="jdo2-api-2.3-eb.jar" mvn_uri="mvn:javax.jdo/jdo2-api/2.3-eb"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jetty-util-6.1.26.jar" name="jetty-util-6.1.26.jar" mvn_uri="mvn:org.mortbay.jetty/jetty-util/6.1.26"/>
@@ -556,7 +556,7 @@
             <library id="google-oauth-client-servlet-&google-oauth_version;.jar" />
             <library id="grpc-context-1.19.0.jar" />
             <library id="gson-2.9.0.jar" />
-            <library id="guava-27.0-jre.jar"/>
+            <library id="guava-32.1.3-jre.jar"/>
             <library id="jackson-core-2.8.6.jar" />
             <library id="jackson-core-asl-1.9.16-TALEND.jar" />
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar" />
