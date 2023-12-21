@@ -43,7 +43,8 @@
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="compress-lzf-1.0.3.jar" name="compress-lzf-1.0.3.jar" mvn_uri="mvn:com.ning/compress-lzf/1.0.3"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="curator-client-2.7.1.jar" name="curator-client-2.7.1.jar" mvn_uri="mvn:org.apache.curator/curator-client/2.7.1"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="curator-framework-2.7.1.jar" name="curator-framework-2.7.1.jar" mvn_uri="mvn:org.apache.curator/curator-framework/2.7.1"/>
-		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-api-client-1.33.0.jar" name="google-api-client-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.33.0"/>
+		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="failureaccess-1.0.1.jar" name="failureaccess-1.0.1.jar" mvn_uri="mvn:com.google.guava/failureaccess/1.0.1"/>
+        <libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-api-client-1.33.0.jar" name="google-api-client-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client/1.33.0"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-api-client-gson-1.33.0.jar" name="google-api-client-gson-1.33.0.jar" mvn_uri="mvn:com.google.api-client/google-api-client-gson/1.33.0"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" name="google-api-services-pubsub-v1-rev20220718-1.32.1.jar" mvn_uri="mvn:com.google.apis/google-api-services-pubsub/v1-rev20220718-1.32.1"/>
 		<libraryNeeded context="plugin:org.talend.spark.distribution.spark24x" id="google-http-client-&google_http_version;.jar" name="google-http-client-&google_http_version;.jar" mvn_uri="mvn:com.google.http-client/google-http-client/&google_http_version;"/>
@@ -264,6 +265,7 @@
 			<library id="commons-net-&commons-net_version;.jar"/>
 			<library id="commons-text-&commons-text_version;.jar"/>
 			<library id="compress-lzf-1.0.3.jar"/>
+			<library id="failureaccess-1.0.1.jar"/>
 			<library id="gson-2.9.0.jar"/>
 			<library id="guava-&guava_version;.jar"/>
 			<library id="hadoop-auth-3.2.4.jar"/>
