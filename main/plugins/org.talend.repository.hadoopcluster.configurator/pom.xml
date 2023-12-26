@@ -154,7 +154,9 @@
                             <includeGroupIds>
                             org.apache.geronimo.specs,javax.annotation,com.cloudera.api.swagger,io.swagger,com.google,com.squareup.okhttp,com.squareup.okio,joda-time,com.sun.xml.bind,com.fasterxml.jackson.jaxrs,com.fasterxml.jackson.module,org.jetbrains,org.hamcrest
                            </includeGroupIds>
-
+                           <excludeGroupIds>
+                            com.google.guava
+                           </excludeGroupIds>
                         </configuration>
                     </execution>
                 </executions>
