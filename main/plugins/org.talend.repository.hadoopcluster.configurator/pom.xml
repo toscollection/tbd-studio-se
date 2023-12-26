@@ -102,12 +102,6 @@
             <groupId>com.cloudera.api.swagger</groupId>
             <artifactId>cloudera-manager-api-swagger</artifactId>
             <version>${cloudera-manager-api.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.google.guava</groupId>
-                    <artifactId>guava</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
     </dependencies>
     <build>
