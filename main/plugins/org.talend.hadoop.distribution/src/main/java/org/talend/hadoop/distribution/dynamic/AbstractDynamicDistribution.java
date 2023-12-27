@@ -399,6 +399,7 @@ public abstract class AbstractDynamicDistribution implements IDynamicDistributio
                 ExceptionHandler.process(e);
             }
         }
+	builtinPluginsCache = null;
     }
 
     abstract protected IDynamicDistributionTemplate initTemplate(DynamicPluginAdapter pluginAdapter, IDynamicMonitor monitor)

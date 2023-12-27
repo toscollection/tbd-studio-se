@@ -625,4 +625,30 @@ public class DynamicDistributionManager implements IDynamicDistributionManager {
     public String getDynamicDistributionCacheVersion() {
         return HadoopDistributionsHelper.getCacheVersion();
     }
+
+    @Override
+    public void reset(IProgressMonitor monitor) {
+        if (!isLoaded) {
+            return;
+        }
+        if (monitor == null) {
+            monitor = new NullProgressMonitor();
+        }
+        IDynamicMonitor dynamicMonitor = new AbsDynamicProgressMonitor(monitor) {
+
+            @Override
+            public void writeMessage(String message) {
+                // nothing to do
+            }
+        };
+        try {
+            unregisterAll(dynamicMonitor, false);
+            usersPluginsCache = null;
+            resetSystemCache();
+            isLoaded = false;
+        } catch (Exception e) {
+            ExceptionHandler.process(e);
+        }
+    }
+
 }
