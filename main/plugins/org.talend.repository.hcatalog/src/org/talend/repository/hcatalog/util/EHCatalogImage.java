@@ -19,8 +19,7 @@ import org.talend.commons.ui.runtime.image.IImage;
  */
 public enum EHCatalogImage implements IImage {
 
-    HCATALOG_RESOURCE_ICON("/icons/HCatalog_icon16.png"), //$NON-NLS-1$
-    HCATALOG_WIZ("/icons/hadoop-logo-wiz.png"); //$NON-NLS-1$
+    HCATALOG_RESOURCE_ICON("/icons/HCatalog_icon16.png"); //$NON-NLS-1$
 
     private String path;
 
