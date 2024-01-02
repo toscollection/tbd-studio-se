@@ -77,7 +77,6 @@ public class HDFSSchemaWizard extends AbstractRepositoryFileTableWizard implemen
     @Override
     public void addPages() {
         setWindowTitle("Schema");
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ECoreImage.METADATA_TABLE_WIZ));
 
         schemaWizardPage = new HDFSSchemaWizardPage(selectedMetadataTable, connectionItem, isRepositoryObjectEditable(),
                 connection);

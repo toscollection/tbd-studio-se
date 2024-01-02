@@ -65,7 +65,6 @@ public class HadoopImportConfsWizard extends Wizard {
 
     @Override
     public void addPages() {
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHadoopClusterImage.HADOOPCLUSTER_WIZ));
         optionPage = new HadoopImportConfsOptionPage();
         addPage(optionPage);
     }

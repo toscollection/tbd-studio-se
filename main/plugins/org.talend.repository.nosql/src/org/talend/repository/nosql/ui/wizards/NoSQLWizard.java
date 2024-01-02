@@ -129,7 +129,6 @@ public class NoSQLWizard extends AbstractNoSQLWizard {
     @Override
     public void addPages() {
         setWindowTitle(Messages.getString("NoSQLWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ENoSQLImage.NOSQL_WIZ_ICON));
         if (isToolBar) {
             pathToSave = null;
         }

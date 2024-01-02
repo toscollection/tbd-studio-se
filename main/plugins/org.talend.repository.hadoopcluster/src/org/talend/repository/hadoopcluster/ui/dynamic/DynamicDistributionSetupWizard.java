@@ -31,7 +31,6 @@ public class DynamicDistributionSetupWizard extends Wizard {
 
     @Override
     public void addPages() {
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHadoopClusterImage.HADOOPCLUSTER_WIZ));
         optionPage = new DynamicDistributionOptionPage(configData);
         retrivePage = new DynamicDistributionDetailsPage(configData);
         addPage(optionPage);

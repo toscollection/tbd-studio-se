@@ -127,7 +127,6 @@ public class HDFSWizard extends HadoopRepositoryWizard<HDFSConnection> {
     @Override
     public void addPages() {
         setWindowTitle(Messages.getString("HDFSWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHDFSImage.HDFS_WIZ));
         if (isToolBar) {
             pathToSave = null;
         }

@@ -86,7 +86,6 @@ public class HCatalogSchemaWizard extends AbstractRepositoryFileTableWizard impl
     @Override
     public void addPages() {
         setWindowTitle("Schema");
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ECoreImage.METADATA_TABLE_WIZ));
 
         schemaWizardPage = new HCatalogSchemaWizardPage(selectedMetadataTable, connectionItem, isRepositoryObjectEditable(),
                 temConnection);
