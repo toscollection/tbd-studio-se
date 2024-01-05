@@ -23,19 +23,10 @@ String cid = node.getUniqueName();
 
 TKafkaInputUtil tKafkaInputUtil = new TKafkaInputUtil(node);
 
-if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
-%>
-	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.8.2.x/tKafkaInput_main_0.8.2.x.javajet"%>
-<%
-} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_9_0_1")) {
-%>
-	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.9.0.x/tKafkaInput_main_0.9.0.x.javajet"%>
-<%
-
-} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_10_0_1","KAFKA_1_1_0","KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
+if(tKafkaInputUtil.isKafkaVersion("KAFKA_3_2_3")) {
 
 %>
-	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/0.10.0.x/tKafkaInput_main_0.10.0.x.javajet"%>
+	<%@ include file="@{org.talend.designer.components.bigdata}/components/tKafkaInput/3.x/tKafkaInput_main_3.x.javajet"%>
 <%
 }
 %>

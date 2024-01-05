@@ -26,23 +26,11 @@ String kiCid = kiNode.getUniqueName();
 
 TKafkaInputUtil tKafkaInputUtil = new TKafkaInputUtil(kiNode);
 
-if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_8_2_0")) {
-%>
-	if (globalMap.containsKey("<%=kiCid%>_consumerConnector")) {
-	    ((kafka.javaapi.consumer.ConsumerConnector) globalMap.get("<%=kiCid%>_consumerConnector")).commitOffsets();
-	} else {
-	    throw new RuntimeException("Could not commit offsets : no consumer has been found from <%=kiCid%>");
-	}
-<%
-} else if(tKafkaInputUtil.isKafkaVersion("KAFKA_0_9_0_1","KAFKA_0_10_0_1","KAFKA_1_1_0","KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
 %>
 	if (globalMap.containsKey("<%=kiCid%>_kafkaConsumer")) {
 	    ((org.apache.kafka.clients.consumer.KafkaConsumer) globalMap.get("<%=kiCid%>_kafkaConsumer")).commitSync();
 	} else {
 	    throw new RuntimeException("Could not commit offsets : no consumer has been found from <%=kiCid%>");
 	}
-<%
-}
-%>
 
 

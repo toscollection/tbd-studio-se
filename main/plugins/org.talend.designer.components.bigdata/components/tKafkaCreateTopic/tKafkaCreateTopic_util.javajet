@@ -39,7 +39,7 @@ class TKafkaCreateTopicUtil {
     }
     
     private void setSecurityProps(java.util.Map<String, String> result) {
-        if (isKafkaVersion("KAFKA_2_4_0") || isKafkaVersion("KAFKA_3_2_3")) {
+        if (isKafkaVersion("KAFKA_3_2_3")) {
             // SSL configuration
             if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
                 if (tSetKeystoreUtil.needTrustStore()) {
@@ -107,10 +107,6 @@ class TKafkaCreateTopicUtil {
 		return "ALTER_TOPIC".equals(ElementParameterParser.getValue(node, "__TOPICACTION__"));
 	}
 
-	public String getZookeeperConnect() {
-		return ElementParameterParser.getValue(connNode, "__ZOOKEEPER_CONNECT__");
-	}
-	
 	public String getKafkaConnect() {
 		return ElementParameterParser.getValue(connNode, "__BROKER_LIST__");
 	}

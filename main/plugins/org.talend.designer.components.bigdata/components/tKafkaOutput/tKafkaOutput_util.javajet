@@ -224,42 +224,40 @@ class TKafkaOutputUtil {
     }
 
     private void setSecurityProps(Map<String, String> result) {
-        if (!isKafkaVersion("KAFKA_0_8_2_0")) {
-            // SSL configuration
-            if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
-                if (tSetKeystoreUtil.needTrustStore()) {
-                    result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
-                    result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
-                    result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
-                }
-                
-                if (tSetKeystoreUtil.needClientAuth()) {
-                    result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
-                    result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath());
-                    result.put("\"ssl.keystore.password\"", tSetKeystoreUtil.getKeyStorePassword());
-                }
+        // SSL configuration
+        if (useHttps() && isSetKeystore() && tSetKeystoreUtil.useHTTPS()) {
+            if (tSetKeystoreUtil.needTrustStore()) {
+                result.put("\"ssl.truststore.type\"", tSetKeystoreUtil.getTrustStoreType());
+                result.put("\"ssl.truststore.location\"", tSetKeystoreUtil.getTrustStorePath());
+                result.put("\"ssl.truststore.password\"", tSetKeystoreUtil.getTrustStorePassword());
             }
+            
+            if (tSetKeystoreUtil.needClientAuth()) {
+                result.put("\"ssl.keystore.type\"", tSetKeystoreUtil.getKeyStoreType());
+                result.put("\"ssl.keystore.location\"", tSetKeystoreUtil.getKeyStorePath());
+                result.put("\"ssl.keystore.password\"", tSetKeystoreUtil.getKeyStorePassword());
+            }
+        }
 
-            // Kerberos configuration
-            if (useKrb()) {
-                result.put("\"sasl.kerberos.service.name\"", getKrbServiceName());
-                if (isSetKinitPath()) {
-                    result.put("\"sasl.kerberos.kinit.cmd\"", getKinitPath());
-                }
+        // Kerberos configuration
+        if (useKrb()) {
+            result.put("\"sasl.kerberos.service.name\"", getKrbServiceName());
+            if (isSetKinitPath()) {
+                result.put("\"sasl.kerberos.kinit.cmd\"", getKinitPath());
             }
         }
     }
 
     private void setProducerRecordProps(Map<String, String> result) {
         // If input type is ProducerRecord - serialize key, value as byte[] by default
-        if (useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
+        if (useProducerRecord() && isKafkaVersion("KAFKA_3_2_3")) {
             result.put("\"key.serializer\"", "\"org.apache.kafka.common.serialization.ByteArraySerializer\"");
             result.put("\"value.serializer\"", "\"org.apache.kafka.common.serialization.ByteArraySerializer\"");
         }
     }
 
     private void setSchemaRegistryProps(Map<String, String> result) {
-        if (useSchemaRegistry() && useProducerRecord() && isKafkaVersion("KAFKA_2_2_1","KAFKA_2_4_0","KAFKA_3_2_3")) {
+        if (useSchemaRegistry() && useProducerRecord() && isKafkaVersion("KAFKA_3_2_3")) {
             // Schema registry
             result.put("\"schema.registry.url\"", getSchemaRegistryUrl());
             if (useSchemaRegistryBasicAuth()) {
