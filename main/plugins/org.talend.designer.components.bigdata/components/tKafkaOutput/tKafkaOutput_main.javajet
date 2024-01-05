@@ -38,10 +38,6 @@ if(useExistingConnection) {
 } else {
 	kafkaVersion = ElementParameterParser.getValue(node, "__KAFKA_VERSION__");
 }
-boolean isKafka0820Version = "KAFKA_0_8_2_0".equals(kafkaVersion);
-boolean isKafka0901Version = "KAFKA_0_9_0_1".equals(kafkaVersion);
-final boolean isKafkaVersionSupportHeaders = ("KAFKA_3_2_3").equals(kafkaVersion) || ("KAFKA_2_4_0").equals(kafkaVersion) || ("KAFKA_2_2_1").equals(kafkaVersion) || ("KAFKA_1_1_0").equals(kafkaVersion);
-
 
 
 if (tKafkaOutputUtil.useProducerRecord()) {
@@ -54,7 +50,7 @@ if (tKafkaOutputUtil.useProducerRecord()) {
 <%
 }
 
-        if(isHeaderEnabled && isKafkaVersionSupportHeaders){
+        if(isHeaderEnabled){
         List<Map<String, String>> headers = (List<Map<String, String>>) ElementParameterParser
                 .getObjectValue(node, "__KAFKA_HEADERS_PROPERTIES__");
 
@@ -93,15 +89,7 @@ if (!<%=cid%>_producerExceptions.isEmpty()) {
 	} else {
 	// if DIE_ON_ERROR unchecked, the process stops when there is AuthenticationException, AuthorizationException, UnknownServerException or UnsupportedVersionException
 	%>
-	<%if(isKafka0820Version) {%>
-		if (e instanceof org.apache.kafka.common.errors.UnknownServerException) {
-		<%
-	} else if(isKafka0901Version) {%>
-		if (e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException) {
-		<%
-	} else {%>
 		if (e instanceof org.apache.kafka.common.errors.AuthenticationException || e instanceof org.apache.kafka.common.errors.AuthorizationException || e instanceof org.apache.kafka.common.errors.UnknownServerException || e instanceof org.apache.kafka.common.errors.UnsupportedVersionException) {
-	<%}%>
 			throw e;
 		} else {
 			<%if(isLog4jEnabled){%>	
