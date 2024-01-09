@@ -41,5 +41,8 @@ org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
 		<% for (java.util.Map.Entry<String, String> entry : tIcebergTable.tableProperties().entrySet()) {%>
     		.putTableProperties(<%=entry.getKey()%>, <%=entry.getValue()%>)
         <% } %>
+		<% for (String partition : tIcebergTable.newPartitions()) {%>
+    		.addPartitions(org.talend.bigdata.core.di.components.ImmutableField.builder().name(<%=partition%>).build())
+		<%}%>
 			.build()
 			.<%=tIcebergTable.actionMethod()%>;

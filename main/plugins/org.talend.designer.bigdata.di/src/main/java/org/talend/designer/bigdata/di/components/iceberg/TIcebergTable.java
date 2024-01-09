@@ -93,6 +93,10 @@ public class TIcebergTable implements WithSchema {
                 : Collections.emptyList();
     }
 
+    public List<String> newPartitions() {
+        return getParameter("__NEW_PARTITIONS__", Collections.<Map<String, String>> emptyList()).stream().map(p -> p.get("PARTITION")).collect(Collectors.toList());
+    }
+
     public Map<String, String> tableProperties() {
         Map<String, String> tableProperties = new HashMap<String, String>();
         getParameter("__TABLE_PROPERTIES__", Collections.<Map<String, String>> emptyList()).stream().forEach(p -> tableProperties.put(p.get("PROPERTY"), p.get("VALUE")));
