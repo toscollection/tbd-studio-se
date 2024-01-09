@@ -20,12 +20,15 @@ public class TIcebergTable implements WithSchema {
 
     private final static Map<String, String> tableActionToMethod = new HashMap<String, String>();
 
+    private final static Map<String, String> alterTableActionToMethod = new HashMap<String, String>();
+
     static {
         tableActionToMethod.put("CREATE_TABLE", "create()");
         tableActionToMethod.put("CREATE_TABLE_IF_NOT_EXISTS", "create(true)");
         tableActionToMethod.put("DROP_TABLE", "drop()");
         tableActionToMethod.put("DROP_TABLE_IF_EXISTS", "drop(true)");
         tableActionToMethod.put("TRUNCATE", "truncate()");
+        alterTableActionToMethod.put("SET_PARTITIONS", "alterPartitions()");
     }
 
     public TIcebergTable(CodeGeneratorArgument arg) {
@@ -46,7 +49,12 @@ public class TIcebergTable implements WithSchema {
     }
 
     public String actionMethod() {
-        return tableActionToMethod.get(getParameter("__TABLE_ACTION__", "CREATE_TABLE"));
+        String tableAction = getParameter("__TABLE_ACTION__", "CREATE_TABLE");
+        if ("ALTER_TABLE".equals(tableAction)) {
+            return alterTableActionToMethod.get(getParameter("__ALTER_TABLE_ACTION__", "SET_PARTITIONS"));
+        } else {
+            return tableActionToMethod.get(getParameter("__TABLE_ACTION__", "CREATE_TABLE"));
+        }
     }
 
     public boolean externalTable() {
