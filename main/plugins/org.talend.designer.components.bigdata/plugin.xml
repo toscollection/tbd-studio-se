@@ -2,7 +2,8 @@
 <!DOCTYPE plugin [
         <!ENTITY google-oauth_version "1.33.3">
         <!ENTITY hive_version "2.3.8">
-        <!ENTITY zookeeper_version "3.7.2">
+        <!ENTITY talend-bigdata-core_version "1.7.0">
+        <!ENTITY zookeeper_version "3.6.2">
         ]>
 <?eclipse version="3.2"?>
 <plugin xmlns="">
@@ -329,11 +330,13 @@
 
        <libraryNeeded
                context="plugin:org.talend.designer.components.bigdata"
-               id="talend-bigdata-core-di-1.6.0.jar"
-               name="talend-bigdata-core-di-1.6.0.jar"
-               mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/1.6.0"/>
+               id="talend-bigdata-core-di-&talend-bigdata-core_version;.jar"
+               name="talend-bigdata-core-di-&talend-bigdata-core_version;.jar"
+               mvn_uri="mvn:org.talend.bigdata.libs/talend-bigdata-core-di/&talend-bigdata-core_version;"/>
 
        <libraryNeededGroup description="Talend-bigdata-core-di group" id="TALEND_BIGDATA_CORE_DI_LIB" name="TALEND_BIGDATA_CORE_DI_LIB">
+            <library id="talend-bigdata-core-di-&talend-bigdata-core_version;.jar"/>
+            <library id="guava-27.0-jre.jar"/>
             <library id="talend-bigdata-core-di-1.6.0.jar"/>
             <library id="guava-32.1.3-jre.jar"/>
        </libraryNeededGroup>
