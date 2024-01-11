@@ -45,24 +45,6 @@
     }
 <%
 
-	String impalaVersion = ElementParameterParser.getValue(createTableNode, "__IMPALA_VERSION__");
-	String distribution = ElementParameterParser.getValue(createTableNode, "__DISTRIBUTION__");
-	
-	if(useExistingConnection) {
-		distribution = "";
-		impalaVersion = "";
-		String connection = ElementParameterParser.getValue(createTableNode, "__CONNECTION__");
-		for (INode pNode : createTableNode.getProcess().getNodesOfType("tHiveConnection")) {
-			if(connection!=null && connection.equals(pNode.getUniqueName())) {
-				distribution = ElementParameterParser.getValue(pNode, "__DISTRIBUTION__");
-				impalaVersion = ElementParameterParser.getValue(pNode, "__HIVE_VERSION__");
-				break;
-			}
-		}
-	}
-	
-	boolean isCustom = "CUSTOM".equals(distribution);
-	
 	String storageFormat = ElementParameterParser.getValue(createTableNode, "__STORAGE_FORMAT__");
 	List<Map<String, String>> serdeProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(createTableNode, "__SERDE_PROPERTIES__");
 	boolean setDelimitedRowFormat = "true".equals(ElementParameterParser.getValue(createTableNode, "__SET_ROW_FORMAT__"));
