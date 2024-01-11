@@ -36,7 +36,6 @@
 				throw new IllegalStateException("Unexpected Error: Hive Distribution can not be found for '"+theDistribution+"-"+theVersion+"'");
 
 			}
-			boolean isCustom = hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 			String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";				        
 				        
 			String additionalJdbcSettings = ElementParameterParser.getValue(node, "__IMPALA_ADDITIONAL_JDBC__");	
@@ -53,7 +52,7 @@
 			boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-			boolean securityIsEnabled = useKrb && ( isCustom || hiveDistrib.doSupportKerberos() );
+			boolean securityIsEnabled = useKrb;
 			String impalaPrincipal = ElementParameterParser.getValue(node, "__IMPALA_PRINCIPAL__");
 			
 			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
@@ -70,7 +69,7 @@
 			boolean storeByHBase = "true".equals(ElementParameterParser.getValue(node, "__STORE_BY_HBASE__"));
 		   String sslSyntaxe=""; 
 
-			if(impalaDriver!=null && !"".equals(impalaDriver.trim()) && (isCustom || hiveDistrib.doSupportHive2())) {
+			if(impalaDriver!=null && !"".equals(impalaDriver.trim()) ) {
 			    impalaDriver = impalaDriver.toLowerCase();
 				if ("hive2".equalsIgnoreCase(impalaDriver)) {
 					javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
@@ -258,7 +257,7 @@
 						String kerberosPart_<%=cid%>="";
 <%
 						// Using SSL in Secure Mode
-						if (useSsl && hiveDistrib.doSupportSSL()) {
+						if (useSsl) {
 							// Does the distrib support SSL + KERBEROS
 							if (hiveDistrib.doSupportSSLwithKerberos()) {
 								if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
@@ -304,7 +303,7 @@
 					// BEGIN IF07
 					} else {
 						//Using SSL in non Secure Mode
-						if(useSsl && hiveDistrib.doSupportSSL()){
+						if(useSsl){
 							if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
 							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
@@ -450,7 +449,6 @@
 		}
 	}
 	
-	boolean isCustom = "CUSTOM".equals(distribution);
 %>
 
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/Input/AbstractDBInputBegin.javajet"%>
