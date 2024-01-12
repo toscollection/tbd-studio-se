@@ -15,7 +15,7 @@ org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
 			.connection(connection_<%=tIcebergTable.getCid()%>)
 			.table(<%=tIcebergTable.table()%>)
 		<% for (org.talend.designer.bigdata.di.components.Schema.Field field : tIcebergTable.getFields()) {%>
-    		.addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("<%=field.getName()%>").type("<%=field.getType()%>").build())
+    		.addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("<%=field.getName()%>").rename("<%=tIcebergTable.getRenameCol(field)%>").type("<%=tIcebergTable.getType(field)%>").afterCol("<%=tIcebergTable.getAfterCol(field)%>").build())
 		<%}%>
 		<% if (tIcebergTable.externalTable()) { %>
 			.external(true)
@@ -41,5 +41,8 @@ org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
 		<% for (java.util.Map.Entry<String, String> entry : tIcebergTable.tableProperties().entrySet()) {%>
     		.putTableProperties(<%=entry.getKey()%>, <%=entry.getValue()%>)
         <% } %>
+		<% for (String partition : tIcebergTable.newPartitions()) {%>
+    		.addPartitions(org.talend.bigdata.core.di.components.ImmutableField.builder().name(<%=partition%>).build())
+		<%}%>
 			.build()
 			.<%=tIcebergTable.actionMethod()%>;
