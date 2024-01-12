@@ -30,28 +30,17 @@
 	String impalaDriver = ElementParameterParser.getValue(connectionNode, "__IMPALA_DRIVER__");
 	
 	boolean supportImpalaConnector = false;
-	 // use HiveComponent type to get all necessary methods but there is something to fix about the design on the current typing 
-	org.talend.hadoop.distribution.component.HiveComponent componentDistrib = null;
-	try {
-	   componentDistrib = (org.talend.hadoop.distribution.component.HiveComponent)org.talend.hadoop.distribution.DistributionFactory.buildDistribution(distributionName, impalaVersionName);
-	   supportImpalaConnector = componentDistrib.doSupportImpalaConnector();
-	} catch (java.lang.Exception e) {
-		e.printStackTrace();
-		return "	throw new IllegalStateException(\"Unexpected Error: Hive Distribution can not be found for '"+distributionName+"-"+impalaVersionName+"'\");";
-
-	}
-	boolean isCustom = componentDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 %>
 	<%@ include file="@{org.talend.designer.components.localprovider}/components/templates/DB/HelpClass/HelpClass.javajet"%>
 	
 
 <%   if(supportImpalaConnector && "impala".equalsIgnoreCase(impalaDriver)){%>
          <%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnectionUtilImpalaDriver.javajet"%>
-<%       connUtil = new ConnectionUtilImpala(componentDistrib);
+<%       connUtil = new ConnectionUtilImpala();
      }else{
 %>
          <%@ include file="@{org.talend.designer.components.bigdata}/components/tImpalaConnection/tImpalaConnectionUtil.javajet"%>
-<%       connUtil = new ConnectionUtil(componentDistrib);
+<%       connUtil = new ConnectionUtil();
      }
 %>
 
@@ -79,11 +68,8 @@
 	String yarnClasspathSeparator = ElementParameterParser.getValue(node, "__CLASSPATH_SEPARATOR__");
 
 	boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-	boolean securityIsEnabled = useKrb && (isCustom || componentDistrib.doSupportKerberos() );
+	boolean securityIsEnabled = useKrb;
 
-	boolean isKerberosAvailableHadoop2 = !isCustom && componentDistrib.isHadoop2() && componentDistrib.doSupportKerberos();
-	boolean isHadoop2 = !isCustom && componentDistrib.isHadoop2();
-	boolean isKerberosAvailableHadoop1 = !isCustom && componentDistrib.isHadoop1() && componentDistrib.doSupportKerberos();
 	boolean configureFromClassPath = "true".equals(ElementParameterParser.getValue(node, "__CONFIGURATIONS_FROM_CLASSPATH__"));
 
 %>
@@ -92,7 +78,7 @@
 
 	java.sql.Statement init_<%=cid%> = conn_<%=cid%>.createStatement();
 <%
-	if((isCustom && useYarn) || (!isCustom && isHadoop2)) {
+	if(useYarn) {
 		if(!configureFromClassPath && setResourceManager) {
 			String resourceManager = ElementParameterParser.getValue(node, "__RESOURCE_MANAGER__");
 %>
@@ -155,7 +141,7 @@
 
 	init_<%=cid%>.close();
 
-	<%if("true".equalsIgnoreCase(storeByHBase) && (isCustom || componentDistrib.doSupportHBaseForHive())) {%>
+	<%if("true".equalsIgnoreCase(storeByHBase)) {%>
 		java.sql.Statement statement_<%=cid%> = conn_<%=cid%>.createStatement();
 		<%if(!configureFromClassPath && zookeeperQuorumForHBase!=null && !"".equals(zookeeperQuorumForHBase) && !"\"\"".equals(zookeeperQuorumForHBase)) {%>
 			statement_<%=cid%>.execute("SET hbase.zookeeper.quorum="+<%=zookeeperQuorumForHBase%>);

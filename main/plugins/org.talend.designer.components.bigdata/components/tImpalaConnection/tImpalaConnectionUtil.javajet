@@ -2,18 +2,16 @@
 	class ConnectionUtil extends DefaultConnectionUtil {
 		private String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
 		private org.talend.hadoop.distribution.component.HiveComponent hiveDistrib;
-		private boolean isCustom;
-
+		
 		public ConnectionUtil(org.talend.hadoop.distribution.component.HiveComponent hiveDistrib) {
 			this.hiveDistrib = hiveDistrib;
-			this.isCustom = hiveDistrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
 		}
 
 		public void createConnection(INode node) {
 			String connectionMode = ElementParameterParser.getValue(node, "__CONNECTION_MODE__");
 			String hiveVersion = ElementParameterParser.getValue(node, "__HIVE_VERSION__");
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-			boolean securityIsEnabled = useKrb && (isCustom || this.hiveDistrib.doSupportKerberos());
+			boolean securityIsEnabled = useKrb;
 			boolean useLDAP = !("".equals(ElementParameterParser.getValue(node, "__PASS__")) || "\"\"".equals(ElementParameterParser.getValue(node, "__PASS__")));
 %>
 			if (<%=ElementParameterParser.getValue(node, "__PASS__")%> != null && <%=useLDAP%>){
@@ -40,7 +38,7 @@
 			boolean useYarn = "true".equals(ElementParameterParser.getValue(node, "__USE_YARN__"));
 
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-			boolean securityIsEnabled = useKrb && ( this.isCustom || this.hiveDistrib.doSupportKerberos() );
+			boolean securityIsEnabled = useKrb;
 			String impalaPrincipal = ElementParameterParser.getValue(node, "__IMPALA_PRINCIPAL__");
 			
 			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
@@ -57,7 +55,7 @@
 			boolean storeByHBase = "true".equals(ElementParameterParser.getValue(node, "__STORE_BY_HBASE__"));
 		    
 
-			if(impalaDriver!=null && !"".equals(impalaDriver.trim()) && (this.isCustom || this.hiveDistrib.doSupportHive2())) {
+			if(impalaDriver!=null && !"".equals(impalaDriver.trim()) ) {
 			    impalaDriver = impalaDriver.toLowerCase();
 				if ("hive2".equalsIgnoreCase(impalaDriver)) {
 					javaDbDriver = "org.apache.hive.jdbc.HiveDriver";

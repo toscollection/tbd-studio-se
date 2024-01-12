@@ -2,8 +2,7 @@
 
 	class ConnectionUtilImpala extends DefaultConnectionUtil {
       // use HiveComponent type to get all necessary methods but there is something to fix about the design on the current typing
-		private org.talend.hadoop.distribution.component.HiveComponent distrib = null;
-
+		
 		private boolean isCustom;
 	   final private  java.util.List<String> logLevel =  new java.util.ArrayList<String>() {{
 			 add("OFF");
@@ -15,15 +14,14 @@
 			 add("TRACE");
 			}};
 
-		public ConnectionUtilImpala(org.talend.hadoop.distribution.component.HadoopComponent distrib) {
-			this.distrib = (org.talend.hadoop.distribution.component.HiveComponent)distrib;
-			this.isCustom = distrib instanceof org.talend.hadoop.distribution.custom.CustomDistribution;
+		public ConnectionUtilImpala() {
+			
 		}
 
 		public void createConnection(INode node) {
 			boolean useLDAP = !("".equals(ElementParameterParser.getValue(node, "__PASS__")) || "\"\"".equals(ElementParameterParser.getValue(node, "__PASS__")));
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-			boolean securityIsEnabled = useKrb && ( this.isCustom || this.distrib.doSupportKerberos() );
+			boolean securityIsEnabled = useKrb;
 			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
 
 			if (securityIsEnabled) {
@@ -81,7 +79,7 @@
 			List<Map<String, String>> hadoopProps = (List<Map<String,String>>)ElementParameterParser.getObjectValue(node, "__HADOOP_ADVANCED_PROPERTIES__");
 
 			boolean useKrb = "true".equals(ElementParameterParser.getValue(node, "__USE_KRB__"));
-			boolean securityIsEnabled = useKrb && ( this.isCustom || this.distrib.doSupportKerberos() );
+			boolean securityIsEnabled = useKrb;
 			String impalaPrincipal = ElementParameterParser.getValue(node, "__IMPALA_PRINCIPAL__");
 
 			boolean useKeytab = "true".equals(ElementParameterParser.getValue(node, "__USE_KEYTAB__"));
@@ -232,7 +230,7 @@
 <%
 
 
-							if (this.distrib.doSupportSSLwithKerberos()) {
+							if (useSsl && useKrb) {
 %>
 								url_<%=cid%> += urlKerberosParameter + ";ssl=1" +";sslTrustStore=" + tldHiveSslTsPath + ";trustStorePassword=" + tldHiveSslTsPassword;
 <%
@@ -277,9 +275,9 @@
 						    String url_<%=cid%> = "jdbc:impala://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%>+ "<%=logLevel%>" + urlKerberosParameter_<%=cid%>;                          
 <%
 						// Using SSL in Secure Mode
-						if (useSsl && this.distrib.doSupportSSL()) {
-							// Does the distrib support SSL + KERBEROS
-							if (this.distrib.doSupportSSLwithKerberos()) {
+						if (useSsl) {
+							// Support SSL + KERBEROS
+							if (useKrb) {
 								if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
 							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
@@ -293,7 +291,7 @@
 
 							url_<%=cid%> += ";ssl=1" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-							// Does the distrib support only SASL-QOP + KERBEROS
+							// Support only SASL-QOP + KERBEROS
 							} else {
 
 %>
@@ -307,7 +305,7 @@
 						}
 					} else {
 						//Using SSL in non Secure Mode
-						if(useSsl && this.distrib.doSupportSSL()){
+						if(useSsl){
 							if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
 							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
