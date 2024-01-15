@@ -23,7 +23,7 @@
         <!ENTITY snakeyaml_version "1.33">
         <!ENTITY snappy-java_version "1.1.10.4">
         <!ENTITY snowflake-jdbc_version "3.13.29">
-        <!ENTITY netty_version "4.1.94.Final">
+        <!ENTITY netty_version "4.1.100.Final">
         <!ENTITY okio_version "3.4.0">
         <!ENTITY parquet_version "1.13.1">
         <!ENTITY wildfly-openssl-java_version "1.0.10.Final">
