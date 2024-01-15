@@ -605,6 +605,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-llap-common-&hive_version;.jar" name="hive-llap-common-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-llap-common/&hive_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-metastore-&hive_version;.jar" name="hive-metastore-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-metastore/&hive_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-serde-&hive_version;.jar" name="hive-serde-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-serde/&hive_version;"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-service-&hive_version;.jar" name="hive-service-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-service/&hive_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-service-rpc-3.1.2.jar" name="hive-service-rpc-3.1.2.jar" mvn_uri="mvn:org.apache.hive/hive-service-rpc/3.1.2"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-shims-&hive_version;.jar" name="hive-shims-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-shims/&hive_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="hive-shims-common-&hive_version;.jar" name="hive-shims-common-&hive_version;.jar" mvn_uri="mvn:org.apache.hive/hive-shims-common/&hive_version;"/>
@@ -629,6 +630,7 @@
             <library id="hive-llap-common-&hive_version;.jar"/>
             <library id="hive-metastore-&hive_version;.jar"/>
             <library id="hive-serde-&hive_version;.jar"/>
+            <library id="hive-service-&hive_version;.jar"/>
             <library id="hive-shims-2.3.0.jar"/>
             <library id="hive-shims-common-&hive_version;.jar"/>
             <library id="hive-storage-api-2.7.2.jar"/>

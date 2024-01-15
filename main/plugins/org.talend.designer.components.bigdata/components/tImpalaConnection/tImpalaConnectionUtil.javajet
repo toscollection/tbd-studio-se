@@ -1,10 +1,9 @@
 <%
 	class ConnectionUtil extends DefaultConnectionUtil {
 		private String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
-		private org.talend.hadoop.distribution.component.HiveComponent hiveDistrib;
 		
-		public ConnectionUtil(org.talend.hadoop.distribution.component.HiveComponent hiveDistrib) {
-			this.hiveDistrib = hiveDistrib;
+		public ConnectionUtil() {
+	
 		}
 
 		public void createConnection(INode node) {
@@ -191,7 +190,7 @@
 						// SSL configurations
 						if(tldHiveEnc.equalsIgnoreCase("ssl")){
 <%
-							if (this.hiveDistrib.doSupportSSLwithKerberos()) {
+							if (useSsl && useKrb) {
 %>
 								url_<%=cid%> += urlKerberosParameter + ";ssl=true" +";sslTrustStore=" + tldHiveSslTsPath + ";trustStorePassword=" + tldHiveSslTsPassword;
 <%
@@ -224,9 +223,9 @@
 <%
 						}
 						// Using SSL in Secure Mode
-						if (useSsl && this.hiveDistrib.doSupportSSL()) {
-							// Does the distrib support SSL + KERBEROS
-							if (this.hiveDistrib.doSupportSSLwithKerberos()) {
+						if (useSsl) {
+							// Support SSL + KERBEROS
+							if (useKrb) {
 								if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
 							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
@@ -239,7 +238,7 @@
 %>
 							String url_<%=cid%> = "jdbc:<%=impalaDbProtocol%>://" + <%=dbhost%> + ":" + <%=dbport%> + "/" + <%=dbname%> + ";principal=" + <%=impalaPrincipal%>+";ssl=true" +";sslTrustStore=" + <%=sslTrustStore%> + ";trustStorePassword=" + decryptedSslStorePassword_<%=cid%>;
 <%
-							// Does the distrib support only SASL-QOP + KERBEROS
+							// Support only SASL-QOP + KERBEROS
 							} else {
 						
 %>
@@ -255,7 +254,7 @@
 					// BEGIN IF07
 					} else {
 						//Using SSL in non Secure Mode
-						if(useSsl && this.hiveDistrib.doSupportSSL()){
+						if(useSsl ){
 							if (ElementParameterParser.canEncrypt(node, sslStorepasswordFieldName)) {
 %>
 							String decryptedSslStorePassword_<%=cid%> = routines.system.PasswordEncryptUtil.decryptPassword(<%=ElementParameterParser.getEncryptedValue(node, sslStorepasswordFieldName)%>);
