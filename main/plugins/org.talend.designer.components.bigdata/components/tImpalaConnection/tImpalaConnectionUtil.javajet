@@ -1,6 +1,6 @@
 <%
 	class ConnectionUtil extends DefaultConnectionUtil {
-		private String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";
+		private String javaDbDriver = "org.apache.hive.jdbc.HiveDriver";
 		
 		public ConnectionUtil() {
 	

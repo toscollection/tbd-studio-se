@@ -25,7 +25,7 @@
 
 	class DBInputBeginUtil extends DefaultDBInputUtil {
 		public void setURL(INode node) {
-			String javaDbDriver = "org.apache.hadoop.hive.jdbc.HiveDriver";				        
+			String javaDbDriver = "org.apache.hive.jdbc.HiveDriver";				        
 				        
 			String additionalJdbcSettings = ElementParameterParser.getValue(node, "__IMPALA_ADDITIONAL_JDBC__");	
 			
