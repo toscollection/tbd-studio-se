@@ -21,7 +21,7 @@
         <!ENTITY scala_version "2.12">
         <!ENTITY spark_version "3.3.3">
         <!ENTITY snakeyaml_version "1.33">
-        <!ENTITY snappy-java_version "1.1.10.1">
+        <!ENTITY snappy-java_version "1.1.10.4">
         <!ENTITY snowflake-jdbc_version "3.13.29">
         <!ENTITY netty_version "4.1.94.Final">
         <!ENTITY okio_version "3.4.0">
