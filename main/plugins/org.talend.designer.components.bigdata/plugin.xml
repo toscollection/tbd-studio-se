@@ -4,6 +4,7 @@
         <!ENTITY hive_version "2.3.8">
         <!ENTITY talend-bigdata-core_version "1.8.0">
         <!ENTITY zookeeper_version "3.6.2">
+        <!ENTITY json_version "20231013">
         ]>
 <?eclipse version="3.2"?>
 <plugin xmlns="">
@@ -501,7 +502,7 @@
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jetty-util-6.1.26.jar" name="jetty-util-6.1.26.jar" mvn_uri="mvn:org.mortbay.jetty/jetty-util/6.1.26"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jsr305-3.0.2.jar" name="jsr305-3.0.2.jar" mvn_uri="mvn:com.google.code.findbugs/jsr305/3.0.2"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="jackson-core-2.8.6.jar" name="jackson-core-2.8.6.jar" mvn_uri="mvn:com.fasterxml.jackson.core/jackson-core/2.8.6"/>
-        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="json-20230227" name="json-20230227.jar" mvn_uri="mvn:org.json/json/20230227"/>
+        <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="json-&json_version;" name="json-&json_version;.jar" mvn_uri="mvn:org.json/json/&json_version;"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="opencensus-api-0.21.0.jar" name="opencensus-api-0.21.0.jar" mvn_uri="mvn:io.opencensus/opencensus-api/0.21.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="opencensus-contrib-http-util-0.21.0.jar" name="opencensus-contrib-http-util-0.21.0.jar" mvn_uri="mvn:io.opencensus/opencensus-contrib-http-util/0.21.0"/>
         <libraryNeeded context="plugin:org.talend.designer.components.bigdata" id="protobuf-java-3.19.6.jar" name="protobuf-java-3.19.6.jar" mvn_uri="mvn:com.google.protobuf/protobuf-java/3.19.6"/>
@@ -563,7 +564,7 @@
             <library id="jackson-core-2.8.6.jar" />
             <library id="jackson-core-asl-1.9.16-TALEND.jar" />
             <library id="jackson-mapper-asl-1.9.16-TALEND.jar" />
-            <library id="json-20230227.jar" />
+            <library id="json-&json_version;.jar" />
             <library id="failureaccess-1.0.1.jar" />
             <library id="talend-bigdata-launcher-dataproc-2.7.1.jar"/>
             <library id="talend-bigdata-launcher-core-2.7.1.jar"/>
