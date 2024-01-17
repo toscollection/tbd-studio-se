@@ -12091,120 +12091,120 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_avro_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-avro_2.11/2.4.0.7.1.1.0-565",
-      "name" : "spark-avro_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-avro_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-avro_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_catalyst_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-catalyst_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-catalyst_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-catalyst_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-catalyst_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_core_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-core_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-core_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-core_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-core_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_graphx_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-graphx_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-graphx_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-graphx_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-graphx_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_hive_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-hive_2.11/2.4.0.7.1.1.0-565",
-      "name" : "spark-hive_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-hive_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-hive_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_kvstore_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-kvstore_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-kvstore_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-kvstore_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-kvstore_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_launcher_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-launcher_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-launcher_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-launcher_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-launcher_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_mllib_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-mllib_2.11/2.4.0.7.1.1.0-565",
-      "name" : "spark-mllib_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-mllib_2.11/2.4.7.7.1.7.2030-1",
+      "name" : "spark-mllib_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_mllib_local_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-mllib-local_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-mllib-local_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-mllib-local_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-mllib-local_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_network_common_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-network-common_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-network-common_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-network-common_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-network-common_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_network_shuffle_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-network-shuffle_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-network-shuffle_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-network-shuffle_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-network-shuffle_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_sketch_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-sketch_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-sketch_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-sketch_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-sketch_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_sql_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-sql_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-sql_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-sql_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-sql_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_streaming_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-streaming_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-streaming_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-streaming_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-streaming_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_streaming_kafka_0_10_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-streaming-kafka-0-10_2.11/2.4.0.7.1.1.0-565",
-      "name" : "spark-streaming-kafka-0-10_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-streaming-kafka-0-10_2.11/2.4.7.7.1.7.2030-1",
+      "name" : "spark-streaming-kafka-0-10_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
@@ -12219,24 +12219,24 @@
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_tags_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-tags_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-tags_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-tags_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-tags_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_unsafe_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-unsafe_2.11/2.4.0.7.1.1.0-565/jar",
-      "name" : "spark-unsafe_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-unsafe_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-unsafe_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],
       "context" : "plugin:org.talend.hadoop.distribution.cdp",
       "excludeDependencies" : "true",
       "id" : "DYNAMIC_Cloudera_CDP7_1_1_0_565_spark_yarn_2_11_2_4_0_7_1_1_0_565_jar",
-      "mvn_uri" : "mvn:org.apache.spark/spark-yarn_2.11/2.4.0.7.1.1.0-565",
-      "name" : "spark-yarn_2.11-2.4.0.7.1.1.0-565.jar",
+      "mvn_uri" : "mvn:org.apache.spark/spark-yarn_2.11/2.4.7.7.1.7.2030-1/jar",
+      "name" : "spark-yarn_2.11-2.4.7.7.1.7.2030-1.jar",
       "tagName" : "libraryNeeded"
     }, {
       "childNodes" : [ ],

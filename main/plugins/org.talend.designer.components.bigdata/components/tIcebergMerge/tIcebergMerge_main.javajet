@@ -1,0 +1,41 @@
+<%@ jet 
+imports="
+    org.talend.designer.codegen.config.CodeGeneratorArgument
+    org.talend.designer.bigdata.di.components.iceberg.TIcebergMerge
+" 
+%>
+
+<%
+      final TIcebergMerge ticebergMerge = new TIcebergMerge((CodeGeneratorArgument) argument);
+%>
+
+java.sql.Connection connection_<%=ticebergMerge.getCid()%> = (java.sql.Connection) globalMap.get("connection_<%=ticebergMerge.getConnectionComponentName()%>");
+org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergMerge.builder()
+		.connection(connection_<%=ticebergMerge.getCid()%>)
+		.source(<%=ticebergMerge.getSourceExpression()%>)
+        .target(<%=ticebergMerge.getTargetExpression()%>)
+        .mergeOnCondition(<%=ticebergMerge.getMergeOnCondition()%>)
+<%    if (ticebergMerge.whenMatchedUpdateChecked()) {%>
+        .whenUpdate(org.talend.bigdata.core.di.components.iceberg.ImmutableWhenClause.builder()
+<%      if (ticebergMerge.whenMatchedUpdateConditionChecked()) { %>
+			.condition(<%=ticebergMerge.getWhenMatchedUpdateCondition()%>)
+<%      }%>
+            .clause(<%=ticebergMerge.getWhenMatchedUpdateClause()%>)
+            .build())
+<%    }%>
+<%    if (ticebergMerge.whenMatchedDeleteChecked()) {%>
+        .whenDelete(org.talend.bigdata.core.di.components.iceberg.ImmutableWhenClause.builder()
+<%      if (ticebergMerge.whenMatchedDeleteConditionChecked()) { %>
+			.condition(<%=ticebergMerge.getWhenMatchedDeleteCondition()%>)
+<%      }%>
+            .build())
+<%    }%>
+<%    if (ticebergMerge.whenNotMatchedInsertChecked()) {%>
+        .whenInsert(org.talend.bigdata.core.di.components.iceberg.ImmutableWhenClause.builder()
+<%      if (ticebergMerge.whenNotMatchedInsertConditionChecked()) { %>
+			.condition(<%=ticebergMerge.getWhenNotMatchedInsertCondition()%>)
+<%      }%>
+            .clause(<%=ticebergMerge.getWhenNotMatchedInsertValues()%>)
+            .build())
+<%    }%>
+		.build().execute();
