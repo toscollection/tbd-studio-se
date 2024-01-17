@@ -158,6 +158,30 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_PASSWORD),
                                 JavaTypesManager.PASSWORD);
                         break;
+                    case HdiAuthType:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_AUTH_MODE));
+                        break;    
+                    case HDIClientId:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_APPLICATION_ID));
+                        break;  
+                    case HdiDirectoryId:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_DIRECTORY_ID));
+                        break;  
+                    case HdiSecretKey:
+                        ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY));
+                        break;
+                    case UseHdiCertificate:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_HDI_CLIENT_CERTIFICATE));
+                    	break;
+                    case HdiClientCertificate:
+                    	ConnectionContextHelper.createParameters(varList, paramName,
+                                conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE));
+                    	break;    
                     case KeyAzureDeployBlob:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB));
@@ -643,6 +667,26 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
+        case HdiAuthType:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case HDIClientId:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case HdiDirectoryId:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case HdiSecretKey:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;
+        case HdiClientCertificate:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;    
         case KeyAzureHost:
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_HOSTNAME,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
