@@ -56,7 +56,7 @@ public enum EHdiAuthType {
         return getHdiAuthTypeByName(name, true);
     }
 
-    public static ESynapseAuthType getHdiAuthTypeByName(String type, boolean display) {
+    public static EHdiAuthType getHdiAuthTypeByName(String type, boolean display) {
         if (type != null) {
             for (EHdiAuthType authType : values()) {
                 if (display) {
