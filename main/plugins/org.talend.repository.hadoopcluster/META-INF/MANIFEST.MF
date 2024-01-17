@@ -13,7 +13,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore.xmi,
  org.apache.commons.commons-beanutils,
  org.apache.commons.lang,
- org.apache.commons.io,
  org.talend.model,
  org.talend.cwm.mip,
  org.eclipse.gmf.runtime.notation,
@@ -63,7 +62,8 @@ Export-Package: org.talend.repository.hadoopcluster.action,
  org.talend.repository.model.hadoopcluster.impl,
  org.talend.repository.model.hadoopcluster.util
 Bundle-Activator: org.talend.repository.hadoopcluster.HadoopClusterPlugin
-Import-Package: org.talend.core.ui.context.model.table,
+Import-Package: org.apache.commons.io,
+ org.talend.core.ui.context.model.table,
  org.talend.core.ui.token,
  org.talend.designer.maven.utils,
  org.talend.repository.hadoopcluster.configurator
