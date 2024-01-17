@@ -1312,7 +1312,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         }
         
         String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_AUTH_MODE));
-        ESynapseAuthType authType = EHdiAuthType.getHdiAuthTypeByName(authModeValue, false);
+        EHdiAuthType authType = EHdiAuthType.getHdiAuthTypeByName(authModeValue, false);
         if ((authModeValue != null)  && (authType != null)) {
             storageAuthType.setText(authType.getDisplayName());
         } else {

@@ -942,7 +942,12 @@ public class HCRepositoryUtil {
         if (hdiclientKey != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY, hdiclientKey);
         }
-
+	
+	String hdiclientCertificate = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HDI_CLIENT_CERTIFICATE.getName());
+        if (hdiclientCertificate != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE, hdiclientCertificate);
+        }
+        	
         String defaultAzureDeployBlob = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.HD_AZURE_DEPLOYBOLB.getName());
         if (defaultAzureDeployBlob != null) {
