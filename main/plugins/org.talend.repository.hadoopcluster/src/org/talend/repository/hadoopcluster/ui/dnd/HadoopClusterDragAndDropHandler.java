@@ -147,15 +147,15 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD));
         } else if (EParameterNameForComponent.PARA_NAME_HDI_APPLICATION_ID.getName().equals(value)) {
-            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_APPLICATION_ID);
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_APPLICATION_ID);
         } else if (EParameterNameForComponent.PARA_NAME_HDI_DIRECTORY_ID.getName().equals(value)) {
-            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_DIRECTORY_ID);
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_DIRECTORY_ID);
         } else if (EParameterNameForComponent.PARA_NAME_HDI_CLIENT_KEY.getName().equals(value)) {
             return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY);
-        } else if (EParameterNameForComponent.PARA_NAME_HDI_HDI_CLIENT_CERTIFICATE.getRepositoryValue().equals(value)) {
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_CLIENT_CERTIFICATE.getRepositoryValue().equals(value)) {
             return Boolean.parseBoolean(hcConnection.getParameters().get(
                     ConnParameterKeys.CONN_PARA_KEY_USE_HDI_CLIENT_CERTIFICATE));
-        } else if (EParameterNameForComponent.PARA_NAME_HDI_HDI_CLIENT_CERTIFICATE.getRepositoryValue().equals(value)) {
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_CLIENT_CERTIFICATE.getRepositoryValue().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE));    
         } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_STORAGE.getName().equals(value)) {
