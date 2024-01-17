@@ -901,7 +901,7 @@ public class HCRepositoryUtil {
         if (defaultWebHCatUserName != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_USERNAME, defaultWebHCatUserName);
         }
-
+	//HD Insight default values
         String defaultHDInsightUserName = hiveVersion.getDefaultConfig(distribution,
                 EHadoopProperties.HD_INSIGHT_USERNAME.getName());
         if (defaultHDInsightUserName != null) {
@@ -917,10 +917,30 @@ public class HCRepositoryUtil {
         if (defaultAzureContainer != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_CONTAINER, defaultAzureContainer);
         }
-
+	
+	String hdiAuthMode = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HD_ADLSGEN2AUTH.getName());
+        if (hdiAuthMode != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_AUTH_MODE, hdiAuthMode);
+        }
+        
         String defaultAzureUserName = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HD_AZURE_USERNAME.getName());
         if (defaultAzureUserName != null) {
             connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_AZURE_USERNAME, defaultAzureUserName);
+        }
+        
+        String hdiclientId =  hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HD_APPLICATION_ID.getName());
+        if (hdiclientId != null) {
+        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_APPLICATION_ID, hdiclientId);
+        }
+    
+        String hdidirectoryId =  hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HD_DIRECTORY_ID.getName());
+        if (hdidirectoryId != null) {
+        	connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_DIRECTORY_ID, hdidirectoryId);
+        }
+        
+        String hdiclientKey = hiveVersion.getDefaultConfig(distribution, EHadoopProperties.HD_CLIENT_KEY.getName());
+        if (hdiclientKey != null) {
+            connection.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY, hdiclientKey);
         }
 
         String defaultAzureDeployBlob = hiveVersion.getDefaultConfig(distribution,

@@ -454,7 +454,7 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
 
     private LabelledWidget hdiClientKey;
 
-    private LabelledWidget useHDICertificate;
+    private LabelledWidget useHdiCertificate;
 
     private LabelledFileField hdiClientCertificate;
 
