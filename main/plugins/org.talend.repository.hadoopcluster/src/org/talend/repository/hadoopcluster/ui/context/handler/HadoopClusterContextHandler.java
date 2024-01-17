@@ -158,7 +158,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_PASSWORD),
                                 JavaTypesManager.PASSWORD);
                         break;
-                    case HdiAuthType:
+                    case HDIAuthType:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_AUTH_MODE));
                         break;    
@@ -166,19 +166,19 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_APPLICATION_ID));
                         break;  
-                    case HdiDirectoryId:
+                    case HDIDirectoryId:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_DIRECTORY_ID));
                         break;  
-                    case HdiSecretKey:
+                    case HDISecretKey:
                         ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY));
                         break;
-                    case UseHdiCertificate:
+                    case UseHDICertificate:
                     	ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_USE_HDI_CLIENT_CERTIFICATE));
                     	break;
-                    case HdiClientCertificate:
+                    case HDIClientCertificate:
                     	ConnectionContextHelper.createParameters(varList, paramName,
                                 conn.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE));
                     	break;    
@@ -667,7 +667,7 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
             hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case HdiAuthType:
+        case HDIAuthType:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_AUTH_MODE,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
@@ -675,15 +675,19 @@ public class HadoopClusterContextHandler extends AbstractRepositoryContextHandle
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_APPLICATION_ID,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case HdiDirectoryId:
+        case HDIDirectoryId:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_SYNAPSE_DIRECTORY_ID,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case HdiSecretKey:
+        case HDISecretKey:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;
-        case HdiClientCertificate:
+        case UseHDICertificate:
+        	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_USE_HDI_CLIENT_CERTIFICATE,
+                    ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
+            break;    
+        case HDIClientCertificate:
         	hadoopConn.getParameters().put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE,
                     ContextParameterUtils.getNewScriptCode(hadoopVariableName, LANGUAGE));
             break;    
