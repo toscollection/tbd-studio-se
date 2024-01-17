@@ -137,17 +137,29 @@ public class HadoopClusterDragAndDropHandler extends AbstractDragAndDropServiceH
         } else if (EParameterNameForComponent.PARA_NAME_STATUSDIR.getName().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_WEB_HCAT_JOB_RESULT_FOLDER));
-        } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_USERNAME.getName().equals(value)) {
+        } else  if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_USERNAME.getName().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_USERNAME));
+        } else  if (EParameterNameForComponent.PARA_NAME_ADLSGEN2AUTH.getName().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_AUTH_MODE));
         } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_PASSWORD.getName().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD));
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_APPLICATION_ID.getName().equals(value)) {
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_APPLICATION_ID);
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_DIRECTORY_ID.getName().equals(value)) {
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_DIRECTORY_ID);
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_CLIENT_KEY.getName().equals(value)) {
+            return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY);
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_HDI_CLIENT_CERTIFICATE.getRepositoryValue().equals(value)) {
+            return Boolean.parseBoolean(hcConnection.getParameters().get(
+                    ConnParameterKeys.CONN_PARA_KEY_USE_HDI_CLIENT_CERTIFICATE));
+        } else if (EParameterNameForComponent.PARA_NAME_HDI_HDI_CLIENT_CERTIFICATE.getRepositoryValue().equals(value)) {
+            return getRepositoryValueOfStringType(hcConnection,
+                    hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_CERTIFICATE));    
         } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_STORAGE.getName().equals(value)) {
             return hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_HDINSIGHT_STORAGE);
-        } else if (EParameterNameForComponent.PARA_NAME_HDINSIGHT_STORAGE_USE_TLS.getName().equals(value)) {
-            return Boolean
-                    .valueOf(hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_HDINSIGHT_STORAGE_USE_TLS));
         } else if (EParameterNameForComponent.PARA_NAME_WASB_HOST.getName().equals(value)) {
             return getRepositoryValueOfStringType(hcConnection,
                     hcConnection.getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_HOSTNAME));
