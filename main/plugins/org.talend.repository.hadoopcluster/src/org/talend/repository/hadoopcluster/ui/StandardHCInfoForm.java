@@ -108,6 +108,7 @@ import org.talend.repository.model.hadoopcluster.HadoopClusterConnectionItem;
 import org.talend.repository.model.hadoopcluster.impl.HadoopClusterConnectionImpl;
 import org.talend.repository.model.hadoopcluster.util.EncryptionUtil;
 import org.talend.hadoop.distribution.constants.synapse.ESynapseAuthType;
+import org.talend.hadoop.distribution.constants.hdinsight.EHdiAuthType;
 import org.talend.core.hadoop.version.EHdinsightStorage;
 
 /**
@@ -446,6 +447,16 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     private LabelledText fsUsername;
 
     private LabelledText fsPassword;
+    
+    private LabelledWidget hdiClientId;
+
+    private LabelledWidget hdiDirectoryId;
+
+    private LabelledWidget hdiClientKey;
+
+    private LabelledWidget useHDICertificate;
+
+    private LabelledFileField hdiClientCertificate;
 
     private LabelledText fsDeployBlob;
 
@@ -1270,6 +1281,13 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         fsDeployBlob = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.deployBlob"), 1);
         fsUsername = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.username"), 1);
         fsPassword = new LabelledText(fsGroup, Messages.getString("HadoopClusterForm.text.azure.password"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        hdiDirectoryId = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.directoryId"));
+        hdiClientId = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.clientId"));
+        hdiClientKey = new LabelledText(synapseGroup,  Messages.getString("SynapseInfoForm.text.azure.clientKey"), 1, SWT.PASSWORD | SWT.BORDER | SWT.SINGLE);
+        useHdiCertificate = new LabelledCheckbox(synapseGroup, Messages.getString("SynapseInfoForm.text.useSynapseCertButton"));
+        String[] extensions = { "*.*" };
+        hdiClientCertificate = new LabelledFileField(synapseGroup, Messages.getString("SynapseInfoForm.text.azure.clientCertificate"), extensions);
+        
 
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_USERNAME, hdiUsername);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_PASSWORD, hdiPassword);
@@ -1280,6 +1298,9 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_CONTAINER, fsContainer);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_USERNAME, fsUsername);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_PASSWORD, fsPassword);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_DIRECTORY_ID, hdiDirectoryId);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_APPLICATION_ID, hdiClientId);
+        fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_HDI_CLIENT_KEY, hdiClientKey);
         fieldByParamKey.put(ConnParameterKeys.CONN_PARA_KEY_AZURE_DEPLOY_BLOB, fsDeployBlob);
 
         String storageValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_AZURE_HDINSIGHT_STORAGE));
@@ -1289,6 +1310,15 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
         } else {
             hdiStorageType.select(0);
         }
+        
+        String authModeValue = StringUtils.trimToEmpty(getConnection().getParameters().get(ConnParameterKeys.CONN_PARA_KEY_HDI_AUTH_MODE));
+        ESynapseAuthType authType = EHdiAuthType.getHdiAuthTypeByName(authModeValue, false);
+        if ((authModeValue != null)  && (authType != null)) {
+            storageAuthType.setText(authType.getDisplayName());
+        } else {
+            storageAuthType.select(0);
+        }
+
 
         updateHDIFieldsVisibility();
     }
@@ -2759,6 +2789,16 @@ public class StandardHCInfoForm extends AbstractHadoopClusterInfoForm<HadoopClus
     }
 
     private void updateHDIFieldsVisibility() {
+    	boolean isAAD = ESynapseAuthType.AAD.getDisplayName().equals(storageAuthType.getText());
+        boolean useCertificate = ((LabelledCheckbox) useHdiCertificate).getSelection() && isAAD;
+        boolean useClientKey = !((LabelledCheckbox) useHdiCertificate).getSelection() && isAAD;
+        hdiUsername.setVisible(!isAAD, isAAD);
+        hdiPassword.setVisible(!isAAD, isAAD);
+        hdiClientId.setVisible(isAAD, !isAAD);
+        hdiDirectoryId.setVisible(isAAD, !isAAD);
+        hdiClientKey.setVisible(useClientKey, !useClientKey);
+        useHdiCertificate.setVisible(isAAD, !isAAD);
+        hdiClientCertificate.setVisible(useCertificate);
         hdiGroup.layout();
         hdiGroup.getParent().layout();
         livyGroup.layout();
