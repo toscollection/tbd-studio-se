@@ -3,7 +3,7 @@
         <!ENTITY google-oauth_version "1.33.3">
         <!ENTITY hive_version "2.3.8">
         <!ENTITY talend-bigdata-core_version "1.8.0">
-        <!ENTITY zookeeper_version "3.6.2">
+        <!ENTITY zookeeper_version "3.7.2">
         <!ENTITY json_version "20231013">
         ]>
 <?eclipse version="3.2"?>
