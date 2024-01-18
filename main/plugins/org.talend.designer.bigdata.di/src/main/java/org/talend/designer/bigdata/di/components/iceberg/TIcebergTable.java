@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.StringUtils;
 import org.talend.core.model.metadata.IMetadataTable;
 import org.talend.core.model.process.INode;
 import org.talend.core.model.utils.NodeUtil;
@@ -163,8 +162,9 @@ public class TIcebergTable implements WithSchema {
         for (Map<String, String> tableItem : mappingTable) {
             if (targetField.getName().equals(tableItem.get("TARGET_COLUMN"))) {
                 // toLowerCasse rename value to avoid same with keyword of iceberg
-                return StringUtils.isEmpty(tableItem.get("RENAME")) ? targetField.getName().toLowerCase()
-                        : tableItem.get("RENAME").toLowerCase();
+                String renameValue = tableItem.get("RENAME");
+                return renameValue == null || renameValue.trim().isEmpty() ? targetField.getName().toLowerCase()
+                        : renameValue.toLowerCase();
             }
 
         }
@@ -175,7 +175,8 @@ public class TIcebergTable implements WithSchema {
         ArrayList<Map<String, String>> mappingTable = getColumnsMappingTable();
         for (Map<String, String> tableItem : mappingTable) {
             if (targetField.getName().equals(tableItem.get("TARGET_COLUMN"))) {
-                return StringUtils.isEmpty(tableItem.get("TYPE")) ? targetField.getType() : tableItem.get("TYPE");
+                String typeValue = tableItem.get("TYPE");
+                return typeValue == null || typeValue.trim().isEmpty() ? targetField.getType() : typeValue;
             }
 
         }
