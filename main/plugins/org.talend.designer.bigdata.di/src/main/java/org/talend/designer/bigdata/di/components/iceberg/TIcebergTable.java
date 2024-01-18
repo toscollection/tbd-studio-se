@@ -162,11 +162,13 @@ public class TIcebergTable implements WithSchema {
         ArrayList<Map<String, String>> mappingTable = getColumnsMappingTable();
         for (Map<String, String> tableItem : mappingTable) {
             if (targetField.getName().equals(tableItem.get("TARGET_COLUMN"))) {
-                return StringUtils.isEmpty(tableItem.get("RENAME")) ? targetField.getName() : tableItem.get("RENAME");
+                // toLowerCasse rename value to avoid same with keyword of iceberg
+                return StringUtils.isEmpty(tableItem.get("RENAME")) ? targetField.getName().toLowerCase()
+                        : tableItem.get("RENAME").toLowerCase();
             }
 
         }
-        return targetField.getName();
+        return targetField.getName().toLowerCase();
     }
 
     public String getType(Schema.Field targetField) {
