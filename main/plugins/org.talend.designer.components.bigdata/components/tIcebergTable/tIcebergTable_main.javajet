@@ -11,7 +11,24 @@ imports="
 
 java.sql.Connection connection_<%=tIcebergTable.getCid()%> = (java.sql.Connection) globalMap.get("connection_<%=tIcebergTable.connectionComponentName()%>");
 
-org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
+<%
+//more sql case
+%>
+<%if(tIcebergTable.isChangeColumnAction()) {%>
+        <%for(org.talend.designer.bigdata.di.components.Schema.Field changeField :tIcebergTable.getFields()) {%>
+            org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
+                .connection(connection_<%=tIcebergTable.getCid()%>)
+                .table(<%=tIcebergTable.table()%>)
+                .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("<%=changeField.getName()%>").rename("<%=tIcebergTable.getRenameCol(changeField)%>").type("<%=tIcebergTable.getType(changeField)%>").afterCol("<%=tIcebergTable.getAfterCol(changeField)%>").build())
+                .build()
+                .<%=tIcebergTable.actionMethod()%>;
+                
+       <%}%>
+<%
+ //more sql case
+%>
+<%}else {%>
+        org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
 			.connection(connection_<%=tIcebergTable.getCid()%>)
 			.table(<%=tIcebergTable.table()%>)
 		<% for (org.talend.designer.bigdata.di.components.Schema.Field field : tIcebergTable.getFields()) {%>
@@ -46,3 +63,4 @@ org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergTable.builder()
 		<%}%>
 			.build()
 			.<%=tIcebergTable.actionMethod()%>;
+<%}%>
