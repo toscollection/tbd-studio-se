@@ -76,7 +76,6 @@ public class NoSQLSchemaWizard extends AbstractNoSQLSchemaWizard {
     @Override
     public void addPages() {
         setWindowTitle(Messages.getString("NoSQLSchemaWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(ECoreImage.METADATA_TABLE_WIZ));
 
         schemaWizardPage = new NoSQLSchemaWizardPage(selectedMetadataTable, connectionItem, isRepositoryObjectEditable(),
                 creation);

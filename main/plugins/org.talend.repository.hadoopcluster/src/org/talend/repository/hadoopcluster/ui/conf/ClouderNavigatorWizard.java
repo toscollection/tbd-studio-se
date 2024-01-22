@@ -53,7 +53,6 @@ public class ClouderNavigatorWizard extends Wizard {
 
     @Override
     public void addPages() {
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHadoopClusterImage.HADOOPCLUSTER_WIZ));
         optionPage = new ClouderaNavigatorOptionPage(connectionItem,creation);
         addPage(optionPage);
     }

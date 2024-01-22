@@ -158,7 +158,6 @@ public class HadoopClusterWizard extends CheckLastVersionRepositoryWizard {
     @Override
     public void addPages() {
         setWindowTitle(Messages.getString("HadoopClusterWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHadoopClusterImage.HADOOPCLUSTER_WIZ));
         if (isToolBar) {
             pathToSave = null;
         }

@@ -43,8 +43,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.PlatformUI;
-import org.talend.commons.ui.runtime.image.EImage;
-import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.designer.hdfsbrowse.hadoop.service.EHadoopServiceType;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceBean;
 import org.talend.designer.hdfsbrowse.hadoop.service.HadoopServiceProperties;
@@ -97,7 +95,6 @@ public class CheckHadoopServicesDialog extends TitleAreaDialog {
     public void create() {
         super.create();
         setMessage(Messages.getString("CheckHadoopServicesDialog.msg")); //$NON-NLS-1$
-        setTitleImage(ImageProvider.getImage(EImage.HADOOP_WIZ_ICON));
     }
 
     @Override

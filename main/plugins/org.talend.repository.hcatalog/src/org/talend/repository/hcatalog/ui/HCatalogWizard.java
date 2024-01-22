@@ -144,7 +144,6 @@ public class HCatalogWizard extends HadoopRepositoryWizard<HCatalogConnection> {
     @Override
     public void addPages() {
         setWindowTitle(Messages.getString("HCatalogWizard.windowTitle")); //$NON-NLS-1$
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHCatalogImage.HCATALOG_WIZ));
         if (isToolBar) {
             pathToSave = null;
         }

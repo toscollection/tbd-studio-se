@@ -45,7 +45,6 @@ public class DynamicModuleGroupWizard extends Wizard {
 
     @Override
     public void addPages() {
-        setDefaultPageImageDescriptor(ImageProvider.getImageDesc(EHadoopClusterImage.HADOOPCLUSTER_WIZ));
         moduleGroupPage = new DynamicModuleGroupDetailsPage(groupData);
         addPage(moduleGroupPage);
     }
