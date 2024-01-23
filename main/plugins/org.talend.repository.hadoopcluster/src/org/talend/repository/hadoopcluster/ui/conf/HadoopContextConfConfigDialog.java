@@ -39,8 +39,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-import org.talend.commons.ui.runtime.image.EImage;
-import org.talend.commons.ui.runtime.image.ImageProvider;
 import org.talend.core.model.context.ContextUtils;
 import org.talend.core.model.properties.ContextItem;
 import org.talend.designer.core.model.utils.emf.talendfile.ContextType;
@@ -80,7 +78,6 @@ public class HadoopContextConfConfigDialog extends TitleAreaDialog {
         super.create();
         setTitle(Messages.getString("HadoopContextConfConfigDialog.title")); //$NON-NLS-1$
         setMessage(Messages.getString("HadoopContextConfConfigDialog.msg")); //$NON-NLS-1$
-        setTitleImage(ImageProvider.getImage(EImage.HADOOP_WIZ_ICON));
     }
 
     @Override
