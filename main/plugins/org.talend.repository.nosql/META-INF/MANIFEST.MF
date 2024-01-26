@@ -6,7 +6,7 @@ Automatic-Module-Name: org.talend.repository.nosql
 Bundle-Version: 8.0.2.qualifier
 Bundle-Activator: org.talend.repository.nosql.RepositoryNoSQLPlugin
 Bundle-ClassPath: .,
- lib/bcprov-jdk18on-1.74.jar
+ lib/bcprov-jdk18on-1.77.jar
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.ecore.xmi,
