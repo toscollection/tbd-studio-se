@@ -8,5 +8,6 @@ imports="
 <%
 final TIcebergOutput ticebergOutput = new TIcebergOutput((CodeGeneratorArgument) argument);
 %>
-
-component_<%=ticebergOutput.getCid()%>.flush();
+<%if(!ticebergOutput.useInsertOverwrite()){%>
+    component_<%=ticebergOutput.getCid()%>.flush();
+<%}%>

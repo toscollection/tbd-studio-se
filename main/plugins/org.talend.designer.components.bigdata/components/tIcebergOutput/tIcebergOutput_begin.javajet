@@ -17,7 +17,21 @@ org.talend.bigdata.core.di.components.iceberg.ImmutableTIcebergOutput component_
     .useBatch(true)
     .batchSize(<%=ticebergOutput.batchSize()%>)
     <% } %>
-<% for (org.talend.designer.bigdata.di.components.Schema.Field field : ticebergOutput.getFields()) {%>
-    .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("<%=field.getName()%>").type("<%=field.getType()%>").build())
-<%}%>
+    <%if (ticebergOutput.useInsertOverwrite()) {%>
+        <%if(ticebergOutput.useSourceTable()) {%>
+            .sourceTable(<%=ticebergOutput.getSourceTable()%>)
+            <% } %>
+        <%if(ticebergOutput.useCustomQuery()) {%>
+            .customQuery(<%=ticebergOutput.getCustomQuery()%>)
+            .useCustomQuery(true)
+        <% } %>
+    <% }else { %>
+        <% for (org.talend.designer.bigdata.di.components.Schema.Field field : ticebergOutput.getFields()) {%>
+            .addFields(org.talend.bigdata.core.di.components.ImmutableField.builder().name("<%=field.getName()%>").type("<%=field.getType()%>").build())
+        <%}%>
+    <%}%>
     .build();
+    
+    <%if (ticebergOutput.useInsertOverwrite()) {%>
+        component_<%=ticebergOutput.getCid()%>.overwrite();
+    <%}%>
